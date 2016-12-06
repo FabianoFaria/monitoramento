@@ -1,0 +1,224 @@
+<?php
+
+/**
+ * Classe que gerencia o login
+ */
+class UserLogin
+{
+    /**
+     * $login_error
+     * 
+     * Recebe valor informando se existe erro no login
+     * 
+     * @access public
+     */
+    public $login_error = null;
+    
+    /**
+     * Funcao que verifica se o usuario esta logado
+     */
+    public function check_login()
+    {
+        // Verifica se esta na sessao
+        if (!isset($_SESSION['userdata']) || empty ($_SESSION['userdata']))
+        {
+            // Se nao estiver
+            // Remove qualquer dado existente
+            $this->logout();
+        }
+    }
+    
+    /**
+     * Funcao que gerencia o login do usuario no sistema
+     */
+    public function logar ()
+    {
+        // Verifica se existe dados na sessao
+        if (isset($_SESSION['userdata']) && ! empty ($_SESSION))
+        {
+            // Armazena o link
+            $login_uri = HOME_URI;
+            
+            // Redireciona
+            echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
+        }
+        
+        // Verifica se eh metodo post
+        if (isset($_POST['userdata']) && ! empty ($_POST['userdata']) && is_array($_POST['userdata']))
+        {
+            // Armazena o post
+            $userdata = $_POST['userdata'];
+            
+            // Extrai as posicoes do array e converte em variaveis
+            extract($userdata);
+            $user = $this->tratamento($user, 0);
+            $userpass = $this->tratamento($userpass, 1);
+            
+            // Criptografa senha
+            $userpass = md5($userpass);
+            
+            // Realiza a verificacao do usuario
+            $query = "select 
+                          u.id , u.nome, u.sobrenome, u.local_usu, u.id_cliente, u.tipo_inst, 
+                          pe.nome as tipo_usu , pe.cadastro , pe.pesquisa, pe.vinculo, pe.configuracao, pe.monitoramento, pe.editar 
+                      from tb_users u 
+                      inner join tb_perfil_acesso pe on pe.id = u.id_perfil_acesso 
+                      where u.email = '{$user}' and u.senha = '{$userpass}' and u.status_ativo = 1 limit 1 ";
+            
+            // Executa a query
+            $result = $this->db->select($query);
+            
+            // Verifica se existe algum erro na query
+            if ($result)
+            {
+                // Verifica se o usuario existe
+                if (@mysql_num_rows($result) > 0)
+                {
+                    // Se o usuario existir
+                    while ($row = @mysql_fetch_assoc($result))
+                    {
+                        $_SESSION['userdata']['firstname']  = $row['nome'];
+                        $_SESSION['userdata']['secondname'] = $row['sobrenome'];
+                        $_SESSION['userdata']['userId']     = $row['id'];
+                        $_SESSION['userdata']['per_ca']     = $row['cadastro'];
+                        $_SESSION['userdata']['per_pe']     = $row['pesquisa'];
+                        $_SESSION['userdata']['per_vi']     = $row['vinculo'];
+                        $_SESSION['userdata']['per_co']     = $row['configuracao'];
+                        $_SESSION['userdata']['per_mo']     = $row['monitoramento'];
+                        $_SESSION['userdata']['per_ed']     = $row['editar'];
+                        $_SESSION['userdata']['local']      = $row['local_usu'];
+                        $_SESSION['userdata']['cliente']    = $row['id_cliente'];
+                        $_SESSION['userdata']['tipo']       = $row['tipo_inst'];
+                        $_SESSION['userdata']['tipo_usu']   = $row['tipo_usu'];
+    
+                        // Registra que o usuario esta logado
+                        $this->logged_in = true;
+                        // Regista a sessao
+                        $this->userdata = $_SESSION['userdata'];
+    
+                        // Armazena o link
+                        $login_uri = HOME_URI;
+                        
+                        // Redireciona via javascript
+                        echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
+                    }
+                }
+                // Se o usuario nao for encontrao
+                else
+                {
+                    // Apresenta mensagem informado que nao achou
+                    $this->login_error = "Usu&aacute;rio e/ou senha incorreto(s).";
+                }
+            }
+            else
+            {
+                // Caso ocorra algum erro na hora de executar a query
+                // Apresentar uma mensagem informando o erro
+                $this->login_error = "Ocorreu um erro interno, entre em contato com o Administrador do site.";
+            }
+        }
+    }
+    
+    /**
+     * Funcao que gerencia o logout do usuario
+     */
+    protected function logout()
+    {
+        // Apaga qualquer valor
+        $_SESSION['userdata'] = array();
+        
+        // Destroi a sessao
+        unset ($_SESSION);
+        
+        // Apaga qualquer valor
+        $_SESSION['userdata'] = array();
+        
+        // Destroi toda sessao
+        session_destroy();
+        
+        // Regenera o id da sessao
+        session_regenerate_id();
+        
+        // Redireciona para a pagina de login
+        $this->goto_login();
+    }
+    
+    /**
+     * Funcao que redireciona para a pagina de login
+     */
+    protected function goto_login()
+    {
+        // Verifica se o path esta definido
+        if (defined('HOME_URI'))
+        {
+            // Configura a url do login
+            $login_uri = HOME_URI . '/login/';
+            
+            // Redireciona via javascript
+            echo '<meta http-equiv="Refresh" content="0; url=' . $login_uri . '">';
+			echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
+        }
+    }
+    
+    /**
+     * Funcao que trata os caracteres que sao inseridos
+     * nos campos de login do sistema
+     * 
+     * @param string  $palavra - Recebe a palavra que sera tratada
+     * @param numeric $regra   - Define o tipo de tratamento
+     * 
+     */
+    public function tratamento ($palavra = null, $regra = 0)
+    {
+        // Verifica se existe a palavra
+        if ($palavra != null)
+        {
+            // Se existir
+            // Armazena a palavra
+            $novaFrase = $palavra;
+            
+            // Verifica a regra de tratamento
+            if ($regra == 0)
+            {
+                // Se for 0
+                // Realiza o tratamento para o nome do usuario
+                // Cria um array com os caracteres que sera substituidos
+                $lista = array("'","(",")","[","]","{","}","+","=","$","#","&","/","*",'"',"´","^","°","ª","º",
+                               "<",">","%","!","?",";",":","`","~",",");
+                
+                // Realiza o loop para substituir os caracteres
+                foreach($lista as $sub)
+                {
+                    //Substitui os caracteres
+                    $novaFrase = str_replace($sub, "", $novaFrase);
+                }
+                
+                // Retorna a string tratada
+                return $novaFrase;
+            }
+            
+            // Verifica se a regra eh para senha
+            if ($regra == 1)
+            {
+                // Se for tratamento de senha
+                // Cria um array com os caracters que sera substuidos
+                $lista = array("'","/",'"',"´","^","°","ª","º","<",">","`","~",";",":");
+                
+                // Realiza o loop para substituir os caracteres
+                foreach($lista as $sub)
+                {
+                    // Substitui os caracteres
+                    $novaFrase = str_replace($sub, "", $novaFrase);
+                }
+                
+                // Retorna a string tratada
+                return $novaFrase;
+            }
+        }
+        // Caso nao exista valor na palavra
+        // Retorna false
+        return false;
+    }
+}
+
+?>

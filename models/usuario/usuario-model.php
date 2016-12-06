@@ -1,0 +1,172 @@
+<?php
+
+class UsuarioModel extends MainModel
+{
+
+
+
+    public function __construct ($db = false , $controller = null)
+    {
+        /* carrega a conexao */
+        $this->db = $db;
+
+        /* carrega o controller */
+        $this->controller = $controller;
+
+        /* carrega os parametros */
+        $this->parametros = $this->controller->parametros;
+    }
+
+
+    public function dadosUsuario($idUser)
+    {
+        //Validação da id informada
+        if($idUser > 0){
+
+            $query = "SELECT * FROM tb_users WHERE id = ".$idUser." ";
+
+            /* monta a result */
+            $busca = $this->db->select($query);
+
+            /* verifica se a query executa */
+            if($busca){
+                /* Retorna a row com os dados do usuário */
+                while($row = @mysql_fetch_assoc($busca)){
+
+                    return $row;
+                }
+            }
+            else{
+                return false;
+            }
+
+        }
+
+        return false;
+    }
+
+    //atualiza os dados do usuário
+    public function atualizarUsuario()
+    {
+        // Coletar os dados do post
+        $id_user   = $_POST['txt_userId'];
+        $nome      = $this->tratamento($_POST['txt_nome']);
+        $sobrenome = $this->tratamento($_POST['txt_sobrenome']);
+        $email     = $this->tratamento($_POST['txt_email'],1);
+        $perfil    = is_numeric($_POST['opc_perfil']) ? $_POST['opc_perfil'] : 0 ;
+        $cliente   = explode("-",$_POST['opc_cliente']);
+        $local     = isset($_POST['opc_local']) ? $_POST['opc_local'] : 0;
+
+
+        // Verifica se existe valor e se a variavel esta definida
+        if (isset($cliente[1]) && is_numeric($cliente[1]))
+        {
+            // Verifica se o cliente eh uma filial
+            if ($cliente[1] == 'c')
+                $tipo_inst = 0;
+            else if ($cliente[1] == 'f')
+                $tipo_inst = 1;
+        }else{
+            $cliente[0] = 0;
+            $tipo_inst = 0;
+        }
+
+        if(!empty($_POST['txt_senha']) && ($_POST['txt_senha'] == $_POST['txt_cfsenha'])){
+            //efetua o tratamento da senha
+            $senha = $this->tratamento($_POST['txt_senha'],2);
+
+            // Verifica se existe um perfil selecionado
+            if ($senha != $_POST['txt_senha'])
+            {
+                // Apresenta uma mensagem de erro
+                echo "<div class='mensagemError'><span>Verifique se existe caracteres inv&aacute;lidos na senha</span></div>";
+
+                // Encerra o processo
+                return;
+            }
+
+
+            $senha = md5($_POST['txt_senha']);
+        }else{
+            $senha = "";
+        }
+
+        // Verifica se existe um perfil selecionado
+        if ($perfil == 0)
+        {
+            // Apresenta uma mensagem de erro
+            echo "<div class='mensagemError'><span>Nenhuma permissão foi selecionado!</span></div>";
+
+            // Encerra o processo
+            return;
+        }
+
+        // Verifica qual eh o local do usuario
+        if ($local == 3)
+        {
+            // Se o local nao estiver definido
+            // Apresenta uma mensagem de erro
+            echo "<div class='mensagemError'><span>Nenhum local foi selecionado!</span></div>";
+
+            // Encerra o processo
+            return;
+        }
+
+        // Verifica se existe campo em braco
+        if ($nome != "" && $sobrenome != "" && $email != "" && $perfil != "" && $cliente != "")
+        {
+            //query diferenciada em caso de alteração de senha
+            if($senha != ""){
+                $query = "UPDATE tb_users SET senha='$senha', id_perfil_acesso='$perfil', nome='$nome', sobrenome='$sobrenome', email='$email', local_usu='$local', id_cliente='$cliente[0]', tipo_inst='$tipo_inst' WHERE id = '$id_user'";
+            }else{
+                $query = "UPDATE tb_users SET id_perfil_acesso='$perfil', nome='$nome', sobrenome='$sobrenome', email='$email', local_usu='$local', id_cliente='$cliente[0]', tipo_inst='$tipo_inst' WHERE id = '$id_user'";
+            }
+
+            var_dump($query);
+
+            // Insere no banco e exibe uma mensagem
+            $this->validaInsercaoBanco($query, "Usuário atualizado com sucesso!", "Erro durante o processo de atualização.");
+        }
+        else
+        {
+            // Se existir campo em branco
+            // Apresentar mensagem informando que existe campo em branco
+            echo "<div class='mensagemError'><span>Existe campos em branco</span></div>";
+        }
+
+    }
+
+
+    /**
+     * Funcao que valida a gravacao da query no banco
+     *
+     * @param string $query - recebe uma string contendo a query
+     * @param string $msgSuc - recebe uma string contendo a mensagem de sucesso
+     * @param string $msgErr - recebe uma string contendo a mensagem de erro
+     */
+    private function validaInsercaoBanco($query, $msgSuc, $msgErr)
+    {
+        // Verifica se gravou com sucesso
+        if ($this->db->query($query))
+        {
+            // Se gravou
+            // Apresenta a mensagem de sucesso
+            echo "<div class='mensagemSucesso'><span>{$msgSuc}</span></div>";
+        }
+        else
+        {
+            // Se ocorreu um erro
+            // Grava o erro no log
+            // Monta a query do log
+            $queryLog = "insert into tb_log (log) values ('Erro ao gravar o cadastro : [".str_replace("'","" , $query)."]')";
+
+            // Executa a query
+            $this->db->query($queryLog);
+
+            // Apresenta a mensagem de erro
+            echo "<div class='mensagemError'><span>{$msgErr}</span></div>";
+        }
+    }
+}
+
+ ?>

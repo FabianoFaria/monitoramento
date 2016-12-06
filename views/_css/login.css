@@ -1,0 +1,78 @@
+html { 
+  background: url(../_images/b-quad.jpg);
+}
+
+body, html
+{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.container
+{
+    border: 0px solid #000;
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    width: 350px;
+    margin-left: -175px;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.campoForm { margin-top: 50px; }
+
+.imgLogin > img { width: 100%;}
+
+.txt_form
+{
+    background-color: #fff;
+    border: 1px solid #fff;
+    width: 80%;
+}
+
+.btn_form
+{
+    background-color: #5896d9;
+    border: 1px solid #5896d9;
+    color: #fff;
+}
+
+
+.txt_form, .btn_form
+{
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 5px 5px 0px #113f46;
+    border-radius: 3px;
+    padding: 5px 10px 5px 10px;
+    font-size: 15px;
+}
+
+.div-respostaLogin
+{
+    position: absolute;
+    width: 100%;
+    top: 10%;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    color: #fff;
+}
+.div-respostaLogin > span
+{
+    background-color: #f36855;
+    margin:0 auto;
+    padding: 0.7em;
+    border-radius: 3px;
+    box-shadow: 5px 5px 0px #113f46;
+}
+
+.esquecisenha
+{
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    color: #fff;
+    text-shadow: 2px 1px 2px #000;
+}

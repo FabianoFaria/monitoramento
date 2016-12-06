@@ -1,0 +1,1032 @@
+/*
+ * configuracao de fonts
+ */
+/* familia */
+/* densidade */
+/* Sans ; Open Sans */
+/* Sans ; Open Sans ; Gudea */
+/* Sans ; Open Sans */
+/* Sans ; Open Sans ; Gudea */
+/* tamanho */
+/* funcoes */
+/*
+ * fim configuracao de fonts
+ */
+/*
+ * configuracao de cores
+ */
+/* cor azul claro */
+/* cor verde claro */
+/* cor font Titulos */
+/* cor azul meio verde */
+/* cor do butao menu */
+/* cor barra de navegacao */
+/* cor do sombra botao menu */
+/* cor cinza claro */
+/* cor de texto vermelho parte de mensagem */
+/* azul claro */
+/* cinza escuro */
+/* cinza fonte e menu da pagina com a cor 13 */
+/* cinza , divisao do menu conf e sair */
+/* azul escuro link menu pagina com cor 13 : hover*/
+/* azul menu de itens cadastrados hover */
+/* cinza sobra , itens cadastrados */
+/* vermelho botao sair */
+/* cor borda barra de navegacao */
+/* Azul claro hover menu */
+/* cinza background */
+/* azul escuro background side bar */
+/* cinza da legenda sidebar */
+/* cinza da legenda sidebar hover */
+/* amarelo claro , botao ne notificacao hover */
+/* background sidebar 3 */
+/* Verde status normal */
+/* Amarelo status warning */
+/* Vermelho status alerta */
+/* cor cinza claro das caixas de notificacao da pagina de vinculo */
+/* cor preto do label do monitoramento */
+/*
+ * configuracao de body
+ */
+body,
+html {
+  background-color: #ffffff;
+  padding: 0px;
+  margin: 0px;
+  min-height: 100%;
+}
+.senhaPerm {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #c94e50;
+  font-size: 14px;
+  font-weight: 400;
+}
+/* mensagem de retorno */
+.mensagemRetorno {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #c94e50;
+  font-size: 17px;
+  font-weight: 600;
+  position: absolute;
+  z-index: 1001;
+  background-color: #808080;
+  opacity: 0.9;
+  border-radius: 3px;
+  padding: 1em;
+  left: 50%;
+  margin-left: auto;
+}
+/* padronizacao da lista */
+/* borda para visualizacao */
+.ver {
+  border: 1px solid #00ff00;
+}
+/* opcao font icon */
+.fs1 {
+  display: inline-table;
+}
+.txt-center {
+  text-align: center;
+}
+/* alinhamento do texto no centro */
+/* font de icone vinculo */
+.fontVinculo {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 35px;
+  font-weight: 400;
+  text-align: center;
+}
+/* remove os padding e margins */
+.noPadding {
+  margin: 10px;
+  padding: 1px;
+}
+/* *************************************************************************
+ *      Configuracao do menu superior
+ * *********************************************************************** */
+#wrapper {
+  margin-left: 86px;
+  height: 43px;
+  min-width: 500px;
+  z-index: 11;
+}
+#wrapper2 {
+  margin-left: 86px;
+}
+#wrapper3 {
+  margin-left: 270px;
+}
+#content,
+#content2,
+#content3 {
+  float: right;
+  width: 100%;
+  z-index: 10;
+}
+#content {
+  background-color: #4691d2;
+  line-height: 43px;
+  padding: 0px 0px 0px 10px;
+  position: fixed;
+  box-shadow: 0px 2px 5px #d5dddf;
+}
+#sidebar,
+#sidebar2 {
+  float: left;
+  text-align: center;
+  position: fixed;
+  margin-left: -86px;
+  width: 86px;
+  z-index: 2;
+}
+#sidebar {
+  background-color: #ffffff;
+  line-height: 43px;
+  z-index: 10;
+}
+#sidebar2 {
+  margin-top: -43px;
+  background-color: #262d40;
+  min-height: 100%;
+  z-index: 9;
+  padding-top: 50px;
+}
+#sidebar3 {
+  float: left;
+  position: absolute;
+  margin-left: -270px;
+  margin-top: -43px;
+  width: 270px;
+  min-height: 100%;
+  border-right: 2px solid #f4f6f7;
+  z-index: 9;
+  padding-top: 43px;
+  background-color: #fbfbfa;
+}
+#cleared,
+#cleared2,
+#cleared3 {
+  clear: both;
+}
+.titulo-pagina {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #b8babc;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 80px;
+}
+.titulo-pagina-cliente {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #de4243;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 80px;
+}
+/* icones e texto do menu pagina */
+.iconTela {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #b8babc;
+  font-size: 35px;
+  font-weight: 400;
+}
+.textTela {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #b8babc;
+  font-size: 12px;
+  font-weight: 400;
+}
+/* link da lista */
+.linkCad {
+  text-decoration: none;
+  color: #808080;
+}
+.linkCad:hover {
+  text-decoration: none;
+  color: #c94e50;
+}
+.linkCad:hover > span {
+  color: #52607a;
+}
+/* configuracao icone barra menu*/
+.imgLogoBarra {
+  height: 33px;
+  -webkit-transition-duration: 700ms;
+  -moz-transition-duration: 700ms;
+  -o-transition-duration: 700ms;
+  transition-duration: 700ms;
+}
+.imgLogoBarra:hover {
+  height: 30px;
+}
+/* barra do logo e menu fechar alerta */
+#listadir,
+.menu-opcao {
+  display: inline-table;
+}
+#listadir {
+  width: 70%;
+  color: #ffffff;
+}
+.menu-opcao {
+  position: absolute;
+  text-align: left;
+  float: right;
+  left: 100%;
+  margin-left: -214px;
+}
+/* lista de icones de pesquisa */
+.lista-menu {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+.lista-menu > li {
+  background-color: #7b6c6c;
+  display: inline-table;
+  padding: 0px 10px 0px 10px;
+  margin-left: -4px;
+}
+.lista-menu > li:hover {
+  background-color: #62aae9;
+}
+.menuSuperiorOpcao {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+.menuSuperiorOpcao:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+.menuSuperiorOpcao2 {
+  color: #ffffff;
+}
+.link-menuCadastro {
+  font-family: 'Open Sans', sans-serif;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 50px;
+}
+.link-menuCadastro:hover {
+  text-decoration: none;
+  color: #ffffff;
+}
+/* configuracao do link que gerencia o navegador do menu */
+.linkMenuSup {
+  font-family: 'Open Sans', sans-serif;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 400;
+}
+.linkMenuSup:hover {
+  color: #ffffff;
+}
+/* ***************************************************** */
+/* configuracao dos botoes do menu */
+#btn_logout,
+#btn_showConf {
+  padding: 0px 10px 0px 10px;
+}
+#btn_showConf {
+  border-right: 1px solid #dddddd;
+}
+#btn_showConf:hover {
+  background-color: #62aae9;
+  color: #ffffff;
+}
+#btn_showConf:hover > a {
+  color: #ffffff;
+}
+#btn_logout:hover {
+  background-color: #ff3e3e;
+}
+#btn_logout:hover > a {
+  color: #ffffff;
+}
+#btn_sair {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 400;
+  position: absolute;
+  background-color: #ff3e3e;
+  padding: 0px 5px 0px 5px;
+  line-height: 30px;
+  left: 100%;
+  margin-left: -100px;
+  top: 57px;
+  border-radius: 3px;
+  display: none;
+  z-index: 10;
+}
+#btn_alertaNot {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 400;
+  border-right: 1px solid #dddddd;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#btn_alertaNot:hover {
+  background-color: #e9e762;
+}
+/* fim das configuracoes dos botoes */
+/* div notificacao */
+#div-notificacao {
+  position: absolute;
+  width: 250px;
+  max-height: 300px;
+  background-color: #ffffff;
+  z-index: 9;
+  margin-left: -215px;
+  border: 1px solid #e8eceb;
+  top: 43px;
+  overflow-y: auto;
+  text-align: left;
+  line-height: 19px;
+  display: none;
+  box-shadow: 0px 2px 5px #b8babc;
+}
+#div-notificacao > ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+#div-notificacao > ul > li {
+  font-family: 'Gudea', sans-serif;
+  color: #7c7f8e;
+  font-size: 13px;
+  font-weight: 400;
+  border-bottom: 1px solid #e8eceb;
+  padding: 12px 10px 12px 10px;
+}
+/* notificacao */
+#contadorNot {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 5px 2px 5px;
+  background-color: #ff3e3e;
+  position: absolute;
+  line-height: 15px;
+  border-radius: 7px;
+  margin-left: -10px;
+  top: 2px;
+  cursor: default;
+}
+.notificacao-titulo {
+  font-family: 'Gudea', sans-serif;
+  color: #7c7f8e;
+  font-size: 13px;
+  font-weight: 700;
+}
+/* lista de itens cadastrados no sistema , icone engrenagem */
+#menuCadastro {
+  width: 400px;
+  position: absolute;
+  left: 100%;
+  margin-left: -436px;
+  top: 44px;
+  background-color: #62aae9;
+  box-shadow: 0px 2px 5px #b8babc;
+  display: none;
+  z-index: 10;
+}
+.ul-menuCadastro {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  text-align: left;
+}
+.ul-menuCadastro > li {
+  display: inline-block;
+  width: 194px;
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 4px;
+  margin-right: 4px;
+}
+.ul-menuCadastro > li:hover {
+  background-color: #0077aa;
+  box-shadow: 4px 4px 0px #008cbb;
+}
+/* configuracao itens sidebar */
+.lista-sidebar {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+/* lista */
+.lista-sidebar > li {
+  padding: 15px 0px 15px 0px;
+}
+/* link sidebar*/
+.link-side {
+  text-decoration: none;
+  color: #7c7f8e;
+}
+.link-side:hover {
+  text-decoration: none;
+}
+.link-side:hover > span {
+  text-decoration: none;
+  color: #e8eceb;
+}
+/* font legenda icon */
+.lb-side {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #7c7f8e;
+  font-size: 12px;
+  font-weight: 400;
+}
+/* font icon side bar */
+.icon-side {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #7c7f8e;
+  font-size: 25px;
+  font-weight: 400;
+}
+/* **************************************************************
+ *      fim configuracao menu
+ * *********************************************************** */
+/* lista sidebar 3 */
+.lista-notificacao {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+.lista-notificacao > li {
+  background-color: #ffffff;
+  min-height: 100px;
+  margin-bottom: 5px;
+  padding: 5px;
+}
+.not-normal {
+  border-left: 6px solid #3ba95c;
+}
+.not-warn {
+  border-left: 6px solid #e7d100;
+}
+.not-alert {
+  border-left: 6px solid #de4243;
+}
+.not-normal > label {
+  font-family: 'Open Sans', sans-serif;
+  color: #3ba95c;
+  font-size: 13px;
+  font-weight: 600;
+}
+.not-warn > label {
+  font-family: 'Open Sans', sans-serif;
+  color: #e7d100;
+  font-size: 13px;
+  font-weight: 600;
+}
+.not-alert > label {
+  font-family: 'Open Sans', sans-serif;
+  color: #de4243;
+  font-size: 13px;
+  font-weight: 600;
+}
+/* fim lista sidebar 3 */
+/* lista de pendencia de vinculo */
+.lista-pendencia-vinculo {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+.lista-pendencia-vinculo > li {
+  border-left: 5px solid #e8eceb;
+  width: 230px;
+  display: inline-table;
+  padding: 5px 10px 5px 10px;
+  margin: 5px;
+  background-color: #faf9f6;
+}
+.label-lista-not-cliente {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #3ba95c;
+  font-size: 20px;
+  font-weight: 300;
+}
+.label-lista-not-equipamento {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 14px;
+  font-weight: 300;
+}
+.lista-pendencia-vinculo > li > a {
+  cursor: pointer;
+}
+.lista-pendencia-vinculo > li:hover {
+  background-color: #e8eceb;
+}
+.lista-pendencia-vinculo > li > a:hover > label {
+  cursor: pointer;
+}
+.lb-relatorio {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 20px;
+  font-weight: 300;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+/* link da pagina de monitoramento */
+.link-tabela-moni {
+  color: #808080;
+}
+/* font padrao */
+.fontPadrao {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 20px;
+  font-weight: 400;
+}
+/* font checkbox opcado de definicoes de grafico */
+.fontOpcDef {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 15px;
+  font-weight: 400;
+}
+/* font breadcump */
+.fontBreadCrumb {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 14px;
+  font-weight: 400;
+}
+/* lista de icones */
+.listaOpcoes {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 22px;
+  font-weight: 300;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+.listaOpcoes > li {
+  padding: 1em;
+  border-bottom: 1px solid #e5e5e5;
+}
+/* balao de salvamento do cadastro */
+.mensagemSucesso,
+.mensagemError {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 400;
+  width: 100%;
+  position: fixed;
+  top: 40%;
+  text-align: center;
+  z-index: 1000;
+}
+.mensagemSucesso > span,
+.mensagemError > span,
+.mensagemSucesso > label,
+.mensagemError > label {
+  border-radius: 3px;
+  padding: 1em;
+  box-shadow: 2px 2px 5px #e5e5e5;
+  margin-left: -100px;
+}
+.mensagemSucesso > span,
+.mensagemSucesso > label {
+  background-color: #4ec957;
+}
+.mensagemError > span,
+.mensagemError > label {
+  background-color: #c94e50;
+}
+.mensagemSucesso > label > a,
+.mensagemError > label > a {
+  color: #ffffff;
+}
+/**
+ * Caixa de mensagem
+ */
+/* Div contendo o conteudo com a mensagem e o box */
+.mensagem-semvalor {
+  left: 0px;
+  width: 100%;
+  position: fixed;
+  top: 40%;
+  text-align: center;
+  z-index: 1000;
+}
+/* Mensagem de alerta no box */
+.mensagem-texto {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 300;
+  background-color: #de4243;
+  padding: 10px;
+}
+/* Link do box de mensagem */
+.link-mensagem {
+  color: #ffffff;
+}
+/**
+ * Configuracao erro 404
+ */
+/* Div */
+.balao-404 {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  width: 480px;
+  margin-left: -240px;
+  top: 30%;
+  z-index: 2;
+}
+.balao-404-fundo {
+  background-color: #87bed0;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.balao-404-esq {
+  float: left;
+}
+.balao-404-dir {
+  float: right;
+  margin-top: 42px;
+}
+/* Labels */
+.txt-404 {
+  font-family: 'Open Sans', sans-serif;
+  color: #555555;
+  font-size: 140px;
+  font-weight: 300;
+}
+.txt-404-erro {
+  font-family: 'Open Sans', sans-serif;
+  color: #555555;
+  font-size: 20px;
+  font-weight: 400;
+}
+/* Link */
+.link-404 {
+  font-family: 'Open Sans', sans-serif;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.link-404:hover {
+  text-decoration: underline;
+}
+/* autocomplete */
+.ui-helper-hidden {
+  display: none;
+}
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+.ui-menu {
+  list-style: none;
+  padding: 0.7em;
+  margin: 0;
+  display: block;
+  width: 100px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px #e5e5e5;
+}
+.ui-widget-content {
+  border-bottom: 1px solid #00A8B3;
+  border-left: 1px solid #00A8B3;
+  border-right: 1px solid #00A8B3;
+  background: #ffffff;
+  color: #808080;
+}
+.ui-widget-content .ui-state-hover,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+  color: #00A8B3;
+  cursor: pointer;
+}
+/* fim autocomplete */
+/*
+ *      configuracao da tabela
+ */
+/*table*/
+table {
+  border-spacing: 0px 5px;
+  margin: 0;
+  padding: 0;
+}
+#stream_table * {
+  background-color: transparent;
+}
+#stream_table > thead > tr > th {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 15px;
+  font-weight: 600;
+}
+#stream_table > tbody > tr,
+#stream_table > tfoot > tr {
+  background-color: #faf9f6;
+}
+#stream_table > thead > tr:hover,
+#stream_table > tbody > tr:hover,
+#stream_table > tfoot > tr:hover {
+  background-color: #d8eff4;
+}
+#stream_table > thead > tr > td,
+#stream_table > tbody > tr > td,
+#stream_table > tfoot > tr > td {
+  padding: 5px 5px 5px 10px;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 14px;
+  font-weight: 400;
+}
+.tdprim {
+  border-right: 0;
+  border-left: 5px solid #c94e50;
+}
+.tdmeio {
+  border-right: 0;
+  border-left: 0;
+  border-top: 1px solid #c94e50;
+  border-bottom: 1px solid #c94e50;
+}
+.tdbdbottom {
+  border-bottom: 1px solid #faf9f6;
+}
+/*
+ *      Configuracoes de grafico
+ */
+.opcoesGrafic {
+  border: 1px solid #fafaf8;
+  text-align: center;
+  border-radius: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.opcoesGrafic:hover {
+  background-color: #fafaf8;
+}
+.link-graficoGerar {
+  color: #808080;
+  text-decoration: none;
+}
+.link-graficoGerar:hover {
+  color: #87bed0;
+  text-decoration: none;
+}
+/*
+ *      Configuracao parte do grafico
+ *
+ */
+/* label que mostra o valor */
+.valorVindo,
+.situacaoLigado,
+.situacaoDesligado {
+  width: 100%;
+  position: relative;
+  text-align: center;
+  padding: 2px;
+}
+.valorVindo {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #e5e5e5;
+}
+.situacaoLigado {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #4ec957;
+}
+.situacaoDesligado {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #c94e50;
+}
+/* Configuracao do fundo */
+.fundo-geraGrafico {
+  background-color: #7c7f8e;
+}
+.fundo-camposGrafico {
+  background-color: #ffffff;
+  border: 2px solid #7c7f8e;
+}
+.separa-campo {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+/* Ajuste no grafico */
+.ajusteGrafico {
+  height: 222px;
+}
+/* configurcao da fonte dos parametros */
+.fontsub {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 15px;
+  font-weight: 400;
+}
+/* configuracao label form-group */
+.form-group > label {
+  font-family: 'Open Sans', sans-serif;
+  color: #b8babc;
+  font-size: 13px;
+  font-weight: 600;
+}
+/* lista de posicao de tabela */
+.posicao-tabela {
+  font-family: 'Gudea', sans-serif;
+  color: #b8babc;
+  font-size: 14px;
+  font-weight: 400;
+}
+/* Bordas de alerta */
+.border-red {
+  border: 1px solid #de4243;
+}
+/* Campo de apresentacao do nome */
+.nome-apresentacao {
+  background-color: #fafaf8;
+  border-bottom: 1px solid #f0f0f8;
+  padding-top: 5px;
+}
+/* labels */
+.lb-not {
+  font-family: 'Open Sans', sans-serif;
+  color: #b8babc;
+  font-size: 15px;
+  font-weight: 600;
+}
+.lb-monitoramento {
+  font-family: "Lucida Sans Unicode";
+  color: #333333;
+  font-size: 12px;
+  font-weight: 400;
+  padding-top: 8px;
+}
+#lb-faltas {
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 60px;
+  font-weight: 300;
+}
+/* div autonomia bateria */
+.div-baseBateria {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  z-index: 1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0px;
+}
+.div-faixaVermelha,
+.div-faixaVerde {
+  position: absolute;
+  height: 80px;
+  left: 0px;
+}
+.div-faixaVermelha {
+  background-color: #ff3e3e;
+  width: 10%;
+  z-index: 3;
+}
+.div-faixaVerde {
+  background-color: #4ec957;
+  width: 100%;
+  z-index: 2;
+}
+.span-menor,
+.span-maior,
+.div-campoPreen {
+  position: absolute;
+  z-index: 4;
+}
+.div-campoPreen,
+.div-carga {
+  height: 60px;
+  left: 0px;
+  top: 50%;
+  margin-top: -30px;
+}
+.span-menor {
+  left: 0px;
+  top: 92%;
+}
+.span-maior {
+  left: 100%;
+  top: 92%;
+  margin-left: -15px;
+}
+.div-campoPreen {
+  width: 100%;
+  background-color: #ffffff;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+}
+.div-carga {
+  width: 0%;
+  position: absolute;
+  background-color: #87bed0;
+  z-index: 5;
+  -webkit-transition: 0.5s all linear;
+  -moz-transition: 0.5s all linear;
+  transition: 0.5s all linear;
+}
+#div-legenda {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 25px;
+  font-weight: 300;
+  z-index: 6;
+  padding-top: 12px;
+}
+/* Mostra o status do nobreak */
+#nobreakLigado {
+  font-family: 'Open Sans', sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 300;
+}
+.nobreakLigadoStatus {
+  background-color: #4ec957;
+}
+.nobreakDesligadoStatus {
+  background-color: #c94e50;
+}
+/* Tempo de operacao */
+.div-tempoOperacao,
+.div-nbLigado,
+.div-nbLigado,
+.div-baseBateria {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+#lb-tempoOperacao {
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 35px;
+  font-weight: 300;
+}
+/* Label das informacoes da tela de monitoramento */
+.info-monito {
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 400;
+}
+.info-monitoDados {
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 25px;
+  font-weight: 300;
+}
+/* Configuracao da font para o option */
+.font-texto-01 {
+  font-family: 'Open Sans', sans-serif;
+  color: #b8babc;
+  font-size: 13px;
+  font-weight: 600;
+}
+.font-texto-02 {
+  font-family: 'Open Sans', sans-serif;
+  color: #555555;
+  font-size: 13px;
+  font-weight: 600;
+}
+/* Opcao da borda */
+.borda-01 {
+  border-bottom: 1px solid #dddddd;
+}
+.borda-02 {
+  border-right: 1px solid #dddddd;
+}

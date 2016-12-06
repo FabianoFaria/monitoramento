@@ -1,0 +1,1092 @@
+// out: main.css, compress: true, strictMath: true
+
+
+/*
+ * configuracao de fonts
+ */
+/* familia */
+@sans: 'Source Sans Pro', sans-serif;
+@gudea: 'Gudea', sans-serif;
+@open: 'Open Sans', sans-serif;
+
+
+/* densidade */
+@w300: 300; /* Sans ; Open Sans */
+@w400: 400; /* Sans ; Open Sans ; Gudea */
+@w600: 600; /* Sans ; Open Sans */
+@w700: 700; /* Sans ; Open Sans ; Gudea */
+
+/* tamanho */
+@s10: 10px;
+@s11: 11px;
+@s12: 12px;
+@s13: 13px;
+@s14: 14px;
+@s15: 15px;
+@s16: 16px;
+@s17: 17px;
+@s18: 18px;
+@s19: 19px;
+@s20: 20px;
+@s22: 22px;
+@s25: 25px;
+@s28: 28px;
+@s30: 30px;
+@s35: 35px;
+@s40: 40px;
+@s45: 45px;
+@s60: 60px;
+@s140: 140px;
+
+
+/* funcoes */
+.font(@familia, @cor, @tamanho,@densidade)
+{
+    font-family: @familia;
+    color: @cor;
+    font-size: @tamanho;
+    font-weight: @densidade;
+}
+
+/*
+ * fim configuracao de fonts
+ */
+
+
+/*
+ * configuracao de cores
+ */
+@cor1: #87bed0; /* cor azul claro */
+@cor2: #4ec957; /* cor verde claro */
+@cor3: #808080; /* cor font Titulos */
+@cor4: #00A8B3; /* cor azul meio verde */
+@cor5: #ffffff; /* cor do butao menu */
+@cor6: #f0f0f8; /* cor barra de navegacao */
+@cor7: #e5e5e5; /* cor do sombra botao menu */
+@cor8: #fafaf8; /* cor cinza claro */
+@cor9: #c94e50; /* cor de texto vermelho parte de mensagem */
+@cor10: #4691d2; /* azul claro */
+@cor11: #555555; /* cinza escuro */
+@cor12: #b8babc; /* cinza fonte e menu da pagina com a cor 13 */
+@cor13: #dddddd; /* cinza , divisao do menu conf e sair */
+@cor14: #52607a; /* azul escuro link menu pagina com cor 13 : hover*/
+@cor15: #0077aa; /* azul menu de itens cadastrados hover */
+@cor16: #cacaca; /* cinza sobra , itens cadastrados */
+@cor17: #ff3e3e; /* vermelho botao sair */
+@cor18: #f4f6f7; /* cor borda barra de navegacao */
+@cor19: #62aae9; /* Azul claro hover menu */
+@cor20: #ecf0f1; /* cinza background */
+@cor21: #262d40; /* azul escuro background side bar */
+@cor22: #7c7f8e; /* cinza da legenda sidebar */
+@cor23: #e8eceb; /* cinza da legenda sidebar hover */
+@cor24: #e9e762; /* amarelo claro , botao ne notificacao hover */
+@cor25: #fbfbfa; /* background sidebar 3 */
+@cor26: #3ba95c; /* Verde status normal */
+@cor27: #e7d100; /* Amarelo status warning */
+@cor28: #de4243; /* Vermelho status alerta */
+@cor29: #faf9f6; /* cor cinza claro das caixas de notificacao da pagina de vinculo */
+@cor30: #333333; /* cor preto do label do monitoramento */
+
+
+/*
+ * configuracao de body
+ */
+body, html
+{
+    background-color: @cor5;
+    padding: 0px;
+    margin: 0px;
+    min-height: 100%;
+}
+
+.senhaPerm { .font(@sans, @cor9, @s14,@w400); }
+
+/* mensagem de retorno */
+.mensagemRetorno
+{
+    .font(@sans, @cor9, @s17,@w600);
+    position: absolute;
+    z-index: 1001;
+    background-color: @cor3;
+    opacity: 0.9;
+    border-radius: 3px;
+    padding: 1em;
+    left: 50%;
+    margin-left: auto;
+}
+
+
+/* padronizacao da lista */
+.uldefault()
+{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+/* borda para visualizacao */
+.ver { border: 1px solid #00ff00; }
+
+
+/* opcao font icon */
+.fs1 { display: inline-table; }
+
+.txt-center { text-align: center; } /* alinhamento do texto no centro */
+
+
+
+/* font de icone vinculo */
+.fontVinculo
+{
+    .font(@sans, @cor3, @s35, @w400);
+    text-align: center;
+}
+
+
+/* remove os padding e margins */
+.noPadding
+{
+    margin: 10px;
+    padding: 1px;
+}
+
+
+/* *************************************************************************
+ *      Configuracao do menu superior
+ * *********************************************************************** */
+#wrapper
+{
+    margin-left: 86px;
+    height: 43px;
+    min-width: 500px;
+    z-index: 11;
+}
+#wrapper2 { margin-left: 86px; }
+#wrapper3 { margin-left: 270px; }
+
+
+#content ,
+#content2 ,
+#content3
+{
+    float: right;
+    width: 100%;
+    z-index: 10;
+}
+#content
+{
+    background-color: @cor10;
+    line-height: 43px;
+    padding: 0px 0px 0px 10px;
+    position: fixed;
+    box-shadow: 0px 2px 5px #d5dddf;
+}
+
+
+#sidebar ,
+#sidebar2
+{
+    float: left;
+    text-align: center;
+    position: fixed;
+    margin-left: -86px;
+    width: 86px;
+    z-index: 2;
+}
+
+#sidebar
+{
+    background-color: @cor5;
+    line-height: 43px;
+    z-index: 10;
+}
+#sidebar2
+{
+    margin-top: -43px;
+    background-color: @cor21;
+    min-height: 100%;
+    z-index: 9;
+    padding-top: 50px;
+}
+#sidebar3
+{
+    float: left;
+    position: absolute;
+    margin-left: -270px;
+    margin-top: -43px;
+    width: 270px;
+    min-height: 100%;
+    border-right: 2px solid @cor18;
+    z-index: 9;
+    padding-top: 43px;
+    background-color: @cor25;
+}
+
+#cleared ,
+#cleared2 ,
+#cleared3
+{
+  clear: both;
+}
+
+
+.titulo-pagina
+{
+    .font(@sans, @cor12, @s25, @w400);
+    line-height: 80px;
+}
+.titulo-pagina-cliente
+{
+    .font(@sans, @cor28, @s25, @w400);
+    line-height: 80px;
+}
+
+
+
+/* icones e texto do menu pagina */
+.iconTela { .font(@sans, @cor12, @s35, @w400); }
+.textTela { .font(@sans, @cor12, @s12, @w400); }
+
+/* link da lista */
+.linkCad
+{
+    text-decoration: none;
+    color: @cor3;
+}
+.linkCad:hover
+{
+    text-decoration: none;
+    color: @cor9;
+}
+.linkCad:hover > span
+{
+    color: @cor14;
+}
+
+
+
+/* configuracao icone barra menu*/
+.imgLogoBarra
+{
+    height: 33px;
+    -webkit-transition-duration: 700ms;
+    -moz-transition-duration: 700ms;
+    -o-transition-duration: 700ms;
+    transition-duration: 700ms;
+}
+.imgLogoBarra:hover{ height: 30px; }
+
+
+/* barra do logo e menu fechar alerta */
+#listadir ,
+.menu-opcao
+{
+    display: inline-table;
+}
+
+#listadir
+{
+    width: 70%;
+    color: @cor5;
+}
+
+.menu-opcao
+{
+    position: absolute;
+    text-align: left;
+    float: right;
+    left: 100%;
+    margin-left: -214px;
+}
+
+
+/* lista de icones de pesquisa */
+.lista-menu { .uldefault(); }
+.lista-menu > li
+{
+    background-color: #7b6c6c;
+    display: inline-table;
+    padding: 0px 10px 0px 10px;
+    margin-left: -4px;
+}
+.lista-menu > li:hover { background-color: @cor19; }
+
+.menuSuperiorOpcao
+{
+    .font(@sans, @cor5, @s14, @w600);
+    color: @cor5;
+}
+.menuSuperiorOpcao:hover
+{
+    color: @cor5;
+    text-decoration: none;
+}
+
+.menuSuperiorOpcao2 { color: @cor5; }
+
+.link-menuCadastro
+{
+    .font(@open, @cor5, @s13, @w300);
+    line-height: 50px;
+}
+.link-menuCadastro:hover
+{
+    text-decoration: none;
+    color: @cor5;
+}
+
+
+/* configuracao do link que gerencia o navegador do menu */
+.linkMenuSup
+{
+    .font(@open, @cor5, @s13, @w400);
+}
+.linkMenuSup:hover
+{
+    color: @cor5;
+}
+/* ***************************************************** */
+
+
+
+
+/* configuracao dos botoes do menu */
+#btn_logout ,
+#btn_showConf
+{
+    padding: 0px 10px 0px 10px;
+}
+#btn_showConf { border-right: 1px solid @cor13; }
+#btn_showConf:hover
+{
+    background-color: @cor19;
+    color: @cor5;
+}
+#btn_showConf:hover > a { color: @cor5; }
+
+#btn_logout:hover
+{
+    background-color: @cor17;
+}
+#btn_logout:hover > a { color: @cor5; }
+#btn_sair
+{
+    .font(@sans, @cor5, @s12, @w400);
+    position: absolute;
+    background-color: @cor17;
+    padding: 0px 5px 0px 5px;
+    line-height: 30px;
+    left: 100%;
+    margin-left: -100px;
+    top: 57px;
+    border-radius: 3px;
+    display: none;
+    z-index: 10;
+}
+#btn_alertaNot
+{
+    .font(@sans, @cor5, @s12, @w400);
+    border-right: 1px solid @cor13;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#btn_alertaNot:hover { background-color: @cor24; }
+/* fim das configuracoes dos botoes */
+
+
+/* div notificacao */
+#div-notificacao
+{
+    position: absolute;
+    width: 250px;
+    max-height: 300px;
+    background-color: @cor5;
+    z-index: 9;
+    margin-left: -215px;
+    border: 1px solid @cor23;
+    top: 43px;
+    overflow-y: auto;
+    text-align: left;
+    line-height: 19px;
+    display: none;
+    box-shadow: 0px 2px 5px @cor12;
+}
+#div-notificacao > ul
+{
+    .uldefault();
+}
+#div-notificacao > ul > li
+{
+    .font(@gudea, @cor22, @s13, @w400);
+    border-bottom: 1px solid @cor23;
+    padding: 12px 10px 12px 10px;
+}
+
+/* notificacao */
+#contadorNot
+{
+    .font(@sans, @cor5, @s13, @w600);
+    padding: 2px 5px 2px 5px;
+    background-color: @cor17;
+    position: absolute;
+    line-height: 15px;
+    border-radius: 7px;
+    margin-left: -10px;
+    top: 2px;
+    cursor: default;
+}
+
+.notificacao-titulo
+{
+    .font(@gudea, @cor22, @s13, @w700);
+}
+
+
+
+
+
+
+
+
+
+/* lista de itens cadastrados no sistema , icone engrenagem */
+#menuCadastro
+{
+    z-index: 10;
+    width: 400px;
+    position: absolute;
+    left: 100%;
+    margin-left: -436px;
+    top: 44px;
+    background-color: @cor19;
+    box-shadow: 0px 2px 5px @cor12;
+    display: none;
+    z-index: 10;
+}
+
+
+.ul-menuCadastro
+{
+    .uldefault();
+    text-align: left;
+}
+.ul-menuCadastro > li
+{
+    display: inline-block;
+    width: 194px;
+    text-align: left;
+    padding-left: 10px;
+    margin-bottom: 4px;
+    margin-right: 4px;
+}
+.ul-menuCadastro > li:hover
+{
+    background-color: @cor15;
+    box-shadow: 4px 4px 0px #008cbb;
+}
+
+
+
+/* configuracao itens sidebar */
+.lista-sidebar { .uldefault(); } /* lista */
+.lista-sidebar > li { padding: 15px 0px 15px 0px; }
+
+
+/* link sidebar*/
+.link-side
+{
+    text-decoration: none;
+    color: @cor22;
+}
+.link-side:hover { text-decoration: none; }
+.link-side:hover > span
+{
+    text-decoration: none;
+    color: @cor23;
+}
+
+/* font legenda icon */
+.lb-side
+{
+    .font(@sans, @cor22, @s12, @w400);
+}
+
+/* font icon side bar */
+.icon-side {
+    .font(@sans, @cor22, @s25, @w400);
+}
+
+
+/* **************************************************************
+ *      fim configuracao menu
+ * *********************************************************** */
+
+
+/* lista sidebar 3 */
+.lista-notificacao
+{
+    .uldefault();
+}
+.lista-notificacao > li
+{
+    background-color: @cor5;
+    min-height: 100px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.not-normal
+{
+    border-left: 6px solid @cor26;
+}
+.not-warn
+{
+    border-left: 6px solid @cor27;
+}
+.not-alert
+{
+    border-left: 6px solid @cor28;
+}
+
+.not-normal > label { .font(@open, @cor26, @s13, @w600); }
+.not-warn   > label { .font(@open, @cor27, @s13, @w600); }
+.not-alert  > label { .font(@open, @cor28, @s13, @w600); }
+
+/* fim lista sidebar 3 */
+
+
+
+
+/* lista de pendencia de vinculo */
+.lista-pendencia-vinculo
+{
+    .uldefault();
+}
+.lista-pendencia-vinculo > li
+{
+    border-left: 5px solid @cor23;
+    width: 230px;
+    display: inline-table;
+    padding: 5px 10px 5px 10px;
+    margin: 5px;
+    background-color: @cor29;
+}
+.label-lista-not-cliente     { .font(@sans, @cor26, @s20, @w300); }
+.label-lista-not-equipamento { .font(@sans, @cor3, @s14, @w300); }
+.lista-pendencia-vinculo > li > a
+{
+    cursor: pointer;
+}
+.lista-pendencia-vinculo > li:hover { background-color: @cor23; }
+.lista-pendencia-vinculo > li > a:hover > label { cursor: pointer; }
+
+.lb-relatorio
+{
+    .font(@sans, @cor3, @s20, @w300);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+
+
+
+
+
+/* link da pagina de monitoramento */
+.link-tabela-moni { color: @cor3; }
+
+
+/* font padrao */
+.fontPadrao { .font(@sans, @cor3, @s20, @w400); }
+
+
+/* font checkbox opcado de definicoes de grafico */
+.fontOpcDef { .font(@sans, @cor3, @s15, @w400); }
+
+
+/* font breadcump */
+.fontBreadCrumb { .font(@sans, @cor3, @s14, @w400); }
+
+
+/* lista de icones */
+.listaOpcoes
+{
+    .font(@sans, @cor3, @s22, @w300);
+    .uldefault();
+}
+.listaOpcoes > li
+{
+    padding: 1em;
+    border-bottom: 1px solid @cor7;
+}
+
+
+/* balao de salvamento do cadastro */
+.mensagemSucesso ,
+.mensagemError
+{
+    .font(@sans, @cor5, @s17, @w400);
+    width: 100%;
+    position: fixed;
+    top: 40%;
+    text-align: center;
+    z-index: 1000;
+}
+.mensagemSucesso > span,
+.mensagemError   > span ,
+.mensagemSucesso > label,
+.mensagemError   > label
+{
+    border-radius: 3px;
+    padding: 1em;
+    box-shadow: 2px 2px 5px @cor7;
+    margin-left: -100px;
+}
+
+.mensagemSucesso > span ,
+.mensagemSucesso > label
+{ background-color: @cor2; }
+
+.mensagemError > span ,
+.mensagemError > label
+{ background-color: @cor9; }
+
+
+.mensagemSucesso > label > a,
+.mensagemError   > label > a
+{ color: @cor5; }
+
+
+/**
+ * Caixa de mensagem
+ */
+
+/* Div contendo o conteudo com a mensagem e o box */
+.mensagem-semvalor
+{
+    left: 0px;
+    width: 100%;
+    position: fixed;
+    top: 40%;
+    text-align: center;
+    z-index: 1000;
+}
+
+/* Mensagem de alerta no box */
+.mensagem-texto
+{
+    .font(@sans, @cor5, @s17, @w300);
+    background-color: @cor28;
+    padding: 10px;
+}
+/* Link do box de mensagem */
+.link-mensagem { color: @cor5; }
+
+
+/**
+ * Configuracao erro 404
+ */
+
+/* Div */
+.balao-404
+{
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    width: 480px;
+    margin-left: -240px;
+    top: 30%;
+    z-index: 2;
+}
+.balao-404-fundo
+{
+    background-color: @cor1;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.balao-404-esq { float: left; }
+
+.balao-404-dir
+{
+    float: right;
+    margin-top: 42px;
+}
+
+/* Labels */
+.txt-404
+{
+    .font(@open, @cor11, @s140, @w300);
+}
+.txt-404-erro
+{
+    .font(@open, @cor11, @s20, @w400);
+}
+
+/* Link */
+.link-404
+{
+    .font(@open, @cor5, @s17, @w600);
+    text-decoration: none;
+}
+.link-404:hover { text-decoration: underline; }
+
+
+
+
+/* autocomplete */
+.ui-helper-hidden {
+	display: none;
+}
+.ui-helper-hidden-accessible {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+.ui-menu {
+	list-style: none;
+	padding: 0.7em;
+	margin: 0;
+	display: block;
+    width: 100px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 5px @cor7;
+}
+
+.ui-widget-content {
+	border-bottom: 1px solid @cor4;
+	border-left: 1px solid @cor4;
+	border-right: 1px solid @cor4;
+	background: @cor5;
+	color: @cor3;
+}
+
+.ui-widget-content .ui-state-hover,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+	color: @cor4;
+    cursor: pointer;
+}
+/* fim autocomplete */
+
+
+
+/*
+ *      configuracao da tabela
+ */
+
+/*table*/
+
+table
+{
+    border-spacing: 0px 5px;
+    margin: 0;
+    padding: 0;
+}
+
+#stream_table *
+{
+    background-color: transparent;
+}
+
+.table-bordered
+{
+
+}
+
+#stream_table > thead > tr > th { .font(@sans, @cor3, @s15, @w600); }
+
+#stream_table > tbody > tr,
+#stream_table > tfoot > tr
+{
+    background-color: @cor29;
+}
+
+#stream_table > thead > tr:hover,
+#stream_table > tbody > tr:hover,
+#stream_table > tfoot > tr:hover
+{
+    background-color: #d8eff4;
+}
+
+#stream_table > thead > tr > td,
+#stream_table > tbody > tr > td,
+#stream_table > tfoot > tr > td
+{
+    padding: 5px 5px 5px 10px;
+    .font(@sans, @cor3, @s14, @w400)
+}
+
+
+.tdprim
+{
+    border-right: 0;
+    border-left: 5px solid @cor9;
+}
+.tdmeio
+{
+    border-right: 0;
+    border-left: 0;
+    border-top: 1px solid @cor9;
+    border-bottom: 1px solid @cor9;
+}
+
+.tdbdbottom
+{
+    border-bottom: 1px solid @cor29;
+}
+
+
+
+
+/*
+ *      Configuracoes de grafico
+ */
+
+.opcoesGrafic
+{
+    border: 1px solid @cor8;
+    text-align: center;
+    border-radius: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.opcoesGrafic:hover { background-color: @cor8; }
+
+
+.link-graficoGerar
+{
+    color: @cor3;
+    text-decoration: none;
+}
+.link-graficoGerar:hover
+{
+    color: @cor1;
+    text-decoration: none;
+}
+
+/*
+ *      Configuracao parte do grafico
+ *
+ */
+
+
+/* label que mostra o valor */
+.valorVindo ,
+.situacaoLigado ,
+.situacaoDesligado
+{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    padding: 2px;
+}
+.valorVindo
+{
+    .font(@sans, @cor3, @s20, @w300);
+    background-color: @cor7;
+}
+
+.situacaoLigado
+{
+    .font(@sans, @cor5, @s20, @w300);
+    background-color: @cor2;
+}
+.situacaoDesligado
+{
+    .font(@sans, @cor5, @s20, @w300);
+    background-color: @cor9;
+}
+
+/* Configuracao do fundo */
+.fundo-geraGrafico   { background-color: @cor22; }
+.fundo-camposGrafico
+{
+    background-color: @cor5;
+    border: 2px solid @cor22;
+}
+
+.separa-campo
+{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.separa-campo2
+{
+}
+
+/* Ajuste no grafico */
+.ajusteGrafico
+{
+    height: 222px;
+}
+
+/* configurcao da fonte dos parametros */
+.fontsub { .font(@sans, @cor3, @s15, @w400); }
+
+
+/* configuracao label form-group */
+.form-group > label
+{
+    .font(@open, @cor12, @s13, @w600);
+}
+
+
+
+/* lista de posicao de tabela */
+.posicao-tabela { .font(@gudea, @cor12, @s14, @w400); }
+
+
+/* Bordas de alerta */
+.border-red { border: 1px solid @cor28; }
+
+
+/* Campo de apresentacao do nome */
+.nome-apresentacao
+{
+    background-color: @cor8;
+    border-bottom: 1px solid @cor6;
+    padding-top: 5px;
+}
+
+
+
+/* labels */
+.lb-not { .font(@open, @cor12, @s15, @w600); }
+.lb-monitoramento
+{
+    .font("Lucida Sans Unicode", @cor30, @s12, @w400);
+    padding-top: 8px;
+}
+#lb-faltas { .font(@open, @cor30, @s60, @w300); }
+
+
+
+/* div autonomia bateria */
+.div-baseBateria
+{
+    position: relative;
+    width: 100%;
+    height: 100px;
+    z-index: 1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0px;
+}
+.div-faixaVermelha,
+.div-faixaVerde
+{
+    position: absolute;
+    height: 80px;
+    left: 0px;
+}
+.div-faixaVermelha
+{
+    background-color: @cor17;
+    width: 10%;
+    z-index: 3;
+}
+.div-faixaVerde
+{
+    background-color: @cor2;
+    width: 100%;
+    z-index: 2;
+}
+
+.span-menor,
+.span-maior,
+.div-campoPreen
+{
+    position: absolute;
+    z-index: 4;
+}
+.div-campoPreen ,
+.div-carga
+{
+    height: 60px;
+    left: 0px;
+    top: 50%;
+    margin-top: -30px;
+}
+
+.span-menor
+{
+    left: 0px;
+    top: 92%;
+}
+.span-maior
+{
+    left: 100%;
+    top: 92%;
+    margin-left: -15px;
+}
+.div-campoPreen
+{
+    width: 100%;
+    background-color: @cor5;
+    border-left: 1px solid @cor7;
+    border-right: 1px solid @cor7;
+}
+.div-carga
+{
+    width: 0%;
+    position: absolute;
+    background-color: @cor1;
+    z-index: 5;
+    -webkit-transition: 0.5s all linear;
+    -moz-transition: 0.5s all linear;
+    transition: 0.5s all linear;
+}
+#div-legenda
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    .font(@open, @cor30, @s25, @w300);
+    z-index: 6;
+    padding-top: 12px;
+}
+
+
+/* Mostra o status do nobreak */
+#nobreakLigado {.font(@open, @cor5, @s20, @w300); }
+.nobreakLigadoStatus    { background-color: @cor2; }
+.nobreakDesligadoStatus { background-color: @cor9; }
+
+
+/* Tempo de operacao */
+.div-tempoOperacao ,
+.div-nbLigado ,
+.div-nbLigado ,
+.div-baseBateria
+{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+#lb-tempoOperacao { .font(@open, @cor30, @s35, @w300); }
+
+
+/* Label das informacoes da tela de monitoramento */
+.info-monito      { .font(@open, @cor30, @s15, @w400); }
+.info-monitoDados { .font(@open, @cor30, @s25, @w300); }
+
+
+/* Configuracao da font para o option */
+.font-texto-01 { .font(@open, @cor12, @s13, @w600); }
+.font-texto-02 { .font(@open, @cor11, @s13, @w600); }
+
+
+/* Opcao da borda */
+.borda-01 { border-bottom: 1px solid @cor13; }
+.borda-02 { border-right: 1px solid @cor13; }

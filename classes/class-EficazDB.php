@@ -1,0 +1,178 @@
+<?php
+
+/**
+ * Classe de conexao com o banco
+ * 
+ * Responsavel por gerenciar toda a conexao
+ * Select , query e fechamento da conexao
+ */
+class EficazDB
+{
+    /**
+     * $host
+     * 
+     * Recebe o nome dos host onde esta o banco de dados
+     * 
+     * @access private
+     */
+    private $host;
+    
+    /**
+     * $dbname
+     * 
+     * Recebe o nome do banco de dados onde contem os dados
+     * 
+     * @access private
+     */
+    private $dbname;
+    
+    /**
+     * $username
+     * 
+     * Recebe o nome do usuario que realiza a conexao com o banco
+     * 
+     * @access private
+     */
+    private $username;
+    
+    /**
+     * $userpass
+     * 
+     * Recebe a senha do usuario que conectara no banco de dados
+     * 
+     * @access private
+     */
+    private $userpass;
+    
+    /**
+     * Metodo de contrucao
+     * quando instanciado realiza a conexao com o banco
+     */
+    public function __construct()
+    {
+        // Armazena os dados de conexao com o banco
+        $this->host =     defined('HOSTNAME') ? HOSTNAME : "localhost";
+        $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazmonitoramento";
+        $this->username = defined('USERNAME') ? USERNAME : "eficazmonitor";
+        $this->userpass = defined('USERPASS') ? USERPASS : "!q2W#e4R";
+        
+        // Chama a conexao com o banco
+        $this->connect();
+    }
+    
+    /**
+     * Funcao que cria a conexao com o banco de dados
+     */
+    final protected function connect ()
+    {
+        // Verifica se existe os valores nas variaveis de conexao
+        if (! empty($this->host) && ! empty($this->dbname) && ! empty($this->userpass) && ! empty($this->username))
+        {
+            // Verifica se a conexao foi realiza com secesso
+            if (@mysql_connect($this->host, $this->username, $this->userpass))
+            {
+                // Seleciona o banco de dados
+                if (@mysql_select_db($this->dbname))
+                {
+                    // Verifica se o modo desenvolvedor esta ativado
+                    if (defined('DEVTOOLS') && DEVTOOLS == true)
+                    {
+                        // Se estiver apresenta a mensagem
+                        echo "<p class='mensagemRetorno'>Conex&atilde;o efetuada com sucesso</p>";
+                    }
+                }
+                else
+                {
+                    // Caso nao consiga selecionar uma base de dados
+                    // Apresenta uma mensagem de erro
+                    echo "<p class='mensagemRetorno'>Erro ao selecionar a base de dados" . @mysql_error() . "</p>";
+                }
+            }
+            else
+            {
+                // Caso a conexao nao seja realizada com sucesso
+                // Apresenta a mensagem de erro
+                echo "<p class='mensagemRetorno'>N&atilde;o foi poss&iacute;vel conectar: " . @mysql_error() . "</p>";
+            }
+        }
+        else
+        {
+            // Se os valores estiverem vazios
+            // Apresenta a mensagem de erro
+            echo "<p class='mensagemRetorno'>Erro de conexao</p>";
+        }
+    }
+    
+    /**
+     * Funcao que realiza as querys no banco
+     * 
+     * Returno true para sucesso
+     * ou false para erro
+     * 
+     * @param string $query - recebe o codigo sql
+     */
+    public function query ($query)
+    {
+        // Verifica se a query executou com secesso
+        if (@mysql_query($query))
+        {
+            // Caso grave com sucesso
+            // Retorna verdadeiro
+            return true;
+        }
+        // Se der erro de execucao
+        // Retorna falso
+        return false;
+    }
+    
+    /**
+     * Funcao que realizao o select no banco
+     * 
+     * @param string $query - Recebe o codigo sql
+     */
+    public function select ($query)
+    {
+        // Verifica se executou com sucesso
+        if ($result = @mysql_query($query))
+        {
+            // Caso execute com sucesso
+            // Retorna a result com o valor do select
+            return $result;
+        }
+        // Caso de erro de execucao
+        // Retorna falso
+        return false;
+    }
+    
+    /**
+     * Funcao responsavel por finaliza a conexao
+     * com o banco de dados
+     */
+    public function close ()
+    {
+        // Verifica se a conexao fechou
+        if (@mysql_close())
+        {
+            // Verifica se o modo desenvolvedor esta ativo
+            if (defined('DEVTOOLS') && DEVTOOLS == true)
+            {
+                // Se estiver ativo
+                // Retorna confirmacao de fechamento
+                echo "<p class='mensagemRetorno'>Conex&atilde;o fechada com sucesso.</p>";
+            }
+        }
+        else
+        {
+            // Caso de erro na hora de fechar a conexao
+            // Verifica se o modo desenvolvedor esta ativo
+            if (defined('DEVTOOLS') && DEVTOOLS == true)
+            {
+                // Se estiver ativo
+                // Mostra a mensagem de erro
+                echo "<p class='mensagemRetorno'>Erro ao fechar a conex&atilde;o : " . @mysql_error() . "</p>";
+            }
+        }
+    }
+}
+
+?>
