@@ -23,6 +23,7 @@
         <!-- Jquery file -->
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.js"></script>
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.mask.js"></script>
+		<script src="<?php echo HOME_URI; ?>/views/_js/bootstrap.min.js"> </script>
         <script src="<?php echo HOME_URI; ?>/views/_js/bootstrap-filestyle.min.js"> </script>
 		<script src="<?php echo HOME_URI; ?>/views/_js/jquery.form.js"></script>
 

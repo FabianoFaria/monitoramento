@@ -7,13 +7,13 @@ class UserLogin
 {
     /**
      * $login_error
-     * 
+     *
      * Recebe valor informando se existe erro no login
-     * 
+     *
      * @access public
      */
     public $login_error = null;
-    
+
     /**
      * Funcao que verifica se o usuario esta logado
      */
@@ -27,7 +27,7 @@ class UserLogin
             $this->logout();
         }
     }
-    
+
     /**
      * Funcao que gerencia o login do usuario no sistema
      */
@@ -38,36 +38,36 @@ class UserLogin
         {
             // Armazena o link
             $login_uri = HOME_URI;
-            
+
             // Redireciona
             echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
         }
-        
+
         // Verifica se eh metodo post
         if (isset($_POST['userdata']) && ! empty ($_POST['userdata']) && is_array($_POST['userdata']))
         {
             // Armazena o post
             $userdata = $_POST['userdata'];
-            
+
             // Extrai as posicoes do array e converte em variaveis
             extract($userdata);
             $user = $this->tratamento($user, 0);
             $userpass = $this->tratamento($userpass, 1);
-            
+
             // Criptografa senha
             $userpass = md5($userpass);
-            
+
             // Realiza a verificacao do usuario
-            $query = "select 
-                          u.id , u.nome, u.sobrenome, u.local_usu, u.id_cliente, u.tipo_inst, 
-                          pe.nome as tipo_usu , pe.cadastro , pe.pesquisa, pe.vinculo, pe.configuracao, pe.monitoramento, pe.editar 
-                      from tb_users u 
-                      inner join tb_perfil_acesso pe on pe.id = u.id_perfil_acesso 
+            $query = "select
+                          u.id , u.nome, u.sobrenome, u.local_usu, u.id_cliente, u.tipo_inst,
+                          pe.nome as tipo_usu , pe.cadastro , pe.pesquisa, pe.vinculo, pe.configuracao, pe.monitoramento, pe.editar
+                      from tb_users u
+                      inner join tb_perfil_acesso pe on pe.id = u.id_perfil_acesso
                       where u.email = '{$user}' and u.senha = '{$userpass}' and u.status_ativo = 1 limit 1 ";
-            
+
             // Executa a query
             $result = $this->db->select($query);
-            
+
             // Verifica se existe algum erro na query
             if ($result)
             {
@@ -90,15 +90,15 @@ class UserLogin
                         $_SESSION['userdata']['cliente']    = $row['id_cliente'];
                         $_SESSION['userdata']['tipo']       = $row['tipo_inst'];
                         $_SESSION['userdata']['tipo_usu']   = $row['tipo_usu'];
-    
+
                         // Registra que o usuario esta logado
                         $this->logged_in = true;
                         // Regista a sessao
                         $this->userdata = $_SESSION['userdata'];
-    
+
                         // Armazena o link
                         $login_uri = HOME_URI;
-                        
+
                         // Redireciona via javascript
                         echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
                     }
@@ -117,8 +117,65 @@ class UserLogin
                 $this->login_error = "Ocorreu um erro interno, entre em contato com o Administrador do site.";
             }
         }
+
+        //Caso tenha sido requisitado recuperar senha
+        if(isset($_POST['userEmail']) && isset($_POST['solicitarSenha'])){
+
+            //verifica se o email existe no Banco de dados
+            $emailSolicitado = $this->tratamento($_POST['userEmail'],1);
+
+
+            $query = "SELECT id,email,senha  FROM tb_users WHERE email = '{$emailSolicitado}'";
+
+            // Executa a query
+            $result = $this->db->select($query);
+
+            if($result){
+
+                $id     = "";
+                $email  = "";
+                $senha  = "";
+
+                //Inicia o tratamento da rquisição de nova senha!
+                if (@mysql_num_rows($result) > 0)
+                {
+                    // Se o usuario existir
+                    while ($row = @mysql_fetch_assoc($result))
+                    {
+                        $id     = $row['id'];
+                        $email  = $row['email'];
+                        $senha  = $row['senha'];
+
+                    }
+                }
+
+                $data_solicitação   = date('Y-m-d');
+                $id_criptografada   = sha1($id);
+                $data_criptografada = sha1(date('Y-m-d'));
+                $token_criptografado = $id_criptografada."+".$data_criptografada;
+
+                //Salva a solicitação no banco de dados para verificação posterior
+                $querySolicitacao = "INSERT INTO tb_recuperacao (id_recuperar, token_validador, data_solicitacao) VALUES('$id', '$token_criptografado', '$data_solicitação')";
+
+                $result_solicitacao = $this->db->query($querySolicitacao);
+
+                //Com a solicitação registrada, é efetuado o envio do email ao usuário
+                if($result_solicitacao){
+
+                    var_dump($this->mailer->email_recuperacao($email, $token_criptografado));
+
+                }
+                else{
+                    $this->login_error = "Ocorreu um erro ao tentar solicitar nova senha, favor solicitar auxilio com o administrador.";
+                }
+
+            }else{
+                $this->login_error = "Favor verificar o email informado.";
+            }
+
+        }
     }
-    
+
     /**
      * Funcao que gerencia o logout do usuario
      */
@@ -126,23 +183,23 @@ class UserLogin
     {
         // Apaga qualquer valor
         $_SESSION['userdata'] = array();
-        
+
         // Destroi a sessao
         unset ($_SESSION);
-        
+
         // Apaga qualquer valor
         $_SESSION['userdata'] = array();
-        
+
         // Destroi toda sessao
         session_destroy();
-        
+
         // Regenera o id da sessao
         session_regenerate_id();
-        
+
         // Redireciona para a pagina de login
         $this->goto_login();
     }
-    
+
     /**
      * Funcao que redireciona para a pagina de login
      */
@@ -153,20 +210,20 @@ class UserLogin
         {
             // Configura a url do login
             $login_uri = HOME_URI . '/login/';
-            
+
             // Redireciona via javascript
             echo '<meta http-equiv="Refresh" content="0; url=' . $login_uri . '">';
 			echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
         }
     }
-    
+
     /**
      * Funcao que trata os caracteres que sao inseridos
      * nos campos de login do sistema
-     * 
+     *
      * @param string  $palavra - Recebe a palavra que sera tratada
      * @param numeric $regra   - Define o tipo de tratamento
-     * 
+     *
      */
     public function tratamento ($palavra = null, $regra = 0)
     {
@@ -176,7 +233,7 @@ class UserLogin
             // Se existir
             // Armazena a palavra
             $novaFrase = $palavra;
-            
+
             // Verifica a regra de tratamento
             if ($regra == 0)
             {
@@ -185,32 +242,32 @@ class UserLogin
                 // Cria um array com os caracteres que sera substituidos
                 $lista = array("'","(",")","[","]","{","}","+","=","$","#","&","/","*",'"',"´","^","°","ª","º",
                                "<",">","%","!","?",";",":","`","~",",");
-                
+
                 // Realiza o loop para substituir os caracteres
                 foreach($lista as $sub)
                 {
                     //Substitui os caracteres
                     $novaFrase = str_replace($sub, "", $novaFrase);
                 }
-                
+
                 // Retorna a string tratada
                 return $novaFrase;
             }
-            
+
             // Verifica se a regra eh para senha
             if ($regra == 1)
             {
                 // Se for tratamento de senha
                 // Cria um array com os caracters que sera substuidos
                 $lista = array("'","/",'"',"´","^","°","ª","º","<",">","`","~",";",":");
-                
+
                 // Realiza o loop para substituir os caracteres
                 foreach($lista as $sub)
                 {
                     // Substitui os caracteres
                     $novaFrase = str_replace($sub, "", $novaFrase);
                 }
-                
+
                 // Retorna a string tratada
                 return $novaFrase;
             }
