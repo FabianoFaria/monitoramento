@@ -47,19 +47,20 @@
      *
      * @param string $query - Recebe o endereço do usuário e o token para recuperação
      */
-    public function email_recuperacao($email, $token)
+    public function email_recuperacao($solicitante, $email, $token)
     {
-        //1 – Definimos Para quem vai ser enviado o email
+        //Definimos Para quem vai ser enviado o email
         $remetente = $this->remetente;
         $destino = $email;
         $assunto = "Solicitação de nova senha!";
 
         // É necessário indicar que o formato do e-mail é html
         $headers  = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        $headers .= 'From: $nome <$remetente>';
+        //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
+        //$headers .= 'From: "Sistema monitoramento" <'.$remetente.'>';
 
-        $mensagem = "<h3>Olá,</h3>";
+        $mensagem = "<h3>Olá, ".$solicitante."</h3>";
         $mensagem .= "<p>";
         $mensagem .= "Foi solicitado a recuperação de senha para o seu acesso ao sistema de monitoramento.";
 
@@ -69,7 +70,7 @@
         $mensagem .= "Se você realmente solicitou uma nova senha, favor clicar no link abaixo:";
         $mensagem .= "</p>";
         $mensagem .= "<p>";
-        $mensagem .= "<a href='".HOME_URI."/login/recuperarSenha' target='_blank'></a>";
+        $mensagem .= "<a href='".HOME_URI."/login/recuperarSenha?token=".$token."' target='_blank'>Solicitar nova senha!</a>";
         $mensagem .= "</p>";
         $mensagem .= "<p>";
         $mensagem .= "Att.";
@@ -78,7 +79,7 @@
 
         //$headers .= "Bcc: $EmailPadrao\r\n";
         $arquivo = '';
-        $enviaremail = mail($destino, $assunto, $mensagem, $headers);
+        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-f sistemaeficaz@sistema.eficazsystem.com.br");
         if($enviaremail){
             return true;
         } else {

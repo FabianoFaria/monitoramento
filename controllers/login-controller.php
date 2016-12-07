@@ -39,8 +39,33 @@ class LoginController extends MainController
      */
     public function recuperarSenha()
     {
-        echo "teste OK!";
+        //Recebe o token gerado anteriormente
+        $token = $_GET['token'];
+
+        $this->verificaPedidoSenha($token);
+
+        //Carrega a página para atualizar a senha para o usuáRedireciona
+
+        // Carregando a view
+        require_once EFIPATH . "/views/login/login-view.php";
+
+        //print_r($this->pedidoSenha_info);
     }
 }
+
+/*
+
+LoginController Object (
+[db] => EficazDB Object (
+    [host:private] => mysql03.eficazsystem2.hospedagemdesites.ws
+    [dbname:private] => eficazsystem22
+    [username:private] => eficazsystem22
+    [userpass:private] => monitor2981 )
+[title] => [login_required] => [parametros] => [login_error] => [login_info] => [pedidoSenha_error] => [pedidoSenha_info] => 5
+[mailer] => email Object (
+    [remetente] => sistemaeficaz@sistema.eficazsystem.com.br )
+
+*/
+
 
 ?>

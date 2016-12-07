@@ -13,6 +13,9 @@ class UserLogin
      * @access public
      */
     public $login_error = null;
+    public $login_info  = null;
+    public $pedidoSenha_error = null;
+    public $pedidoSenha_info  = null;
 
     /**
      * Funcao que verifica se o usuario esta logado
@@ -125,7 +128,7 @@ class UserLogin
             $emailSolicitado = $this->tratamento($_POST['userEmail'],1);
 
 
-            $query = "SELECT id,email,senha  FROM tb_users WHERE email = '{$emailSolicitado}'";
+            $query = "SELECT id, nome, sobrenome, email,senha  FROM tb_users WHERE email = '{$emailSolicitado}'";
 
             // Executa a query
             $result = $this->db->select($query);
@@ -133,6 +136,7 @@ class UserLogin
             if($result){
 
                 $id     = "";
+                $nome   = "";
                 $email  = "";
                 $senha  = "";
 
@@ -143,6 +147,7 @@ class UserLogin
                     while ($row = @mysql_fetch_assoc($result))
                     {
                         $id     = $row['id'];
+                        $nome   = $row['nome']." ".$row['sobrenome'];
                         $email  = $row['email'];
                         $senha  = $row['senha'];
 
@@ -151,8 +156,8 @@ class UserLogin
 
                 $data_solicitação   = date('Y-m-d');
                 $id_criptografada   = sha1($id);
-                $data_criptografada = sha1(date('Y-m-d'));
-                $token_criptografado = $id_criptografada."+".$data_criptografada;
+                $data_criptografada = sha1(date('Y-m-d h:i:s'));
+                $token_criptografado = $id_criptografada."_".$data_criptografada;
 
                 //Salva a solicitação no banco de dados para verificação posterior
                 $querySolicitacao = "INSERT INTO tb_recuperacao (id_recuperar, token_validador, data_solicitacao) VALUES('$id', '$token_criptografado', '$data_solicitação')";
@@ -162,8 +167,17 @@ class UserLogin
                 //Com a solicitação registrada, é efetuado o envio do email ao usuário
                 if($result_solicitacao){
 
-                    var_dump($this->mailer->email_recuperacao($email, $token_criptografado));
-
+                    //valida o resultado do envio de email
+                    $envioEmail = $this->mailer->email_recuperacao($nome, $email, $token_criptografado);
+                    //envio com sucesso
+                    if($envioEmail)
+                    {
+                        $this->login_info = "Solicitação de nova senha concluida, verifique sua caixa de email mais mais informações!";
+                        $this->login_error= "";
+                    } //erro no envio
+                    else{
+                        $this->login_error = "Não foi possivel solicitar nova senha, tente novamente mais tarde ou contate o administrador!";
+                    }
                 }
                 else{
                     $this->login_error = "Ocorreu um erro ao tentar solicitar nova senha, favor solicitar auxilio com o administrador.";
@@ -175,6 +189,53 @@ class UserLogin
 
         }
     }
+
+    /**
+     * Função que valida o pedido de nova senha
+     */
+    public function verificaPedidoSenha($token)
+    {
+        //var_dump("Token recebido ", $token);
+
+        /*
+        public $pedidoSenha_error = null;
+        public $pedidoSenha_info  = null;
+        */
+
+        if(isset($token) && $token != ""){
+
+            //Efetuar uma busca no BD pelo token do pedido
+            $query = "SELECT id_recuperar, token_validador, status FROM tb_recuperacao WHERE token_validador = '$token'";
+
+            // Executa a query
+            $result = $this->db->select($query);
+
+            $idUsuario      = "";
+            $statusToken    = "";
+
+            //validação dos resultados da query
+            if(@mysql_num_rows($result) > 0){
+
+                // Se o usuario existir
+                while ($row = @mysql_fetch_assoc($result))
+                {
+                    $idUsuario      = $row['id_recuperar'];
+                    $statusToken    = $row['token_validador'];
+                }
+
+                $this->pedidoSenha_info     = $idUsuario;
+                $this->pedidoSenha_error    = "_";
+
+            }else{
+                $this->pedidoSenha_error = "Dados do pedido de nova senha inválidos.";
+            }
+
+        }
+        else{
+            $this->pedidoSenha_error = "Dados do pedido de nova senha não foram encontrados.";
+        }
+    }
+
 
     /**
      * Funcao que gerencia o logout do usuario

@@ -53,23 +53,28 @@ body, html
     font-size: 15px;
 }
 
-.div-respostaLogin
+.div-respostaLogin, .div-solicitacoSenha
 {
     position: absolute;
     width: 100%;
-    top: 10%;
+    top: 30%;
     text-align: center;
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     color: #fff;
 }
-.div-respostaLogin > span
+.div-respostaLogin > span, .div-solicitacoSenha > span
 {
     background-color: #f36855;
     margin:0 auto;
     padding: 0.7em;
     border-radius: 3px;
     box-shadow: 5px 5px 0px #113f46;
+}
+
+.div-solicitacoSenha > span
+{
+    background-color: #317a86;
 }
 
 .esquecisenha
