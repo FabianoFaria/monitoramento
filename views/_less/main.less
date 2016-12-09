@@ -157,8 +157,8 @@ body, html
  * *********************************************************************** */
 #wrapper
 {
-    margin-left: 86px;
-    height: 43px;
+    // margin-left: 86px;
+    height: 70px;
     min-width: 500px;
     z-index: 11;
 }
@@ -267,13 +267,22 @@ body, html
 
 
 /* configuracao icone barra menu*/
+#logoNavBar
+{
+    background-color: #ffffff;
+    height: 70px;
+    width: 85px;
+}
+
 .imgLogoBarra
 {
-    height: 33px;
+    height: 60px;
     -webkit-transition-duration: 700ms;
     -moz-transition-duration: 700ms;
     -o-transition-duration: 700ms;
     transition-duration: 700ms;
+    padding-left: 10px;
+    padding-top: 10px;
 }
 .imgLogoBarra:hover{ height: 30px; }
 
@@ -348,6 +357,48 @@ body, html
 }
 /* ***************************************************** */
 
+/* NAVEGAÇÃO DO MENU TOPO DIREITO */
+
+.top-nav {
+    padding: 0 15px;
+}
+
+.top-nav>li {
+    display: inline-block;
+    float: left;
+}
+
+.top-nav>li>a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    line-height: 20px;
+    color: #999;
+}
+
+.top-nav>li>a:hover,
+.top-nav>li>a:focus,
+.top-nav>.open>a,
+.top-nav>.open>a:hover,
+.top-nav>.open>a:focus {
+    color: #fff;
+    background-color: #000;
+}
+
+.top-nav>.open>.dropdown-menu {
+    float: left;
+    position: absolute;
+    margin-top: 0;
+    border: 1px solid rgba(0,0,0,.15);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: #fff;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+
+.top-nav>.open>.dropdown-menu>li>a {
+    white-space: normal;
+}
 
 
 
@@ -357,7 +408,7 @@ body, html
 {
     padding: 0px 10px 0px 10px;
 }
-#btn_showConf { border-right: 1px solid @cor13; }
+//#btn_showConf { border-right: 1px solid @cor13; }
 #btn_showConf:hover
 {
     background-color: @cor19;
@@ -372,7 +423,7 @@ body, html
 #btn_logout:hover > a { color: @cor5; }
 #btn_sair
 {
-    .font(@sans, @cor5, @s12, @w400);
+    .font(@sans, @cor1, @s12, @w400);
     position: absolute;
     background-color: @cor17;
     padding: 0px 5px 0px 5px;
@@ -386,12 +437,10 @@ body, html
 }
 #btn_alertaNot
 {
-    .font(@sans, @cor5, @s12, @w400);
-    border-right: 1px solid @cor13;
-    padding-left: 20px;
-    padding-right: 20px;
+    .font(@sans, @cor12, @s14, @w400);
+    padding:15px;
 }
-#btn_alertaNot:hover { background-color: @cor24; }
+#btn_alertaNot:hover { background-color: @cor30; }
 /* fim das configuracoes dos botoes */
 
 

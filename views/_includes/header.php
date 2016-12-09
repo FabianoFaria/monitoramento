@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+
         <title>Eficaz System - Monitoramento |<?php echo $this->title;?></title>
 
         <!-- Font Files -->
@@ -18,7 +21,7 @@
         <!-- CSS Files -->
         <link rel="stylesheet" type="text/css" href="<?php echo HOME_URI; ?>/views/_css/font.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo HOME_URI; ?>/views/_less/main.css" />
-
+		<link rel="stylesheet" type="text/css" href="<?php echo HOME_URI; ?>/views/_css/sb-admin-2.css" />
 
         <!-- Jquery file -->
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.js"></script>
@@ -26,6 +29,7 @@
 		<script src="<?php echo HOME_URI; ?>/views/_js/bootstrap.min.js"> </script>
         <script src="<?php echo HOME_URI; ?>/views/_js/bootstrap-filestyle.min.js"> </script>
 		<script src="<?php echo HOME_URI; ?>/views/_js/jquery.form.js"></script>
+
 
 	</head>
 	<body>

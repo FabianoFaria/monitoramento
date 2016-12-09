@@ -106,8 +106,7 @@ html {
  *      Configuracao do menu superior
  * *********************************************************************** */
 #wrapper {
-  margin-left: 86px;
-  height: 43px;
+  height: 70px;
   min-width: 500px;
   z-index: 11;
 }
@@ -209,12 +208,19 @@ html {
   color: #52607a;
 }
 /* configuracao icone barra menu*/
+#logoNavBar {
+  background-color: #ffffff;
+  height: 70px;
+  width: 85px;
+}
 .imgLogoBarra {
-  height: 33px;
+  height: 60px;
   -webkit-transition-duration: 700ms;
   -moz-transition-duration: 700ms;
   -o-transition-duration: 700ms;
   transition-duration: 700ms;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 .imgLogoBarra:hover {
   height: 30px;
@@ -285,13 +291,46 @@ html {
   color: #ffffff;
 }
 /* ***************************************************** */
+/* NAVEGAÇÃO DO MENU TOPO DIREITO */
+.top-nav {
+  padding: 0 15px;
+}
+.top-nav > li {
+  display: inline-block;
+  float: left;
+}
+.top-nav > li > a {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  line-height: 20px;
+  color: #999;
+}
+.top-nav > li > a:hover,
+.top-nav > li > a:focus,
+.top-nav > .open > a,
+.top-nav > .open > a:hover,
+.top-nav > .open > a:focus {
+  color: #fff;
+  background-color: #000;
+}
+.top-nav > .open > .dropdown-menu {
+  float: left;
+  position: absolute;
+  margin-top: 0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background-color: #fff;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+.top-nav > .open > .dropdown-menu > li > a {
+  white-space: normal;
+}
 /* configuracao dos botoes do menu */
 #btn_logout,
 #btn_showConf {
   padding: 0px 10px 0px 10px;
-}
-#btn_showConf {
-  border-right: 1px solid #dddddd;
 }
 #btn_showConf:hover {
   background-color: #62aae9;
@@ -308,7 +347,7 @@ html {
 }
 #btn_sair {
   font-family: 'Source Sans Pro', sans-serif;
-  color: #ffffff;
+  color: #87bed0;
   font-size: 12px;
   font-weight: 400;
   position: absolute;
@@ -324,15 +363,13 @@ html {
 }
 #btn_alertaNot {
   font-family: 'Source Sans Pro', sans-serif;
-  color: #ffffff;
-  font-size: 12px;
+  color: #b8babc;
+  font-size: 14px;
   font-weight: 400;
-  border-right: 1px solid #dddddd;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 15px;
 }
 #btn_alertaNot:hover {
-  background-color: #e9e762;
+  background-color: #333333;
 }
 /* fim das configuracoes dos botoes */
 /* div notificacao */
