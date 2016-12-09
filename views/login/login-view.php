@@ -39,13 +39,14 @@
                 <div class="imgLogin"><img src="<?php echo HOME_URI; ?>/views/_images/logo.png"></div>
 
                 <div class="campoForm">
-                    <form method="post">
+                    <form method="post" action="<?php echo HOME_URI; ?>/login/validarNovaSenha">
 
-                        <p class="txt_form">Recuperação de senha</p>
+                        <h3 class="esquecisenha">Recuperação de senha</h3>
 
-                        <input type="hidden" name="usuario" value="<?php echo $this->pedidoSenha_info; ?>">
-                        <p><input type="text" name="novaSenha" placeholder="Nova senha" class="txt_form"></p>
-                        <p><input type="password" name="confirmarNovaSenha" placeholder="Confirma nova senha" class="txt_form"></p>
+                        <input type="hidden" name="usuarioIdenctificado" value="<?php echo $this->pedidoSenha_info; ?>">
+                        <input type="hidden" name="token" value="<?php echo $this->pedidoSenha_token; ?>">
+                        <p><input type="password" name="novaSenha" placeholder="Nova senha" class="txt_form" required></p>
+                        <p><input type="password" name="confirmarNovaSenha" placeholder="Confirma nova senha" class="txt_form" required></p>
                         <p><input type="submit" name="btnEnviarSenha" value="Atualizar nova senha" class="btn_form"></p>
                     </form>
                 </div>

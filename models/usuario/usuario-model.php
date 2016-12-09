@@ -122,8 +122,6 @@ class UsuarioModel extends MainModel
                 $query = "UPDATE tb_users SET id_perfil_acesso='$perfil', nome='$nome', sobrenome='$sobrenome', email='$email', local_usu='$local', id_cliente='$cliente[0]', tipo_inst='$tipo_inst' WHERE id = '$id_user'";
             }
 
-            var_dump($query);
-
             // Insere no banco e exibe uma mensagem
             $this->validaInsercaoBanco($query, "Usuário atualizado com sucesso!", "Erro durante o processo de atualização.");
         }

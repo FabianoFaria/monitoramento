@@ -16,6 +16,7 @@ class UserLogin
     public $login_info  = null;
     public $pedidoSenha_error = null;
     public $pedidoSenha_info  = null;
+    public $pedidoSenha_token = null;
 
     /**
      * Funcao que verifica se o usuario esta logado
@@ -46,7 +47,7 @@ class UserLogin
             echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
         }
 
-        // Verifica se eh metodo post
+        // Verifica se eh metodo post para efetuar o login normal
         if (isset($_POST['userdata']) && ! empty ($_POST['userdata']) && is_array($_POST['userdata']))
         {
             // Armazena o post
@@ -188,6 +189,8 @@ class UserLogin
             }
 
         }
+
+
     }
 
     /**
@@ -195,12 +198,6 @@ class UserLogin
      */
     public function verificaPedidoSenha($token)
     {
-        //var_dump("Token recebido ", $token);
-
-        /*
-        public $pedidoSenha_error = null;
-        public $pedidoSenha_info  = null;
-        */
 
         if(isset($token) && $token != ""){
 
@@ -224,6 +221,7 @@ class UserLogin
                 }
 
                 $this->pedidoSenha_info     = $idUsuario;
+                $this->pedidoSenha_token    = $statusToken;
                 $this->pedidoSenha_error    = "_";
 
             }else{
@@ -236,6 +234,42 @@ class UserLogin
         }
     }
 
+    /**
+     * Funcao que efetua a validação da nova senha
+     */
+    public function registraNovaSenha($novoPass, $confirmPass, $usuarioToken, $idUsuario)
+    {
+        //Valida se as senha estão iguais
+        if($novoPass == $confirmPass)
+        {
+            //Efetua o tratamento da nova senha
+            $senhaParaSalvar = md5($novoPass);
+
+            //Efetuar o update no Banco de dados
+            $query = "UPDATE tb_users SET senha = '$senhaParaSalvar' WHERE id = '$idUsuario'";
+
+            $result = $this->db->query($query);
+
+            return true;
+
+            /**
+             * FUNCIONALIDADE FUTURA, ENVIO DE EMAIL AVISANDO SOBRE A NOVA SENHA CADATRADA
+             */
+
+            // if($result){
+            //     $this->login_info = "";
+            // }
+
+        }else{
+
+            //Retorna para a página de cadastro de login
+
+            $this->pedidoSenha_info     = $idUsuario;
+            $this->pedidoSenha_token    = $usuarioToken;
+            $this->pedidoSenha_error    = "_";
+
+        }
+    }
 
     /**
      * Funcao que gerencia o logout do usuario
@@ -264,7 +298,7 @@ class UserLogin
     /**
      * Funcao que redireciona para a pagina de login
      */
-    protected function goto_login()
+    public function goto_login()
     {
         // Verifica se o path esta definido
         if (defined('HOME_URI'))

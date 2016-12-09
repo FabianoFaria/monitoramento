@@ -49,23 +49,30 @@ class LoginController extends MainController
         // Carregando a view
         require_once EFIPATH . "/views/login/login-view.php";
 
-        //print_r($this->pedidoSenha_info);
     }
+
+    /**
+     * Função para validar nova senha solicitada pelo usuário
+     */
+    public function validarNovaSenha()
+    {
+        //Efetua a validação da nova senha e conforme o resultado retorna para a tela correta
+
+        $idUsuario      = $this->tratamento($_POST['usuarioIdenctificado'], 1);
+        $usuarioToken   = $_POST['token'];
+        $novoPass       = $this->tratamento($_POST['novaSenha'], 1);
+        $confirmPass    = $this->tratamento($_POST['confirmarNovaSenha'], 1);
+
+        $resultadoAtualizado = $this->registraNovaSenha($novoPass, $confirmPass, $usuarioToken, $idUsuario);
+
+        if($resultadoAtualizado){
+            $this->goto_login();
+        }
+
+        // Carregando a view
+        require_once EFIPATH . "/views/login/login-view.php";
+    }
+
 }
-
-/*
-
-LoginController Object (
-[db] => EficazDB Object (
-    [host:private] => mysql03.eficazsystem2.hospedagemdesites.ws
-    [dbname:private] => eficazsystem22
-    [username:private] => eficazsystem22
-    [userpass:private] => monitor2981 )
-[title] => [login_required] => [parametros] => [login_error] => [login_info] => [pedidoSenha_error] => [pedidoSenha_info] => 5
-[mailer] => email Object (
-    [remetente] => sistemaeficaz@sistema.eficazsystem.com.br )
-
-*/
-
 
 ?>

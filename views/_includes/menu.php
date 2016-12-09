@@ -188,7 +188,7 @@ else
             <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_mo'] == 1){ ?>
             <li>
                 <a class="link-side" href="<?php echo HOME_URI; ?>/usuario/">
-                  <span class="icon-side"><i class="fa fa-id-card fa-lg"></i></span><br>
+                  <span class="icon-side"><i class="fa fa-cogs fa-lg"></i></span><br>
                   <span class="lb-side">Dados usuário</span>
                 </a>
             </li>
