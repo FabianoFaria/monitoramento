@@ -104,7 +104,7 @@ body {
     z-index: 1;
     position: absolute;
     width: 250px;
-    margin-top: 51px;
+    margin-top: 70px;
   }
   .navbar-top-links .dropdown-messages,
   .navbar-top-links .dropdown-tasks,
@@ -402,6 +402,24 @@ table.dataTable thead .sorting:after {
 .timeline-body > p + p {
   margin-top: 5px;
 }
+
+/*Importado do main CSS*/
+/* notificacao */
+#contadorNot {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 5px 2px 5px;
+  background-color: #ff3e3e;
+  position: absolute;
+  line-height: 15px;
+  border-radius: 7px;
+  margin-left: 5px;
+  top: 2px;
+  cursor: default;
+}
+
 @media (max-width: 767px) {
   ul.timeline:before {
     left: 40px;
