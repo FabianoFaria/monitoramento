@@ -165,6 +165,38 @@ class UsuarioModel extends MainModel
             echo "<div class='mensagemError'><span>{$msgErr}</span></div>";
         }
     }
+
+    /**
+     * Funcao que lista os usuários atualmente cadastrados
+     *
+      */
+    public function listagemUsuario(){
+
+        $query = "SELECT id, nome, sobrenome, email, dt_criaco FROM tb_users";
+
+        /* monta a result */
+        $result = $this->db->select($query);
+
+        /* verifica se existe resposta */
+        if ($result)
+        {
+            /* verifica se existe valor */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* armazena na array */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                /* devolve retorno */
+                return $retorno;
+            }
+        }
+        else
+            return false;
+
+    }
 }
 
  ?>

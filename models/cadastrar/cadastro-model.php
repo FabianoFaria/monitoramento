@@ -7,7 +7,7 @@ class CadastroModel extends MainModel
 {
     /**
      * Metodo construtor da classe
-     * 
+     *
      * @param object $db         - Recebe os dados de conexao com o banco
      * @param array  $controller - Recebe os parametros
      */
@@ -15,14 +15,14 @@ class CadastroModel extends MainModel
     {
         // Conexao com o banco
         $this->db = $db;
-        
+
         // Configuracao do controller
         $this->controller = $controller;
-        
+
         // Configura os parâmetros
 		$this->parametros = $this->controller->parametros;
     }
-    
+
     /**
      * Funcao que cadastra o cliente
      * Sempre que ocorrer uma acao no botao submit
@@ -44,7 +44,7 @@ class CadastroModel extends MainModel
             $estado   = $this->tratamento($_POST['opc_estado']);
             $cidade   = $this->tratamento($_POST['txt_cidade']);
             $bairro   = $this->tratamento($_POST['txt_bairro']);
-            
+
             // Verifica se os cambos obrigatorios nao sao nulos
             if ($cliente != "" && $endereco != "" && $cep != "" && $cidade != "" && $bairro != "")
             {
@@ -52,10 +52,10 @@ class CadastroModel extends MainModel
                 $up_resp = $this->validaUpload($_FILES);
                 // Grava no banco os valores
                 $query = "insert into tb_cliente (nome, endereco, numero, cep, id_pais, id_estado, ddd, telefone , cidade, bairro, id_users ,
-                                                  foto) 
+                                                  foto)
                           values ('{$cliente}', '{$endereco}', '{$numero}', '{$cep}', '{$pais}', '{$estado}', '{$ddd}', '{$telefone}',
                           '{$cidade}', '{$bairro}', '{$_SESSION['userdata']['userId']}', '{$up_resp}')";
-                          
+
                 // Realiza a chamada para gravar e verficar se gravou com sucesso
                 $this->validaInsercaoBanco ($query, "Cadastro salvo com sucesso!", "Erro durante o salvamento.");
             }
@@ -67,7 +67,7 @@ class CadastroModel extends MainModel
             }
         }
     }
-    
+
     /**
      * Funcao que realiza o cadastro das filiais
      * Sempre que ocorrer uma acao no botao submit
@@ -90,23 +90,23 @@ class CadastroModel extends MainModel
             $bairro   = $this->tratamento($_POST['txt_bairro']);
             $pais     = $this->tratamento($_POST['opc_pais']);
             $estado   = $this->tratamento($_POST['opc_estado']);
-            
+
             // Verifica se nao estao em branco
             if ($filial != "" && $cep != "" && $endereco != "" && $cidade != "" && $bairro != "" && $matriz != "")
             {
                 // Se nao estiver em branco
                 // Realiza o upload da imagem
                 $up_resp = $this->validaUpload($_FILES);
-                
+
                 // Monta a query
-                $query = "insert into tb_filial (nome, id_matriz, endereco, numero, cep, id_pais, id_estado, cidade, bairro, ddd, 
-                                                 telefone,id_users, foto) 
+                $query = "insert into tb_filial (nome, id_matriz, endereco, numero, cep, id_pais, id_estado, cidade, bairro, ddd,
+                                                 telefone,id_users, foto)
                           values ('{$filial}','{$matriz}','{$endereco}','{$numero}','{$cep}','{$pais}','{$estado}', '{$cidade}','{$bairro}',
                                   '{$ddd}','{$telefone}','{$_SESSION['userdata']['userId']}','{$up_resp}')";
-                
+
                 // Realiza a chamada para gravar e verficar se gravou com sucesso
                 $this->validaInsercaoBanco ($query, "Cadastro salvo com sucesso!", "Erro durante o salvamento.");
-                
+
                 // Monta a url de redirecionamento
                 $move_uri = HOME_URI . "/cadastrar/filial/";
                 // Redireciona a pagina
@@ -120,7 +120,7 @@ class CadastroModel extends MainModel
             }
         }
     }
-    
+
     /**
      * Funcao responsavel por cadastrar o fabricante
      * Sempre que o botao submit sofrer uma acao
@@ -142,7 +142,7 @@ class CadastroModel extends MainModel
             $bairro     = $this->tratamento($_POST['txt_bairro']);
             $pais       = $this->tratamento($_POST['opc_pais']);
             $estado     = $this->tratamento($_POST['opc_estado']);
-            
+
             // Verifica se existe campo em braco
             if ($fabricante != "" && $cep != "" && $endereco != "" && $cidade != "" && $bairro != "")
             {
@@ -151,8 +151,8 @@ class CadastroModel extends MainModel
                 $query = "insert into tb_fabricante (nome, ddd, telefone, cep, endereco, numero, cidade, bairro, id_pais, id_estado,id_users)
                           values ('{$fabricante}','{$ddd}','{$telefone}','{$cep}','{$endereco}','{$numero}','{$cidade}',
                                   '{$bairro}','{$pais}','{$estado}','{$_SESSION['userdata']['userId']}')";
-                
-                // Insere no banco e exibe uma mensagem 
+
+                // Insere no banco e exibe uma mensagem
                 $this->validaInsercaoBanco($query, "Cadastro salvo com sucesso!", "Erro durante o salvamento.");
             }
             else
@@ -163,7 +163,7 @@ class CadastroModel extends MainModel
             }
         }
     }
-    
+
     /**
      * Funcao responsavel por cadastrar o equipamento
      * Sempre que o botao submit sofrer uma acao
@@ -183,21 +183,21 @@ class CadastroModel extends MainModel
             $caracteristica = isset($_POST['txt_caracteristica']) && !empty ($_POST['txt_caracteristica']) ? $this->converte($this->tratamento($_POST['txt_caracteristica'])) : '';
             $tipoBateria = isset($_POST['opc_tipoBateria']) ? $_POST['opc_tipoBateria'] : '';
             $amperagem = isset($_POST['txt_amperagem']) && !empty ($_POST['txt_amperagem']) ? $this->converte($this->tratamento($_POST['txt_amperagem'])) : '';
-            
-            
+
+
             // Verifica se nao esta em branco
             if ($tipoEquip != "" && $idFabri != "")
             {
                 // Se nao estiver em branco
                 // Realiza a insercao no banco
                 $query = "insert into tb_equipamento (id_users, id_fabricante,
-                          tipo_equipamento, modelo, potencia,qnt_bateria, caracteristica_equip, tipo_bateria, amperagem_bateria) 
+                          tipo_equipamento, modelo, potencia,qnt_bateria, caracteristica_equip, tipo_bateria, amperagem_bateria)
                           values ('{$_SESSION['userdata']['userId']}','{$idFabri}','{$tipoEquip}','{$modeloEquip}','{$potencia}','{$qntBateria}'
                                   ,'{$caracteristica}','{$tipoBateria}','{$amperagem}')";
-                
-                // Insere no banco e exibe uma mensagem 
+
+                // Insere no banco e exibe uma mensagem
                 $this->validaInsercaoBanco($query, "Cadastro salvo com sucesso!", "Erro durante o salvamento.");
-                
+
                 // Monta a url de redirecionamento
                 $move_uri = HOME_URI . "/cadastrar/equipamento/";
                 // Redireciona a pagina
@@ -211,12 +211,12 @@ class CadastroModel extends MainModel
             }
         }
     }
-    
-    
-    
+
+
+
     /**
      * Funcao que realiza o cadastro do usuario
-     * 
+     *
      * Cadastra todos os usuarios que utilizaram o sistema
      * Separando por interno (Eficaz) e externo (Cliente)
      */
@@ -234,18 +234,18 @@ class CadastroModel extends MainModel
             $perfil    = isset($_POST['opc_perfil']) ? $_POST['opc_perfil'] : 0 ;
             $cliente   = explode("-",$_POST['opc_cliente']);
             $local     = isset($_POST['opc_local']) ? $_POST['opc_local'] : 0;
-            
+
             // Verifica se existe um perfil selecionado
             if ($senha != $_POST['txt_senha'])
             {
                 // Apresenta uma mensagem de erro
                 echo "<div class='mensagemError'><span>Verifique se existe caracteres inv&aacute;lidos na senha</span></div>";
-                
+
                 // Encerra o processo
                 return;
             }
-            
-            
+
+
             // Verifica se existe campo em branco
             if ($_POST['txt_nome'] != "" && $_POST['txt_sobrenome'] != "" && $_POST['txt_email'] != "" && $_POST['txt_senha'] !== ""
                && $_POST['txt_cfsenha'] != "")
@@ -255,24 +255,24 @@ class CadastroModel extends MainModel
                 {
                     // Apresenta uma mensagem de erro
                     echo "<div class='mensagemError'><span>Nenhum perfil foi selecionado!</span></div>";
-                    
+
                     // Encerra o processo
                     return;
                 }
-                
-                
+
+
                 // Verifica qual eh o local do usuario
                 if ($local == 3)
                 {
                     // Se o local nao estiver definido
                     // Apresenta uma mensagem de erro
                     echo "<div class='mensagemError'><span>Nenhum local foi selecionado!</span></div>";
-                    
+
                     // Encerra o processo
                     return;
                 }
-                
-                
+
+
                 // Verifica se existe valor e se a variavel esta definida
                 if (isset($cliente[1]))
                 {
@@ -282,16 +282,16 @@ class CadastroModel extends MainModel
                     else if ($cliente[1] == 'f')
                         $tipo_inst = 1;
                 }
-                
+
                 // Verifica se a senha e a confirmacao sao iguais
                 if ($senha == $cfsenha)
                 {
                     // Monta query para buscar o email no sistema
                     $query = "select id, email from tb_users where email = '{$email}'";
-                    
+
                     // Monta a result
                     $result = $this->db->select($query);
-                    
+
                     // Verifica se existe resposta
                     if ($result)
                     {
@@ -307,7 +307,7 @@ class CadastroModel extends MainModel
                         {
                             // Aplica criptografia unidirecional na senha
                             $senha = md5($senha);
-                            
+
                             // Se o usuario nao for encontrado
                             // Verificando se o usuario eh externo ou interno
                             if ($local == 1)
@@ -334,10 +334,10 @@ class CadastroModel extends MainModel
                                     echo "<div class='mensagemError'><span>Erro ao salvar.</span></div>";
                                 }
                             }
-                            
-                            // Insere no banco e exibe uma mensagem 
+
+                            // Insere no banco e exibe uma mensagem
                             $this->validaInsercaoBanco($query, "Cadastro salvo com sucesso!", "Erro ao salvar.");
-                            
+
                             // Apaga dados do formulario
                             unset($_POST);
                         }
@@ -349,9 +349,9 @@ class CadastroModel extends MainModel
                     // Apresenta a mensagem de erro
                     echo "<div class='mensagemError'><span>Senhas diferentes</span></div>";
                 }
-                
+
             }
-            else 
+            else
             {
                 // Se existir campo em branco
                 // Apresenta uma mensagem
@@ -359,7 +359,7 @@ class CadastroModel extends MainModel
             }
         }
     }
-    
+
     /*
      *      busca matriz
      *      funcao que traz, clientes, filiais
@@ -382,37 +382,37 @@ class CadastroModel extends MainModel
             // Verifica se existe equipamento
             $query = "select id, tipo_equipamento as nome from tb_equipamento where status_ativo = 1";
         }
-        
+
         // Verifica se exite valor
         $respMatriz = $this->verificaResposta($query);
-        
+
         // Retorna a resposta do select
         return $respMatriz;
     }
-    
-    
-    
+
+
+
     /**
      * loadPerfilAcesso
-     * 
+     *
      * Funcao que gera a lista de todas as permissoes
-     * 
+     *
      * @access public
      */
     public function loadPerfilAcesso()
     {
         $pac2 = new C_PhpAutocomplete('permissaoac');
         $pac2->display('SELECT');
-        
+
         // Monta a query para buscar as permissoes
         $query = "select id, nome from tb_perfil_acesso where status_ativo = 1";
-        
+
         // Monta a result
         $result = $this->db->select($query);
-        
+
         // Criar o array de resposta
         $resultado = array();
-        
+
         // Verifica se existe valor na result
         if (@mysql_num_rows($result) > 0)
         {
@@ -420,7 +420,7 @@ class CadastroModel extends MainModel
             while ($rowfabricante = @mysql_fetch_assoc($result))
                 $resultado[] = $rowfabricante;
         }
-        
+
         // Exibe as permissoes no option
         echo "<select id='permissaoac' name='opc_perfil' class='font-texto-01' required><option>Selecione uma permiss&atilde;o</option>";
                 // Monta a lista de permissoes
@@ -431,8 +431,8 @@ class CadastroModel extends MainModel
                 }
         echo "</select>";
     }
-    
-    
+
+
     /**
      * Funcao que busca todos os fabricantes - matar
      * cadastrados no sistema
@@ -441,20 +441,20 @@ class CadastroModel extends MainModel
     {
         // Monta a query
         $query = "select id, nome from tb_fabricante where status_ativo = 1";
-        
+
         // Verifica se existe algum valor
         $respFabri = $this->verificaResposta($query);
-        
+
         // Retorna um valor
         return $respFabri;
     }
-    
-    
+
+
     /**
      * Funcao que verifica se existe valor no select
-     * 
+     *
      * @param string $query - Recebe uma string com o select
-     * 
+     *
      * @return array or false $resp - Retona um array se realizou o select
      * ou false caso nao encontre nada
      */
@@ -480,9 +480,9 @@ class CadastroModel extends MainModel
         // Fim
         return false;
     }
-    
-    
-    
+
+
+
     /**
      * Funcao que valida a gravacao da query no banco
      *
@@ -505,19 +505,19 @@ class CadastroModel extends MainModel
             // Grava o erro no log
             // Monta a query do log
             $queryLog = "insert into tb_log (log) values ('Erro ao gravar o cadastro : [".str_replace("'","" , $query)."]')";
-            
+
             // Executa a query
             $this->db->query($queryLog);
-            
+
             // Apresenta a mensagem de erro
             echo "<div class='mensagemError'><span>{$msgErr}</span></div>";
         }
     }
-    
-    
+
+
     /**
      * Funcao que realiza o upload da foto
-     * 
+     *
      * @param array $files - Recebe um array com os dados da foto
      *
      * @return string $up_resp - Devolve o nome da foto

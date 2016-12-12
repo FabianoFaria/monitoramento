@@ -8,8 +8,8 @@ else
     $t_not = 0;
 ?>
 
-   <div id="wrapper">
-    
+   <div id="wrapper" style="min-height:560px;">
+
       <!-- Navigation -->
       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
@@ -24,7 +24,6 @@ else
             </div>
         </div>
         <!-- /.navbar-header -->
-
 
         <ul class="nav navbar-top-links navbar-right">
             <!-- TOTAL DE ALERTAS, SE EXISTIREM -->
@@ -81,11 +80,11 @@ else
               <!-- /.dropdown-messages -->
             </li>
             <!-- PESQUISAR -->
-            <li class="dropdown">
+            <!-- <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa  fa-cogs fa-fw"></i> <i class="fa fa-caret-down"></i>
-              </a>
-              <ul class="dropdown-menu dropdown-tasks">
+              </a> -->
+              <!-- <ul class="dropdown-menu dropdown-tasks">
                 <li><a href="<?php echo HOME_URI; ?>/pesquisar/clientecadastrado" class="link-menuCadastro">
                   <i class="fa fa-university fa-lg"></i>&nbsp;&nbsp;Cliente Cadastrado</a></li>
                 <li><a href="<?php echo HOME_URI; ?>/pesquisar/filialcadastrado" class="link-menuCadastro">
@@ -94,16 +93,26 @@ else
                   <i class="fa fa-gavel fa-lg"></i>&nbsp;&nbsp;Fabricante Cadastrado</a></li>
                 <li><a href="<?php echo HOME_URI; ?>/pesquisar/equipamentocadastrado" class="link-menuCadastro">
                   <i class="fa fa-hdd-o fa-lg"></i>&nbsp;&nbsp;Equipamento Cadastrado</a></li>
-              </ul>
+              </ul> -->
               <!-- /.dropdown-tasks -->
+            <!-- </li> -->
+            <!-- BOTAO VISUALIZAR DADOS DO USUÁRIO -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                    <i class="fa fa-user fa-fw"></i>
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                </li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/usuario/"><i class="fa fa-folder-open fa-fw"></i>Perfil do usuário</a></span><!-- Fim Botao Sair -->
+                </ul>
             </li>
             <!-- BOTAO SAIR -->
             <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo HOME_URI; ?>/login/sair">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
                         <i class="fa fa-power-off fa-fw"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        </li><span id="btn_sair">Sair do sistema!</span><!-- Fim Botao Sair -->
+                        </li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/login/sair"><i class="fa fa-power-off fa-fw"></i>Sair do sistema!</a></span><!-- Fim Botao Sair -->
                     </ul>
                     <!-- /.dropdown-user -->
             </li>
@@ -120,27 +129,79 @@ else
                 </li>
                 <!-- CADASTRO -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
-                <li>
-                  <a href="<?php echo HOME_URI; ?>/cadastrar/">
-                    <i class="fa fa-plus fa-3x"></i> <span class="lb-side">Cadastrar</span><span class="fa arrow"></span>
-                  </a>
-                  <ul class="nav nav-second-level">
-                    <li>
-                      <a href="flot.html">Cliente</a>
-                    </li>
-                    <li>
-                      <a href="morris.html">Filial</a>
-                    </li>
-                    <li>
-                      <a href="morris.html">Fabricante</a>
-                    </li>
-                    <li>
-                      <a href="morris.html">Equipamento</a>
-                    </li>
-                  </ul>
-                  <!-- /.nav-second-level -->
-                </li>
+                    <!-- <li>
+                      <a href="<?php //echo HOME_URI; ?>/cadastrar/">
+                        <i class="fa fa-plus fa-3x"></i> <span class="lb-side">Cadastrar</span><span class="fa arrow"></span>
+                      </a>
+                      <ul class="nav nav-second-level">
+                        <li>
+                          <a href="flot.html">Cliente</a>
+                        </li>
+                        <li>
+                          <a href="morris.html">Filial</a>
+                        </li>
+                        <li>
+                          <a href="morris.html">Fabricante</a>
+                        </li>
+                        <li>
+                          <a href="morris.html">Equipamento</a>
+                        </li>
+                       </ul>
+                       /.nav-second-level -->
+                    <!-- </li> -->
                 <?php } ?>
+                <!-- USUÁRIOS -->
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                    <li>
+                        <a href="<?php echo HOME_URI; ?>/usuario/listar" class="">
+                          <i class="fa fa-users fa-3x"></i>
+                          <span class="icon-side"></span>
+                          <spam>Usuários</span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <!-- CLIENTES -->
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                    <li>
+                        <a href="<?php echo HOME_URI; ?>/cliente" class="">
+                          <i class="fa fa-university fa-3x"></i>
+                          <span class="icon-side"></span>
+                          <spam>Clientes</span>
+                        </a>
+                    </li>
+                <?php } ?>
+                <!-- FILIAL -->
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                    <li>
+                        <a href="<?php echo HOME_URI; ?>/filial" class="">
+                          <i class="fa fa-building-o fa-3x"></i>
+                          <span class="icon-side"></span>
+                          <spam>Filiais</span>
+                        </a>
+                    </li>
+                <?php } ?>
+                <!-- FABRICANTE -->
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                    <li>
+                        <a href="<?php echo HOME_URI; ?>/fabricante" class="">
+                          <i class="fa fa-building fa-3x"></i>
+                          <span class="icon-side"></span>
+                          <spam>Fabricantes</span>
+                        </a>
+                    </li>
+                <?php } ?>
+                <!-- EQUIPAMENTO -->
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                    <li>
+                        <a href="<?php echo HOME_URI; ?>/equipamento" class="">
+                          <i class="fa fa-hdd-o fa-3x"></i>
+                          <span class="icon-side"></span>
+                          <spam>Equipamentos</span>
+                        </a>
+                    </li>
+                <?php } ?>
+
                 <!-- VINCULO -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                 <li>
@@ -178,15 +239,6 @@ else
                   </a>
                 </li>
                 <?php } ?>
-                <!-- DADOS DO USUÁRIO  -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
-                <li>
-                  <a class="link-side" href="<?php echo HOME_URI; ?>/usuario/">
-                    <span class="icon-side"><i class="fa fa-user fa-3x"></i></span>
-                    <span class="lb-side">Dados usuário</span>
-                  </a>         
-                </li>
-                <?php } ?>
             </ul>
           </div>
           <!-- /.sidebar-collapse -->
@@ -195,5 +247,9 @@ else
 
       </nav>
 
-
-      <div id="page-wrapper" style="min-height: 186px;">
+      <div id="page-wrapper" >
+          <!-- DIV CONTENDO A LOCALIZAÇÃO ATUAL DO USUÁRIO NO SISTEMA -->
+          <div class="row">
+              <div id="listadir" class="col-lg-12 page-header">
+              </div>
+          </div>

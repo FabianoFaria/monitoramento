@@ -42,9 +42,29 @@
 
 
         /**
-         * Funcao que gerencia a edicao das informacoes do Usuário
+         * Funcao que leva a tela com a lista de usuários
          */
+        public function listar ()
+        {
+            // Verifica se esta logado
+            $this->check_login();
 
+            //Define o titulo da página
+            $this->title = "Lista usuário";
+
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+            // Carrega o modelo para este view
+            $modelo = $this->load_model('usuario/usuario-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/usuario/usuarioLista-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
 
     }
 

@@ -1,5 +1,14 @@
-       
+
+                <hr>
+                <footer>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class=""> Eficaz system - 2016 </p>
+                        </div>
+                    </div>
+                </footer>
             </div>
+
         </div>
         <!-- Js Files -->
         <!-- <script src='<?php echo HOME_URI; ?>/views/_js/jquery-ui.min.js'></script>- -->

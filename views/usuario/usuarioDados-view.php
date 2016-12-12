@@ -28,7 +28,7 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
 <div class="container fontPadrao">
 
     <!-- Titulo pagina -->
-    <label class="titulo-pagina">Dados do usuário</label><!-- Fim Titulo pagina -->
+    <label class="page-header"><h3>Dados do usuário</h3></label><!-- Fim Titulo pagina -->
 
     <!-- formulario de cadastro -->
     <form method="post" id="edicao_usuario">
