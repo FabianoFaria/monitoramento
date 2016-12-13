@@ -23,13 +23,13 @@ else
     // carrega os dados
     $cValor = $modelo->insereDadosGrafico($listaIni->carregaValorTri());
     $cValor2 = $modelo->insereDadosGrafico($listaIni->carregaValorTri("saida"));
-    
+
     // Busca informacoes sobre o cliente e equipamento
     $infoCli = $modelo->buscaDadosClinte ($nova_url[0]);
-    
+
     // Carrega a data, para realizar a comparacao de tempo ligado
     $respData = $modelo->verificaTempoOperacao($nova_url[0]);
-    
+
     // Variavel que monitora se existe data como parametro
     // Se existir desabilita os graficos do multimetro
     // Inicia a variavel
@@ -52,8 +52,8 @@ else
     <script>
         // gerenciador de link
         var menu = document.getElementById('listadir');
-        menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / ' + 
-                         '<a href="<?php echo HOME_URI; ?>/monitoramento/" class="linkMenuSup">Monitoramento</a> / ' + 
+        menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / ' +
+                         '<a href="<?php echo HOME_URI; ?>/monitoramento/" class="linkMenuSup">Monitoramento</a> / ' +
                          '<a href="" class="linkMenuSup">Visual</a>';
     </script>
 
@@ -72,8 +72,10 @@ else
     {
     ?>
 
+    <!-- Custom CSS -->
+    <link href="<?php echo HOME_URI; ?>/views/_css/grafics.css" rel="stylesheet" type="text/css">
 
-    <!-- scripts do grafico --> 
+    <!-- scripts do grafico -->
     <script src="<?php echo HOME_URI; ?>/views/_js/highcharts/highcharts.js"></script>
     <script src="<?php echo HOME_URI; ?>/views/_js/highcharts/highcharts-more.js"></script>
     <script src="<?php echo HOME_URI; ?>/views/_js/moment/moment.js"></script>
@@ -118,17 +120,17 @@ else
             });
         });
 
-        
+
 
         <?php
             // Tabela utilizadas
             $tabela = array("b","c","d","e","f","g");
             $tipoES = array("R","S","T","R","S","T");
             $nomes = array ("entrada","saida");
-            
+
             // Converte da base 64 para texto
             $id = base64_decode($this->parametros[0]);
-            
+
             // Loop para criar o grafico
             for($p=0;$p<sizeof($tabela);$p++)
             {
@@ -143,13 +145,13 @@ else
                     // 1 para saida
                     $g = 1;
                 }
-                
+
                 // Coleta os dados
                 $dadosMoni = $modelo->carregaDadosGrafico($tabela[$p], $nomes[$g], $id);
                 $dadosMoni = explode(";",$dadosMoni);
-                
+
                 ?>
-        
+
                     $(function () {
                         $('#grafico-<?php echo $nomes[$g].'-'.strtolower($tipoES[$p]); ?>').highcharts({
                             title: {
@@ -173,7 +175,7 @@ else
                                     color: '#808080'
                                 }]
                             },
-                                
+
                             tooltip: {
                                 valueSuffix: ''
                             },
@@ -184,14 +186,14 @@ else
                         });
                     });
                 <?php
-                
+
             }
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
             if ($data_rel == 0 )
             {
                 // Variavel que soma as posicoes
@@ -295,12 +297,12 @@ else
                                         leftVal,
                                         //rightVal,
                                         inc = parseFloat(valor/10);
-                                    
+
                                     leftVal =  inc;
-                                    
-                                    
+
+
                                     //rightVal = inc;
-                                    
+
                                     if (leftVal <= 0) {
                                         leftVal = 0;
                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
@@ -317,7 +319,7 @@ else
                                         $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoLigado');
                                         document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Ligado';
                                     }
-                                
+
                                     left.update(leftVal, false);
                                     document.getElementById('<?php echo $nomeDivBat.$a;?>').innerHTML = leftVal + " ( v )";
                                     chart.redraw();
@@ -335,16 +337,16 @@ else
 
 
     <div class="container-fluid fundo-geraGrafico">
-        
+
         <!-- Dados do cliente -->
         <div class="row nome-apresentacao">
-            
+
             <!-- Informacoes do clinte -->
             <div class="col-md-3 col-sm-6">
                 <label class="info-monito">Unidade</label><br>
                 <label class="info-monitoDados"><?php echo $infoCli['nomeCli']; ?></label>
             </div><!-- Fim informacao do cliente -->
-            
+
             <!-- Informacoes Equipamento -->
             <div class="col-md-3 col-sm-6">
                 <label class="info-monito">Equipamento</label><br>
@@ -355,10 +357,10 @@ else
                 </label>
             </div><!-- Fim Informacoes Equipamento -->
         </div><!-- Fim Dados do cliente -->
-        
-        
+
+
         <div class="row">
-            
+
             <!-- Coluna de grafico analogico -->
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="row">
@@ -377,7 +379,7 @@ else
                         <div id="sit-sai1" class="situacaoDesligado">Carregando...</div>
                     </div><!-- Saida R/S -->
                 </div>
-                
+
                 <div class="row">
                     <!-- Entrada S/T -->
                     <div class="col-md-6 col-sm-6 col-xs-6 fundo-camposGrafico">
@@ -394,8 +396,8 @@ else
                         <div id="sit-sai2" class="situacaoDesligado">Carregando...</div>
                     </div><!-- Saida S/T -->
                 </div>
-                
-                
+
+
                 <div class="row">
                     <!-- Entrada R/T -->
                     <div class="col-md-6 col-sm-6 col-xs-6 fundo-camposGrafico">
@@ -413,13 +415,13 @@ else
                     </div><!-- Saida R/T -->
                 </div>
             </div><!-- Fim Coluna de grafico analogico -->
-            
-            
-            
-            
+
+
+
+
             <!-- Coluna de outros graficos -->
             <div class="col-md-6 col-sm-12 col-xs-12">
-                
+
                 <!-- Primeira linha -->
                 <div class="row">
                     <!-- Bateria -->
@@ -462,29 +464,29 @@ else
                             </script>
                         </div>
                     </div><!-- Fim Bateria -->
-                    
-                    
-                    
+
+
+
                     <!-- Grafico entrada r -->
                     <div class="col-md-4 col-sm-6 col-xs-6 separa-campo fundo-camposGrafico">
                         <div id="grafico-entrada-r" style="width: 100%; height: 220px; margin: 0 auto"></div>
                     </div>
                     <!-- Fim grafico entrada r -->
 
-                    
-                    
+
+
                     <!-- Grafico saida r -->
                     <div class="col-md-4 col-sm-6 col-xs-6 separa-campo fundo-camposGrafico">
                         <div id="grafico-saida-r" style="width: 100%; height: 220px; margin: 0 auto"></div>
                     </div>
                     <!-- Fim grafico saida r -->
-                    
-                    
-                    
+
+
+
                 </div><!-- Primeira linha -->
-                
-                
-                
+
+
+
                 <!-- Tempo de operacao -->
                 <div class="row">
                     <?php
@@ -511,7 +513,7 @@ else
                         <label class="lb-monitoramento">Tempo de opera&ccedil;&atilde;o</label>
                         <div class="div-tempoOperacao">
                             <label id="lb-tempoOperacao">
-                                <?php 
+                                <?php
                                     if ($conv < 2 )
                                       echo $conv . " Dia";
                                     else
@@ -520,28 +522,28 @@ else
                             </label>
                         </div>
                     </div><!-- Fim tempo de operacao -->
-                    
-                    
+
+
                     <!-- Grafico entrada r -->
                     <div class="col-md-4 col-sm-6 col-xs-6 separa-campo fundo-camposGrafico">
                         <div id="grafico-entrada-s" style="width: 100%; height: 220px; margin: 0 auto"></div>
                     </div>
                     <!-- Fim grafico entrada r -->
 
-                    
-                    
+
+
                     <!-- Grafico saida r -->
                     <div class="col-md-4 col-sm-6 col-xs-6 separa-campo fundo-camposGrafico">
                         <div id="grafico-saida-s" style="width: 100%; height: 220px; margin: 0 auto"></div>
                     </div>
                     <!-- Fim grafico saida r -->
                 </div>
-                
-                
+
+
                 <!-- Segunda linha -->
                 <div class="row">
-                    
-                    
+
+
                     <!-- Nobreak ligado -->
                     <div class="col-md-4 col-sm-6 col-xs-6 txt-center fundo-camposGrafico ajusteGrafico">
                         <label class="lb-monitoramento">No-break Ligado ?</label>
@@ -579,44 +581,44 @@ else
                             <div id="fundoBaseNobreak"><label id="nobreakLigado"></label></div>
                         </div>
                     </div><!-- Fim nobreak ligado -->
-                    
-                    
+
+
                     <!-- Grafico entrada t -->
                     <div class="col-md-4 col-sm-6 col-xs-6 separa-campo fundo-camposGrafico">
                         <div id="grafico-entrada-t" style="width: 100%; height: 220px; margin: 0 auto"></div>
                     </div>
                     <!-- Fim grafico entrada r -->
 
-                    
-                    
+
+
                     <!-- Grafico saida t -->
                     <div class="col-md-4 col-sm-6 col-xs-6 separa-campo fundo-camposGrafico">
                         <div id="grafico-saida-t" style="width: 100%; height: 220px; margin: 0 auto"></div>
                     </div>
                     <!-- Fim grafico saida r -->
-                    
-                    
+
+
                 </div><!-- Fim Segunda linha -->
-                
-                
+
+
             </div><!-- Fim Coluna de outros graficos -->
         </div>
-        
-        
-        
-        
-        <?php 
+
+
+
+
+        <?php
         // Verifica se as datas existem
         // Caso nao existam, mostra os multimetros de tensao
         if ($data_rel == 0 ) { ?>
 
-        
-        
-        
+
+
+
         <?php } ?>
     </div>
 
-    <?php } 
+    <?php }
 }
 
 ?>

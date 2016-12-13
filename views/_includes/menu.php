@@ -125,7 +125,11 @@ else
             <ul class="nav" id="side-menu">
                 <!-- HOME -->
                 <li>
-                  <a href="<?php echo HOME_URI; ?>/home/"><i class="fa fa-dashboard fa-3x"></i> <span class="lb-side">Monitorar</span></a>
+                  <a href="<?php echo HOME_URI; ?>/home/"><i class="fa fa-dashboard fa-3x"></i> <span class="lb-side">Painel inicial</span></a>
+                </li>
+                <!-- ALARMES -->
+                <li>
+                  <a href="<?php echo HOME_URI; ?>/alarme/"><i class="fa fa-volume-up fa-3x"></i> <span class="lb-side">Alarmes</span></a>
                 </li>
                 <!-- CADASTRO -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
@@ -150,17 +154,6 @@ else
                        /.nav-second-level -->
                     <!-- </li> -->
                 <?php } ?>
-                <!-- USUÁRIOS -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
-                    <li>
-                        <a href="<?php echo HOME_URI; ?>/usuario/listar" class="">
-                          <i class="fa fa-users fa-3x"></i>
-                          <span class="icon-side"></span>
-                          <spam>Usuários</span>
-                        </a>
-                    </li>
-                <?php } ?>
-
                 <!-- CLIENTES -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                     <li>
@@ -171,16 +164,6 @@ else
                         </a>
                     </li>
                 <?php } ?>
-                <!-- FILIAL -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
-                    <li>
-                        <a href="<?php echo HOME_URI; ?>/filial" class="">
-                          <i class="fa fa-building-o fa-3x"></i>
-                          <span class="icon-side"></span>
-                          <spam>Filiais</span>
-                        </a>
-                    </li>
-                <?php } ?>
                 <!-- FABRICANTE -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                     <li>
@@ -188,6 +171,16 @@ else
                           <i class="fa fa-building fa-3x"></i>
                           <span class="icon-side"></span>
                           <spam>Fabricantes</span>
+                        </a>
+                    </li>
+                <?php } ?>
+                <!-- FILIAL -->
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                    <li>
+                        <a href="<?php echo HOME_URI; ?>/filial" class="">
+                          <i class="fa fa-building-o fa-3x"></i>
+                          <span class="icon-side"></span>
+                          <spam>Filiais</span>
                         </a>
                     </li>
                 <?php } ?>
@@ -221,23 +214,33 @@ else
                   </a>
                 </li>
                 <?php } ?>
-                <!-- BI-GRAFI -->
+                <!-- ANTIGO BI-GRAFI, ATUAL MONITORAR -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
                 <li>
                     <a class="link-side" href="<?php echo HOME_URI; ?>/monitoramento/">
                       <span class="icon-side"><i class="fa fa-tachometer fa-3x"></i></span>
-                      <span class="lb-side">Bi-grafi</span>
+                      <span class="lb-side">Monitorar</span>
                     </a>
                 </li>
                 <?php } ?>
-                <!-- GRAFICO -->
+                <!-- ANTIGO GRAFICO, ATUAL RELATORIO -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
                 <li>
                   <a class="link-side" href="<?php echo HOME_URI; ?>/grafico/">
                     <span class="icon-side"><i class="fa fa-area-chart fa-3x"></i></span>
-                    <span class="lb-side">Gr&aacute;fico</span>
+                    <span class="lb-side">Relatório</span>
                   </a>
                 </li>
+                <?php } ?>
+                <!-- USUÁRIOS -->
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                    <li>
+                        <a href="<?php echo HOME_URI; ?>/usuario/listar" class="">
+                          <i class="fa fa-users fa-3x"></i>
+                          <span class="icon-side"></span>
+                          <spam>Usuários</span>
+                        </a>
+                    </li>
                 <?php } ?>
             </ul>
           </div>

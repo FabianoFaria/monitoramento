@@ -14,7 +14,7 @@ $retorno = $modelo->buscaRelacao();
 ?>
 
 <script type="text/javascript">
-    var Movies0 = [ 
+    var Movies0 = [
         <?php
             /* se for um array */
             if (is_array($retorno))
@@ -25,15 +25,15 @@ $retorno = $modelo->buscaRelacao();
                     $statusVer = "Desativado";
                     if ($row['status_ativo'] == 1)
                         $statusVer = "Ativado";
-                    
+
                     /* convert data para o padrao brasileiro */
                     $tempo = date('d/m/Y', strtotime($row['dt_criacao']));
-                    
+
                     /* criptografa sim */
                     $chaveSim = base64_encode($row['num_sim']);
 
 
-                    $guarda .= "{modelsh: '{$chaveSim}', 
+                    $guarda .= "{modelsh: '{$chaveSim}',
                                  num_sim: {$row['num_sim']},
                                  dataTmp: '{$tempo}',
                                  cliente: '{$modelo->converte($row['nome'],1)}',
@@ -59,8 +59,8 @@ $retorno = $modelo->buscaRelacao();
 
 <div class="container-fluid">
     <!-- Titulo pagina -->
-    <label class="titulo-pagina">BI-GRAFI</label><!-- Fim Titulo pagina -->
-    
+    <label class="page-header">BI-GRAFI</label><!-- Fim Titulo pagina -->
+
     <div class='table-responsive'>
         <table id="stream_table" class='table table-striped table-bordered'>
             <thead>

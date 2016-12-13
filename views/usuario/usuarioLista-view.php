@@ -6,7 +6,7 @@
 <script type="text/javascript">
     // gerenciador de link
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/home/usuario/listar">Listar usuários</a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/usuario/listar">Listar usuários</a>';
 </script>
 
 <?php
@@ -28,7 +28,7 @@
                 </a>
             </div>
         </div>
-
+        <!-- TABELA CONTENDO OS USUÁRIOS CADASTRADOS -->
         <div class="panel panel-default">
             <div class="panel-heading">
 
@@ -56,7 +56,7 @@
                                    <td><?php echo $usuario['email']; ?></td>
                                    <td><?php echo implode("/", array_reverse(explode("-", $usuario['dt_criaco']))); ?></td>
                                    <td>
-                                       <a href="<?php echo HOME_URI; ?>/usuario/editarUsuario/<?php echo $usuario['id']; ?>" class="link-tabela-moni">
+                                       <a href="<?php echo HOME_URI; ?>/usuario/editarTerceiros/<?php echo $usuario['id']; ?>" class="link-tabela-moni">
                                            <i class="fa fa-pencil-square-o fa-lg"></i>
                                        </a>
                                    </td>

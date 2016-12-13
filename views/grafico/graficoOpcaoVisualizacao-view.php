@@ -175,7 +175,7 @@ var menu = document.getElementById('listadir');
 
     <script>
         $( "#btn_gerarGrafico" ).click(function() {
-            
+
             //Valida se pelo menos um parametro foi selecionado!
             var checkboxs=document.getElementsByName("parametrosGraficos");
             var okay=false;
@@ -188,9 +188,32 @@ var menu = document.getElementById('listadir');
                 }
             }
             if(okay)geraGrafico('<?php echo $modelo->nUrl; ?>');
-            else $('#nadaSelecionado').modal();;
+            else $('#nadaSelecionado').modal();
 
         });
+
+        function geraGrafico(link)
+        {
+            // Coleta os dados do checkbox
+            var entr1t = $("#chk_entrada_r1t").is(":checked");
+            var ents1t = $("#chk_entrada_s1t").is(":checked");
+            var entt1t = $("#chk_entrada_t1t").is(":checked");
+            var entr1c = $("#chk_entrada_r1c").is(":checked");
+            var ents1c = $("#chk_entrada_s1c").is(":checked");
+            var entt1c = $("#chk_entrada_t1c").is(":checked");
+
+            if (!entr1t) entr1t = 0; else entr1t = 1;
+            if (!ents1t) ents1t = 0; else ents1t = 1;
+            if (!entt1t) entt1t = 0; else entt1t = 1;
+            if (!entr1c) entr1c = 0; else entr1c = 1;
+            if (!ents1c) ents1c = 0; else ents1c = 1;
+            if (!entt1c) entt1c = 0; else entt1c = 1;
+
+            var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c;
+            window.location.href = link + url;
+        }
+
+
     </script>
 
 </div>

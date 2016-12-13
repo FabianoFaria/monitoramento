@@ -1,0 +1,258 @@
+/*
+* Css especifico para a geração dos gráficos
+*/
+
+
+.opcoesGrafic {
+  border: 1px solid #fafaf8;
+  text-align: center;
+  border-radius: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.opcoesGrafic:hover {
+  background-color: #fafaf8;
+}
+.link-graficoGerar {
+  color: #808080;
+  text-decoration: none;
+}
+.link-graficoGerar:hover {
+  color: #87bed0;
+  text-decoration: none;
+}
+/*
+ *      Configuracao parte do grafico
+ *
+ */
+/* label que mostra o valor */
+.valorVindo,
+.situacaoLigado,
+.situacaoDesligado {
+  width: 100%;
+  position: relative;
+  text-align: center;
+  padding: 2px;
+}
+.valorVindo {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #e5e5e5;
+}
+.situacaoLigado {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #4ec957;
+}
+.situacaoDesligado {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 300;
+  background-color: #c94e50;
+}
+/* Configuracao do fundo */
+.fundo-geraGrafico {
+  background-color: #7c7f8e;
+}
+.fundo-camposGrafico {
+  background-color: #ffffff;
+  border: 2px solid #7c7f8e;
+}
+.separa-campo {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+/* Ajuste no grafico */
+.ajusteGrafico {
+  height: 222px;
+}
+/* configurcao da fonte dos parametros */
+.fontsub {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #808080;
+  font-size: 15px;
+  font-weight: 400;
+}
+/* configuracao label form-group */
+.form-group > label {
+  font-family: 'Open Sans', sans-serif;
+  color: #b8babc;
+  font-size: 13px;
+  font-weight: 600;
+}
+/* lista de posicao de tabela */
+.posicao-tabela {
+  font-family: 'Gudea', sans-serif;
+  color: #b8babc;
+  font-size: 14px;
+  font-weight: 400;
+}
+/* Bordas de alerta */
+.border-red {
+  border: 1px solid #de4243;
+}
+/* Campo de apresentacao do nome */
+.nome-apresentacao {
+  background-color: #fafaf8;
+  border-bottom: 1px solid #f0f0f8;
+  padding-top: 5px;
+}
+/* labels */
+.lb-not {
+  font-family: 'Open Sans', sans-serif;
+  color: #b8babc;
+  font-size: 15px;
+  font-weight: 600;
+}
+.lb-monitoramento {
+  font-family: "Lucida Sans Unicode";
+  color: #333333;
+  font-size: 12px;
+  font-weight: 400;
+  padding-top: 8px;
+}
+#lb-faltas {
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 60px;
+  font-weight: 300;
+}
+/* div autonomia bateria */
+.div-baseBateria {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  z-index: 1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0px;
+}
+.div-faixaVermelha,
+.div-faixaVerde {
+  position: absolute;
+  height: 80px;
+  left: 0px;
+}
+.div-faixaVermelha {
+  background-color: #ff3e3e;
+  width: 10%;
+  z-index: 3;
+}
+.div-faixaVerde {
+  background-color: #4ec957;
+  width: 100%;
+  z-index: 2;
+}
+.span-menor,
+.span-maior,
+.div-campoPreen {
+  position: absolute;
+  z-index: 4;
+}
+.div-campoPreen,
+.div-carga {
+  height: 60px;
+  left: 0px;
+  top: 50%;
+  margin-top: -30px;
+}
+.span-menor {
+  left: 0px;
+  top: 92%;
+}
+.span-maior {
+  left: 100%;
+  top: 92%;
+  margin-left: -15px;
+}
+.div-campoPreen {
+  width: 100%;
+  background-color: #ffffff;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+}
+.div-carga {
+  width: 0%;
+  position: absolute;
+  background-color: #87bed0;
+  z-index: 5;
+  -webkit-transition: 0.5s all linear;
+  -moz-transition: 0.5s all linear;
+  transition: 0.5s all linear;
+}
+#div-legenda {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 25px;
+  font-weight: 300;
+  z-index: 6;
+  padding-top: 12px;
+}
+/* Mostra o status do nobreak */
+#nobreakLigado {
+  font-family: 'Open Sans', sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 300;
+}
+.nobreakLigadoStatus {
+  background-color: #4ec957;
+}
+.nobreakDesligadoStatus {
+  background-color: #c94e50;
+}
+/* Tempo de operacao */
+.div-tempoOperacao,
+.div-nbLigado,
+.div-nbLigado,
+.div-baseBateria {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+#lb-tempoOperacao {
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 35px;
+  font-weight: 300;
+}
+/* Label das informacoes da tela de monitoramento */
+.info-monito {
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 400;
+}
+.info-monitoDados {
+  font-family: 'Open Sans', sans-serif;
+  color: #333333;
+  font-size: 25px;
+  font-weight: 300;
+}
+/* Configuracao da font para o option */
+.font-texto-01 {
+  font-family: 'Open Sans', sans-serif;
+  color: #b8babc;
+  font-size: 13px;
+  font-weight: 600;
+}
+.font-texto-02 {
+  font-family: 'Open Sans', sans-serif;
+  color: #555555;
+  font-size: 13px;
+  font-weight: 600;
+}
+/* Opcao da borda */
+.borda-01 {
+  border-bottom: 1px solid #dddddd;
+}
+.borda-02 {
+  border-right: 1px solid #dddddd;
+}
