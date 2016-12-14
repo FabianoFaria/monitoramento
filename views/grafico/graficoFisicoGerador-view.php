@@ -3,10 +3,8 @@
 if (! defined('EFIPATH')) exit();
 ?>
 
-
 <script src="<?php echo HOME_URI; ?>/views/_js/table/mustache.js" type="text/javascript"></script>
 <script src="<?php echo HOME_URI; ?>/views/_js/table/stream_table.js" type="text/javascript"></script>
-
 
 <?php
 // chamando lista de valores
@@ -47,19 +45,17 @@ $retorno = $modelo->buscaRelacao();
     ];
     var Movies = [Movies0];
 
-
     // gerenciador de link
     var menu = document.getElementById('listadir');
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/" class="linkMenuSup">Gr&aacute;fico</a>';
 </script>
-
 
 <script src="<?php echo HOME_URI; ?>/views/_js/table/index.js" type="text/javascript"></script>
 
 <div class="row">
     <div class="col-md-12">
         <!-- Titulo pagina -->
-        <label class="page-header">Relatorio gráfico</label><!-- Fim Titulo pagina -->
+        <label class="page-header">Relatorio gráfico impresso</label><!-- Fim Titulo pagina -->
     </div>
 
 </div>
@@ -117,6 +113,7 @@ $retorno = $modelo->buscaRelacao();
         </div>
     </div>
 </div>
+
 
 <div class="container-fluid">
 

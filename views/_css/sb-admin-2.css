@@ -403,6 +403,19 @@ table.dataTable thead .sorting:after {
   margin-top: 5px;
 }
 
+/*
+* Sobreescrevendo alguns estilos do tema
+*/
+.page-header{
+    margin: 15px 0 15px;
+}
+
+.blink-test{
+    animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+
 /*Importado do main CSS*/
 /* notificacao */
 #contadorNot {

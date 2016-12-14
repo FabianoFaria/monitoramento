@@ -7,16 +7,16 @@ class MonitoramentoModel extends MainModel
     {
         /* carrega a conexao */
         $this->db = $db;
-        
+
         /* carrega o controller */
         $this->controller = $controller;
-        
+
         /* carrega os parametros */
         $this->parametros = $this->controller->parametros;
     }
-    
-    
-    
+
+
+
     /**
      * funcao que configura os parametros , redefine a nova url
      */
@@ -24,17 +24,17 @@ class MonitoramentoModel extends MainModel
     {
         /* grava a primeira posicao da url */
         $nova_url[0] = $this->parametros[0];
-        
+
         /* trata o segundo paramentro */
         $deco_url = explode("-",base64_decode($this->parametros[1]));
-        
+
         /* insere os valores decodificados */
         for ($a=0;$a<sizeof($deco_url);$a++)
             $nova_url[$a+1] = $deco_url[$a];
-        
+
         return $nova_url;
     }
-    
+
     /**
      * funcao que carrega os parametros do grafico
      */
@@ -47,16 +47,16 @@ class MonitoramentoModel extends MainModel
         $ideq = base64_decode($this->parametros[1]);
         // Id sim equipamento
         $idsq = base64_decode($this->parametros[2]);
-        
+
         $idse = base64_decode($this->parametros[3]);
-        
+
         // Monta a query
         $query = "select parametro from tb_parametro where id_sim_equipamento = {$idsq} and num_sim = {$sim} and id_equipamento = {$ideq[0]} order by (dt_criacao) desc limit 1";
-        
+
         /* monta a result */
         $busca = $this->db->select($query);
-        
-        
+
+
         /* verifica se a query executa */
         if ($busca)
         {
@@ -66,10 +66,10 @@ class MonitoramentoModel extends MainModel
                 /* monta o array com os valores */
                 while($row = @mysql_fetch_assoc($busca))
                     $retorno[] = $row;
-                
+
                 /* quebra a resposta no array */
                 $retorno = explode("|",$retorno[0]['parametro']);
-                
+
                 foreach($retorno as $row)
                 {
                     $row2 = explode("-",$row);
@@ -95,10 +95,10 @@ class MonitoramentoModel extends MainModel
             /* se a query apresentar erro, retorna false */
             return false;
         }
-        
-        
+
+
     }
-    
+
     /**
      * Funcao que captura acao do post
      * Coleta dos dados das datas e gera o grafico por periodo
@@ -113,10 +113,10 @@ class MonitoramentoModel extends MainModel
             {
                 $dti = base64_encode($_POST['dt_ini']);
                 $dtf = base64_encode($_POST['dt_fim']);
-                
+
                 // Monta url
                 $link = HOME_URI . "/monitoramento/gerarGrafico/".$this->parametros[0]."/".$this->parametros[1]."/".$this->parametros[2]."/".$this->parametros[3]."/".$dti."/".$dtf;
-                
+
                 // Redireciona para o grafico
                 echo "<script type='text/javascript'>window.location.href = '" . $link . "'</script>";
             }
@@ -129,7 +129,7 @@ class MonitoramentoModel extends MainModel
             }
         }
     }
-    
+
     /**
      * Funcao que insere os dados do $data em um string de retorno
      * Para chamar os valores dos graficos linha
@@ -154,14 +154,14 @@ class MonitoramentoModel extends MainModel
                 $resutadoGrafico .= $valTratar[$a].",";
             }
         }
-        
+
         return $resutadoGrafico;
     }
-    
-    
+
+
     /**
      * Funcao que busca o tempo de operacao do aparelho
-     * 
+     *
      * @return string $dataOperacao - retorno o tempo total de operacao do dispositivo
      */
     function verificaTempoOperacao($sim)
@@ -171,7 +171,7 @@ class MonitoramentoModel extends MainModel
 
         // Monta a query para pegar os valores da entrada
         $query = "select dt_criacao from tb_numero_falta where id_num_sim = {$sim} order by (dt_criacao) desc limit 1";
-        
+
         // Realiza a pesquisa no banco
         $result = $this->db->select($query);
 
@@ -209,21 +209,21 @@ class MonitoramentoModel extends MainModel
         // Retorna o resultado
         return $resultado;
     }
-    
-    
+
+
     /**
      * Funcao que busca os dados do cliente como
      * nome e dados do equipamento
-     * 
+     *
      * @param string $sim - recebe a criptografia do sim
-     * 
+     *
      * @return array $resp - retorna todos os dados do cliente
      */
     public function buscaDadosClinte ($sim)
     {
         // Decodifica o sim
         $sim = base64_decode($sim);
-        
+
         // Monta a query
         $query = "select
                     c.nome as nomeCli, e.tipo_equipamento as nomeEquip , e.modelo as modeloEquip, fa.nome as nomeFabri
@@ -233,10 +233,10 @@ class MonitoramentoModel extends MainModel
                 inner join tb_equipamento e on e.id = sq.id_equipamento
                 inner join tb_fabricante fa on fa.id = e.id_fabricante
                 where sq.id_sim = {$sim}";
-        
+
         // Busca valores
         $resultado = $this->realizaBusca($query);
-        
+
         // Verifica se existe retorno
         if ($resultado)
             return $resultado;
@@ -253,10 +253,10 @@ class MonitoramentoModel extends MainModel
                     inner join tb_equipamento e on e.id = sq.id_equipamento
                     inner join tb_fabricante fa on fa.id = e.id_fabricante
                     where sq.id_sim = {$sim}";
-            
+
             // Busca os valores
             $resultado = $this->realizaBusca($query);
-            
+
             // Verifica se existe valor
             if ($resultado)
             {
@@ -271,20 +271,20 @@ class MonitoramentoModel extends MainModel
             }
         }
     }
-    
-    
+
+
     /**
      * carregaDadosGrafico
-     * 
+     *
      * Funcao que carrega os dados do grafico de entrada e saida
-     * 
+     *
      * @access public
      */
     public function carregaDadosGrafico($posicao, $parte, $id)
     {
         // Coleta as informacoes do grafico
         $querymon = "select {$posicao},dt_criacao from tb_dados where num_sim = {$id} order by (dt_criacao) desc limit 20";
-        
+
         // Monta a result
         $resmon = $this->db->select($querymon);
 
@@ -293,39 +293,39 @@ class MonitoramentoModel extends MainModel
         {
             $tempomon = "[";
             $datamon = "[";
-            
-            
-            
+
+
+
             // Coleta o resultado
             while($rowmon = @mysql_fetch_assoc($resmon))
             {
                 $linhaArr[] = $rowmon;
             }
-            
+
             // Coleta o total do vetor
             $vetTam = sizeof($linhaArr);
-            
+
             // Monta a resposta de tras para frente
             for ($a=$vetTam-1;$a>=0;$a--)
             {
                 $datamon .= floatval($linhaArr[$a][$posicao]/10).",";
                 $tempomon .= "'".$linhaArr[$a]['dt_criacao']."',";
             }
-            
+
             // Diciona o final
             $datamon .= "]";
             $tempomon .= "]";
             // Remove a virgula
             $datamon = str_replace(",]","]",$datamon);
             $tempomon = str_replace(",]","]",$tempomon);
-            
+
             // Junta o tempo com os dados
             $datamon .= ";".$tempomon;
-            
+
             // Retorna os dados
             return $datamon;
         }
-        
+
         return false;
     }
 }

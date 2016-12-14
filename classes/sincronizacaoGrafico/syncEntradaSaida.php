@@ -1,17 +1,17 @@
 <?php
 
-header("content-type: application/json"); 
+header("content-type: application/json");
 // Chama a classe de conexao com o banco de dados
 require_once '../class-EficazDB.php';
 // Cria o objeto
 $conn = new EficazDB();
 
 /**
- * 656e7472616461 - entrada 
+ * 656e7472616461 - entrada
  * 6e756d65726f   - numero sim
  * 706f73546162656c61 - Posicao na tabela
- * 
- * 
+ *
+ *
  */
 
 // Verifica se a entrada esta setada
@@ -104,8 +104,8 @@ function verificaLigado($conn,$sim)
         while ($row = @mysql_fetch_assoc($result))
             $resultado[] = $row;
     }
-    
-    // Verifica se esta em branco 
+
+    // Verifica se esta em branco
     if (intval($resultado[0]['e']) == 0 && intval($resultado[0]['f']) == 0 && intval($resultado[0]['g']) == 0)
     {
         // Se os valores estiverem zerados
@@ -118,7 +118,7 @@ function verificaLigado($conn,$sim)
         // Marca como nobreak ligado
         $resp = 1;
     }
-    
+
     // Devolve a resposta por callback
     echo $_GET['callback']. '(['. json_encode($resp) . '])';
     // Fim
@@ -158,16 +158,16 @@ function verificaEntradaSaida ($conn,$tb,$sim)
 
 /**
  * Funcao que verifica o total de faltas
- * 
+ *
  */
 function verificaFaltas($conn,$sim)
 {
     // Monta a query para pegar os valores da entrada
     $query = "select count(id) as n_falta from tb_numero_falta where id_num_sim = {$sim}";
-    
+
     // Realiza a pesquisa no banco
     $result = $conn->select($query);
-    
+
     // Verifica se existe resultado
     if (@mysql_num_rows ($result) > 0)
     {
@@ -190,10 +190,10 @@ function verificaTempoOperacao($conn,$sim)
 {
     // Monta a query para pegar os valores da entrada
     $query = "select dt_criacao from tb_numero_falta where id_num_sim = {$sim} order by (dt_criacao) desc limit 1";
-    
+
     // Realiza a pesquisa no banco
     $result = $conn->select($query);
-    
+
     // Verifica se existe resultado
     if (@mysql_num_rows ($result) > 0)
     {
@@ -218,10 +218,10 @@ function verificaTempoOperacao($conn,$sim)
         else
             $resultdo = 0;
     }
-    
+
     // Coleta a data de retorno
     $resultado = strval($resp[0]['dt_criacao']);
-    
+
     // Devolve a resposta por callback
     echo $_GET['callback']. '(['. json_encode($resultado) . '])';
 }
@@ -234,10 +234,10 @@ function verificaBateria ($conn,$sim,$tb)
 {
     // Monta a query
     $query = "select {$tb} from tb_dados where num_sim = {$sim} order by (dt_criacao) desc limit 1 ";
-    
+
     // Monta a result
     $result = $conn->select($query);
-    
+
     // Verifica se existe valor
     if (@mysql_num_rows($result) > 0)
     {
@@ -247,10 +247,10 @@ function verificaBateria ($conn,$sim,$tb)
     }
     else
         $resp = 0;
-    
+
     // Coleta a data de retorno
     $resultado = floatval($resp[0][$tb]);
-    
+
     // Devolve a resposta por callback
     echo $_GET['callback']. '(['. json_encode($resultado) . '])';
 }

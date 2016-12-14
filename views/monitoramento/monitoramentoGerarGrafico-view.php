@@ -6,6 +6,7 @@ if (! defined('EFIPATH')) exit();
 // Carrega as configuracoes de sim , configurando e tratando a url
 $nova_url = $modelo->confParamentroGrafico();
 
+
 // Carrega os parametros
 $retorno = $modelo->loadGraficoParam();
 
@@ -25,7 +26,7 @@ else
     $cValor2 = $modelo->insereDadosGrafico($listaIni->carregaValorTri("saida"));
 
     // Busca informacoes sobre o cliente e equipamento
-    $infoCli = $modelo->buscaDadosClinte ($nova_url[0]);
+    $infoCli = $modelo->buscaDadosClinte($nova_url[0]);
 
     // Carrega a data, para realizar a comparacao de tempo ligado
     $respData = $modelo->verificaTempoOperacao($nova_url[0]);
@@ -461,6 +462,8 @@ else
                                         document.getElementById('div-cargaBat').style.width = calcula+"%";
                                     });
                                 },6000);
+
+                                console.log("data[0] : " + data[0]);
                             </script>
                         </div>
                     </div><!-- Fim Bateria -->

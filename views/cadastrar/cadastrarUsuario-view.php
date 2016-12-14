@@ -17,9 +17,9 @@ $modelo->cadastrarUsuario();
 
 <div class="container-fluid fontPadrao">
     <!-- Titulo pagina -->
-    <label class="titulo-pagina">USU&Aacute;RIO</label><!-- Fim Titulo pagina -->
-    
-    
+    <label class="page-header">Usuário</label><!-- Fim Titulo pagina -->
+
+
     <!-- formulario de cadastro -->
     <form method="post">
         <div class="row">
@@ -31,7 +31,7 @@ $modelo->cadastrarUsuario();
                     value="<?php if (isset($_POST['txt_nome'])) echo $_POST['txt_nome']; ?>">
                 </div>
             </div><!-- fim nome do usuario -->
-            
+
             <!-- sobrenome do usuario -->
             <div class="col-md-4">
                 <div class="form-group">
@@ -40,7 +40,7 @@ $modelo->cadastrarUsuario();
                     value="<?php if (isset($_POST['txt_sobrenome'])) echo $_POST['txt_sobrenome']; ?>">
                 </div>
             </div><!-- fim sobrenome do usuario -->
-            
+
             <!-- E-mail -->
             <div class="col-md-4">
                 <div class="form-group">
@@ -50,8 +50,8 @@ $modelo->cadastrarUsuario();
                 </div>
             </div><!-- fim E-mail -->
         </div>
-         
-        
+
+
         <div class="row">
             <!-- senha -->
             <div class="col-md-4">
@@ -61,7 +61,7 @@ $modelo->cadastrarUsuario();
                     <span class="senhaPerm">Caracteres permitidos !,-,#,+,=,*</span>
                 </div>
             </div><!-- fim senha -->
-            
+
             <!-- confirma senha -->
             <div class="col-md-4">
                 <div class="form-group">
@@ -69,7 +69,7 @@ $modelo->cadastrarUsuario();
                     <input type="password" class="form-control" id="txt_cfsenha" name="txt_cfsenha" placeholder="Confirma senha" maxlength="30" required>
                 </div>
             </div><!-- fim confirma senha -->
-            
+
             <!-- Usuario interno ou externo -->
             <div class="col-md-4">
                 <div class="form-group">
@@ -82,8 +82,8 @@ $modelo->cadastrarUsuario();
                 </div>
             </div><!-- fim Usuario interno ou externo -->
         </div>
-        
-        
+
+
         <div class="row">
             <!-- nome da matiz -->
             <div class="col-md-4">
@@ -92,7 +92,7 @@ $modelo->cadastrarUsuario();
                     <?php $modelo->loadClienteFilial(); ?>
                 </div>
             </div><!-- fim do campo nome da matiz -->
-            
+
             <!-- permissao -->
             <div class="col-md-4">
                 <div class="form-group">
@@ -101,12 +101,12 @@ $modelo->cadastrarUsuario();
                 </div>
             </div><!-- fim permissao -->
         </div>
-        
-        
+
+
         <!-- botao de enviar -->
         <div class="row">
             <div class="col-md-2 col-md-offset-5 txt-center"><input type="submit" id="btn_salvar" name="btn_salvar" class="btn btn-info" value="Salvar"></div>
         </div><!-- fim do botao de envio -->
-        
+
     </form><!-- fim do formulario de cadastro -->
 </div>

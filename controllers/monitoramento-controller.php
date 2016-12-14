@@ -13,13 +13,13 @@ class MonitoramentoController extends MainController
     {
         // Verifica se esta logado
         $this->check_login();
-        
+
         // Define o titulo da pagina
         $this->title = "Monitoramento";
-        
+
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
-        
+
         // Carrega o modelo
         $modelo = $this->load_model('monitoramento/monitoramento-model');
         
@@ -29,67 +29,67 @@ class MonitoramentoController extends MainController
         require_once EFIPATH . "/views/monitoramento/monitoramento-view.php";
         require_once EFIPATH . "/views/_includes/footer.php";
     }
-    
-    
+
+
     /**
      * unidades
-     * 
+     *
      * Funcao que monta a lista da matriz e suas filiais
-     * 
+     *
      * @accss public
      */
     public function unidades ()
     {
         // Verifica se esta logado
         $this->check_login();
-        
+
         // Define o titulo da pagina
         $this->title = "Monitoramento";
-        
+
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
-        
+
         // Carrega o modelo
         $modelo = $this->load_model('monitoramento/monitoramento-model');
-        
+
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
         require_once EFIPATH . "/views/_includes/menu.php";
         require_once EFIPATH . "/views/monitoramento/monitoramentoListaFilial-view.php";
         require_once EFIPATH . "/views/_includes/footer.php";
     }
-    
-    
+
+
     /**
      * listaEquipamento
-     * 
+     *
      * Funcao que monta a lista de equipamento da unidade ou matriz
-     * 
+     *
      * @accss public
      */
     public function listaEquipamento ()
     {
         // Verifica se esta logado
         $this->check_login();
-        
+
         // Define o titulo da pagina
         $this->title = "Monitoramento";
-        
+
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
-        
+
         // Carrega o modelo
         $modelo = $this->load_model('monitoramento/monitoramento-model');
-        
+
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
         require_once EFIPATH . "/views/_includes/menu.php";
         require_once EFIPATH . "/views/monitoramento/monitoramentoListaEquipamento-view.php";
         require_once EFIPATH . "/views/_includes/footer.php";
     }
-    
-    
-    
+
+
+
     /**
      * Funcao de Gerador de grafico
      * mostra o grafico de barra ou analogico
@@ -98,27 +98,27 @@ class MonitoramentoController extends MainController
     {
         // Verifica se esta login
         $this->check_login();
-        
+
         // Define o titulo da pagina
         $this->title = "Monitoramento Visual";
-        
+
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
-        
+
         // Carrega o modelo
         $modelo = $this->load_model('monitoramento/monitoramento-model');
-        
+
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
         require_once EFIPATH . "/views/_includes/menu.php";
-        
+
         // Carrega a lista inicial de dados do grafico linha
         require_once EFIPATH . "/classes/sincronizacaoGrafico/listaInicial.php";
 
         // Inicia class da Lista inical
         $limite = 30;
         $listaIni = new ListaInicial($limite, $this->db, $this->parametros);
-        
+
         // Carregando a view
         require_once EFIPATH . "/views/monitoramento/monitoramentoGerarGrafico-view.php";
         require_once EFIPATH . "/views/_includes/footer.php";
