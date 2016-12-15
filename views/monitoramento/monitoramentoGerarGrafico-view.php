@@ -31,6 +31,7 @@ else
     // Carrega a data, para realizar a comparacao de tempo ligado
     $respData = $modelo->verificaTempoOperacao($nova_url[0]);
 
+
     // Variavel que monitora se existe data como parametro
     // Se existir desabilita os graficos do multimetro
     // Inicia a variavel

@@ -4,8 +4,12 @@
 if (! defined('EFIPATH')) exit();
 
 // chamando lista de valores
-// cliente id ; tipo 
+// cliente id ; tipo
 $retorno = $modelo->tabelaDeCliente($_SESSION['userdata']['cliente'],$_SESSION['userdata']['tipo']);
+
+    var_dump($_SESSION);
+
+    //Página aparentemente utilizada para usuários EXTERNOS
 
 ?>
 
@@ -13,7 +17,7 @@ $retorno = $modelo->tabelaDeCliente($_SESSION['userdata']['cliente'],$_SESSION['
 <script src="<?php echo HOME_URI; ?>/views/_js/table/stream_table.js" type="text/javascript"></script>
 <script type="text/javascript">
 
-var Movies0 = [ 
+var Movies0 = [
     <?php
         /* se for um array */
         if (is_array($retorno))
@@ -25,7 +29,7 @@ var Movies0 = [
                 if ($row['situacao'] == 1)
                     $statusVer = "Ativado";
                 $tempo = date('d/m/Y', strtotime($row['tempo']));
-                
+
                 $chaveSim = base64_encode($row['sim']);
                 /* criptografa ambiente/equipamento */
                 $modelaq = base64_encode($row['id_sq']);
@@ -40,7 +44,7 @@ var Movies0 = [
                              install:     '{$tempo}' ,
                              status:      '{$statusVer}'
                             } ,";
-                
+
             }
             $guarda .= ".";
             $guarda = str_replace(",.","",$guarda);
@@ -58,10 +62,30 @@ var Movies = [Movies0];
 <script src="<?php echo HOME_URI; ?>/views/_js/table/index.js" type="text/javascript"></script>
 
 
-<div class="container">
-    
-    <label class="tituloPagina"><?php echo $modelo->converte($row['cliente'],1); ?></label>
-    
+<div class="row">
+
+    <div class="col-md-8 barraBemvindo">
+        <!-- Titulo pagina -->
+        <label class="page-header">
+            <h4>Bem vindo, <?php echo $_SESSION['userdata']['firstname']." ".$_SESSION['userdata']['secondname']; ?></h4>
+        </label>
+    </div>
+    <div class="col-md-4 pull-right">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <i class="fa fa-clock-o  fa-fw"></i> Última atualização
+            </div>
+            <div class="panel-body">
+                <p>
+                    <?php // Exibe alguma coisa como: Monday 8th of August 2005 03:12:46 PM
+                        echo date('d/ m/ Y, g:i a');
+                    ?>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
     <div class='table-responsive'>
         <table id="stream_table" class='table table-striped table-bordered'>
             <thead>

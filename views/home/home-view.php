@@ -1,6 +1,8 @@
     <!-- HOME VIEW -->
     <?php
         if (! defined('EFIPATH')) exit;
+
+        var_dump($_SESSION);
     ?>
 
     <script type="text/javascript">
@@ -31,9 +33,37 @@
                     </p>
                 </div>
             </div>
-
         </div>
     </div>
+
+    <?php
+
+        //Se usuário for administrador
+        if(($_SESSION['userdata']['cliente'] == 0) && ($_SESSION['userdata']['tipo_usu'] == 'Administrador')){
+
+            $listaCliente = $modelo->tabelaDeCliente($_SESSION['userdata']['cliente'], $_SESSION['userdata']['tipo']);
+
+            var_dump($listaCliente);
+
+    ?>
+
+    <?php
+
+        }else{
+
+            $listarFiliais = $modeloFilial->filiaisCliente($_SESSION['userdata']['cliente']);
+
+            if($listarFiliais){
+                var_dump($listarFiliais);
+            }
+    ?>
+
+    <?php
+
+        }
+
+    ?>
+
 
     <!-- CONTAGEM DE ALERTAS -->
     <!-- CONTADOR DE ALERTAS COMENTADO E SUBSTITUIDO POR UM TABELA MENOR-->

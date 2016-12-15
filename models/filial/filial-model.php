@@ -51,5 +51,33 @@
             else
                 return false;
         }
+
+
+        /*
+         * Função responsavel por listar filiais de um determinado cliente
+        */
+        public function filiaisCliente($idMatriz){
+
+            $query = "SELECT * FROM tb_filial WHERE id_matriz = '$idMatriz'";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            if($result){
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    return $retorno;
+                }
+            }else
+                return false;
+        }
     }
 ?>

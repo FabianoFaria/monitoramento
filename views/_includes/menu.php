@@ -6,6 +6,7 @@ if ($dadosNot)
     $t_not = sizeof($dadosNot);
 else
     $t_not = 0;
+
 ?>
 
    <div id="wrapper" style="min-height:560px;">
@@ -36,7 +37,7 @@ else
                 echo "<span id='contadorNot'>{$t_not}</span>";
               ?>
               <ul class="dropdown-menu dropdown-messages">
-                 <?php
+                <?php
                     // verifica se existe e eh um array
                     if (!empty($dadosNot) && is_array($dadosNot))
                     {
@@ -103,7 +104,7 @@ else
                     <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                </li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/usuario/"><i class="fa fa-folder-open fa-fw"></i>Perfil do usuário</a></span><!-- Fim Botao Sair -->
+                <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/usuario/"><i class="fa fa-folder-open fa-fw"></i>Perfil do usuário</a></span></li><!-- Fim Botao Sair -->
                 </ul>
             </li>
             <!-- BOTAO SAIR -->
@@ -112,7 +113,7 @@ else
                         <i class="fa fa-power-off fa-fw"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        </li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/login/sair"><i class="fa fa-power-off fa-fw"></i>Sair do sistema!</a></span><!-- Fim Botao Sair -->
+                        <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/login/sair"><i class="fa fa-power-off fa-fw"></i>Sair do sistema!</a></span></li><!-- Fim Botao Sair -->
                     </ul>
                     <!-- /.dropdown-user -->
             </li>
@@ -128,7 +129,7 @@ else
                   <a href="<?php echo HOME_URI; ?>/home/"><i class="fa fa-home fa-3x"></i> <span class="lb-side">Painel inicial</span></a>
                 </li>
                 <!-- ANTIGO BI-GRAFI, ATUAL MONITORAR -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_pe'] == 1) { ?>
                 <li>
                     <a class="link-side" href="<?php echo HOME_URI; ?>/monitoramento/">
                       <span class="icon-side"><i class="fa fa-tachometer fa-3x"></i></span>
@@ -137,7 +138,7 @@ else
                 </li>
                 <?php } ?>
                 <!-- ANTIGO GRAFICO, ATUAL RELATORIO -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_pe'] == 1) { ?>
                 <li>
                   <a class="link-side" href="#">
                     <span class="icon-side"><i class="fa fa-area-chart fa-3x"></i></span>
@@ -146,10 +147,10 @@ else
                   </a>
                   <ul class="nav nav-second-level">
                       <li>
-                          <a href="<?php echo HOME_URI; ?>/grafico/"><i class="fa fa-area-chart fa-2x"></i><span> Relatorio gráfico</span></a>
+                          <a href="<?php echo HOME_URI; ?>/grafico/"><i class="fa fa-area-chart fa-1x"></i><span> Relatorio gráfico</span></a>
                       </li>
                       <li>
-                          <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador"><i class="fa fa-clipboard fa-2x"></i> Relatorio fisico</a>
+                          <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador"><i class="fa fa-clipboard fa-1x"></i> Relatorio fisico</a>
                       </li>
                   </ul>
                 </li>
@@ -161,7 +162,7 @@ else
                 <!-- CADASTRO -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                     <li>
-                      <a href="<?php //echo HOME_URI; ?>/cadastrar/">
+                      <a href="">
                         <i class="fa fa-plus fa-3x"></i> <span class="lb-side">Cadastrar</span><span class="fa arrow"></span>
                       </a>
                       <ul class="nav nav-second-level">
