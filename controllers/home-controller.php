@@ -22,6 +22,7 @@ class HomeController extends MainController
 
         // Carrega modelo
         $modelo         = $this->load_model('home/home-model');
+        $modeloCliente  = $this->load_model('cliente/cliente-model');
         $modeloFilial   = $this->load_model('filial/filial-model');
 
         // Carrega view

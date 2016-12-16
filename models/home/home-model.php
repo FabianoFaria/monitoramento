@@ -40,7 +40,7 @@ class HomeModel extends MainModel
         return false;
     }
 
-    
+
 
     /* acao que gera o grafico */
     public function gerarGrafico()

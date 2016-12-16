@@ -129,7 +129,7 @@ else
                   <a href="<?php echo HOME_URI; ?>/home/"><i class="fa fa-home fa-3x"></i> <span class="lb-side">Painel inicial</span></a>
                 </li>
                 <!-- ANTIGO BI-GRAFI, ATUAL MONITORAR -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_pe'] == 1) { ?>
+                <?php if (isset($_SESSION['userdata']['local']) && $_SESSION['userdata']['per_mo'] == 1) { ?>
                 <li>
                     <a class="link-side" href="<?php echo HOME_URI; ?>/monitoramento/">
                       <span class="icon-side"><i class="fa fa-tachometer fa-3x"></i></span>
@@ -138,7 +138,7 @@ else
                 </li>
                 <?php } ?>
                 <!-- ANTIGO GRAFICO, ATUAL RELATORIO -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_pe'] == 1) { ?>
+                <?php if(isset($_SESSION['userdata']['local']) && $_SESSION['userdata']['per_pe'] == 1) { ?>
                 <li>
                   <a class="link-side" href="#">
                     <span class="icon-side"><i class="fa fa-area-chart fa-3x"></i></span>

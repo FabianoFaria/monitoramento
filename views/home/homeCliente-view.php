@@ -7,7 +7,7 @@ if (! defined('EFIPATH')) exit();
 // cliente id ; tipo
 $retorno = $modelo->tabelaDeCliente($_SESSION['userdata']['cliente'],$_SESSION['userdata']['tipo']);
 
-    var_dump($_SESSION);
+    //var_dump($_SESSION);
 
     //Página aparentemente utilizada para usuários EXTERNOS
 

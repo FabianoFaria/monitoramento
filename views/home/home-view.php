@@ -2,7 +2,7 @@
     <?php
         if (! defined('EFIPATH')) exit;
 
-        var_dump($_SESSION);
+        //var_dump($_SESSION);
     ?>
 
     <script type="text/javascript">
@@ -41,9 +41,9 @@
         //Se usuário for administrador
         if(($_SESSION['userdata']['cliente'] == 0) && ($_SESSION['userdata']['tipo_usu'] == 'Administrador')){
 
-            $listaCliente = $modelo->tabelaDeCliente($_SESSION['userdata']['cliente'], $_SESSION['userdata']['tipo']);
+            $listaCliente = $modeloCliente->listarCliente($_SESSION['userdata']['cliente'], $_SESSION['userdata']['tipo']);
 
-            var_dump($listaCliente);
+            //var_dump($_SESSION);
 
     ?>
 
@@ -54,7 +54,7 @@
             $listarFiliais = $modeloFilial->filiaisCliente($_SESSION['userdata']['cliente']);
 
             if($listarFiliais){
-                var_dump($listarFiliais);
+                //var_dump($listarFiliais);
             }
     ?>
 
@@ -162,6 +162,34 @@
         </div> -->
     <!-- </div> -->
 
+    <!-- FILTRO DE ALERTAS -->
+    <!-- <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="" href="#filtroCollapse"><i class="fa fa-arrow-circle-o-down fw"></i> Filtro de alarmes </a>
+                </div>
+                <div id="filtroCollapse" class="painel-body panel-collapse collapse in">
+                    <form id="filtroAlarmes">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Cliente/Filia</label><br>
+                                <?php $modelo->loadClienteFilial(); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-info">Filtrar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div> -->
+
     <!-- PRINCIPAIS STATUS DE ALERTAS -->
     <div class="row">
         <div class="col-lg-12">
@@ -231,3 +259,10 @@
         </div>
 
     </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#collapseOne').collapse("hide");
+    $('#filtroCollapse').collapse("hide");
+  });
+</script>

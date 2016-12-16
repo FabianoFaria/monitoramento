@@ -175,3 +175,9 @@ $retorno = $modelo->buscaRelacao();
         </td>
     </tr>
 </script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#filtroCollapse').collapse("hide");
+  });
+</script>

@@ -1,7 +1,7 @@
 <?php
 /*
  *      pagina de vinculo do SIM ao Cliente
- *      
+ *
  */
 
 // verfica link
@@ -22,11 +22,10 @@ $modelo->vincularSim();
 <div class="container-fluid fontPadrao">
     <!-- Titulo pagina -->
     <label class="titulo-pagina">CLIENTE AO SIM</label><!-- Fim Titulo pagina -->
-    
-    
+
+
     <!-- formulario de cadastro -->
     <form method="post">
-        
         <div class="row">
             <!-- nome da matiz -->
             <div class="col-md-4">
@@ -35,7 +34,7 @@ $modelo->vincularSim();
                     <?php $modelo->loadClienteFilial(); ?>
                 </div>
             </div><!-- fim do campo nome da matiz -->
-            
+
             <!-- Codigo SIM -->
             <div class="col-md-4">
                 <div class="form-group">
@@ -44,13 +43,13 @@ $modelo->vincularSim();
                 </div>
             </div><!-- fim do Codigo SIM -->
         </div>
-        
-        
+
+
         <!-- botao de envio -->
         <div class="row">
             <div class="col-md-2 col-md-offset-5 txt-center">
                 <input type="submit" class="btn btn-info" name="btn_vicular" value="Vicular SIM"></div>
         </div><!-- fim botao de envio -->
-        
+
     </form><!-- fim do formulario -->
 </div>
