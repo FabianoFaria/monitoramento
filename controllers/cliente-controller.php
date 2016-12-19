@@ -29,6 +29,36 @@
         require_once EFIPATH . "/views/cliente/clienteLista-view.php";
         require_once EFIPATH . "/views/_includes/footer.php";
     }
+
+    public function cadastrar(){
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            // Define o titulo da pagina
+            $this->title = "cadastrar";
+
+            // Carrega os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+            // Carrega o modelo para este view
+            $modelo = $this->load_model('cliente/cliente-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/cliente/cadastrarCliente-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+        }
+    }
  }
 
  ?>

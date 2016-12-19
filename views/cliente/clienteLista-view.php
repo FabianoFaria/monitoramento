@@ -16,18 +16,28 @@
  ?>
 
  <div class="row">
+     <div class="col-lg-12">
+         <!-- TITULO PAGINA -->
+         <label class="page-header">Clientes registrados até o momento</label><!-- Fim Titulo pagina -->
+
+     </div>
+
+ </div>
+ <div class="row">
+     <div class="col-md-4 pull-left">
+
+        <div class="btn-group">
+            <a href="<?php echo HOME_URI; ?>/cliente/cadastrar/" class="btn btn-primary">
+                <i class="fa fa-plus fa-lg"> </i> Adicionar novo cliente
+            </a>
+        </div>
+
+     </div>
+ </div>
+
+ <div class="row">
     <div class="col-lg-12">
 
-        <!-- TITULO PAGINA -->
-        <label class="page-header">Clientes registrados até o momento</label><!-- Fim Titulo pagina -->
-
-        <div class="pull-right">
-            <div class="btn-group">
-                <a href="<?php echo HOME_URI; ?>/cadastrar/cliente/" class="btn btn-primary">
-                    <i class="fa fa-plus fa-lg"> </i>Adicionar novo cliente
-                </a>
-            </div>
-        </div>
         <!-- TABELA CONTENDO TODOS OS CLIENTES -->
         <div class="panel panel-default">
             <div class="panel-heading">

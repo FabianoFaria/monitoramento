@@ -3,14 +3,14 @@
                 <footer>
                     <div class="row">
                         <div class="col-lg-12">
-                            <p class=""> Eficaz system - 2016 </p>
+                            <p class=""> Eficaz system - 2016</p>
                         </div>
                     </div>
                 </footer>
             </div>
 
         </div>
-        <!-- Js Files -->
+
         <!-- <script src='<?php echo HOME_URI; ?>/views/_js/jquery-ui.min.js'></script>- -->
 
         <!-- bootstrap -->
@@ -26,6 +26,9 @@
         <!-- Main Files -->
         <script src="<?php echo HOME_URI; ?>/views/_js/sb-admin-2.js"></script>
 
+        <!-- Js Files da página atual, se existir -->
+
+        <script src="<?php echo HOME_URI; ?>/views/_js/pages/<?php echo $this->title; ?>.js"></script>
 
 	</body>
 </html>

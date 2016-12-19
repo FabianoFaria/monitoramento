@@ -35,8 +35,8 @@
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.js"></script>
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.mask.js"></script>
 
-        <script src="<?php echo HOME_URI; ?>/views/_js/bootstrap-filestyle.min.js"> </script>
-        <script src="<?php echo HOME_URI; ?>/views/_js/jquery.form.js"></script>
+        <script src="<?php echo HOME_URI; ?>/views/_js/jquery.validate.js"></script>
+        <script src="<?php echo HOME_URI; ?>/views/_js/additional-methods.js"></script>
 
         <!-- SETTAR TIME ZONE -->
         <?php

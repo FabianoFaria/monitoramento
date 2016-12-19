@@ -13,7 +13,7 @@ class CadastrarController extends MainController
     {
         // Verifica o login
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
         if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
         {
@@ -28,7 +28,7 @@ class CadastrarController extends MainController
 
             // Parametro da funcao
             $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
-            
+
             // Carrega o modelo para este view
             $modelo = $this->load_model('cadastrar/cadastro-model');
 
@@ -39,7 +39,7 @@ class CadastrarController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
-    
+
     /**
      * Funcao que gerencia a parte de cadastro de clintes
      */
@@ -47,7 +47,7 @@ class CadastrarController extends MainController
     {
         // Verifica o login
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
         if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
         {
@@ -73,7 +73,7 @@ class CadastrarController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
-    
+
     /**
      * Funcao que gerencia o cadastro de filiais
      */
@@ -81,7 +81,7 @@ class CadastrarController extends MainController
     {
         // Verifica o login
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
         if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
         {
@@ -107,15 +107,15 @@ class CadastrarController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
-    
+
     /**
-     * Funcao que gerencia o cadastra de fabricante 
+     * Funcao que gerencia o cadastra de fabricante
      */
     public function fabricante ()
     {
         // Verificar se esta logado
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
         if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
         {
@@ -141,7 +141,7 @@ class CadastrarController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
-    
+
     /**
      * Funcao que gerencia o cadastro de equipamento
      */
@@ -149,7 +149,7 @@ class CadastrarController extends MainController
     {
         // Verifica se esta logado
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
         if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
         {
@@ -164,7 +164,7 @@ class CadastrarController extends MainController
 
             // Define os parametros da funcao
             $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
-            
+
             // Carrega o modelo
             $modelo = $this->load_model('cadastrar/cadastro-model');
 
@@ -175,7 +175,7 @@ class CadastrarController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
-    
+
     /**
      * Funcao que gerencia o cadastro de usuario
      */
@@ -183,7 +183,7 @@ class CadastrarController extends MainController
     {
         // verifica se esta logado
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
         if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
         {
@@ -209,7 +209,7 @@ class CadastrarController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
-    
+
 }
 
 ?>
