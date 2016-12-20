@@ -13,11 +13,11 @@ define('HOME_URI' , 'http://127.0.0.1/eficazmonitor'); // versao desenvolvedor
 // // hostname
 // define('HOSTNAME' , 'localhost');
 // // usuario da base
-// define('USERNAME' , 'eficazmonitor');
+// define('USERNAME' , 'root');
 // // senha
-// define('USERPASS' , '!q2W#e4R');
+// define('USERPASS' , '');
 // // nome da base de dados
-// define('DBNAME' , 'eficazmonitoramento');
+// define('DBNAME' , 'eficazsystem22');
 
 // localhost
 // hostname

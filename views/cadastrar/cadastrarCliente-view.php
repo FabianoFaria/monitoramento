@@ -17,8 +17,8 @@ $modelo->cadastrarCliente();
 <div class="container-fluid fontPadrao">
     <!-- Titulo pagina -->
     <label class="titulo-pagina">CLIENTE</label><!-- Fim Titulo pagina -->
-    
-    
+
+
     <!-- formulario de cadastro -->
     <form method="post" autocomplete="off" enctype="multipart/form-data">
         <div class="row">
@@ -29,7 +29,7 @@ $modelo->cadastrarCliente();
                     <input type="text" class="form-control" id="txt_cliente" name="txt_cliente" placeholder="Nome do cliente" maxlength="100" required>
                 </div>
             </div><!-- fim do campo nome do cliente -->
-            
+
             <!-- DDD -->
             <div class="col-md-2">
                 <div class="form-group">
@@ -37,7 +37,7 @@ $modelo->cadastrarCliente();
                     <input type="text" class="form-control" id="txt_ddd" name="txt_ddd" placeholder="DDD (000)" maxlength="3" onkeypress="return onlyNumber(event);">
                 </div>
             </div><!-- fim do ddd -->
-            
+
             <!-- telefone -->
             <div class="col-md-4">
                 <div class="form-group">
@@ -46,8 +46,8 @@ $modelo->cadastrarCliente();
                 </div>
             </div><!-- fim do telefone -->
         </div>
-        
-        
+
+
         <div class="row">
             <!-- cep -->
             <div class="col-md-2">
@@ -56,8 +56,8 @@ $modelo->cadastrarCliente();
                     <input type="text" class="form-control" id="txt_cep" name="txt_cep" placeholder="CEP" maxlength="9" required onkeypress="return onlyNumber(event);">
                 </div>
             </div><!-- fim do cep -->
-            
-            
+
+
             <!-- endereco do cliente -->
             <div class="col-md-6">
                 <div class="form-group">
@@ -65,7 +65,7 @@ $modelo->cadastrarCliente();
                     <input type="text" class="form-control" id="txt_endereco" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required>
                 </div>
             </div><!-- fim do endereco do cliente -->
-            
+
             <!-- numero -->
             <div class="col-md-2">
                 <div class="form-group">
@@ -74,8 +74,8 @@ $modelo->cadastrarCliente();
                 </div>
             </div><!-- fim do numero -->
         </div>
-        
-        
+
+
         <div class="row">
             <!-- Cidade -->
             <div class="col-md-3">
@@ -84,7 +84,7 @@ $modelo->cadastrarCliente();
                     <input type="text" class="form-control" id="txt_cidade" name="txt_cidade" placeholder="Cidade" maxlength="50" required>
                 </div>
             </div><!-- fim do campo Cidade -->
-            
+
             <!-- Bairro -->
             <div class="col-md-3">
                 <div class="form-group">
@@ -92,27 +92,29 @@ $modelo->cadastrarCliente();
                     <input type="text" class="form-control" id="txt_bairro" name="txt_bairro" placeholder="Cidade" maxlength="50" required>
                 </div>
             </div><!-- fim do campo Bairro -->
-            
+        </div>
+        <div class="row">
+
             <!-- pais -->
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <div class="form-group">
                     <label for="pais">Pais</label><br>
                     <?php $modelo->listaPaises(); ?>
                 </div>
             </div><!-- fim do pais -->
-            
-            
+
+
             <!-- estado -->
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <div class="form-group">
                     <label for="estado">Estado</label><br>
                     <?php $modelo->listaEstado(); ?>
                 </div>
             </div><!-- fim do estado -->
         </div>
-        
-        
-        
+
+
+
         <div class="row">
             <!-- foto -->
             <div class="col-md-4">
@@ -122,13 +124,13 @@ $modelo->cadastrarCliente();
                 </div>
             </div><!-- Fim fotos -->
         </div>
-        
-        
-        
+
+
+
         <!-- botao de enviar -->
         <div class="row">
             <div class="col-md-2 col-md-offset-5 txt-center"><input type="submit" name="btn_salvar" class="btn btn-info" value="Salvar"></div>
         </div><!-- fim do botao de envio -->
-        
+
     </form><!-- fim do formulario de cadastro -->
 </div>
