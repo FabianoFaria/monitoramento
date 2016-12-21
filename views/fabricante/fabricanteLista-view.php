@@ -23,7 +23,7 @@
 
         <div class="pull-right">
             <div class="btn-group">
-                <a href="<?php echo HOME_URI; ?>/cadastrar/fabricante/" class="btn btn-primary">
+                <a href="<?php echo HOME_URI; ?>/fabricante/cadastrar/" class="btn btn-primary">
                     <i class="fa fa-plus fa-lg"> </i>Adicionar novo fabricante
                 </a>
             </div>
