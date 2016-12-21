@@ -128,6 +128,48 @@ else
                 <li>
                   <a href="<?php echo HOME_URI; ?>/home/"><i class="fa fa-home fa-3x"></i> <span class="lb-side">Painel inicial</span></a>
                 </li>
+                <!-- CADASTRO -->
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                  <li>
+                    <a href="">
+                      <i class="fa fa-plus fa-3x"></i> <span class="lb-side">Cadastrar</span><span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                      <li>
+                          <!-- Cadastro de clientes -->
+                          <a href="<?php echo HOME_URI; ?>/cliente" class="">
+                            <i class="fa fa-university fa-1x"></i>
+                            <span class="icon-side"></span>
+                            <spam>Clientes</span>
+                          </a>
+                      </li>
+                      <li>
+                        <!-- Cadastro de filiais -->
+                        <a href="<?php echo HOME_URI; ?>/filial" class="">
+                          <i class="fa fa-building-o fa-1x"></i>
+                          <span class="icon-side"></span>
+                          <spam>Filiais</span>
+                        </a>
+                      </li>
+                      <li>
+                        <!-- Cadastro Fabricantes -->
+                          <a href="<?php echo HOME_URI; ?>/fabricante" class="">
+                            <i class="fa fa-building fa-1x"></i>
+                            <span class="icon-side"></span>
+                            <spam>Fabricantes</span>
+                          </a>
+                        </li>
+                        <li>  
+                          <a href="<?php echo HOME_URI; ?>/equipamento" class="">
+                            <i class="fa fa-hdd-o fa-1x"></i>
+                            <span class="icon-side"></span>
+                            <spam>Equipamentos</span>
+                          </a>
+                        </li>
+                       </ul>
+                      <!-- /.nav-second-level -->
+                  </li>
+                <?php } ?>
                 <!-- ANTIGO BI-GRAFI, ATUAL MONITORAR -->
                 <?php if (isset($_SESSION['userdata']['local']) && $_SESSION['userdata']['per_mo'] == 1) { ?>
                 <li>
@@ -159,48 +201,7 @@ else
                 <li>
                   <a href="<?php echo HOME_URI; ?>/alarme/"><i class="fa fa-volume-up fa-3x"></i> <span class="lb-side">Alarmes</span></a>
                 </li>
-                <!-- CADASTRO -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
-                    <li>
-                      <a href="">
-                        <i class="fa fa-plus fa-3x"></i> <span class="lb-side">Cadastrar</span><span class="fa arrow"></span>
-                      </a>
-                      <ul class="nav nav-second-level">
-                        <li>
-                            <!-- Cadastro de clientes -->
-                            <a href="<?php echo HOME_URI; ?>/cliente" class="">
-                                <i class="fa fa-university fa-1x"></i>
-                                <span class="icon-side"></span>
-                                <spam>Clientes</span>
-                            </a>
-                        </li>
-                        <li>
-                            <!-- Cadastro de filiais -->
-                            <a href="<?php echo HOME_URI; ?>/filial" class="">
-                              <i class="fa fa-building-o fa-1x"></i>
-                              <span class="icon-side"></span>
-                              <spam>Filiais</span>
-                            </a>
-                        </li>
-                        <li>
-                            <!-- Cadastro Fabricantes -->
-                            <a href="<?php echo HOME_URI; ?>/fabricante" class="">
-                              <i class="fa fa-building fa-1x"></i>
-                              <span class="icon-side"></span>
-                              <spam>Fabricantes</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo HOME_URI; ?>/equipamento" class="">
-                              <i class="fa fa-hdd-o fa-1x"></i>
-                              <span class="icon-side"></span>
-                              <spam>Equipamentos</span>
-                            </a>
-                        </li>
-                       </ul>
-                   <!-- /.nav-second-level -->
-                    </li>
-                <?php } ?>
+                
                 <!-- CLIENTES -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                     <!-- <li>

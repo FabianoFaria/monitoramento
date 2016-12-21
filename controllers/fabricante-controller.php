@@ -16,7 +16,7 @@
          $this->check_login();
 
          // Define o titulo da pagina
-         $this->title = "Fabricantes";
+         $this->title = "fabricante";
 
          // Define os parametro da funcao
          $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -30,6 +30,30 @@
          require_once EFIPATH . "/views/fabricante/fabricanteLista-view.php";
          require_once EFIPATH . "/views/_includes/footer.php";
 
+     }
+
+     /**
+     *
+     */
+     public function cadastrar ()
+     {
+        // Verifica se esta logado
+         $this->check_login();
+
+         // Define o titulo da pagina
+         $this->title = "fabricante";
+
+         // Define os parametro da funcao
+         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+         // Carrega o modelo
+         $modelo = $this->load_model('fabricante/fabricante-model');
+
+          // Carrega view
+         require_once EFIPATH . "/views/_includes/header.php";
+         require_once EFIPATH . "/views/_includes/menu.php";
+         require_once EFIPATH . "/views/fabricante/fabricanteCadastrar-view.php";
+         require_once EFIPATH . "/views/_includes/footer.php";
      }
 
 
