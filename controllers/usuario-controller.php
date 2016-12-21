@@ -104,6 +104,40 @@
              }
          }
 
+
+         //Efetua o tratamento das funções passadas via JSON
+
+         /**
+          * Funcao que cadastra uma usuário para o cliente
+          */
+          public function registraUsuario(){
+
+              //CARREGA MODELO PARA ESTA FUNÇÃO
+              $UsuarioModelo    = $this->load_model('usuario/usuario-model');
+
+              //Faz tratamento de dados recebidos antes de enviar para a model
+
+              $senha            = $_POST['senha'];
+              $confirmaSenha    = $_POST['confirmaS'];
+
+
+              if($senha == $confirmaSenha){
+                  $senha = md5($senha);
+              }else{
+                  $senha = md5('12345');
+              }
+
+              $registraUsuario  = $UsuarioModelo->registrarUsuarioParaCliente($_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $senha);
+
+              if($registraUsuario){
+                  exit(json_encode(array('status' => $registraUsuario['status'], 'idUsuario' => $registraUsuario['idUsuario'])));
+              }else{
+                  exit(json_encode(array('status' => $registraUsuario['status'], 'idUsuario' => $registraUsuario['idUsuario'])));
+              }
+
+          }
+
+
     }
 
 

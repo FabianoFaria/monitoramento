@@ -197,6 +197,30 @@ class UsuarioModel extends MainModel
             return false;
 
     }
+
+    //Funções para tratamento de dados via JSON
+    public function registrarUsuarioParaCliente($nome, $sobrenome, $email, $celular, $telefone, $senha){
+
+        // Verifica se os cambos obrigatorios nao sao nulos
+        if ($nome != "" && $sobrenome != "" && $email != "" && $celular != "" && $telefone != "")
+        {
+            $query = "INSERT INTO tb_users(id_perfil_acesso, nome, sobrenome, email, telefone, celular, senha, local_usu, status_ativo) VALUES('2', '$nome', '$sobrenome', '$email', '$telefone', '$celular', '$senha', '1', '1')";
+
+            // Verifica se gravou com sucesso
+            if ($this->db->query($query))
+            {
+                $array = array('status' => true, 'idUsuario' => 0);
+            }else{
+                $array = array('status' => false, 'idUsuario' => 0);
+            }
+
+        }else{
+            $array = array('status' => false, 'idUsuario' => 0);
+        }
+
+        return $array;
+    }
+
 }
 
  ?>

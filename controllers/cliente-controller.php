@@ -58,7 +58,26 @@
             require_once EFIPATH . "/views/cliente/cadastrarCliente-view.php";
             require_once EFIPATH . "/views/_includes/footer.php";
         }
+
     }
+
+    //Funções para tratar das operações via JSON
+
+    public function registrarClientes(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $clienteModelo      = $this->load_model('cliente/cliente-model');
+
+        $registraClienteBd  = $clienteModelo->cadastrarClienteJson($_POST['nome_cliente'], $_POST['ddd'], $_POST['telefone'], $_POST['cep'], $_POST['endereco'], $_POST['numero'], $_POST['bairro'], $_POST['cidade'], $_POST['estado'], $_POST['pais']);
+
+        if($registraClienteBd['status']){
+            exit(json_encode(array('status' => $registraClienteBd['status'], 'idCliente' => $registraClienteBd['idCliente'])));
+        }else{
+            exit(json_encode(array('status' => $registraClienteBd['status'], 'idCliente' => $registraClienteBd['idCliente'])));
+        }
+
+    }
+
  }
 
  ?>

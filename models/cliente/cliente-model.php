@@ -93,6 +93,72 @@
               }
           }
 
+        //OPERAÇÔES DE CRUD ATRAVÉS DE JSON
+        public function cadastrarClienteJson($nomeCliente, $ddd, $telefone, $cep, $endereco, $numero, $bairro, $cidade, $estado, $pais)
+        {
+            // Verifica se os cambos obrigatorios nao sao nulos
+            if ($nomeCliente != "" && $endereco != "" && $cep != "" && $cidade != "" && $bairro != "")
+            {
+
+                // Realiza o upload da imagem
+                //$up_resp = $this->validaUpload($_FILES);
+
+                // Grava no banco os valores
+                $query = "insert into tb_cliente (nome, endereco, numero, cep, id_pais, id_estado, ddd, telefone , cidade, bairro, id_users ,
+                                                  foto)
+                          values ('{$nomeCliente}', '{$endereco}', '{$numero}', '{$cep}', '{$pais}', '{$estado}', '{$ddd}', '{$telefone}',
+                          '{$cidade}', '{$bairro}', '{$_SESSION['userdata']['userId']}', 'a881bd9c3f3b8446ef35ac350a06691a.jpg')";
+
+
+                // Realiza a chamada para gravar e verficar se gravou com sucesso
+                $result = $this->validaInsercaoBanco ($query, "Cadastro salvo com sucesso!", "Erro durante o salvamento.");
+
+                //$queryId = mysql_insert_id();
+
+                $array = array('status' => $result, 'idCliente' => 0);
+
+            }else{
+
+                $array = array('status' => false, 'idCliente' => 0);
+
+            }
+
+            return $array;
+        }
+
+        /**
+         * Funcao que valida a gravacao da query no banco
+         *
+         * @param string $query - recebe uma string contendo a query
+         * @param string $msgSuc - recebe uma string contendo a mensagem de sucesso
+         * @param string $msgErr - recebe uma string contendo a mensagem de erro
+         */
+        private function validaInsercaoBanco($query, $msgSuc, $msgErr)
+        {
+            // Verifica se gravou com sucesso
+            if ($this->db->query($query))
+            {
+                // Se gravou
+                // Apresenta a mensagem de sucesso
+                //echo "<div class='mensagemSucesso'><span>{$msgSuc}</span></div>";
+                return true;
+            }
+            else
+            {
+                // Se ocorreu um erro
+                // Grava o erro no log
+                // Monta a query do log
+                $queryLog = "insert into tb_log (log) values ('Erro ao gravar o cadastro : [".str_replace("'","" , $query)."]')";
+
+                // Executa a query
+                $this->db->query($queryLog);
+
+                // Apresenta a mensagem de erro
+                //echo "<div class='mensagemError'><span>{$msgErr}</span></div>";
+                return false;
+            }
+        }
+
     }
 
 ?>

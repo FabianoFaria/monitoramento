@@ -10,7 +10,7 @@
 <script type="text/javascript">
     // gerenciador de link
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/cadastrar/" class="linkMenuSup">Cadastrar</a> / <a href="<?php echo HOME_URI; ?>/cadastrar/cliente/" class="linkMenuSup">Cliente</a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/cliente/" class="linkMenuSup">Listar Clientes</a> / <a href="<?php echo HOME_URI; ?>/cliente/cadastrar/" class="linkMenuSup">Cadastrar Cliente</a>';
 </script>
 
 <!-- Jquery file -->
@@ -18,6 +18,10 @@
 
 <div class="row">
     <div class="col-md-12">
+
+        <!-- TITULO PAGINA --><!-- TITULO PAGINA -->
+       <label class="page-header">Cadastro de novo cliente</label><!-- Fim Titulo pagina -->
+
         <!-- Cadastra do cliente -->
         <div class="panel-group" id="accordionContatoClie" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
@@ -39,7 +43,7 @@
                               <!-- nome do cliente -->
                               <div class="col-md-4">
                                   <div class="form-group">
-                                      <label for="cliente">Nome do cliente</label>
+                                      <label for="cliente">Nome da empresa do cliente</label>
                                       <input type="text" class="form-control" id="txt_cliente" name="txt_cliente" placeholder="Nome do cliente" maxlength="100">
                                   </div>
                               </div><!-- fim do campo nome do cliente -->
@@ -61,13 +65,23 @@
                               </div><!-- fim do telefone -->
                             </div>
                             <div class="row">
+                                <!-- endereco do cliente -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="endereco">Endere&ccedil;o</label>
+                                        <input type="text" class="form-control" id="txt_endereco" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required>
+                                    </div>
+                                </div><!-- fim do endereco do cliente -->
+
                                 <!-- cep -->
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="cep">CEP</label>
                                         <input type="text" class="form-control" id="txt_cep" name="txt_cep" placeholder="CEP" maxlength="9" >
                                     </div>
                                 </div><!-- fim do cep -->
+                            </div>
+                            <div class="row">
 
                                 <!-- numero -->
                                 <div class="col-md-2">
@@ -86,7 +100,7 @@
                                 </div><!-- fim do campo Bairro -->
 
                                 <!-- Cidade -->
-                                <div class="col-md-3">
+                                <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="cidade">Cidade</label>
                                         <input type="text" class="form-control" id="txt_cidade" name="txt_cidade" placeholder="Cidade" maxlength="50" required>
@@ -268,97 +282,14 @@
                         <!-- Contem botão para adicionar novos formularios de filiais! -->
                         <div class="row">
                             <div class="col-md-12">
-                                <input id="temFiliais" type="checkbox" name="possuiFiliais" value="filiais">Cliente possue filiais<br>
+                                <input id="temFiliais" type="checkbox" name="temFiliais" value="filiais">Cliente possue filiais<br>
 
-                                <span id="countFiliais" value="0"></span>
+                                <span id="countFiliais" style="display:none">1</span>
                             </div>
                         </div>
-                        <!-- Trecho referente a amostra de formulario de filiais -->
 
                         <div id="listaFiliais" class="row" style="display:none">
                             <div class="filiais col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3 class="page-header">Filial 01</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!-- nome da filial -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Nome da Filial</label>
-                                            <input type="text" class="form-control" id="txt_filial" name="txt_filial" placeholder="Nome da Filial" maxlength="100" required value="">
-                                        </div>
-                                    </div><!-- fim do campo nome da filial -->
-
-                                    <!-- DDD -->
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">C&oacute;digo de &Aacute;rea</label>
-                                            <input type="text" class="form-control" id="txt_ddd" name="txt_ddd" placeholder="DDD (000)" maxlength="3" onkeypress="" value="">
-                                        </div>
-                                    </div><!-- fim do ddd -->
-
-                                    <!-- telefone -->
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Telefone</label>
-                                            <input type="text" class="form-control" id="txt_telefone" name="txt_telefone" placeholder="Telefone" maxlength="9" onkeypress="" value="">
-                                        </div>
-                                    </div><!-- fim do telefone -->
-                                </div>
-
-                                <div class="row">
-                                    <!-- CEP da filial -->
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">CEP</label>
-                                            <input type="text" class="form-control" id="txt_cep" name="txt_cep" placeholder="CEP" maxlength="9" required onkeypress="" value="">
-                                        </div>
-                                    </div><!-- fim do cep -->
-                                    <!-- endereco do cliente -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Endere&ccedil;o</label>
-                                            <input type="text" class="form-control" id="txt_endereco" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required value="">
-                                        </div>
-                                    </div><!-- fim do endereco do cliente -->
-
-                                    <!-- numero -->
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">N&uacute;mero</label>
-                                            <input type="text" class="form-control" id="txt_numero" name="txt_numero" placeholder="N&uacute;mero" maxlength="10" onkeypress="" value="">
-                                        </div>
-                                    </div><!-- fim do numero -->
-
-                                </div>
-
-                                <div class="row">
-                                    <!-- Bairro -->
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Bairro</label>
-                                            <input type="text" class="form-control" id="txt_bairro" name="txt_bairro" placeholder="Cidade" maxlength="50" required value="">
-                                        </div>
-                                    </div><!-- fim do campo Bairro -->
-
-                                    <!-- Cidade -->
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Cidade</label>
-                                            <input type="text" class="form-control" id="txt_cidade" name="txt_cidade" placeholder="Cidade" maxlength="50" required value="">
-                                        </div>
-                                    </div><!-- fim do campo Cidade -->
-
-                                    <!-- estado -->
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Estado</label><br>
-                                            <?php $modelo->listaEstado(); ?>
-                                        </div>
-                                    </div><!-- fim do estado -->
-                                </div>
 
                                 <div class="row">
                                     <div class="col-md-4">
@@ -372,6 +303,102 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Trecho de template para filiais adicionais -->
+                        <div class="row">
+                            <div class="templateHtml" style="display:none;">
+                                <div class="filiais col-md-12">
+                                    <!-- Titulo da filial -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3 class="page-header">Adicionar filial</h3>
+                                        </div>
+                                    </div>
+                                    <!-- Primeiro linha de inputs -->
+                                    <div class="row">
+                                        <!-- nome da filial -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Nome da Filial</label>
+                                                <input type="text" class="form-control" id="txt_filial" name="txt_filial" placeholder="Nome da Filial" maxlength="100" required value="">
+                                            </div>
+                                        </div><!-- fim do campo nome da filial -->
+
+                                        <!-- DDD -->
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">C&oacute;digo de &Aacute;rea</label>
+                                                <input type="text" class="form-control" id="txt_ddd" name="txt_ddd" placeholder="DDD (000)" maxlength="3" onkeypress="" value="">
+                                            </div>
+                                        </div><!-- fim do ddd -->
+
+                                        <!-- telefone -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Telefone</label>
+                                                <input type="text" class="form-control" id="txt_telefone" name="txt_telefone" placeholder="Telefone" maxlength="9" onkeypress="" value="">
+                                            </div>
+                                        </div><!-- fim do telefone -->
+                                    </div>
+
+                                    <!-- Segunda linha de output -->
+                                    <div class="row">
+                                        <!-- CEP da filial -->
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">CEP</label>
+                                                <input type="text" class="form-control" id="txt_cep" name="txt_cep" placeholder="CEP" maxlength="9" required onkeypress="" value="">
+                                            </div>
+                                        </div><!-- fim do cep -->
+                                        <!-- endereco do cliente -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Endere&ccedil;o</label>
+                                                <input type="text" class="form-control" id="txt_endereco" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required value="">
+                                            </div>
+                                        </div><!-- fim do endereco do cliente -->
+
+                                        <!-- numero -->
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">N&uacute;mero</label>
+                                                <input type="text" class="form-control" id="txt_numero" name="txt_numero" placeholder="N&uacute;mero" maxlength="10" onkeypress="" value="">
+                                            </div>
+                                        </div><!-- fim do numero -->
+                                    </div>
+
+                                    <div class="row">
+                                        <!-- Bairro -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Bairro</label>
+                                                <input type="text" class="form-control" id="txt_bairro" name="txt_bairro" placeholder="Cidade" maxlength="50" required value="">
+                                            </div>
+                                        </div><!-- fim do campo Bairro -->
+
+                                        <!-- Cidade -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Cidade</label>
+                                                <input type="text" class="form-control" id="txt_cidade" name="txt_cidade" placeholder="Cidade" maxlength="50" required value="">
+                                            </div>
+                                        </div><!-- fim do campo Cidade -->
+
+                                        <!-- estado -->
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Estado</label><br>
+                                                <?php $modelo->listaEstado(); ?>
+                                            </div>
+                                        </div><!-- fim do estado -->
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fim do trecho de amostra para filiais adicionais -->
+
                         <div class="row">
                             <div class="col-md-4">
 
@@ -383,6 +410,13 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-4">
+
+                            </div>
+                            <div id="resultadoCadastro" class="col-md-4">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
