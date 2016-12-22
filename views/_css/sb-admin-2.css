@@ -475,3 +475,6 @@ table.dataTable thead .sorting:after {
     border-left-width: 0;
   }
 }
+.error{
+    color: #d9534f;
+}

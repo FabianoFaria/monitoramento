@@ -57,6 +57,24 @@
      }
 
 
+    /*
+    * REGISTRO DE FABRICANTE VIA JSON
+    */
+    public function registraFabricanteJSON(){
+
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+        $fabricanteModelo       = $this->load_model('fabricante/fabricante-model');
+
+        $fabricanteRegistrado   = $fabricanteModelo->registrarFabricanteJson($_POST['novoFabricante'], $_POST['ddd'], $_POST['telefone'], $_POST['cep'], $_POST['endereco'], $_POST['numero'], $_POST['bairro'], $_POST['cidade'], $_POST['estado'], $_POST['pais']);
+
+        if($fabricanteRegistrado){
+            exit(json_encode(array('status' => $fabricanteRegistrado['status'] )));
+        }else{
+            exit(json_encode(array('status' => $fabricanteRegistrado['status'] )));
+        }
+
+
+    }
 }
 
 

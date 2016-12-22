@@ -156,6 +156,7 @@
                                 <div class="col-md-4 ">
                                     <div class="form-group">
                                         <div class=" txt-center"><button id="validarResponsavel" type="button" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar cliente</button</div>
+                                        <input id="resultadoCadastro" name="resultadoCadastro" type="hidden" value="">
                                     </div>
                                 </div>
                             </div>
@@ -281,26 +282,14 @@
                     <div class="panel-body">
                         <!-- Contem botão para adicionar novos formularios de filiais! -->
                         <div class="row">
-                            <div class="col-md-12">
-                                <input id="temFiliais" type="checkbox" name="temFiliais" value="filiais">Cliente possue filiais<br>
+                            <div class="col-md-4">
 
-                                <span id="countFiliais" style="display:none">1</span>
                             </div>
-                        </div>
-
-                        <div id="listaFiliais" class="row" style="display:none">
-                            <div class="filiais col-md-12">
-
-                                <div class="row">
-                                    <div class="col-md-4">
-
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class=" txt-center"><button id="adicionarNovaFilial" type="button" name="btn_adicionar" class="btn btn-info" value="Adicionar filial">Adicionar nova filial</button></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-4">
+                                <p class="page-header">
+                                    <input id="temFiliais" type="checkbox" name="temFiliais" value="filiais"> Cliente possue filiais?<br>
+                                </p>
+                                <input type="hidden" id="countFiliais" name="countFiliais" value="1" style="display:none">
                             </div>
                         </div>
 
@@ -311,7 +300,7 @@
                                     <!-- Titulo da filial -->
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h3 class="page-header">Adicionar filial</h3>
+                                            <h3 class="page-header">Nova filial</h3>
                                         </div>
                                     </div>
                                     <!-- Primeiro linha de inputs -->
@@ -320,7 +309,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Nome da Filial</label>
-                                                <input type="text" class="form-control" id="txt_filial" name="txt_filial" placeholder="Nome da Filial" maxlength="100" required value="">
+                                                <input type="text" class="form-control"  name="txt_filial" placeholder="Nome da Filial" maxlength="100" required value="">
                                             </div>
                                         </div><!-- fim do campo nome da filial -->
 
@@ -328,7 +317,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">C&oacute;digo de &Aacute;rea</label>
-                                                <input type="text" class="form-control" id="txt_ddd" name="txt_ddd" placeholder="DDD (000)" maxlength="3" onkeypress="" value="">
+                                                <input type="text" class="form-control"  name="txt_ddd" placeholder="DDD (000)" maxlength="3" onkeypress="" value="">
                                             </div>
                                         </div><!-- fim do ddd -->
 
@@ -336,7 +325,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Telefone</label>
-                                                <input type="text" class="form-control" id="txt_telefone" name="txt_telefone" placeholder="Telefone" maxlength="9" onkeypress="" value="">
+                                                <input type="text" class="form-control" name="txt_telefone" placeholder="Telefone" maxlength="9" onkeypress="" value="">
                                             </div>
                                         </div><!-- fim do telefone -->
                                     </div>
@@ -347,14 +336,14 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">CEP</label>
-                                                <input type="text" class="form-control" id="txt_cep" name="txt_cep" placeholder="CEP" maxlength="9" required onkeypress="" value="">
+                                                <input type="text" class="form-control" name="txt_cep" placeholder="CEP" maxlength="9" required onkeypress="" value="">
                                             </div>
                                         </div><!-- fim do cep -->
                                         <!-- endereco do cliente -->
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Endere&ccedil;o</label>
-                                                <input type="text" class="form-control" id="txt_endereco" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required value="">
+                                                <input type="text" class="form-control" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required value="">
                                             </div>
                                         </div><!-- fim do endereco do cliente -->
 
@@ -362,7 +351,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">N&uacute;mero</label>
-                                                <input type="text" class="form-control" id="txt_numero" name="txt_numero" placeholder="N&uacute;mero" maxlength="10" onkeypress="" value="">
+                                                <input type="text" class="form-control" name="txt_numero" placeholder="N&uacute;mero" maxlength="10" onkeypress="" value="">
                                             </div>
                                         </div><!-- fim do numero -->
                                     </div>
@@ -372,7 +361,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Bairro</label>
-                                                <input type="text" class="form-control" id="txt_bairro" name="txt_bairro" placeholder="Cidade" maxlength="50" required value="">
+                                                <input type="text" class="form-control" name="txt_bairro" placeholder="Cidade" maxlength="50" required value="">
                                             </div>
                                         </div><!-- fim do campo Bairro -->
 
@@ -380,7 +369,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Cidade</label>
-                                                <input type="text" class="form-control" id="txt_cidade" name="txt_cidade" placeholder="Cidade" maxlength="50" required value="">
+                                                <input type="text" class="form-control" name="txt_cidade" placeholder="Cidade" maxlength="50" required value="">
                                             </div>
                                         </div><!-- fim do campo Cidade -->
 
@@ -399,6 +388,22 @@
                         </div>
                         <!-- Fim do trecho de amostra para filiais adicionais -->
 
+
+                        <div id="listaFiliais" class="row" style="display:none">
+                            <div class="filiais col-md-12">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class=" txt-center"><button id="adicionarNovaFilial" type="button" name="btn_adicionar" class="btn btn-info" value="Adicionar filial">Adicionar nova filial</button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
 
@@ -414,7 +419,20 @@
                             <div class="col-md-4">
 
                             </div>
-                            <div id="resultadoCadastro" class="col-md-4">
+                            <div class="col-md-4">
+                                <div id="resultadoPositivo" class="panel panel-green" style="display:none;">
+                                    <div class="panel-heading">
+                                        Cadastro concluido
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>
+                                            Cadastro de cliente foi concluido com susceso! Você será redirecionando em breve.
+                                        </p>
+                                    </div>
+                                    <div class="panel-footer">
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

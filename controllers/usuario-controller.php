@@ -127,7 +127,7 @@
                   $senha = md5('12345');
               }
 
-              $registraUsuario  = $UsuarioModelo->registrarUsuarioParaCliente($_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $senha);
+              $registraUsuario  = $UsuarioModelo->registrarUsuarioParaCliente($_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $senha, $_POST['idCliente']);
 
               if($registraUsuario){
                   exit(json_encode(array('status' => $registraUsuario['status'], 'idUsuario' => $registraUsuario['idUsuario'])));

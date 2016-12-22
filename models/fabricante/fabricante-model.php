@@ -53,6 +53,30 @@ class FabricanteModel extends MainModel
     }
 
 
+    /*
+    * Fabricante para registrar via JSON
+    */
+    public function registrarFabricanteJson($novoFabricante, $ddd, $telefone, $cep, $endereco, $numero, $bairro, $cidade, $estado, $pais)
+    {
+        $idUser = $_SESSION['userdata']['userId'];
+
+        // Monta a query
+        $query = "insert into tb_fabricante (nome, ddd, telefone, cep, endereco, numero, cidade, bairro, id_pais, id_estado,id_users)
+                  values ('$novoFabricante','$ddd','$telefone','$cep','$endereco','$numero','$cidade',
+                          '$bairro','$pais','$estado','$idUser')";
+
+        $result   = $this->db->select($query);
+
+        // Verifica se gravou com sucesso
+        if ($result)
+        {
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
 }
 
 ?>

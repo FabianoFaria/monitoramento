@@ -70,8 +70,8 @@
                                     ?>
 
                                     <td><?php echo $fabricante['endereco']; ?></td>
-                                    <td><?php echo $fabricante['estado']; ?></td>
                                     <td><?php echo $fabricante['cidade']; ?></td>
+                                    <td><?php echo $fabricante['estado']; ?></td>
                                     <td><?php echo $fabricante['pais']; ?></td>
                                     <td>
                                         <a href="<?php echo HOME_URI; ?>/editar/editarFabricante/<?php echo $fabricante['id']; ?>" class="link-tabela-moni">

@@ -79,5 +79,38 @@
             }else
                 return false;
         }
+
+
+        /*
+        * Cadastrar filial através de AJAX
+        */
+        public function registroFilial($nomeFilial, $codigoArea, $telefone, $cepFilial, $endereco, $numero, $bairro, $cidade, $idEstado, $idPais, $idMatriz){
+
+            // Verifica se os cambos obrigatorios nao sao nulos
+            if ($nomeFilial != "" && $telefone != "" && $cepFilial != "" && $endereco != "" && $cidade != "")
+            {
+                $idUser = $_SESSION['userdata']['userId'];
+
+                // Monta a query
+                $query = "insert into tb_filial (nome, id_matriz, endereco, numero, cep, id_pais, id_estado, cidade, bairro, ddd,
+                            telefone,id_users, foto)
+                            values ('$nomeFilial','$idMatriz','$endereco','$numero','$cepFilial','$idPais','$idEstado', '$cidade','$bairro',
+                            '$codigoArea','$telefone','$idUser','a881bd9c3f3b8446ef35ac350a06691a.jpg')";
+
+                // Verifica se gravou com sucesso
+                if ($this->db->query($query))
+                {
+                    $array = array('status' => true);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
     }
 ?>

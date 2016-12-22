@@ -111,11 +111,14 @@
 
 
                 // Realiza a chamada para gravar e verficar se gravou com sucesso
-                $result = $this->validaInsercaoBanco ($query, "Cadastro salvo com sucesso!", "Erro durante o salvamento.");
+                //$result = $this->validaInsercaoBanco ($query, "Cadastro salvo com sucesso!", "Erro durante o salvamento.");
 
+                $result   = $this->db->select($query);
+
+                $idGerada  = mysql_insert_id();
                 //$queryId = mysql_insert_id();
 
-                $array = array('status' => $result, 'idCliente' => 0);
+                $array = array('status' => $result, 'idCliente' => $idGerada);
 
             }else{
 

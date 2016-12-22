@@ -35,7 +35,7 @@
                   <div class="panel-body">
 
                   	<!-- form contendo os dados do cliente -->
-                    <form id="cadFabricanet" method="post">
+                    <form id="cadFabricanet" method="post" action="#">
                     	 <div class="row">
                     	 	<!-- nome do fabricante -->
 				            <div class="col-md-6">
@@ -52,7 +52,7 @@
 				                    <input type="text" class="form-control" id="txt_ddd" name="txt_ddd" placeholder="DDD (000)" maxlength="3" onkeypress="return onlyNumber(event);">
 				                </div>
 				            </div><!-- fim do ddd -->
-            
+
 				            <!-- telefone -->
 				            <div class="col-md-4">
 				                <div class="form-group">
@@ -61,6 +61,15 @@
 				                </div>
 				            </div><!-- fim do telefone -->
                     	 </div>
+
+                         <div class="row">
+                             <div class="col-md-6">
+                                 <div class="form-group">
+                                   <label for="exampleInputEmail1">Email do Fabricante</label>
+                                   <input type="text" class="form-control" id="txt_email" name="txt_email" placeholder="Email Fabricante" maxlength="80" required>
+                               </div>
+                             </div>
+                         </div>
 
                     	 <div class="row">
 
@@ -71,8 +80,8 @@
 				                    <input type="text" class="form-control" id="txt_cep" name="txt_cep" placeholder="CEP" maxlength="9" required onkeypress="return onlyNumber(event);">
 				                </div>
 				            </div><!-- fim do cep -->
-            
-            
+
+
 				            <!-- endereco do cliente -->
 				            <div class="col-md-6">
 				                <div class="form-group">
@@ -80,7 +89,7 @@
 				                    <input type="text" class="form-control" id="txt_endereco" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required>
 				                </div>
 				            </div><!-- fim do endereco do cliente -->
-            
+
 				            <!-- numero -->
 				            <div class="col-md-2">
 				                <div class="form-group">
@@ -99,7 +108,7 @@
 				                    <input type="text" class="form-control" id="txt_cidade" name="txt_cidade" placeholder="Cidade" maxlength="50" required>
 				                </div>
 				            </div><!-- fim do campo Cidade -->
-            
+
 				            <!-- Bairro -->
 				            <div class="col-md-3">
 				                <div class="form-group">
@@ -109,7 +118,7 @@
 				            </div><!-- fim do campo Bairro -->
             			</div>
             			<div class="row">
-            
+
 				            <!-- pais -->
 				            <div class="col-md-4">
 				                <div class="form-group">
@@ -117,8 +126,8 @@
 				                    <?php $modelo->listaPaises(); ?>
 				                </div>
 				            </div><!-- fim do pais -->
-            
-            
+
+
 				            <!-- estado -->
 				            <div class="col-md-4">
 				                <div class="form-group">
@@ -127,13 +136,33 @@
 				                </div>
 				            </div><!-- fim do estado -->
                     	 </div>
+
                     	 <div class="row">
                     	 	<div class="col-md-4">
                     	 	</div>
                     	 	<div class="col-md-4">
-                    	 		 <button id="salvarFabricante" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar</button>
+                    	 		 <buttom type="button" id="salvarFabricante" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar</button>
                     	 	</div>
                     	 </div>
+                         <div class="row">
+                             <div class="col-md-4">
+                     	 	</div>
+                     	 	<div class="col-md-4">
+                                <div id="resultadoPositivo" class="panel panel-green" style="display:none;">
+                                    <div class="panel-heading">
+                                        Cadastro concluido
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>
+                                            Cadastro de fabricante foi concluido com susceso! Você será redirecionando em breve.
+                                        </p>
+                                    </div>
+                                    <div class="panel-footer">
+
+                                    </div>
+                                </div>
+                     	 	</div>
+                         </div>
                     </form>
 
                   </div>

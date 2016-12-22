@@ -1,6 +1,11 @@
 $().ready(function() {
 
     //Ajustes iniciais da página de cadastro
+    var pathArray = window.location.href.split( '/' );
+    var protocol = pathArray[0];
+    var host = pathArray[2];
+    var urlP = protocol + '//' + host;
+
 
     //Collapse dados do usuário
     $('#accordionCliente').hide();
@@ -8,7 +13,7 @@ $().ready(function() {
     //Collapse dos dados de filiais
     $('#accordionFiliais').hide();
 
-    //Processo de validação de cadastro de cliente
+    //PROCESSO DE VALIDAÇÃO DE CADASTRO DE CLIENTE
     $('#validarResponsavel').click(function() {
 
         // validate signup form on keyup and submit
@@ -77,13 +82,70 @@ $().ready(function() {
         //Caso os dados estejam corretos, será exibido o formulario seguinte e o formulario atual se tornara readOnly
         if($("#cadCliete").valid()){
 
+            //Efetua o cadastro da empresa cliente
+
+            //Dados da empresa do cliente
+            var nomeCliente     = $('#txt_cliente').val();
+            var ddd             = $('#txt_ddd').val();
+            var telefone        = $('#txt_telefone').val();
+            var cep             = $('#txt_cep').val();
+            var endereco        = $('#txt_endereco').val();
+            var numero          = $('#txt_numero').val();
+            var bairro          = $('#txt_bairro').val();
+            var cidade          = $('#txt_cidade').val();
+            var estado          = 1;
+            var pais            = 36;
+
+            //Efetua cadastro do cliente via JSON
+            $.ajax({
+             url: urlP+"/eficazmonitor/cliente/registrarClientes",
+             secureuri: false,
+             type : "POST",
+             dataType: 'json',
+             data      : {
+              'nome_cliente' : nomeCliente,
+              'ddd' : ddd,
+              'telefone' : telefone,
+              'cep' : cep,
+              'endereco' : endereco,
+              'numero' : numero,
+              'bairro' : bairro,
+              'cidade' : cidade,
+              'estado' : estado,
+              'pais'   : pais
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+                       if(datra.status == true)
+                       {
+                       	   var statusCad      = datra.status;
+                           var idClienteCad   = datra.idCliente;
+                       	   $('#resultadoCadastro').val(idClienteCad);
+                       }
+                       else
+                       {
+                           //Settar a mensagem de erro!
+                       	   $('#resultadoCadastro').html("Algo não foi registrado!" +  statusCad);
+                       }
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+            });
+
+            //Após concluir o cadastro, trava os campos do formulario da empresa cliente
+
             $('#cadCliete input').prop('readonly', true);
 
             $('#accordionCliente').fadeIn();
         }
     });
 
-    //valida os dados do contato do cliete
+    //VALIDA OS DADOS DO CONTATO DO CLIETE
     $('#validarContatoCliente').click(function(){
 
         //valida se as regras para cadastro do contato estão corretas
@@ -149,6 +211,47 @@ $().ready(function() {
         //Ao verificar se os dados de contato do cliente estão válidas e então procegue o cadastro do cliente
         if($('#cadContatoCliente').valid()){
 
+            //Efetua o cadastro do usuário para o o cliente cadastrado no processo anterior
+
+            //Dados do contato do cliente
+
+            var nomeContato     = $('#txt_nome_contato').val();
+            var sobrenome       = $('#txt_sobrenome_contato').val();
+            var emailContato    = $('#txt_email_contato').val();
+            var celularContato  = $('#txt_celular_contato').val();
+            var telefoneContato = $('#txt_telefone_contato').val();
+            var senhaContato    = $('#txt_senha_contato').val();
+            var confirmaSenha   = $('#txt_cfsenha_contato').val();
+            var idCliente       = $('#resultadoCadastro').val();
+
+            //Efetua o cadastro do contato do cliente via JSON
+            $.ajax({
+                url: urlP+"/eficazmonitor/usuario/registraUsuario",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'nome'      : nomeContato,
+                    'sobrenome' : sobrenome,
+                    'email'     : emailContato,
+                    'celular'   : celularContato,
+                    'telefone'  : telefoneContato,
+                    'senha'     : senhaContato,
+                    'confirmaS' : confirmaSenha,
+                    'idCliente' : idCliente
+                },
+                success : function(datra)
+                {
+                    console.log("Prossiga!");
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
             $('#cadContatoCliente input').prop('readonly', true);
 
             $('#accordionFiliais').fadeIn();
@@ -165,11 +268,6 @@ $().ready(function() {
 
     });
 
-
-    // $('<div/>', {
-    //  'class' : 'filiais', html: GetHtml()
-    // }).appendTo('#listaFiliais');
-
     //Adiciona novo formulario para cadastro de filial
     $('#adicionarNovaFilial').click(function(){
 
@@ -179,6 +277,7 @@ $().ready(function() {
 
     });
 
+    //Efetua a numeração dos formularios de filiais conforme forem sendo gerados
     function GetHtml()
     {
       var len = $('#countFiliais').val();
@@ -193,129 +292,99 @@ $().ready(function() {
       $html.find('[name=txt_bairro]')[0].name="txt_bairro" + len;
       $html.find('[name=txt_cidade]')[0].name="txt_cidade" + len;
 
-
+      //setta no html a contagem atual de formularios de filiais adicionados
       $('#countFiliais').val(len);
-
+      //Retorna o formulario gerado com a numeração especificada
       return $html.html();
     }
 
 
     //Testar validação dos dados das filiais cadastradas antes de enviar
-    $(document).ready(function (){
+    //$(document).ready(function (){
+
         $('#concluirCadastro').click(function() {
 
-            var pathArray = window.location.href.split( '/' );
-            var protocol = pathArray[0];
-            var host = pathArray[2];
-            var urlP = protocol + '//' + host;
-
-            //Dados do contato do cliente
-
-            var nomeContato     = $('#txt_nome_contato').val();
-            var sobrenome       = $('#txt_sobrenome_contato').val();
-            var emailContato    = $('#txt_email_contato').val();
-            var celularContato  = $('#txt_celular_contato').val();
-            var telefoneContato = $('#txt_telefone_contato').val();
-            var senhaContato    = $('#txt_senha_contato').val();
-            var confirmaSenha   = $('#txt_cfsenha_contato').val();
-
-            //Efetua o cadastro do contato do cliente via JSON
-            $.ajax({
-                url: urlP+"/eficazmonitor/usuario/registrarClientes",
-                secureuri: false,
-                type : "POST",
-                dataType: 'text',
-                data      : {
-                    'nome'      : nomeContato,
-                    'sobrenome' : sobrenome,
-                    'email'     : emailContato,
-                    'celular'   : celularContato,
-                    'telefone'  : telefoneContato,
-                    'senha'     : senhaContato,
-                    'confirmaS' : confirmaSenha
-                },
-                success : function(datra)
-                {
-                    console.log("Prossiga!");
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                 // Handle errors here
-                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
-                 // STOP LOADING SPINNER
-                }
-            });
-
-
-            //Dados da empresa do cliente
-            var nomeCliente     = $('#txt_cliente').val();
-            var ddd             = $('#txt_ddd').val();
-            var telefone        = $('#txt_telefone').val();
-            var cep             = $('#txt_cep').val();
-            var endereco        = $('#txt_endereco').val();
-            var numero          = $('#txt_numero').val();
-            var bairro          = $('#txt_bairro').val();
-            var cidade          = $('#txt_cidade').val();
-            var estado          = 1;
-            var pais            = 36;
-            var idCliente       = "";
-
-            //Efetua cadastro do cliente via JSON
-            $.ajax({
-             url: urlP+"/eficazmonitor/cliente/registrarClientes",
-             secureuri: false,
-             type : "POST",
-              dataType: 'text',
-             data      : {
-              'nome_cliente' : nomeCliente,
-              'ddd' : ddd,
-              'telefone' : telefone,
-              'cep' : cep,
-              'endereco' : endereco,
-              'numero' : numero,
-              'bairro' : bairro,
-              'cidade' : cidade,
-              'estado' : estado,
-              'pais'   : pais
-              },
-                   success : function(datra)
-                    {
-                       //tempTest = JSON(datra);
-                       if(datra.status == true)
-                       {
-                       	   var statusCad      = datra.status;
-                           var idClienteCad   =  datra.idCliente;
-                       	   $('#resultadoCadastro').html("Cliente salvo com sucesso!" + idClienteCad);
-                       }
-                       else
-                       {
-                       	   $('#resultadoCadastro').html("Algo não foi registrado!" +  statusCad);
-                       }
-                    },
-                   error: function(jqXHR, textStatus, errorThrown)
-                    {
-                    // Handle errors here
-                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
-                    // STOP LOADING SPINNER
-                    }
-            });
-
-
-            //Após o cadastro do cliente, salva o contato do cliente também via JSON
-
             //VERIFICA SE CLIENTE POSSUI FILIAIS
-            var check=$('input:checkbox[name=temFiliais]').is(':checked');
+            var check = $('input:checkbox[name=temFiliais]').is(':checked');
 
             if(check == true){
-                console.log("Possui filiais!" + host);
+
+                //INICIA O TRATAMENTO DOS FORMULARIOS DE FILIAIS
+
+                var quantidadeFiliais = $('#countFiliais').val();
+
+
+                //INICIA O LOOP DE CADASTRO DE FILIAIS
+
+                for(var i = 1; i <= quantidadeFiliais; i++){
+
+                    var idMatriz    = $('#resultadoCadastro').val();
+                    var nomeFilial  = $('[name=txt_filial'+i+']').val();
+                    var codigoArea  = $('[name=txt_ddd'+i+']').val();
+                    var telefone    = $('[name=txt_telefone'+i+']').val();
+                    var cepFilial   = $('[name=txt_cep'+i+']').val();
+                    var endereco    = $('[name=txt_endereco'+i+']').val();
+                    var numero      = $('[name=txt_numero'+i+']').val();
+                    var bairro      = $('[name=txt_bairro'+i+']').val();
+                    var cidade      = $('[name=txt_cidade'+i+']').val();
+                    var estado      = $('[name=opc_estado'+i+']').val();
+
+                    if((nomeFilial != " " && endereco != " ")){
+
+
+                        //Envio de dados para cadastro de filial via JSON
+                        $.ajax({
+                            url: urlP+"/eficazmonitor/filial/registraFilial",
+                            secureuri: false,
+                            type : "POST",
+                            dataType: 'json',
+                            data      : {
+                                'nomeFilial': nomeFilial,
+                                'codigoArea': codigoArea,
+                                'telefone'  : telefone,
+                                'cepFilial' : cepFilial,
+                                'endereco'  : endereco,
+                                'numero'    : numero,
+                                'bairro'    : bairro,
+                                'cidade'    : cidade,
+                                'idEstado'  : 3,
+                                'idPais'    : 36,
+                                'idMatriz'  : idMatriz
+                            },
+                            success : function(datra)
+                            {
+                                console.log("Prossiga com o for!");
+                            },
+                            error: function(jqXHR, textStatus, errorThrown)
+                            {
+                             // Handle errors here
+                             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                             // STOP LOADING SPINNER
+                            }
+                        });
+                    }
+
+                }
+
+                $('#resultadoPositivo').fadeIn();
+
+                setTimeout(function(){
+                    window.location.replace(urlP +"/eficazmonitor/cliente/");
+                }, 3000);
+
             }else{
-                console.log("Não possui filiais!" + urlP);
+                //FINALIZA O PROCESSO DE CADASTRO DE EMPRESAS CLIENTES
+
+                setTimeout(function(){
+                        window.location.replace(urlP +"/eficazmonitor/cliente/");
+                    }, 1500);
+
             }
 
         });
 
 
-    });
+    //});
 
 
 });

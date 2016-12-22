@@ -34,6 +34,24 @@
              require_once EFIPATH . "/views/_includes/footer.php";
          }
 
+         //TRATAMENTO DOS DADOS PARA CADASTRO VIA JSON
+
+         public function registraFilial(){
+
+            //CARREGA MODELO PARA ESTA FUNÇÃO
+            $filialModelo    = $this->load_model('filial/filial-model');
+
+            $registraFilial  = $filialModelo->registroFilial($_POST['nomeFilial'], $_POST['codigoArea'], $_POST['telefone'], $_POST['cepFilial'], $_POST['endereco'], $_POST['numero'], $_POST['bairro'], $_POST['cidade'], $_POST['idEstado'], $_POST['idPais'], $_POST['idMatriz']);
+
+            if($registraFilial){
+                exit(json_encode(array('status' => $registraFilial['status'] )));
+            }else{
+                exit(json_encode(array('status' => $registraFilial['status'] )));
+            }
+
+         }
+
+
     }
 
 ?>
