@@ -24,7 +24,7 @@
 
  </div>
  <div class="row">
-     <div class="col-md-4 pull-left">
+     <div class="col-md-4">
 
         <div class="btn-group">
             <a href="<?php echo HOME_URI; ?>/cliente/cadastrar/" class="btn btn-primary">

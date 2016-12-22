@@ -15,19 +15,24 @@
 
  ?>
 
- <div class="row">
-    <div class="col-lg-12">
-
+<div class="row">
+    <div class="col-md-12">
         <!-- TITULO PAGINA -->
         <label class="page-header">Fabricantes registrados até o momento</label><!-- Fim Titulo pagina -->
-
-        <div class="pull-right">
-            <div class="btn-group">
-                <a href="<?php echo HOME_URI; ?>/fabricante/cadastrar/" class="btn btn-primary">
-                    <i class="fa fa-plus fa-lg"> </i>Adicionar novo fabricante
-                </a>
-            </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="btn-group">
+            <a href="<?php echo HOME_URI; ?>/fabricante/cadastrar/" class="btn btn-primary">
+                <i class="fa fa-plus fa-lg"> </i>Adicionar novo fabricante
+            </a>
         </div>
+    </div>
+</div>
+
+ <div class="row">
+    <div class="col-lg-12">
 
         <!-- TABELA CONTENDO OS CLIENTES CADASTRADOS -->
         <div class="panel panel-default">
