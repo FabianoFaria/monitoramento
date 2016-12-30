@@ -15,7 +15,7 @@
              $this->controller = $controller;
 
              // Configura os parâmetros
-     		$this->parametros = $this->controller->parametros;
+     		     $this->parametros = $this->controller->parametros;
          }
 
          /* FUNÇÃO RESPONSAVEL PELA LISTAGEM DE CLIENTES
@@ -47,6 +47,53 @@
              else
                  return false;
          }
+
+         /*
+         * Função responsavel por listar as filiais de um cliente
+         */
+
+         public function carregarFiliaisCliente($idCliente)
+         {
+            if(is_numeric($idCliente)){
+
+              $query = "SELECT fil.id, fil.nome, fil.endereco, fil.cidade, fil.ddd, fil.telefone, est.nome as 'estado', pais.nome as 'pais', clie.nome as 'matriz' FROM tb_filial fil
+                        LEFT JOIN tb_estado est ON est.id = fil.id_estado
+                        JOIN tb_pais pais ON pais.id = fil.id_pais
+                        JOIN tb_cliente clie ON clie.id = fil.id_matriz
+                        WHERE fil.id_matriz = '$idCliente'";
+
+              /* MONTA A RESULT */
+              $result = $this->db->select($query);
+
+              /* VERIFICA SE EXISTE RESPOSTA */
+              if ($result)
+              {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                  {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                      $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'filiais' => $retorno);
+                }
+              }else{
+                $array = array('status' => false, 'filiais' => '');
+              }
+
+
+            }else{
+
+              $array = array('status' => false, 'filiais' => '');
+
+            }
+
+            
+         }
+
 
          /**
           * Funcao que cadastra o cliente
@@ -100,14 +147,26 @@
             if ($nomeCliente != "" && $endereco != "" && $cep != "" && $cidade != "" && $bairro != "")
             {
 
+              // Armazena o retorno do post
+              $cliente  = $this->tratamento($nomeCliente);
+              $endereco = $this->tratamento($endereco);
+              $numero   = !empty ($numero) ? $this->tratamento($numero,3) : 0;
+              $ddd      = !empty($ddd) ? $this->tratamento($ddd,3) : 0;
+              $telefone = !empty ($telefone) ? $this->tratamento($telefone,3) : 0;
+              $cep      = $this->tratamento($cep,3);
+              $pais     = $this->tratamento($pais);
+              $estado   = $this->tratamento($estado);
+              $cidade   = $this->tratamento($cidade);
+              $bairro   = $this->tratamento($bairro);
+                
                 // Realiza o upload da imagem
-                //$up_resp = $this->validaUpload($_FILES);
+                $up_resp = $this->validaUpload($_FILES);
 
                 // Grava no banco os valores
                 $query = "insert into tb_cliente (nome, endereco, numero, cep, id_pais, id_estado, ddd, telefone , cidade, bairro, id_users ,
                                                   foto)
                           values ('{$nomeCliente}', '{$endereco}', '{$numero}', '{$cep}', '{$pais}', '{$estado}', '{$ddd}', '{$telefone}',
-                          '{$cidade}', '{$bairro}', '{$_SESSION['userdata']['userId']}', 'a881bd9c3f3b8446ef35ac350a06691a.jpg')";
+                          '{$cidade}', '{$bairro}', '{$_SESSION['userdata']['userId']}', '$up_resp')";
 
 
                 // Realiza a chamada para gravar e verficar se gravou com sucesso
@@ -128,6 +187,149 @@
 
             return $array;
         }
+
+        /*
+        * Função para atualizar o cliente
+        */
+        public function atualizarClienteJson($idCliente, $nome_cliente, $ddd, $telefone, $cep, $endereco, $numero, $bairro, $cidade, $estado, $pais)
+        {
+
+          // Armazena o retorno do post
+          $cliente  = $this->tratamento($nome_cliente);
+          $endereco = $this->tratamento($endereco);
+          $numero   = !empty ($numero) ? $this->tratamento($numero,3) : 0;
+          $ddd      = !empty($ddd) ? $this->tratamento($ddd,3) : 0;
+          $telefone = !empty ($telefone) ? $this->tratamento($telefone,3) : 0;
+          $cep      = $this->tratamento($cep,3);
+          $pais     = (is_numeric($pais)) ?   $this->tratamento($pais) : null;
+          $estado   = (is_numeric($estado)) ? $this->tratamento($estado) : null;
+          $cidade   = $cidade;
+          $bairro   = $this->tratamento($bairro);
+
+          $query = "UPDATE tb_cliente SET ";
+          if(isset($cliente)){  $query .= "nome = '$cliente' ";}
+          if(isset($endereco)){ $query .= ", endereco = '$endereco'";}
+          if(isset($numero)){   $query .= ", numero = '$numero'";}
+          if(isset($ddd)){      $query .= ", ddd = '$ddd'";}
+          if(isset($telefone)){ $query .= ", telefone = '$telefone'";}
+          if(isset($cep)){      $query .= ", cep = '$cep'";}
+          if(isset($pais)){     $query .= ", id_pais = '$pais'";}
+          if(isset($estado)){   $query .= ", id_estado = '$estado'";}
+          if(isset($cidade)){   $query .= ", cidade = '$cidade'";}
+          if(isset($bairro)){   $query .= ", bairro = '$bairro'";}
+          $query .= " WHERE id = '$idCliente'";
+
+          /* monta result */
+          $result = $this->db->query($query);
+
+          if ($result){
+            $array = array('status' => true);
+          }else{
+            $array = array('status' => false);
+          }
+
+          return $array;
+        }
+
+
+        /*
+        *   Função para carregar dados do cliente
+        */
+        public function carregarDadosCliente($idCliente){
+
+          if(is_numeric($idCliente)){
+
+
+            $query = "SELECT 
+                      c.nome , c.endereco, c.numero, c.cep, c.cidade, c.bairro, c.ddd, c.telefone , p.nome as pais ,
+                      e.nome as estado , p.id as idpais, e.id as idestado
+                      FROM tb_cliente c
+                      INNER JOIN tb_pais p on p.id = c.id_pais
+                      INNER JOIN tb_estado e on e.id = c.id_estado
+                      WHERE c.id = $idCliente";
+
+             /* monta result */
+             $result = $this->db->select($query);
+
+            if ($result){
+              /* verifica se existe valor */
+              if (@mysql_num_rows($result)>0)
+              {
+                  /* pega os valores e monta um array */
+                  while ($row = @mysql_fetch_assoc($result))
+                      $retorno[] = $row;
+                  
+                  /* retorna o select */
+                  $cliente  = $retorno;
+                  $status   = true;
+              }
+              else
+                /* fim */
+                $status = false;
+
+            }else{
+              /* fim */
+              $status = false;
+            }
+
+            $array = array('status' => true, 'dados' => $cliente) ;
+
+
+          }else{
+
+            $array = array('status' => false);
+
+          }
+
+          return $array;
+
+        }
+
+        /*
+        * Função que recupera os dados do contatos do cliente
+        */
+        public function carregaDadosContato($idCliente)
+        {
+
+          if(is_numeric($idCliente)){
+
+            $query = "SELECT id, nome, sobrenome, email, telefone, celular, id_cliente
+                      FROM tb_users
+                      WHERE id_cliente = '$idCliente'";
+
+            /* monta result */
+            $result = $this->db->select($query);
+
+            if ($result){
+              /* verifica se existe valor */
+              if (@mysql_num_rows($result)>0)
+              {
+                  /* pega os valores e monta um array */
+                  while ($row = @mysql_fetch_assoc($result))
+                      $retorno[] = $row;
+                  
+                  /* retorna o select */
+                  $cliente  = $retorno;
+                  $status   = true;
+              }
+              else
+                /* fim */
+                $status = false;
+
+            }else{
+              /* fim */
+              $status = false;
+            }
+
+            $array = array('status' => true, 'dados' => $cliente) ;
+          
+          }else{
+            $array = array('status' => false);
+          }
+
+          return $array;
+        }
+
 
         /**
          * Funcao que valida a gravacao da query no banco
@@ -161,6 +363,33 @@
                 return false;
             }
         }
+
+        /**
+         * Funcao que realiza o upload da foto
+         *
+         * @param array $files - Recebe um array com os dados da foto
+         *
+         * @return string $up_resp - Devolve o nome da foto
+         */
+        private function validaUpload($files)
+        {
+            // Verifica se existe arquivo no upload
+            if (!empty($files['file_foto']['name']) && !empty($files['file_foto']['tmp_name']) && !empty($files['file_foto']['type']))
+            {
+                // Se existir arquivo para upload
+                // Envia o array e aguarda a resposta
+                $up_resp = $this->upload($files);
+            }
+            else
+            {
+                // Se nao existir arquivo para realizar upload
+                $up_resp = '';
+            }
+            // Devolve o nome do arquivo
+            return $up_resp;
+        }
+
+
 
     }
 

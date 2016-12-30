@@ -6,6 +6,13 @@ $().ready(function() {
     var host = pathArray[2];
     var urlP = protocol + '//' + host;
 
+    //Adição de máscara de edição
+
+    $('#txt_ddd').mask('(999)');
+    $('#txt_telefone').mask('9999-9999');
+    $('#txt_cep').mask('9999-999');
+
+
 	//Collapse dados do usuário
     $('#accordionCliente').hide();
 

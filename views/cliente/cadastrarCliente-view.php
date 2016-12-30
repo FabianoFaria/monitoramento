@@ -19,7 +19,7 @@
 <div class="row">
     <div class="col-md-12">
 
-        <!-- TITULO PAGINA --><!-- TITULO PAGINA -->
+        <!-- TITULO PAGINA -->
        <label class="page-header">Cadastro de novo cliente</label><!-- Fim Titulo pagina -->
 
         <!-- Cadastra do cliente -->
@@ -37,7 +37,7 @@
                   <div class="panel-body">
 
                       <!-- form contendo os dados do cliente -->
-                      <form id="cadCliete" method="post">
+                      <form id="cadCliete" method="post" enctype="multipart/form-data">
 
                           <div class="row">
                               <!-- nome do cliente -->
@@ -53,14 +53,14 @@
                               <div class="col-md-2">
                                   <div class="form-group">
                                       <label for="ddd">C&oacute;digo de &Aacute;rea</label>
-                                      <input type="text" class="form-control" id="txt_ddd" name="txt_ddd" placeholder="DDD (000)" maxlength="3" onkeypress="return onlyNumber(event);">
+                                      <input type="text" class="form-control" id="txt_ddd" name="txt_ddd" placeholder="DDD (000)" maxlength="3">
                                   </div>
                               </div><!-- fim do ddd -->
                               <!-- telefone -->
                               <div class="col-md-4">
                                   <div class="form-group">
                                       <label for="telefone">Telefone</label>
-                                      <input type="text" class="form-control" id="txt_telefone" name="txt_telefone" placeholder="Telefone" maxlength="10" onkeypress="return onlyNumber(event);">
+                                      <input type="text" class="form-control" id="txt_telefone" name="txt_telefone" placeholder="Telefone" maxlength="10">
                                   </div>
                               </div><!-- fim do telefone -->
                             </div>
@@ -69,7 +69,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="endereco">Endere&ccedil;o</label>
-                                        <input type="text" class="form-control" id="txt_endereco" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required>
+                                        <input type="text" class="form-control" id="txt_endereco" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200">
                                     </div>
                                 </div><!-- fim do endereco do cliente -->
 
@@ -95,7 +95,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="bairro">Bairro</label>
-                                        <input type="text" class="form-control" id="txt_bairro" name="txt_bairro" placeholder="Cidade" maxlength="50" required>
+                                        <input type="text" class="form-control" id="txt_bairro" name="txt_bairro" placeholder="Cidade" maxlength="50">
                                     </div>
                                 </div><!-- fim do campo Bairro -->
 
@@ -133,12 +133,12 @@
 
                             <div class="row">
                                 <!-- foto -->
-                                <div class="col-md-4">
+                               <!--  <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="foto">Logo / Foto cliente</label>
                                         <input type="file" name="file_foto" id="file_foto" class="filestyle" data-icon="false">
                                     </div>
-                                </div><!-- Fim fotos -->
+                                </div> --><!-- Fim fotos -->
                             </div>
 
                             <div class="row">
@@ -257,7 +257,7 @@
                                 </div>
                                 <div class="col-md-4 ">
                                     <div class="form-group">
-                                        <div class=" txt-center"><button id="validarContatoCliente" type="button" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar dados contato</button</div>
+                                        <div class=" txt-center"><button id="validarContatoCliente" type="button" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar dados contato</button></div>
                                     </div>
                                 </div>
                             </div>

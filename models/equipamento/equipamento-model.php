@@ -49,6 +49,56 @@ class EquipamentoModel extends MainModel
         else
             return false;
     }
+
+
+    /*
+    * Registra vis JSON os dados do equipamento
+    */
+
+    public function registrarEquipamentoJson($idCliente, $idFilial, $equipamento, $modEquip, $fabricante, $quantBateria, $caracteristicas, $amperagem, $tipoBateria, $potencia){
+
+        // Verifica se os cambos obrigatorios nao sao nulos
+        if ($idCliente != "" && $equipamento != "" && $modEquip != "" && $fabricante != "")
+        {
+
+            // Trata os valores
+            $idUser         = $_SESSION['userdata']['userId'];
+            $idCliente      = $idCliente;
+            $idFilial       = ($idFilial == "") ? 0 : $idFilial;
+            $idFabri        = $fabricante;
+            $tipoEquip      = isset($equipamento) && !empty ($equipamento) ? $this->converte($this->tratamento($equipamento)) : '';
+            $modeloEquip    = isset($modEquip) && !empty ($modEquip) ? $this->converte($this->tratamento($modEquip)) : '';
+            $potencia       = isset($potencia) && !empty ($potencia) ? $this->converte($this->tratamento($potencia)) : '';
+            $qntBateria     = isset($quantBateria) && !empty ($quantBateria) ? $this->converte($this->tratamento($quantBateria)) : 0;
+            $caracteristica = isset($caracteristicas) && !empty ($caracteristicas) ? $this->converte($this->tratamento($caracteristicas)) : '';
+            $tipoBateria    = isset($tipoBateria) ? $tipoBateria : '';
+            $amperagem      = isset($amperagem) && !empty ($amperagem) ? $this->converte($this->tratamento($amperagem)) : '';
+
+            // Se nao estiver em branco
+            // Realiza a insercao no banco
+            $query          = "insert into tb_equipamento (id_users, id_fabricante, id_cliente, id_filial,
+                                tipo_equipamento, modelo, potencia,qnt_bateria, caracteristica_equip, tipo_bateria, amperagem_bateria)
+                                values ('$idUser','$idFabri', $idCliente, $idFilial,'$tipoEquip','$modeloEquip','$potencia','$qntBateria'
+                                ,'$caracteristica','$tipoBateria','$amperagem')";
+            
+            //var_dump($query);
+
+            $result         = $this->db->select($query);
+
+            $idEquip        = mysql_insert_id();
+
+            $array = array('status' => $result, 'idequipamento' => $idEquip);
+
+        }else{
+
+            $array = array('status' => false, 'idequipamento' => 0);
+
+        }
+
+        return $array;
+
+    }
+
 }
 
 ?>

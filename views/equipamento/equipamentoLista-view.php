@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-md-4">
         <div class="btn-group">
-            <a href="<?php echo HOME_URI; ?>/cadastrar/equipamento/" class="btn btn-primary">
+            <a href="<?php echo HOME_URI; ?>/equipamento/cadastrarEquipamento/" class="btn btn-primary">
                 <i class="fa fa-plus fa-lg"> </i>Adicionar novo equipamento
             </a>
         </div>

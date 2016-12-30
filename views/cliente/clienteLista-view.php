@@ -52,6 +52,7 @@
                                 <th>Cidade</th>
                                 <th>Telefone</th>
                                 <th class="txt-center">Editar</th>
+                                <th class="txt-center">Filiais</th>
                                 <th class="txt-center">Excluir</th>
                             </tr>
                         </thead>
@@ -66,8 +67,13 @@
                                         <td><?php echo $cliente['cidade']; ?></td>
                                         <td><?php echo "(".$cliente['ddd'].") ".$cliente['telefone']; ?></td>
                                         <td>
-                                            <a href="<?php echo HOME_URI; ?>/editar/editarCliente/<?php echo $cliente['id']; ?>" class="link-tabela-moni">
+                                            <a href="<?php echo HOME_URI; ?>/cliente/editarCliente/<?php echo $cliente['id']; ?>" class="link-tabela-moni">
                                                 <i class="fa fa-pencil-square-o fa-lg"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="<?php echo HOME_URI; ?>/cliente/listarFiliaisCliente/<?php echo $cliente['id']; ?>" class="link-tabela-moni">
+                                                <i class="fa fa-sitemap  fa-lg"></i>
                                             </a>
                                         </td>
                                         <td>

@@ -204,6 +204,12 @@ class UsuarioModel extends MainModel
         // Verifica se os cambos obrigatorios nao sao nulos
         if ($nome != "" && $sobrenome != "" && $email != "" && $celular != "" && $telefone != "")
         {
+
+            // Coletar os dados do post
+            $nome      = $this->tratamento($nome);
+            $sobrenome = $this->tratamento($sobrenome);
+            $email     = $this->tratamento($email,1);
+
             $query = "INSERT INTO tb_users(id_perfil_acesso, nome, sobrenome, email, telefone, celular, senha, local_usu, status_ativo, id_cliente) VALUES('2', '$nome', '$sobrenome', '$email', '$telefone', '$celular', '$senha', '1', '1', $idCliente)";
 
             // Verifica se gravou com sucesso
@@ -220,6 +226,39 @@ class UsuarioModel extends MainModel
 
         return $array;
     }
+
+    //Função para atualizar o usuario
+    public function atualizarUsuarioJson($id_usuario, $nome, $sobrenome, $email, $celular, $telefone, $confirmaS, $idCliente)
+    {
+
+        // Coletar os dados do post
+        $id_user   = $id_usuario;
+        $nome      = $this->tratamento($nome);
+        $sobrenome = $this->tratamento($sobrenome);
+        $email     = $this->tratamento($email,1);
+        $senha     = ($confirmaS != '') ? md5($confirmaS) : null;
+
+        $query = "UPDATE tb_users SET ";
+          if(isset($nome)){         $query .= "nome = '$nome' ";}
+          if(isset($sobrenome)){    $query .= ", sobrenome = '$sobrenome'";}
+          if(isset($email)){        $query .= ", email = '$email'";}
+          if(isset($celular)){      $query .= ", celular = '$celular'";}
+          if(isset($telefone)){     $query .= ", telefone = '$telefone'";}
+          if(isset($senha)){        $query .= ", senha = '$senha'";}
+          $query .= " WHERE id = '$id_user'";
+
+          /* monta result */
+          $result = $this->db->query($query);
+
+          if ($result){
+            $array = array('status' => true);
+          }else{
+            $array = array('status' => false);
+          }
+
+          return $array;
+    }
+
 
 }
 

@@ -137,6 +137,23 @@
 
           }
 
+        /*
+        * Função para atualizar o contato do cliente 
+        */
+        public function registraAtualizacaoUsuario()
+        {
+
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $usuarioModelo     = $this->load_model('usuario/usuario-model');
+
+            $atualizarContato  = $usuarioModelo->atualizarUsuarioJson($_POST['id_usuario'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['confirmaS'], $_POST['idCliente']);
+
+            if($atualizarContato['status']){
+                exit(json_encode(array('status' => true)));
+            }else{
+                exit(json_encode(array('status' => false)));
+            }
+        }
 
     }
 

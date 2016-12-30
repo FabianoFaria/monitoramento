@@ -91,6 +91,21 @@
             {
                 $idUser = $_SESSION['userdata']['userId'];
 
+
+                // coleta os dados
+                $nomeFilial     = $this->tratamento($nomeFilial);
+                $idMatriz       = $this->tratamento($idMatriz);
+                $codigoArea     = !empty ($codigoArea) ? $this->tratamento($codigoArea,3) : 0;
+                $telefone       = !empty ($telefone) ? $this->tratamento($telefone,3) : 0;
+                $cep            = $this->tratamento($cepFilial,3);
+                $endereco       = $this->tratamento($endereco);
+                $numero         = !empty ($numero) ? $this->tratamento($numero,3) : 0;
+                $cidade         = $this->tratamento($cidade);
+                $bairro         = $this->tratamento($bairro);
+                $pais           = $this->tratamento($idPais);
+                $estado         = $this->tratamento($idEstado);
+
+
                 // Monta a query
                 $query = "insert into tb_filial (nome, id_matriz, endereco, numero, cep, id_pais, id_estado, cidade, bairro, ddd,
                             telefone,id_users, foto)

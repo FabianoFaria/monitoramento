@@ -51,10 +51,14 @@ class EficazDB
     public function __construct()
     {
         // Armazena os dados de conexao com o banco
+        // $this->host =     defined('HOSTNAME') ? HOSTNAME : "localhost";
+        // $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazmonitoramento";
+        // $this->username = defined('USERNAME') ? USERNAME : "eficazmonitor";
+        // $this->userpass = defined('USERPASS') ? USERPASS : "!q2W#e4R";
         $this->host =     defined('HOSTNAME') ? HOSTNAME : "localhost";
-        $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazmonitoramento";
-        $this->username = defined('USERNAME') ? USERNAME : "eficazmonitor";
-        $this->userpass = defined('USERPASS') ? USERPASS : "!q2W#e4R";
+        $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazsystem22";
+        $this->username = defined('USERNAME') ? USERNAME : "root";
+        $this->userpass = defined('USERPASS') ? USERPASS : "";
         
         // Chama a conexao com o banco
         $this->connect();
@@ -65,8 +69,8 @@ class EficazDB
      */
     final protected function connect ()
     {
-        // Verifica se existe os valores nas variaveis de conexao
-        if (! empty($this->host) && ! empty($this->dbname) && ! empty($this->userpass) && ! empty($this->username))
+        // Verifica se existe os valores nas variaveis de conexao --FAVOR RECOLOCAR NO CÓDIGO O TRECHO  && ! empty($this->userpass)
+        if (! empty($this->host) && ! empty($this->dbname) && ! empty($this->username))
         {
             // Verifica se a conexao foi realiza com secesso
             if (@mysql_connect($this->host, $this->username, $this->userpass))
