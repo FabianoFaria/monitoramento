@@ -70,6 +70,43 @@ class EquipamentoController extends MainController
 
 
      /*
+     * Carregar dados do equipamento cadastrado
+     */
+
+     public function editarEquipamentoCliente(){
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            // Define o titulo da pagina
+            $this->title = "equipamento";
+
+            // Carrega os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+            // Carrega o modelo para este view
+            $modelo     = $this->load_model('equipamento/equipamento-model');
+
+            // Carrega view
+             require_once EFIPATH . "/views/_includes/header.php";
+             require_once EFIPATH . "/views/_includes/menu.php";
+             require_once EFIPATH . "/views/equipamento/equipamentoEdicao-view.php";
+             require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+        
+     }
+
+
+     /*
      *  Efetua o cadastro de equipamento via JSON
      */
 
@@ -88,6 +125,8 @@ class EquipamentoController extends MainController
         }
 
      }
+
+
 }
 
 ?>

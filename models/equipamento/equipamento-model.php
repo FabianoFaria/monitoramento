@@ -24,8 +24,11 @@ class EquipamentoModel extends MainModel
     */
     public function listarEquipamentos()
     {
-        $query = "SELECT equip.id, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria FROM tb_equipamento equip
-                    JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante";
+        $query = "SELECT equip.id, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', simEquip.id_sim as 'sim_clie'
+                    FROM tb_equipamento equip
+                    JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
+                    LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
+                    LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id";
 
         /* MONTA A RESULT */
         $result = $this->db->select($query);
@@ -48,6 +51,49 @@ class EquipamentoModel extends MainModel
         }
         else
             return false;
+    }
+
+    /*
+    *   Carregar dados equipamento
+    */
+
+    public function dadosEquipamentoCliente($idEquipamento)
+    {
+
+        if(is_numeric($idEquipamento)){
+            $query = "SELECT equip.id, equip.id_cliente, equip.id_filial, equip.tipo_equipamento, equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria, clie.nome as 'cliente', fili.nome as 'filial'
+                      FROM tb_equipamento equip
+                      JOIN tb_cliente clie ON clie.id = equip.id_cliente
+                      LEFT JOIN tb_filial fili ON fili.id = equip.id_filial
+                      WHERE  equip.id = '$idEquipamento'";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipamento' => $retorno);
+                }
+            }else{
+                $array = array('status' => false, 'equipamento' => '');
+            }
+        }else{
+            $array = array('status' => false, 'equipamento' => '');
+        }
+
+        return $array;
+
     }
 
 
