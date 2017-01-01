@@ -145,6 +145,55 @@ class EquipamentoModel extends MainModel
 
     }
 
-}
+    /*
+    *   Editar equipamento via JSON
+    */
+
+    public function editarEquipamentoJson($idEquip, $idFabricante, $idCliente, $idFilial, $equipamento, $modEquip, $caracteristicas, $quantBateria, $amperagem, $tipoBateria, $potencia)
+    {
+
+        // Armazena o retorno do post
+        $idEquip            = $this->tratamento($idEquip);
+        $idFabricante       = $this->tratamento($idFabricante);
+        $cliente            = $this->tratamento($idCliente);
+        $filial             = $this->tratamento($idFilial);
+        $equipamento        = $this->tratamento($equipamento);
+        $modEquip           = $this->tratamento($modEquip);
+        $caracteristicas    = $this->tratamento($caracteristicas);
+        $quantBateria       = $this->tratamento($quantBateria);
+        $amperagem          = $this->tratamento($amperagem);
+        $tipoBateria        = $this->tratamento($tipoBateria);
+        $potencia           = $this->tratamento($potencia);
+
+
+        $query = "UPDATE tb_equipamento SET ";
+          if(isset($id_fabricante)){  $query .= "id_fabricante = '$idFabricante' ,";}
+          if(isset($cliente)){  $query .= "id_cliente = '$cliente' ,";}
+          if(isset($filial)){  $query .= "id_filial = '$filial' ,";}
+          if(isset($equipamento)){  $query .= "id_filial = '$equipamento' ,";}
+          if(isset($modEquip)){  $query .= "modelo = '$modEquip' ,";}
+          if(isset($caracteristicas)){  $query .= "caracteristica_equip = '$caracteristicas' ,";}
+          if(isset($quantBateria)){  $query .= "qnt_bateria = '$quantBateria' ,";}
+          if(isset($amperagem)){  $query .= "amperagem_bateria = '$amperagem' ,";}
+          if(isset($tipoBateria)){  $query .= "tipo_bateria = '$tipoBateria' ,";}
+          if(isset($potencia)){  $query .= "potencia = '$potencia' ";}
+        $query .= " WHERE id = '$idEquip'";
+
+        /* monta result */
+          $result = $this->db->query($query);
+
+            //var_dump($query);
+
+          if ($result){
+            $array = array('status' => true);
+          }else{
+            $array = array('status' => false);
+          }
+
+          return $array;
+
+    }
+
+}   
 
 ?>

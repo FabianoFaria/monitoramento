@@ -222,6 +222,18 @@ $(document).ready(function(){
     if($('#editarEquipamento').valid()){
       //console.log('prossiga com a edição!!');
 
+      var idEquip     = $('#idEquip').val();
+      var idCliente     = $('#clienteEquipamento').val();
+      var idFilial      = $('#filialEquipamento').val();
+      var equipamento   = $('#txt_tipoEquip').val();
+      var modEquip    = $('#txt_modeloEquip').val();
+      var fabricante    = $('[name=opc_fabricante]').val();
+      var quantBateria  = $('#txt_qntBateria').val();
+      var potencia    = $('#txt_potencia').val();
+      var caracteristicas = $('#txt_caracteristica').val();
+      var amperagem     = $('#txt_amperagem').val();
+      var tipoBateria   = $('#opc_tipoBateria').val();
+
       //Efetua o registro do equipamento no BD
 
       $.ajax({
@@ -230,6 +242,7 @@ $(document).ready(function(){
         type : "POST",
         dataType: 'json',
         data      : {
+          'idEquip'       : idEquip,
           'idCliente'     : idCliente,
           'idFilial'      : idFilial,
           'equipamento'   : equipamento,
@@ -237,20 +250,20 @@ $(document).ready(function(){
           'fabricante'    : fabricante,
           'quantBateria'    : quantBateria,
           'caracteristicas' : caracteristicas,
-          'amperagem'     : amperagem,
-          'tipoBateria'   : tipoBateria,
-          'potencia'    : potencia
+          'amperagem'       : amperagem,
+          'tipoBateria'     : tipoBateria,
+          'potencia'        : potencia
 
         },
         success : function(datra)
           { 
             if(datra.status){
-                        alert("Equipamento cadastrado corretamente.");
+                        alert("Equipamento editado corretamente.");
                         setTimeout(function(){
                           window.location.replace(urlP +"/eficazmonitor/equipamento/");
               }, 3000);
             }else{
-              alert("Ocorreu um erro ao cadastrar o equipamento.");
+              alert("Ocorreu um erro ao editar o equipamento.");
             }
             //$array = array('status' => $result, 'idequipamento' => $idEquip);
                       

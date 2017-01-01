@@ -126,7 +126,24 @@ class EquipamentoController extends MainController
 
      }
 
+     /*
+     *  Função para editar o equipamento via JSON
+     */
 
+     public function editarEquipamentoClienteJson()
+     {
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+
+        $equipModelo    = $this->load_model('equipamento/equipamento-model');
+
+        $editarEquip    = $equipModelo->editarEquipamentoJson($_POST['idEquip'], $_POST['fabricante'], $_POST['idCliente'], $_POST['idFilial'], $_POST['equipamento'], $_POST['modEquip'], $_POST['caracteristicas'], $_POST['quantBateria'], $_POST['amperagem'], $_POST['tipoBateria'], $_POST['potencia']);
+
+        if($editarEquip){
+            exit(json_encode(array('status' => $editarEquip['status'] )));
+        }else{
+            exit(json_encode(array('status' => $editarEquip['status'] )));
+        }
+     }
 }
 
 ?>
