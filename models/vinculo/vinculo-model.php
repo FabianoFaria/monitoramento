@@ -6,30 +6,30 @@ class VinculoModel extends MainModel
     {
         /* carrega a conexao */
         $this->db = $db;
-        
+
         /* carrega o controller */
         $this->controller = $controller;
-        
+
         /* carrega os parametros */
         $this->parametros = $this->controller->parametros;
-        
+
     }
-    
-    
+
+
     /*
      *      Quando existir uma acao do do post
      *      Chama a funcao para salvar o vinculo
      */
     public function vincularSim ()
     {
-        
+
         /* verifica se existe acao do post */
         if (isset($_POST['btn_vicular']))
         {
             /* capitura valores */
             $cliente = $_POST['opc_cliente'];
             $num_sim = $_POST['txt_numSim'];
-            
+
             /* verificar se existe campo em branco */
             if (isset($cliente) && ! empty ($cliente) && $cliente != "" && isset($num_sim) && ! empty ($num_sim) && $num_sim != "")
             {
@@ -50,7 +50,7 @@ class VinculoModel extends MainModel
                         echo "<div class='mensagemError'><span>Erro na inser&ccedil;&atilde;o. Erro 145.</span></div>";
                         return;
                     }
-                    
+
                     /* verifica se existe um valor de retorno */
                     if (@mysql_num_rows($proc) > 0)
                     {
@@ -83,8 +83,8 @@ class VinculoModel extends MainModel
                 echo "<div class='mensagemError'><span>Existe campos em branco</span></div>";
         }
     }
-    
-    
+
+
     /*
      *      funcao que capita a acao do botao
      *      e realiza o cadastro do equipamento
@@ -99,19 +99,19 @@ class VinculoModel extends MainModel
             $equip = isset($_POST['opc_equipamento']) ? $_POST['opc_equipamento'] : 0;
             $numeroSerie = isset($_POST['txt_numeroSerie']) && !empty ($_POST['txt_numeroSerie']) ? $this->converte($this->tratamento($_POST['txt_numeroSerie'])) : 0;
             $ambiente = isset($_POST['txt_ambiente']) && !empty ($_POST['txt_ambiente']) ? $this->converte($this->tratamento($_POST['txt_ambiente'])) : '';
-            
+
             /* verifica se os campos existem e nao estao em branco */
             if (isset($sim) && !empty($sim) && $sim != 0 && isset($equip) && !empty($equip) && $equip != 0 )
             {
                 $equip = explode ("-",$equip);
-                
+
                 // monta a query
                 if ($equip[1] == 'e')
                     $query = "insert into tb_sim_equipamento (id_equipamento, id_sim, num_serie, ambiente) values
                               ('{$equip[0]}','{$sim}' , '{$numeroSerie}','{$ambiente}')";
-                
+
                 $result = $this->db->query($query);
-                
+
                 // verifica se existe reposta
                 if ($result)
                 {
@@ -130,8 +130,8 @@ class VinculoModel extends MainModel
         }
     }
     /* fim da funcao de cadastro */
-    
-    
+
+
     /*
      *      busca matriz
      *      funcao que traz, clientes, filiais
@@ -154,30 +154,30 @@ class VinculoModel extends MainModel
             /* verifica se existe equipamento */
             $query = "select id, tipo_equipamento from tb_equipamento where status_ativo = 1";
         }
-        
+
         // Busca query no banco
         $retorno = $this->resultado_query($query);
         // Retorna o resultado
         return $retorno;
     }
-    
-    
+
+
     /* tabela de clientes que possuem um dispositivo */
     public function tabelaDeCliente()
     {
         // Monta a query
         $query = "call proc_relacionamento";
-        
+
         // Busca query no banco
         $retorno = $this->resultado_query($query);
         // Retorna o resultado
         return $retorno;
     }
-    
-    
-    
+
+
+
     /*
-     *      Funcao que carega todos os clientes que 
+     *      Funcao que carega todos os clientes que
      *      possuem um sim cadastrado
      */
     public function view_sim_cliente ($num = 0)
@@ -204,8 +204,8 @@ class VinculoModel extends MainModel
         // Retorna array
         return $retorno;
     }
-    
-    
+
+
     /**
      * Funcao que carrega o cliente cadastrado no vinculo
      * de acordo com o id cadastrado
@@ -223,10 +223,10 @@ class VinculoModel extends MainModel
                 from tb_sim_equipamento sq
                 inner join tb_sim s on s.num_sim = sq.id_sim
                 where id = {$id}";
-        
+
         // Result que busca os valores
         $result = $this->db->select($query);
-        
+
         // Verifica se existe resposta
         if ($result)
         {
@@ -235,45 +235,45 @@ class VinculoModel extends MainModel
             {
                 // Coleta os dados
                 $row = @mysql_fetch_assoc($result);
-                
+
                 // Busca cliente
                 if (isset($row['id_cliente']) && !empty($row['id_cliente']))
                     // monta a busca de cliente
                     $queryCli = "select nome from tb_cliente where id = {$row['id_cliente']}";
-                
-                
+
+
                 // Busca filial
                 if (isset($row['id_filial']) && !empty($row['id_filial']))
                     // monta a busca de filial
                     $queryCli = "select nome from tb_cliente where id = {$row['id_filial']}";
-                
-                
+
+
                 // Busca equipamento
                 if (isset($row['id_equipamento']) && !empty($row['id_equipamento']))
                     // monta a busca de equipamento
                     $queryEqui = "select tipo_equipamento as nome from tb_equipamento where id = {$row['id_equipamento']}";
-                
-                
+
+
                 // Realiza a busca da query de cliente e equipamento
                 $buscaCli  = $this->resultado_query($queryCli);
                 $buscaEqui = $this->resultado_query($queryEqui);
-                
+
                 // coleta os dados e monta a variavel com o nome do cliente e equipamento
                 $buscaCli = isset($buscaCli[0]['nome']) && !empty($buscaCli[0]['nome']) ? $this->converte($buscaCli[0]['nome'], 1) : "";
                 $buscaEqui = isset($buscaEqui[0]['nome']) && !empty($buscaEqui[0]['nome']) ? $this->converte($buscaEqui[0]['nome'],1) : "";
-                
+
                 return $buscaCli . "/" . $buscaEqui;
             }
         }
     }
-    
-    
+
+
     /**
      * Funcao que captura acao no botao de vunculo
-     * 
+     *
      * @param string $parametro - contem as chaves e a posicao na tabela
      */
-    
+
     public function vinc_equip_sim_tabela ($parametro)
     {
         // Verifica se existe acao sobre a opcao salvar
@@ -281,12 +281,12 @@ class VinculoModel extends MainModel
         {
             // Coleta os dados do post
             $poss = $_POST['opc_posicao'];
-            
+
             // Variavel de controle
             $controle = 0;
             // Marca posicao
             $marca = array();
-            
+
             // Verifica as posicoes da tabela
             foreach ($poss as $confpos)
             {
@@ -301,7 +301,7 @@ class VinculoModel extends MainModel
                     $marca[] = $confpos;
                 }
             }
-            
+
             // Verifica o controle
             if ($controle == 0)
             {
@@ -310,7 +310,7 @@ class VinculoModel extends MainModel
                 {
                     // Monta a query
                     $query = "insert into tb_posicao  (id_sim_equipamento,posicao,id_num_sim) values ({$parametro[0]} ,'{$posicao}',{$parametro[1]})";
-                    
+
                     // Verifica e realiza a insercao das informacoes no banco
                     if (!$this->db->query($query))
                     {
@@ -320,10 +320,10 @@ class VinculoModel extends MainModel
                         return;
                     }
                 }
-                
+
                 // Monta a query de update, para atualizar a relacao de vinculo
                 $query = "update tb_sim_equipamento set vinc_tabela = 1 where id = {$parametro[0]}";
-                
+
                 // Realiza a verificacao e o update das informacoes
                 if (!$this->db->query($query))
                 {
@@ -334,7 +334,7 @@ class VinculoModel extends MainModel
                 }
                 // Mensagem de sucesso
                 echo "<div class='mensagemSucesso'><span>Cadastro salvo com sucesso!</span></div>";
-                
+
                 // Monta a url de redirecionamento
                 $login_uri = HOME_URI . "/vinculo/equipamentolista/";
                 // Redireciona a pagina
@@ -357,33 +357,33 @@ class VinculoModel extends MainModel
             }
         }
     }
-    
-    
-    
+
+
+
     /**
      * listaClienteSim
-     * 
+     *
      * Funcao que gera a lista de todos os clientes e filiais junto do sim
-     * 
+     *
      * @access public
      */
     public function listaClienteSim()
     {
         $pac2 = new C_PhpAutocomplete('simNumInput');
         $pac2->display('SELECT');
-        
+
         // Monta a query para buscar os clientes e filiais junto do sim
         $query = "select s.num_sim, c.nome
                         from tb_sim s
                         inner join tb_cliente c on c.id = s.id_cliente
                         where s.status_ativo = 1 and s.id_cliente is not null";
-        
+
         // Monta a result
         $result = $this->db->select($query);
-        
+
         // Criar o array de resposta
         $resultado = array();
-        
+
         // Verifica se existe valor na result
         if (@mysql_num_rows($result) > 0)
         {
@@ -391,15 +391,15 @@ class VinculoModel extends MainModel
             while ($rowestado = @mysql_fetch_assoc($result))
                 $resultado[] = $rowestado;
         }
-        
+
         $query = "select  s.num_sim, c.nome
                         from tb_sim s
                         inner join tb_filial c on c.id = s.id_filial
                         where s.status_ativo = 1 and s.id_filial is not null";
-        
+
         // Monta a result
         $result = $this->db->select($query);
-        
+
         // Verifica se existe valor na result
         if (@mysql_num_rows($result) > 0)
         {
@@ -407,7 +407,7 @@ class VinculoModel extends MainModel
             while ($rowestado = @mysql_fetch_assoc($result))
                 $resultado[] = $rowestado;
         }
-        
+
         // Exibe os clientes e filiais junto do sim no option
         echo "<select id='simNumInput' name='opc_numSim' class='font-texto-01' required><option>Selecione um cliente/filial</option>";
                 // Monta a lista de clientes e filiais junto do sim
@@ -418,29 +418,29 @@ class VinculoModel extends MainModel
                 }
         echo "</select>";
     }
-    
-    
+
+
     /**
      * listaEquipamento
-     * 
+     *
      * Funcao que gera a lista de todos os equipamentos
-     * 
+     *
      * @access public
      */
     public function listaEquipamento()
     {
         $pac2 = new C_PhpAutocomplete('equipLista');
         $pac2->display('SELECT');
-        
+
         // Monta a query para buscar os equipamentos
         $query = "select id, tipo_equipamento as nome from tb_equipamento where status_ativo = 1";
-        
+
         // Monta a result
         $result = $this->db->select($query);
-        
+
         // Criar o array de resposta
         $resultado = array();
-        
+
         // Verifica se existe valor na result
         if (@mysql_num_rows($result) > 0)
         {
@@ -448,7 +448,7 @@ class VinculoModel extends MainModel
             while ($rowequiperes = @mysql_fetch_assoc($result))
                 $resultado[] = $rowequiperes;
         }
-        
+
         // Exibe os equipamentos no option
         echo "<select id='equipLista' name='opc_equipamento' class='font-texto-01' required><option>Selecione um equipamento</option>";
                 // Monta a lista de equipamentos
@@ -459,9 +459,9 @@ class VinculoModel extends MainModel
                 }
         echo "</select>";
     }
-    
-    
-    
+
+
+
     /**
      * Funcao utilizada para verificar se existe resultado
      *
@@ -472,7 +472,7 @@ class VinculoModel extends MainModel
     {
         // Realiza a query no banco
         $result = $this->db->select ($query);
-        
+
         // Verifica se existe resposta
         if ($result)
         {
@@ -492,6 +492,51 @@ class VinculoModel extends MainModel
         }
         // Fim
         return false;
+    }
+
+
+    /*
+    * Função para retornar os SIMs que estão vinculados a um SIM
+    */
+    public function ListarVinculosCliente($idCliente)
+    {
+        if(is_numeric($idCliente)){
+
+            $query = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, fili.nome AS 'filial'
+                        FROM tb_sim sim
+                        LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
+                        WHERE sim.id_cliente = $idCliente AND sim.status_ativo = 1";
+
+            // Monta a result
+            $result = $this->db->select($query);
+
+            // Verifica se existe resposta
+            if($result)
+            {
+                // Verifica se existe resultado
+                if (@mysql_num_rows($result) > 0)
+                {
+                    // Converte para array
+                    while ($row = @mysql_fetch_assoc($result))
+                        // Armazena no array de retorno
+                        $retorno[] = $row;
+
+                    // Retorna o valor
+                    $array = array('status' => true, 'sims' => $retorno);
+                }else{
+                    $array = array('status' => false, 'sims' => '');
+                }
+                // Fim
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
     }
 }
 

@@ -51,6 +51,7 @@
                                 <th>Nome</th>
                                 <th>Cidade</th>
                                 <th>Telefone</th>
+                                <th class="txt-center">Gerenciar SIM</th>
                                 <th class="txt-center">Editar</th>
                                 <th class="txt-center">Filiais</th>
                                 <th class="txt-center">Excluir</th>
@@ -66,7 +67,8 @@
                                         <td><?php echo $cliente['nome']; ?></td>
                                         <td><?php echo $cliente['cidade']; ?></td>
                                         <td><?php echo "(".$cliente['ddd'].") ".$cliente['telefone']; ?></td>
-                                        <td>
+                                        <td><a href="<?php echo HOME_URI; ?>/vinculo/gerenciarVinculo/<?php echo  $cliente['id']; ?>"><i class="fa fa-credit-card fa-lg"></i></i></a></a></td>
+                                        <td >
                                             <a href="<?php echo HOME_URI; ?>/cliente/editarCliente/<?php echo $cliente['id']; ?>" class="link-tabela-moni">
                                                 <i class="fa fa-pencil-square-o fa-lg"></i>
                                             </a>

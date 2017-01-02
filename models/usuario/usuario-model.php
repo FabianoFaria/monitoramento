@@ -212,10 +212,13 @@ class UsuarioModel extends MainModel
 
             $query = "INSERT INTO tb_users(id_perfil_acesso, nome, sobrenome, email, telefone, celular, senha, local_usu, status_ativo, id_cliente) VALUES('2', '$nome', '$sobrenome', '$email', '$telefone', '$celular', '$senha', '1', '1', $idCliente)";
 
+            //var_dump($query);
+
             // Verifica se gravou com sucesso
             if ($this->db->query($query))
             {
-                $array = array('status' => true, 'idUsuario' => 0);
+                $idGerada  = mysql_insert_id();
+                $array = array('status' => true, 'idUsuario' => $idGerada);
             }else{
                 $array = array('status' => false, 'idUsuario' => 0);
             }

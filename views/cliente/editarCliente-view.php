@@ -9,17 +9,22 @@
     //var_dump($contato);
 
     /*
-		  array(2) { ["status"]=> bool(true) ["dados"]=> array(2) { [0]=> array(7) { ["id"]=> string(1) "3" ["nome"]=> string(8) "Fabiano " ["sobrenome"]=> string(6) "Hatori" ["email"]=> string(27) "fabiano@eficazSystem.com.br" ["telefone"]=> string(0) "" ["celular"]=> string(1) "0" ["id_cliente"]=> string(1) "1" } [1]=> array(7) { ["id"]=> string(1) "4" ["nome"]=> string(6) "Allan " ["sobrenome"]=> string(5) "Lima " ["email"]=> string(30) "allan.lima@eficazsystem.com.br" ["telefone"]=> string(0) "" ["celular"]=> string(1) "0" ["id_cliente"]=> string(1) "1" } } } 
+		  array(2) { ["status"]=> bool(true) ["dados"]=> array(2) { [0]=> array(7) { ["id"]=> string(1) "3" ["nome"]=> string(8) "Fabiano " ["sobrenome"]=> string(6) "Hatori" ["email"]=> string(27) "fabiano@eficazSystem.com.br" ["telefone"]=> string(0) "" ["celular"]=> string(1) "0" ["id_cliente"]=> string(1) "1" } [1]=> array(7) { ["id"]=> string(1) "4" ["nome"]=> string(6) "Allan " ["sobrenome"]=> string(5) "Lima " ["email"]=> string(30) "allan.lima@eficazsystem.com.br" ["telefone"]=> string(0) "" ["celular"]=> string(1) "0" ["id_cliente"]=> string(1) "1" } } }
     */
 
 	if($dados['status']){
 		$dadosCliente = $dados['dados'][0];
-    $dadosContato = $contato['dados'][0];
+
 	}else{
 	 	$dadosCliente = null;
-    $dadosContato = null;
+
 	}
 
+    if($contato['status']){
+        $dadosContato = $contato['dados'][0];
+    }else{
+        $dadosContato = null;
+    }
 
 ?>
 
@@ -37,7 +42,7 @@
     <div class="col-md-12">
 
     	<!-- TITULO PAGINA -->
-       <label class="page-header">Editar cliente</label><!-- Fim Titulo pagina -->	
+       <label class="page-header">Editar cliente</label><!-- Fim Titulo pagina -->
 
        	<!-- Cadastra do cliente -->
        	<div class="panel-group" id="accordionContatoClie" role="tablist" aria-multiselectable="true">
@@ -61,7 +66,7 @@
                           <div class="col-md-4">
                             <div class="form-group">
                               <label for="cliente">Nome da empresa do cliente</label>
-                              <input type="hidden" id="txt_idCliente" name="txt_idCliente" value="<?php echo $this->parametros[0]; ?>"> 
+                              <input type="hidden" id="txt_idCliente" name="txt_idCliente" value="<?php echo $this->parametros[0]; ?>">
                               <input type="text" class="form-control" id="txt_cliente" name="txt_cliente" placeholder="Nome do cliente" maxlength="100" value="<?php echo ($dados['status']) ? $dadosCliente['nome'] : ""; ?>">
                             </div>
                           </div><!-- fim do campo nome do cliente -->
@@ -173,7 +178,7 @@
                             </div>
                           </div>
 
-                         
+
 
                         </div>
 
@@ -190,7 +195,7 @@
 <div class="row">
   <div class="col-md-12">
     <!-- TITULO PAGINA -->
-    <label class="page-header">Editar contato cliente</label><!-- Fim Titulo pagina --> 
+    <label class="page-header">Editar contato cliente</label><!-- Fim Titulo pagina -->
 
     <!-- Cadastra do cliente -->
     <div class="panel-group" id="accordionContatoClie" role="tablist" aria-multiselectable="true">
@@ -287,9 +292,3 @@
 
   </div>
 </div>
-
-
-
-
-
-

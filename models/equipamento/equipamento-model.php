@@ -63,7 +63,7 @@ class EquipamentoModel extends MainModel
         if(is_numeric($idEquipamento)){
             $query = "SELECT equip.id, equip.id_cliente, equip.id_filial, equip.tipo_equipamento, equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria, clie.nome as 'cliente', fili.nome as 'filial'
                       FROM tb_equipamento equip
-                      JOIN tb_cliente clie ON clie.id = equip.id_cliente
+                      LEFT JOIN tb_cliente clie ON clie.id = equip.id_cliente
                       LEFT JOIN tb_filial fili ON fili.id = equip.id_filial
                       WHERE  equip.id = '$idEquipamento'";
 
@@ -110,7 +110,7 @@ class EquipamentoModel extends MainModel
             // Trata os valores
             $idUser         = $_SESSION['userdata']['userId'];
             $idCliente      = $idCliente;
-            $idFilial       = ($idFilial == "") ? 0 : $idFilial;
+            $idFilial       = ($idFilial == '') ? 0 : $idFilial;
             $idFabri        = $fabricante;
             $tipoEquip      = isset($equipamento) && !empty ($equipamento) ? $this->converte($this->tratamento($equipamento)) : '';
             $modeloEquip    = isset($modEquip) && !empty ($modEquip) ? $this->converte($this->tratamento($modEquip)) : '';
@@ -122,11 +122,8 @@ class EquipamentoModel extends MainModel
 
             // Se nao estiver em branco
             // Realiza a insercao no banco
-            $query          = "insert into tb_equipamento (id_users, id_fabricante, id_cliente, id_filial,
-                                tipo_equipamento, modelo, potencia,qnt_bateria, caracteristica_equip, tipo_bateria, amperagem_bateria)
-                                values ('$idUser','$idFabri', $idCliente, $idFilial,'$tipoEquip','$modeloEquip','$potencia','$qntBateria'
-                                ,'$caracteristica','$tipoBateria','$amperagem')";
-            
+            $query          = "INSERT INTO tb_equipamento (id_users, id_fabricante, id_cliente, id_filial, tipo_equipamento, modelo, potencia,qnt_bateria, caracteristica_equip, tipo_bateria, amperagem_bateria) VALUES ('$idUser','$idFabri', '$idCliente', '$idFilial','$tipoEquip','$modeloEquip','$potencia','$qntBateria','$caracteristica','$tipoBateria','$amperagem')";
+
             //var_dump($query);
 
             $result         = $this->db->select($query);
@@ -194,6 +191,6 @@ class EquipamentoModel extends MainModel
 
     }
 
-}   
+}
 
 ?>

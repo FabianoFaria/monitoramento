@@ -23,8 +23,8 @@
          */
          public function listarCliente()
          {
-             $query = "SELECT id, nome, cidade, ddd, telefone FROM tb_cliente";
-
+             $query = "SELECT clie.id, clie.nome, clie.cidade, clie.ddd, clie.telefone
+                        FROM tb_cliente clie";
              /* MONTA A RESULT */
              $result = $this->db->select($query);
 
@@ -79,6 +79,8 @@
 
                     /* DEVOLVE RETORNO */
                     $array = array('status' => true, 'filiais' => $retorno);
+                }else{
+                    $array = array('status' => false, 'filiais' => '');
                 }
               }else{
                 $array = array('status' => false, 'filiais' => '');
@@ -91,7 +93,7 @@
 
             }
 
-            
+            return $array;
          }
 
 
@@ -158,21 +160,23 @@
               $estado   = $this->tratamento($estado);
               $cidade   = $this->tratamento($cidade);
               $bairro   = $this->tratamento($bairro);
-                
+
                 // Realiza o upload da imagem
                 $up_resp = $this->validaUpload($_FILES);
 
                 // Grava no banco os valores
-                $query = "insert into tb_cliente (nome, endereco, numero, cep, id_pais, id_estado, ddd, telefone , cidade, bairro, id_users ,
+                $query = "INSERT INTO tb_cliente (nome, endereco, numero, cep, id_pais, id_estado, ddd, telefone , cidade, bairro, id_users ,
                                                   foto)
-                          values ('{$nomeCliente}', '{$endereco}', '{$numero}', '{$cep}', '{$pais}', '{$estado}', '{$ddd}', '{$telefone}',
+                          VALUES ('{$nomeCliente}', '{$endereco}', '{$numero}', '{$cep}', '{$pais}', '{$estado}', '{$ddd}', '{$telefone}',
                           '{$cidade}', '{$bairro}', '{$_SESSION['userdata']['userId']}', '$up_resp')";
 
 
                 // Realiza a chamada para gravar e verficar se gravou com sucesso
                 //$result = $this->validaInsercaoBanco ($query, "Cadastro salvo com sucesso!", "Erro durante o salvamento.");
 
-                $result   = $this->db->select($query);
+                $result   = $this->db->query($query);
+
+                //var_dump($query);
 
                 $idGerada  = mysql_insert_id();
                 //$queryId = mysql_insert_id();
@@ -240,7 +244,7 @@
           if(is_numeric($idCliente)){
 
 
-            $query = "SELECT 
+            $query = "SELECT
                       c.nome , c.endereco, c.numero, c.cep, c.cidade, c.bairro, c.ddd, c.telefone , p.nome as pais ,
                       e.nome as estado , p.id as idpais, e.id as idestado
                       FROM tb_cliente c
@@ -258,7 +262,7 @@
                   /* pega os valores e monta um array */
                   while ($row = @mysql_fetch_assoc($result))
                       $retorno[] = $row;
-                  
+
                   /* retorna o select */
                   $cliente  = $retorno;
                   $status   = true;
@@ -307,22 +311,26 @@
                   /* pega os valores e monta um array */
                   while ($row = @mysql_fetch_assoc($result))
                       $retorno[] = $row;
-                  
+
                   /* retorna o select */
                   $cliente  = $retorno;
                   $status   = true;
+
+                  $array = array('status' => true, 'dados' => $cliente) ;
               }
               else
                 /* fim */
-                $status = false;
+                // $status = false;
+
+                $array = array('status' => false, 'dados' => '') ;
 
             }else{
               /* fim */
               $status = false;
+
+              $array = array('status' => true, 'dados' => '') ;
             }
 
-            $array = array('status' => true, 'dados' => $cliente) ;
-          
           }else{
             $array = array('status' => false);
           }
@@ -334,9 +342,9 @@
         /**
          * Funcao que valida a gravacao da query no banco
          *
-         * @param string $query - recebe uma string contendo a query
-         * @param string $msgSuc - recebe uma string contendo a mensagem de sucesso
-         * @param string $msgErr - recebe uma string contendo a mensagem de erro
+         * @param string $query     - recebe uma string contendo a query
+         * @param string $msgSuc    - recebe uma string contendo a mensagem de sucesso
+         * @param string $msgErr    - recebe uma string contendo a mensagem de erro
          */
         private function validaInsercaoBanco($query, $msgSuc, $msgErr)
         {

@@ -8,13 +8,13 @@
 
     if($dados['status']){
 		$dadosCliente = $dados['dados'][0];
-    	$dadosFiliais = $filiais['filiais'][0];
+    	$dadosFiliais = $filiais['filiais'];
 	}else{
 	 	$dadosCliente = null;
     	$dadosFiliais = null;
 	}
 
-	//var_dump($dados);
+	//var_dump($dadosFiliais);
 
 ?>
 
@@ -53,8 +53,9 @@
                         </thead>
                         <tbody>
                             <?php
-                                if(isset($dadosFiliais))
+                                if($dadosFiliais != '')
                                 {
+
                                     foreach ($dadosFiliais as $filia){
                                 ?>
                                     <tr>
@@ -93,7 +94,7 @@
             </div>
 
 
-        </div>	
+        </div>
 
 	</div>
 </div>

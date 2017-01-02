@@ -125,7 +125,7 @@
             require_once EFIPATH . "/views/_includes/footer.php";
         }
 
-        
+
 
     }
 
@@ -175,10 +175,10 @@
 
         if($filiaisCliente['status']){
 
-            $filiaisClienteHtml = "<option value='0'>Selecione a filial</option>";
+            //$filiaisClienteHtml = "<option value='0'>Selecione a filial</option>";
 
             foreach ($filiaisCliente['filiais'] as $filiais) {
-                
+
                 $filiaisClienteHtml .= "<option value='".$filiais['id']."'>".$filiais['nome']."</option>";
 
             }
