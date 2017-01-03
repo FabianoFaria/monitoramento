@@ -246,6 +246,78 @@ class VinculoController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
+
+
+    /*
+    * Função para carregar a tela de vinculo do equipamento com o SIM
+    */
+    public function vincularEquipamentoSim()
+    {
+        // Verifica se esta logado
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_vi'] != 1 )
+        {
+            // Se nao possuir permissao
+            // Redireciona para index
+            $this->moveHome();
+        }
+        else
+        {
+            // Define o titulo da pagina
+            $this->title = "vinculo";
+
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+            // Carrega o model
+            $modelo         = $this->load_model('equipamento/equipamento-model');
+            $modeloClie     = $this->load_model('cliente/cliente-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/vinculo/vincularSimEquipamento-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+        }
+    }
+
+    /*
+    * Função para registrar vinculo entre SIM e cliente via JSON
+    */
+
+    public function registrarVinculoClienteJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
+
+        $vinculoRegistrado  = $vinculoModelo->cadastrarVinculoCliente($_POST['idCliente'],$_POST['idFilial'],$_POST['num_sim']);
+
+        if($vinculoRegistrado['status']){
+            exit(json_encode(array('status' => $vinculoRegistrado['status'])));
+        }else{
+            exit(json_encode(array('status' => $vinculoRegistrado['status'])));
+        }
+
+    }
+
+    /*
+    * Função para registrar o vinculo entre um equipamento e um SIM
+    */
+    public function registrarVinculoEquipamentoJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
+
+        $vinculoEquipamento = $vinculoModelo->cadastrarVinculoEquipamento($_POST['idEquipamento'], $_POST['simVinculado'], $_POST['numero_serie'], $_POST['ambiente']);
+
+        if($vinculoEquipamento['status']){
+            exit(json_encode(array('status' => $vinculoEquipamento['status'])));
+        }else{
+            exit(json_encode(array('status' => $vinculoEquipamento['status'])));
+        }
+    }
 }
 
 ?>

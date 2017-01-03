@@ -112,6 +112,9 @@
                             values ('$nomeFilial','$idMatriz','$endereco','$numero','$cepFilial','$idPais','$idEstado', '$cidade','$bairro',
                             '$codigoArea','$telefone','$idUser','a881bd9c3f3b8446ef35ac350a06691a.jpg')";
 
+                //var_dump($query);
+
+
                 // Verifica se gravou com sucesso
                 if ($this->db->query($query))
                 {

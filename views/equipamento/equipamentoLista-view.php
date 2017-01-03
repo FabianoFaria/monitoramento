@@ -48,7 +48,7 @@
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
                                 <th>Fabricante</th>
-                                <!-- <th>Potencia</th>-->                                
+                                <!-- <th>Potencia</th>-->
                                 <th>Cliente</th>
                                 <!-- <th>Quantidade baterias</th> -->
                                 <th>N° SIM</th>
@@ -72,7 +72,7 @@
                                     <!-- <td><?php //echo $equipamento['potencia']; ?></td> -->
                                     <td><?php echo $equipamento['cliente']?></td>
                                     <!-- <td><?php //echo $equipamento['qnt_bateria']; ?></td> -->
-                                    <td><?php echo (isset($equipamento['sim_clie'])) ? $equipamento['sim_clie'] : "<a href='".HOME_URI."/vinculo/vincular/".$equipamento['id']."'> Vincular N° SIM </a>"; ?></td>
+                                    <td><?php echo (isset($equipamento['sim_clie'])) ? $equipamento['sim_clie'] : "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> Vincular N° SIM </a>"; ?></td>
                                     <td><?php echo $equipamento['caracteristica_equip']; ?></td>
                                     <td><?php echo $equipamento['tipo_bateria']; ?></td>
                                     <td><?php echo $equipamento['amperagem_bateria']; ?></td>

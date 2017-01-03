@@ -41,7 +41,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Cliente com o equipamento : </label>
-                        <select id="clienteEquipamento" name="clienteEquipamento">
+                        <select id="clienteEquipamento" name="clienteEquipamento" class="form-control">
                             <option value="" selected>Selecione cliente</option>
                             <?php
                                 if(isset($dadosCliente)){
@@ -60,7 +60,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Filial com o equipamento : </label>
-                        <select id="filialEquipamento" name="filialEquipamento">
+                        <select id="filialEquipamento" name="filialEquipamento" class="form-control">
                             <option value="">Selecione filial</option>
                         </select>
                     </div>
@@ -95,7 +95,7 @@
                     </div>
                 </div><!-- fim modelo do equipamento -->
 
-               
+
 
             </div>
             <div class="row">
@@ -121,7 +121,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="caracteristica">Caracter&iacute;sticas equipamento (Opcional)</label>
-                        <input type="text" class="form-control" id="txt_caracteristica" name="txt_caracteristica" placeholder="Caracter&iacute;sticas equipamento" 
+                        <input type="text" class="form-control" id="txt_caracteristica" name="txt_caracteristica" placeholder="Caracter&iacute;sticas equipamento"
                         maxlength="30" value="">
                     </div>
                 </div><!-- fim Caracteristica do equipamento -->

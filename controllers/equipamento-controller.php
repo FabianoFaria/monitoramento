@@ -102,9 +102,35 @@ class EquipamentoController extends MainController
              require_once EFIPATH . "/views/_includes/footer.php";
 
         }
-        
+
      }
 
+     /*
+     * Carrega a tela de vinculaçao do equipamento com o SIM
+     */
+     public function vincularEquipamentoSim()
+     {
+         // Verifica o login
+         $this->check_login();
+
+         // Verifica as permissoes necessarias
+         if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+         {
+             // Se nao possuir
+             // Redireciona para index
+             $this->moveHome();
+         }else{
+
+             // Carrega o modelo para este view
+             $modelo     = $this->load_model('equipamento/equipamento-model');
+
+             // Carrega view
+              require_once EFIPATH . "/views/_includes/header.php";
+              require_once EFIPATH . "/views/_includes/menu.php";
+              require_once EFIPATH . "/views/equipamento/equipamentoVincularSim-view.php";
+              require_once EFIPATH . "/views/_includes/footer.php";
+        }
+     }
 
      /*
      *  Efetua o cadastro de equipamento via JSON

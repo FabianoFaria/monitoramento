@@ -167,7 +167,7 @@ class EquipamentoModel extends MainModel
           if(isset($id_fabricante)){  $query .= "id_fabricante = '$idFabricante' ,";}
           if(isset($cliente)){  $query .= "id_cliente = '$cliente' ,";}
           if(isset($filial)){  $query .= "id_filial = '$filial' ,";}
-          if(isset($equipamento)){  $query .= "id_filial = '$equipamento' ,";}
+          if(isset($equipamento)){  $query .= "tipo_equipamento = '$equipamento' ,";}
           if(isset($modEquip)){  $query .= "modelo = '$modEquip' ,";}
           if(isset($caracteristicas)){  $query .= "caracteristica_equip = '$caracteristicas' ,";}
           if(isset($quantBateria)){  $query .= "qnt_bateria = '$quantBateria' ,";}

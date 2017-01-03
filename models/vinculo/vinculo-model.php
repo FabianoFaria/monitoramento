@@ -538,6 +538,62 @@ class VinculoModel extends MainModel
 
         return $array;
     }
+
+    /*
+    * Função para registrar o vinculo via JSON
+    */
+    public function cadastrarVinculoCliente($idCliente, $idFilial, $numSim)
+    {
+        if(is_numeric($idCliente)){
+
+            if(!is_numeric($idFilial)){
+                $idFilial = 0;
+            }
+
+            $query = "INSERT INTO tb_sim (num_sim, id_cliente, id_filial) VALUES ('$numSim', '$idCliente', '$idFilial')";
+
+            //var_dump($query);
+
+            // Verifica se gravou com sucesso
+            if ($this->db->query($query))
+            {
+                $array = array('status' => true);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+        return $array;
+    }
+
+    /*
+    * Função para registrar vinculo com equipamento
+    */
+
+    public function cadastrarVinculoEquipamento($idEquipamento, $simVinculado, $numero_serie, $ambiente){
+
+        if(is_numeric($idEquipamento)){
+
+            $query = "INSERT INTO tb_sim_equipamento (id_equipamento, id_sim, num_serie, ambiente) VALUES ('$idEquipamento', '$simVinculado', '$numero_serie', '$ambiente')";
+
+            //var_dump($query);
+
+            // Verifica se gravou com sucesso
+            if ($this->db->query($query))
+            {
+                $array = array('status' => true);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
 }
 
 ?>

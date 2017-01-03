@@ -338,6 +338,101 @@
           return $array;
         }
 
+        /*
+        * Função para carregar os números de SIM vinculados a filial do cliente
+        */
+        public function listarSimCliente($idCliente, $idFilial)
+        {
+            if(is_numeric($idCliente)){
+
+                $query = "SELECT clie.nome as 'cliente', fili.nome as 'filial', sim.num_sim
+                            FROM  tb_cliente clie
+                            LEFT JOIN tb_filial fili ON clie.id = fili.id_matriz
+                            LEFT JOIN tb_sim sim ON fili.id = sim.id_filial
+                            WHERE fili.id_matriz = $idCliente AND fili.id = $idFilial";
+
+                /* monta result */
+                $result = $this->db->select($query);
+
+                if ($result){
+                  /* verifica se existe valor */
+                  if (@mysql_num_rows($result)>0)
+                  {
+                      /* pega os valores e monta um array */
+                      while ($row = @mysql_fetch_assoc($result))
+                          $retorno[] = $row;
+
+                      /* retorna o select */
+                      $cliente  = $retorno;
+                      $status   = true;
+
+                      $array = array('status' => true, 'dados' => $cliente) ;
+                  }
+                  else
+                    /* fim */
+                    // $status = false;
+                    $array = array('status' => false, 'dados' => '') ;
+
+                }else{
+                  /* fim */
+                  $status = false;
+
+                  $array = array('status' => true, 'dados' => '') ;
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+
+        }
+
+        /*
+        * FUnção para carregar o num_sim da matriz do cliente com base no equipamento alocado
+        */
+
+        public function listarSimClienteMatriz($idEquip){
+
+            if(is_numeric($idEquip)){
+                $query = "SELECT clie.nome as 'cliente', sim.num_sim
+                            FROM  tb_cliente clie
+                            JOIN tb_equipamento equip ON clie.id = equip.id_cliente
+                            LEFT JOIN tb_sim sim ON clie.id = sim.id_cliente
+                            WHERE equip.id = $idEquip";
+
+                /* monta result */
+                $result = $this->db->select($query);
+
+                if($result){
+
+                    /* verifica se existe valor */
+                    if (@mysql_num_rows($result)>0)
+                    {
+                        /* pega os valores e monta um array */
+                        while ($row = @mysql_fetch_assoc($result))
+                            $retorno[] = $row;
+
+                        /* retorna o select */
+                        $cliente  = $retorno;
+                        $status   = true;
+
+                        $array = array('status' => true, 'dados' => $cliente) ;
+                    }
+                    else
+                      /* fim */
+                      // $status = false;
+                      $array = array('status' => false, 'dados' => '');
+                }else{
+                     $array = array('status' => false, 'dados' => '');
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
 
         /**
          * Funcao que valida a gravacao da query no banco

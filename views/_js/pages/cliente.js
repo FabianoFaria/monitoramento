@@ -165,11 +165,11 @@ $().ready(function() {
                 },
                 txt_telefone_contato:{
                     required:true
-                   
+
                 },
                 txt_celular_contato:{
                     required : true
-                   
+
                 },
                 txt_senha_contato : {
                     required : true
@@ -193,11 +193,11 @@ $().ready(function() {
                 },
                 txt_telefone_contato:{
                     required : "Campo obrigatório"
-                   
+
                 },
                 txt_celular_contato:{
                     required : "Campo obrigatório"
-                  
+
                 },
                 txt_senha_contato:{
                     required : "Campo obrigatório"
@@ -309,7 +309,11 @@ $().ready(function() {
             //VERIFICA SE CLIENTE POSSUI FILIAIS
             var check = $('input:checkbox[name=temFiliais]').is(':checked');
 
+            console.log('verificando check : '+ check);
+
             if(check == true){
+
+                console.log("Prossiga !");
 
                 //INICIA O TRATAMENTO DOS FORMULARIOS DE FILIAIS
 
@@ -319,6 +323,8 @@ $().ready(function() {
                 //INICIA O LOOP DE CADASTRO DE FILIAIS
 
                 for(var i = 1; i <= quantidadeFiliais; i++){
+
+                    console.log("Cadastrando a filial : "+i);
 
                     var idMatriz    = $('#resultadoCadastro').val();
                     var nomeFilial  = $('[name=txt_filial'+i+']').val();
@@ -505,10 +511,10 @@ $().ready(function() {
                     }
             });
 
-        }  
+        }
 
     });
-    
+
     //Efetua a validação dos dados antes de efetuar a atualização do contato do cliente
 
     $('#editarContatoCliente').click(function(){
@@ -528,11 +534,11 @@ $().ready(function() {
                 },
                 txt_telefone_contato:{
                     required:true
-                   
+
                 },
                 txt_celular_contato:{
                     required : true
-                   
+
                 },
                 txt_senha_contato : {
                     required : false
@@ -556,11 +562,11 @@ $().ready(function() {
                 },
                 txt_telefone_contato:{
                     required : "Campo obrigatório"
-                   
+
                 },
                 txt_celular_contato:{
                     required : "Campo obrigatório"
-                  
+
                 },
                 txt_senha_contato:{
                     required : "Campo obrigatório"

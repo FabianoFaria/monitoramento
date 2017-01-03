@@ -44,8 +44,9 @@
                 <!-- nome da filial -->
                 <div class="col-md-4">
                     <div class="form-group">
+                        <input type="hidden" id="idCliente" name="idCliente" value="<?php echo $this->parametros[0]; ?>" />
                         <label for="exampleInputEmail1">Filial (Opcional)</label><br>
-                        <select id="filialVincular">
+                        <select id="filialVincular" class="form-control">
                             <?php
 
                                 if(isset($dadosFiliais)){
@@ -72,7 +73,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">C&oacute;digo do SIM</label>
-                        <input type="text" class="form-control" id="txt_numSim" name="txt_numSim" placeholder="C&oacute;digo do SIM" maxlength="14" onkeypress="return onlyNumber(event);" required>
+                        <input type="text" class="form-control" id="txt_numSim" name="txt_numSim" placeholder="C&oacute;digo do SIM" maxlength="20" onkeypress="return onlyNumber(event);" required>
                     </div>
                 </div><!-- fim do Codigo SIM -->
 
@@ -80,7 +81,8 @@
 
             <div class="row">
                 <div class="col-md-2 col-md-offset-5 txt-center">
-                    <input type="submit" class="btn btn-info" name="btn_vicular" value="Vicular SIM">
+                    <!-- <input type="submit" class="btn btn-info" name="btn_vicular" value="Vicular SIM"> -->
+                    <button type="button" id="salvarVinculo" class="btn btn-info">Vincular</button>
                 </div>
             </div>
 

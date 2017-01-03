@@ -29,14 +29,14 @@
 </div>
 
 <?php
-	
+
 	/*
 
- 		array(1) { [0]=> array(12) { ["id"]=> string(1) "4" ["id_cliente"]=> string(1) "2" ["id_filial"]=> string(1) "0" ["tipo_equipamento"]=> string(6) "tretre" ["modelo"]=> string(5) "erter" ["potencia"]=> string(4) "4453" ["qnt_bateria"]=> string(5) "23323" ["caracteristica_equip"]=> string(5) "23423" ["tipo_bateria"]=> string(13) "Estacionária" ["amperagem_bateria"]=> string(5) "23423" ["cliente"]=> string(4) "Jose" ["filial"]=> NULL } } 
+ 		array(1) { [0]=> array(12) { ["id"]=> string(1) "4" ["id_cliente"]=> string(1) "2" ["id_filial"]=> string(1) "0" ["tipo_equipamento"]=> string(6) "tretre" ["modelo"]=> string(5) "erter" ["potencia"]=> string(4) "4453" ["qnt_bateria"]=> string(5) "23323" ["caracteristica_equip"]=> string(5) "23423" ["tipo_bateria"]=> string(13) "Estacionária" ["amperagem_bateria"]=> string(5) "23423" ["cliente"]=> string(4) "Jose" ["filial"]=> NULL } }
 	*/
 
-    var_dump($equipamentoCarregado);
-	
+    //var_dump($equipamentoCarregado);
+
 
 ?>
 
@@ -52,9 +52,9 @@
         		<div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Cliente com o equipamento : </label>
-                        <input id="idEquip" name="idEquip" type='hidden' value="<?php echo $this->parametros[0]; ?>"> 
-                        <input id="clienteEquipamento" name="clienteEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_cliente']; ?>"> 
-                        <input id="filialEquipamento" name="filialEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_filial']; ?>"> 
+                        <input id="idEquip" name="idEquip" type='hidden' value="<?php echo $this->parametros[0]; ?>">
+                        <input id="clienteEquipamento" name="clienteEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_cliente']; ?>">
+                        <input id="filialEquipamento" name="filialEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_filial']; ?>">
                         <input id="nomeCliente" name="nomeCliente" type='text' value="<?php echo $equipamentoCarregado['cliente']; ?>">
                     </div>
                 </div><!-- fim fabricante -->
@@ -122,7 +122,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="caracteristica">Caracter&iacute;sticas equipamento (Opcional)</label>
-                        <input type="text" class="form-control" id="txt_caracteristica" name="txt_caracteristica" placeholder="Caracter&iacute;sticas equipamento" 
+                        <input type="text" class="form-control" id="txt_caracteristica" name="txt_caracteristica" placeholder="Caracter&iacute;sticas equipamento"
                         maxlength="30" value="<?php echo $equipamentoCarregado['caracteristica_equip']; ?>">
                     </div>
                 </div><!-- fim Caracteristica do equipamento -->
@@ -153,7 +153,7 @@
                     </div>
                 </div><!-- fim Tipo de bateria -->
 
-        	</div>	
+        	</div>
 
         	<!-- botao de enviar -->
             <div class="row">

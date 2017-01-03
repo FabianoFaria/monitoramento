@@ -24,8 +24,8 @@ $modelo->cad_sim_equip();
 <div class="container-fluid fontPadrao">
     <!-- Titulo pagina -->
     <label class="titulo-pagina">EQUIPAMENTO AO SIM</label><!-- Fim Titulo pagina -->
-    
-    
+
+
     <!-- formulario de cadastro -->
     <form method="post">
         <div class="row">
@@ -36,7 +36,7 @@ $modelo->cad_sim_equip();
                     <?php $modelo->listaClienteSim(); ?>
                 </div>
             </div><!-- fim do Codigo SIM -->
-            
+
             <!-- equipamentos -->
             <div class="col-md-3">
                 <div class="form-group">
@@ -44,17 +44,17 @@ $modelo->cad_sim_equip();
                     <?php $modelo->listaEquipamento(); ?>
                 </div>
             </div><!-- fim dos equipamentos -->
-            
+
             <!-- Numero de serie -->
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="numeroSerie">N&uacute;mero de s&eacute;rie (Opcional)</label>
-                    <input type="text" class="form-control" id="txt_numeroSerie" name="txt_numeroSerie" placeholder="N&uacute;mero de s&eacute;rie" 
+                    <input type="text" class="form-control" id="txt_numeroSerie" name="txt_numeroSerie" placeholder="N&uacute;mero de s&eacute;rie"
                     maxlength="30" onkeypress="return onlyNumber(event);" value="<?php if (isset($_POST['txt_numeroSerie'])) echo $_POST['txt_numeroSerie']; ?>">
                 </div>
             </div><!-- fim Numero de serie -->
-            
-            
+
+
             <!-- Ambiente -->
             <div class="col-md-3">
                 <div class="form-group">
@@ -64,7 +64,7 @@ $modelo->cad_sim_equip();
                 </div>
             </div><!-- fim Ambiente -->
         </div>
-        
+
         <!-- botao de envio -->
         <div class="row">
             <div class="col-md-2 col-md-offset-5 txt-center">
@@ -72,4 +72,3 @@ $modelo->cad_sim_equip();
         </div><!-- fim botao de envio -->
     </form><!-- fim do formulario -->
 </div>
-    

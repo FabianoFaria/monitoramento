@@ -27,7 +27,7 @@ $(document).ready(function(){
 
               },
                    success : function(datra)
-                    {	
+                    {
 
                     	var statusCad   = datra.status;
                         var htmlFiliais	= datra.filiais;
@@ -35,7 +35,7 @@ $(document).ready(function(){
                        //tempTest = JSON(datra);
                        if(datra.status == true)
                        {
-                       	   
+
                        	   $('#filialEquipamento').append(htmlFiliais);
                        }
                        else
@@ -51,8 +51,8 @@ $(document).ready(function(){
                     // STOP LOADING SPINNER
                     }
             });
-		
-		
+
+
 	});
 
 	/*
@@ -95,7 +95,7 @@ $(document).ready(function(){
               	txt_qntBateria:{
               		digits : "Apenas informar digitos!"
               	}
-            }	
+            }
 		});
 
 		if($('#novoEquipamento').valid()){
@@ -116,7 +116,7 @@ $(document).ready(function(){
 			//Verifica se um fabricante foi selecionado!
 
 			if($.isNumeric(fabricante)){
-				
+
 				//Efetua o registro do equipamento no BD
 
 				$.ajax({
@@ -135,10 +135,10 @@ $(document).ready(function(){
 	              'amperagem'  		: amperagem,
 	              'tipoBateria'  	: tipoBateria,
 	              'potencia'		: potencia
+                },
 
-	              },
                    success : function(datra)
-                    {	
+                    {
                     	if(datra.status){
                     		alert("Equipamento cadastrado corretamente.");
                     		setTimeout(function(){
@@ -148,7 +148,7 @@ $(document).ready(function(){
                     		alert("Ocorreu um erro ao cadastrar o equipamento.");
                     	}
                     	//$array = array('status' => $result, 'idequipamento' => $idEquip);
-                    	
+
 
                     },
                    error: function(jqXHR, textStatus, errorThrown)
@@ -165,19 +165,19 @@ $(document).ready(function(){
 				alert('fabricante não foi selecionado!');
 			}
 
-			
+
 
 		}
 
 
 	});
-  
+
 
   $('#nomeCliente').attr('readonly', true);
   $('#nomeFilial').attr('readonly', true);
 
   /*
-  * Função para edição de equipamento 
+  * Função para edição de equipamento
   */
 
   $('#validarEdicaoEquipamento').click(function() {
@@ -216,7 +216,7 @@ $(document).ready(function(){
         txt_qntBateria:{
           digits : "Apenas informar digitos!"
         }
-      } 
+      }
     });
 
     if($('#editarEquipamento').valid()){
@@ -256,7 +256,7 @@ $(document).ready(function(){
 
         },
         success : function(datra)
-          { 
+          {
             if(datra.status){
                         alert("Equipamento editado corretamente.");
                         setTimeout(function(){
@@ -266,7 +266,7 @@ $(document).ready(function(){
               alert("Ocorreu um erro ao editar o equipamento.");
             }
             //$array = array('status' => $result, 'idequipamento' => $idEquip);
-                      
+
 
           },
         error: function(jqXHR, textStatus, errorThrown)
