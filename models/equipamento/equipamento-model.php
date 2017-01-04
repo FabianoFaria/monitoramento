@@ -188,7 +188,48 @@ class EquipamentoModel extends MainModel
           }
 
           return $array;
+    }
 
+    /*
+    * Função para retornar os dados de vinculo do equipamento antes de configura-lo
+    */
+
+    public function detalhesEquipamentoParaConfiguracao($idEquip){
+
+        if(is_numeric($idEquip)){
+
+            $query = "SELECT simEquip.id, simEquip.id_equipamento, simEquip.id_sim
+                        FROM tb_sim_equipamento simEquip
+                        WHERE simEquip.id_equipamento = '$idEquip'";
+
+            $result         = $this->db->select($query);
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipamento' => $retorno);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
     }
 
 }

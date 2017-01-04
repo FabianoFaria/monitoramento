@@ -176,7 +176,7 @@
                               <button id="editarClienteExistente" type="button" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar cliente</button</div>
                               <input id="resultadoCadastro" name="resultadoCadastro" type="hidden" value="">
                             </div>
-                          </div>
+                        </div>
 
 
 

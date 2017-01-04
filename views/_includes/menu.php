@@ -131,10 +131,10 @@ else
                 <!-- CADASTRO -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                   <li>
-                    <a href="">
+                    <a href="" class="menuCadastro" data-toggle="dropdown">
                       <i class="fa fa-plus fa-3x"></i> <span class="lb-side">Cadastrar</span><span class="fa arrow"></span>
                     </a>
-                    <ul class="nav nav-second-level">
+                    <ul class="nav nav-second-level collapse in">
                       <li>
                           <!-- Cadastro de clientes -->
                           <a href="<?php echo HOME_URI; ?>/cliente" class="">
@@ -159,7 +159,7 @@ else
                             <spam>Fabricantes</span>
                           </a> -->
                       <!--   </li> -->
-                        <li>  
+                        <li>
                           <a href="<?php echo HOME_URI; ?>/equipamento" class="">
                             <i class="fa fa-hdd-o fa-1x"></i>
                             <span class="icon-side"></span>
@@ -201,7 +201,7 @@ else
                 <li>
                   <a href="<?php echo HOME_URI; ?>/alarme/"><i class="fa fa-volume-up fa-3x"></i> <span class="lb-side">Alarmes</span></a>
                 </li>
-                
+
                 <!-- CLIENTES -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                     <!-- <li>

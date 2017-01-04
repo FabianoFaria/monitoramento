@@ -53,9 +53,9 @@
                                 <!-- <th>Quantidade baterias</th> -->
                                 <th>N° SIM</th>
                                 <th>Caracteristica</th>
-                                <th>Tipo bateria</th>
-                                <th>Amperagem</th>
-                                <th class="txt-center">Editar</th>
+                                <!-- <th>Tipo bateria</th> -->
+                                <th class="txt-center">Configurar parametros</th>
+                                <th class="txt-center">Editar equipamento</th>
                                 <th class="txt-center">Excluir</th>
                             </tr>
                         </thead>
@@ -74,8 +74,12 @@
                                     <!-- <td><?php //echo $equipamento['qnt_bateria']; ?></td> -->
                                     <td><?php echo (isset($equipamento['sim_clie'])) ? $equipamento['sim_clie'] : "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> Vincular N° SIM </a>"; ?></td>
                                     <td><?php echo $equipamento['caracteristica_equip']; ?></td>
-                                    <td><?php echo $equipamento['tipo_bateria']; ?></td>
-                                    <td><?php echo $equipamento['amperagem_bateria']; ?></td>
+                                    <!-- <td><?php //echo $equipamento['tipo_bateria']; ?></td> -->
+                                    <td><?php //echo $equipamento['amperagem_bateria']; ?>
+                                        <a href="<?php echo HOME_URI; ?>/configuracao/configurarEquipamentoCliente/<?php echo $equipamento['id'] ?>" class="link-tabela-moni">
+                                            <i class="fa fa-wrench "></i>
+                                        </a>
+                                    </td>
                                     <td>
                                         <!-- <a href="<?php echo HOME_URI; ?>/editar/editarEquipamento/<?php echo $equipamento['id']; ?>" class="link-tabela-moni">
                                             <i class="fa fa-pencil-square-o fa-lg"></i>
