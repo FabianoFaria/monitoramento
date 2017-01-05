@@ -55,14 +55,14 @@
                         <input id="idEquip" name="idEquip" type='hidden' value="<?php echo $this->parametros[0]; ?>">
                         <input id="clienteEquipamento" name="clienteEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_cliente']; ?>">
                         <input id="filialEquipamento" name="filialEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_filial']; ?>">
-                        <input id="nomeCliente" name="nomeCliente" type='text' value="<?php echo $equipamentoCarregado['cliente']; ?>">
+                        <input id="nomeCliente" name="nomeCliente" type='text'  class="form-control" value="<?php echo $equipamentoCarregado['cliente']; ?>">
                     </div>
                 </div><!-- fim fabricante -->
 
         		<div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Filial com o equipamento : </label>
-                        <input id="nomeFilial" name="nomeFilial" type='text' value="<?php echo (isset($equipamentoCarregado['filial'])) ? $equipamentoCarregado['filial']: " "; ?>">
+                        <input id="nomeFilial" name="nomeFilial" type='text'  class="form-control" value="<?php echo (isset($equipamentoCarregado['filial'])) ? $equipamentoCarregado['filial']: " "; ?>">
                     </div>
                 </div><!-- fim filial -->
 

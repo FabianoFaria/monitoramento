@@ -166,6 +166,14 @@ else
                             <spam>Equipamentos</span>
                           </a>
                         </li>
+                        <li>
+                            <a href="<?php echo HOME_URI; ?>/alarme" class="">
+                              <i class="fa fa-volume-up fa-1x"></i>
+                              <span class="icon-side"></span>
+                              <spam>Alarmes</span>
+                            </a>
+                        </li>
+
                        </ul>
                       <!-- /.nav-second-level -->
                   </li>
@@ -198,9 +206,9 @@ else
                 </li>
                 <?php } ?>
                 <!-- ALARMES -->
-                <li>
-                  <a href="<?php echo HOME_URI; ?>/alarme/"><i class="fa fa-volume-up fa-3x"></i> <span class="lb-side">Alarmes</span></a>
-                </li>
+                <!-- <li>
+                  <a href="<?php //echo HOME_URI; ?>/alarme/"><i class="fa fa-volume-up fa-3x"></i> <span class="lb-side">Alarmes</span></a>
+                </li> -->
 
                 <!-- CLIENTES -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>

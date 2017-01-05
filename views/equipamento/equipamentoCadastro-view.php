@@ -37,7 +37,7 @@
         <!-- formulario de cadastro -->
         <form id="novoEquipamento" method="post">
             <div class="row">
-
+                
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Cliente com o equipamento : </label>

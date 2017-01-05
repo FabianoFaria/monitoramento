@@ -171,11 +171,11 @@
 
         $filiaisCliente     = $clienteModelo->carregarFiliaisCliente($_POST['idCliente']);
 
-        $filiaisClienteHtml = "<option value='0'>Não há filiais cadastradas </option>";
+        $filiaisClienteHtml = "";
 
         if($filiaisCliente['status']){
 
-            //$filiaisClienteHtml = "<option value='0'>Selecione a filial</option>";
+            $filiaisClienteHtml .= "<option value='0'>Selecione a filial</option>";
 
             foreach ($filiaisCliente['filiais'] as $filiais) {
 
@@ -185,6 +185,9 @@
 
             exit(json_encode(array('status' => true, 'filiais' => $filiaisClienteHtml)));
         }else{
+
+            $filiaisClienteHtml = "<option value='0'>Não há filiais cadastradas </option>";
+
             exit(json_encode(array('status' => false, 'filiais' => $filiaisClienteHtml)));
         }
 

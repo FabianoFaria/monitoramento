@@ -189,6 +189,53 @@ class ConfiguracaoController extends MainController
         }
 
     }
+
+    /*
+    * Efetua o cadastro da configuração do equipamento
+    */
+    public function cadastrarConfiguracaoEquipamentoJson()
+    {
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $modelConfiguracao = $this->load_model('configuracao/configuracao-model');
+
+        $configuracaoSalva = $modelConfiguracao->cadastrarConfiguracaoEquip($_POST['parametros'], $_POST['id_sim_equipamento'], $_POST['id_equipamento'], $_POST['numeroSim']);
+
+        if($configuracaoSalva['status']){
+            exit(json_encode(array('status' => true)));
+        }else{
+            exit(json_encode(array('status' => false)));
+        }
+    }
+
+    /*
+    * Efetua a atualização da configuração do equipamento
+    */
+    public function editarConfiguracaoEquipamentoJson()
+    {
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $modelConfiguracao = $this->load_model('configuracao/configuracao-model');
+
+        $configuracaoAtualizada = $modelConfiguracao->editarConfiguracaoEquip($_POST['idParametros'], $_POST['parametros'], $_POST['id_sim_equipamento'], $_POST['id_equipamento'], $_POST['numeroSim']);
+
+        if($configuracaoAtualizada['status']){
+            exit(json_encode(array('status' => true)));
+        }else{
+            exit(json_encode(array('status' => false)));
+        }
+
+    }
+
+
+    /*
+    *  Trata as strings dos valores das configurações dos equipamento
+    */
+    public function trataValor($valor){
+
+        //Formato da string esperado : 'et1-2-0'
+        $temp = explode('-', $valor);
+        return str_replace('.',',',$temp[2]);
+    }
+
 }
 
 ?>

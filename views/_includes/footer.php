@@ -23,6 +23,9 @@
         <script src="<?php echo HOME_URI; ?>/views/_js/morris.js"></script>
         <script src="<?php echo HOME_URI; ?>/views/_js/morris-data.js"></script>
 
+        <!-- SweetAlert JavaScript -->
+        <script src="<?php echo HOME_URI; ?>/views/_js/sweetalert.min.js"></script>
+
         <!-- Main Files -->
         <script src="<?php echo HOME_URI; ?>/views/_js/sb-admin-2.js"></script>
 

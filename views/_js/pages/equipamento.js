@@ -35,12 +35,14 @@ $(document).ready(function(){
                        //tempTest = JSON(datra);
                        if(datra.status == true)
                        {
-
+                           $('#filialEquipamento').html('');
                        	   $('#filialEquipamento').append(htmlFiliais);
                        }
                        else
                        {
                            //Settar a mensagem de erro!
+                           $('#filialEquipamento').html('');
+                           
                        	   $('#filialEquipamento').append(htmlFiliais);
                        }
                     },
@@ -140,12 +142,14 @@ $(document).ready(function(){
                    success : function(datra)
                     {
                     	if(datra.status){
-                    		alert("Equipamento cadastrado corretamente.");
+                    		//alert("Equipamento cadastrado corretamente.");
+                            swal("", "Equipamento cadastrado corretamente!", "success");
                     		setTimeout(function(){
 			                    window.location.replace(urlP +"/eficazmonitor/equipamento/");
 			                }, 3000);
                     	}else{
-                    		alert("Ocorreu um erro ao cadastrar o equipamento.");
+                    		//alert("Ocorreu um erro ao cadastrar o equipamento.");
+                            swal("Oops...!", "Ocorreu um erro ao cadastrar o equipamento!", "error");
                     	}
                     	//$array = array('status' => $result, 'idequipamento' => $idEquip);
 
@@ -162,7 +166,8 @@ $(document).ready(function(){
 
 
 			}else{
-				alert('fabricante não foi selecionado!');
+				//alert('fabricante não foi selecionado!');
+                swal("", "Favor selecionar um fabricante!", "info");
 			}
 
 
@@ -258,12 +263,14 @@ $(document).ready(function(){
         success : function(datra)
           {
             if(datra.status){
-                        alert("Equipamento editado corretamente.");
+                        //alert("Equipamento editado corretamente.");
+                        swal("", "Equipamento editado corretamente.", "success");
                         setTimeout(function(){
                           window.location.replace(urlP +"/eficazmonitor/equipamento/");
               }, 3000);
             }else{
-              alert("Ocorreu um erro ao editar o equipamento.");
+              //alert("Ocorreu um erro ao editar o equipamento.");
+              swal("Oops...", "Ocorreu um erro ao editar o equipamento.", "error");
             }
             //$array = array('status' => $result, 'idequipamento' => $idEquip);
 

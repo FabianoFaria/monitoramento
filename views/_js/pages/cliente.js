@@ -494,13 +494,15 @@ $().ready(function() {
                        //tempTest = JSON(datra);
                        if(datra.status == true)
                        {
-                           alert("Cliente atualizado com sucesso!");
+                           //alert("Cliente atualizado com sucesso!");
+                           swal("", "Cliente atualizado com sucesso!", "success");
                            location.reload();
                        }
                        else
                        {
                            //Settar a mensagem de erro!
-                           alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                           //alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                           swal("Oops...", "Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!", "error");
                        }
                     },
                    error: function(jqXHR, textStatus, errorThrown)
@@ -612,14 +614,16 @@ $().ready(function() {
                 },
                 success : function(datra)
                 {
-                    alert("Cliente atualizado com sucesso!");
+                    //alert("Cliente atualizado com sucesso!");
+                    swal("", "Contato com o cliente atualizado com sucesso!", "success");
                     location.reload();
                 },
                 error: function(jqXHR, textStatus, errorThrown)
                 {
 
                     //Settar a mensagem de erro!
-                           alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                          // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                        swal("Oops...", "Ocorreu um erro ao atualizar o contato, favor verificar os dados informados!", "error");
                  // Handle errors here
                  console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
                  // STOP LOADING SPINNER

@@ -31,6 +31,9 @@
         <!-- Custom Fonts -->
         <link href="<?php echo HOME_URI; ?>/views/_css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+        <!-- SweetAlert CSS-->
+        <link rel="stylesheet" type="text/css" href="<?php echo HOME_URI; ?>/views/_css/sweetalert.css">
+
         <!-- Jquery file -->
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.js"></script>
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.mask.js"></script>

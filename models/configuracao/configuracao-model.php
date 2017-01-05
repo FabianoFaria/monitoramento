@@ -300,7 +300,7 @@ class ConfiguracaoModel extends MainModel
                     }
 
                     /* devolve retorno */
-                    $array = array('status' => false, 'param' => $retorno);
+                    $array = array('status' => true, 'param' => $retorno);
 
                 }else{
                     $array = array('status' => false, 'param' => 0);
@@ -315,6 +315,62 @@ class ConfiguracaoModel extends MainModel
 
         return $array;
     }
+
+    /*
+    *  Função para registrar configurações do equipamento
+    */
+    public function cadastrarConfiguracaoEquip($parametros, $id_sim_equipamento, $id_equipamento, $numeroSim)
+    {
+        if(is_numeric($id_sim_equipamento) && is_numeric($id_equipamento)){
+
+            $idUsuario = $_SESSION['userdata']['userId'];
+
+            // Monta a query para salvar o parametro no banco
+            $query = "insert into tb_parametro (num_sim, id_sim_equipamento, parametro, id_equipamento, id_users) values
+                      ('$numeroSim','$id_sim_equipamento','$parametros','$id_equipamento','$idUsuario')";
+
+
+            // Verifica se gravou com sucesso
+            if ($this->db->query($query))
+            {
+                $array = array('status' => true);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    *  Função para atualizar configurações do equipamento
+    */
+    public function editarConfiguracaoEquip($idParametros, $parametros, $id_sim_equipamento, $id_equipamento, $numeroSim)
+    {
+        if(is_numeric($idParametros) && is_numeric($id_sim_equipamento)){
+
+            $idUsuario = $_SESSION['userdata']['userId'];
+
+            $query = "UPDATE tb_parametro SET id_users = '$idUsuario', parametro = '$parametros' WHERE id = $idParametros";
+
+            // Verifica se gravou com sucesso
+            if ($this->db->query($query))
+            {
+                $array = array('status' => true);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
 
 }
 

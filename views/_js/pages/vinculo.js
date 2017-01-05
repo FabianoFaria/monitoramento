@@ -54,7 +54,8 @@ $().ready(function() {
                   if(datra.status == true)
                   {
 
-                    alert('Vinculo cadastrado com sucesso!');
+                    //alert('Vinculo cadastrado com sucesso!');
+                    swal("", "'Vinculo cadastrado com sucesso!", "success");
                     setTimeout(function(){
                         window.location.replace(urlP +"/eficazmonitor/vinculo/gerenciarVinculo/"+clienteVinculo+"/");
                     }, 3000);
@@ -62,7 +63,8 @@ $().ready(function() {
                   else
                   {
                     //Settar a mensagem de erro!
-                    alert('Ocorreu um ero ao tentar cadastrar!');
+                    //alert('Ocorreu um ero ao tentar cadastrar!');
+                    swal("Oops...", "Ocorreu um ero ao tentar cadastrar!", "error");
                   }
                },
               error: function(jqXHR, textStatus, errorThrown)
@@ -121,7 +123,7 @@ $().ready(function() {
              secureuri: false,
              type : "POST",
              dataType: 'json',
-             data      : {
+             data : {
                 'idEquipamento' : idEquipamento,
                 'simVinculado' : simVinculado,
                 'numero_serie' : numero_serie,
@@ -136,7 +138,8 @@ $().ready(function() {
                   if(datra.status == true)
                   {
 
-                    alert('Vinculo cadastrado com sucesso!');
+                    //alert('Vinculo cadastrado com sucesso!');
+                    swal("", "Vinculo cadastrado com sucesso!", "success");
                     setTimeout(function(){
                         window.location.replace(urlP +"/eficazmonitor/equipamento/");
                     }, 3000);
@@ -144,7 +147,8 @@ $().ready(function() {
                   else
                   {
                     //Settar a mensagem de erro!
-                    alert('Ocorreu um ero ao tentar vincular!');
+                    //alert('Ocorreu um ero ao tentar vincular!');
+                    swal("", "Ocorreu um ero ao tentar vincular!", "error");
                   }
                },
               error: function(jqXHR, textStatus, errorThrown)
