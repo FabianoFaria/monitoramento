@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 03-Jan-2017 às 19:42
+-- Generation Time: 05-Jan-2017 às 19:57
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -102,6 +102,23 @@ INSERT INTO `tb_cliente` (`id`, `id_users`, `id_pais`, `id_estado`, `nome`, `end
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `tb_contato_alerta`
+--
+
+CREATE TABLE `tb_contato_alerta` (
+  `id` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `id_filial` int(11) NOT NULL,
+  `nome_contato` varchar(150) NOT NULL,
+  `funcao` varchar(50) NOT NULL,
+  `email` varchar(60) NOT NULL,
+  `celular` varchar(15) NOT NULL,
+  `observacao` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `tb_dados`
 --
 
@@ -160,10 +177,11 @@ CREATE TABLE `tb_equipamento` (
 
 INSERT INTO `tb_equipamento` (`id`, `id_fabricante`, `id_cliente`, `id_filial`, `id_users`, `tipo_equipamento`, `modelo`, `potencia`, `qnt_bateria`, `caracteristica_equip`, `tipo_bateria`, `amperagem_bateria`, `status_ativo`, `dt_criacao`) VALUES
 (7, 2, 16, 0, 5, 'No break', 'KV250', '1', '4', '1233', 'Automotiva', '2332', 1, '2017-01-03 18:00:25'),
-(8, 1, 16, 0, 5, 'Bateria', '24re', '43', '2', '2', 'EstacionÃ¡ria', '2', 1, '2017-01-03 18:01:51'),
-(9, 1, 21, 2, 5, 'Ar condicionado', 'Palizare', '900', '3', 'Pequeno ar condicionado de par', 'Automotiva', '123', 1, '2017-01-03 19:23:23'),
-(10, 2, 21, 2, 5, 'Bateria', 'modulo 14', '123', '2', 'Bateria comum', 'EstacionÃ¡ria', '12323', 1, '2017-01-03 19:23:59'),
-(11, 1, 21, 3, 5, 'Medidor de umidade do ar', 'liquid air', '2123', '3', '11', 'Automotiva', '80', 1, '2017-01-03 19:27:03');
+(8, 1, 16, 0, 5, 'Bateria clk', '24re', '43', '2', '2', 'EstacionÃ¡ria', '2', 1, '2017-01-03 18:01:51'),
+(9, 1, 21, 2, 5, 'Bateria vlad', 'Palizare', '900', '3', 'Pequeno ar condicionado de par', 'Automotiva', '123', 1, '2017-01-03 19:23:23'),
+(10, 2, 21, 2, 5, 'Bateria der', 'modulo 14', '123', '2', 'Bateria comum', 'EstacionÃ¡ria', '12323', 1, '2017-01-03 19:23:59'),
+(11, 1, 21, 3, 5, 'Bateria abc', 'liquid air', '2123', '3', '11', 'Automotiva', '80', 1, '2017-01-03 19:27:03'),
+(12, 1, 21, 2, 5, 'Bateria', 'vita', '234', '324', '4234', 'Automotiva', '3434', 1, '2017-01-05 13:12:07');
 
 -- --------------------------------------------------------
 
@@ -16578,7 +16596,7 @@ CREATE TABLE `tb_parametro` (
   `id_users` int(11) NOT NULL,
   `id_sim_equipamento` int(11) DEFAULT NULL,
   `num_sim` decimal(15,0) NOT NULL,
-  `parametro` varchar(400) DEFAULT NULL,
+  `parametro` varchar(600) DEFAULT NULL,
   `dt_criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status_ativo` smallint(6) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -16588,7 +16606,10 @@ CREATE TABLE `tb_parametro` (
 --
 
 INSERT INTO `tb_parametro` (`id`, `id_equipamento`, `id_users`, `id_sim_equipamento`, `num_sim`, `parametro`, `dt_criacao`, `status_ativo`) VALUES
-(1, 1, 1, 1, '13949007326906', 'eb-1-190|et-1-200|ei-1-220|et2-1-230|ea-1-240|eb-2-190|et-2-200|ei-2-220|et2-2-230|ea-2-240|eb-3-190|et-3-200|ei-3-220|et2-3-230|ea-3-240|sb-1-190|st1-1-200|si-1-220|st2-1-230|sa-1-240|sb-2-190|st1-2-200|si-2-220|st2-2-230|sa-2-240|sb-3-190|st1-3-200|si-3-220|st2-3-230|sa-3-240', '2015-08-07 18:27:14', 1);
+(1, 1, 1, 1, '13949007326906', 'eb-1-190|et-1-200|ei-1-220|et2-1-230|ea-1-240|eb-2-190|et-2-200|ei-2-220|et2-2-230|ea-2-240|eb-3-190|et-3-200|ei-3-220|et2-3-230|ea-3-240|sb-1-190|st1-1-200|si-1-220|st2-1-230|sa-1-240|sb-2-190|st1-2-200|si-2-220|st2-2-230|sa-2-240|sb-3-190|st1-3-200|si-3-220|st2-3-230|sa-3-240', '2015-08-07 18:27:14', 1),
+(2, 11, 5, 5, '6666666666', '|inicio|eb-1-555.55|et1-1-555.55|ei-1-555.55|et2-1-555.55|ea-1-555.55||inicio|eb-2-555.55|et1-2-555.55|ei-2-555.55|et2-2-555.55|ea-2-555.55||inicio|eb-3-555.55|et1-3-555.55|ei-3-555.55|et2-3-555.55|ea-3-555.55||inicio|sb-1-333.33|st1-1-333.33|si-1-333.33|st2-1-333.33|sa-1-333.33||inicio|sb-2-333.33|st1-2-333.33|si-2-333.33|st2-2-333.33|sa-2-333.33||inicio|sb-3-333.33|st1-3-333.33|si-3-333.33|st2-3-333.33|sa-3-333.33||inicio|tb-1-444.44|tt1-1-444.44|ti-1-444.44|tt2-1-444.44|ta-1-444.44||inicio|tb-2-444.44|tt1-2-444.44|ti-2-444.44|tt2-2-444.44|ta-2-444.44|', '2017-01-05 11:29:41', 1),
+(3, 8, 5, 2, '4444444444444', '|inicio|eb-1-0|et1-1-0|ei-1-0|et2-1-0|ea-1-0||inicio|eb-2-0|et1-2-0|ei-2-0|et2-2-0|ea-2-0||inicio|eb-3-0|et1-3-0|ei-3-0|et2-3-0|ea-3-0||inicio|sb-1-0|st1-1-0|si-1-0|st2-1-0|sa-1-0||inicio|sb-2-0|st1-2-0|si-2-0|st2-2-0|sa-2-0||inicio|sb-3-0|st1-3-0|si-3-0|st2-3-0|sa-3-0||inicio|tb-1-0|tt1-1-0|ti-1-0|tt2-1-0|ta-1-0||inicio|tb-2-0|tt1-2-0|ti-2-0|tt2-2-0|ta-2-0|', '2017-01-05 13:04:24', 1),
+(4, 8, 5, 2, '4444444444444', '|inicio|eb-1-123.32|et1-1-123.21|ei-1-123.21|et2-1-234.34|ea-1-234.23||inicio|eb-2-234.23|et1-2-234.23|ei-2-234.32|et2-2-545.34|ea-2-435.34||inicio|eb-3-0|et1-3-0|ei-3-0|et2-3-0|ea-3-0||inicio|sb-1-453.45|st1-1-545.43|si-1-543.54|st2-1-534.53|sa-1-345.43||inicio|sb-2-435.43|st1-2-545.45|si-2-534.55|st2-2-435.43|sa-2-435.43||inicio|sb-3-0|st1-3-0|si-3-0|st2-3-0|sa-3-0||inicio|tb-1-0|tt1-1-0|ti-1-0|tt2-1-0|ta-1-0||inicio|tb-2-0|tt1-2-0|ti-2-0|tt2-2-0|ta-2-0|', '2017-01-05 13:05:08', 1);
 
 -- --------------------------------------------------------
 
@@ -16785,6 +16806,12 @@ ALTER TABLE `tb_cliente`
   ADD KEY `id_users` (`id_users`);
 
 --
+-- Indexes for table `tb_contato_alerta`
+--
+ALTER TABLE `tb_contato_alerta`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tb_dados`
 --
 ALTER TABLE `tb_dados`
@@ -16922,6 +16949,11 @@ ALTER TABLE `tb_alerta`
 ALTER TABLE `tb_cliente`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
+-- AUTO_INCREMENT for table `tb_contato_alerta`
+--
+ALTER TABLE `tb_contato_alerta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `tb_dados`
 --
 ALTER TABLE `tb_dados`
@@ -16930,12 +16962,17 @@ ALTER TABLE `tb_dados`
 -- AUTO_INCREMENT for table `tb_equipamento`
 --
 ALTER TABLE `tb_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `tb_filial`
 --
 ALTER TABLE `tb_filial`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `tb_parametro`
+--
+ALTER TABLE `tb_parametro`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_sim_equipamento`
 --
