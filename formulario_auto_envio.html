@@ -1,0 +1,29 @@
+<form name="myForm" id="myForm" target="_myFrame" action="http://monitor.eficazsystem.com.br/alvo.php" method="POST">
+    <p>
+        <input name="test" value="Helou world" />
+    </p>
+    <p>
+        <input name="test2" value="Olá mundo" />
+    </p>
+    <p>
+        <input type="submit" value="Submit" />
+    </p>
+</form>
+
+<script type="text/javascript">
+    window.onload=function(){
+        var auto = setTimeout(function(){ autoRefresh(); }, 100);
+
+        function submitform(){
+          //alert('test');
+          console.log('Prossiga com o olá mundo');
+
+          document.forms["myForm"].submit();
+        }
+
+        function autoRefresh(){
+           clearTimeout(auto);
+           auto = setTimeout(function(){ submitform(); autoRefresh(); }, 1000);
+        }
+    }
+</script>

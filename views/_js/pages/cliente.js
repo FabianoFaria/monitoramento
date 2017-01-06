@@ -6,6 +6,27 @@ $().ready(function() {
     var host = pathArray[2];
     var urlP = protocol + '//' + host;
 
+
+    /*
+    * Função para iniciar o processo de exclusão de clientes
+    */
+    function iniciarExclusaoCliente(idClienteExcluir)
+    {
+        swal({
+          title: "Tem certeza?",
+          text: "Este processo não pode ser revertido!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Sim, ecluir cliente!",
+          closeOnConfirm: false
+        },
+        function(){
+          swal("Apagado!", "Cliente imaginario apagado!", "success");
+        });
+    }
+
+
     //Adição de máscara de edição
 
     $('#txt_ddd').mask('(999)');

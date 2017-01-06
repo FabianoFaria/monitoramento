@@ -114,14 +114,14 @@ if($detalhesEquip['status']){
 
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1" class="fontsub">Valor Baixo</label>
+                                                        <label for="exampleInputEmail1" class="fontsub">Valor crítico baixo</label>
                                                         <input type="text" class="form-control" id="eb-<?php echo $a;?>" name="eb-<?php echo $a;?>" placeholder="000,00" maxlength="7" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[0]) : ""; ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1" class="fontsub">Valor tolerância 1</label>
+                                                        <label for="exampleInputEmail1" class="fontsub">Valor baixo</label>
                                                         <input type="text" class="form-control" id="et-<?php echo $a;?>" name="et-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[1]) : ""; ?>">
                                                     </div>
                                                 </div>
@@ -135,14 +135,14 @@ if($detalhesEquip['status']){
 
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1" class="fontsub">Valor tolerância 2</label>
+                                                        <label for="exampleInputEmail1" class="fontsub">Valor alto</label>
                                                         <input type="text" class="form-control" id="et2-<?php echo $a;?>" name="et2-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[3]) : ""; ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1" class="fontsub">Valor Alto</label>
+                                                        <label for="exampleInputEmail1" class="fontsub">Valor crítico alto</label>
                                                         <input type="text" class="form-control" id="ea-<?php echo $a;?>" name="ea-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
                                                     </div>
                                                 </div>
