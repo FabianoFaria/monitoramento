@@ -26,15 +26,15 @@ $().ready(function() {
         });
     }
 
-
     //Adição de máscara de edição
 
     $('#txt_ddd').mask('(999)');
     $('#txt_telefone').mask('9999-9999');
-    $('#txt_cep').mask('9999-999');
+    $('#txt_cep').mask('99999-999');
     $('#txt_telefone_contato').mask('(999) 9999-9999');
     $('#txt_celular_contato').mask('(999) 9999-9999');
 
+    $('.telefonaFilial').mask('9999-9999');
 
     //Collapse dados do usuário
     $('#accordionCliente').hide();
@@ -116,7 +116,7 @@ $().ready(function() {
             var numero          = $('#txt_numero').val();
             var bairro          = $('#txt_bairro').val();
             var cidade          = $('#txt_cidade').val();
-            var estado          = $('#estado').val();
+            var estado          = $('#estados').val();
             var pais            = $('#pais').val();
 
             //Efetua cadastro do cliente via JSON
@@ -314,6 +314,11 @@ $().ready(function() {
       $html.find('[name=txt_numero]')[0].name="txt_numero" + len;
       $html.find('[name=txt_bairro]')[0].name="txt_bairro" + len;
       $html.find('[name=txt_cidade]')[0].name="txt_cidade" + len;
+      $html.find('[name=estados]')[0].name="estados" + len;
+      $html.find('[name=paises]')[0].name="paises" + len;
+      //$html.find('[onBlur=validaCEP()]')[0].onBlur="validaCEP("+len+")"
+
+
 
       //setta no html a contagem atual de formularios de filiais adicionados
       $('#countFiliais').val(len);
@@ -356,7 +361,8 @@ $().ready(function() {
                     var numero      = $('[name=txt_numero'+i+']').val();
                     var bairro      = $('[name=txt_bairro'+i+']').val();
                     var cidade      = $('[name=txt_cidade'+i+']').val();
-                    var estado      = $('[name=opc_estado'+i+']').val();
+                    var estado      = $('[name=estados'+i+']').val();
+                    var pais        = $('[name=paises'+i+']').val();
 
                     if((nomeFilial != " " && endereco != " ")){
 
@@ -376,8 +382,8 @@ $().ready(function() {
                                 'numero'    : numero,
                                 'bairro'    : bairro,
                                 'cidade'    : cidade,
-                                'idEstado'  : 3,
-                                'idPais'    : 36,
+                                'idEstado'  : estado,
+                                'idPais'    : pais,
                                 'idMatriz'  : idMatriz
                             },
                             success : function(datra)
@@ -395,7 +401,8 @@ $().ready(function() {
 
                 }
 
-                $('#resultadoPositivo').fadeIn();
+                // $('#resultadoPositivo').fadeIn();
+                swal("","Cliente cadastrado corretamente!","success");
 
                 setTimeout(function(){
                     window.location.replace(urlP +"/eficazmonitor/cliente/");
@@ -654,6 +661,329 @@ $().ready(function() {
         }
 
     });
+
+
+    //Apaga os textos no formulario de cadastro de cliente
+    function limpa_formulário_cep() {
+        // Limpa valores do formulário de cep.
+        $("#txt_endereco").val("");
+        $("#txt_bairro").val("");
+        $("#txt_cidade").val("");
+        $("#estados").val(16);
+        $("#pais").val(36);
+    }
+
+    //Efetua a validação do CEP do cliente
+
+    $('#txt_cep').blur(function() {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = $(this).val().replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != ""){
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test(cep)){
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                $("#txt_endereco").val("...");
+                $("#txt_bairro").val("...");
+                $("#txt_cidade").val("...");
+                $("#estados").val(16);
+                $("#pais").val(36);
+
+                //Consulta o webservice viacep.com.br/
+                $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                    if (!("erro" in dados)) {
+                        //Atualiza os campos com os valores da consulta.
+                        $("#txt_endereco").val(dados.logradouro);
+                        $("#txt_bairro").val(dados.bairro);
+                        $("#txt_cidade").val(dados.localidade);
+
+                        //console.log(dados.uf);
+                        switch (dados.uf) {
+                            case 'AC':
+                                $("#estados").val(1);
+                            break;
+                            case 'AL':
+                                $("#estados").val(2);
+                            break;
+                            case 'AP':
+                                $("#estados").val(3);
+                            break;
+                            case 'AM':
+                                $("#estados").val(4);
+                            break;
+                            case 'BA':
+                                $("#estados").val(5);
+                            break;
+                            case 'CE':
+                                $("#estados").val(5);
+                            break;
+                            case 'DF':
+                                $("#estados").val(7);
+                            break;
+                            case 'ES':
+                                $("#estados").val(8);
+                            break;
+                            case 'GO':
+                                $("#estados").val(9);
+                            break;
+                            case 'MA':
+                                $("#estados").val(10);
+                            break;
+                            case 'MT':
+                                $("#estados").val(11);
+                            break;
+                            case 'MS':
+                                $("#estados").val(12);
+                            break;
+                            case 'MG':
+                                $("#estados").val(13);
+                            break;
+                            case 'PA':
+                                $("#estados").val(14);
+                            break;
+                            case 'PB':
+                                $("#estados").val(15);
+                            break;
+                            case 'PR':
+                                $("#estados").val(16);
+                            break;
+                            case 'PE':
+                                $("#estados").val(17);
+                            break;
+                            case 'PI':
+                                $("#estados").val(18);
+                            break;
+                            case 'RJ':
+                                $("#estados").val(19);
+                            break;
+                            case 'RN':
+                                $("#estados").val(20);
+                            break;
+                            case 'RS':
+                                $("#estados").val(21);
+                            break;
+                            case 'RO':
+                                $("#estados").val(22);
+                            break;
+                            case 'RR':
+                                $("#estados").val(23);
+                            break;
+                            case 'SC':
+                                $("#estados").val(24);
+                            break;
+                            case 'SP':
+                                $("#estados").val(25);
+                            break;
+                            case 'SE':
+                                $("#estados").val(26);
+                            break;
+                            case 'TO':
+                                $("#estados").val(27);
+                            break;
+                            default:
+                                $("#estados").val(999);
+                            break;
+                        }
+
+                    } //end if.
+                    else {
+                        //CEP pesquisado não foi encontrado.
+                        limpa_formulário_cep();
+                        swal("","CEP não encontrado.","error");
+                    }
+                });
+
+            } //end if.
+            else {
+                //cep é inválido.
+                limpa_formulário_cep();
+                swal("","Formato de CEP inválido.","error");
+            }
+
+        }
+        else{
+            //cep sem valor, limpa formulário.
+            limpa_formulário_cep();
+        }
+
+    });
+
+    function limpa_formulário_cep_filial(numero){
+        //Preenche os campos com "..." enquanto consulta webservice.
+        $('[name=txt_endereco'+numero+']').val("...");
+        $('[name=txt_bairro'+numero+']').val("...");
+        $('[name=txt_cidade'+numero+']').val("...");
+        $('[name=estados'+numero+']').val(16);
+        $('[name=paises'+numero+']').val(36);
+    }
+
+    //Função para buscar o CEP de determinada filial
+    function buscaCep(numeroId, cepInformado){
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = cepInformado.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != ""){
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test(cep)){
+
+                /*
+                var estado      = $('[name=estados'+i+']').val();
+                */
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                $('[name=txt_endereco'+numeroId+']').val("...");
+                $('[name=txt_bairro'+numeroId+']').val("...");
+                $('[name=txt_cidade'+numeroId+']').val("...");
+                $('[name=estados'+numeroId+']').val(16);
+                $('[name=paises'+numeroId+']').val(36);
+
+                //Consulta o webservice viacep.com.br/
+                $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                    if (!("erro" in dados)) {
+                        //Atualiza os campos com os valores da consulta.
+                        $('[name=txt_endereco'+numeroId+']').val(dados.logradouro);
+                        $('[name=txt_bairro'+numeroId+']').val(dados.bairro);
+                        $('[name=txt_cidade'+numeroId+']').val(dados.localidade);
+
+                        //console.log(dados.uf);
+                        switch (dados.uf) {
+                            case 'AC':
+                                $('[name=estados'+numeroId+']').val(1);
+                            break;
+                            case 'AL':
+                                $('[name=estados'+numeroId+']').val(2);
+                            break;
+                            case 'AP':
+                                $('[name=estados'+numeroId+']').val(3);
+                            break;
+                            case 'AM':
+                                $('[name=estados'+numeroId+']').val(4);
+                            break;
+                            case 'BA':
+                                $('[name=estados'+numeroId+']').val(5);
+                            break;
+                            case 'CE':
+                                $('[name=estados'+numeroId+']').val(5);
+                            break;
+                            case 'DF':
+                                $('[name=estados'+numeroId+']').val(7);
+                            break;
+                            case 'ES':
+                                $('[name=estados'+numeroId+']').val(8);
+                            break;
+                            case 'GO':
+                                $('[name=estados'+numeroId+']').val(9);
+                            break;
+                            case 'MA':
+                                $('[name=estados'+numeroId+']').val(10);
+                            break;
+                            case 'MT':
+                                $('[name=estados'+numeroId+']').val(11);
+                            break;
+                            case 'MS':
+                                $('[name=estados'+numeroId+']').val(12);
+                            break;
+                            case 'MG':
+                                $('[name=estados'+numeroId+']').val(13);
+                            break;
+                            case 'PA':
+                                $('[name=estados'+numeroId+']').val(14);
+                            break;
+                            case 'PB':
+                                $('[name=estados'+numeroId+']').val(15);
+                            break;
+                            case 'PR':
+                                $('[name=estados'+numeroId+']').val(16);
+                            break;
+                            case 'PE':
+                                $('[name=estados'+numeroId+']').val(17);
+                            break;
+                            case 'PI':
+                                $('[name=estados'+numeroId+']').val(18);
+                            break;
+                            case 'RJ':
+                                $('[name=estados'+numeroId+']').val(19);
+                            break;
+                            case 'RN':
+                                $('[name=estados'+numeroId+']').val(20);
+                            break;
+                            case 'RS':
+                                $('[name=estados'+numeroId+']').val(21);
+                            break;
+                            case 'RO':
+                                $('[name=estados'+numeroId+']').val(22);
+                            break;
+                            case 'RR':
+                                $('[name=estados'+numeroId+']').val(23);
+                            break;
+                            case 'SC':
+                                $('[name=estados'+numeroId+']').val(24);
+                            break;
+                            case 'SP':
+                                $('[name=estados'+numeroId+']').val(25);
+                            break;
+                            case 'SE':
+                                $('[name=estados'+numeroId+']').val(26);
+                            break;
+                            case 'TO':
+                                $('[name=estados'+numeroId+']').val(27);
+                            break;
+                            default:
+                                $('[name=estados'+numeroId+']').val(999);
+                            break;
+                        }
+
+                    }else{
+
+                        //CEP pesquisado não foi encontrado.
+                        limpa_formulário_cep_filial(numeroId);
+                        swal("","CEP não encontrado.","error");
+                    }
+
+                });
+
+            }else{
+                //cep é inválido.
+                limpa_formulário_cep_filial(numeroId);
+                swal("","Formato de CEP inválido.","error");
+            }
+
+        }else{
+            //cep sem valor, limpa formulário da filial.
+            limpa_formulário_cep_filial(numeroId);
+        }
+    }
+
+    /*
+    * Função para validar o CEP das filiais
+    */
+    $(document).on('blur','.cepFilial',function(){
+
+        var cepFilial       = $(this).val();
+        var numeroFilial    = $(this).attr('name');
+        var numero          = numeroFilial.substr(numeroFilial.length - 1);
+
+        console.log(cepFilial+ " - " +numero);
+
+        buscaCep(numero, cepFilial);
+
+    });
+
 
 
 });

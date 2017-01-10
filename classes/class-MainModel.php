@@ -424,6 +424,50 @@ class MainModel
     }
 
 
+    /*
+    * Função para listagem simples de paises
+    */
+    public function listaPaisesSimples(){
+
+        // Monta a query para buscar os paises
+        $query = "select id,nome from tb_pais where status_ativo = 1";
+
+        // Busca os valores do select
+        $resultado = $this->verificaQuery($query);
+
+        $lista = array();
+
+        // Monta a lista de pais com o mesmo id
+        foreach ($resultado as $rowestado)
+        {
+            array_push($lista, array('pais' => $rowestado['nome'], 'id' => $rowestado['id']));
+        }
+
+        return $lista;
+    }
+
+    /*
+    * Função para listagem simples d estados
+    */
+    public function listaEstadosSimples(){
+
+        // Monta a query para buscar os estados
+        $query = "select id,nome from tb_estado where status_ativo = 1";
+
+        // Busca os valores do select
+        $resultado = $this->verificaQuery($query);
+
+        $lista = array();
+
+        // Monta a lista de pais com o mesmo id
+        foreach ($resultado as $rowpais)
+        {
+            array_push($lista, array('nome' => $rowpais['nome'], 'id' => $rowpais['id']));
+        }
+
+        return $lista;
+    }
+
 
     /**
      * listaMatriz
