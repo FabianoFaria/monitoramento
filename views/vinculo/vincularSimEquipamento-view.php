@@ -19,40 +19,8 @@
         $dadosCliente   = $modeloClie->listarSimClienteMatriz($dadosEquipamentos['id']);
     }
 
-	//var_dump($dadosCliente);
+	//var_dump($dadosEquipamentos);
 
-
-    /*
-    'id' => string '4' (length=1)
-  'id_cliente' => string '3' (length=1)
-  'id_filial' => string '5' (length=1)
-  'tipo_equipamento' => string 'Bateria' (length=7)
-  'modelo' => string '123' (length=3)
-  'potencia' => string '5.78' (length=4)
-  'qnt_bateria' => string '8' (length=1)
-  'caracteristica_equip' => string 'treeee' (length=6)
-  'tipo_bateria' => string 'Automotiva' (length=10)
-  'amperagem_bateria' => string '988' (length=3)
-  'cliente' => string 'Shopping' (length=8)
-  'filial' => string 'Filia primaria' (length=14)
-
-    */
-
-    /*
-    'id' => string '4' (length=1)
-      'id_cliente' => string '3' (length=1)
-      'id_filial' => string '5' (length=1)
-      'tipo_equipamento' => string 'Bateria' (length=7)
-      'modelo' => string '123' (length=3)
-      'potencia' => string '5.78' (length=4)
-      'qnt_bateria' => string '8' (length=1)
-      'caracteristica_equip' => string 'treeee' (length=6)
-      'tipo_bateria' => string 'Automotiva' (length=10)
-      'amperagem_bateria' => string '988' (length=3)
-      'cliente' => string 'Shopping' (length=8)
-      'filial' => string 'Filia primaria' (length=14)
-
-    */
 
 ?>
 
@@ -79,7 +47,8 @@
                     <div class="form-group">
                         <label for="numeroSerie">Equipamento para vincular</label>
                         <input type="hidden" id="idEquipamento" name="idEquipamento" value="<?php echo $dadosEquipamentos['id'];?>" />
-                        <input type="text" id="equipamentoVincular" class="form-control" value="<?php echo $dadosEquipamentos['tipo_equipamento']." ".$dadosEquipamentos['modelo']; ?>" >
+                        <input type="hidden" id="idTipoEquipamento" name="idTipoEquipamento" value="<?php echo $dadosEquipamentos['tipo_equipamento'];?>" />
+                        <input type="text" id="equipamentoVincular" class="form-control" value="<?php echo $dadosEquipamentos['nomeEquipamento']." ".$dadosEquipamentos['modelo']; ?>" >
                     </div>
                 </div>
 

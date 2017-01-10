@@ -61,7 +61,7 @@ class EquipamentoModel extends MainModel
     {
 
         if(is_numeric($idEquipamento)){
-            $query = "SELECT equip.id, equip.id_cliente, equip.id_filial, equip.tipo_equipamento, equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria, clie.nome as 'cliente', fili.nome as 'filial'
+            $query = "SELECT equip.id, equip.id_cliente, equip.id_filial, equip.tipo_equipamento, equip.nomeEquipamento, equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria, clie.nome as 'cliente', fili.nome as 'filial'
                       FROM tb_equipamento equip
                       LEFT JOIN tb_cliente clie ON clie.id = equip.id_cliente
                       LEFT JOIN tb_filial fili ON fili.id = equip.id_filial
@@ -101,7 +101,7 @@ class EquipamentoModel extends MainModel
     * Registra vis JSON os dados do equipamento
     */
 
-    public function registrarEquipamentoJson($idCliente, $idFilial, $equipamento, $modEquip, $fabricante, $quantBateria, $caracteristicas, $amperagem, $tipoBateria, $potencia){
+    public function registrarEquipamentoJson($idCliente, $idFilial, $equipamento, $nomeEquipamento, $modEquip, $fabricante, $quantBateria, $caracteristicas, $amperagem, $tipoBateria, $potencia){
 
         // Verifica se os cambos obrigatorios nao sao nulos
         if ($idCliente != "" && $equipamento != "" && $modEquip != "" && $fabricante != "")
@@ -112,7 +112,8 @@ class EquipamentoModel extends MainModel
             $idCliente      = $idCliente;
             $idFilial       = ($idFilial == '') ? 0 : $idFilial;
             $idFabri        = $fabricante;
-            $tipoEquip      = isset($equipamento) && !empty ($equipamento) ? $this->converte($this->tratamento($equipamento)) : '';
+            $tipoEquip      = $equipamento;
+            $nomeEquipamento = isset($nomeEquipamento) && !empty ($nomeEquipamento) ? $this->converte($this->tratamento($nomeEquipamento)) : '';
             $modeloEquip    = isset($modEquip) && !empty ($modEquip) ? $this->converte($this->tratamento($modEquip)) : '';
             $potencia       = isset($potencia) && !empty ($potencia) ? $this->converte($this->tratamento($potencia)) : '';
             $qntBateria     = isset($quantBateria) && !empty ($quantBateria) ? $this->converte($this->tratamento($quantBateria)) : 0;
@@ -122,7 +123,7 @@ class EquipamentoModel extends MainModel
 
             // Se nao estiver em branco
             // Realiza a insercao no banco
-            $query          = "INSERT INTO tb_equipamento (id_users, id_fabricante, id_cliente, id_filial, tipo_equipamento, modelo, potencia,qnt_bateria, caracteristica_equip, tipo_bateria, amperagem_bateria) VALUES ('$idUser','$idFabri', '$idCliente', '$idFilial','$tipoEquip','$modeloEquip','$potencia','$qntBateria','$caracteristica','$tipoBateria','$amperagem')";
+            $query          = "INSERT INTO tb_equipamento (id_users, id_fabricante, id_cliente, id_filial, tipo_equipamento, nomeEquipamento, modelo, potencia,qnt_bateria, caracteristica_equip, tipo_bateria, amperagem_bateria) VALUES ('$idUser','$idFabri', '$idCliente', '$idFilial','$tipoEquip','$nomeEquipamento','$modeloEquip','$potencia','$qntBateria','$caracteristica','$tipoBateria','$amperagem')";
 
             //var_dump($query);
 
@@ -146,10 +147,11 @@ class EquipamentoModel extends MainModel
     *   Editar equipamento via JSON
     */
 
-    public function editarEquipamentoJson($idEquip, $idFabricante, $idCliente, $idFilial, $equipamento, $modEquip, $caracteristicas, $quantBateria, $amperagem, $tipoBateria, $potencia)
+    public function editarEquipamentoJson($nomeEquipamento, $idEquip, $idFabricante, $idCliente, $idFilial, $equipamento, $modEquip, $caracteristicas, $quantBateria, $amperagem, $tipoBateria, $potencia)
     {
 
         // Armazena o retorno do post
+        $nomeEquipamento    = $this->tratamento($nomeEquipamento);
         $idEquip            = $this->tratamento($idEquip);
         $idFabricante       = $this->tratamento($idFabricante);
         $cliente            = $this->tratamento($idCliente);
@@ -164,6 +166,7 @@ class EquipamentoModel extends MainModel
 
 
         $query = "UPDATE tb_equipamento SET ";
+          if(isset($nomeEquipamento)){  $query .= "nomeEquipamento = '$nomeEquipamento' ,";}
           if(isset($id_fabricante)){  $query .= "id_fabricante = '$idFabricante' ,";}
           if(isset($cliente)){  $query .= "id_cliente = '$cliente' ,";}
           if(isset($filial)){  $query .= "id_filial = '$filial' ,";}
@@ -231,6 +234,112 @@ class EquipamentoModel extends MainModel
 
         return $array;
     }
+
+
+    /*
+    * Função para carregar os tipos de equipamentos
+    */
+
+    public function listarTipoEquip(){
+
+        $query = "SELECT id, tipo_equipamento
+                FROM tb_tipo_equipamento
+                WHERE status = '1'";
+
+                $result         = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if($result)
+                {
+                    /* VERIFICA SE EXISTE VALOR */
+                    if (@mysql_num_rows($result) > 0)
+                    {
+                        /* ARMAZENA NA ARRAY */
+                        while ($row = @mysql_fetch_assoc ($result))
+                        {
+                            $retorno[] = $row;
+                        }
+
+                        /* DEVOLVE RETORNO */
+                        $array = array('status' => true, 'equipamento' => $retorno);
+                    }else{
+                        $array = array('status' => false);
+                    }
+
+                }else{
+                    $array = array('status' => false);
+                }
+
+        return $array;
+    }
+
+    /*
+    *   Função para carregar o tipo de equipamento e o posicionamento na tabela
+    */
+    public function carregarPosicaoTabela($idTipo)
+    {
+        if(is_numeric($idTipo)){
+
+            $query = "SELECT tipoEquip.id, tipoEquip.descricao_equipamento, tipoEquip.posicoes_tabela
+                     FROM tb_tipo_equipamento tipoEquip
+                     WHERE tipoEquip.id = '$idTipo'";
+
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipamento' => $retorno);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * Função para registrar posicionamento do equipamento na tabela
+    */
+    public function registroPosicao($idSimEquipamento, $idNumSim, $posicao){
+
+        if(is_numeric($idSimEquipamento)){
+
+            $query = "INSERT INTO tb_posicao (id_sim_equipamento, id_num_sim, posicao, status_ativo) VALUES ('$idSimEquipamento', '$idNumSim', '$posicao', '1')";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+            //var_dump($query);
+            if ($result){
+                $array = array('status' => true);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
 
 }
 

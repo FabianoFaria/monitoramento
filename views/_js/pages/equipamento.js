@@ -42,7 +42,7 @@ $(document).ready(function(){
                        {
                            //Settar a mensagem de erro!
                            $('#filialEquipamento').html('');
-                           
+
                        	   $('#filialEquipamento').append(htmlFiliais);
                        }
                     },
@@ -65,6 +65,9 @@ $(document).ready(function(){
 
 		$('#novoEquipamento').validate({
 			rules: {
+                txt_nomeEquip:{
+                    required : true
+                },
                 clienteEquipamento:{
                     required : true
                 },
@@ -82,6 +85,9 @@ $(document).ready(function(){
               	}
             },
             messages: {
+                txt_nomeEquip:{
+                    required : "Campo obrigatório"
+                },
                 clienteEquipamento: {
                     required : "Campo obrigatório"
                 },
@@ -107,6 +113,7 @@ $(document).ready(function(){
 			var idCliente 		= $('#clienteEquipamento').val();
 			var idFilial  		= $('#filialEquipamento').val();
 			var equipamento 	= $('#txt_tipoEquip').val();
+            var nomeEquipamento = $('#txt_nomeEquip').val();
 			var modEquip 		= $('#txt_modeloEquip').val();
 			var fabricante 		= $('[name=opc_fabricante]').val();
 			var quantBateria	= $('#txt_qntBateria').val();
@@ -130,6 +137,7 @@ $(document).ready(function(){
 	              'idCliente' 		: idCliente,
 	              'idFilial'  		: idFilial,
 	              'equipamento'  	: equipamento,
+                  'nomeEquipamento' : nomeEquipamento,
 	              'modEquip'  		: modEquip,
 	              'fabricante'  	: fabricante,
 	              'quantBateria'  	: quantBateria,
@@ -163,8 +171,6 @@ $(document).ready(function(){
                     }
         });
 
-
-
 			}else{
 				//alert('fabricante não foi selecionado!');
                 swal("", "Favor selecionar um fabricante!", "info");
@@ -180,6 +186,7 @@ $(document).ready(function(){
 
   $('#nomeCliente').attr('readonly', true);
   $('#nomeFilial').attr('readonly', true);
+  $('#txt_tipoEquip').attr('readonly', true);
 
   /*
   * Função para edição de equipamento
@@ -189,6 +196,9 @@ $(document).ready(function(){
 
     $('#editarEquipamento').validate({
       rules: {
+        txt_nomeEquip:{
+            required : true
+        },
         clienteEquipamento:{
           required : true
         },
@@ -206,6 +216,9 @@ $(document).ready(function(){
         }
       },
       messages: {
+        txt_nomeEquip:{
+         required : "Campo obrigatório"
+        },
         clienteEquipamento: {
           required : "Campo obrigatório"
         },
@@ -227,17 +240,18 @@ $(document).ready(function(){
     if($('#editarEquipamento').valid()){
       //console.log('prossiga com a edição!!');
 
-      var idEquip     = $('#idEquip').val();
-      var idCliente     = $('#clienteEquipamento').val();
-      var idFilial      = $('#filialEquipamento').val();
-      var equipamento   = $('#txt_tipoEquip').val();
-      var modEquip    = $('#txt_modeloEquip').val();
-      var fabricante    = $('[name=opc_fabricante]').val();
-      var quantBateria  = $('#txt_qntBateria').val();
-      var potencia    = $('#txt_potencia').val();
-      var caracteristicas = $('#txt_caracteristica').val();
-      var amperagem     = $('#txt_amperagem').val();
-      var tipoBateria   = $('#opc_tipoBateria').val();
+      var nomeEquipamento   = $('#txt_nomeEquip').val();
+      var idEquip           = $('#idEquip').val();
+      var idCliente         = $('#clienteEquipamento').val();
+      var idFilial          = $('#filialEquipamento').val();
+      var equipamento       = $('#txt_tipoEquip').val();
+      var modEquip          = $('#txt_modeloEquip').val();
+      var fabricante        = $('[name=opc_fabricante]').val();
+      var quantBateria      = $('#txt_qntBateria').val();
+      var potencia          = $('#txt_potencia').val();
+      var caracteristicas   = $('#txt_caracteristica').val();
+      var amperagem         = $('#txt_amperagem').val();
+      var tipoBateria       = $('#opc_tipoBateria').val();
 
       //Efetua o registro do equipamento no BD
 
@@ -247,12 +261,13 @@ $(document).ready(function(){
         type : "POST",
         dataType: 'json',
         data      : {
-          'idEquip'       : idEquip,
-          'idCliente'     : idCliente,
-          'idFilial'      : idFilial,
-          'equipamento'   : equipamento,
-          'modEquip'      : modEquip,
-          'fabricante'    : fabricante,
+          'nomeEquipamento' : nomeEquipamento,
+          'idEquip'         : idEquip,
+          'idCliente'       : idCliente,
+          'idFilial'        : idFilial,
+          'equipamento'     : equipamento,
+          'modEquip'        : modEquip,
+          'fabricante'      : fabricante,
           'quantBateria'    : quantBateria,
           'caracteristicas' : caracteristicas,
           'amperagem'       : amperagem,

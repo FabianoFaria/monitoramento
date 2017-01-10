@@ -578,12 +578,12 @@ class VinculoModel extends MainModel
 
             $query = "INSERT INTO tb_sim_equipamento (id_equipamento, id_sim, num_serie, ambiente) VALUES ('$idEquipamento', '$simVinculado', '$numero_serie', '$ambiente')";
 
-            //var_dump($query);
-
             // Verifica se gravou com sucesso
             if ($this->db->query($query))
             {
-                $array = array('status' => true);
+                //var_dump($query);
+                $idGerada  = mysql_insert_id();
+                $array = array('status' => true, 'id_sim_equipamento' => $idGerada);
             }else{
                 $array = array('status' => false);
             }

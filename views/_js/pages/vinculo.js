@@ -117,6 +117,7 @@ $().ready(function() {
             var simVinculado    = $('#simVinculadoCliente').val();
             var numero_serie    = $('#txt_numeroSerie').val();
             var ambiente        = $('#txt_ambiente').val();
+            var tipoEquipamento = $('#idTipoEquipamento').val();
 
             $.ajax({
              url: urlP+"/eficazmonitor/vinculo/registrarVinculoEquipamentoJson",
@@ -124,10 +125,11 @@ $().ready(function() {
              type : "POST",
              dataType: 'json',
              data : {
-                'idEquipamento' : idEquipamento,
-                'simVinculado' : simVinculado,
-                'numero_serie' : numero_serie,
-                'ambiente' : ambiente
+                'tipoEquipamento'   : tipoEquipamento,
+                'idEquipamento'     : idEquipamento,
+                'simVinculado'      : simVinculado,
+                'numero_serie'      : numero_serie,
+                'ambiente'          : ambiente
               },
               success : function(datra)
                {

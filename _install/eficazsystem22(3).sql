@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 05-Jan-2017 às 19:57
+-- Generation Time: 09-Jan-2017 às 19:51
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -116,6 +116,17 @@ CREATE TABLE `tb_contato_alerta` (
   `observacao` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tb_contato_alerta`
+--
+
+INSERT INTO `tb_contato_alerta` (`id`, `id_cliente`, `id_filial`, `nome_contato`, `funcao`, `email`, `celular`, `observacao`) VALUES
+(1, 2, 0, 'Adolfo', 'TÃ©cnico geral', 'sistemaeficaz@sistema.eficazsystem.com.br', '123123123321', ''),
+(2, 21, 3, 'Carla', 'Fiscal tributario', 'sistemaeficaz@eficazsystem.com.br', '123123123321', '\nqweqwe'),
+(3, 21, 3, 'Carla Majorie', 'Fiscal tributario', 'sistemaeficaz@eficazsystem.com.br', '123123123321', 'Teste de observaÃ§aÃµ'),
+(4, 21, 3, 'Carla', 'Fiscal tributario', 'sistemaeficaz@eficazsystem.com.br', '123123123321', ''),
+(5, 21, 0, 'Carla', 'Fiscal tributario', 'sistemaeficaz@eficazsystem.com.br', '123123123321', 'Teste de observaÃ§Ã£o');
+
 -- --------------------------------------------------------
 
 --
@@ -160,7 +171,8 @@ CREATE TABLE `tb_equipamento` (
   `id_cliente` int(11) NOT NULL COMMENT 'Id do cliente onde o equipamento será instalado',
   `id_filial` int(11) NOT NULL COMMENT 'Id da filial do cliente onde será instalado o equipamento',
   `id_users` int(11) NOT NULL,
-  `tipo_equipamento` varchar(100) NOT NULL,
+  `tipo_equipamento` int(11) NOT NULL,
+  `nomeEquipamento` varchar(100) NOT NULL,
   `modelo` varchar(100) NOT NULL,
   `potencia` varchar(15) DEFAULT NULL,
   `qnt_bateria` decimal(5,0) DEFAULT NULL,
@@ -175,13 +187,14 @@ CREATE TABLE `tb_equipamento` (
 -- Extraindo dados da tabela `tb_equipamento`
 --
 
-INSERT INTO `tb_equipamento` (`id`, `id_fabricante`, `id_cliente`, `id_filial`, `id_users`, `tipo_equipamento`, `modelo`, `potencia`, `qnt_bateria`, `caracteristica_equip`, `tipo_bateria`, `amperagem_bateria`, `status_ativo`, `dt_criacao`) VALUES
-(7, 2, 16, 0, 5, 'No break', 'KV250', '1', '4', '1233', 'Automotiva', '2332', 1, '2017-01-03 18:00:25'),
-(8, 1, 16, 0, 5, 'Bateria clk', '24re', '43', '2', '2', 'EstacionÃ¡ria', '2', 1, '2017-01-03 18:01:51'),
-(9, 1, 21, 2, 5, 'Bateria vlad', 'Palizare', '900', '3', 'Pequeno ar condicionado de par', 'Automotiva', '123', 1, '2017-01-03 19:23:23'),
-(10, 2, 21, 2, 5, 'Bateria der', 'modulo 14', '123', '2', 'Bateria comum', 'EstacionÃ¡ria', '12323', 1, '2017-01-03 19:23:59'),
-(11, 1, 21, 3, 5, 'Bateria abc', 'liquid air', '2123', '3', '11', 'Automotiva', '80', 1, '2017-01-03 19:27:03'),
-(12, 1, 21, 2, 5, 'Bateria', 'vita', '234', '324', '4234', 'Automotiva', '3434', 1, '2017-01-05 13:12:07');
+INSERT INTO `tb_equipamento` (`id`, `id_fabricante`, `id_cliente`, `id_filial`, `id_users`, `tipo_equipamento`, `nomeEquipamento`, `modelo`, `potencia`, `qnt_bateria`, `caracteristica_equip`, `tipo_bateria`, `amperagem_bateria`, `status_ativo`, `dt_criacao`) VALUES
+(7, 2, 16, 0, 5, 1, 'No break', 'KV250', '1', '4', '1233', 'Automotiva', '2332', 1, '2017-01-03 18:00:25'),
+(8, 1, 16, 0, 5, 1, 'Bateria clk', '24re', '43', '2', '2', 'EstacionÃ¡ria', '2', 1, '2017-01-03 18:01:51'),
+(9, 1, 21, 2, 5, 1, 'Bateria vlad', 'Palizare', '900', '3', 'Pequeno ar condicionado de par', 'Automotiva', '123', 1, '2017-01-03 19:23:23'),
+(10, 2, 21, 2, 5, 1, 'Bateria der', 'modulo 14', '123', '2', 'Bateria comum', 'EstacionÃ¡ria', '12323', 1, '2017-01-03 19:23:59'),
+(11, 1, 21, 3, 5, 1, 'Bateria abc', 'liquid air', '2123', '3', '11', 'Automotiva', '80', 1, '2017-01-03 19:27:03'),
+(12, 1, 21, 2, 5, 1, 'Bateria', 'vita', '234', '324', '4234', 'Automotiva', '3434', 1, '2017-01-05 13:12:07'),
+(13, 1, 19, 0, 5, 1, 'EAD', '123', '', '0', '', '', '', 1, '2017-01-09 13:45:28');
 
 -- --------------------------------------------------------
 
@@ -16655,6 +16668,27 @@ CREATE TABLE `tb_posicao` (
   `dt_criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tb_posicao`
+--
+
+INSERT INTO `tb_posicao` (`id`, `id_sim_equipamento`, `id_num_sim`, `posicao`, `status_ativo`, `dt_criacao`) VALUES
+(31, 11, '9888888888888', 'a', 1, '2017-01-09 19:46:01'),
+(32, 11, '9888888888888', 'b', 1, '2017-01-09 19:46:01'),
+(33, 11, '9888888888888', 'c', 1, '2017-01-09 19:46:01'),
+(34, 11, '9888888888888', 'd', 1, '2017-01-09 19:46:01'),
+(35, 11, '9888888888888', 'e', 1, '2017-01-09 19:46:01'),
+(36, 11, '9888888888888', 'f', 1, '2017-01-09 19:46:01'),
+(37, 11, '9888888888888', 'g', 1, '2017-01-09 19:46:01'),
+(38, 11, '9888888888888', 'h', 1, '2017-01-09 19:46:01'),
+(39, 11, '9888888888888', 'i', 1, '2017-01-09 19:46:01'),
+(40, 11, '9888888888888', 'j', 1, '2017-01-09 19:46:01'),
+(41, 11, '9888888888888', 'k', 1, '2017-01-09 19:46:01'),
+(42, 11, '9888888888888', 'l', 1, '2017-01-09 19:46:01'),
+(43, 11, '9888888888888', 'm', 1, '2017-01-09 19:46:01'),
+(44, 11, '9888888888888', 'n', 1, '2017-01-09 19:46:01'),
+(45, 11, '9888888888888', 'o', 1, '2017-01-09 19:46:01');
+
 -- --------------------------------------------------------
 
 --
@@ -16708,6 +16742,7 @@ INSERT INTO `tb_sim` (`num_sim`, `id_cliente`, `id_filial`, `status_ativo`, `dt_
 ('2222222222222', 2, 0, 1, '2017-01-03 17:34:01'),
 ('3333333333333', 3, 0, 1, '2017-01-03 17:38:50'),
 ('4444444444444', 16, 0, 1, '2017-01-03 17:57:01'),
+('9888888888888', 19, 0, 1, '2017-01-09 19:40:08'),
 ('11111111111111', 1, 0, 1, '2017-01-03 17:32:02');
 
 -- --------------------------------------------------------
@@ -16736,7 +16771,33 @@ INSERT INTO `tb_sim_equipamento` (`id`, `id_equipamento`, `id_sim`, `num_serie`,
 (2, 8, '4444444444444', '55555555555555555555', 'Proximo ao local', 0, 1, '2017-01-03 18:43:17'),
 (4, 9, '333333333', '111111222222', 'Quarto localizdo no x andar', 0, 1, '2017-01-03 19:24:34'),
 (5, 11, '6666666666', '555555566666', 'PrÃ³ximo a janela', 0, 1, '2017-01-03 19:32:02'),
-(6, 10, '333333333', '9999999000000', 'PrÃ³ximo a porta de saÃ­da', 0, 1, '2017-01-03 19:32:28');
+(6, 10, '333333333', '9999999000000', 'PrÃ³ximo a porta de saÃ­da', 0, 1, '2017-01-03 19:32:28'),
+(7, 12, '333333333', '9999999000000000', 'Ambiente nÃ£o detalhado', 0, 1, '2017-01-09 19:37:30'),
+(8, 13, '9888888888888', '0', '0000000', 0, 1, '2017-01-09 19:40:44'),
+(9, 13, '9888888888888', '0', '0000000', 0, 1, '2017-01-09 19:44:24'),
+(10, 13, '9888888888888', '0', '0000000', 0, 1, '2017-01-09 19:44:25'),
+(11, 13, '9888888888888', '0', '0000000', 0, 1, '2017-01-09 19:46:01');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_tipo_equipamento`
+--
+
+CREATE TABLE `tb_tipo_equipamento` (
+  `id` int(11) NOT NULL,
+  `tipo_equipamento` varchar(50) NOT NULL,
+  `descricao_equipamento` text NOT NULL,
+  `posicoes_tabela` varchar(40) NOT NULL,
+  `status` int(2) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_tipo_equipamento`
+--
+
+INSERT INTO `tb_tipo_equipamento` (`id`, `tipo_equipamento`, `descricao_equipamento`, `posicoes_tabela`, `status`) VALUES
+(1, 'No-break', 'Um UPS, popularmente conhecido como no-break, é empregado em aparelhos eletrônicos, como computadores. Sua alimentação é provida por uma bateria, que fica sendo carregada enquanto a rede elétrica está funcionando corretamente. ', 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o', 1);
 
 -- --------------------------------------------------------
 
@@ -16923,6 +16984,12 @@ ALTER TABLE `tb_sim_equipamento`
   ADD KEY `id_sim` (`id_sim`);
 
 --
+-- Indexes for table `tb_tipo_equipamento`
+--
+ALTER TABLE `tb_tipo_equipamento`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tb_users`
 --
 ALTER TABLE `tb_users`
@@ -16952,7 +17019,7 @@ ALTER TABLE `tb_cliente`
 -- AUTO_INCREMENT for table `tb_contato_alerta`
 --
 ALTER TABLE `tb_contato_alerta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_dados`
 --
@@ -16962,7 +17029,7 @@ ALTER TABLE `tb_dados`
 -- AUTO_INCREMENT for table `tb_equipamento`
 --
 ALTER TABLE `tb_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `tb_filial`
 --
@@ -16974,10 +17041,20 @@ ALTER TABLE `tb_filial`
 ALTER TABLE `tb_parametro`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT for table `tb_posicao`
+--
+ALTER TABLE `tb_posicao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+--
 -- AUTO_INCREMENT for table `tb_sim_equipamento`
 --
 ALTER TABLE `tb_sim_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `tb_tipo_equipamento`
+--
+ALTER TABLE `tb_tipo_equipamento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --

@@ -1,10 +1,11 @@
-<!-- LISTAR FILIAIS DO CLIENTE VIEW -->
+<!-- LISTAR FILIAIS DO EQUIPAMENTO VIEW -->
 <?php
     if (! defined('EFIPATH')) exit;
 
     /* Carrega os dados do cliente */
-    $dados    = $modeloClie->carregarDadosCliente($this->parametros[0]);
-    $clientes = $modeloClie->listarCliente();
+    $dados      = $modeloClie->carregarDadosCliente($this->parametros[0]);
+    $clientes   = $modeloClie->listarCliente();
+    $tiposEquip = $modelo->listarTipoEquip();
 
     if($clientes){
 		$dadosCliente = $clientes;
@@ -14,7 +15,13 @@
     	//$dadosFiliais = null;
 	}
 
-	//var_dump($clientes);
+    if($tiposEquip['status']){
+        $tiposEncontrados = $tiposEquip['equipamento'];
+    }else {
+        $tiposEncontrados = 0;
+    }
+
+	//var_dump($tiposEquip);
 
 ?>
 
@@ -37,7 +44,7 @@
         <!-- formulario de cadastro -->
         <form id="novoEquipamento" method="post">
             <div class="row">
-                
+
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Cliente com o equipamento : </label>
@@ -66,6 +73,27 @@
                     </div>
                 </div><!-- fim filial -->
 
+                <!-- Tipo de equipamento -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="tipoEquipamento">Tipo de Equipamento</label>
+                        <select class="form-control" id="txt_tipoEquip" name="txt_tipoEquip" >
+                            <option value=""> Selecione tipo</option>
+                            <?php
+
+                                if($tiposEncontrados != 0){
+                                    foreach ($tiposEncontrados as $tipo) {
+                                        echo "<option value='".$tipo['id']."'>".$tipo['tipo_equipamento']."</option>";
+                                    }
+                                }else{
+                                    echo "Nennuption m tipo de equipamento cadastrado.";
+                                }
+
+                            ?>
+                        </select>
+                    </div>
+                </div><!-- fim tipo do equipamento -->
+
             </div>
 
             <div class="row">
@@ -80,8 +108,8 @@
                 <!-- Tipo de equipamento -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="tipoEquipamento">Tipo de Equipamento</label>
-                        <input type="text" class="form-control" id="txt_tipoEquip" name="txt_tipoEquip" placeholder="Tipo de Equipamento" maxlength="80"
+                        <label for="nomeEquipamento">Nome do Equipamento</label>
+                        <input type="text" class="form-control" id="txt_nomeEquip" name="txt_nomeEquip" placeholder="Tipo de Equipamento" maxlength="80"
                         value="">
                     </div>
                 </div><!-- fim tipo do equipamento -->

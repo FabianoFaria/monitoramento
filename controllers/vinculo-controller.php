@@ -309,15 +309,39 @@ class VinculoController extends MainController
 
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
+        $equipModel         = $this->load_model('equipamento/equipamento-model');
 
         $vinculoEquipamento = $vinculoModelo->cadastrarVinculoEquipamento($_POST['idEquipamento'], $_POST['simVinculado'], $_POST['numero_serie'], $_POST['ambiente']);
 
+        //$_POST['tipoEquipamento'];
+
         if($vinculoEquipamento['status']){
+
+            // EFETUA O POSICIONAMENTO DO EQUIPAMENTO NA TABELA
+            $posicionamentoTabela = $equipModel->carregarPosicaoTabela($_POST['tipoEquipamento']);
+
+            if($posicionamentoTabela['status']){
+
+                //Efetua o registro de posicionamento do equipamento na tabela
+
+                $posicaoEquipamento = $posicionamentoTabela['equipamento'][0];
+
+                $posicoes   = explode(',',$posicaoEquipamento['posicoes_tabela']);
+
+                for($i=0; $i < count($posicoes); $i++){
+                    //echo('<p>'.$posicoes[$i].'</p>');
+                    $registraPosicao = $equipModel->registroPosicao($vinculoEquipamento['id_sim_equipamento'], $_POST['simVinculado'], $posicoes[$i]);
+
+                }
+
+            }
+            
             exit(json_encode(array('status' => $vinculoEquipamento['status'])));
         }else{
             exit(json_encode(array('status' => $vinculoEquipamento['status'])));
         }
     }
 }
+
 
 ?>

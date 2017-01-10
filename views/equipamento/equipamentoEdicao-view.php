@@ -3,12 +3,19 @@
 <?php
     if (! defined('EFIPATH')) exit;
 
-    $dadosEquipamento =	$modelo->dadosEquipamentoCliente($this->parametros[0]);
+    $dadosEquipamento   = $modelo->dadosEquipamentoCliente($this->parametros[0]);
+    $tiposEquip         = $modelo->listarTipoEquip();
 
     if($dadosEquipamento['status']){
     	$equipamentoCarregado = $dadosEquipamento['equipamento'][0];
     }else{
     	$equipamentoCarregado = null;
+    }
+
+    if($tiposEquip['status']){
+        $tiposEncontrados = $tiposEquip['equipamento'];
+    }else {
+        $tiposEncontrados = 0;
     }
 
 ?>
@@ -17,7 +24,7 @@
 <script type="text/javascript">
     // gerenciador de link
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/equipamento">Listar equipamentos</a> / <a href="<?php echo HOME_URI; ?>/equipamento/editarEquipamentoCliente/<?php echo $this->parametros[0]; ?>"><?php echo (isset($equipamentoCarregado)) ? $equipamentoCarregado['tipo_equipamento']: ""; ?></a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/equipamento">Listar equipamentos</a> / <a href="<?php echo HOME_URI; ?>/equipamento/editarEquipamentoCliente/<?php echo $this->parametros[0]; ?>">Edição de equipamento : <?php echo (isset($equipamentoCarregado)) ? $equipamentoCarregado['tipo_equipamento']: ""; ?></a>';
 </script>
 
 
@@ -66,6 +73,31 @@
                     </div>
                 </div><!-- fim filial -->
 
+                <!-- Tipo de equipamento -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="tipoEquipamento">Tipo de Equipamento</label>
+                        <select class="form-control" id="txt_tipoEquip" name="txt_tipoEquip" >
+                            <option value=""> Selecione tipo</option>
+                            <?php
+
+                                if($tiposEncontrados != 0){
+                                    foreach ($tiposEncontrados as $tipo) {
+                                        if($tipo['id'] == $equipamentoCarregado['tipo_equipamento']){
+                                            echo "<option value='".$tipo['id']."' selected>".$tipo['tipo_equipamento']."</option>";
+                                        }else{
+                                            echo "<option value='".$tipo['id']."'>".$tipo['tipo_equipamento']."</option>";
+                                        }
+                                    }
+                                }else{
+                                    echo "Nennuption m tipo de equipamento cadastrado.";
+                                }
+
+                            ?>
+                        </select>
+                    </div>
+                </div><!-- fim tipo do equipamento -->
+
         	</div>
 
         	<div class="row">
@@ -81,9 +113,9 @@
                 <!-- Tipo de equipamento -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="tipoEquipamento">Tipo de Equipamento</label>
-                        <input type="text" class="form-control" id="txt_tipoEquip" name="txt_tipoEquip" placeholder="Tipo de Equipamento" maxlength="80"
-                        value="<?php echo $equipamentoCarregado['tipo_equipamento']; ?>">
+                        <label for="tipoEquipamento">Nome de Equipamento</label>
+                        <input type="text" class="form-control" id="txt_nomeEquip" name="txt_nomeEquip" placeholder="Tipo de Equipamento" maxlength="80"
+                        value="<?php echo $equipamentoCarregado['nomeEquipamento']; ?>">
                     </div>
                 </div><!-- fim tipo do equipamento -->
 
