@@ -496,7 +496,7 @@ class VinculoModel extends MainModel
 
 
     /*
-    * Função para retornar os SIMs que estão vinculados a um SIM
+    * Função para retornar os SIMs que estão vinculados a um Cliente
     */
     public function ListarVinculosCliente($idCliente)
     {
@@ -538,6 +538,98 @@ class VinculoModel extends MainModel
 
         return $array;
     }
+
+    /*
+    * Função para retornar as posições de vinculo de um tipo de equipamento
+    */
+    public function posicoesEquipamentoVincular($idEquipamentopamento)
+    {
+        if(is_numeric($idEquipamentopamento)){
+
+            $query  = "SELECT equip.tipo_equipamento, tpEquip.posicoes_tabela, tpEquip.limite_equipamentos
+                        FROM tb_equipamento equip
+                        LEFT JOIN tb_tipo_equipamento tpEquip ON tpEquip.id = equip.tipo_equipamento
+                        WHERE = equip.id = '$idEquipamentopamento'";
+
+            // Monta a result
+            $result = $this->db->select($query);
+
+            // Verifica se existe resposta
+            if($result){
+
+                // Verifica se existe resultado
+                if (@mysql_num_rows($result) > 0)
+                {
+                    // Converte para array
+                    while ($row = @mysql_fetch_assoc($result))
+                        // Armazena no array de retorno
+                        $retorno[] = $row;
+
+                    // Retorna o valor
+                    $array = array('status' => true, 'posicoes' => $retorno);
+                }else{
+                    $array = array('status' => false, 'posicoes' => '');
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else {
+
+            $array = array('status' => false);
+
+        }
+
+        return $array;
+
+    }
+
+    /*
+    * Função para recuperar as posições ocupadas em um SIM
+    */
+    public function posicoesOcupadas($numeroSim)
+    {
+
+        if(is_numeric($numeroSim)){
+
+            $query = "SELECT pos.posicao
+                      FROM  tb_posicao pos
+                      WHERE pos.id_num_sim = '$numeroSim'";
+
+            // Monta a result
+            $result = $this->db->select($query);
+
+            // Verifica se existe resposta
+            if($result){
+
+                // Verifica se existe resultado
+                if (@mysql_num_rows($result) > 0)
+                {
+                    // Converte para array
+                    while ($row = @mysql_fetch_assoc($result))
+                        // Armazena no array de retorno
+                        $retorno[] = $row;
+
+                    // Retorna o valor
+                    $array = array('status' => true, 'posicoes_ocupadas' => $retorno);
+                }else{
+                    $array = array('status' => false, 'posicoes_ocupadas' => '');
+                }
+
+            }else{
+
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
 
     /*
     * Função para registrar o vinculo via JSON

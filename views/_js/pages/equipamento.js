@@ -124,7 +124,7 @@ $(document).ready(function(){
 
 			//Verifica se um fabricante foi selecionado!
 
-			if($.isNumeric(fabricante)){
+			//if($.isNumeric(fabricante)){
 
 				//Efetua o registro do equipamento no BD
 
@@ -169,14 +169,12 @@ $(document).ready(function(){
                     console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
                     // STOP LOADING SPINNER
                     }
-        });
+                });
 
-			}else{
-				//alert('fabricante não foi selecionado!');
-                swal("", "Favor selecionar um fabricante!", "info");
-			}
-
-
+			// }else{
+			// 	//alert('fabricante não foi selecionado!');
+            //     swal("", "Favor selecionar um fabricante!", "info");
+			// }
 
 		}
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 09-Jan-2017 às 19:51
+-- Generation Time: 10-Jan-2017 às 19:56
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -89,15 +89,9 @@ CREATE TABLE `tb_cliente` (
 INSERT INTO `tb_cliente` (`id`, `id_users`, `id_pais`, `id_estado`, `nome`, `endereco`, `numero`, `cep`, `cidade`, `bairro`, `ddd`, `telefone`, `foto`, `status_ativo`, `dt_criacao`) VALUES
 (1, 1, 36, 16, 'Eficaz System', 'Rua Norberto de Brito', 1131, '83005290', 'S&atilde;o Jos&eacute; dos Pinhais', 'Centro', 41, 31551706, '', 1, '2015-08-07 18:23:09'),
 (2, 2, 36, 16, 'Jose', 'Rua Norberto de Brito', 1131, '83005290', 'S&atilde;o Jos&eacute; dos Pinhais', 'Centro', 41, 11111111, '', 1, '2015-09-11 16:29:53'),
-(3, 2, 36, 16, 'Shopping', 'Rua Norberto de Brito', 1221, '83005290', 'S&atilde;o Jos&eacute; dos Pinhais', 'Centro', 41, 111111111, '', 1, '2015-09-11 16:32:56'),
-(14, 5, 36, 16, 'Oticas AVGS', 'Inacio lustosa ', 490, '1232312', 'Ressaca', 'Rio Bonito', 23, 12323232, '', 1, '2017-01-03 17:40:40'),
-(15, 5, 36, 16, 'Oticas AVGS', 'Inacio lustosa ', 490, '1232312', 'Ressaca', 'Rio Bonito', 23, 12323232, '', 1, '2017-01-03 17:40:40'),
-(16, 5, 36, 16, 'Frishman Aisegaler', 'Noberto Brito', 909, '1232132', 'Cuiab&aacute;', 'Centro', 998, 12312313, '', 1, '2017-01-03 17:50:14'),
-(17, 5, 36, 16, 'Mercado aberto', 'Rua das araua', 23444, '3423423', 'Seca', 'Laguna', 93, 12332222, '', 1, '2017-01-03 18:50:57'),
-(18, 5, 36, 16, 'Cartorio Aberto', 'Letras ficticias', 23232, '1232131', 'Laranjeiras', 'centro', 123, 12322321, '', 1, '2017-01-03 19:02:27'),
-(19, 5, 36, 16, 'Frigorifico AÃ§ores', 'Rua estreito de Magalh&atilde;es ', 2312312, '1231231', 'Velha friburgo', 'Centro', 123, 12321312, '', 1, '2017-01-03 19:08:19'),
-(20, 5, 36, 6, 'Frigorifico aurora nova', 'Tavares Souza', 89098, '2313123', 'Karniawa', 'Centro', 232, 12321312, '', 1, '2017-01-03 19:11:22'),
-(21, 5, 36, 16, 'Sorveterias Mais', 'Rua Gon&ccedil;alves soares', 123123123, '1231231', 'Araucaria', 'Centro', 123, 12312312, '', 1, '2017-01-03 19:19:51');
+(48, 5, 36, 16, 'Correntes Andromeda', 'Alameda Viam&atilde;o', 0, '85862220', 'Foz do Igua&ccedil;u', 'Jardim Nacional', 23, 12321312, '', 1, '2017-01-10 17:20:22'),
+(49, 5, 36, 16, 'Distribuidora Coral', '...', 0, '27262090', '...', '...', 932, 23124234, '', 1, '2017-01-10 17:24:48'),
+(50, 5, 36, 17, 'Nacional Industrias', 'Rua do Luar', 0, '53402395', 'Paulista', 'Fragoso', 23, 23234234, '', 1, '2017-01-10 17:26:09');
 
 -- --------------------------------------------------------
 
@@ -121,11 +115,11 @@ CREATE TABLE `tb_contato_alerta` (
 --
 
 INSERT INTO `tb_contato_alerta` (`id`, `id_cliente`, `id_filial`, `nome_contato`, `funcao`, `email`, `celular`, `observacao`) VALUES
-(1, 2, 0, 'Adolfo', 'TÃ©cnico geral', 'sistemaeficaz@sistema.eficazsystem.com.br', '123123123321', ''),
-(2, 21, 3, 'Carla', 'Fiscal tributario', 'sistemaeficaz@eficazsystem.com.br', '123123123321', '\nqweqwe'),
-(3, 21, 3, 'Carla Majorie', 'Fiscal tributario', 'sistemaeficaz@eficazsystem.com.br', '123123123321', 'Teste de observaÃ§aÃµ'),
-(4, 21, 3, 'Carla', 'Fiscal tributario', 'sistemaeficaz@eficazsystem.com.br', '123123123321', ''),
-(5, 21, 0, 'Carla', 'Fiscal tributario', 'sistemaeficaz@eficazsystem.com.br', '123123123321', 'Teste de observaÃ§Ã£o');
+(10, 48, 12, 'Monitor D', 'funcao', 'pareos@email.com', '23423423', 'Nenhum'),
+(9, 48, 11, 'Contato Duma', 'Monitor', 'email@email.com', '232324234', 'Nenhuma'),
+(8, 48, 10, 'Contato C', 'Monitor D', 'contato@email.com2', '123123213', 'Nenhuma'),
+(6, 48, 0, 'Contato A', 'Monitor', 'contatoa@email.com', '3213123213231', 'nenhuma'),
+(7, 48, 9, 'Contato B', 'Monitor', 'email@email.com', '3213213213213', 'Nenhuma');
 
 -- --------------------------------------------------------
 
@@ -188,13 +182,12 @@ CREATE TABLE `tb_equipamento` (
 --
 
 INSERT INTO `tb_equipamento` (`id`, `id_fabricante`, `id_cliente`, `id_filial`, `id_users`, `tipo_equipamento`, `nomeEquipamento`, `modelo`, `potencia`, `qnt_bateria`, `caracteristica_equip`, `tipo_bateria`, `amperagem_bateria`, `status_ativo`, `dt_criacao`) VALUES
-(7, 2, 16, 0, 5, 1, 'No break', 'KV250', '1', '4', '1233', 'Automotiva', '2332', 1, '2017-01-03 18:00:25'),
-(8, 1, 16, 0, 5, 1, 'Bateria clk', '24re', '43', '2', '2', 'EstacionÃ¡ria', '2', 1, '2017-01-03 18:01:51'),
-(9, 1, 21, 2, 5, 1, 'Bateria vlad', 'Palizare', '900', '3', 'Pequeno ar condicionado de par', 'Automotiva', '123', 1, '2017-01-03 19:23:23'),
-(10, 2, 21, 2, 5, 1, 'Bateria der', 'modulo 14', '123', '2', 'Bateria comum', 'EstacionÃ¡ria', '12323', 1, '2017-01-03 19:23:59'),
-(11, 1, 21, 3, 5, 1, 'Bateria abc', 'liquid air', '2123', '3', '11', 'Automotiva', '80', 1, '2017-01-03 19:27:03'),
-(12, 1, 21, 2, 5, 1, 'Bateria', 'vita', '234', '324', '4234', 'Automotiva', '3434', 1, '2017-01-05 13:12:07'),
-(13, 1, 19, 0, 5, 1, 'EAD', '123', '', '0', '', '', '', 1, '2017-01-09 13:45:28');
+(20, 1, 48, 0, 5, 1, 'C130', '345', '200', '2', 'Nenhuma caracteristica', 'Automotiva', '123', 1, '2017-01-10 18:17:41'),
+(21, 1, 49, 0, 5, 1, 'Termodinamico', 'NRV', '123', '2', 'Nenhuma Caracteristica extra', 'Selada', '100', 1, '2017-01-10 18:19:26'),
+(22, 1, 50, 0, 5, 1, 'Gh', '12', '112', '2', 'Nenhuma em especial', 'EstacionÃ¡ria', '123', 1, '2017-01-10 18:20:21'),
+(23, 1, 48, 9, 5, 1, 'Fgh', '13', '120', '2', 'Nenhuma', 'Automotiva', '120', 1, '2017-01-10 18:21:05'),
+(24, 1, 50, 15, 5, 1, 'Hju', '8090', '100', '2', 'nENHUMA', 'Selada', '100', 1, '2017-01-10 18:22:01'),
+(25, 1, 50, 15, 5, 1, 'Hju', '8090', '100', '2', 'nENHUMA', 'Selada', '100', 1, '2017-01-10 18:22:01');
 
 -- --------------------------------------------------------
 
@@ -304,9 +297,16 @@ CREATE TABLE `tb_filial` (
 --
 
 INSERT INTO `tb_filial` (`id`, `id_matriz`, `id_estado`, `id_pais`, `id_users`, `nome`, `endereco`, `numero`, `cep`, `cidade`, `bairro`, `ddd`, `telefone`, `foto`, `status_ativo`, `dt_criacao`) VALUES
-(1, 20, 3, 36, 5, 'Filial Alha', '123123213', 12312312, '12312312', '3123213213', '12321312', 123, 123123123, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-03 19:16:21'),
-(2, 21, 3, 36, 5, 'Filial 2', 'Rua macedo Antunes', 123123, '231312', 'palotina', 'piracicava', 321, 123123123, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-03 19:21:34'),
-(3, 21, 3, 36, 5, 'Alpha 1', 'Tobias macedo', 2323, '123123', 'Curitba', 'Centro', 213, 123213213, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-03 19:21:34');
+(7, 46, 13, 36, 5, 'Filail reserva', 'Rua Maria Rosa de Souza', 0, '38181543', 'Arax&amp;aacute;', 'Jardim Nat&amp;aacute;lia', 23, 23423423, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:12:44'),
+(8, 47, 27, 36, 5, 'Filial Tocantins', 'Avenida Tocantins', 0, '77066044', 'Palmas', 'Setor Morada do Sol Taquaralto', 32, 333333333, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:18:25'),
+(9, 48, 5, 36, 5, 'Groud Zeros', 'Rua Barra da Ribeira', 0, '44056519', 'Feira de Santana', 'Mangabeira', 23, 232343243, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:53'),
+(10, 48, 25, 36, 5, 'Peace Walker', 'Avenida Ant&ocirc;nio Pagliato', 9999, '13057067', 'Campinas', 'Residencial Citt&aacute; Di Firenze', 32, 234234324, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:54'),
+(11, 48, 17, 36, 5, 'Phanton Pain', 'Rua Joaquim Alves Correia', 0, '54753690', 'Camaragibe', 'Vila da Inabi', 23, 234234343, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:54'),
+(12, 48, 7, 36, 5, 'Snake Eater', 'QR 510 Conjunto 3', 0, '72312603', 'Bras&iacute;lia', 'Samambaia Sul Samambaia', 933, 324324324, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:54'),
+(13, 50, 7, 36, 5, 'Filial Dois', 'Quadra 4 Bloco N', 0, '73360414', 'Bras&iacute;lia', 'Setor Residencial Leste Planaltina', 23, 234234234, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49'),
+(14, 50, 25, 36, 5, 'Filial Zero', 'Rua Kanebo', 0, '13213090', 'Jundia&iacute;', 'Distrito Industrial', 23, 423423423, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49'),
+(15, 50, 9, 36, 5, 'Filial Tr&ecirc;s', 'Avenida Lagoa', 0, '73814505', 'Formosa', 'Village', 89, 234324234, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49'),
+(16, 50, 21, 36, 5, 'Filial Um', 'Acesso O Dois', 0, '91791220', 'Porto Alegre', 'Restinga', 23, 234234234, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49');
 
 -- --------------------------------------------------------
 
@@ -16614,16 +16614,6 @@ CREATE TABLE `tb_parametro` (
   `status_ativo` smallint(6) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `tb_parametro`
---
-
-INSERT INTO `tb_parametro` (`id`, `id_equipamento`, `id_users`, `id_sim_equipamento`, `num_sim`, `parametro`, `dt_criacao`, `status_ativo`) VALUES
-(1, 1, 1, 1, '13949007326906', 'eb-1-190|et-1-200|ei-1-220|et2-1-230|ea-1-240|eb-2-190|et-2-200|ei-2-220|et2-2-230|ea-2-240|eb-3-190|et-3-200|ei-3-220|et2-3-230|ea-3-240|sb-1-190|st1-1-200|si-1-220|st2-1-230|sa-1-240|sb-2-190|st1-2-200|si-2-220|st2-2-230|sa-2-240|sb-3-190|st1-3-200|si-3-220|st2-3-230|sa-3-240', '2015-08-07 18:27:14', 1),
-(2, 11, 5, 5, '6666666666', '|inicio|eb-1-555.55|et1-1-555.55|ei-1-555.55|et2-1-555.55|ea-1-555.55||inicio|eb-2-555.55|et1-2-555.55|ei-2-555.55|et2-2-555.55|ea-2-555.55||inicio|eb-3-555.55|et1-3-555.55|ei-3-555.55|et2-3-555.55|ea-3-555.55||inicio|sb-1-333.33|st1-1-333.33|si-1-333.33|st2-1-333.33|sa-1-333.33||inicio|sb-2-333.33|st1-2-333.33|si-2-333.33|st2-2-333.33|sa-2-333.33||inicio|sb-3-333.33|st1-3-333.33|si-3-333.33|st2-3-333.33|sa-3-333.33||inicio|tb-1-444.44|tt1-1-444.44|ti-1-444.44|tt2-1-444.44|ta-1-444.44||inicio|tb-2-444.44|tt1-2-444.44|ti-2-444.44|tt2-2-444.44|ta-2-444.44|', '2017-01-05 11:29:41', 1),
-(3, 8, 5, 2, '4444444444444', '|inicio|eb-1-0|et1-1-0|ei-1-0|et2-1-0|ea-1-0||inicio|eb-2-0|et1-2-0|ei-2-0|et2-2-0|ea-2-0||inicio|eb-3-0|et1-3-0|ei-3-0|et2-3-0|ea-3-0||inicio|sb-1-0|st1-1-0|si-1-0|st2-1-0|sa-1-0||inicio|sb-2-0|st1-2-0|si-2-0|st2-2-0|sa-2-0||inicio|sb-3-0|st1-3-0|si-3-0|st2-3-0|sa-3-0||inicio|tb-1-0|tt1-1-0|ti-1-0|tt2-1-0|ta-1-0||inicio|tb-2-0|tt1-2-0|ti-2-0|tt2-2-0|ta-2-0|', '2017-01-05 13:04:24', 1),
-(4, 8, 5, 2, '4444444444444', '|inicio|eb-1-123.32|et1-1-123.21|ei-1-123.21|et2-1-234.34|ea-1-234.23||inicio|eb-2-234.23|et1-2-234.23|ei-2-234.32|et2-2-545.34|ea-2-435.34||inicio|eb-3-0|et1-3-0|ei-3-0|et2-3-0|ea-3-0||inicio|sb-1-453.45|st1-1-545.43|si-1-543.54|st2-1-534.53|sa-1-345.43||inicio|sb-2-435.43|st1-2-545.45|si-2-534.55|st2-2-435.43|sa-2-435.43||inicio|sb-3-0|st1-3-0|si-3-0|st2-3-0|sa-3-0||inicio|tb-1-0|tt1-1-0|ti-1-0|tt2-1-0|ta-1-0||inicio|tb-2-0|tt1-2-0|ti-2-0|tt2-2-0|ta-2-0|', '2017-01-05 13:05:08', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -16673,21 +16663,21 @@ CREATE TABLE `tb_posicao` (
 --
 
 INSERT INTO `tb_posicao` (`id`, `id_sim_equipamento`, `id_num_sim`, `posicao`, `status_ativo`, `dt_criacao`) VALUES
-(31, 11, '9888888888888', 'a', 1, '2017-01-09 19:46:01'),
-(32, 11, '9888888888888', 'b', 1, '2017-01-09 19:46:01'),
-(33, 11, '9888888888888', 'c', 1, '2017-01-09 19:46:01'),
-(34, 11, '9888888888888', 'd', 1, '2017-01-09 19:46:01'),
-(35, 11, '9888888888888', 'e', 1, '2017-01-09 19:46:01'),
-(36, 11, '9888888888888', 'f', 1, '2017-01-09 19:46:01'),
-(37, 11, '9888888888888', 'g', 1, '2017-01-09 19:46:01'),
-(38, 11, '9888888888888', 'h', 1, '2017-01-09 19:46:01'),
-(39, 11, '9888888888888', 'i', 1, '2017-01-09 19:46:01'),
-(40, 11, '9888888888888', 'j', 1, '2017-01-09 19:46:01'),
-(41, 11, '9888888888888', 'k', 1, '2017-01-09 19:46:01'),
-(42, 11, '9888888888888', 'l', 1, '2017-01-09 19:46:01'),
-(43, 11, '9888888888888', 'm', 1, '2017-01-09 19:46:01'),
-(44, 11, '9888888888888', 'n', 1, '2017-01-09 19:46:01'),
-(45, 11, '9888888888888', 'o', 1, '2017-01-09 19:46:01');
+(46, 12, '9999988777', 'a', 1, '2017-01-10 18:49:18'),
+(47, 12, '9999988777', 'b', 1, '2017-01-10 18:49:18'),
+(48, 12, '9999988777', 'c', 1, '2017-01-10 18:49:18'),
+(49, 12, '9999988777', 'd', 1, '2017-01-10 18:49:18'),
+(50, 12, '9999988777', 'e', 1, '2017-01-10 18:49:18'),
+(51, 12, '9999988777', 'f', 1, '2017-01-10 18:49:18'),
+(52, 12, '9999988777', 'g', 1, '2017-01-10 18:49:18'),
+(53, 12, '9999988777', 'h', 1, '2017-01-10 18:49:18'),
+(54, 12, '9999988777', 'i', 1, '2017-01-10 18:49:18'),
+(55, 12, '9999988777', 'j', 1, '2017-01-10 18:49:18'),
+(56, 12, '9999988777', 'k', 1, '2017-01-10 18:49:18'),
+(57, 12, '9999988777', 'l', 1, '2017-01-10 18:49:18'),
+(58, 12, '9999988777', 'm', 1, '2017-01-10 18:49:18'),
+(59, 12, '9999988777', 'n', 1, '2017-01-10 18:49:18'),
+(60, 12, '9999988777', 'o', 1, '2017-01-10 18:49:18');
 
 -- --------------------------------------------------------
 
@@ -16737,13 +16727,16 @@ CREATE TABLE `tb_sim` (
 --
 
 INSERT INTO `tb_sim` (`num_sim`, `id_cliente`, `id_filial`, `status_ativo`, `dt_criacao`) VALUES
-('333333333', 21, 2, 1, '2017-01-03 19:22:05'),
-('6666666666', 21, 3, 1, '2017-01-03 19:22:15'),
-('2222222222222', 2, 0, 1, '2017-01-03 17:34:01'),
-('3333333333333', 3, 0, 1, '2017-01-03 17:38:50'),
-('4444444444444', 16, 0, 1, '2017-01-03 17:57:01'),
-('9888888888888', 19, 0, 1, '2017-01-09 19:40:08'),
-('11111111111111', 1, 0, 1, '2017-01-03 17:32:02');
+('777777777', 49, 0, 1, '2017-01-10 17:59:42'),
+('9999988777', 48, 10, 1, '2017-01-10 17:59:11'),
+('9999996666', 50, 0, 1, '2017-01-10 18:00:00'),
+('9999998888', 48, 9, 1, '2017-01-10 17:58:38'),
+('9999999911', 48, 0, 1, '2017-01-10 17:58:21'),
+('999998888854', 50, 14, 1, '2017-01-10 18:00:41'),
+('999999888433', 50, 14, 1, '2017-01-10 18:00:58'),
+('9999999666655', 50, 13, 1, '2017-01-10 18:00:15'),
+('99999994443333', 50, 15, 1, '2017-01-10 18:01:12'),
+('999995555533332', 50, 16, 1, '2017-01-10 18:01:34');
 
 -- --------------------------------------------------------
 
@@ -16767,16 +16760,7 @@ CREATE TABLE `tb_sim_equipamento` (
 --
 
 INSERT INTO `tb_sim_equipamento` (`id`, `id_equipamento`, `id_sim`, `num_serie`, `ambiente`, `vinc_tabela`, `status_ativo`, `dt_criacao`) VALUES
-(1, 7, '4444444444444', '44444444444444444444', 'Local', 0, 1, '2017-01-03 18:42:45'),
-(2, 8, '4444444444444', '55555555555555555555', 'Proximo ao local', 0, 1, '2017-01-03 18:43:17'),
-(4, 9, '333333333', '111111222222', 'Quarto localizdo no x andar', 0, 1, '2017-01-03 19:24:34'),
-(5, 11, '6666666666', '555555566666', 'PrÃ³ximo a janela', 0, 1, '2017-01-03 19:32:02'),
-(6, 10, '333333333', '9999999000000', 'PrÃ³ximo a porta de saÃ­da', 0, 1, '2017-01-03 19:32:28'),
-(7, 12, '333333333', '9999999000000000', 'Ambiente nÃ£o detalhado', 0, 1, '2017-01-09 19:37:30'),
-(8, 13, '9888888888888', '0', '0000000', 0, 1, '2017-01-09 19:40:44'),
-(9, 13, '9888888888888', '0', '0000000', 0, 1, '2017-01-09 19:44:24'),
-(10, 13, '9888888888888', '0', '0000000', 0, 1, '2017-01-09 19:44:25'),
-(11, 13, '9888888888888', '0', '0000000', 0, 1, '2017-01-09 19:46:01');
+(12, 20, '9999988777', '777777888899', 'Desconhecido', 0, 1, '2017-01-10 18:49:18');
 
 -- --------------------------------------------------------
 
@@ -16789,6 +16773,7 @@ CREATE TABLE `tb_tipo_equipamento` (
   `tipo_equipamento` varchar(50) NOT NULL,
   `descricao_equipamento` text NOT NULL,
   `posicoes_tabela` varchar(40) NOT NULL,
+  `limite_equipamentos` int(11) NOT NULL COMMENT 'Guarda a quantidade de equipamentos suportada na tabela',
   `status` int(2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -16796,8 +16781,12 @@ CREATE TABLE `tb_tipo_equipamento` (
 -- Extraindo dados da tabela `tb_tipo_equipamento`
 --
 
-INSERT INTO `tb_tipo_equipamento` (`id`, `tipo_equipamento`, `descricao_equipamento`, `posicoes_tabela`, `status`) VALUES
-(1, 'No-break', 'Um UPS, popularmente conhecido como no-break, é empregado em aparelhos eletrônicos, como computadores. Sua alimentação é provida por uma bateria, que fica sendo carregada enquanto a rede elétrica está funcionando corretamente. ', 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o', 1);
+INSERT INTO `tb_tipo_equipamento` (`id`, `tipo_equipamento`, `descricao_equipamento`, `posicoes_tabela`, `limite_equipamentos`, `status`) VALUES
+(1, 'No-break', 'Um UPS, popularmente conhecido como no-break, é empregado em aparelhos eletrônicos, como computadores. Sua alimentação é provida por uma bateria, que fica sendo carregada enquanto a rede elétrica está funcionando corretamente. ', 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o', 1, 1),
+(2, 'Medidor de temperatura', 'Medidor de temperatura, utilizado para monitorar no-breaks ou ar condicionados', 'p,q', 2, 1),
+(3, 'Porta digital R', 'Equipamentos de monitoramento simples', 'r', 5, 1),
+(4, 'Porta digital S', 'Entrada digital para monitorar equipamentos diversos', 's', 5, 1),
+(5, 'Porta digital T', 'Entrada digital para monitorar equipamentos diversos', 't', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -16831,13 +16820,10 @@ INSERT INTO `tb_users` (`id`, `id_perfil_acesso`, `nome`, `sobrenome`, `email`, 
 (3, 1, 'Fabiano ', 'Hatori', 'fabiano@eficazSystem.com.br', '', '', 'c62d929e7b7e7b6165923a5dfc60cb56', 1, 1, 0, 1, '2016-12-05 13:38:08'),
 (4, 1, 'Allan ', 'Lima ', 'allan.lima@eficazsystem.com.br', '', '', '9091a762fd732c7d0f308540ee93ed94', 1, 1, 0, 1, '2016-12-06 19:45:00'),
 (5, 1, 'Sistema2', 'Eficaz', 'sistemaeficaz@sistema.eficazsystem.com.br', '', '', '42d8aa7cde9c78c4757862d84620c335', 1, 0, 0, 1, '2016-12-07 17:08:02'),
-(10, 2, 'Avelino ', 'Santos', 'email@email.com.br', '(433) 2112-3331', '(098) 2123-2222', '4297f44b13955235245b2497399d7a93', 1, 15, 0, 1, '2017-01-03 17:44:06'),
-(11, 2, 'Tarcilio ', 'Amaral', 'amaraul@email.com', '(123) 3211-1232', '(123) 2311-1223', '4297f44b13955235245b2497399d7a93', 1, 16, 0, 1, '2017-01-03 17:51:07'),
-(12, 2, 'Regente ', 'Jones', 'jones@email.com.br', '(232) 3232-3232', '(213) 2333-2321', '4297f44b13955235245b2497399d7a93', 1, 17, 0, 1, '2017-01-03 18:51:25'),
-(13, 2, 'Horacio', 'neves', 'neves@email.com', '(123) 1232-3222', '(123) 2322-2222', '4297f44b13955235245b2497399d7a93', 1, 18, 0, 1, '2017-01-03 19:05:22'),
-(14, 2, 'Laura ', 'Renata', 'email@e.com.br', '(123) 1231-2312', '(312) 3123-1232', 'efe6398127928f1b2e9ef3207fb82663', 1, 19, 0, 1, '2017-01-03 19:08:48'),
-(15, 2, 'Paola', 'Kruts', 'email@email.com', '(123) 1231-2312', '(123) 2312-3123', 'efe6398127928f1b2e9ef3207fb82663', 1, 20, 0, 1, '2017-01-03 19:11:49'),
-(16, 2, 'Silvanaonorato', 'honorato', 'email@email.com', '(213) 1231-2321', '(213) 1231-2312', '4297f44b13955235245b2497399d7a93', 1, 21, 0, 1, '2017-01-03 19:20:25');
+(41, 2, 'Leandro ', 'Moraes', 'email@email.com.br', '(123) 1231-2312', '(132) 1312-3123', 'efe6398127928f1b2e9ef3207fb82663', 1, 48, 0, 1, '2017-01-10 17:20:48'),
+(42, 2, 'Golvea', 'Gusm&atilde;o', 'email@email.com', '(342) 2342-3423', '(423) 4234-2342', 'efe6398127928f1b2e9ef3207fb82663', 1, 49, 0, 1, '2017-01-10 17:25:08'),
+(43, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', 'efe6398127928f1b2e9ef3207fb82663', 1, 50, 0, 1, '2017-01-10 17:26:32'),
+(44, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', 'efe6398127928f1b2e9ef3207fb82663', 1, 50, 0, 1, '2017-01-10 17:26:33');
 
 --
 -- Indexes for dumped tables
@@ -17014,12 +17000,12 @@ ALTER TABLE `tb_alerta`
 -- AUTO_INCREMENT for table `tb_cliente`
 --
 ALTER TABLE `tb_cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT for table `tb_contato_alerta`
 --
 ALTER TABLE `tb_contato_alerta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tb_dados`
 --
@@ -17029,12 +17015,12 @@ ALTER TABLE `tb_dados`
 -- AUTO_INCREMENT for table `tb_equipamento`
 --
 ALTER TABLE `tb_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `tb_filial`
 --
 ALTER TABLE `tb_filial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `tb_parametro`
 --
@@ -17044,22 +17030,22 @@ ALTER TABLE `tb_parametro`
 -- AUTO_INCREMENT for table `tb_posicao`
 --
 ALTER TABLE `tb_posicao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 --
 -- AUTO_INCREMENT for table `tb_sim_equipamento`
 --
 ALTER TABLE `tb_sim_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `tb_tipo_equipamento`
 --
 ALTER TABLE `tb_tipo_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

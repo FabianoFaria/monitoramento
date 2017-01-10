@@ -311,10 +311,19 @@ class VinculoController extends MainController
         $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
         $equipModel         = $this->load_model('equipamento/equipamento-model');
 
-        $vinculoEquipamento = $vinculoModelo->cadastrarVinculoEquipamento($_POST['idEquipamento'], $_POST['simVinculado'], $_POST['numero_serie'], $_POST['ambiente']);
+        //verificar se há posições disponiveis na tabela de monitoramento do número SIM escolhido
+
+        $posicoesOcupadas                   = $vinculoModelo->posicoesOcupadas($_POST['simVinculado']);
+        $posicoesEquipamentoParaVincular    = $vinculoModelo->posicoesEquipamentoVincular($_POST['idEquipamento']);
+
+        var_dump($posicoesEquipamentoParaVincular);
+
+
+
+        //$vinculoEquipamento = $vinculoModelo->cadastrarVinculoEquipamento($_POST['idEquipamento'], $_POST['simVinculado'], $_POST['numero_serie'], $_POST['ambiente']);
 
         //$_POST['tipoEquipamento'];
-
+        /*
         if($vinculoEquipamento['status']){
 
             // EFETUA O POSICIONAMENTO DO EQUIPAMENTO NA TABELA
@@ -335,11 +344,12 @@ class VinculoController extends MainController
                 }
 
             }
-            
+
             exit(json_encode(array('status' => $vinculoEquipamento['status'])));
         }else{
             exit(json_encode(array('status' => $vinculoEquipamento['status'])));
         }
+        */
     }
 }
 
