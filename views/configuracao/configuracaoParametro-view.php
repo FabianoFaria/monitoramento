@@ -79,6 +79,158 @@ if($detalhesEquip['status']){
                 <input id="num_sim" name="num_sim" type="hidden" value="<?php echo $equipDetalhe['id_sim']; ?>" />
                 <input id="idParametros" name="idParametros" type="hidden" value="<?php echo ($parametrosEquip != 0) ? $parametrosEquip['id']: ""; ?>">
 
+                <!-- Form reformulado conforme alterações na forma de cofigurar os parametros -->
+                <form id="formConfigDiferenciado" method="post">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                   Tensão de entrada
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="page-header" for="exampleInputEmail1">Entrada </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-error">
+                                                <label for="exampleInputEmail1" class="control-label">Valor crítico baixo</label>
+                                                <input type="text" class="form-control" id="eb" name="eb" placeholder="000,00" maxlength="7" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-warning">
+                                                <label for="exampleInputEmail1" class="control-label">Valor baixo</label>
+                                                <input type="text" class="form-control" id="et" name="et" placeholder="000,00" maxlength="7" onkeypress="" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-success">
+                                                <label for="exampleInputEmail1" class="control-label">Valor Ideal</label>
+                                                <input type="text" class="form-control" id="ei" name="ei" placeholder="000,00" maxlength="7" onkeypress="" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-warning">
+                                                <label for="exampleInputEmail1" class="control-label">Valor alto</label>
+                                                <input type="text" class="form-control" id="et2" name="et2" placeholder="000,00" maxlength="7" onkeypress="" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-error">
+                                                <label for="exampleInputEmail1" class="control-label">Valor crítico alto</label>
+                                                <input type="text" class="form-control " id="ea" name="ea" placeholder="000,00" maxlength="7" onkeypress="" value="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Tensão saída
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="page-header" for="exampleInputEmail1">Saída</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-error">
+                                                <label for="exampleInputEmail1" class="control-label">Valor crítico baixo</label>
+                                                <input type="text" class="form-control" id="sb" name="sb" placeholder="000,00" maxlength="7" onkeypress="" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-warning">
+                                                <label for="exampleInputEmail1" class="control-label">Valor baixo</label>
+                                                <input type="text" class="form-control" id="st1" name="st1" placeholder="000,00" maxlength="7" onkeypress="" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-success">
+                                                <label for="exampleInputEmail1" class="control-label">Valor Ideal</label>
+                                                <input type="text" class="form-control" id="ti" name="ti" placeholder="000,00" maxlength="7" onkeypress="" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-warning">
+                                                <label for="exampleInputEmail1" class="control-label">Valor alto</label>
+                                                <input type="text" class="form-control" id="tt2" name="tt2" placeholder="000,00" maxlength="7" onkeypress="" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group has-error">
+                                                <label for="exampleInputEmail1" class="control-label">Valor crítico alto</label>
+                                                <input type="text" class="form-control" id="ta" name="ta" placeholder="000,00" maxlength="7" onkeypress="" value="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Tensão bateria
+                                </div>
+                                <div class="panel-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Corrente entrada
+                                </div>
+                                <div class="panel-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Corrente saída
+                                </div>
+                                <div class="panel-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
 
                 <!-- form contendo os dados do cliente -->
                 <form id="formConfiguracaoParametros" method="post">
@@ -113,37 +265,37 @@ if($detalhesEquip['status']){
                                                 </div>
 
                                                 <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1" class="fontsub">Valor crítico baixo</label>
+                                                    <div class="form-group has-error">
+                                                        <label for="exampleInputEmail1" class="control-label">Valor crítico baixo</label>
                                                         <input type="text" class="form-control" id="eb-<?php echo $a;?>" name="eb-<?php echo $a;?>" placeholder="000,00" maxlength="7" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[0]) : ""; ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1" class="fontsub">Valor baixo</label>
+                                                    <div class="form-group has-warning">
+                                                        <label for="exampleInputEmail1" class="control-label">Valor baixo</label>
                                                         <input type="text" class="form-control" id="et-<?php echo $a;?>" name="et-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[1]) : ""; ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1" class="fontsub">Valor Ideal</label>
+                                                    <div class="form-group has-success">
+                                                        <label for="exampleInputEmail1" class="control-label">Valor Ideal</label>
                                                         <input type="text" class="form-control" id="ei-<?php echo $a;?>" name="ei-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[2]) : ""; ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1" class="fontsub">Valor alto</label>
+                                                    <div class="form-group has-warning">
+                                                        <label for="exampleInputEmail1" class="control-label">Valor alto</label>
                                                         <input type="text" class="form-control" id="et2-<?php echo $a;?>" name="et2-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[3]) : ""; ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1" class="fontsub">Valor crítico alto</label>
-                                                        <input type="text" class="form-control" id="ea-<?php echo $a;?>" name="ea-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
+                                                    <div class="form-group has-error">
+                                                        <label for="exampleInputEmail1" class="control-label">Valor crítico alto</label>
+                                                        <input type="text" class="form-control " id="ea-<?php echo $a;?>" name="ea-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
                                                     </div>
                                                 </div>
 
@@ -189,36 +341,36 @@ if($detalhesEquip['status']){
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor crítico baixo</label>
+                                                <div class="form-group has-error">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor crítico baixo</label>
                                                     <input type="text" class="form-control" id="sb-<?php echo $a;?>" name="sb-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[0]) : ""; ?>">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor baixo</label>
+                                                <div class="form-group has-warning">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor baixo</label>
                                                     <input type="text" class="form-control" id="st1-<?php echo $a;?>" name="st1-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[1]) : ""; ?>">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor Ideal</label>
+                                                <div class="form-group has-success">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor Ideal</label>
                                                     <input type="text" class="form-control" id="si-<?php echo $a;?>" name="si-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[2]) : ""; ?>">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor alto</label>
+                                                <div class="form-group has-warning">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor alto</label>
                                                     <input type="text" class="form-control" id="st2-<?php echo $a;?>" name="st2-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[3]) : ""; ?>">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor crítico alto</label>
+                                                <div class="form-group has-error">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor crítico alto</label>
                                                     <input type="text" class="form-control" id="sa-<?php echo $a;?>" name="sa-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
                                                 </div>
                                             </div>
@@ -259,42 +411,42 @@ if($detalhesEquip['status']){
                                     ?>
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <label class="page-header" for="exampleInputEmail1">Tensão <?php echo $a?> </label>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor crítico baixo</label>
+                                                <div class="form-group has-error">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor crítico baixo</label>
                                                     <input type="text" class="form-control" id="tb-<?php echo $a;?>" name="tb-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[0]) : ""; ?>">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor baixo</label>
+                                                <div class="form-group has-warning">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor baixo</label>
                                                     <input type="text" class="form-control" id="tt1-<?php echo $a;?>" name="tt1-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[1]) : ""; ?>">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor Ideal</label>
+                                                <div class="form-group has-success">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor Ideal</label>
                                                     <input type="text" class="form-control" id="ti-<?php echo $a;?>" name="ti-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[2]) : ""; ?>">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor alto</label>
+                                                <div class="form-group has-warning">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor alto</label>
                                                     <input type="text" class="form-control" id="tt2-<?php echo $a;?>" name="tt2-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[3]) : ""; ?>">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="fontsub">Valor crítico alto</label>
+                                                <div class="form-group has-error">
+                                                    <label for="exampleInputEmail1" class="control-label">Valor crítico alto</label>
                                                     <input type="text" class="form-control" id="ta-<?php echo $a;?>" name="ta-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
                                                 </div>
                                             </div>

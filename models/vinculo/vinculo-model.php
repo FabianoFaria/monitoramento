@@ -549,7 +549,7 @@ class VinculoModel extends MainModel
             $query  = "SELECT equip.tipo_equipamento, tpEquip.posicoes_tabela, tpEquip.limite_equipamentos
                         FROM tb_equipamento equip
                         LEFT JOIN tb_tipo_equipamento tpEquip ON tpEquip.id = equip.tipo_equipamento
-                        WHERE = equip.id = '$idEquipamentopamento'";
+                        WHERE equip.id = '$idEquipamentopamento'";
 
             // Monta a result
             $result = $this->db->select($query);

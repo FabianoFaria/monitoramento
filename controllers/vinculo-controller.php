@@ -311,45 +311,123 @@ class VinculoController extends MainController
         $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
         $equipModel         = $this->load_model('equipamento/equipamento-model');
 
-        //verificar se há posições disponiveis na tabela de monitoramento do número SIM escolhido
+        //VERIFICAR SE HÁ POSIÇÕES DISPONIVEIS NA TABELA DE MONITORAMENTO DO NÚMERO SIM ESCOLHIDO
 
         $posicoesOcupadas                   = $vinculoModelo->posicoesOcupadas($_POST['simVinculado']);
         $posicoesEquipamentoParaVincular    = $vinculoModelo->posicoesEquipamentoVincular($_POST['idEquipamento']);
+        $posicionamentoViavel               = null;
 
-        var_dump($posicoesEquipamentoParaVincular);
+        //var_dump($posicoesOcupadas);
+
+        if($posicoesOcupadas['status']){
+            //foram encontradas posições ocupadas na tabela, efetuara verificação
+            if($posicoesEquipamentoParaVincular['status']){
+                $posParaOcupar  = explode(',',$posicoesEquipamentoParaVincular['posicoes'][0]['posicoes_tabela']);
+                $posOcupada     = array();
+
+                //Conparar as posições ocupadas com as posições para ocupar
+                foreach ($posicoesOcupadas['posicoes_ocupadas'] as $posicao) {
+                    //array_push($posOcupada, $posicao['posicao']);
+
+                    /*
+                    * CASO O POSICIONAMENTO NÃO SEJA VIAVEL, SERÁ RETORNADO FALSE, POIS NÃO HÁ ESPAÇO NA TABELA ALOCADO PARA O SIM
+                    */
+
+                    if(in_array($posicao['posicao'], $posParaOcupar)){
+                        //var_dump ("Posicoes para vincular já estão ocupadas!".$posicao['posicao']);
+                        $posicionamentoViavel   = false;
+                    }else{
+                        $posicionamentoViavel   = true;
+                    }
+                }
+
+            }else{
+                //Implementar condição de erro
+                $posicionamentoViavel   = false;
+            }
 
 
+        }else{
 
-        //$vinculoEquipamento = $vinculoModelo->cadastrarVinculoEquipamento($_POST['idEquipamento'], $_POST['simVinculado'], $_POST['numero_serie'], $_POST['ambiente']);
+            //Não foram encontradas posições na tabela seguir com a alocação de posições
+            $posicionamentoViavel       = true;
+        }
 
-        //$_POST['tipoEquipamento'];
-        /*
-        if($vinculoEquipamento['status']){
+        // Testar se o SIM para vincular já não está com as posições necessarias ocupadas
+        if($posicionamentoViavel){
 
-            // EFETUA O POSICIONAMENTO DO EQUIPAMENTO NA TABELA
-            $posicionamentoTabela = $equipModel->carregarPosicaoTabela($_POST['tipoEquipamento']);
+            //INICIA O PROCESSO DE VINCULO COM A TABELA
 
-            if($posicionamentoTabela['status']){
+            $vinculoEquipamento = $vinculoModelo->cadastrarVinculoEquipamento($_POST['idEquipamento'], $_POST['simVinculado'], $_POST['numero_serie'], $_POST['ambiente']);
 
-                //Efetua o registro de posicionamento do equipamento na tabela
+            if($vinculoEquipamento['status']){
 
-                $posicaoEquipamento = $posicionamentoTabela['equipamento'][0];
+                // CARREGA O POSICIONAMENTO QUE O EQUIPAMENTO OCUPARA NA TABELA
+                $posicionamentoTabela = $equipModel->carregarPosicaoTabela($_POST['tipoEquipamento']);
 
-                $posicoes   = explode(',',$posicaoEquipamento['posicoes_tabela']);
+                if($posicionamentoTabela['status']){
 
-                for($i=0; $i < count($posicoes); $i++){
-                    //echo('<p>'.$posicoes[$i].'</p>');
-                    $registraPosicao = $equipModel->registroPosicao($vinculoEquipamento['id_sim_equipamento'], $_POST['simVinculado'], $posicoes[$i]);
+                    //EFETUA O REGISTRO DE POSICIONAMENTO DO EQUIPAMENTO NA TABELA
+
+                    $posicaoEquipamento = $posicionamentoTabela['equipamento'][0];
+
+                    $posicoes   = explode(',',$posicaoEquipamento['posicoes_tabela']);
+
+                    for($i=0; $i < count($posicoes); $i++){
+                        //echo('<p>'.$posicoes[$i].'</p>');
+                        $registraPosicao = $equipModel->registroPosicao($vinculoEquipamento['id_sim_equipamento'], $_POST['simVinculado'], $posicoes[$i]);
+
+                    }
+
+                    //VERIFICAR POSSIBILIDADE DE REGISTRAR NA TABELA SIM O VINCULO NA TABELA
 
                 }
 
+                exit(json_encode(array('status' => $vinculoEquipamento['status'], 'msg' => 'Vínculo registrado corretamente.')));
+
+            }else{
+                exit(json_encode(array('status' => $vinculoEquipamento['status'], 'msg' => 'Ocorreu um erro ao tentar vincular posição na tabela, verifique os dados enviados.')));
             }
 
-            exit(json_encode(array('status' => $vinculoEquipamento['status'])));
+
         }else{
-            exit(json_encode(array('status' => $vinculoEquipamento['status'])));
+            exit(json_encode(array('status' => false, 'msg' => 'Não há posições na tabela para vincular este equipamento')));
         }
-        */
+
+    }
+
+
+    /*
+    * Efetua a consulta das posições ocpadas na tabela pelo número SIM informado
+    */
+    public function  posicoesOcupadasTabela(){
+
+        if(is_numeric($_POST['numeroSim'])){
+
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
+
+            $posicoesOcupadas   = $vinculoModelo->posicoesOcupadas($_POST['numeroSim']);
+
+            if($posicoesOcupadas['status']){
+
+                //Montagem de parte da tabela
+                $html = "";
+                foreach ($posicoesOcupadas['posicoes_ocupadas'] as $posicao) {
+                $html .= "<button class='btn btn-default'><span>".$posicao['posicao']." </span></button>";
+                }
+                $html .= "";
+
+                exit(json_encode(array('status' => true, 'html' => $html)));
+
+            }else{
+                exit(json_encode(array('status' => false, 'html' => "<tr><td colspan='2'>SIM informado não possui posições ocupadas na tabela! </td></tr>")));
+            }
+
+        }else{
+            exit(json_encode(array('status' => false, 'html' => "<tr><td colspan='2'>Sim informado não está correto!</td></tr>")));
+        }
+
     }
 }
 

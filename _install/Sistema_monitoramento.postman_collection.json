@@ -1,0 +1,296 @@
+{
+	"id": "445bccd1-4138-5205-5194-94603044412c",
+	"name": "Sistema_monitoramento",
+	"description": "",
+	"order": [
+		"f79501ce-8141-b905-9593-6f3ab10ea36f",
+		"87d9ac9e-f396-7ced-bf44-cef29abdf719"
+	],
+	"folders": [],
+	"timestamp": 1484155526205,
+	"owner": "1446427",
+	"public": false,
+	"requests": [
+		{
+			"id": "87d9ac9e-f396-7ced-bf44-cef29abdf719",
+			"headers": "",
+			"url": "http://127.0.0.1/eficazmonitor/datasync.php?A=13949007326906&B=1&C=1&D=1&E=1&F=1&G=1&H=1&I=1&J=1&L=1&M=1&N=1&O=1&P=1&Q=1&R=1&S=1&T=1&U=000000",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "A",
+					"value": "99999994443333",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "B",
+					"value": "1270",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "C",
+					"value": "1269",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "D",
+					"value": "1220",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "E",
+					"value": "1260",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "F",
+					"value": "1261",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "G",
+					"value": "1260",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "H",
+					"value": "260",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "I",
+					"value": "50",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "J",
+					"value": "100",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "L",
+					"value": "55",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "M",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "N",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "O",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "P",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "Q",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "R",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "S",
+					"value": "11011",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "T",
+					"value": "11100",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "U",
+					"value": "00011",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484161175399,
+			"name": "Data_sync simulação para gerar Alerta",
+			"description": "Simulação de recebimento de dados do equipamento e tratamento dos dados recebidos para gerar o alerta",
+			"collectionId": "445bccd1-4138-5205-5194-94603044412c",
+			"responses": []
+		},
+		{
+			"id": "f79501ce-8141-b905-9593-6f3ab10ea36f",
+			"headers": "",
+			"url": "http://127.0.0.1/eficazmonitor/datasync_backup.php?A=13949007326906&B=1&C=1&D=1&E=1&F=1&G=1&H=1&I=1&J=1&L=1&M=1&N=1&O=1&P=1&Q=1&R=1&S=1&T=1&U=000000",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "445bccd1-4138-5205-5194-94603044412c",
+			"data": [
+				{
+					"key": "A",
+					"value": "99999994443333",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "B",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "C",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "D",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "E",
+					"value": "11",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "F",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "G",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "H",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "I",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "J",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "L",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "M",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "N",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "O",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "P",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "Q",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "R",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "S",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "T",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "U",
+					"value": "00000",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Data_sync simulação",
+			"description": "Simulação de recebimento de dados do equipamento",
+			"descriptionFormat": "html",
+			"time": 1484156710645,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}

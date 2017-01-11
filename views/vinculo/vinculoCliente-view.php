@@ -79,7 +79,7 @@
                                         Número do Sim
                                     </th>
                                     <th>
-                                        Detalhes do Sim
+                                        Posicionamento da tabela
                                     </th>
                                     <th>
                                         Excluir
@@ -92,7 +92,7 @@
 
                                         foreach ($dadosVinculo as $vinculo) {
 
-                                            echo "<tr><td>".$vinculo['num_sim']."</td><td><a href='".HOME_URI."/viculo/detalhesVinculo/".$vinculo['num_sim']."'><i class='fa fa-eye '></i></a></td><td><a href='#' class='removeVinculo'><i class='fa fa-times'></i></a></td></tr>";
+                                            echo "<tr><td>".$vinculo['num_sim']."</td><td><a href='javascript:void(0)' onClick='detalhesPosicao(".$vinculo['num_sim'].")'><i class='fa fa-eye '></i></a></td><td><a href='#' class='removeVinculo'><i class='fa fa-times'></i></a></td></tr>";
 
                                         }
                                     }
@@ -117,4 +117,32 @@
         </div>
 
     </div>
+</div>
+
+<!-- Modal exibindo as posições já ocupadas pelo sim informado! -->
+
+<div  id="posicoesTabela" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Posicionamento da tabela</h4>
+          </div>
+
+          <div class="modal-body">
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <i class="fa fa-user-md "></i> Posições ocupadas na tabela
+                  </div>
+                  <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span id="posOcupadas"></span>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+  </div>
 </div>

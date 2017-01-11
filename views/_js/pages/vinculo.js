@@ -1,11 +1,48 @@
+//Ajustes iniciais da página de cadastro
+var pathArray = window.location.href.split( '/' );
+var protocol = pathArray[0];
+var host = pathArray[2];
+var urlP = protocol + '//' + host;
+
+/*
+* Exibe o posicionamento da tabela conforme o SIM informado
+*/
+function detalhesPosicao(simNumber){
+
+    //Efetua a consulta na tabela de posicionamento
+    $.ajax({
+        url: urlP+"/eficazmonitor/vinculo/posicoesOcupadasTabela",
+        secureuri: false,
+        type : "POST",
+        dataType: 'json',
+        data      : {
+            'numeroSim' : simNumber
+        },
+        success : function(datra)
+        {
+            $('#posOcupadas').html(datra.html);
+            $('#posicoesTabela').modal();
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+
+            //Settar a mensagem de erro!
+            // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+            swal("Oops...", "Número SIM não retornou posições!", "error");
+            // Handle errors here
+            console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+            // STOP LOADING SPINNER
+        }
+
+    });
+}
+
+$('#posicoesTabela').on('hidden.bs.modal', function (e) {
+    $('#posOcupadas').html('');
+})
+
+
 $().ready(function() {
-
-    //Ajustes iniciais da página de cadastro
-    var pathArray = window.location.href.split( '/' );
-    var protocol = pathArray[0];
-    var host = pathArray[2];
-    var urlP = protocol + '//' + host;
-
 
     /*
     * Função para efetuar o registro do vinculo do SIM com o cliente
@@ -135,13 +172,12 @@ $().ready(function() {
                {
 
                  var statusCad   = datra.status;
-
+                 var resposta = datra.msg;
                   //tempTest = JSON(datra);
                   if(datra.status == true)
                   {
-
                     //alert('Vinculo cadastrado com sucesso!');
-                    swal("", "Vinculo cadastrado com sucesso!", "success");
+                    swal("", resposta, "info");
                     setTimeout(function(){
                         window.location.replace(urlP +"/eficazmonitor/equipamento/");
                     }, 3000);
@@ -150,7 +186,7 @@ $().ready(function() {
                   {
                     //Settar a mensagem de erro!
                     //alert('Ocorreu um ero ao tentar vincular!');
-                    swal("", "Ocorreu um ero ao tentar vincular!", "error");
+                    swal("", resposta, "error");
                   }
                },
               error: function(jqXHR, textStatus, errorThrown)
@@ -163,5 +199,7 @@ $().ready(function() {
         }
 
     });
+
+
 
 });
