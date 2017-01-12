@@ -8,8 +8,147 @@ $().ready(function(){
 
     //Adição de máscara de edição
 
-    $('#formConfiguracaoParametros input').mask('999,99');
+    $('#formConfigDiferenciado input').mask('999,99');
 
+
+    $('#salvarConfiguracaoParametros').click(function(){
+
+        var paramConcatenados = "";
+
+        //Recupera os valores de tensão de entrada
+        var ecb = $('#ecb').val();
+        var eb  = $('#eb').val();
+        var ei  = $('#ei').val();
+        var ea  = $('#ea').val();
+        var eca = $('#eca').val();
+
+        paramConcatenados = paramConcatenados.concat('|inicio|ecb-'+ecb+'|eb-'+eb+'|ei-'+ei+'|ea-'+ea+'|eca-'+eca+'|');
+
+        //Recupera os valores de tensão de saída
+        var scb = $('#scb').val();
+        var sb  = $('#sb').val();
+        var si  = $('#si').val();
+        var sa  = $('#sa').val();
+        var sca = $('#sca').val();
+
+        paramConcatenados = paramConcatenados.concat('|inicio|scb-'+scb+'|sb-'+sb+'|si-'+si+'|sa-'+sa+'|sca-'+sca+'|');
+
+        //Recupera os valores de bateria
+        var tbcb = $('#tbcb').val();
+        var tbb  = $('#tbb').val();
+        var tbi  = $('#tbi').val();
+        var tba  = $('#tba').val();
+        var tbcb = $('#tbcb').val();
+
+        paramConcatenados = paramConcatenados.concat('|inicio|tbcb-'+tbcb+'|tbb-'+tbb+'|tbi-'+tbi+'|tba-'+tba+'|tbcb-'+tbcb+'|');
+
+        //Recupera os valores de corrente de entrada
+        var ccb = $('#ccb').val();
+        var cb  = $('#cb').val();
+        var ci  = $('#ci').val();
+        var ca  = $('#ca').val();
+        var cca = $('#cca').val();
+
+        paramConcatenados = paramConcatenados.concat('|inicio|ccb-'+ccb+'|cb-'+cb+'|ci-'+ci+'|ca-'+ca+'|cca-'+cca+'|');
+
+        //Recupera os valores de corrente de saída
+        var cscb = $('#cscb').val();
+        var csb  = $('#csb').val();
+        var csi  = $('#csi').val();
+        var csa  = $('#csa').val();
+        var csca = $('#csca').val();
+
+        paramConcatenados = paramConcatenados.concat('|inicio|cscb-'+cscb+'|csb-'+csb+'|csi-'+csi+'|csa-'+csa+'|csca-'+csca+'|');
+
+        var idCOnfiguracao = $('#idParametros').val();
+        /*
+        * Verificação se á sendo esta sendo efetuado uma edição ou cadastro de uma nova configuração
+        */
+        if(idCOnfiguracao == ""){
+            var parametros          = paramConcatenados;
+            var id_sim_equipamento  = $('#id_sim_equip').val();
+            var id_equipamento      = $('#id_equip').val();
+            var numeroSim           = $('#num_sim').val();
+
+            $.ajax({
+                url: urlP+"/eficazmonitor/configuracao/cadastrarConfiguracaoEquipamentoJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'parametros' : parametros,
+                    'id_sim_equipamento' : id_sim_equipamento,
+                    'id_equipamento' : id_equipamento,
+                    'numeroSim' : numeroSim
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
+                        //alert('Configuração salva corretamente!');
+                        swal("", "Configuração cadastrada com sucesso!", "success")
+                    }else{
+                        //alert('Ocorreu um erro ao salvar a configuração, verifique os dados enviados etente novamente!');
+                        swal("Oops...", "Ocorreu um erro ao salvar a configuração, verifique os dados enviados e tente novamente!", "error");
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
+        }else{
+            /*
+            * Efetua a atualização das configurações do equipamento
+            */
+            var idParametros        = $('#idParametros').val();
+            var parametros          = paramConcatenados;
+            var id_sim_equipamento  = $('#id_sim_equip').val();
+            var id_equipamento      = $('#id_equip').val();
+            var numeroSim           = $('#num_sim').val();
+
+            $.ajax({
+                url: urlP+"/eficazmonitor/configuracao/editarConfiguracaoEquipamentoJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'idParametros' : idParametros,
+                    'parametros' : parametros,
+                    'id_sim_equipamento' : id_sim_equipamento,
+                    'id_equipamento' : id_equipamento,
+                    'numeroSim' : numeroSim
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
+                        //alert('Configuração salva corretamente!');
+                        swal("", "Configuração atualizada com sucesso!", "success");
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000);
+                    }else{
+                        //alert('Ocorreu um erro ao salvar a configuração, verifique os dados enviados etente novamente!');
+                        swal("Oops...", "Ocorreu um erro ao editar a configuração, verifique os dados enviados e tente novamente!", "error");
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+        }
+
+
+    });
+
+    //
+    // DESATUALIZADO
+    //
     $('#salvarConfiguracaoParam').click(function(){
 
         var paramConcatenados = "";

@@ -233,7 +233,7 @@ class ConfiguracaoController extends MainController
 
         //Formato da string esperado : 'et1-2-0'
         $temp = explode('-', $valor);
-        return str_replace('.',',',$temp[2]);
+        return str_replace('.',',',$temp[1]);
     }
 
 }
