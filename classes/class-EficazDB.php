@@ -1,8 +1,9 @@
 <?php
 
+
 /**
  * Classe de conexao com o banco
- * 
+ *
  * Responsavel por gerenciar toda a conexao
  * Select , query e fechamento da conexao
  */
@@ -10,40 +11,40 @@ class EficazDB
 {
     /**
      * $host
-     * 
+     *
      * Recebe o nome dos host onde esta o banco de dados
-     * 
+     *
      * @access private
      */
     private $host;
-    
+
     /**
      * $dbname
-     * 
+     *
      * Recebe o nome do banco de dados onde contem os dados
-     * 
+     *
      * @access private
      */
     private $dbname;
-    
+
     /**
      * $username
-     * 
+     *
      * Recebe o nome do usuario que realiza a conexao com o banco
-     * 
+     *
      * @access private
      */
     private $username;
-    
+
     /**
      * $userpass
-     * 
+     *
      * Recebe a senha do usuario que conectara no banco de dados
-     * 
+     *
      * @access private
      */
     private $userpass;
-    
+
     /**
      * Metodo de contrucao
      * quando instanciado realiza a conexao com o banco
@@ -59,11 +60,11 @@ class EficazDB
         $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazsystem22";
         $this->username = defined('USERNAME') ? USERNAME : "root";
         $this->userpass = defined('USERPASS') ? USERPASS : "";
-        
+
         // Chama a conexao com o banco
         $this->connect();
     }
-    
+
     /**
      * Funcao que cria a conexao com o banco de dados
      */
@@ -106,13 +107,13 @@ class EficazDB
             echo "<p class='mensagemRetorno'>Erro de conexao</p>";
         }
     }
-    
+
     /**
      * Funcao que realiza as querys no banco
-     * 
+     *
      * Returno true para sucesso
      * ou false para erro
-     * 
+     *
      * @param string $query - recebe o codigo sql
      */
     public function query ($query)
@@ -128,10 +129,10 @@ class EficazDB
         // Retorna falso
         return false;
     }
-    
+
     /**
      * Funcao que realizao o select no banco
-     * 
+     *
      * @param string $query - Recebe o codigo sql
      */
     public function select ($query)
@@ -147,7 +148,7 @@ class EficazDB
         // Retorna falso
         return false;
     }
-    
+
     /**
      * Funcao responsavel por finaliza a conexao
      * com o banco de dados

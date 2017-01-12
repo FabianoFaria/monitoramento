@@ -38,9 +38,9 @@ $().ready(function(){
         var tbb  = $('#tbb').val();
         var tbi  = $('#tbi').val();
         var tba  = $('#tba').val();
-        var tbcb = $('#tbcb').val();
+        var tbca = $('#tbca').val();
 
-        paramConcatenados = paramConcatenados.concat('|inicio|tbcb-'+tbcb+'|tbb-'+tbb+'|tbi-'+tbi+'|tba-'+tba+'|tbcb-'+tbcb+'|');
+        paramConcatenados = paramConcatenados.concat('|inicio|tbcb-'+tbcb+'|tbb-'+tbb+'|tbi-'+tbi+'|tba-'+tba+'|tbca-'+tbca+'|');
 
         //Recupera os valores de corrente de entrada
         var ccb = $('#ccb').val();

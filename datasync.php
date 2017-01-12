@@ -7,7 +7,8 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
    isset($_POST['N']) && isset($_POST['O']) && isset($_POST['P']) && isset($_POST['Q']) &&
    isset($_POST['R']) && isset($_POST['S']) && isset($_POST['T']) && isset($_POST['U']))
 {
-    // Inclui a classe de conexao
+
+    // Inclui a classe de conexa
     require_once "classes/class-EficazDB.php";
 
     // Cria um objeto de da classe de conexao
@@ -44,20 +45,18 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     }
 
     //VERIFICA OS PARAMETROS RECEBIDOS PARA IDENTIFICAR O EQUIPAMENTO
-
     $tipoEquipamento = 0;
 
     if(isset($_POST['B']) && $_POST['B'] != 0){
         //RECEBENDO DADOS DE NOBREAKS
         $tipoEquipamento = 1;
 
-    }elseif((isset($_POST['P']) && ($_POST['P']) != 0) || (isset($_POST['Q']) && ($_POST['Q'] != 0)) ){
+    }elseif((isset($_POST['P']) && ($_POST['P'] != 0)) || (isset($_POST['Q']) && ($_POST['Q'] != 0))){
         //RECEBENDO DE MEDIDORES DE TEMPERATURAS
         $tipoEquipamento = 2;
 
     }elseif(isset($_POST['R']) || isset($_POST['S']) || isset($_POST['T'])){
         //RECEBENDO DE ENTRADAS DIGITAIS
-
     }
 
     //CARREGA OS PARAMETROS DEFINIDOS PARA O SIM INFORMADO
@@ -68,9 +67,6 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     // Monta a result com os parametros
     $result = $conn->select($parametros);
 
-    /*
-    * EFETUA O TRATAMENTO DOS PARAMETROS CARREGADOS
-    */
     /*
     * VERIFICA SE EXISTE RESPOSTA
     */
@@ -96,52 +92,59 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     */
     if($dados){
 
+        /*
+        * DEVIDO AO FATO DE EXISTIR MAIS DE UM TIPO DE EQUIPAMENTO
+        * IMPLEMENTAR UMA FORMA DE TRABALHAR COM OS DEMAIS TIPOS DE CONFIGURAÇÔES QUE PODERAM VIR
+        */
+
+        /*
+        * VERIFICAR SE A VARIAVEL $dados[0]['id_sim_equipamento'] NÃO RESOLVE O PROBLEMA
+        */
+
+        //COM OS PARAMETROS CARREGADOS, INICIA A COMPARAÇÃO COM OS DADOS RECEBIDOS
         $parametros = $dados[0]['parametro'];
+        $idSimEquip = $dados[0]['id_sim_equipamento'];
+        //var_dump($parametros);
+
+        $configuracaoSalva = explode('|inicio|',$parametros);
+
+        //var_dump($configuracaoSalva);
+        $valoresEntrada         = explode('|', $configuracaoSalva[1]);
+
+        //var_dump($valoresEntrada);
+
+        //TESTA OS VALORES DE ENTRADA
+        $statusB                = comparaParametrosEquipamento(($_POST['B']/10), $valoresEntrada, $idSimEquip);
+        $statusC                = comparaParametrosEquipamento(($_POST['C']/10), $valoresEntrada, $idSimEquip);
+        $statusD                = comparaParametrosEquipamento(($_POST['D']/10), $valoresEntrada, $idSimEquip);
+
+        $valoresSaida           = explode('|', $configuracaoSalva[2]);
+        //TESTA OS VALORES DE SAÍDA
+        $statusE                = comparaParametrosEquipamento(($_POST['E']/10), $valoresSaida, $idSimEquip);
+        $statusF                = comparaParametrosEquipamento(($_POST['F']/10), $valoresSaida, $idSimEquip);
+        $statusG                = comparaParametrosEquipamento(($_POST['G']/10), $valoresSaida, $idSimEquip);
+
+        $valoresBateria         = explode('|', $configuracaoSalva[3]);
+        //TESTA OS VALORES DA BATERIA
+        $statusH                = comparaParametrosEquipamento($_POST['H'], $valoresBateria, $idSimEquip);
+
+        $valoresCorrente        = explode('|', $configuracaoSalva[4]);
+        //TESTA OS VALORES DE CORRENTE
+        $statusI                = comparaParametrosEquipamento(($_POST['I']/10), $valoresCorrente, $idSimEquip);
+        $statusJ                = comparaParametrosEquipamento(($_POST['J']/10), $valoresCorrente, $idSimEquip);
+        $statusL                = comparaParametrosEquipamento(($_POST['L']/10), $valoresCorrente, $idSimEquip);
+
+        $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
+        //TESTA OS VALORES DE SAÍDA DE CORRENTE
+        $statusM                = comparaParametrosEquipamento(($_POST['M']/10), $valoresCorrenteSaida, $idSimEquip);
+        $statusN                = comparaParametrosEquipamento(($_POST['N']/10), $valoresCorrenteSaida, $idSimEquip);
+        $statusO                = comparaParametrosEquipamento(($_POST['O']/10), $valoresCorrenteSaida, $idSimEquip);
 
     }else{
-        var_dump($dados);
+        //var_dump($dados);
+        $parametros = 0;
     }
 
-    //VERIFICAR OS DADOS DE ENTRADA CASO SEJA UM EQUIPAMENTO DO TIPO 1
-
-    switch ($tipoEquipamento) {
-        case '1':
-            var_dump($parametros);
-
-            /*
-            * INICIA O PROCESSO DE VERIFICAÇÂO DE PARAMETROS PARA O TIPO DE EQUIPAMENTO 1 (No-breks)
-            */
-            //separa os parametros de acordo com os dados enviados
-
-            $configuracaoSalva = explode('|inicio|',$parametros);
-
-            //RETIRA OS PARAMETROS DE ENTRADA
-            $entrada1   = explode('|', $configuracaoSalva[1]);
-            $entrada2   = explode('|', $configuracaoSalva[2]);
-            $entrada3   = explode('|', $configuracaoSalva[3]);
-
-            //RETIRA OS VALORES DE SAIDA
-            $saida1     = explode('|', $configuracaoSalva[4]);
-            $saida2     = explode('|', $configuracaoSalva[5]);
-            $saida3     = explode('|', $configuracaoSalva[6]);
-
-            //RETIRA OS VALORES DE TENSÃO
-            $tensao1    = explode('|', $configuracaoSalva[7]);
-            $tensao2    = explode('|', $configuracaoSalva[8]);
-
-            var_dump($entrada1, $entrada2, $entrada3, $tensao1, $tensao2);
-
-        break;
-
-        default:
-            echo "Ação para ser implementada!";
-        break;
-    }
-
-
-
-
-    //COM OS PARAMETROS CARREGADOS, EFETUA A CONPARAÇÃO COM OS DADOS RECEBIDOS
 
     //EFETUA A AÇÃO DE ACORDO COM O RESULTADO DA COMPARAÇÃO
 
@@ -230,5 +233,98 @@ function verifiSele($query,$conn)
     return $retorno;
 }
 
+/*
+*  Trata as strings dos valores das configurações dos equipamento
+*/
+function trataValorDataSync($valor){
+    //Formato da string esperado : 'et1-2-0'
+    $temp = explode("-", $valor);
+    return (float) $temp[1];
+}
+
+/*
+* Recebe a array com os parametros de determinada entrada de tensão variavel para comparação
+*/
+function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip){
+
+    //var_dump($configuacoes);
+
+    switch ($parametro) {
+        case $parametro < trataValorDataSync($configuacoes[0]):
+            echo "Critico baixo!".$parametro." ".$configuacoes[0]."<br>";
+        break;
+        case $parametro < trataValorDataSync($configuacoes[1]):
+            echo "Baixo !".$parametro." ".$configuacoes[1]."<br>";
+        break;
+        case $parametro > trataValorDataSync($configuacoes[4]):
+            echo "Crítico Alto !".$parametro." ".$configuacoes[4]."<br>";
+        break;
+        case $parametro > trataValorDataSync($configuacoes[3]):
+            echo "Alto !".$parametro." -- ".$configuacoes[3]." <br>";
+        break;
+        default:
+            echo "Switch OK ! ".$parametro."<br>";
+        break;
+    }
+
+
+    //var_dump($configuacoes);
+
+    //echo "recebi entrada de tensão ".$parametro." </br>";
+}
+
+/*
+* Recebe a array com os parametros de determinada entrada de tensão variavel para comparação
+*/
+function comparaParametrosEntradaEquipamento($parametro, $configuacoes){
+
+    //$valorReal = $parametro/10;
+
+    switch ($parametro) {
+        case $parametro < trataValorDataSync($configuacoes[0]):
+            echo "Critico baixo!<br>";
+        break;
+        case $parametro < trataValorDataSync($configuacoes[1]):
+            echo "Baixo !<br>";
+        break;
+        case $parametro > trataValorDataSync($configuacoes[3]):
+            echo "Crítico Alto !<br>";
+        break;
+        case $parametro > (float) trataValorDataSync($configuacoes[2]):
+            echo "Alto !".$parametro." <br>";
+        break;
+        default:
+            echo "Switch OK !<br>";
+        break;
+    }
+}
+
+/*
+* Recebe a array com os parametros de determinado saída de tensão e a variavel para comparação
+*/
+function comparaParametrosSaidaEquipamento($parametro, $configuacoes){
+    echo "recebi saída de tensão ".$parametro." </br>";
+}
+
+/*
+* Recebe a array com os parametros de determinado bateria e a variavel para comparação
+*/
+function comparaParametrosBateriaEquipamento($parametro, $configuacoes){
+    echo "recebi bateria ".$parametro." </br>";
+}
+
+/*
+* Recebe a array com os parametros de determinado entrada de corrente e a variavel para comparação
+*/
+function comparaParametrosCorrenteEquipamento($parametro, $configuacoes){
+    echo "recebi corrente ".$parametro." </br>";
+}
+
+/*
+* Recebe a array com os parametros de determinado saída de corrente e a variavel para comparação
+*/
+function comparaParametrosSaidaCorrenteEquipamento($parametro, $configuacoes){
+    echo "recebi saída de corrente ".$parametro." </br>";
+}
 
 ?>
