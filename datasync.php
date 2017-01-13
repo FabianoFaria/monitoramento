@@ -1,5 +1,9 @@
 <?php
 
+// Inclui a classe de conexa
+require_once "classes/class-EficazDB.php";
+require_once "classes/class-email.php";
+
 // Valida os campos do post
 if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POST['D']) &&
    isset($_POST['E']) && isset($_POST['F']) && isset($_POST['G']) && isset($_POST['H']) &&
@@ -7,9 +11,6 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
    isset($_POST['N']) && isset($_POST['O']) && isset($_POST['P']) && isset($_POST['Q']) &&
    isset($_POST['R']) && isset($_POST['S']) && isset($_POST['T']) && isset($_POST['U']))
 {
-
-    // Inclui a classe de conexa
-    require_once "classes/class-EficazDB.php";
 
     // Cria um objeto de da classe de conexao
     $conn = new EficazDB;
@@ -114,31 +115,31 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
         //var_dump($valoresEntrada);
 
         //TESTA OS VALORES DE ENTRADA
-        $statusB                = comparaParametrosEquipamento(($_POST['B']/10), $valoresEntrada, $idSimEquip);
-        $statusC                = comparaParametrosEquipamento(($_POST['C']/10), $valoresEntrada, $idSimEquip);
-        $statusD                = comparaParametrosEquipamento(($_POST['D']/10), $valoresEntrada, $idSimEquip);
+        $statusB                = comparaParametrosEquipamento(($_POST['B']/10), $valoresEntrada, $idSimEquip, 'Tensão');
+        $statusC                = comparaParametrosEquipamento(($_POST['C']/10), $valoresEntrada, $idSimEquip, 'Tensão');
+        $statusD                = comparaParametrosEquipamento(($_POST['D']/10), $valoresEntrada, $idSimEquip, 'Tensão');
 
         $valoresSaida           = explode('|', $configuracaoSalva[2]);
         //TESTA OS VALORES DE SAÍDA
-        $statusE                = comparaParametrosEquipamento(($_POST['E']/10), $valoresSaida, $idSimEquip);
-        $statusF                = comparaParametrosEquipamento(($_POST['F']/10), $valoresSaida, $idSimEquip);
-        $statusG                = comparaParametrosEquipamento(($_POST['G']/10), $valoresSaida, $idSimEquip);
+        $statusE                = comparaParametrosEquipamento(($_POST['E']/10), $valoresSaida, $idSimEquip, 'Saída tensão');
+        $statusF                = comparaParametrosEquipamento(($_POST['F']/10), $valoresSaida, $idSimEquip, 'Saída tensão');
+        $statusG                = comparaParametrosEquipamento(($_POST['G']/10), $valoresSaida, $idSimEquip, 'Saída tensão');
 
         $valoresBateria         = explode('|', $configuracaoSalva[3]);
         //TESTA OS VALORES DA BATERIA
-        $statusH                = comparaParametrosEquipamento($_POST['H'], $valoresBateria, $idSimEquip);
+        $statusH                = comparaParametrosEquipamento($_POST['H'], $valoresBateria, $idSimEquip, 'Bateria');
 
         $valoresCorrente        = explode('|', $configuracaoSalva[4]);
         //TESTA OS VALORES DE CORRENTE
-        $statusI                = comparaParametrosEquipamento(($_POST['I']/10), $valoresCorrente, $idSimEquip);
-        $statusJ                = comparaParametrosEquipamento(($_POST['J']/10), $valoresCorrente, $idSimEquip);
-        $statusL                = comparaParametrosEquipamento(($_POST['L']/10), $valoresCorrente, $idSimEquip);
+        $statusI                = comparaParametrosEquipamento(($_POST['I']/10), $valoresCorrente, $idSimEquip, 'Corrente');
+        $statusJ                = comparaParametrosEquipamento(($_POST['J']/10), $valoresCorrente, $idSimEquip, 'Corrente');
+        $statusL                = comparaParametrosEquipamento(($_POST['L']/10), $valoresCorrente, $idSimEquip, 'Corrente');
 
         $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
         //TESTA OS VALORES DE SAÍDA DE CORRENTE
-        $statusM                = comparaParametrosEquipamento(($_POST['M']/10), $valoresCorrenteSaida, $idSimEquip);
-        $statusN                = comparaParametrosEquipamento(($_POST['N']/10), $valoresCorrenteSaida, $idSimEquip);
-        $statusO                = comparaParametrosEquipamento(($_POST['O']/10), $valoresCorrenteSaida, $idSimEquip);
+        $statusM                = comparaParametrosEquipamento(($_POST['M']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente');
+        $statusN                = comparaParametrosEquipamento(($_POST['N']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente');
+        $statusO                = comparaParametrosEquipamento(($_POST['O']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente');
 
     }else{
         //var_dump($dados);
@@ -245,28 +246,94 @@ function trataValorDataSync($valor){
 /*
 * Recebe a array com os parametros de determinada entrada de tensão variavel para comparação
 */
-function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip){
+function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $ParametroVerificado){
 
     //var_dump($configuacoes);
 
-    switch ($parametro) {
-        case $parametro < trataValorDataSync($configuacoes[0]):
-            echo "Critico baixo!".$parametro." ".$configuacoes[0]."<br>";
-        break;
-        case $parametro < trataValorDataSync($configuacoes[1]):
-            echo "Baixo !".$parametro." ".$configuacoes[1]."<br>";
-        break;
-        case $parametro > trataValorDataSync($configuacoes[4]):
-            echo "Crítico Alto !".$parametro." ".$configuacoes[4]."<br>";
-        break;
-        case $parametro > trataValorDataSync($configuacoes[3]):
-            echo "Alto !".$parametro." -- ".$configuacoes[3]." <br>";
-        break;
-        default:
-            echo "Switch OK ! ".$parametro."<br>";
-        break;
-    }
+    /*
+    * TESTA OS PARAMETROS ATRAVÉS DE IF E ELSES
+    */
+    if($parametro > (float) trataValorDataSync($configuacoes[4])){
+        /*
+        * GERAR ALERTA
+        */
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip);
 
+        if($alarmeExiste){
+
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 3);
+
+            /*
+            * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
+            */
+
+            //Procura os contatos para envio de alerta da tabela tb_contato_alerta
+            // Cria um objeto de da classe de conexao
+            $connBase      = new EficazDB;
+
+            $queryContatos = "SELECT  FROM tb_contato_alerta WHERE ";
+
+            // Cria um objeto de da classe de email
+            $mailer        = new email;
+
+
+
+        }
+
+
+
+
+        // echo "Crítico Alto !".$parametro." ".$configuacoes[4]."<br>";
+    }elseif($parametro > (float) trataValorDataSync($configuacoes[3])){
+        /*
+        * GERAR ALARME
+        */
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip);
+
+            //var_dump($alarmeExiste);
+        if(!$alarmeExiste){
+
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 5);
+        }
+
+        //echo "Alto !".$parametro." -- ".$configuacoes[3]." <br>";
+    }elseif($parametro < (float) trataValorDataSync($configuacoes[0])){
+        /*
+        * GERAR ALERTA
+        */
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip);
+
+        if($alarmeExiste){
+
+            /*
+            * GERAR ALARME
+            */
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 2);
+
+            /*
+            * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
+            */
+
+        }
+
+        //echo "Critico baixo!".$parametro." ".$configuacoes[0]."<br>";
+    }elseif($parametro < (float) trataValorDataSync($configuacoes[1])){
+
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip);
+
+        if(!$alarmeExiste){
+
+            /*
+            * GERAR ALARME
+            */
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 4);
+        }
+
+        //echo "Baixo !".$parametro." ".$configuacoes[1]."<br>";
+    }else{
+        //Nada acontece
+        //echo "OK ! ".$parametro."<br>";
+    }
 
     //var_dump($configuacoes);
 
@@ -274,57 +341,124 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip){
 }
 
 /*
-* Recebe a array com os parametros de determinada entrada de tensão variavel para comparação
+* VERIFICA SE JÁ EXISTE ALGUM ALARME ATIVO PARA O EQUIPAMENTO
 */
-function comparaParametrosEntradaEquipamento($parametro, $configuacoes){
+function verificarAlarmeExistente($idEquipSim){
 
-    //$valorReal = $parametro/10;
+    //PROCURA NA TABELA DE ALARME, ALGUM REGISTRO DO EQUIPAMENTO COMPROMETIDO
+    // Cria um objeto de da classe de conexao
+    $connBase    = new EficazDB;
 
-    switch ($parametro) {
-        case $parametro < trataValorDataSync($configuacoes[0]):
-            echo "Critico baixo!<br>";
-        break;
-        case $parametro < trataValorDataSync($configuacoes[1]):
-            echo "Baixo !<br>";
-        break;
-        case $parametro > trataValorDataSync($configuacoes[3]):
-            echo "Crítico Alto !<br>";
-        break;
-        case $parametro > (float) trataValorDataSync($configuacoes[2]):
-            echo "Alto !".$parametro." <br>";
-        break;
-        default:
-            echo "Switch OK !<br>";
-        break;
+    $queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  visto = 0";
+
+    var_dump($queryAlarme);
+
+    // Monta a result com os parametros
+    $result = $connBase->select($queryAlarme);
+
+    if($result){
+        //var_dump($result);
+
+        // Verifica se existe valor de retorno
+        if (@mysql_num_rows ($result) > 0)
+        {
+            return true;
+        }else{
+            return false;
+        }
+
+        // Fecha a conexao
+        $connBase->close();
+
+    }else{
+        // echo  "Nada encontrado";
+        return false;
+
+        // Fecha a conexao
+        $connBase->close();
     }
+
 }
 
 /*
-* Recebe a array com os parametros de determinado saída de tensão e a variavel para comparação
+* INICIA O PROCESSO DE REGISTRO DE ALARME
 */
-function comparaParametrosSaidaEquipamento($parametro, $configuacoes){
-    echo "recebi saída de tensão ".$parametro." </br>";
+function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolado, $parametroAvaliado, $tipoAlarme){
+
+    // Cria um objeto de da classe de conexao
+    $connBase = new EficazDB;
+
+    echo "id equipamento </br>".$idEquipSim;
+    echo "parametro avaliado </br>".$parametroAvaliado;
+    echo "tipo alarme </br>".$tipoAlarme;
+    $data = date('Y-m-d h:i:s');
+
+    //REGISTRA O ALARME NO SISTEMA
+    $queryAlarme = "INSERT INTO tb_alerta(id_sim_equipamento, id_msg_alerta, dt_criacao )
+                    VALUES ('$idEquipSim', '$tipoAlarme', '$data')";
+
+    $result = $connBase->query($queryAlarme);
+
+    $idGerada  = mysql_insert_id();
+
+    if(!$result)
+    {
+        // Monta a query de log
+        $query = "insert into tb_log (log)  values ('Erro ao tentar registrar um alerta para o equipamento de id_sim :".$idEquipSim."')";
+
+        // Grava o log
+        $connBase->query($query);
+
+        // Retona o erro
+        header('HTTP/1.1 404 Not Found');
+        // Finaliza a execucao
+        exit();
+    }
+
+    $idAlarme = mysql_insert_id();
+
+    //REGISTRA OS DETALHES DO ALARME PARA CONSULTA PELO MONITOR
+    $queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta (id_alerta, parametro, parametroMedido, parametroAtingido)
+                            VALUES ('$idAlarme', '$parametroAvaliado', '$parametroEnviado', '$parametroViolado')";
+
+    // Grava no DB
+    $resultadoDetalhes = $connBase->query($queryDetalheAlarme);
+
+    if(!$resultadoDetalhes)
+    {
+        // Monta a query de log
+        $query = "insert into tb_log (log)  values ('Erro ao tentar registrar um alerta para o equipamento de id_sim :".$idEquipSim."')";
+
+        // Grava o log
+        $connBase->query($query);
+
+        // Retona o erro
+        header('HTTP/1.1 404 Not Found');
+        // Finaliza a execucao
+        exit();
+    }else{
+
+        // Fecha a conexao
+        $connBase->close();
+
+        // Retorna mensagem de sucesso
+        header ('HTTP/1.1 200 OK');
+    }
+
 }
 
-/*
-* Recebe a array com os parametros de determinado bateria e a variavel para comparação
-*/
-function comparaParametrosBateriaEquipamento($parametro, $configuacoes){
-    echo "recebi bateria ".$parametro." </br>";
-}
 
 /*
-* Recebe a array com os parametros de determinado entrada de corrente e a variavel para comparação
+* INICIA O PROCESSO DE EMISSÃO DE ALERTA
 */
-function comparaParametrosCorrenteEquipamento($parametro, $configuacoes){
-    echo "recebi corrente ".$parametro." </br>";
+function gerarAlertaEquipamento(){
+
+    //NÃO APENAS GERA UM ALARME, COMO DISPARA EMAILS OU MENSAGENS PARA OS CONTATOS RESPONSAVEIS PELO EQUIPAMENTO
+
+
+
 }
 
-/*
-* Recebe a array com os parametros de determinado saída de corrente e a variavel para comparação
-*/
-function comparaParametrosSaidaCorrenteEquipamento($parametro, $configuacoes){
-    echo "recebi saída de corrente ".$parametro." </br>";
-}
+
 
 ?>

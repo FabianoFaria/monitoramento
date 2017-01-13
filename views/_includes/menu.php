@@ -126,7 +126,19 @@ else
             <ul class="nav" id="side-menu">
                 <!-- HOME -->
                 <li>
-                  <a href="<?php echo HOME_URI; ?>/home/"><i class="fa fa-desktop fa-3x"></i> <span class="lb-side">Tela de monitoramento</span></a>
+                  <a href="<?php echo HOME_URI; ?>/home/" data-toggle="dropdown">
+                      <i class="fa fa-desktop fa-3x"></i> <span class="lb-side">Tela de monitoramento</span>
+                  </a>
+                  <ul class="nav nav-second-level collapse in">
+                      <li>
+                          <!-- Cadastro de clientes -->
+                          <a href="<?php echo HOME_URI; ?>/home/" class="">
+                            <i class="fa fa-laptop  fa-1x"></i>
+                            <span class="icon-side"></span>
+                            <spam>Alarmes gerados</span>
+                          </a>
+                      </li>
+                  </ul>
                 </li>
                 <!-- CADASTRO -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>

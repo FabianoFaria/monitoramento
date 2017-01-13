@@ -42,6 +42,18 @@
         $this->remetente =  defined('REMETENTE') ? REMETENTE : "sistemaeficaz@sistema.eficazsystem.com.br ";
     }
 
+    /*
+    * Função para efetuar o envio de email para eventual DISPARO DE ALERTA
+    *
+    *
+    *@param
+    */
+    public function envioEmailAlerta(){
+
+        
+
+    }
+
     /**
      * Funcao que realizao do envio para recuperação de senhas
      *

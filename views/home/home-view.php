@@ -1,9 +1,11 @@
-    <!-- HOME VIEW -->
-    <?php
-        if (! defined('EFIPATH')) exit;
+<!-- HOME VIEW -->
+<?php
+    if (! defined('EFIPATH')) exit;
 
-        //var_dump($_SESSION);
-    ?>
+    //var_dump($_SESSION);
+
+    $alarmesRegistrados = $modeloAlarme->alarmesGerados();
+?>
 
     <script type="text/javascript">
         // gerenciador de link
@@ -21,18 +23,18 @@
             </label>
         </div>
         <div class="col-md-4 pull-right">
-            <div class="panel panel-info">
+            <!-- <div class="panel panel-info">
                 <div class="panel-heading">
                     <i class="fa fa-clock-o  fa-fw"></i> Última atualização
                 </div>
                 <div class="panel-body">
                     <p>
                         <?php // Exibe alguma coisa como: Monday 8th of August 2005 03:12:46 PM
-                            echo date('d/ m/ Y, g:i a');
+                            //echo date('d/ m/ Y, g:i a');
                         ?>
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -191,7 +193,7 @@
     </div> -->
 
     <!-- PRINCIPAIS STATUS DE ALERTAS -->
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -218,7 +220,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- GRÁFICO DOS ÚLTIMOS ALERTAS -->
     <div class="row">
@@ -237,18 +239,97 @@
                                     <tr>
                                         <th>Status</th>
                                         <th>Data</th>
-                                        <th>Mestre</th>
-                                        <th>Módulo</th>
-                                        <th>Ponto</th>
+                                        <th>Cliente</th>
+                                        <!-- <th>Módulo</th> -->
+                                        <th>Equipamento</th>
                                         <th>Descrição</th>
                                         <th>Medida gerada</th>
-                                        <th>Adicionar observações</th>
+                                        <th>Detalhes</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php
+
+                                        if($alarmesRegistrados['status']){
+
+                                            foreach ($alarmesRegistrados['alerta'] as $listaAlarmes) {
+                                    ?>
+                                        <tr>
+                                            <td>
+                                                <?php
+                                                    switch ($listaAlarmes['status_ativo']) {
+                                                        case '1':
+                                                            echo "<i class='fa  fa-arrow-circle-right fa-2x fa-blink' style='color:red'></i>";
+                                                        break;
+
+                                                        default:
+                                                            echo "<i class='fa  fa-arrow-circle-right fa-2x' style='color:green'></i>";
+                                                        break;
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                    $data = explode(" ", $listaAlarmes['dt_criacao']);
+                                                    echo implode("/",array_reverse(explode("-", $data[0])));
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                    echo $listaAlarmes['nome'];
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                    echo $listaAlarmes['nomeEquipamento'];
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <p>
+                                                    <b>
+                                                        <?php
+                                                            echo $listaAlarmes['mensagem'];
+                                                        ?>
+                                                    </b>
+                                                </p>
+
+                                            </td>
+                                            <td>
+                                                <h4>
+                                                    <span class="text-danger">
+                                                        <?php
+                                                            echo  $listaAlarmes['parametroMedido'];
+                                                        ?>
+                                                    </span>/
+                                                    <span class="text-info">
+                                                        <?php
+                                                            echo $listaAlarmes['parametroAtingido'];
+                                                        ?>
+                                                    </span>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary" onclick="">
+                                                    <i class="fa fa-search "></i> Detalhes
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                    <?php
+                                            }
+
+                                        }else{
+                                    ?>
                                     <tr>
                                         <td colspan="8">Nenhum alarme gerado até o momento!</td>
                                     </tr>
+                                    <?php
+
+                                        }
+
+                                    ?>
+
+
                                 </tbod>
                             </table>
                         </div>

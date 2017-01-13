@@ -15,7 +15,7 @@ class HomeController extends MainController
         $this->check_login();
 
         // Define o titulo da pagina
-        $this->title = "Home";
+        $this->title = "home";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -30,10 +30,12 @@ class HomeController extends MainController
         require_once EFIPATH . "/views/_includes/menu.php";
 
         // Verifica se o cliente eh externo ou interno
-        if (($_SESSION['userdata']['local'] == 1) || ($_SESSION['userdata']['cliente'] == 0))
+        if (($_SESSION['userdata']['local'] == 1) || ($_SESSION['userdata']['cliente'] == 0)){
+
+            $modeloAlarme   = $this->load_model('alarme/alarme-model');
             // Chama view cliente interno
             require_once EFIPATH . "/views/home/home-view.php";
-        else{
+        }else{
             // Chama view para cliente
             require_once EFIPATH . "/views/home/homeCliente-view.php";
 

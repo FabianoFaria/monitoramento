@@ -87,7 +87,9 @@ if($detalhesEquip['status']){
 
                         <?php
 
+                            if(isset($configuracaoSalva)){
                                 $valoresEntrada = explode('|', $configuracaoSalva[1]);
+                            }
 
                         ?>
 
@@ -107,7 +109,7 @@ if($detalhesEquip['status']){
                                         <div class="col-md-2">
                                             <div class="form-group has-error">
                                                 <label for="exampleInputEmail1" class="control-label">Valor crítico baixo</label>
-                                                <input type="text" class="form-control" id="ecb" name="ecb" placeholder="000,00" maxlength="7" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[0]) : ""; ?>">
+                                                <input type="text" class="form-control" id="ecb" name="ecb" placeholder="000,00" maxlength="7" value="<?php echo  (isset($configuracaoSalva)) ? $this->trataValor($valoresEntrada[0]) : ""; ?>">
                                             </div>
                                         </div>
 
@@ -121,21 +123,21 @@ if($detalhesEquip['status']){
                                         <div class="col-md-2">
                                             <div class="form-group has-success">
                                                 <label for="exampleInputEmail1" class="control-label">Valor Ideal</label>
-                                                <input type="text" class="form-control" id="ei" name="ei" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[2]) : ""; ?>">
+                                                <input type="text" class="form-control" id="ei" name="ei" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (isset($configuracaoSalva)) ? $this->trataValor($valoresEntrada[2]) : ""; ?>">
                                             </div>
                                         </div>
 
                                         <div class="col-md-2">
                                             <div class="form-group has-warning">
                                                 <label for="exampleInputEmail1" class="control-label">Valor alto</label>
-                                                <input type="text" class="form-control" id="ea" name="ea" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[3]) : ""; ?>">
+                                                <input type="text" class="form-control" id="ea" name="ea" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (isset($configuracaoSalva)) ? $this->trataValor($valoresEntrada[3]) : ""; ?>">
                                             </div>
                                         </div>
 
                                         <div class="col-md-2">
                                             <div class="form-group has-error">
                                                 <label for="exampleInputEmail1" class="control-label">Valor crítico alto</label>
-                                                <input type="text" class="form-control " id="eca" name="eca" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
+                                                <input type="text" class="form-control " id="eca" name="eca" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (isset($configuracaoSalva)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
                                             </div>
                                         </div>
 
@@ -151,8 +153,10 @@ if($detalhesEquip['status']){
 
                         <?php
 
-                                $valoresSaida = explode('|', $configuracaoSalva[2]);
-
+                                //$valoresSaida = explode('|', $configuracaoSalva[2]);
+                                if(isset($configuracaoSalva)){
+                                    $valoresSaida = explode('|', $configuracaoSalva[2]);
+                                }
                         ?>
 
                         <div class="col-lg-12">
@@ -214,8 +218,10 @@ if($detalhesEquip['status']){
 
                         <?php
 
-                            $valoresBateria = explode('|', $configuracaoSalva[3]);
-
+                            //$valoresBateria = explode('|', $configuracaoSalva[3]);
+                            if(isset($configuracaoSalva)){
+                                $valoresBateria = explode('|', $configuracaoSalva[3]);
+                            }
                         ?>
 
                         <div class="col-lg-12">
@@ -271,8 +277,10 @@ if($detalhesEquip['status']){
 
                         <?php
 
-                            $valoresCorrente = explode('|', $configuracaoSalva[4]);
-
+                            //$valoresCorrente = explode('|', $configuracaoSalva[4]);
+                            if(isset($configuracaoSalva)){
+                                $valoresCorrente = explode('|', $configuracaoSalva[4]);
+                            }
                         ?>
 
                         <div class="col-lg-12">
@@ -327,8 +335,10 @@ if($detalhesEquip['status']){
                     <div class="row">
                         <?php
 
-                          $valoresCorrenteSaida = explode('|', $configuracaoSalva[5]);
-
+                          //$valoresCorrenteSaida = explode('|', $configuracaoSalva[5]);
+                          if(isset($configuracaoSalva)){
+                              $valoresCorrenteSaida = explode('|', $configuracaoSalva[5]);
+                          }
                         ?>
 
                         <div class="col-lg-12">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 10-Jan-2017 às 19:56
+-- Generation Time: 13-Jan-2017 às 19:51
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -57,6 +57,14 @@ CREATE TABLE `tb_alerta` (
   `status_ativo` smallint(6) NOT NULL DEFAULT '1',
   `dt_criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_alerta`
+--
+
+INSERT INTO `tb_alerta` (`id`, `id_sim_equipamento`, `id_msg_alerta`, `visto`, `status_ativo`, `dt_criacao`) VALUES
+(13, 12, 5, 0, 1, '2017-01-13 08:56:26'),
+(14, 13, 5, 0, 1, '2017-01-13 09:15:25');
 
 -- --------------------------------------------------------
 
@@ -115,6 +123,7 @@ CREATE TABLE `tb_contato_alerta` (
 --
 
 INSERT INTO `tb_contato_alerta` (`id`, `id_cliente`, `id_filial`, `nome_contato`, `funcao`, `email`, `celular`, `observacao`) VALUES
+(11, 50, 0, 'Abc Def', 'RecepÃ§Ã£o', 'email@email.com', '123213213', '312321332'),
 (10, 48, 12, 'Monitor D', 'funcao', 'pareos@email.com', '23423423', 'Nenhum'),
 (9, 48, 11, 'Contato Duma', 'Monitor', 'email@email.com', '232324234', 'Nenhuma'),
 (8, 48, 10, 'Contato C', 'Monitor D', 'contato@email.com2', '123123213', 'Nenhuma'),
@@ -325,7 +334,7 @@ CREATE TABLE `tb_log` (
 --
 
 INSERT INTO `tb_log` (`id`, `log`, `dt_criacao`) VALUES
-(1, '2015-11-26 15:48:45', '0000-00-00 00:00:00'),
+(1, '2015-11-26 15:48:45', '2017-01-03 02:00:00'),
 (2, 'a:0:{}', '2015-11-26 17:49:32'),
 (3, 'a:0:{}', '2015-11-26 17:57:33'),
 (4, 'Erro ao gravar o cadastro : [insert into tb_cliente (nome, endereco, numero, cep, id_pais, id_estado, ddd, telefone , cidade, bairro, id_users ,\n                                                  foto) \n                          values (Temporario, Rua Norberto de Brito, 0, 83005290, Selecione um pais, Selecione um estado, 0, 0,\n                          S&atilde;o Jos&eacute; dos Pinhais, Centro, 3, )]', '2016-12-05 17:39:59'),
@@ -335,7 +344,12 @@ INSERT INTO `tb_log` (`id`, `log`, `dt_criacao`) VALUES
 (8, 'Erro ao gravar o cadastro : [UPDATE tb_users SET senha=d41d8cd98f00b204e9800998ecf8427e, id_perfil_acesso=Selecione uma permissÃ£o, nome=RobertoAFS, sobrenome=Shimokawa, email=sistemaeficazeficazsystem.com.br, local_usu=1, id_cliente=0, tipo_inst=0 WHERE id = 1]', '2016-12-06 19:01:10'),
 (9, 'Erro ao gravar o cadastro : [UPDATE tb_users SET senha=d41d8cd98f00b204e9800998ecf8427e, id_perfil_acesso=Selecione uma permissÃ£o, nome=RobertoAFS, sobrenome=Shimokawa, email=sistemaeficazeficazsystem.com.br, local_usu=1, id_cliente=0, tipo_inst=0 WHERE id = 1]', '2016-12-06 19:02:21'),
 (10, 'Erro ao gravar o cadastro : [UPDATE tb_users SET id_perfil_acesso=Selecione uma permissÃ£o, nome =RobertoAFS, sobrenome =Shimokawa, email =sistemaeficazeficazsystem.com.br, local_usu=1, tipo_inst=Array WHERE id_cliente = 1]', '2016-12-06 19:03:09'),
-(11, 'Erro ao gravar o cadastro : [UPDATE tb_users SET id_perfil_acesso=Selecione uma permissÃ£o, nome=RobertoAFS, sobrenome=Shimokawa, email=sistemaeficazeficazsystem.com.br, local_usu=1, id_cliente=0, tipo_inst=0 WHERE id = 1]', '2016-12-06 19:03:59');
+(11, 'Erro ao gravar o cadastro : [UPDATE tb_users SET id_perfil_acesso=Selecione uma permissÃ£o, nome=RobertoAFS, sobrenome=Shimokawa, email=sistemaeficazeficazsystem.com.br, local_usu=1, id_cliente=0, tipo_inst=0 WHERE id = 1]', '2016-12-06 19:03:59'),
+(12, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :".$idEquipSim."', '2017-01-13 12:45:13'),
+(13, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :12', '2017-01-13 13:21:20'),
+(14, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :12', '2017-01-13 13:22:22'),
+(15, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :12', '2017-01-13 13:23:02'),
+(16, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :12', '2017-01-13 13:24:04');
 
 -- --------------------------------------------------------
 
@@ -347,6 +361,7 @@ CREATE TABLE `tb_msg_alerta` (
   `id` int(11) NOT NULL,
   `id_users` int(11) NOT NULL,
   `mensagem` varchar(200) NOT NULL,
+  `descricao_alarme` text NOT NULL,
   `status_ativo` smallint(6) NOT NULL DEFAULT '1',
   `dt_criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -355,10 +370,13 @@ CREATE TABLE `tb_msg_alerta` (
 -- Extraindo dados da tabela `tb_msg_alerta`
 --
 
-INSERT INTO `tb_msg_alerta` (`id`, `id_users`, `mensagem`, `status_ativo`, `dt_criacao`) VALUES
-(1, 1, 'Verificar carregador', 1, '2015-08-07 14:14:05'),
-(2, 1, 'Tens&atilde;o muito baixa', 1, '2015-08-07 14:14:05'),
-(3, 1, 'Tens&atilde;o muito alta', 1, '2015-08-07 14:14:05');
+INSERT INTO `tb_msg_alerta` (`id`, `id_users`, `mensagem`, `descricao_alarme`, `status_ativo`, `dt_criacao`) VALUES
+(1, 1, 'Verificar carregador', '', 1, '2015-08-07 14:14:05'),
+(2, 1, 'Tens&atilde;o em nível criticamente baixo', '', 1, '2015-08-07 14:14:05'),
+(3, 1, 'Tens&atilde;o em nível criticamente alto', '', 1, '2015-08-07 14:14:05'),
+(4, 5, 'Tens&atilde;o em nível baixo', '', 1, '2017-01-13 10:52:23'),
+(5, 5, 'Tens&atilde;o em nível alto', '', 1, '2017-01-13 10:52:23'),
+(6, 5, 'Nível da bateria está baixo', '', 1, '2017-01-13 10:54:52');
 
 -- --------------------------------------------------------
 
@@ -16614,6 +16632,14 @@ CREATE TABLE `tb_parametro` (
   `status_ativo` smallint(6) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tb_parametro`
+--
+
+INSERT INTO `tb_parametro` (`id`, `id_equipamento`, `id_users`, `id_sim_equipamento`, `num_sim`, `parametro`, `dt_criacao`, `status_ativo`) VALUES
+(4, 20, 5, 12, '9999988777', '|inicio|ecb-95|eb-111|ei-127|ea-133|eca-143||inicio|scb-96|sb-112|si-127|sa-134|sca-142||inicio|tbcb-97|tbb-113|tbi-127|tba-135|tbca-145||inicio|ccb-98|cb-114|ci-127|ca-136|cca-140||inicio|cscb-99|csb-115|csi-127|csa-137|csca-139|', '2017-01-12 12:16:58', 1),
+(5, 25, 5, 13, '99999994443333', '|inicio|ecb-98|eb-110|ei-127|ea-135|eca-145||inicio|scb-92|sb-105|si-127|sa-130|sca-140||inicio|tbcb-90|tbb-105|tbi-127|tba-135|tbca-146||inicio|ccb-|cb-|ci-|ca-|cca-||inicio|cscb-|csb-|csi-|csa-|csca-|', '2017-01-13 19:10:49', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -16677,7 +16703,37 @@ INSERT INTO `tb_posicao` (`id`, `id_sim_equipamento`, `id_num_sim`, `posicao`, `
 (57, 12, '9999988777', 'l', 1, '2017-01-10 18:49:18'),
 (58, 12, '9999988777', 'm', 1, '2017-01-10 18:49:18'),
 (59, 12, '9999988777', 'n', 1, '2017-01-10 18:49:18'),
-(60, 12, '9999988777', 'o', 1, '2017-01-10 18:49:18');
+(60, 12, '9999988777', 'o', 1, '2017-01-10 18:49:18'),
+(61, 13, '99999994443333', 'a', 1, '2017-01-11 10:29:51'),
+(62, 13, '99999994443333', 'b', 1, '2017-01-11 10:29:51'),
+(63, 13, '99999994443333', 'c', 1, '2017-01-11 10:29:51'),
+(64, 13, '99999994443333', 'd', 1, '2017-01-11 10:29:51'),
+(65, 13, '99999994443333', 'e', 1, '2017-01-11 10:29:51'),
+(66, 13, '99999994443333', 'f', 1, '2017-01-11 10:29:51'),
+(67, 13, '99999994443333', 'g', 1, '2017-01-11 10:29:51'),
+(68, 13, '99999994443333', 'h', 1, '2017-01-11 10:29:52'),
+(69, 13, '99999994443333', 'i', 1, '2017-01-11 10:29:52'),
+(70, 13, '99999994443333', 'j', 1, '2017-01-11 10:29:52'),
+(71, 13, '99999994443333', 'k', 1, '2017-01-11 10:29:52'),
+(72, 13, '99999994443333', 'l', 1, '2017-01-11 10:29:52'),
+(73, 13, '99999994443333', 'm', 1, '2017-01-11 10:29:52'),
+(74, 13, '99999994443333', 'n', 1, '2017-01-11 10:29:52'),
+(75, 13, '99999994443333', 'o', 1, '2017-01-11 10:29:52'),
+(76, 14, '9999998888', 'a', 1, '2017-01-11 12:11:07'),
+(77, 14, '9999998888', 'b', 1, '2017-01-11 12:11:07'),
+(78, 14, '9999998888', 'c', 1, '2017-01-11 12:11:07'),
+(79, 14, '9999998888', 'd', 1, '2017-01-11 12:11:07'),
+(80, 14, '9999998888', 'e', 1, '2017-01-11 12:11:07'),
+(81, 14, '9999998888', 'f', 1, '2017-01-11 12:11:07'),
+(82, 14, '9999998888', 'g', 1, '2017-01-11 12:11:07'),
+(83, 14, '9999998888', 'h', 1, '2017-01-11 12:11:07'),
+(84, 14, '9999998888', 'i', 1, '2017-01-11 12:11:08'),
+(85, 14, '9999998888', 'j', 1, '2017-01-11 12:11:08'),
+(86, 14, '9999998888', 'k', 1, '2017-01-11 12:11:08'),
+(87, 14, '9999998888', 'l', 1, '2017-01-11 12:11:08'),
+(88, 14, '9999998888', 'm', 1, '2017-01-11 12:11:08'),
+(89, 14, '9999998888', 'n', 1, '2017-01-11 12:11:08'),
+(90, 14, '9999998888', 'o', 1, '2017-01-11 12:11:08');
 
 -- --------------------------------------------------------
 
@@ -16760,7 +16816,9 @@ CREATE TABLE `tb_sim_equipamento` (
 --
 
 INSERT INTO `tb_sim_equipamento` (`id`, `id_equipamento`, `id_sim`, `num_serie`, `ambiente`, `vinc_tabela`, `status_ativo`, `dt_criacao`) VALUES
-(12, 20, '9999988777', '777777888899', 'Desconhecido', 0, 1, '2017-01-10 18:49:18');
+(12, 20, '9999988777', '777777888899', 'Desconhecido', 0, 1, '2017-01-10 18:49:18'),
+(13, 25, '99999994443333', '111111111111111112', 'Desconhecido', 0, 1, '2017-01-11 10:29:51'),
+(14, 23, '9999998888', '3213123213', 'R', 0, 1, '2017-01-11 12:11:07');
 
 -- --------------------------------------------------------
 
@@ -16787,6 +16845,30 @@ INSERT INTO `tb_tipo_equipamento` (`id`, `tipo_equipamento`, `descricao_equipame
 (3, 'Porta digital R', 'Equipamentos de monitoramento simples', 'r', 5, 1),
 (4, 'Porta digital S', 'Entrada digital para monitorar equipamentos diversos', 's', 5, 1),
 (5, 'Porta digital T', 'Entrada digital para monitorar equipamentos diversos', 't', 5, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_tratamento_alerta`
+--
+
+CREATE TABLE `tb_tratamento_alerta` (
+  `id` int(11) NOT NULL,
+  `id_alerta` int(11) NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `parametro` varchar(200) NOT NULL,
+  `parametroMedido` float NOT NULL,
+  `parametroAtingido` float NOT NULL,
+  `tratamento_aplicado` text
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_tratamento_alerta`
+--
+
+INSERT INTO `tb_tratamento_alerta` (`id`, `id_alerta`, `id_user`, `parametro`, `parametroMedido`, `parametroAtingido`, `tratamento_aplicado`) VALUES
+(9, 14, NULL, 'SaÃ­da tensÃ£o', 134.2, 130, NULL),
+(8, 13, NULL, 'TensÃ£o', 140, 133, NULL);
 
 -- --------------------------------------------------------
 
@@ -16976,6 +17058,12 @@ ALTER TABLE `tb_tipo_equipamento`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tb_tratamento_alerta`
+--
+ALTER TABLE `tb_tratamento_alerta`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tb_users`
 --
 ALTER TABLE `tb_users`
@@ -16995,7 +17083,7 @@ ALTER TABLE `log`
 -- AUTO_INCREMENT for table `tb_alerta`
 --
 ALTER TABLE `tb_alerta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `tb_cliente`
 --
@@ -17005,12 +17093,12 @@ ALTER TABLE `tb_cliente`
 -- AUTO_INCREMENT for table `tb_contato_alerta`
 --
 ALTER TABLE `tb_contato_alerta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tb_dados`
 --
 ALTER TABLE `tb_dados`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=312670;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=312875;
 --
 -- AUTO_INCREMENT for table `tb_equipamento`
 --
@@ -17022,25 +17110,40 @@ ALTER TABLE `tb_equipamento`
 ALTER TABLE `tb_filial`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
+-- AUTO_INCREMENT for table `tb_log`
+--
+ALTER TABLE `tb_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `tb_msg_alerta`
+--
+ALTER TABLE `tb_msg_alerta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT for table `tb_parametro`
 --
 ALTER TABLE `tb_parametro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_posicao`
 --
 ALTER TABLE `tb_posicao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 --
 -- AUTO_INCREMENT for table `tb_sim_equipamento`
 --
 ALTER TABLE `tb_sim_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `tb_tipo_equipamento`
 --
 ALTER TABLE `tb_tipo_equipamento`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `tb_tratamento_alerta`
+--
+ALTER TABLE `tb_tratamento_alerta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
