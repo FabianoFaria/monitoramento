@@ -259,7 +259,7 @@
                                                 <?php
                                                     switch ($listaAlarmes['status_ativo']) {
                                                         case '1':
-                                                            echo "<i class='fa  fa-arrow-circle-right fa-2x fa-blink' style='color:red'></i>";
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i>";
                                                         break;
 
                                                         default:
@@ -309,7 +309,7 @@
                                                 </h4>
                                             </td>
                                             <td>
-                                                <button class="btn btn-primary" onclick="">
+                                                <button class="btn btn-primary" onclick="detalharAlarme(<?php echo $listaAlarmes['id']; ?>)">
                                                     <i class="fa fa-search "></i> Detalhes
                                                 </button>
                                             </td>
@@ -339,6 +339,111 @@
             </div>
         </div>
 
+    </div>
+
+
+    <!--
+        Modal para exibição dos detalhes do alarme especificado
+    -->
+    <!-- Modal -->
+    <div class="modal fade" id="detalhesAlarme" tabindex="-1" role="dialog" aria-labelledby="detalhes">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Detalhes do alarme</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Data do alarme -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-warning "></i> <span id="statusAlarme"></span>
+                            </div>
+
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning">
+                                        <p>
+                                                Data de geração : <span id="dataGeracao"></span>
+                                        </p>
+                                        <p>
+                                                Data de geração : <span id="dataVizualizacao"></span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-info">
+                                        <p>
+                                                Vínculo equipamento : <span id="nomeCliente"></span>
+                                        </p>
+                                        <p>
+                                                Local do alarme : <span id="localAlarme"></span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning">
+
+                                        <p>
+                                            Limite que gerou o alarme : <span id="limiteAlarme"></span>
+                                        </p>
+                                        <p>
+                                            Descrição extra : <span id="informacaoesAlarme"></span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning">
+                                        <p>
+                                            Medida que gerou o alarme : <span id="tipoMedida"></span>
+                                        </p>
+                                        <p>
+                                            Medida que gerou o alarme : <span id="medidaOriginal"></span>
+                                        </p>
+                                        <p>
+                                            Última medida Registrada : <span id="ultimaMedida"></span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning">
+                                        <form id="solucaoAplicada">
+
+                                            
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button id="fecharTelaAlarme" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 <script type="text/javascript">

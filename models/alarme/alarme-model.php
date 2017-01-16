@@ -174,7 +174,7 @@
         */
         public function alarmesGerados(){
 
-            $query = "SELECT alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
@@ -203,11 +203,49 @@
               }else{
                   $array = array('status' => false, 'alerta' => '');
               }
-          }
+            }
 
             return $array;
         }
 
+
+        /*
+        * RECUPERA OS DADOS DO ALARME PARA SEREM EXIBIDOS PARA O USUÁRIO
+        */
+        public function recuperaDadosAlarme($idAlarme){
+
+            $query = "SELECT alert.id, alert.id_sim_equipamento, alert.id_msg_alerta, alert.status_ativo, alert.visto, alert.dt_criacao, trat_alert.id AS 'tratamento_id', trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado,
+                    equip.nomeEquipamento, equip.modelo, equip.id_cliente, equip.id_filial
+                    FROM tb_alerta alert
+                    JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                    JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
+                    JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                    WHERE alert.id = '$idAlarme'";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if ($result)
+            {
+              /* VERIFICA SE EXISTE VALOR */
+              if (@mysql_num_rows($result) > 0)
+                {
+                  /* ARMAZENA NA ARRAY */
+                  while ($row = @mysql_fetch_assoc ($result))
+                  {
+                    $retorno[] = $row;
+                  }
+
+                  /* DEVOLVE RETORNO */
+                  $array = array('status' => true, 'alerta' => $retorno);
+              }else{
+                  $array = array('status' => false, 'alerta' => '');
+              }
+            }
+
+            return $array;
+        }
     }
 
 ?>

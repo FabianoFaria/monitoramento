@@ -4,6 +4,61 @@ var protocol = pathArray[0];
 var host = pathArray[2];
 var urlP = protocol + '//' + host;
 
+function detalharAlarme(idAlarme){
+
+    //Inicia a coleta de dados do alarme para preparação para exibição
+    $.ajax({
+        url: urlP+"/eficazmonitor/alarme/carregarDetalhesAlarmeJson",
+        secureuri: false,
+        type : "POST",
+        dataType: 'json',
+        data      : {
+          'idAlarme' : idAlarme
+      },
+      success : function(datra)
+       {
+          //tempTest = JSON(datra);
+          if(datra.status == true)
+          {
+              $('#statusAlarme').html(datra.statusAlarme);
+              $('#dataGeracao').html(datra.dataAlarme+ ' '+datra.horaAlarme);
+              $('#dataVizualizacao').html(datra.dataVisualizada);
+
+              $('#nomeCliente').html(datra.cliente['nome']);
+
+              if(datra.filial == ''){
+                   $('#localAlarme').html('Matriz');
+              }else{
+                   $('#localAlarme').html(datra.filial[0]['nome']);
+              }
+
+              //DETALHES ALARME
+             $('#limiteAlarme').html(datra.alarme['mensagem']);
+             $('#informacaoesAlarme').html(datra.alarme['descricao_alarme']);
+
+            //MEDIDAS QUE GERARAM O ALARME
+            $('#tipoMedida').html(datra.alarme['parametro']);
+            $('#medidaOriginal').html(datra.alarme['parametroMedido']);
+            $('#ultimaMedida').html('Não recebido ainda.');
+
+              $('#detalhesAlarme').modal();
+          }
+          else
+          {
+            swal("", "Ocorreu um erro ao tentar recuperar os dados do alarme. Favor tentar novamente.", "error");
+          }
+       },
+      error: function(jqXHR, textStatus, errorThrown)
+      {
+        // Handle errors here
+        console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+        // STOP LOADING SPINNER
+      }
+
+    });
+}
+
+
 $().ready(function() {
 
     /*

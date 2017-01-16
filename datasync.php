@@ -199,7 +199,7 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     $conn->close();
 
     // Retorna mensagem de sucesso
-    header ('HTTP/1.1 200 OK');
+    //header ('HTTP/1.1 200 OK');
 }
 else
     // Retorna erro
@@ -257,43 +257,52 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
         /*
         * GERAR ALERTA
         */
-        $alarmeExiste = verificarAlarmeExistente($idSimEquip);
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip, 2);
 
-        if($alarmeExiste){
-
-            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 3);
+        if(!$alarmeExiste){
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 3, 2);
 
             /*
             * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
             */
+            //Carrega as informações do equipamento que gerou o alarme
+            $equipamentoAlerta  = carregarDadosEquip($idSimEquip);
+
+            //var_dump($equipamentoAlerta);
 
             //Procura os contatos para envio de alerta da tabela tb_contato_alerta
-            // Cria um objeto de da classe de conexao
-            $connBase      = new EficazDB;
-
-            $queryContatos = "SELECT  FROM tb_contato_alerta WHERE ";
+            $listaContatos      = carregarContatosAlerta($idSimEquip);
 
             // Cria um objeto de da classe de email
             $mailer        = new email;
 
+            /*
+            * Verifica se a lista de contatos não está vazia, então inicia o envio de emails
+            */
+            if(!empty($listaContatos)){
+                //var_dump($retorno);
 
+                foreach ($listaContatos as $contato) {
+
+                    //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
+
+                    $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo']);
+                }
+            }
 
         }
-
-
-
 
         // echo "Crítico Alto !".$parametro." ".$configuacoes[4]."<br>";
     }elseif($parametro > (float) trataValorDataSync($configuacoes[3])){
         /*
         * GERAR ALARME
         */
-        $alarmeExiste = verificarAlarmeExistente($idSimEquip);
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip, 1);
 
             //var_dump($alarmeExiste);
         if(!$alarmeExiste){
 
-            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 5);
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 5, 1);
         }
 
         //echo "Alto !".$parametro." -- ".$configuacoes[3]." <br>";
@@ -301,32 +310,51 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
         /*
         * GERAR ALERTA
         */
-        $alarmeExiste = verificarAlarmeExistente($idSimEquip);
-
-        if($alarmeExiste){
-
-            /*
-            * GERAR ALARME
-            */
-            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 2);
-
-            /*
-            * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
-            */
-
-        }
-
-        //echo "Critico baixo!".$parametro." ".$configuacoes[0]."<br>";
-    }elseif($parametro < (float) trataValorDataSync($configuacoes[1])){
-
-        $alarmeExiste = verificarAlarmeExistente($idSimEquip);
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip, 3);
 
         if(!$alarmeExiste){
 
             /*
             * GERAR ALARME
             */
-            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 4);
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 2 ,2);
+
+            /*
+            * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
+            */
+            //Carrega as informações do equipamento que gerou o alarme
+            $equipamentoAlerta  = carregarDadosEquip($idSimEquip);
+            //Procura os contatos para envio de alerta da tabela tb_contato_alerta
+            $listaContatos      = carregarContatosAlerta($idSimEquip);
+            // Cria um objeto de da classe de email
+            $mailer        = new email;
+            /*
+            * Verifica se a lista de contatos não está vazia, então inicia o envio de emails
+            */
+            if(!empty($listaContatos)){
+                //var_dump($retorno);
+
+                foreach ($listaContatos as $contato) {
+
+                    //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
+
+                    $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo']);
+                }
+            }
+
+        }
+
+        //echo "Critico baixo!".$parametro." ".$configuacoes[0]."<br>";
+    }elseif($parametro < (float) trataValorDataSync($configuacoes[1])){
+
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip, 4);
+
+        if(!$alarmeExiste){
+
+            /*
+            * GERAR ALARME
+            */
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 4, 1);
         }
 
         //echo "Baixo !".$parametro." ".$configuacoes[1]."<br>";
@@ -343,15 +371,17 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
 /*
 * VERIFICA SE JÁ EXISTE ALGUM ALARME ATIVO PARA O EQUIPAMENTO
 */
-function verificarAlarmeExistente($idEquipSim){
+function verificarAlarmeExistente($idEquipSim, $tipoAlerta){
 
     //PROCURA NA TABELA DE ALARME, ALGUM REGISTRO DO EQUIPAMENTO COMPROMETIDO
     // Cria um objeto de da classe de conexao
     $connBase    = new EficazDB;
 
-    $queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  visto = 0";
 
-    var_dump($queryAlarme);
+    // Um alerta com status 5 sinaliza que está finalizado, abixo disso, ainda está ativo
+    $queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  visto < 5";
+
+    //var_dump($queryAlarme);
 
     // Monta a result com os parametros
     $result = $connBase->select($queryAlarme);
@@ -383,19 +413,19 @@ function verificarAlarmeExistente($idEquipSim){
 /*
 * INICIA O PROCESSO DE REGISTRO DE ALARME
 */
-function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolado, $parametroAvaliado, $tipoAlarme){
+function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolado, $parametroAvaliado, $tipoAlarme, $nivelAlarme){
 
     // Cria um objeto de da classe de conexao
     $connBase = new EficazDB;
 
-    echo "id equipamento </br>".$idEquipSim;
-    echo "parametro avaliado </br>".$parametroAvaliado;
-    echo "tipo alarme </br>".$tipoAlarme;
+    // echo "id equipamento </br>".$idEquipSim;
+    // echo "parametro avaliado </br>".$parametroAvaliado;
+    // echo "tipo alarme </br>".$tipoAlarme;
     $data = date('Y-m-d h:i:s');
 
     //REGISTRA O ALARME NO SISTEMA
-    $queryAlarme = "INSERT INTO tb_alerta(id_sim_equipamento, id_msg_alerta, dt_criacao )
-                    VALUES ('$idEquipSim', '$tipoAlarme', '$data')";
+    $queryAlarme = "INSERT INTO tb_alerta(id_sim_equipamento, id_msg_alerta, nivel_alerta, dt_criacao )
+                    VALUES ('$idEquipSim', '$tipoAlarme', '$nivelAlarme', '$data')";
 
     $result = $connBase->query($queryAlarme);
 
@@ -442,7 +472,7 @@ function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolad
         $connBase->close();
 
         // Retorna mensagem de sucesso
-        header ('HTTP/1.1 200 OK');
+        //header ('HTTP/1.1 200 OK');
     }
 
 }
@@ -459,6 +489,82 @@ function gerarAlertaEquipamento(){
 
 }
 
+/*
+* INICIA O PROCESSO DE PROCURA DE CONTATOS PARA ENVIO DE ALERTA
+*/
+function carregarContatosAlerta($idSimEquipamento){
+
+    // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+    $connBase      = new EficazDB;
+
+    $queryContatos = "SELECT contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.email, contAlert.celular
+                        FROM tb_contato_alerta contAlert
+                        JOIN tb_sim sim ON sim.id_cliente = contAlert.id_cliente
+                        JOIN tb_sim_equipamento simEquip ON simEquip.id_sim = sim.num_sim
+                        WHERE simEquip.id = '$idSimEquipamento'";
+
+    // Monta a result
+    $result = $connBase->select($queryContatos);
+
+    // Verifica se existe valor de retorno
+    if (@mysql_num_rows ($result) > 0)
+    {
+        /* ARMAZENA NA ARRAY */
+        while ($row = @mysql_fetch_assoc ($result))
+        {
+            $retorno[] = $row;
+        }
+
+    }else{
+        // Se nao existir valor de retorno
+        // Armazena 0 no vetor
+        $retorno[] = 0;
+    }
+
+    // Fecha a conexao
+    $connBase->close();
+
+    return $retorno;
+
+}
+
+/*
+* CARREGAR DADOS DO EQUIPAMENTO QUE GEROU O ALERTA
+*/
+function carregarDadosEquip($idSimEquip){
+
+    // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+    $connBase   = new EficazDB;
+
+    $query      = "SELECT equip.nomeEquipamento, equip.modelo, tipoEquip.tipo_equipamento
+                    FROM tb_equipamento equip
+                    JOIN tb_sim_equipamento simEquip ON equip.id = simEquip.id_equipamento
+                    JOIN tb_tipo_equipamento tipoEquip ON equip.tipo_equipamento = tipoEquip.id
+                    WHERE simEquip.id = '$idSimEquip'";
+
+    // Monta a result
+    $result = $connBase->select($query);
+
+    // Verifica se existe valor de retorno
+    if (@mysql_num_rows ($result) > 0)
+    {
+        /* ARMAZENA NA ARRAY */
+        while ($row = @mysql_fetch_assoc ($result))
+        {
+            $retorno[] = $row;
+        }
+
+    }else{
+        // Se nao existir valor de retorno
+        // Armazena 0 no vetor
+        $retorno[] = 0;
+    }
+
+    // Fecha a conexao
+    $connBase->close();
+
+    return $retorno;
+}
 
 
 ?>

@@ -48,9 +48,41 @@
     *
     *@param
     */
-    public function envioEmailAlerta(){
+    public function envioEmailAlertaEquipamento($email, $nomeContato, $tipoEquip, $nomeEquip, $modeloEquip){
 
-        
+        //Definimos Para quem vai ser enviado o email
+        $remetente = $this->remetente;
+        $destino = $email;
+        $assunto = "ALERTA, um equipamento se encontra em estado crítico!";
+
+        // É necessário indicar que o formato do e-mail é html
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
+        //$headers .= 'From: "Sistema monitoramento" <'.$remetente.'>';
+
+        $mensagem = "<h3>Olá, ".$nomeContato."</h3>";
+        $mensagem .= "<p>";
+        $mensagem .= "Um ".$tipoEquip." ".$nomeEquip." de modelo ".$modeloEquip." se encontra ";
+        $mensagem .= "apresentando possiveis problemas, pois recebemos dados do equipamento em niveis ";
+        $mensagem .= " iguais ou acima do considerado critico.";
+        $mensagem .= "</p>";
+        $mensagem .= "<p>";
+        $mensagem .= "Favor solicitar verificação do equipamento o mais rapido possível.";
+        $mensagem .= "</p>";
+        $mensagem .= "<p>";
+        $mensagem .= "Att.";
+        $mensagem .= "</p>";
+
+        //$headers .= "Bcc: $EmailPadrao\r\n";
+        $arquivo = '';
+        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-f sistemaeficaz@sistema.eficazsystem.com.br");
+        if($enviaremail){
+            return true;
+        } else {
+            return false;
+        }
+
 
     }
 
@@ -75,7 +107,6 @@
         $mensagem = "<h3>Olá, ".$solicitante."</h3>";
         $mensagem .= "<p>";
         $mensagem .= "Foi solicitado a recuperação de senha para o seu acesso ao sistema de monitoramento.";
-
         $mensagem .= "</p>";
         $mensagem .= "";
         $mensagem .= "<p>";

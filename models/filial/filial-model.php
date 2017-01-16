@@ -80,6 +80,32 @@
                 return false;
         }
 
+        /*
+        * Carrega os dados de uma filial especifica
+        */
+        public function filialEspecificaCliente($idFilial){
+
+            $query = "SELECT * FROM tb_filial WHERE id = '$idFilial'";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            if($result){
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    return $retorno;
+                }
+            }else
+                return false;
+        }
 
         /*
         * Cadastrar filial através de AJAX
