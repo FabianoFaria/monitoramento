@@ -221,6 +221,9 @@
                 break;
             }
 
+            $mensagemAlerta     = $alarmeModelo->recuperaMensagemAlarme($dadosAlarme['id_msg_alerta']);
+            // array_push($dadosAlarme, $mensagemAlerta['mensagem'][0]['mensagem']);
+            // array_push($dadosAlarme, $mensagemAlerta['mensagem'][0]['descricao_alarme']);
             //var_dump($dadosAlarme);
 
             exit(json_encode(array('status' => true, 'cliente' => $dadosClie['dados'][0], 'filial' => $dadosFili, 'alarme' => $dadosAlarme, 'statusAlarme' => $statusAlarme, 'horaAlarme' => $horaCriacao, 'dataAlarme' => $dataCriacaoTratada, 'dataVisualizada' => $dataVisualizacao)));
@@ -228,6 +231,28 @@
             exit(json_encode(array('status' => $dadosAlarme['status'])));
         }
     }
+
+
+    /*
+    * Função para registrar tratamento do alarme
+    */
+    public function salvarTratamentoAlarmeJson(){
+
+        $alarmeModelo       = $this->load_model('alarme/alarme-model');
+
+        $registroTratamento = $alarmeModelo->registrarTratamentoAlarme($_POST['idAlarme'], $_POST['msgTrat']);
+
+        if($registroTratamento['status']){
+
+            $alterarStatusAlarme = $alarmeModelo->atualizarStatusAlarme($_POST['idAlarme'], $_POST['statusAlm']);
+
+            exit(json_encode(array('status' => $registroTratamento['status'])));
+        }else{
+            exit(json_encode(array('status' => $registroTratamento['status'])));
+        }
+
+    }
+
 
  }
 

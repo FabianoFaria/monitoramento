@@ -181,7 +181,8 @@
                     JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
-                    JOIN tb_cliente clie ON clie.id = sim.id_cliente";
+                    JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                    ORDER BY alert.id DESC";
 
             /* MONTA A RESULT */
             $result = $this->db->select($query);
@@ -242,6 +243,93 @@
               }else{
                   $array = array('status' => false, 'alerta' => '');
               }
+            }
+
+            return $array;
+        }
+
+        /*
+        * Retorna a mensagem de alarme que foi gerada
+        */
+        public function recuperaMensagemAlarme($idMsg){
+
+            $query = "SELECT msg.mensagem, msg.descricao_alarme
+                        FROM tb_msg_alerta msg
+                        WHERE msg.id = '$idMsg'";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if ($result)
+            {
+              /* VERIFICA SE EXISTE VALOR */
+              if (@mysql_num_rows($result) > 0)
+                {
+                  /* ARMAZENA NA ARRAY */
+                  while ($row = @mysql_fetch_assoc ($result))
+                  {
+                    $retorno[] = $row;
+                  }
+
+                  /* DEVOLVE RETORNO */
+                  $array = array('status' => true, 'mensagem' => $retorno);
+              }else{
+                  $array = array('status' => false, 'mensagem' => '');
+              }
+            }
+
+            return $array;
+        }
+
+        /*
+        * Registra o tratamento dado ao alarme
+        */
+
+        public function registrarTratamentoAlarme($idAlarme, $tratamento){
+
+            if(is_numeric($idAlarme)){
+
+                $id_usuer   = $_SESSION['userdata']['userId'];
+
+                $query      = "UPDATE tb_tratamento_alerta SET id_user = $id_usuer, tratamento_aplicado = '$tratamento'
+                            WHERE id_alerta = '$idAlarme'";
+
+                //var_dump($query);
+
+                if ($this->db->query($query))
+                {
+                    $array = array('status' => true);
+                }else{
+                    $array = array('status' => false);
+                }
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
+
+        /*
+        * ATUALIZA O STATUS DO ALARME
+        */
+        public function atualizarStatusAlarme($idAlarme, $statusAlarme){
+
+            if(is_numeric($statusAlarme) && is_numeric($idAlarme)){
+
+                $query      = "UPDATE tb_alerta SET status_ativo = '$statusAlarme'
+                            WHERE id = '$idAlarme'";
+
+                if ($this->db->query($query))
+                {
+                    $array = array('status' => true);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
             }
 
             return $array;

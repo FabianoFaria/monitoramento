@@ -32,16 +32,27 @@ function detalharAlarme(idAlarme){
                    $('#localAlarme').html(datra.filial[0]['nome']);
               }
 
-              //DETALHES ALARME
-             $('#limiteAlarme').html(datra.alarme['mensagem']);
-             $('#informacaoesAlarme').html(datra.alarme['descricao_alarme']);
+            //   //DETALHES ALARME
+            //  $('#limiteAlarme').html(datra.alarme['0']);
+            //  $('#informacaoesAlarme').html(datra.alarme['1']);
+            var statusAtual = datra.alarme['status_ativo'];
 
-            //MEDIDAS QUE GERARAM O ALARME
+            $('#statusAlarmeModal').val(statusAtual);
+            //$("#statusAlarmeModal > select > option[value=" + statusAtual + "]").prop("selected",true);
+
+            $('#tratamentoAlarme').html(datra.alarme['tratamento_aplicado']);
+            //MEDIDAS QUE GERARAM O ALAtmlRME
             $('#tipoMedida').html(datra.alarme['parametro']);
             $('#medidaOriginal').html(datra.alarme['parametroMedido']);
             $('#ultimaMedida').html('Não recebido ainda.');
 
-              $('#detalhesAlarme').modal();
+            $('#idAlarme').val(idAlarme);
+
+            $('#detalhesAlarme').modal({
+                    backdrop: 'static',
+                    keyboard: false
+            });
+
           }
           else
           {
@@ -59,6 +70,8 @@ function detalharAlarme(idAlarme){
 }
 
 
+
+
 $().ready(function() {
 
     /*
@@ -71,5 +84,76 @@ $().ready(function() {
     //         ...
     //     });
     // }, 5000);
+
+    /*
+    * Salva o tratamento dado ao alarme, muda o status para vizualizado
+    */
+
+    $('#validarResponsavel').click(function(){
+
+        var idAlarme    = $('#idAlarme').val();
+        var tratAlarme  = $('#tratamentoAlarme').val();
+        var statusAlarme = $('#statusAlarmeModal').val();
+
+        //console.log('teste' + idAlarme);
+
+        $('#solucaoAplicada').validate({
+            rules: {
+                tratamentoAlarme: {
+                    required : true
+                },
+                statusAlarmeModal : {
+                    required : true
+                }
+            },
+            messages: {
+                tratamentoAlarme: {
+                    required : "Campo obrigatório"
+                },
+                statusAlarmeModal : {
+                    required : "Campo obrigatório"
+                }
+            }
+        });
+
+        if($('#solucaoAplicada').valid()){
+
+            $.ajax({
+                url: urlP+"/eficazmonitor/alarme/salvarTratamentoAlarmeJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                  'idAlarme' : idAlarme,
+                  'msgTrat'  : tratAlarme,
+                  'statusAlm' : statusAlarme
+              },
+              success : function(datra)
+               {
+                   if(datra.status){
+                       swal('','Tratamento registrado, verifica o estado do equipamento para confirmar a resolução do alarme', 'info');
+                       $('#detalhesAlarme').modal('hide');
+
+                       setTimeout(function(){
+                           location.reload();
+                       }, 2000);
+                   }else{
+
+                       swal('','Ocorreu um problema ao tentar registrar o tratamento, faveor verificar os dados informados','error');
+                       $('#detalhesAlarme').modal('hide');
+                   }
+
+               },
+              error: function(jqXHR, textStatus, errorThrown)
+              {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                // STOP LOADING SPINNER
+              }
+            });
+
+        }
+
+    });
 
 });

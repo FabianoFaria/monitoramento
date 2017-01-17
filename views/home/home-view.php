@@ -259,11 +259,20 @@
                                                 <?php
                                                     switch ($listaAlarmes['status_ativo']) {
                                                         case '1':
-                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i>";
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i> <p> Novo</p>";
+                                                        break;
+                                                        case '2':
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:orange'></i> <p> Visualizado</p>";
+                                                        break;
+                                                        case '3':
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:yellow'></i> <p> Em tratamento</p>";
+                                                        break;
+                                                        case '4':
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:gray'></i> <p> Solucionado</p>";
                                                         break;
 
                                                         default:
-                                                            echo "<i class='fa  fa-arrow-circle-right fa-2x' style='color:green'></i>";
+                                                            echo "<i class='fa  fa-check  fa-2x' style='color:green'></i> <p> Finalizado</p>";
                                                         break;
                                                     }
                                                 ?>
@@ -366,7 +375,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="alert alert-warning">
+                                    <div class="well">
                                         <p>
                                                 Data de geração : <span id="dataGeracao"></span>
                                         </p>
@@ -380,7 +389,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="alert alert-info">
+                                    <div class="well">
                                         <p>
                                                 Vínculo equipamento : <span id="nomeCliente"></span>
                                         </p>
@@ -392,44 +401,72 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-12">
-                                    <div class="alert alert-warning">
+                                    <div class="well">
 
                                         <p>
-                                            Limite que gerou o alarme : <span id="limiteAlarme"></span>
+                                            <b>Limite que gerou o alarme : </b><span id="limiteAlarme"></span>
                                         </p>
                                         <p>
-                                            Descrição extra : <span id="informacaoesAlarme"></span>
+                                            <b>Descrição extra : </b><span id="informacaoesAlarme"></span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="well">
+                                        <p>
+                                            <b>Medida que gerou o alarme : </b><span id="tipoMedida"></span>
+                                        </p>
+                                        <p>
+                                            <b>Medida que gerou o alarme : </b><span id="medidaOriginal"></span>
+                                        </p>
+                                        <p>
+                                            <b>Última medida Registrada : </b><span id="ultimaMedida"></span>
                                         </p>
 
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="alert alert-warning">
-                                        <p>
-                                            Medida que gerou o alarme : <span id="tipoMedida"></span>
-                                        </p>
-                                        <p>
-                                            Medida que gerou o alarme : <span id="medidaOriginal"></span>
-                                        </p>
-                                        <p>
-                                            Última medida Registrada : <span id="ultimaMedida"></span>
-                                        </p>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="alert alert-warning">
-                                        <form id="solucaoAplicada">
-
-                                            
-
+                                    <div class="well">
+                                        <form id="solucaoAplicada" method="post">
+                                            <div class="row">
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <label for="statusAlarmeModal">Status do alarme</label>
+                                                        <select id="statusAlarmeModal" name="statusAlarmeModal" class="form-control">
+                                                            <option value="2">Visualizado</option>
+                                                            <option value="3">Em tratamento</option>
+                                                            <option value="4">Solucionado</option>
+                                                            <option value="5">Finalizado</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="cliente">Ações para tratamento do alarme</label>
+                                                        <textarea id="tratamentoAlarme" name="tratamentoAlarme" class="form-control" rows="7"></textarea>
+                                                    </div>
+                                                </div><!-- fim do campo nome do cliente -->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <div class="form-group">
+                                                        <div class=" txt-center"><button id="validarResponsavel" type="button" name="validarResponsavel" class="btn btn-info" value="Salvar">Fechar janela</button</div>
+                                                        <input id="idAlarme" name="idAlarme" type="hidden" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -438,10 +475,10 @@
                     </div>
 
                 </div>
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
 
                     <button id="fecharTelaAlarme" type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

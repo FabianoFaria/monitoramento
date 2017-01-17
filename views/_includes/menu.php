@@ -126,7 +126,7 @@ else
             <ul class="nav" id="side-menu">
                 <!-- HOME -->
                 <li>
-                  <a href="<?php echo HOME_URI; ?>/home/" data-toggle="dropdown">
+                  <a href="<?php echo HOME_URI; ?>/home/" data-toggle="">
                       <i class="fa fa-desktop fa-3x"></i> <span class="lb-side">Tela de monitoramento</span>
                   </a>
                   <ul class="nav nav-second-level collapse in">
@@ -143,7 +143,7 @@ else
                 <!-- CADASTRO -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                   <li>
-                    <a href="" class="menuCadastro" data-toggle="dropdown">
+                    <a href="" class="menuCadastro" data-toggle="">
                       <i class="fa fa-download fa-3x"></i> <span class="lb-side">Cadastrar</span><span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse in">
@@ -197,6 +197,11 @@ else
                       <span class="icon-side"><i class="fa fa-tachometer fa-3x"></i></span>
                       <span class="lb-side">Monitorar</span>
                     </a>
+                    <ul class="nav nav-second-level collapse in">
+                        <li>
+                            <a href="<?php echo HOME_URI; ?>/monitoramento/"><i class="fa fa-tachometer fa-1x"></i><span> Monitorar</span></a>
+                        </li>
+                    </ul>
                 </li>
                 <?php } ?>
                 <!-- ANTIGO GRAFICO, ATUAL RELATORIO -->
@@ -205,9 +210,9 @@ else
                   <a class="link-side" href="#">
                     <span class="icon-side"><i class="fa fa-area-chart fa-3x"></i></span>
                     <span class="lb-side">Relatório</span>
-                     <span class="fa arrow"></span>
+                    <span class="fa arrow"></span>
                   </a>
-                  <ul class="nav nav-second-level">
+                  <ul class="nav nav-second-level collapse in">
                       <li>
                           <a href="<?php echo HOME_URI; ?>/grafico/"><i class="fa fa-area-chart fa-1x"></i><span> Relatorio gráfico</span></a>
                       </li>
@@ -264,15 +269,15 @@ else
                 <?php } ?>
 
                 <!-- VINCULO -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
-                <li>
-                  <a href="<?php echo HOME_URI; ?>/vinculo/">
+                <?php //if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                <!-- <li>
+                  <a href="<?php //echo HOME_URI; ?>/vinculo/">
                     <i class="fa fa-link fa-3x"></i>
                     <span class="icon-side"></span>
                     <span class="lb-side">Vinculo</span>
                   </a>
-                </li>
-                <?php } ?>
+                </li> -->
+                <?php //} ?>
                 <!-- CONFIGURACAO -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
                 <li>

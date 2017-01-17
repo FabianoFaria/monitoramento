@@ -54,6 +54,52 @@ class EquipamentoModel extends MainModel
     }
 
     /*
+    * Função para carregar lista de equipamentos de cliente especifico
+    */
+    public function listarEquipamentosCliente($idCliente)
+    {
+        if(is_numeric($idCliente)){
+
+            $query = "SELECT equip.id, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', simEquip.id_sim as 'sim_clie'
+                        FROM tb_equipamento equip
+                        JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
+                        LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
+                        LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id
+                        WHERE equip.id_cliente = '$idCliente'";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipamentos' => $retorno);
+                }else{
+                    $array = array('status' => false, 'equipamentos' => '');
+                }
+            }else{
+                $array = array('status' => false, 'equipamentos' => '');
+            }
+
+        }else{
+            $array = array('status' => false, 'equipamentos' => '');
+        }
+
+        return $array;
+    }
+
+
+    /*
     *   Carregar dados equipamento
     */
 
@@ -84,7 +130,10 @@ class EquipamentoModel extends MainModel
 
                     /* DEVOLVE RETORNO */
                     $array = array('status' => true, 'equipamento' => $retorno);
+                }else{
+                    $array = array('status' => false, 'equipamento' => '');
                 }
+
             }else{
                 $array = array('status' => false, 'equipamento' => '');
             }

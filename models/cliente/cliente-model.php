@@ -23,7 +23,7 @@
          */
          public function listarCliente()
          {
-             $query = "SELECT clie.id, clie.nome, clie.cidade, clie.ddd, clie.telefone
+             $query = "SELECT clie.id, clie.nome, clie.cidade, clie.ddd, clie.telefone, clie.status_ativo, clie.dt_criacao
                         FROM tb_cliente clie";
              /* MONTA A RESULT */
              $result = $this->db->select($query);

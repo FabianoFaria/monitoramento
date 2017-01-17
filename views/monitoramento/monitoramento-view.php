@@ -10,7 +10,10 @@ if (! defined('EFIPATH')) exit();
 // chamando lista de valores
 $retorno = $modelo->buscaRelacao();
 
+// Retorna a lista de clientes
+
 //Retorno sendo carregado direto da class.main
+$lista = $modeloClie->listarCliente();
 
 ?>
 
@@ -60,124 +63,58 @@ $retorno = $modelo->buscaRelacao();
 <div class="row">
     <div class="col-md-12">
         <!-- Titulo pagina -->
-        <label class="page-header">Monitoramento</label><!-- Fim Titulo pagina -->
+        <label class="page-header">Clientes configurados para monitorar</label><!-- Fim Titulo pagina -->
     </div>
-
 </div>
+
 <div class="row">
+    <div class="col-lg-12">
 
-        <div class="col-lg-12">
-            <div class="panel panel-info" id="accordionFiltro">
-                <div class="panel-heading">
-                    <a data-toggle="collapse" data-parent="#accordionFiltro" href="#filtroCollapse"><h5><i class="fa fa-search-plus "></i> Filtro de alarmes</h5></a>
-                </div>
-                <div id="filtroCollapse" class="panel-body panel-collapse collapse in">
-                    <form method="post">
-                        <div class="row">
-                            <!-- Status do alarme -->
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Status do alarme</label>
-                                    <select class="form-control">
-                                        <option value="">Selecione...</option>
-                                        <option value="">Todos</option>
-                                        <option value="">Alarme gerado</option>
-                                        <option value="">Alarme reconhecido</option>
-                                        <option value="">Alarme solucionado</option>
-                                        <option value="">Alarme finalizado</option>
-                                    </select>
-                                </div>
-                            </div>
+        <!-- TABELA CONTENDO TODOS OS CLIENTES -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
 
-                            <!-- Nome do cliente -->
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Nome do cliente</label>
-                                    <select class="form-control">
-                                        <option value="">Selecione...</option>
-                                        <option value="">Todos</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4 ">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Filial</label>
-                                    <select class="form-control">
-                                        <option value="">Selecione...</option>
-                                        <option value="">Todos</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-md-4 ">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Equipamento</label>
-                                    <select class="form-control">
-                                        <option value="">Selecione...</option>
-                                        <option value="">Todos</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 pull-right">
-                                <button class="btn btn-info pull-right" type="button">Filtrar</button>
-                            </div>
-                        </div>
-                    </form>
+            <div class="panel-body">
+                <div class='table-responsive'>
+                    <table id="" class='table table-striped table-bordered'>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Cidade</th>
+                                <th>Telefone</th>
+                                <th class="txt-center">Monitorar equipamentos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                if($lista)
+                                {
+                                    foreach ($lista as $cliente){
+                                ?>
+                                    <tr>
+                                        <td><?php echo $cliente['nome']; ?></td>
+                                        <td><?php echo $cliente['cidade']; ?></td>
+                                        <td><?php echo "(".$cliente['ddd'].") ".$cliente['telefone']; ?></td>
+                                        <td><a href="<?php echo HOME_URI; ?>/monitoramento/unidades/<?php echo  $cliente['id']; ?>"><i class="fa  fa-camera-retro fa-2x"></i></a></td>
+                                    </tr>
+                                <?php
+                                    }
+                                }
+                                else{
+                                ?>
+                                    <tr>
+                                        <td colspan="4">Nenhum cliente cadastrado até o momento</td>
+                                    </tr>
+                                <?php
+                                }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
 
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-
-        <div class='table-responsive'>
-            <table id="stream_table" class='table table-striped table-bordered'>
-                <thead>
-                    <tr>
-                        <th class="tdbdbottom">Cliente</th>
-                        <th class="tdbdbottom">Data ativa&ccedil;&atilde;o</th>
-                        <th class="tdbdbottom">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <div id="summary"><div></div></div>
         </div>
 
     </div>
 </div>
-
-
-<script id="template" type="text/html">
-    <tr>
-        <td class="tdprim">
-            <a href="<?php echo HOME_URI; ?>/monitoramento/unidades/{{record.modelsh}}" class="link-tabela-moni">
-                {{record.cliente}}
-            </a>
-        </td>
-        <td class="">
-            <a href="<?php echo HOME_URI; ?>/monitoramento/unidades/{{record.modelsh}}" class="link-tabela-moni">
-                {{record.dataTmp}}
-            </a>
-        </td>
-        <td class="">
-            <a href="<?php echo HOME_URI; ?>/monitoramento/unidades/{{record.modelsh}}" class="link-tabela-moni">
-                {{record.status}}
-            </a>
-        </td>
-    </tr>
-</script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#filtroCollapse').collapse("hide");
-  });
-</script>

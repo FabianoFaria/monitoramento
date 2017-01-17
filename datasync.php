@@ -379,7 +379,7 @@ function verificarAlarmeExistente($idEquipSim, $tipoAlerta){
 
 
     // Um alerta com status 5 sinaliza que está finalizado, abixo disso, ainda está ativo
-    $queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  visto < 5";
+    $queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 5";
 
     //var_dump($queryAlarme);
 
