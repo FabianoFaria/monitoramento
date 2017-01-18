@@ -50,7 +50,7 @@
             $this->check_login();
 
             //Define o titulo da página
-            $this->title = "Lista usuário";
+            $this->title = "usuario";
 
             // Define os parametro da funcao
             $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -85,7 +85,7 @@
              }else
              {
                  //Define o titulo da pagina
-                 $this->title = "Editar usuário";
+                 $this->title = "usuario";
 
                  // Define os parametro da funcao
                  $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();

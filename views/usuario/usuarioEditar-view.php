@@ -35,7 +35,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nome do Usu&aacute;rio</label>
-                        <input type="text" class="form-control" id="txt_nome" name="txt_nome" placeholder="Nome do Usu&aacute;rio" maxlength="50" required
+                        <input type="text" class="form-control" id="txt_nome" name="txt_nome" placeholder="Nome do Usu&aacute;rio" maxlength="50"
                         value="<?php echo $retornoUsuario['nome']; ?>">
                     </div>
                 </div><!-- fim nome do usuario -->
