@@ -12,9 +12,18 @@ if (!defined('EFIPATH')) exit();
 //$retorno = $modelo->buscaRelacaoFilial();
 
 //Retorna informacoes do cliente
-
+$detalhesCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
 //Retorna a lista de equipamentos do cliente para listar, seja da matriz ou da filial
 $listaEquipamentos = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
+
+if($detalhesCliente['status']){
+    $nomeCliente = $detalhesCliente['dados'][0]['nome'];
+}else{
+    $nomeCliente = 'Não informado';
+}
+
+// $teste = base64_decode("MTM5NDkwMDczMjY5MDY");
+// var_dump($teste);
 
 ?>
 
@@ -72,7 +81,7 @@ $listaEquipamentos = $modeloEquip->listarEquipamentosCliente($this->parametros[0
 
     // gerenciador de link
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/monitoramento/" class="linkMenuSup">Monitoramento</a> / <a href="<?php echo HOME_URI; ?>/monitoramento/unidades/<?php echo $this->parametros[0]; ?>"></a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/monitoramento/" class="linkMenuSup">Monitoramento</a> / <a href="<?php echo HOME_URI; ?>/monitoramento/unidades/<?php echo $this->parametros[0]; ?>"><?php echo $nomeCliente; ?></a>';
 </script>
 
 
@@ -94,14 +103,70 @@ $listaEquipamentos = $modeloEquip->listarEquipamentosCliente($this->parametros[0
         <table id="" class='table table-striped table-bordered'>
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Nivel</th>
-                    <th>C&oacute;digo Sim</th>
-                    <th>Status</th>
-                    <th>Criado</th>
+                    <th>Nome equipamento</th>
+                    <th>Modelo</th>
+                    <th>Característica</th>
+                    <th>Cliente</th>
+                    <th>Filial/Matriz</th>
+                    <th>Monitorar</th>
                 </tr>
             </thead>
             <tbody>
+            <?php
+
+                if($listaEquipamentos['status']){
+
+                    foreach ($listaEquipamentos['equipamentos'] as $equipamento) {
+
+                        /*
+                        * Tratamento dos dados do equipamento para passagem de parametros
+                        */
+
+
+
+            ?>
+                <tr>
+                    <td>
+                        <?php echo $equipamento['nomeEquipamento']; ?>
+                    </td>
+                    <td>
+                        <?php echo $equipamento['modelo']; ?>
+                    </td>
+                    <td>
+                        <?php echo $equipamento['caracteristica_equip']; ?>
+                    </td>
+                    <td>
+                        <?php echo $equipamento['cliente']; ?>
+                    </td>
+                    <td>
+                        <?php echo (isset($equipamento['filial'])) ? $equipamento['filial'] : "Matriz"; ?>
+                    </td>
+                    <td>
+                        <a href="<?php echo HOME_URI; ?>/monitoramento/gerarGrafico/<?php echo $equipamento['id']; ?>"><i class="fa fa-picture-o fa-2x"></i></a>
+                    </td>
+                </tr>
+            <?php
+
+                        /*
+                        'id' => string '25' (length=2)
+  'equipamento' => string '1' (length=1)
+  'fabricante' => string 'Eaton' (length=5)
+  'modelo' => string '8090' (length=4)
+  'potencia' => string '100' (length=3)
+  'qnt_bateria' => string '2' (length=1)
+  'caracteristica_equip' => string 'nENHUMA' (length=7)
+  'tipo_bateria' => string 'Selada' (length=6)
+  'amperagem_bateria' => string '100' (length=3)
+  'cliente' => string 'Nacional Industrias' (length=19)
+  'filial' => string 'Filial Tr&ecirc;s' (length=17)
+
+                        */
+
+                    }
+                }else{
+                    echo "<tr><td colspan='6'> Não há equipamentos configurados para monitoramento</td></tr>";
+                }
+            ?>
             </tbody>
         </table>
         <div id="summary"><div></div></div>
@@ -111,7 +176,7 @@ $listaEquipamentos = $modeloEquip->listarEquipamentosCliente($this->parametros[0
 
 <?php
 
-    var_dump($listaEquipamentos);
+    //var_dump($listaEquipamentos);
 
 ?>
 

@@ -60,12 +60,13 @@ class EquipamentoModel extends MainModel
     {
         if(is_numeric($idCliente)){
 
-            $query = "SELECT equip.id, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', simEquip.id_sim as 'sim_clie'
+            $query = "SELECT equip.id, equip.nomeEquipamento, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', fili.nome as 'filial'
                         FROM tb_equipamento equip
                         JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                         LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
-                        LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id
-                        WHERE equip.id_cliente = '$idCliente'";
+                        LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0
+                        WHERE equip.id_cliente = '$idCliente'
+                        GROUP BY equip.id";
 
             /* MONTA A RESULT */
             $result = $this->db->select($query);
@@ -107,7 +108,7 @@ class EquipamentoModel extends MainModel
     {
 
         if(is_numeric($idEquipamento)){
-            $query = "SELECT equip.id, equip.id_cliente, equip.id_filial, equip.tipo_equipamento, equip.nomeEquipamento, equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria, clie.nome as 'cliente', fili.nome as 'filial'
+            $query = "SELECT equip.id, equip.id_cliente, equip.id_filial, equip.tipo_equipamento, equip.nomeEquipamento, equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria, clie.id as 'idClie', clie.nome as 'cliente', fili.nome as 'filial'
                       FROM tb_equipamento equip
                       LEFT JOIN tb_cliente clie ON clie.id = equip.id_cliente
                       LEFT JOIN tb_filial fili ON fili.id = equip.id_filial

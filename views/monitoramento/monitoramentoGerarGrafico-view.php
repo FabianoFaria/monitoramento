@@ -3,12 +3,45 @@
 // Verifica se esta definido o path
 if (! defined('EFIPATH')) exit();
 
-// Carrega as configuracoes de sim , configurando e tratando a url
-$nova_url = $modelo->confParamentroGrafico();
+// Aqui está sendo simplificado o processo de coleta de dados do equipamento para geração de gráficos
+$dadosEquipamento   = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
+// Aqui está sendo carregado os dados de Sim, id_sim_equipamento necessarios para está página
+$dadosVinculoEquip  = $modeloEquip->detalhesEquipamentoParaConfiguracao($this->parametros[0]);
+//Aqui são os dados do cliente para exibição na tela
+$dadosClie          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
 
+if($dadosClie['status']){
+    $dadosClie = $dadosClie['equipamento'][0];
+    $idClie    = $dadosClie['idClie'];
+    $nomeClie  = $dadosClie['cliente'];
+}
+
+// Carrega as configuracoes de sim , configurando e tratando a url
+//METODO SENDO DESATIVADO
+//$nova_url = $modelo->confParamentroGrafico();
+
+if($dadosVinculoEquip['status']){
+    $idEquip    = $dadosVinculoEquip['equipamento'][0]['id_equipamento'];
+    $idSimEquip = $dadosVinculoEquip['equipamento'][0]['id'];
+    $idSim      = $dadosVinculoEquip['equipamento'][0]['id_sim'];
+}else{
+    $idEquip    = null;
+    $idSimEquip = null;
+    $idSim      = null;
+}
+
+//Inicia class da Lista inical
+$parametroListaIni  = array();
+array_push($parametroListaIni, $idSim);
+$limite             = 30;
+$listaIni           = new ListaInicial($limite, $this->db, $parametroListaIni);
+
+//var_dump($dadosVinculoEquip);
 
 // Carrega os parametros
-$retorno = $modelo->loadGraficoParam();
+$retorno = $modelo->loadGraficoParam($idEquip, $idSimEquip, $idSim);
+
+var_dump($retorno);
 
 if (empty($retorno) && isset($retorno))
 {
@@ -25,12 +58,11 @@ else
     $cValor = $modelo->insereDadosGrafico($listaIni->carregaValorTri());
     $cValor2 = $modelo->insereDadosGrafico($listaIni->carregaValorTri("saida"));
 
-    // Busca informacoes sobre o cliente e equipamento
-    $infoCli = $modelo->buscaDadosClinte($nova_url[0]);
+    // Busca informacoes sobre o cliente e equipamento, alterando o parametro de '$nova_url[0]' para '$idSim'
+    $infoCli = $modelo->buscaDadosClinte($idSim);
 
-    // Carrega a data, para realizar a comparacao de tempo ligado
-    $respData = $modelo->verificaTempoOperacao($nova_url[0]);
-
+    // Carrega a data, para realizar a comparacao de tempo ligado , alterando o parametro de '$nova_url[0]' para '$idSim'
+    $respData = $modelo->verificaTempoOperacao($idSim);
 
     // Variavel que monitora se existe data como parametro
     // Se existir desabilita os graficos do multimetro
@@ -56,7 +88,8 @@ else
         var menu = document.getElementById('listadir');
         menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / ' +
                          '<a href="<?php echo HOME_URI; ?>/monitoramento/" class="linkMenuSup">Monitoramento</a> / ' +
-                         '<a href="" class="linkMenuSup">Visual</a>';
+                         '<a href="<?php echo HOME_URI; ?>/monitoramento/unidades/<?php echo $idClie ?>"> <?php echo $nomeClie; ?></a>' +
+                         '/<a href="<?php echo HOME_URI; ?>/monitoramento/gerarGrafico/<?php echo $this->parametros[0]; ?>"> Equipamento </a>';
     </script>
 
     <?php
@@ -81,7 +114,7 @@ else
     <script src="<?php echo HOME_URI; ?>/views/_js/highcharts/highcharts.js"></script>
     <script src="<?php echo HOME_URI; ?>/views/_js/highcharts/highcharts-more.js"></script>
     <script src="<?php echo HOME_URI; ?>/views/_js/moment/moment.js"></script>
-    <script src="<?php echo HOME_URI; ?>/views/_js/monitoramento/main.js"></script>
+    <script src="<?php echo HOME_URI; ?>/views/_js/main.js"></script>
 
 
     <script type="text/javascript">
@@ -131,7 +164,9 @@ else
             $nomes = array ("entrada","saida");
 
             // Converte da base 64 para texto
-            $id = base64_decode($this->parametros[0]);
+            // $id = base64_decode($this->parametros[0]);
+            // NESSA ALTERAÇÂO A id DO SIM FOI RECUPERADA COM A CHAMADA DE UMA FUNÇÃO NO INICIO DO ARQUIVO
+            $id = $idSim;
 
             // Loop para criar o grafico
             for($p=0;$p<sizeof($tabela);$p++)
@@ -288,10 +323,11 @@ else
                         function (chart) {
                             var valor = 0;
                             setInterval(function () {
-                                if (chart.series) { // the chart may be  destroyed
-                                    var url =  "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $nova_url[0];?>&656e7472616461=1&706f73546162656c61=<?php echo $t;?>&callback=?";
+                                if (chart.series) { // the chart may be  destroyed, colocando '$idSim' no lugar de '$nova_url[0]'
+                                    var url =  "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=1&706f73546162656c61=<?php echo $t;?>&callback=?";
                                     $.getJSON(url,  function(data) {
                                         valor = parseFloat(data[0]);
+
                                     });
 
                                     var left = chart.series[0].points[0],
@@ -299,6 +335,7 @@ else
                                         leftVal,
                                         //rightVal,
                                         inc = parseFloat(valor/10);
+
 
                                     leftVal =  inc;
 
@@ -331,11 +368,17 @@ else
                     });
 
         <?php
-                    $mult += 5;
+                    //$mult foi comentado pois estava gerando erro com a nova forma de carregar as configurações
+                    // $mult += 5;
                 }
             }
         ?>
     </script>
+
+
+    <!-- INICIO DO HTML DA PÁGINA -->
+
+
 
 
     <div class="container-fluid fundo-geraGrafico">
@@ -453,8 +496,8 @@ else
                                 var valorBat = 0;
                                 var maxBat = 400;
 
-                                setInterval(function(){
-                                    var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $nova_url[0];?>&656e7472616461=5&706f73546162656c61=h&callback=?";
+                                setInterval(function(){  //, colocando '$idSim' no lugar de '$nova_url[0]'
+                                    var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=h&callback=?";
                                     $.getJSON(url,  function(data) {
                                         valorBat = parseFloat(data[0]);
                                         var calcula = (valorBat*100)/maxBat;
@@ -464,7 +507,7 @@ else
                                     });
                                 },6000);
 
-                                console.log("data[0] : " + data[0]);
+                                console.log("data[0] : " + valorBat);
                             </script>
                         </div>
                     </div><!-- Fim Bateria -->
@@ -554,8 +597,8 @@ else
                         <div class="div-nbLigado">
                             <script type="application/javascript">
                                 var valorLigado = 0;
-                                setInterval(function(){
-                                    var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $nova_url[0];?>&656e7472616461=2&&callback=?";
+                                setInterval(function(){  //, colocando '$idSim' no lugar de '$nova_url[0]'
+                                    var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=2&&callback=?";
                                     $.getJSON(url,  function(data) {
                                         valorLigado = parseFloat(data[0]);
                                     });

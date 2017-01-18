@@ -53,6 +53,7 @@ class MonitoramentoController extends MainController
         // Carrega o modelo
         $modelo         = $this->load_model('monitoramento/monitoramento-model');
         $modeloEquip    = $this->load_model('equipamento/equipamento-model');
+        $modeloClie     = $this->load_model('cliente/cliente-model');
 
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
@@ -102,13 +103,15 @@ class MonitoramentoController extends MainController
         $this->check_login();
 
         // Define o titulo da pagina
-        $this->title = "Monitoramento Visual";
+        $this->title = "monitoramento";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // Carrega o modelo
-        $modelo = $this->load_model('monitoramento/monitoramento-model');
+        $modelo         = $this->load_model('monitoramento/monitoramento-model');
+        // Carrega os dados do equipamento
+        $modeloEquip    = $this->load_model('equipamento/equipamento-model');
 
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
@@ -118,13 +121,15 @@ class MonitoramentoController extends MainController
         require_once EFIPATH . "/classes/sincronizacaoGrafico/listaInicial.php";
 
         // Inicia class da Lista inical
-        $limite = 30;
-        $listaIni = new ListaInicial($limite, $this->db, $this->parametros);
+        //ESTE METODO TAMBEM PASSOU POR REFORMULAÇÕES
+        // $limite     = 30;
+        //$listaIni   = new ListaInicial($limite, $this->db, $this->parametros);
 
         // Carregando a view
         require_once EFIPATH . "/views/monitoramento/monitoramentoGerarGrafico-view.php";
         require_once EFIPATH . "/views/_includes/footer.php";
     }
+
 }
 
 ?>

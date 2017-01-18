@@ -37,65 +37,103 @@ class MonitoramentoModel extends MainModel
 
     /**
      * funcao que carrega os parametros do grafico
+     * MODIFICANDO ESTA FUNÇÃO DE FORMA QUE PASSE A RECEBER PARAMETROS
      */
-    public function loadGraficoParam()
+    public function loadGraficoParam($idEquip, $idSimEquip, $numSim)
     {
+        //COMENTANDO ESTE TRECHO PARA DESATIVAR
         // Tira criptografica
         // Sim
-        $sim  = base64_decode($this->parametros[0]);
+        //$sim  = base64_decode($this->parametros[0]);
         // Id equipamento
-        $ideq = base64_decode($this->parametros[1]);
+        //$ideq = base64_decode($this->parametros[1]);
         // Id sim equipamento
-        $idsq = base64_decode($this->parametros[2]);
+        //$idsq = base64_decode($this->parametros[2]);
 
-        $idse = base64_decode($this->parametros[3]);
+        //$idse = base64_decode($this->parametros[3]);
 
-        // Monta a query
-        $query = "select parametro from tb_parametro where id_sim_equipamento = {$idsq} and num_sim = {$sim} and id_equipamento = {$ideq[0]} order by (dt_criacao) desc limit 1";
+        //VALIDANDO OS TRECHOS PASSADOS POR PARAMETROS
+        if(isset($idEquip) && isset($idSimEquip) && isset($numSim)){
+            $sim  = $numSim;
+            $ideq = $idEquip;
+            $idsq = $idSimEquip;
 
-        /* monta a result */
-        $busca = $this->db->select($query);
+            // Monta a query
+            $query = "SELECT parametro FROM tb_parametro WHERE id_sim_equipamento = '$idsq' AND num_sim = '$sim' AND id_equipamento = '$ideq' ORDER BY (dt_criacao) DESC LIMIT 1";
 
+            /* monta a result */
+            $busca = $this->db->select($query);
 
-        /* verifica se a query executa */
-        if ($busca)
-        {
-            /* verifica se existe valor */
-            if (@mysql_num_rows($busca) > 0)
+            /* verifica se a query executa */
+            if ($busca)
             {
-                /* monta o array com os valores */
-                while($row = @mysql_fetch_assoc($busca))
-                    $retorno[] = $row;
-
-                /* quebra a resposta no array */
-                $retorno = explode("|",$retorno[0]['parametro']);
-
-                foreach($retorno as $row)
+                /* verifica se existe valor */
+                if (@mysql_num_rows($busca) > 0)
                 {
-                    $row2 = explode("-",$row);
-                    // Coleta posicao
-                    $posicao[] = $row2[0];
-                    // colote valor
-                    $valor[] = $row2[2];
+                    /* monta o array com os valores */
+                    while($row = @mysql_fetch_assoc($busca))
+                        $retorno[] = $row;
+
+                    /* quebra a resposta no array */
+                    $retorno = explode("|inicio|",$retorno[0]['parametro']);
+
+                    //var_dump($retorno);
+
+                    // foreach($retorno as $row)
+                    // {
+                    //
+                    //
+                    //     $row2 = explode("-",$row);
+                    //     // Coleta posicao
+                    //     $posicao[] = $row2[0];
+                    //     // colote valor
+                    //     $valor[] = $row2[2];
+                    // }
+
+                    for($i = 1; $i <=5; $i++){
+                        //var_dump($retorno[0]);
+
+                        $row2 = explode("|", $retorno[$i]);
+
+                        if($row2 != ''){
+
+                            for($f=0; $f<=4; $f++){
+
+                                //var_dump($row2[$f]);
+                                $row3 = explode("-",$row2[$f]);
+                                // Coleta posicao
+                                $posicao[] = $row3[0];
+                                // // colote valor
+                                $valor[] = ($row3[1] != '') ? $row3[1] : 0;
+                            }
+                        }
+
+                        //var_dump($valor);
+                        //(isset($configuracaoSalva)) ? $this->trataValor($valoresEntrada[0]) : ""
+                    }
+
+                    //Destroi variavel auxiliar
+                    unset($row2);
+                    //Retorna os valores
+                    return $valor;
+                    //return $retorno;
                 }
-                // Destroi variavel auxiliar
-                unset($row2);
-                // Retorna os valores
-                return $valor;
+                else
+                {
+                    /* caso nao existir valor, retorna false */
+                    return false;
+                }
             }
             else
             {
-                /* caso nao existir valor, retorna false */
+                echo "nao";
+                /* se a query apresentar erro, retorna false */
                 return false;
             }
-        }
-        else
-        {
-            echo "nao";
-            /* se a query apresentar erro, retorna false */
+
+        }else{
             return false;
         }
-
 
     }
 
@@ -327,6 +365,16 @@ class MonitoramentoModel extends MainModel
         }
 
         return false;
+    }
+
+    /*
+    *  Trata as strings dos valores das configurações dos equipamento
+    */
+    public function trataValor($valor){
+
+        //Formato da string esperado : 'et1-2-0'
+        $temp = explode('-', $valor);
+        return str_replace('.',',',$temp[1]);
     }
 }
 
