@@ -35,7 +35,10 @@ class ListaInicial
         $this->db = $db;
 
         // Decodifica o parametro do sim
-        $parametro = base64_decode($parametros[0]);
+        //$parametro = base64_decode($parametros[0]);
+        $parametro = $parametros[0];
+
+        //var_dump($parametros);
 
         // Recebe os parametos da data
         // Verifica se existem e tem valor
@@ -49,14 +52,14 @@ class ListaInicial
             $dti = str_replace("T"," ",$dti);
             $dtf = str_replace("T"," ",$dtf);
 
+
             // Monta a query utilizando datas
-            $select = $this->db->select("select h,i,dt_criacao from tb_dados where num_sim = {$parametro} and status_ativo = 1 and dt_criacao between '{$dti}:00' and '{$dtf}:59' order by id desc");
+            $select = $this->db->select("SELECT h,i,dt_criacao FROM tb_dados WHERE num_sim = '$parametro' AND status_ativo = 1 AND dt_criacao BETWEEN '{$dti}:00' AND '{$dtf}:59' ORDER BY id DESC");
         }
         else
         {
             // Monta a query sem datas
-            $select = $this->db->select("select h,i,dt_criacao from tb_dados where num_sim = {$parametro} and status_ativo = 1 order
-                                         by id desc limit {$limite}");
+            $select = $this->db->select("SELECT h,i,dt_criacao FROM tb_dados WHERE num_sim = '$parametro' AND status_ativo = 1 ORDER BY id DESC LIMIT $limite");
         }
 
         // Verifica se existe resposta do select
@@ -65,6 +68,7 @@ class ListaInicial
             // Verifica se existe valor na result
             if (@mysql_num_rows($select) > 0)
             {
+
                 // Coleta os valores da result e transforma em array
                 while($row = @mysql_fetch_array($select))
                 {
@@ -89,6 +93,8 @@ class ListaInicial
                     $this->data['entrada'][] = "[Date.UTC({$sepData[0]},{$sepData[1]},{$sepData[2]},{$sepHora[0]},{$sepHora[1]},{$sepHora[2]}),".intval($row['i'])."]";
 
                     $this->data['saida'][] = "[Date.UTC({$sepData[0]},{$sepData[1]},{$sepData[2]},{$sepHora[0]},{$sepHora[1]},{$sepHora[2]}),".intval($row['h'])."]";
+
+
                 }
             }
             else
@@ -103,7 +109,7 @@ class ListaInicial
         {
             // Caso nao exista retorno do select
             // Informa que nao existe nenhum valor
-            echo "Nenhum valor<script>alert('nada');</script>";
+            echo "Nenhum valor<script>alert(Nenhum dado foi encontrado no BD para o SIM informado!');</script>";
         }
     }
 

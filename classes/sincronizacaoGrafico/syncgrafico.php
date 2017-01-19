@@ -1,6 +1,6 @@
 <?php
 // Inclui o cabecalho informando que eh um JSON
-header("content-type: application/json"); 
+header("content-type: application/json");
 
 // Inclui a classe de conexao com o banco
 require_once '../class-EficazDB.php';
@@ -25,8 +25,9 @@ if (@mysql_num_rows($select) > 0)
         $data[] = "Date.UTC({$sepData[0]}, {$sepData[1]}, {$sepData[2]}, {$sepHora[0]} , {$sepHora[1]}, {$sepHora[2]})";
         // Armazena o valor
         $data[] = $row['c'];
+
     }
-    
+
     //$array = array($resp);
     echo $_GET['callback']. '('. json_encode($data) . ')';
     //print_r($data);
