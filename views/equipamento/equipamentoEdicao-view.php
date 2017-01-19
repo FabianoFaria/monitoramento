@@ -24,14 +24,14 @@
 <script type="text/javascript">
     // gerenciador de link
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/equipamento">Listar equipamentos</a> / <a href="<?php echo HOME_URI; ?>/equipamento/editarEquipamentoCliente/<?php echo $this->parametros[0]; ?>">Edição de equipamento : <?php echo (isset($equipamentoCarregado)) ? $equipamentoCarregado['tipo_equipamento']: ""; ?></a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/equipamento">Listar equipamentos</a> / <a href="<?php echo HOME_URI; ?>/equipamento/editarEquipamentoCliente/<?php echo $this->parametros[0]; ?>">Edição de equipamento : <?php echo (isset($equipamentoCarregado)) ? $equipamentoCarregado['tipoEquip']: ""; ?></a>';
 </script>
 
 
 <div class="row">
     <div class="col-lg-12">
         <!-- TITULO PAGINA -->
-        <label class="page-header">Edição de equipamento : <?php echo (isset($equipamentoCarregado)) ? $equipamentoCarregado['tipo_equipamento']: ""; ?></label><!-- Fim Titulo pagina -->
+        <label class="page-header">Edição de equipamento : <?php echo (isset($equipamentoCarregado)) ? $equipamentoCarregado['tipoEquip']: ""; ?></label><!-- Fim Titulo pagina -->
     </div>
 </div>
 

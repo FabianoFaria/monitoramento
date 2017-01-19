@@ -126,6 +126,7 @@ class MonitoramentoController extends MainController
         //$listaIni   = new ListaInicial($limite, $this->db, $this->parametros);
 
         // Carregando a view
+        //require_once EFIPATH . "/views/monitoramento/monitoramentoGerarGrafico-view_back_up.php";
         require_once EFIPATH . "/views/monitoramento/monitoramentoGerarGrafico-view.php";
         require_once EFIPATH . "/views/_includes/footer.php";
     }
