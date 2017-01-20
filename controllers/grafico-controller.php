@@ -26,7 +26,9 @@ class GraficoController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // Carrega o modelo para este view
-        $modelo = $this->load_model('grafico/grafico-model');
+        $modelo     = $this->load_model('grafico/grafico-model');
+
+        $modeloClie = $this->load_model('cliente/cliente-model');
 
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
@@ -55,12 +57,14 @@ class GraficoController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // Carrega o modelo para este view
-        $modelo = $this->load_model('grafico/graficoListaFilial-model');
+        $modelo         = $this->load_model('grafico/graficoListaFilial-model');
+        $modeloClie     = $this->load_model('cliente/cliente-model');
+        $modeloEquip    = $this->load_model('equipamento/equipamento-model');
 
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
         require_once EFIPATH . "/views/_includes/menu.php";
-        require_once EFIPATH . "/views/grafico/graficoListaFilial-view.php";
+        require_once EFIPATH . "/views/grafico/graficoListaEquipamento-view.php";
         require_once EFIPATH . "/views/_includes/footer.php";
     }
 
@@ -114,7 +118,9 @@ class GraficoController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // Carrega o modelo para este view
-        $modelo = $this->load_model('grafico/graficoOpcaoVisualizacao-model');
+        $modelo         = $this->load_model('grafico/graficoOpcaoVisualizacao-model');
+        $modeloClie     = $this->load_model('cliente/cliente-model');
+        $modeloEquip    = $this->load_model('equipamento/equipamento-model');
 
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
@@ -178,5 +184,12 @@ class GraficoController extends MainController
          require_once EFIPATH . "/views/grafico/graficoFisicoGerador-view.php";
          require_once EFIPATH . "/views/_includes/footer.php";
      }
+
+    /*
+    * Função para listar as filiais do cliente, caso exista
+    */
+    public function graficoCliente(){
+
+    }
 }
 ?>

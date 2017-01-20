@@ -128,7 +128,7 @@ else
             // var_dump($cValor2);
 
             // TABELA UTILIZADAS PARA TENSÃO E CORRENTE
-            $tabela = array("b","c","d","i","j","l","e","f","g","m","n","o");
+            $tabela = array("b","c","d","e","f","g","i","j","l","m","n","o");
             $tipoES = array("R","S","T","CR","CS","CT","R","S","T","CR","CS","CT");
             $nomes = array ("entrada","saida");
 
@@ -379,7 +379,7 @@ else
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <!-- TITULO PAINEL -->
-                    <label class="page-header">Monitoramento de equipamento :</label><!-- Fim Titulo pagina -->
+                    <h4 class="page-header">Monitoramento de equipamento :</h4><!-- Fim Titulo pagina -->
                 </div>
                 <div class="panel-body">
                     <!-- DETALHES DO CLIENTE -->
@@ -537,21 +537,59 @@ else
                             <div class="panel-body">
                                 <div class="col-lg-4">
                                     <h4>Carga da bateria</h4>
-                                    <div class="div-baseBateria">
+
+                                    <!-- GRAFICO BATERIA REVISADO -->
+                                    <div class="row">
+                                        <div id="wellCargabateria" class="well well-normal-status" style="margin-top:30px;height:100px;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="pull-left text-muted">0</span><span class="pull-right text-muted">400</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="cargaBateria">
+                                                        <div class="progress progress-striped active">
+                                                            <div id="cargaUtilGraficoBateria" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                                <span id="cargaBateriaPorcentagem" class=""></span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <h4 id="mensagemCargaBateria" class="text-center"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- FIM GRAFICO BATERIA REVISADO -->
+
+                                    <!-- GRAFICO ANTIGO BATERIA -->
+                                    <!-- <div class="div-baseBateria"> -->
                                         <!-- Barras de forca -->
-                                        <div class="div-faixaVermelha"></div><div class="div-faixaVerde"></div>
+                                        <!-- <div class="div-faixaVermelha"></div><div class="div-faixaVerde"></div> -->
 
                                         <!-- Valores -->
-                                        <span class="span-menor">0</span>
-                                        <span id="span-maior" class="span-maior">400</span>
+                                        <!-- <span class="span-menor">0</span>
+                                        <span id="span-maior" class="span-maior">400</span> -->
 
                                         <!-- Campo de preenchimento -->
-                                        <div class="div-campoPreen">
+                                        <!-- <div class="div-campoPreen"> -->
                                             <!-- Legenda -->
-                                            <div id="div-legenda"></div>
+                                            <!-- <div id="div-legenda"></div> -->
                                             <!-- Barra de carga -->
-                                            <div id="div-cargaBat" class="div-carga"></div>
-                                        </div>
+                                            <!-- <div id="div-cargaBat" class="div-carga"></div> -->
+                                        <!-- </div> -->
+
+                                        <?php
+                                            /*
+                                            * RECUPERANDO O VALOR PARA OS NÍVEIS DE BATERIA, VINDOS DA VARIAVEL '$retorno'
+                                            */
+                                            $bateriaCriticoBaixo    = $retorno['10'];
+                                            $bateriaBaixo           = $retorno['11'];
+                                            $bateriaNivelNormal     = $retorno['12'];
+
+                                        ?>
 
                                         <script type="application/javascript">
                                             var valorBat = 0;
@@ -563,15 +601,50 @@ else
                                                     valorBat = parseFloat(data[0]);
                                                     var calcula = (valorBat*100)/maxBat;
                                                     console.log(calcula);
-                                                    document.getElementById('div-legenda').innerHTML = valorBat;
-                                                    document.getElementById('div-cargaBat').style.width = calcula+"%";
+                                                    // document.getElementById('div-legenda').innerHTML = valorBat;
+                                                    // document.getElementById('div-cargaBat').style.width = calcula+"%";
+
+                                                    //Estilização do novo gráfico de bateria
+                                                    document.getElementById('cargaBateriaPorcentagem').innerHTML = calcula+"%";
+                                                    document.getElementById('cargaUtilGraficoBateria').style.width = calcula+"%";
+                                                    //Se a bateria chegar a menor de 15% muda o estilo do well
+                                                    if(valorBat < <?php echo $bateriaBaixo; ?>){
+                                                        document.getElementById('mensagemCargaBateria').innerHTML = " ";
+                                                        document.getElementById('mensagemCargaBateria').innerHTML = "Carga em nível baixo!";
+
+                                                        document.getElementById('wellCargabateria').className = "";
+                                                        document.getElementById('wellCargabateria').className = "well well-atention-status";
+
+                                                        document.getElementById('cargaUtilGraficoBateria').className = "";
+                                                        document.getElementById('cargaUtilGraficoBateria').className = "progress-bar progress-bar-warning";
+                                                    }
+                                                    if(valorBat < <?php echo $bateriaCriticoBaixo; ?>){
+                                                        // document.getElementById('cargaUtilGraficoBateria').style.width = calcula+"%";
+                                                        document.getElementById('mensagemCargaBateria').innerHTML = " ";
+                                                        document.getElementById('mensagemCargaBateria').innerHTML = "Carga criticamente baixa!";
+
+                                                        document.getElementById('wellCargabateria').className = "";
+                                                        document.getElementById('wellCargabateria').className = "well well-danger-status well-blink";
+                                                        document.getElementById('cargaUtilGraficoBateria').className = "";
+                                                        document.getElementById('cargaUtilGraficoBateria').className = "progress-bar progress-bar-danger";
+                                                    }
+                                                    if(valorBat > <?php echo $bateriaBaixo; ?>){
+                                                        document.getElementById('mensagemCargaBateria').innerHTML = " ";
+                                                        document.getElementById('mensagemCargaBateria').innerHTML = "Carga nível seguro!";
+                                                        document.getElementById('wellCargabateria').className = "";
+                                                        document.getElementById('wellCargabateria').className = "well well-normal-status";
+                                                        document.getElementById('cargaUtilGraficoBateria').className = "";
+                                                        document.getElementById('cargaUtilGraficoBateria').className = "progress-bar progress-bar-success";
+                                                    }
                                                 });
                                             },6000);
 
                                             console.log("data[0] : " + parseFloat(data[0]));
                                         </script>
 
-                                    </div>
+                                    <!-- </div> -->
+
+
                                 </div>
                                 <div class="col-lg-4">
                                     <h4>Equipamento ligado?</h4>
@@ -604,10 +677,10 @@ else
                                                 }
 
                                                 //document.getElementById('nobreakLigado').innerHTML = valorLigado + "<br>" + resposta;
-                                                document.getElementById('nobreakLigado').innerHTML = "<p><i class='fa fa-power-off fa-2x'></i>" + resposta+"</p>";//
+                                                document.getElementById('nobreakLigado').innerHTML = "<h4><i class='fa fa-power-off fa-2x'></i> " + resposta+"</h4>";//
                                             },6000);
                                         </script>
-                                        <div id="fundoBaseNobreak"><label id="nobreakLigado"></label></div>
+                                        <div id="fundoBaseNobreak" class="well"><label id="nobreakLigado"></label></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">

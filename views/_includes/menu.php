@@ -216,9 +216,9 @@ else
                       <li>
                           <a href="<?php echo HOME_URI; ?>/grafico/"><i class="fa fa-area-chart fa-1x"></i><span> Relatorio gráfico</span></a>
                       </li>
-                      <li>
+                      <!-- <li>
                           <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador"><i class="fa fa-clipboard fa-1x"></i> Relatorio fisico</a>
-                      </li>
+                      </li> -->
                   </ul>
                 </li>
                 <?php } ?>
