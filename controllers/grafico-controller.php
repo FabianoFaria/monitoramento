@@ -51,7 +51,7 @@ class GraficoController extends MainController
         $this->check_login();
 
         //Define o titulo da pagina
-        $this->title = "Grafico";
+        $this->title = "grafico";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -83,7 +83,7 @@ class GraficoController extends MainController
         $this->check_login();
 
         //Define o titulo da pagina
-        $this->title = "Grafico";
+        $this->title = "grafico";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -112,7 +112,7 @@ class GraficoController extends MainController
         $this->check_login();
 
         //Define o titulo da pagina
-        $this->title = "Grafico";
+        $this->title = "grafico";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -142,13 +142,15 @@ class GraficoController extends MainController
         $this->check_login();
 
         //Define o titulo da pagina
-        $this->title = "Grafico";
+        $this->title = "grafico";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // Carrega o modelo para este view
-        $modelo = $this->load_model('grafico/graficoGerador-model');
+        $modelo         = $this->load_model('grafico/graficoGerador-model');
+        $modeloEquip    = $this->load_model('equipamento/equipamento-model');
+        $modeloClie     = $this->load_model('cliente/cliente-model');
 
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
@@ -170,7 +172,7 @@ class GraficoController extends MainController
          $this->check_login();
 
          //Define o titulo da pagina
-         $this->title = "Grafico";
+         $this->title = "grafico";
 
          // Define os parametro da funcao
          $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();

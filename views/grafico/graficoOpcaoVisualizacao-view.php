@@ -18,6 +18,7 @@ var menu = document.getElementById('listadir');
 <div class="container-fluid">
 
     <form id="formularioGeradorGrafico" method="">
+        <input type="hidden" id="geraGrafico" value="<?php echo $modelo->nUrl; ?>" />
         <div class="row">
             <div class="col-md-12">
                 <label class="titulo-pagina">
@@ -76,8 +77,6 @@ var menu = document.getElementById('listadir');
                                 <label class="font-texto-02">Tens&atilde;o</label>
                             </div>
                         </div>
-
-
 
                     </div>
                 </div>
@@ -309,7 +308,7 @@ var menu = document.getElementById('listadir');
                         <div class="row borda-01">
                             <div class="col-md-6 txt-center">
                                 <label class="font-texto-02">
-                                    <input class="form-control" type="text" id="data_inicio_rel" name="parametrosGraficosDataInico">
+                                    <input class="form-control" type="text" id="data_inicio_rel" name="data_inicio_rel" val="">
                                 </label>
                             </div>
                             <div class="col-md-6">
@@ -320,7 +319,7 @@ var menu = document.getElementById('listadir');
                         <div class="row">
                             <div class="col-md-6 txt-center">
                                 <label class="font-texto-02">
-                                    <input class="form-control" type="text" id="data_fim_rel" name="parametrosGraficosDataFim">
+                                    <input class="form-control" type="text" id="data_fim_rel" name="data_fim_rel" val="">
                                 </label>
                             </div>
                             <div class="col-md-6">
@@ -338,7 +337,8 @@ var menu = document.getElementById('listadir');
         </div>
 
         <div class="row text-center">
-            <a href="#" class="btn btn-default" id="btn_gerarGrafico" onclick="">Gerar grafico</a>
+            <!-- <a href="#" class="btn btn-default" id="btn_gerarGrafico" onclick="">Gerar grafico</a> -->
+            <button type="button" class="btn btn-primary" id="btn_gerarGrafico">Gerar gráfico</button>
         </div>
 
     </form>
@@ -363,48 +363,5 @@ var menu = document.getElementById('listadir');
       </div>
     </div>
 
-
-    <script>
-        $( "#btn_gerarGrafico" ).click(function() {
-
-            //Valida se pelo menos um parametro foi selecionado!
-            var checkboxs=document.getElementsByName("parametrosGraficos");
-            var okay=false;
-            for(var i=0,l=checkboxs.length;i<l;i++)
-            {
-                if(checkboxs[i].checked)
-                {
-                    okay=true;
-                    break;
-                }
-            }
-            if(okay)geraGrafico('<?php echo $modelo->nUrl; ?>');
-            else $('#nadaSelecionado').modal();
-
-        });
-
-        function geraGrafico(link)
-        {
-            // Coleta os dados do checkbox
-            var entr1t = $("#chk_entrada_r1t").is(":checked");
-            var ents1t = $("#chk_entrada_s1t").is(":checked");
-            var entt1t = $("#chk_entrada_t1t").is(":checked");
-            var entr1c = $("#chk_entrada_r1c").is(":checked");
-            var ents1c = $("#chk_entrada_s1c").is(":checked");
-            var entt1c = $("#chk_entrada_t1c").is(":checked");
-
-            if (!entr1t) entr1t = 0; else entr1t = 1;
-            if (!ents1t) ents1t = 0; else ents1t = 1;
-            if (!entt1t) entt1t = 0; else entt1t = 1;
-            if (!entr1c) entr1c = 0; else entr1c = 1;
-            if (!ents1c) ents1c = 0; else ents1c = 1;
-            if (!entt1c) entt1c = 0; else entt1c = 1;
-
-            var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c;
-            window.location.href = link + url;
-        }
-
-
-    </script>
 
 </div>

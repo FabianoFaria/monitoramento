@@ -57,64 +57,102 @@ class GraficoGeradorModel extends MainModel
     private function montaGrafico ()
     {
 
-        // Cria as tabelas
-        $tabela = array("b","c","d","e","f","g");
-        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T");
+        // CRIA AS TABELAS
+        $tabela = array("b","c","d","e","f","g","i", "j", "l", "m", "n", "o", "h");
+        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T", "corrente R", "Corrente S", "Corrente T", "Corrente Saida R", "Corrente Saida S", "Corrente Saida T", "Bateria");
 
-        // Converte da base 64
-        $sim_num = base64_decode($this->parametros[0]);
+        // CONVERTE DA BASE 64
+        //$sim_num = base64_decode($this->parametros[0]);
+        $equipId = $this->parametros[0];
 
-        // Coleta os itens ativados
-        $opc = explode(",",$this->parametros[4]);
+        //RECUPERA O SIM ATRAVES DO NUMERO DO EQUIPAMENTO
 
-        // Monta a query para buscar os resultados
-        $query = "select dt_criacao, ";
+        if(is_numeric($equipId)){
+            $querySim = "SELECT id_sim FROM tb_sim_equipamento WHERE id_equipamento = '$equipId'";
 
-        // Define os parametros
-        for ($a = 0; $a < sizeof($tabela) ; $a++)
-        {
-            if ($opc[$a] == 1)
-                $query .= $tabela[$a] . ",";
-        }
-        // Trata a ultima posicao
-        $query .= ".";
-        $query = str_replace(",.","",$query);
+            $resultadoSim = $this->verificaQuery($querySim);
 
-        // Adiciona o final da query
-        $query .= " from tb_dados where num_sim = {$sim_num} limit 300";
+            if(!empty($resultadoSim)){
 
-        // Busca os dados no banco
-        $result = $this->verificaQuery($query);
+                $sim_num = $resultadoSim[0]['id_sim'];
 
-        // Inicia a variavel da data
-        $respDate = "[";
+                // Coleta os itens ativados
+                //$opc = explode(",",$this->parametros[4]);
+                $opc = explode(",",$this->parametros[1]);
 
-        // Realiza o loop na result
-        for ($a = 0; $a < sizeof($result); $a++)
-        {
-            $respDate .= "'".date('d-M-y H:i',strtotime($result[$a]['dt_criacao']))."',";
+                // Monta a query para buscar os resultados
+                $query = "SELECT dt_criacao, ";
 
-            for ($b = 0; $b < sizeof($tabela) ; $b++)
-            {
-                if ($opc[$b] == 1 && empty ($respData[$tabela[$b]][0]))
+                // Define os parametros
+                for ($a = 0; $a < sizeof($tabela) ; $a++)
                 {
-                    $respData[$tabela[$b]][0] = "{name:'{$tabela2[$b]}',data:[";
+                    if (($opc[$a] == 1) && (is_numeric($opc[$a])))
+                        $query .= $tabela[$a] . ",";
                 }
 
-                if ($opc[$b] == 1)
-                    $respData[$tabela[$b]][0] .= "".intval(floatval($result[$a][$tabela[$b]]/10)).",";
+                // Trata a ultima posicao
+                $query .= ".";
+                $query = str_replace(",.","",$query);
+
+                // Recupera as datas de inicio e fim de periodo
+
+                $dataIni  = date( "Y-m-d H:i:s", strtotime($opc[13]) );
+                $dataFim  = date( "Y-m-d H:i:s", strtotime($opc[14]) );
+
+                // Adiciona o final da query
+                $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao > '{$dataIni}' AND dt_criacao < '{$dataFim}' LIMIT 300";
+
+                //var_dump( $opc, $query);
+
+                // Busca os dados no banco
+                $result = $this->verificaQuery($query);
+
+                // Inicia a variavel da data
+                $respDate = "[";
+
+                if(!empty($result)){
+
+                    // Realiza o loop na result
+                    for ($a = 0; $a < sizeof($result); $a++)
+                    {
+                        $respDate .= "'".date('d-M-y H:i',strtotime($result[$a]['dt_criacao']))."',";
+
+                        for ($b = 0; $b < sizeof($tabela) ; $b++)
+                        {
+                            if ($opc[$b] == 1 && empty ($respData[$tabela[$b]][0]))
+                            {
+                                $respData[$tabela[$b]][0] = "{name:'{$tabela2[$b]}',data:[";
+
+                            }
+
+                            if ($opc[$b] == 1)
+                                $respData[$tabela[$b]][0] .= "".intval(floatval($result[$a][$tabela[$b]]/10)).",";
+                        }
+                    }
+
+                    // Adiciona e remove os caracteres
+                    $respDate .= "]";
+                    $respDate = str_replace(",]","]",$respDate);
+
+                    foreach ($respData as $campo => $valor)
+                    {
+                        $respData[$campo][0] = $valor[0] . ",}";
+                        $respData[$campo][0] = str_replace(",,","]",$respData[$campo][0]);
+                    }
+
+                }else{
+                    $respDate = "[]";
+                    $respData = "{}";
+                }
+
             }
-        }
-        // Adiciona e remove os caracteres
-        $respDate .= "]";
-        $respDate = str_replace(",]","]",$respDate);
 
+            //var_dump($resultadoSim);
 
+        }else{
+            $respDate = "[]";
+            $respData = "{}";
 
-        foreach ($respData as $campo => $valor)
-        {
-            $respData[$campo][0] = $valor[0] . ",}";
-            $respData[$campo][0] = str_replace(",,","]",$respData[$campo][0]);
         }
 
         // Converte para json

@@ -20,8 +20,12 @@
         <script src="<?php echo HOME_URI; ?>/views/_js/metisMenu.js"></script>
         <!-- Morris Charts JavaScript -->
         <script src="<?php echo HOME_URI; ?>/views/_js/raphael.js"></script>
-        <script src="<?php echo HOME_URI; ?>/views/_js/morris.js"></script>
-        <script src="<?php echo HOME_URI; ?>/views/_js/morris-data.js"></script>
+
+        <!-- FLOAT Js -->
+        <script src="<?php echo HOME_URI; ?>/views/_js/jquery.flot.js"></script>
+        <script src="<?php echo HOME_URI; ?>/views/_js/jquery.flot.selection.js"></script>
+        <script src="<?php echo HOME_URI; ?>/views/_js/jquery.flot.time.js"></script>
+
 
         <!-- SweetAlert JavaScript -->
         <script src="<?php echo HOME_URI; ?>/views/_js/sweetalert.min.js"></script>

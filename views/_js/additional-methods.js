@@ -1066,4 +1066,39 @@ $.validator.addMethod( "ziprange", function( value, element ) {
 	return this.optional( element ) || /^90[2-5]\d\{2\}-\d{4}$/.test( value );
 }, "Your ZIP-code must be in the range 902xx-xxxx to 905xx-xxxx" );
 
+/*
+* Valida a data no formato BR
+*/
+jQuery.validator.addMethod("dateBR", function(value, element) {
+
+		   if(value.length!=10) return false;
+
+		   var data        = value;
+		   var dia         = data.substr(0,2);
+		   var barra1      = data.substr(2,1);
+		   var mes         = data.substr(3,2);
+		   var barra2      = data.substr(5,1);
+		   var ano         = data.substr(6,4);
+
+		   if(data.length!=10||barra1!="/"||barra2!="/"||isNaN(dia)||isNaN(mes)||isNaN(ano)||dia>31||mes>12)return false;
+		   if((mes==4||mes==6||mes==9||mes==11) && dia==31)return false;
+		   if(mes==2  &&  (dia>29||(dia==29 && ano%4!=0)))return false;
+		   if(ano < 1900)return false;
+		   return true;
+}, "Informe uma data válida.");
+
+/*
+* Valida se a data fina é maior que a data inicio
+*/
+jQuery.validator.addMethod("greaterThan",
+function(value, element, params) {
+
+    if (!/Invalid|NaN/.test(new Date(value))) {
+        return new Date(value) > new Date($(params).val());
+    }
+
+    return isNaN(value) && isNaN($(params).val())
+        || (Number(value) > Number($(params).val()));
+},'Must be greater than {0}.');
+
 }));
