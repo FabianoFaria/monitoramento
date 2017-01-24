@@ -20,7 +20,7 @@ class GraficoController extends MainController
         $this->check_login();
 
         //Define o titulo da pagina
-        $this->title = "Grafico";
+        $this->title = "grafico";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -98,6 +98,40 @@ class GraficoController extends MainController
         require_once EFIPATH . "/views/_includes/footer.php";
     }
 
+    /*
+    * FUNÇÃO PARA LISTAR OS EQUIPAMENTOS ALOCADOS PARA O CLIENTE E SUAS RESPECTIVAS FILIAIS
+    */
+    public function graficoFisicoEquipamentoCliente(){
+
+        // Verifica se esta logado
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "grafico";
+
+            // DEFINE OS PARAMETRO DA FUNCAO
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+            // Carrega o modelo para este view
+            $modelo         = $this->load_model('grafico/graficoOpcaoVisualizacao-model');
+            $modeloClie     = $this->load_model('cliente/cliente-model');
+            $modeloEquip    = $this->load_model('equipamento/equipamento-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/grafico/graficoParametrosRelatorio-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+        }
+    }
 
     /**
      * opcaoVisualizacao
@@ -178,7 +212,9 @@ class GraficoController extends MainController
          $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
          // Carrega o modelo para este view
-         $modelo = $this->load_model('grafico/grafico-model');
+         $modelo        = $this->load_model('grafico/grafico-model');
+         $modeloClie    = $this->load_model('cliente/cliente-model');
+         $modeloEquip   = $this->load_model('equipamento/equipamento-model');
 
          // Carrega view
          require_once EFIPATH . "/views/_includes/header.php";
@@ -187,11 +223,6 @@ class GraficoController extends MainController
          require_once EFIPATH . "/views/_includes/footer.php";
      }
 
-    /*
-    * Função para listar as filiais do cliente, caso exista
-    */
-    public function graficoCliente(){
 
-    }
 }
 ?>

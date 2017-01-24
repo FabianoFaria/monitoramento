@@ -81,7 +81,7 @@ class GraficoGeradorModel extends MainModel
                 $opc = explode(",",$this->parametros[1]);
 
                 // Monta a query para buscar os resultados
-                $query = "SELECT dt_criacao, ";
+                $query = "SELECT UNIX_TIMESTAMP(dt_criacao) AS 'dt_criacao', ";
 
                 // Define os parametros
                 for ($a = 0; $a < sizeof($tabela) ; $a++)
@@ -100,7 +100,8 @@ class GraficoGeradorModel extends MainModel
                 $dataFim  = date( "Y-m-d H:i:s", strtotime($opc[14]) );
 
                 // Adiciona o final da query
-                $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao > '{$dataIni}' AND dt_criacao < '{$dataFim}' LIMIT 300";
+                // $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao > '{$dataIni}' AND dt_criacao < '{$dataFim}' LIMIT 300";
+                $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}'";
 
                 //var_dump( $opc, $query);
 
@@ -115,7 +116,8 @@ class GraficoGeradorModel extends MainModel
                     // Realiza o loop na result
                     for ($a = 0; $a < sizeof($result); $a++)
                     {
-                        $respDate .= "'".date('d-M-y H:i',strtotime($result[$a]['dt_criacao']))."',";
+                        // $respDate .= "'".date('d-M-y H:i',strtotime($result[$a]['dt_criacao']))."',";
+                        $respDate .= "'".$result[$a]['dt_criacao']."',";
 
                         for ($b = 0; $b < sizeof($tabela) ; $b++)
                         {

@@ -121,8 +121,8 @@ else
         </ul>
         <!-- /.navbar-top-links -->
 
-        <div class="navbar-default sidebar" role="navigation">
-          <div class="sidebar-nav navbar-collapse">
+        <div class="navbar-default sidebar" role="">
+          <div class="sidebar-nav">
             <ul class="nav" id="side-menu">
                 <!-- HOME -->
                 <li>
@@ -216,9 +216,9 @@ else
                       <li>
                           <a href="<?php echo HOME_URI; ?>/grafico/"><i class="fa fa-area-chart fa-1x"></i><span> Relatorio gráfico</span></a>
                       </li>
-                      <!-- <li>
-                          <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador"><i class="fa fa-clipboard fa-1x"></i> Relatorio fisico</a>
-                      </li> -->
+                      <li>
+                          <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador"><i class="fa fa-clipboard fa-1x"></i> Relatorio de estatisticas</a>
+                      </li>
                   </ul>
                 </li>
                 <?php } ?>
