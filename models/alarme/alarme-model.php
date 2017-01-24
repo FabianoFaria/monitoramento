@@ -114,7 +114,7 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if ($result)
+                if($result)
                 {
                   /* VERIFICA SE EXISTE VALOR */
                   if (@mysql_num_rows($result) > 0)

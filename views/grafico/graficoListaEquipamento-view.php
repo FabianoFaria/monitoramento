@@ -1,6 +1,19 @@
-<?php 
+<?php
 
 if (!defined('EFIPATH')) exit();
+
+    $dadosCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
+
+    if($dadosCliente['status']){
+        $dadosCliente   = $dadosCliente['dados'][0];
+        $lista          = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
+        $lista          = $lista['equipamentos'];
+        $nomeCliente    = $dadosCliente['nome'];
+    }else{
+        $lista          = false;
+    }
+
+    //var_dump($lista);
 
 ?>
 
@@ -9,127 +22,95 @@ if (!defined('EFIPATH')) exit();
 
 <?php
 // chamando lista de valores
-$retorno = $modelo->buscaRelacaoEquipamento();
-$retorno2 = $modelo->buscaClienteFilial();
+// $retorno = $modelo->buscaRelacaoEquipamento();
+// $retorno2 = $modelo->buscaClienteFilial();
 
 
 ?>
 
 <script type="text/javascript">
-    var Movies0 = [ 
-        <?php
-            /* se for um array */
-            if (is_array($retorno))
-            {
-                $guarda = "";
-                
-                for ($a = 0 ; $a < sizeof($retorno) ; $a++)
-                {
-                    if (!empty($retorno[$a]))
-                    {
-                        $statusVer = "Desativado";
-                        if ($retorno[$a]['status_ativo'] == 1)
-                            $statusVer = "Ativado";
-                        
-                        
-                        $tempo = date('d/m/Y', strtotime($retorno[$a]['dt_criacao']));
-                        /* criptografa */
-                        $chaveSim = base64_encode($retorno[$a]['num_sim']);
-                        /* criptografa ambiente/equipamento */
-                        $modelaq = base64_encode($retorno[$a]['tb_sim_id']);
-                        /* criptografa id-sim-equip*/
-                        $modeliq = base64_encode($retorno[$a]['equip_id']);
-                        /* criptografa id-sim-equipamento */
-                        $sim_equ = base64_encode($retorno[$a]['tb_sim_id']);
-
-                        
-                        // Monta o array dos dados
-                        $guarda .= "{num_sim:     '{$chaveSim}',
-                                     modeleq:     '{$modeliq}' ,
-                                     modelsq:     '{$modelaq}' ,
-                                     sim_equi:    '{$sim_equ}' ,
-                                     
-                                     modelsh: '{$this->parametros[0]}', 
-                                     nomeEqui: '{$retorno[$a]['tipo_equipamento']}',
-                                     modelo: '{$retorno[$a]['modelo']}',
-                                     fabricante: '{$retorno[$a]['nome']}',
-                                     dataCriado: '{$tempo}',
-                                     status: '{$statusVer}' },";
-                    }
-                }
-                
-                $guarda .= ".";
-                $guarda = str_replace(",.","",$guarda);
-                echo $guarda;
-                
-            }
-        ?>
-    ];
-    var Movies = [Movies0];
-
-
     // gerenciador de link
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/configuracao/" class="linkMenuSup">Configura&ccedil;&atilde;o</a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/" class="linkMenuSup">Relatôrio </a> / <a href="<?php echo HOME_URI; ?>/grafico/listaFilial/<?php echo $this->parametros[0]; ?>"> Cliente :<?php echo $nomeCliente; ?></a>';
 </script>
 
 
 <script src="<?php echo HOME_URI; ?>/views/_js/table/index.js" type="text/javascript"></script>
 
-
-<div class="container-fluid">
-    <!-- Titulo pagina -->
-    <label class="titulo-pagina-cliente"><?php echo $retorno2['nome']; ?></label>
-    
-    <label class="titulo-pagina">
-        - GR&Aacute;FICO DO EQUIPAMENTO
-    </label><!-- Fim Titulo pagina --><!-- Fim Titulo pagina -->
-    
-    <div class='table-responsive'>
-        <table id="stream_table" class='table table-striped table-bordered'>
-            <thead>
-                <tr>
-                    <th lass="tdbdbottom">Nome do equipamento</th>
-                    <th lass="tdbdbottom">Modelo</th>
-                    <th lass="tdbdbottom">Fabricante</th>
-                    <th lass="tdbdbottom">Status</th>
-                    <th lass="tdbdbottom">Criado</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <div id="summary"><div></div></div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Titulo pagina -->
+        <label class="page-header">Relatôrios para equipamentos da matriz/filiais</label><!-- Fim Titulo pagina -->
     </div>
+
 </div>
 
-<script id="template" type="text/html">
-    <tr>
-        
-        <td class="tdprim">
-            <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/{{record.num_sim}}/{{record.modeleq}}/{{record.modelsq}}/{{record.sim_equi}}" class="link-tabela-moni">
-                {{record.nomeEqui}}
-            </a>
-        </td>
-        <td>
-            <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/{{record.num_sim}}/{{record.modeleq}}/{{record.modelsq}}/{{record.sim_equi}}" class="link-tabela-moni">
-                {{record.modelo}}
-            </a>
-        </td>
-        <td>
-            <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/{{record.num_sim}}/{{record.modeleq}}/{{record.modelsq}}/{{record.sim_equi}}" class="link-tabela-moni">
-                {{record.fabricante}}
-            </a>
-        </td>
-        <td>
-            <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/{{record.num_sim}}/{{record.modeleq}}/{{record.modelsq}}/{{record.sim_equi}}" class="link-tabela-moni">
-                {{record.status}}
-            </a>
-        </td>
-        <td>
-            <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/{{record.num_sim}}/{{record.modeleq}}/{{record.modelsq}}/{{record.sim_equi}}" class="link-tabela-moni">
-                {{record.dataCriado}}
-            </a>
-        </td>
-    </tr>
-</script>
+<div class="row">
+    <div class="col-lg-12">
+
+        <!-- TABELA CONTENDO OS USUÁRIOS CADASTRADOS -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            </diV>
+
+            <div class="panel-body">
+                <div class='table-responsive'>
+
+                    <table id="stream_table" class='table table-striped table-bordered'>
+                        <thead>
+                            <tr>
+                                <th>Equipamento</th>
+                                <th>Modelo</th>
+                                <th>Fabricante</th>
+                                <!-- <th>Potencia</th>-->
+                                <th>Cliente</th>
+                                <th>Sede</th>
+
+                                <th>Caracteristica</th>
+                                <!-- <th>Tipo bateria</th> -->
+                                <th class="txt-center">Verificar relatôrio equipamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                if($lista){
+
+                                    foreach ($lista as $equipamento) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $equipamento['tipoEquip']; ?></td>
+                                    <td><?php echo $equipamento['modelo']; ?></td>
+                                    <td><?php echo $equipamento['fabricante']; ?></td>
+                                    <!-- <td><?php //echo $equipamento['potencia']; ?></td> -->
+                                    <td><?php echo $equipamento['cliente']?></td>
+                                    <td>
+                                        <?php echo (isset($equipamento['filial'])) ? $equipamento['filial'] : "Matriz"; ?>
+                                    </td>
+                                    <!-- <td><?php //echo $equipamento['qnt_bateria']; ?></td> -->
+                                    <td><?php echo $equipamento['caracteristica_equip']; ?></td>
+                                    <!-- <td><?php //echo $equipamento['tipo_bateria']; ?></td> -->
+                                    <td><?php //echo $equipamento['amperagem_bateria']; ?>
+                                        <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/<?php echo $equipamento['id'] ?>" class="link-tabela-moni">
+                                            <i class="fa fa-clipboard  fa-2x "></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php
+                                    }
+                                }else{
+                            ?>
+                                 <tr>
+                                     <td colspan="6">Nenhum equipamento cadastrado até o momento</td>
+                                 </tr>
+                            <?php
+                                }
+
+                            ?>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

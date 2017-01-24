@@ -66,7 +66,7 @@
                                     foreach ($lista as $equipamento) {
                             ?>
                                 <tr>
-                                    <td><?php echo $equipamento['equipamento']; ?></td>
+                                    <td><?php echo $equipamento['tipo_equipamento']; ?></td>
                                     <td><?php echo $equipamento['modelo']; ?></td>
                                     <td><?php echo $equipamento['fabricante']; ?></td>
                                     <!-- <td><?php //echo $equipamento['potencia']; ?></td> -->

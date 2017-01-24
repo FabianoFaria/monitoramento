@@ -204,8 +204,8 @@ class MonitoramentoModel extends MainModel
      */
     function verificaTempoOperacao($sim)
     {
-        // Decodifica a url
-        $sim = base64_decode($sim);
+        // Decodifica a url, DEVIDO A MUDANÇA NA FORMA DE RECUPERAR O SIM, NÂO HÁ MAIS NECESSIDADE DE DECODIFICAR
+        //$sim = base64_decode($sim);
 
         // Monta a query para pegar os valores da entrada
         $query = "select dt_criacao from tb_numero_falta where id_num_sim = {$sim} order by (dt_criacao) desc limit 1";
@@ -259,8 +259,8 @@ class MonitoramentoModel extends MainModel
      */
     public function buscaDadosClinte ($sim)
     {
-        // Decodifica o sim
-        $sim = base64_decode($sim);
+        // Decodifica o sim, DEVIDO A MUDANÇAS NA FORMA DE RECUPERAR O SIM, NÃO HÁ MAIS NECESSIDADE DE DECODIFICAR
+        //$sim = base64_decode($sim);
 
         // Monta a query
         $query = "select
@@ -321,7 +321,7 @@ class MonitoramentoModel extends MainModel
     public function carregaDadosGrafico($posicao, $parte, $id)
     {
         // Coleta as informacoes do grafico
-        $querymon = "select {$posicao},dt_criacao from tb_dados where num_sim = {$id} order by (dt_criacao) desc limit 20";
+        $querymon = "select {$posicao},dt_criacao from tb_dados where num_sim = {$id} order by (dt_criacao) desc limit 2";
 
         // Monta a result
         $resmon = $this->db->select($querymon);

@@ -25,8 +25,9 @@ else
 
 // Verifica se o numero do sim existe
 if (isset($_GET['6e756d65726f']))
-    // Decodifica e coleta o numero do sim
-    $sim = base64_decode($_GET['6e756d65726f']);
+    // Decodifica e coleta o numero do sim, RETIRANDO A DECODIFICAÇÂO DEVIDO A FORMA DE RECUPERAÇÂO DO SIM
+    //$sim = base64_decode($_GET['6e756d65726f']);
+    $sim = $_GET['6e756d65726f'];
 else
     $sim = 0;
 
@@ -92,7 +93,7 @@ else if ($entrada == 5)
 function verificaLigado($conn,$sim)
 {
     // Monta a query para pegar os valores da entrada
-    $query = "select e,f,g from tb_dados where num_sim={$sim} and status_ativo = 1 order by (dt_criacao) desc limit 1";
+    $query = "SELECT e,f,g FROM tb_dados WHERE num_sim={$sim} AND status_ativo = 1 ORDER BY (dt_criacao) DESC LIMIT 1";
 
     // Executa a query
     $result = $conn->select($query);
@@ -132,7 +133,7 @@ function verificaLigado($conn,$sim)
 function verificaEntradaSaida ($conn,$tb,$sim)
 {
     // Coleta os dados
-    $result = $conn->select ("select {$tb} from tb_dados where num_sim={$sim} and status_ativo=1 order by (dt_criacao) desc limit 1");
+    $result = $conn->select ("SELECT {$tb} FROM tb_dados WHErE num_sim={$sim} AND status_ativo=1 ORDER BY (dt_criacao) DESC LIMIT 1");
     // Verifica se existe uma resposta
     if ($result)
     {

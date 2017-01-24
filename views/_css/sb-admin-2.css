@@ -493,3 +493,31 @@ table.dataTable thead .sorting:after {
   -o-animation: fa-blink .95s linear infinite;
   animation: fa-blink .95s linear infinite;
 }
+
+.well-normal-status{
+    background-color: #6ebbe1;
+    color : #ffffff;
+}
+.well-atention-status{
+    background-color: #defb1b;
+    color : #ffffff;
+}
+.well-danger-status{
+    background-color: #d9534f;
+    color : #ffffff;
+}
+
+@keyframes well-blink {
+    0% { opacity: 1; }
+    25% { opacity: 0.75; }
+    50% { opacity: 0.5; }
+    75% { opacity: 0.75; }
+    100% { opacity: 1; }
+}
+.well-blink {
+  -webkit-animation: well-blink 1s linear infinite;
+  -moz-animation: well-blink 1s linear infinite;
+  -ms-animation: well-blink 1s linear infinite;
+  -o-animation: well-blink 1s linear infinite;
+  animation: well-blink 1s linear infinite;
+}

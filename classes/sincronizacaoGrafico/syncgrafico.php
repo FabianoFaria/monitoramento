@@ -7,7 +7,7 @@ require_once '../class-EficazDB.php';
 $conn = new EficazDB();
 
 //$select = $conn->selectGrafico();
-$select = $conn->select("select * from tb_dados order by dt_insercao desc limit 20 ");
+$select = $conn->select("SELECT * FROM tb_dados ORDER BY dt_criacao DESC LIMIT 20 ");
 
 // Verifica se existe valor no select
 if (@mysql_num_rows($select) > 0)
@@ -31,6 +31,7 @@ if (@mysql_num_rows($select) > 0)
     //$array = array($resp);
     echo $_GET['callback']. '('. json_encode($data) . ')';
     //print_r($data);
+    return
 }
 // Fecha a conexao com o banco de dados
 $conn->close();
