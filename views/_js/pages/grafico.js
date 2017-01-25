@@ -49,15 +49,24 @@ function geraGrafico(link)
 
     var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c+ "," + entr1tc + "," + ents1tc + "," + entt1tc + "," + entr1cc + "," + ents1cc + "," + entt1cc + "," + batent + "," + dataIni + "," + dataFim;
     window.location.href = link + url;
-    
+
+}
+
+function gerarGraficoFisico(){
+
 }
 
 $().ready(function() {
 
     //TORNA OBRIGATORIO INFORMAR DATA AO FORMULARIO DE RELATORIO
 
+    $('#data_inicio_relatorio').mask('99/99/9999');
+    $('#data_fim_relatorio').mask('99/99/9999');
+
     $('#data_inicio_rel').mask('99/99/9999');
     $('#data_fim_rel').mask('99/99/9999');
+
+    //TRATA os daderar os dados para gerar o gráfico
 
     $('#btn_gerarGrafico').click(function(){
 
@@ -110,5 +119,59 @@ $().ready(function() {
             }
 
     });
+
+    //TRATA as datas que servirão de parametros para relatorio
+
+    $('#confirmParametros').click(function(){
+
+        $("#periodoRelatorio").validate({
+
+            rules: {
+
+                data_fim_relatorio : {
+                    required : true,
+                    dateBR : true,
+                    greaterThan : "#data_inicio_relatorio"
+                },
+                data_inicio_relatorio : {
+                    required : true,
+                    dateBR : true
+                }
+            },
+            messages: {
+
+                data_fim_relatorio : {
+                    required : "Campo obrigatôrio.",
+                    dateBR : "Favor informar uma data válida!",
+                    greaterThan : "Data final deve ser maior que a data inicial!"
+                },
+                data_inicio_relatorio : {
+                    required : "Campo obrigatôrio.",
+                    dateBR : "Favor informar uma data válida!"
+                }
+            }
+
+        });
+
+        if($("#periodoRelatorio").valid()){
+
+            var idClient    = $('#idcliente').val();
+
+            var from    = $("#data_inicio_relatorio").val().split("/");
+            var dataIni = from[2]+"-"+from[1]+"-"+from[0];
+
+            var to    = $("#data_fim_relatorio").val().split("/");
+            var dataFim = to[2]+"-"+to[1]+"-"+to[0];
+
+
+            //Concatena os parametros em uma string e passa para o link
+            var url     = idClient+"/"+from+"/"+to;
+            var link    = urlP+"/eficazmonitor/grafico/gerarRelatorioCliente/"
+            window.location.href = link + url;
+
+        }
+    });
+
+
 
 });
