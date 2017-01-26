@@ -56,6 +56,26 @@ function gerarGraficoFisico(){
 
 }
 
+/*
+* Adiciona datapicker ao formulario de data
+*/
+var options = {
+    dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
+    monthNames: [ "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ],
+    maxDate: "+0y +0m +0d",
+    mindate: "-1y -6m",
+    changeMonth: true,
+    changeYear: true,
+    yearRange: "c-1:c+1",
+    monthRange: "c-6:c+0",
+    dateFormat: "dd/mm/yy"
+}
+
+ $("#data_inicio_relatorio").datepicker(options);
+ $("#data_fim_relatorio").datepicker(options);
+ $("#data_inicio_rel").datepicker(options);
+ $("#data_fim_rel").datepicker(options);
+
 $().ready(function() {
 
     //TORNA OBRIGATORIO INFORMAR DATA AO FORMULARIO DE RELATORIO
@@ -65,6 +85,7 @@ $().ready(function() {
 
     $('#data_inicio_rel').mask('99/99/9999');
     $('#data_fim_rel').mask('99/99/9999');
+
 
     //TRATA os daderar os dados para gerar o gráfico
 

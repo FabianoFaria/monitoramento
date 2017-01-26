@@ -431,11 +431,37 @@
         {
             if(is_numeric($idequipamento)){
 
-                $query = "SELECT sim_equip.id, sim_equip.id_equipamento, sim_equip.id_sim, sim_equip.num_serie, alert.id as 'alertId', alert.status_ativo, trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado
+                $query = "SELECT sim_equip.id, sim_equip.id_equipamento, sim_equip.id_sim, sim_equip.num_serie, alert.id as 'alertId', alert.status_ativo, alert.dt_criacao, trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado, msg_alert.mensagem
                             FROM tb_sim_equipamento sim_equip
                             JOIN tb_alerta alert ON alert.id_sim_equipamento = sim_equip.id
+                            JOIN tb_msg_alerta msg_alert ON msg_alert.id = alert.id_msg_alerta
                             JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
-                            WHERE sim_equip.id_equipamento = '$idequipamento' AND alert.dt_criacao BETWEEN '$dataInicio 00:00:00' AND '$dataFim 00:00:00'";
+                            WHERE sim_equip.id_equipamento = '$idequipamento' AND alert.dt_criacao BETWEEN '$dataInicio 00:00:00' AND '$dataFim 00:00:00'
+                            ORDER BY alert.id DESC";
+
+                /* EXECUTA A QUERY ESPECIFICADA */
+                $result = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if($result)
+                {
+                    /* VERIFICA SE EXISTE VALOR */
+                    if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'equipAlarm' => $retorno);
+                    }else{
+                      $array = array('status' => false, 'equipAlarm' => '');
+                    }
+                }else{
+                    $array = array('status' => false, 'equipAlarm' => '');
+                }
 
             }else{
                 $array = array('status' => false);
