@@ -1,13 +1,52 @@
 <?php
 /* carrega dados */
 $dadosNot = $modelo->notificacao();
-if ($dadosNot)
-    /* carrega total de notificacao */
-    $t_not = sizeof($dadosNot);
-else
-    $t_not = 0;
+
+/*
+* VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+*/
+switch ($_SESSION['userdata']['tipo_usu']) {
+    case 'Administrador':
+        //var_dump($_SESSION);
+
+        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmes();
+
+    break;
+
+    case 'Cliente':
+
+
+        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['userId']);
+
+    break;
+
+    case 'Visitante':
+
+
+        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['userId']);
+    break;
+
+    case 'Tecnico':
+        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmes();
+
+    break;
+}
+
+if($notificacaoAlertas['status']){
+    /* CARREGA TOTAL DE NOTIFICACAO */
+    //$t_not = sizeof($dadosNot);
+
+    /* NO LUGAR DE NOTIFICAÇÃO, ESTÁ SENDO COLOCADO, AS NOTIFICAÇÕES DE ALARMES */
+    $t_not      = sizeof($notificacaoAlertas['alarmes']);
+    $dadosNot   = $notificacaoAlertas['alarmes'];
+
+}else {
+    $t_not      = 0;
+    $dadosNot   = null;
+}
 
 ?>
+
 
    <div id="wrapper" style="min-height:560px;">
 
@@ -36,46 +75,99 @@ else
                 if ($t_not != 0)
                 echo "<span id='contadorNot'>{$t_not}</span>";
               ?>
-              <ul class="dropdown-menu dropdown-messages">
+              <ul id="listaMenuAlarmes" class="dropdown-menu dropdown-messages">
                 <?php
-                    // verifica se existe e eh um array
-                    if (!empty($dadosNot) && is_array($dadosNot))
-                    {
-                      // monta a estrutura
-                      foreach ($dadosNot as $resul)
-                      {
-                        // inicia a lista de notificacao
-                        echo "<li class=''>";
-                        // verifica se eh um vinculo
-                        if ($resul['modo'] == "vinculo")
-                        {
-                          // monta link do parametro
-                          $paramlink = base64_encode($resul['id']."/".$resul['sim']);
-                          // verifica o tipo, se eh um equipamento ou ambiente
-                          if ($resul['tipo'] == "e")
-                          {
-                            // para equipamento
-                            echo "<div class=''><strong>Vincular tabela ao equipamento</strong></div><br>";
-                            echo "<strong>Cliente </strong> " .  $resul['nome'] . "<br>";
-                            echo "<p><strong>Equipamento</strong> " . $resul['nome_equip'] . "</p>";
-                            echo "<p><a href='".HOME_URI."/vinculo/vincularposicao/{$paramlink}'><i class='fa fa-link'></i> Clique aqui para vincular</a></p>";
-                            echo "";
-                          }
-                          else if ($resul['tipo'] == "a")
-                          {
-                            // para ambiente
-                              echo "<div class='notificacao-titulo'><strong>Vincular tabela ao ambiente</strong></div><br>";
-                              echo "<strong>Cliente </strong> " .  $resul['nome'] . "<br>";
-                              echo "<p><strong>Ambiente </strong>". $resul['nome_amb'] . "</p>";
-                              echo "<p><a href='".HOME_URI."/vinculo/vincularposicao/{$paramlink}'><i class='fa fa-link'></i> Clique aqui para vincular</a></p>";
-                          }
+
+                    //VERIFICA SE EXISTE E EH UM ARRAY
+                     if(isset($dadosNot))
+                     {
+
+                         /*
+                         0 =>
+    array (size=12)
+      'id' => string '81' (length=2)
+      'dt_criacao' => string '2017-01-19 04:56:59' (length=19)
+      'status_ativo' => string '1' (length=1)
+      'visto' => string '0' (length=1)
+      'mensagem' => string 'Tens&atilde;o em n&iacute;vel criticamente baixo' (length=48)
+      'id_equipamento' => string '22' (length=2)
+      'nomeEquipamento' => string 'Gh' (length=2)
+      'modelo' => string '12' (length=2)
+      'nome' => string 'Nacional Industrias' (length=19)
+      'parametro' => string 'Tensão' (length=7)
+      'parametroMedido' => string '0' (length=1)
+      'parametroAtingido' => string '60' (length=2)
+
+                         */
+
+                        foreach ($dadosNot as $novoAlerta) {
+                            ?>
+
+                            <li>
+                                <a href="<?php echo HOME_URI ?>/home/">
+                                    <div>
+                                        <strong><?php echo $novoAlerta['nome']; ?></strong>
+                                    </div>
+                                    <div>
+                                       <?php echo $novoAlerta['mensagem']; ?>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <?php
                         }
-                          echo "</li>";
-                           echo "<li class='divider'></li>";
-                      }
+
+                    }else{
+                        ?>
+                        <li>
+                            <div>
+                                <strong>Nenhum alarme</strong>
+                            </div>
+                            <div>
+                               Não há novos alarmes registrados.
+                            </div>
+                        </li>
+                        <?php
                     }
-                    else
-                    echo "<li>Nenhuma notifica&ccedil;&atilde;o</li>";
+
+                    // verifica se existe e eh um array
+                    // if (!empty($dadosNot) && is_array($dadosNot))
+                    // {
+                    //   // monta a estrutura
+                    //   foreach ($dadosNot as $resul)
+                    //   {
+                    //     // inicia a lista de notificacao
+                    //     echo "<li class=''>";
+                    //     // verifica se eh um vinculo
+                    //     if ($resul['modo'] == "vinculo")
+                    //     {
+                    //       // monta link do parametro
+                    //       $paramlink = base64_encode($resul['id']."/".$resul['sim']);
+                    //       // verifica o tipo, se eh um equipamento ou ambiente
+                    //       if ($resul['tipo'] == "e")
+                    //       {
+                    //         // para equipamento
+                    //         echo "<div class=''><strong>Vincular tabela ao equipamento</strong></div><br>";
+                    //         echo "<strong>Cliente </strong> " .  $resul['nome'] . "<br>";
+                    //         echo "<p><strong>Equipamento</strong> " . $resul['nome_equip'] . "</p>";
+                    //         echo "<p><a href='".HOME_URI."/vinculo/vincularposicao/{$paramlink}'><i class='fa fa-link'></i> Clique aqui para vincular</a></p>";
+                    //         echo "";
+                    //       }
+                    //       else if ($resul['tipo'] == "a")
+                    //       {
+                    //         // para ambiente
+                    //           echo "<div class='notificacao-titulo'><strong>Vincular tabela ao ambiente</strong></div><br>";
+                    //           echo "<strong>Cliente </strong> " .  $resul['nome'] . "<br>";
+                    //           echo "<p><strong>Ambiente </strong>". $resul['nome_amb'] . "</p>";
+                    //           echo "<p><a href='".HOME_URI."/vinculo/vincularposicao/{$paramlink}'><i class='fa fa-link'></i> Clique aqui para vincular</a></p>";
+                    //       }
+                    //     }
+                    //       echo "</li>";
+                    //        echo "<li class='divider'></li>";
+                    //   }
+                    // }
+                    // else
+                    // echo "<li>Nenhuma notifica&ccedil;&atilde;o</li>";
                 ?>
               </ul>
               <!-- /.dropdown-messages -->
@@ -305,6 +397,40 @@ else
         <!-- /.navbar-static-side -->
 
       </nav>
+
+      <script type="application/javascript">
+
+       /*
+       * Efetua a atualização do contador de alarmes a cada periodo de tempo
+       */
+
+          var dotValue = $('#contadorNot').html();
+
+          setInterval(function(){
+            var url = "<?php echo HOME_URI; ?>/alarme/verificaNovoAlarme?clie=<?php echo $_SESSION['userdata']['cliente']; ?>&total="+dotValue;
+            $.getJSON(url,  function(data) {
+
+                if(data.status){
+
+                    //NOVA CONTAGEM
+                    $('#contadorNot').html(contagem);
+                    //NOVA LISTA DE ALARMES
+                    $('#listaMenuAlarmes').html();
+                    $('#listaMenuAlarmes').html(alarmes);
+
+                    //exit(json_encode(array('status' => $statusContagem, 'contagem' => $totalAlarmes, 'alarmes' => $alarmesNovos)));
+
+                }else{
+                    console.log('prossiga!');
+                }
+            });
+
+            //   dotValue++;
+            //   $('#contadorNot').html(dotValue);
+
+          },5000);
+
+      </script>
 
       <div id="page-wrapper" >
           <!-- DIV CONTENDO A LOCALIZAÇÃO ATUAL DO USUÁRIO NO SISTEMA -->

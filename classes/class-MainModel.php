@@ -229,6 +229,84 @@ class MainModel
             return false;
     }
 
+    /*
+    * Função para buscar notificação de alarme
+    */
+    public function recuperaNotificacoesAlarmes(){
+
+        $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+                FROM tb_alerta alert
+                JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
+                JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
+                JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
+                JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                WHERE alert.status_ativo  = '1'
+                ORDER BY alert.id DESC";
+
+        // Monta a result
+        $result = $this->db->select($query);
+
+        /* verifica se existe resultado */
+        if (@mysql_num_rows($result) > 0)
+        {
+            /* monta array com os resultados */
+            while ($row = @mysql_fetch_assoc($result))
+                $retorno[] = $row;
+
+            /* retorna o array */
+            $array = array('status' => true, 'alarmes' => $retorno);
+
+        }else{
+            $array = array('status' => false, 'alarmes' => '');
+        }
+
+        return $array;
+    }
+
+    /*
+    *   Função para retornar os alarmes novos gerados pelo cliente.
+    */
+    public function recuperaNotificacoesAlarmesCliente($idCliente){
+
+        if(is_numeric($idCliente)){
+
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+                    FROM tb_alerta alert
+                    JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
+                    JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                    JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
+                    JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                    JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
+                    JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                    WHERE clie.id = '$idCliente' AND alert.status_ativo  = '1'
+                    ORDER BY alert.id DESC";
+
+            // Monta a result
+            $result = $this->db->select($query);
+
+            /* verifica se existe resultado */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* monta array com os resultados */
+                while ($row = @mysql_fetch_assoc($result))
+                    $retorno[] = $row;
+
+                /* retorna o array */
+                $array = array('status' => true, 'alarmes' => $retorno);
+
+            }else{
+                $array = array('status' => false, 'alarmes' => '');
+            }
+
+        }else{
+            $array = array('status' => false, 'alarmes' => '');
+        }
+
+        return $array;
+    }
+
 
     /**
      * Funcao de upload de arquivo
