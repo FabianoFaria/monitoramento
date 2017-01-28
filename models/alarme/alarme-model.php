@@ -203,12 +203,58 @@
                   $array = array('status' => true, 'alerta' => $retorno);
               }else{
                   $array = array('status' => false, 'alerta' => '');
-              }
+
+                    $retorno[] = $row;
+                  }
+
             }
 
             return $array;
         }
 
+        /*
+        * RECUPERA LISTA DE ALARMES QUE FORAM REGISTRADOS POR DETERMINADO CLIENTE
+        */
+        public function alarmesGeradosCliente($idCliente){
+
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+                    FROM tb_alerta alert
+                    JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
+                    JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                    JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
+                    JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                    JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
+                    JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                    WHERE clie.id = '$idCliente'
+                    ORDER BY alert.id DESC";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if ($result)
+            {
+              /* VERIFICA SE EXISTE VALOR */
+              if (@mysql_num_rows($result) > 0)
+                {
+                  /* ARMAZENA NA ARRAY */
+                  while ($row = @mysql_fetch_assoc ($result))
+                  {
+                    $retorno[] = $row;
+                  }
+
+                  /* DEVOLVE RETORNO */
+                  $array = array('status' => true, 'alerta' => $retorno);
+              }else{
+                  $array = array('status' => false, 'alerta' => '');
+
+                    $retorno[] = $row;
+                  }
+
+            }
+
+            return $array;
+        }
 
         /*
         * RECUPERA OS DADOS DO ALARME PARA SEREM EXIBIDOS PARA O USUÁRIO
@@ -243,6 +289,113 @@
               }else{
                   $array = array('status' => false, 'alerta' => '');
               }
+            }
+
+            return $array;
+        }
+
+        /*
+        * Efetua a contagem de alarmes para atualização de contagem.
+        */
+        public function contagemNovosAlarmes($idClie){
+
+            if(is_numeric($idClie)){
+
+                //Caso um administrador esteja logado
+                if($idClie == 0){
+                    $query = "SELECT COUNT(alert.id) AS 'totalNovo' FROM tb_alerta alert WHERE status_ativo = '1' ";
+                }else{
+                    $query = "SELECT COUNT(alert.id) AS 'totalNovo'
+                            FROM tb_alerta alert
+                           JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
+                          JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
+                            JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                            WHERE alert.status_ativo  = '1' AND clie.id = '$idClie'";
+                }
+
+                /* MONTA A RESULT */
+                $result = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if ($result)
+                {
+                  /* VERIFICA SE EXISTE VALOR */
+                  if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'totalAlarmes' => $retorno);
+                  }else{
+                      $array = array('status' => true, 'totalAlarmes' => 0);
+                  }
+              }else{
+                $array = array('status' => false, 'totalAlarmes' => 0);
+              }
+
+            }else{
+
+                $array = array('status' => false, 'totalAlarmes' => 0);
+
+            }
+
+            return $array;
+        }
+
+        /*
+        * RECUPERA OS ALERTAS PARA SEREM EXIBIDOS NO MENU
+        */
+        public function recuperaNotificacoesAlarmesRecemCadastrados($idCliente){
+
+            if(is_numeric($idCliente)){
+
+                if($idCliente == 0){
+                    $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+                            FROM tb_alerta alert
+                            JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
+                            JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                            JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
+                            JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                            JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
+                            JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                            WHERE alert.status_ativo  = '1'
+                            ORDER BY alert.id DESC";
+                }else{
+                    $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+                            FROM tb_alerta alert
+                            JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
+                            JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                            JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
+                            JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                            JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
+                            JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                            WHERE clie.id = '$idCliente' AND alert.status_ativo  = '1'
+                            ORDER BY alert.id DESC";
+                }
+
+                // Monta a result
+                $result = $this->db->select($query);
+
+                /* verifica se existe resultado */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* monta array com os resultados */
+                    while ($row = @mysql_fetch_assoc($result))
+                        $retorno[] = $row;
+
+                    /* retorna o array */
+                    $array = array('status' => true, 'alarmes' => $retorno);
+
+                }else{
+                    $array = array('status' => false, 'alarmes' => '');
+                }
+
+            }else{
+                $array = array('status' => false, 'totalAlarmes' => 0);
             }
 
             return $array;
@@ -334,6 +487,142 @@
 
             return $array;
         }
+
+
+        /*
+        * Recupera os dados do(s) equipamento(s) que o cliente possui
+        */
+        public function totalEquipamentosClientes($idCliente){
+
+            if(is_numeric($idCliente)){
+
+                $query = "SELECT clie.id, sim.num_sim, sim_equip.id_equipamento, sim_equip.num_serie, tp_equip.tipo_equipamento, equip.nomeEquipamento, equip.modelo FROM tb_cliente clie
+                            JOIN tb_sim sim ON sim.id_cliente = clie.id
+                            LEFT JOIN tb_sim_equipamento sim_equip ON sim_equip.id_sim = sim.num_sim
+                            LEFT JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                            LEFT JOIN tb_tipo_equipamento tp_equip ON tp_equip.id = equip.tipo_equipamento
+                            WHERE clie.id = '$idCliente'";
+
+                /* EXECUTA A QUERY ESPECIFICADA */
+                $result = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if($result)
+                {
+                    /* VERIFICA SE EXISTE VALOR */
+                    if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'equipamentos' => $retorno);
+                    }else{
+                      $array = array('status' => false, 'equipamentos' => '');
+                    }
+                }else{
+                    $array = array('status' => false, 'equipamentos' => '');
+                }
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+
+        }
+
+        /*
+        * RECUPERA O TOTAL DE ALARMES REGISTRADOS DURANTE UM PERIODO, DE ACORDO COM UM DETERMINADO CLIENTE
+        */
+        public function totalAlarmesGeradoEquipamento($idequipamento, $dataInicio, $dataFim){
+
+            if(is_numeric($idequipamento)){
+
+                $query = "SELECT COUNT(alert.id) AS 'total' FROM tb_alerta alert
+                        JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
+                        JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                        WHERE equip.id = '$idequipamento' AND alert.dt_criacao BETWEEN '$dataInicio 00:00:00' AND '$dataFim 00:00:00'";
+
+                /* EXECUTA A QUERY ESPECIFICADA */
+                $result = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if($result)
+                {
+                    /* VERIFICA SE EXISTE VALOR */
+                    if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'alarmes' => $retorno);
+                    }else{
+                      $array = array('status' => false, 'alarmes' => '');
+                    }
+                }else{
+                    $array = array('status' => false, 'alarmes' => '');
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
+        /*
+        * RECUPERA OS ALARMES QUE FORAM DISPARADOS POR DETERMINADO EQUIPAMENTO
+        */
+        public function recuperaAlarmesEquipamento($idequipamento, $dataInicio, $dataFim)
+        {
+            if(is_numeric($idequipamento)){
+
+                $query = "SELECT sim_equip.id, sim_equip.id_equipamento, sim_equip.id_sim, sim_equip.num_serie, alert.id as 'alertId', alert.status_ativo, alert.dt_criacao, trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado, msg_alert.mensagem
+                            FROM tb_sim_equipamento sim_equip
+                            JOIN tb_alerta alert ON alert.id_sim_equipamento = sim_equip.id
+                            JOIN tb_msg_alerta msg_alert ON msg_alert.id = alert.id_msg_alerta
+                            JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                            WHERE sim_equip.id_equipamento = '$idequipamento' AND alert.dt_criacao BETWEEN '$dataInicio 00:00:00' AND '$dataFim 00:00:00'
+                            ORDER BY alert.id DESC";
+
+                /* EXECUTA A QUERY ESPECIFICADA */
+                $result = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if($result)
+                {
+                    /* VERIFICA SE EXISTE VALOR */
+                    if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'equipAlarm' => $retorno);
+                    }else{
+                      $array = array('status' => false, 'equipAlarm' => '');
+                    }
+                }else{
+                    $array = array('status' => false, 'equipAlarm' => '');
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
     }
 
 ?>

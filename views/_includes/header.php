@@ -40,6 +40,10 @@
 
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.validate.js"></script>
         <script src="<?php echo HOME_URI; ?>/views/_js/additional-methods.js"></script>
+        
+        <!-- Jquery UI CSS -->
+        <link rel="stylesheet" type="text/css" href="<?php echo HOME_URI; ?>/views/_css/jquery.css">
+
 
         <!-- SETTAR TIME ZONE -->
         <?php

@@ -5,6 +5,37 @@
     //var_dump($_SESSION);
 
     $alarmesRegistrados = $modeloAlarme->alarmesGerados();
+    
+    /*
+    * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+    */
+    switch ($_SESSION['userdata']['tipo_usu']) {
+        case 'Administrador':
+            //var_dump($_SESSION);
+
+            $alarmesRegistrados = $modeloAlarme->alarmesGerados();
+
+        break;
+
+        case 'Cliente':
+
+            $alarmesRegistrados = $modeloAlarme->alarmesGeradosCliente($_SESSION['userdata']['cliente']);
+
+        break;
+
+        case 'Visitante':
+
+            $alarmesRegistrados = $modeloAlarme->alarmesGeradosCliente($_SESSION['userdata']['cliente']);
+
+        break;
+
+        case 'Tecnico':
+            $alarmesRegistrados = $modeloAlarme->alarmesGerados();
+
+        break;
+    }
+
+
 ?>
 
     <script type="text/javascript">

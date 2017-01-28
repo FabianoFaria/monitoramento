@@ -1,6 +1,9 @@
 <?php
-/* verifica se esta definido o path */
-if (! defined('EFIPATH')) exit();
+    /* verifica se esta definido o path */
+    if (! defined('EFIPATH')) exit();
+
+    $listaClientes = $modeloClie->listarCliente();
+
 ?>
 
 <script src="<?php echo HOME_URI; ?>/views/_js/table/mustache.js" type="text/javascript"></script>
@@ -12,42 +15,10 @@ $retorno = $modelo->buscaRelacao();
 ?>
 
 <script type="text/javascript">
-    var Movies0 = [
-        <?php
-            /* se for um array */
-            if (is_array($retorno))
-            {
-                $guarda = "";
-                foreach($retorno as $row)
-                {
-                    $statusVer = "Desativado";
-                    if ($row['status_ativo'] == 1)
-                        $statusVer = "Ativado";
 
-                    /* convert data para o padrao brasileiro */
-                    $tempo = date('d/m/Y', strtotime($row['dt_criacao']));
-
-                    /* criptografa sim */
-                    $chaveSim = base64_encode($row['num_sim']);
-
-
-                    $guarda .= "{modelsh: '{$chaveSim}',
-                                 num_sim: {$row['num_sim']},
-                                 dataTmp: '{$tempo}',
-                                 cliente: '{$modelo->converte($row['nome'],1)}',
-                                 status: '{$statusVer}' },";
-                }
-                $guarda .= ".";
-                $guarda = str_replace(",.","",$guarda);
-                echo $guarda;
-            }
-        ?>
-    ];
-    var Movies = [Movies0];
-
-    // gerenciador de link
+    // GERENCIADOR DE LINK
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/" class="linkMenuSup">Gr&aacute;fico</a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/graficoFisicoGerador/" class="linkMenuSup">Relatôrio fisico</a>';
 </script>
 
 <script src="<?php echo HOME_URI; ?>/views/_js/table/index.js" type="text/javascript"></script>
@@ -55,100 +26,56 @@ $retorno = $modelo->buscaRelacao();
 <div class="row">
     <div class="col-md-12">
         <!-- Titulo pagina -->
-        <label class="page-header">Relatorio gráfico impresso</label><!-- Fim Titulo pagina -->
+        <label class="page-header">Selecione cliente para gerar relatôrio</label><!-- Fim Titulo pagina -->
     </div>
 
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-info" id="accordionFiltro">
+    <div class="col-lg-12">
+
+        <!-- TABELA CONTENDO OS USUÁRIOS CADASTRADOS -->
+        <div class="panel panel-default">
             <div class="panel-heading">
-                <a data-toggle="collapse" data-parent="#accordionFiltro" href="#filtroCollapse" aria-expanded="false" aria-controls="accordionFiltro"><h5><i class="fa fa-search-plus "></i> Adicionar filtro</h5></a>
+
             </div>
-            <div id="filtroCollapse" class="panel-body panel-collapse collapse in">
-                <form method="post">
-                    <div class="row">
-                        <!-- Status do alarme -->
-                        <div class="col-md-4 ">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Equipamento</label>
-                                <select class="form-control">
-                                    <option value="">Selecione...</option>
-                                    <option value="">Todos</option>
-                                </select>
-                            </div>
-                        </div>
+            <div class="panel-body">
+                <table class='table table-striped table-bordered'>
+                    <thead>
+                        <tr>
+                            <th class="tdbdbottom">Cliente</th>
+                            <th class="tdbdbottom">Data ativa&ccedil;&atilde;o</th>
+                            <th class="tdbdbottom">Status</th>
+                            <th class="tdbdbottom">Parametros para relatôrio</th>
+                        </tr>
+                    </thead>
+                    <tbdoy>
+                        <?php
+                            if($listaClientes){
 
-                        <!-- Nome do cliente -->
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Nome do cliente</label>
-                                <select class="form-control">
-                                    <option value="">Selecione...</option>
-                                    <option value="">Todos</option>
-                                </select>
-                            </div>
-                        </div>
+                                foreach ($listaClientes as $cliente) {
 
+                                    $data           = explode(" ",$cliente['dt_criacao']);
+                                    $dataCliente    = $data[0];
 
-                        <div class="col-md-4 ">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Filial</label>
-                                <select class="form-control">
-                                    <option value="">Selecione...</option>
-                                    <option value="">Todos</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $cliente['nome']?></td>
+                                        <td><?php echo implode("/", array_reverse(explode("-", $dataCliente))); ?></td>
+                                        <td><?php echo ($cliente['status_ativo'] == 1) ? "Ativo": "Desativado" ; ?></td>
+                                        <td><a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoEquipamentoCliente/<?php echo $cliente['id']; ?>"><i class="fa fa-file-text-o fa-2x"></i></a></td>
+                                    </tr>
+                                    <?php
+                                }
 
-                        <div class="col-md-4 pull-right">
-                            <button class="btn btn-info pull-right" type="button">Filtrar</button>
-                        </div>
-                    </div>
-                </form>
+                            }else{
+                                echo "<tr><td colspan='4'>Nenhum cliente disponivel. </td></tr>";
+                            }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
+
     </div>
 </div>
-
-
-<div class="container-fluid">
-
-    <div class='table-responsive'>
-        <table id="stream_table" class='table table-striped table-bordered'>
-            <thead>
-                <tr>
-                    <th class="tdbdbottom">Cliente</th>
-                    <th class="tdbdbottom">Data ativa&ccedil;&atilde;o</th>
-                    <th class="tdbdbottom">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <div id="summary"><div></div></div>
-    </div>
-</div>
-
-<script id="template" type="text/html">
-    <tr>
-        <td class="tdprim">
-            <a href="<?php echo HOME_URI; ?>/grafico/listaFilial/{{record.modelsh}}" class="link-tabela-moni">
-                {{record.cliente}}
-            </a>
-        </td>
-        <td class="">
-            <a href="<?php echo HOME_URI; ?>/grafico/listaFilial/{{record.modelsh}}" class="link-tabela-moni">
-                {{record.dataTmp}}
-            </a>
-        </td>
-        <td class="">
-            <a href="<?php echo HOME_URI; ?>/grafico/listaFilial/{{record.modelsh}}" class="link-tabela-moni">
-                {{record.status}}
-            </a>
-        </td>
-    </tr>
-</script>

@@ -3,9 +3,11 @@
 /* verifica se esta definido o path */
 if (! defined('EFIPATH')) exit();
 
+    
+
 // chamando lista de valores
 // cliente id ; tipo
-$retorno = $modelo->tabelaDeCliente($_SESSION['userdata']['cliente'],$_SESSION['userdata']['tipo']);
+    $retorno = $modelo->tabelaDeCliente($_SESSION['userdata']['cliente'],$_SESSION['userdata']['tipo']);
 
     //var_dump($_SESSION);
 

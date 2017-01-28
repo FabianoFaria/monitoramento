@@ -521,3 +521,10 @@ table.dataTable thead .sorting:after {
   -o-animation: well-blink 1s linear infinite;
   animation: well-blink 1s linear infinite;
 }
+
+/*
+* Propiedade localizada na área de relatório gráfico
+*/
+.legendLabel{
+    color: #ffffff;
+}

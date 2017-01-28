@@ -43,7 +43,7 @@
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        $modelo         = $this->load_model('usuario/usuario-model');
+        $modelo        = $this->load_model('usuario/usuario-model');
         // CARREGA O MODELO PARA ESTE VIEW
         $alarmeModelo  = $this->load_model('alarme/alarme-model');
         $modeloEdicao  = $this->load_model('editar/editar-model');
@@ -253,6 +253,76 @@
 
     }
 
+
+    /*
+    * VERIFICA SE FOI REGISTRADO UM NOVO ALARME PARA ATUALIZAR O CONTADOR VIA JSON
+    */
+    public function verificaNovoAlarme(){
+
+        $quantidadeAtual    = $_GET['total'];
+
+        $alarmeModelo       = $this->load_model('alarme/alarme-model');
+
+        $contagemAlarmes    = $alarmeModelo->contagemNovosAlarmes($_GET['clie']);
+
+        if($contagemAlarmes['status']){
+
+            //Compara com o número atual de alarmes
+
+            if($quantidadeAtual < $contagemAlarmes['totalAlarmes'][0]['totalNovo']){
+
+                //Carrega os alarmes que foram recem cadastrados
+                $alarmesRegistrados = $alarmeModelo->recuperaNotificacoesAlarmesRecemCadastrados($_GET['clie']);
+
+                //var_dump($alarmesRegistrados);
+                if($alarmesRegistrados['status']){
+
+                    $listaAlarme    = "";
+
+                    //Monta a lista de alarmes que seram devolvidos ao JSON para serem exibidos no menu.
+                    foreach ($alarmesRegistrados['alarmes'] as $alarmeLista) {
+                        $listaAlarme    .= "<li>";
+                        $listaAlarme    .= "<a href='".HOME_URI."/home/'>";
+                        $listaAlarme    .= "<div>";
+                        $listaAlarme    .= "<strong>".$alarmeLista['nome']."</strong>";
+                        $listaAlarme    .= "</div>";
+                        $listaAlarme    .= "<div>";
+                        $listaAlarme    .= $alarmeLista['mensagem'];
+                        $listaAlarme    .= "</div>";
+                        $listaAlarme    .= "</a>";
+
+                        $listaAlarme    .= "</li>";
+                        $listaAlarme    .= "<li class='divider'></li>";
+
+                    }
+                    $statusContagem = true;
+                    $totalAlarmes   = $contagemAlarmes['totalAlarmes'][0]['totalNovo'];
+                    $alarmesNovos   = $listaAlarme;
+
+                }else{
+                    //Retorna falso caso não tenha sido retornado um npumero de alertas maior que o inicial
+                    $statusContagem = false;
+                    $totalAlarmes   = 0;
+                    $alarmesNovos   = '';
+                }
+
+            }else{
+                //Retorna falso caso não tenha sido retornado um npumero de alertas maior que o inicial
+                $statusContagem = false;
+                $totalAlarmes   = 0;
+                $alarmesNovos   = '';
+            }
+
+        }else{
+            //Devolve nenhum dado extra em caso a busca tenha falhado
+            $statusContagem = false;
+            $totalAlarmes   = $quantidadeAtual;
+            $alarmesNovos   = '';
+        }
+
+        exit(json_encode(array('status' => $statusContagem, 'contagem' => $totalAlarmes, 'alarmes' => $alarmesNovos)));
+
+    }
 
  }
 

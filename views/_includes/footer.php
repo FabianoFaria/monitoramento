@@ -33,6 +33,11 @@
         <!-- Main Files -->
         <script src="<?php echo HOME_URI; ?>/views/_js/sb-admin-2.js"></script>
 
+        <!-- Jquery UI CSS -->
+        <link rel="stylesheet" type="text/css" href="<?php echo HOME_URI; ?>/views/_css/jquery-ui.css">
+        <script src="<?php echo HOME_URI; ?>/views/_js/jquery-ui.js" type="text/javascript"></script>
+
+
         <!-- Js Files da página atual, se existir -->
 
         <script src="<?php echo HOME_URI; ?>/views/_js/pages/<?php echo $this->title; ?>.js"></script>
