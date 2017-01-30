@@ -3,9 +3,39 @@
 if (! defined('EFIPATH')) exit();
 
 
-    $listaClientes = $modeloClie->listarCliente();
+    //$listaClientes = $modeloClie->listarCliente();
 
     //var_dump($listaClientes);
+    /*
+    * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+    */
+    switch ($_SESSION['userdata']['tipo_usu']) {
+        case 'Administrador':
+            //var_dump($_SESSION);
+            $listaClientes = $modeloClie->listarCliente();
+
+
+        break;
+
+        case 'Cliente':
+
+            $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+
+        break;
+
+        case 'Visitante':
+
+            $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+
+        break;
+
+        case 'Tecnico':
+            //RETORNO SENDO CARREGADO DIRETO DA CLASS.MAIN
+            $listaClientes = $modeloClie->listarCliente();
+
+        break;
+    }
+
 
 ?>
 

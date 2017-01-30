@@ -22,7 +22,7 @@
              $this->check_login();
 
              //Define o titulo da pagina
-             $this->title = "Usuário";
+             $this->title = "usuario";
 
              // Define os parametro da funcao
              $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -50,7 +50,7 @@
             $this->check_login();
 
             //Define o titulo da página
-            $this->title = "Lista usuário";
+            $this->title = "usuario";
 
             // Define os parametro da funcao
             $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -85,7 +85,7 @@
              }else
              {
                  //Define o titulo da pagina
-                 $this->title = "Editar usuário";
+                 $this->title = "usuario";
 
                  // Define os parametro da funcao
                  $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -138,7 +138,7 @@
           }
 
         /*
-        * Função para atualizar o contato do cliente 
+        * Função para atualizar o contato do cliente
         */
         public function registraAtualizacaoUsuario()
         {
@@ -149,6 +149,23 @@
             $atualizarContato  = $usuarioModelo->atualizarUsuarioJson($_POST['id_usuario'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['confirmaS'], $_POST['idCliente']);
 
             if($atualizarContato['status']){
+                exit(json_encode(array('status' => true)));
+            }else{
+                exit(json_encode(array('status' => false)));
+            }
+        }
+
+        /*
+        * FUNÇÃO PARA ATUALIZAR USUÁRIO ATUALIZAR OS PRÓPIOS DADOS VIA JSON
+        */
+        public function atualizarUsuarioManual(){
+
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $usuarioModelo          = $this->load_model('usuario/usuario-model');
+
+            $atualizarUsuarioJson   = $usuarioModelo->atualizarUsuarioJson($_POST['idUser'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['senha'], $_POST['confirmaS']);
+
+            if($atualizarUsuarioJson['status']){
                 exit(json_encode(array('status' => true)));
             }else{
                 exit(json_encode(array('status' => false)));

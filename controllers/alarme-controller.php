@@ -324,6 +324,77 @@
 
     }
 
+    /*
+    * VERIFICA SE FOI REGISTRADO UM NOVO ALARME PARA ATUALIZAR O CONTADOR VIA JSON
+    */
+    public function verificaListaNovoAlarme(){
+
+        $quantidadeAtual    = $_GET['total'];
+
+        $alarmeModelo       = $this->load_model('alarme/alarme-model');
+
+        $contagemAlarmes    = $alarmeModelo->recuperaNotificacoesAlarmesRecemCadastrados($_GET['clie'], $quantidadeAtual);
+
+        $listaAlarme        = "";
+
+        if($contagemAlarmes['status']){
+
+            $statusContagem = true;
+            //Monta a lista de alarmes que seram devolvidos ao JSON para serem exibidos no menu.
+            foreach ($contagemAlarmes['alarmes'] as $alarmeLista) {
+                $listaAlarme    .= "<tr>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i> <p> Novo</p>";
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                    $data = explode(" ", $alarmeLista['dt_criacao']);
+                        $listaAlarme    .= implode("/",array_reverse(explode("-", $data[0])));
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= $alarmeLista['nome'];
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= $alarmeLista['nomeEquipamento'];
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= "<p><b>".$alarmeLista['mensagem']."</b></p>";
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= "<h4>";
+                        $listaAlarme    .= "<span class='text-danger'>";
+                            $listaAlarme    .=$alarmeLista['parametroMedido'];
+                        $listaAlarme    .= "</span>";
+                        $listaAlarme    .= " / ";
+                        $listaAlarme    .= "<span class='text-danger'>";
+                            $listaAlarme    .=$alarmeLista['parametroMedido'];
+                        $listaAlarme    .= "</span>";
+                        $listaAlarme    .= "</h4>";
+
+                        $listaAlarme    .= $alarmeLista['nome'];
+                    $listaAlarme    .= "</td>";
+
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= "<button>";
+                            $listaAlarme    .= "<i class='fa fa-search '></i> Detalhes";
+                        $listaAlarme    .= "</button>";
+                    $listaAlarme    .= "</td>";
+                $listaAlarme    .= "</tr>";
+
+                $quantidadeAtual++;
+            }
+
+            $totalAlarmes   = $quantidadeAtual;
+
+        }else{
+            //Devolve nenhum dado extra em caso a busca tenha falhado
+            $statusContagem = false;
+            $totalAlarmes   = $quantidadeAtual;
+            $listaAlarme    = '';
+        }
+
+        exit(json_encode(array('statusLista' => $statusContagem, 'contagemLista' => $totalAlarmes, 'alarmesNovaLista' => $listaAlarme)));
+    }
+
  }
 
  /*

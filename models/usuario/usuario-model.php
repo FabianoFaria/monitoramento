@@ -230,6 +230,44 @@ class UsuarioModel extends MainModel
         return $array;
     }
 
+    /*
+    * ATUALIZA OS DADOS ENVIADOS DO PRÓPIO USUÁRIO
+    */
+    public function atualizarUsuarioManual($id_usuario, $nome, $sobrenome, $email, $celular, $telefone, $senha, $confirmaS){
+
+        // Coletar os dados do post
+        $id_user   = $id_usuario;
+        $nome      = $this->tratamento($nome);
+        $sobrenome = $this->tratamento($sobrenome);
+        $email     = $this->tratamento($email,1);
+        if($senha == $confirmaS){
+            $senha  = ($confirmaS != '') ? md5($confirmaS) : null;
+        }else{
+            $senha  = null;
+        }
+
+        $query = "UPDATE tb_users SET ";
+          if(isset($nome)){         $query .= "nome = '$nome' ";}
+          if(isset($sobrenome)){    $query .= ", sobrenome = '$sobrenome'";}
+          if(isset($email)){        $query .= ", email = '$email'";}
+          if(isset($celular)){      $query .= ", celular = '$celular'";}
+          if(isset($telefone)){     $query .= ", telefone = '$telefone'";}
+          if(isset($senha)){        $query .= ", senha = '$senha'";}
+          $query .= " WHERE id = '$id_user'";
+
+        /* MONTA RESULT */
+        $result = $this->db->query($query);
+
+        if ($result){
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
     //Função para atualizar o usuario
     public function atualizarUsuarioJson($id_usuario, $nome, $sobrenome, $email, $celular, $telefone, $confirmaS, $idCliente)
     {

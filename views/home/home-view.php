@@ -5,7 +5,7 @@
     //var_dump($_SESSION);
 
     $alarmesRegistrados = $modeloAlarme->alarmesGerados();
-    
+
     /*
     * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
     */
@@ -14,23 +14,27 @@
             //var_dump($_SESSION);
 
             $alarmesRegistrados = $modeloAlarme->alarmesGerados();
+            $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmes();
 
         break;
 
         case 'Cliente':
 
             $alarmesRegistrados = $modeloAlarme->alarmesGeradosCliente($_SESSION['userdata']['cliente']);
+            $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['userId']);
 
         break;
 
         case 'Visitante':
 
             $alarmesRegistrados = $modeloAlarme->alarmesGeradosCliente($_SESSION['userdata']['cliente']);
+            $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['userId']);
 
         break;
 
         case 'Tecnico':
             $alarmesRegistrados = $modeloAlarme->alarmesGerados();
+            $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmes();
 
         break;
     }
@@ -42,6 +46,50 @@
         // gerenciador de link
         var menu = document.getElementById('listadir');
         menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a>';
+    </script>
+
+    <?php
+
+        //LOCAL PARA GUARDAR A QUANTIDADE DE NOVOS ALARMES
+        if($alarmesRegistrados['status']){
+            ?>
+            <span id="novoAlertasCount" style="display:none;"><?php echo sizeof($notificacaoAlertas['alarmes']); ?></span>
+            <?php
+        }else{
+            ?>
+            <span id="novoAlertasCount" style="display:none;">0</span>
+            <?php
+        }
+    ?>
+
+    <script type="application/javascript">
+
+        /*
+        * EFETUA A ATUALIZAÇÃO DA LISTA DE ALARMES A CADA PERIODO DE TEMPO
+        */
+        $(document).ready(function () {
+
+            setInterval(function(){
+
+                var totalAlarmesAtual = $('#novoAlertasCount').html();
+                console.log('prossiga monitoramento! '+totalAlarmesAtual);
+
+                var url = "<?php echo HOME_URI; ?>/alarme/verificaListaNovoAlarme?clie=<?php echo $_SESSION['userdata']['cliente']; ?>&total="+totalAlarmesAtual;
+                $.getJSON(url,  function(data) {
+
+                    if(data.statusLista){
+                        //Insere um linha no topo da tabela
+                        $(data.alarmesNovaLista).insertBefore( "#listaAlarmesEquipamentos tbody" );
+                        $('#novoAlertasCount').html(data.contagemLista);
+                    }else{
+                        console.log('prossiga monitoramento!');
+                    }
+
+                });
+            },5000);
+
+        });
+
     </script>
 
     <!-- MENSAGEM DE BOAS VINDAS -->
@@ -97,175 +145,20 @@
 
     ?>
 
-
-    <!-- CONTAGEM DE ALERTAS -->
-    <!-- CONTADOR DE ALERTAS COMENTADO E SUBSTITUIDO POR UM TABELA MENOR-->
-    <!-- <div class="row"> -->
-        <!-- ALERTAS GERADOS -->
-        <!-- <div class="col-lg-3 col-md-6">
-            <a href="<?php echo HOME_URI; ?>/alarme/alarmeStatus/1">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-warning fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">0</div>
-                                <div>Alarme <br> gerados!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer alert-danger">
-                        <span class="pull-left">Ver detalhes</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </a>
-        </div> -->
-        <!-- ALERTAS RECONHECIDOS -->
-        <!-- <div class="col-lg-3 col-md-6">
-            <a href="<?php echo HOME_URI; ?>/alarme/alarmeStatus/2">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-search-plus fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">0</div>
-                                <div>Alarmes </br>reconhecidos!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer alert-warning">
-                        <span class="pull-left">Ver detalhes</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </a>
-        </div> -->
-        <!-- ALERTAS RECONHECIDOS E SOLUCIONADOS -->
-        <!-- <div class="col-lg-3 col-md-6">
-            <a href="<?php echo HOME_URI; ?>/alarme/alarmeStatus/3">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-wrench fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">0</div>
-                                <div>Alarmes </br>solucionados!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer alert-info">
-                        <span class="pull-left">Ver detalhes</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </a>
-        </div> -->
-        <!-- ALERTAS FINALIZADOS -->
-        <!-- <div class="col-lg-3 col-md-6">
-            <a href="<?php echo HOME_URI; ?>/alarme/alarmeStatus/4">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa  fa-check fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">0</div>
-                                <div>Alarmes </br> finalizados!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer alert-success">
-                        <span class="pull-left">Ver detalhes</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </a>
-        </div> -->
-    <!-- </div> -->
-
-    <!-- FILTRO DE ALERTAS -->
-    <!-- <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a data-toggle="collapse" data-parent="" href="#filtroCollapse"><i class="fa fa-arrow-circle-o-down fw"></i> Filtro de alarmes </a>
-                </div>
-                <div id="filtroCollapse" class="painel-body panel-collapse collapse in">
-                    <form id="filtroAlarmes">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Cliente/Filia</label><br>
-                                <?php $modelo->loadClienteFilial(); ?>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-info">Filtrar</button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- PRINCIPAIS STATUS DE ALERTAS -->
-    <!-- <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-list-ul fa-fw"></i> Status de alarmes</a>
-                </div>
-                <div id="collapseOne" class="panel-body panel-collapse collapse in">
-                    <table class="table-responsive">
-                        <tr>
-                            <td class="blink-test">
-                                <i class="fa fa-exclamation-circle fa-fw alert-danger "></i> Alarme gerado
-                            </td>
-                            <td>
-                                <i class="fa fa-exclamation-circle fa-fw alert-warning"></i> Alarme reconhecido
-                            </td>
-                            <td>
-                                <i class="fa fa-exclamation-circle fa-fw alert-info"></i> Alarme solucionado
-                            </td>
-                            <td>
-                                <i class="fa fa-exclamation-circle fa-fw alert-success"></i> Alarme finalizado
-                            </td>
-
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <!-- GRÁFICO DOS ÚLTIMOS ALERTAS -->
     <div class="row">
         <!-- /.panel -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-bar-chart-o fa-fw"></i> Últimos registros de alarmes
+
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="table-responsive">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="listaAlarmesEquipamentos">
                                 <thead>
                                     <tr>
                                         <th>Status</th>

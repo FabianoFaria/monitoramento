@@ -4,6 +4,39 @@
 
     $listaClientes = $modeloClie->listarCliente();
 
+    /*
+    * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+    */
+    switch ($_SESSION['userdata']['tipo_usu']) {
+        case 'Administrador':
+            //var_dump($_SESSION);
+            $listaClientes = $modeloClie->listarCliente();
+
+
+        break;
+
+        case 'Cliente':
+
+            $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+
+        break;
+
+        case 'Visitante':
+
+            $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+
+        break;
+
+        case 'Tecnico':
+            //RETORNO SENDO CARREGADO DIRETO DA CLASS.MAIN
+            $listaClientes = $modeloClie->listarCliente();
+
+        break;
+    }
+
+
+
+
 ?>
 
 <script src="<?php echo HOME_URI; ?>/views/_js/table/mustache.js" type="text/javascript"></script>
@@ -18,7 +51,7 @@ $retorno = $modelo->buscaRelacao();
 
     // GERENCIADOR DE LINK
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/graficoFisicoGerador/" class="linkMenuSup">Relatôrio fisico</a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador/" class="linkMenuSup">Relatôrio fisico</a>';
 </script>
 
 <script src="<?php echo HOME_URI; ?>/views/_js/table/index.js" type="text/javascript"></script>

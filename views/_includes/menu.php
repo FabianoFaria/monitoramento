@@ -3,31 +3,37 @@
 $dadosNot = $modelo->notificacao();
 
 /*
+* CARREGA MODEL PARA ALARMES, INDEPENDENTE DA PÁGINA
+*/
+$alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
+
+
+/*
 * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
 */
 switch ($_SESSION['userdata']['tipo_usu']) {
     case 'Administrador':
         //var_dump($_SESSION);
 
-        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmes();
+        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmes();
 
     break;
 
     case 'Cliente':
 
 
-        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['userId']);
+        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['cliente']);
 
     break;
 
     case 'Visitante':
 
 
-        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['userId']);
+        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['cliente']);
     break;
 
     case 'Tecnico':
-        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmes();
+        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmes();
 
     break;
 }
@@ -69,11 +75,15 @@ if($notificacaoAlertas['status']){
             <!-- TOTAL DE ALERTAS, SE EXISTIREM -->
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-exclamation-triangle fa-fw"></i> <i class="fa fa-caret-down"></i>
+                <i class="fa fa-exclamation-triangle fa-1x"></i> <i class="fa fa-caret-down fa-1x"></i>
               </a>
               <?php
-                if ($t_not != 0)
-                echo "<span id='contadorNot'>{$t_not}</span>";
+                if ($t_not != 0){
+                    echo "<span id='contadorNot'>{$t_not}</span>";
+                }else{
+                    echo "<span id='contadorNot' style='display:none;'>{$t_not}</span>";
+                }
+
               ?>
               <ul id="listaMenuAlarmes" class="dropdown-menu dropdown-messages">
                 <?php
@@ -192,20 +202,20 @@ if($notificacaoAlertas['status']){
             <!-- BOTAO VISUALIZAR DADOS DO USUÁRIO -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                    <i class="fa fa-user fa-fw"></i>
-                    <i class="fa fa-caret-down"></i>
+                    <i class="fa fa-user fa-1x"></i>
+                    <i class="fa fa-caret-down fa-1x"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/usuario/"><i class="fa fa-folder-open fa-fw"></i>Perfil do usuário</a></span></li><!-- Fim Botao Sair -->
+                <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/usuario/"><i class="fa fa-folder-open fa-1x"></i>Perfil do usuário</a></span></li><!-- Fim Botao Sair -->
                 </ul>
             </li>
             <!-- BOTAO SAIR -->
             <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                        <i class="fa fa-power-off fa-fw"></i>
+                        <i class="fa fa-power-off fa-2x"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/login/sair"><i class="fa fa-power-off fa-fw"></i>Sair do sistema!</a></span></li><!-- Fim Botao Sair -->
+                        <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/login/sair"><i class="fa fa-power-off fa-1x"></i>Sair do sistema!</a></span></li><!-- Fim Botao Sair -->
                     </ul>
                     <!-- /.dropdown-user -->
             </li>
@@ -370,15 +380,17 @@ if($notificacaoAlertas['status']){
                   </a>
                 </li> -->
                 <?php //} ?>
+
+                <!-- OCULTANDO O MENU DE CONFIGURAÇÔES POR ESTAR DEFAZADO COM RELAÇÂO AS ATUALIZAÇÔES QUE FORAM FEITAS ATÈ O MOMENTO-->
                 <!-- CONFIGURACAO -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
-                <li>
-                  <a class="link-side" href="<?php echo HOME_URI; ?>/configuracao/">
+                <?php //if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
+                <!-- <li>
+                  <a class="link-side" href="<?php //echo HOME_URI; ?>/configuracao/">
                     <span class="icon-side"><i class="fa fa-cogs fa-3x"></i></span>
                     <span class="lb-side">Configura&ccedil;&atilde;o</span>
                   </a>
-                </li>
-                <?php } ?>
+                </li> -->
+                <?php //} ?>
 
                 <!-- USUÁRIOS -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
@@ -413,10 +425,10 @@ if($notificacaoAlertas['status']){
                 if(data.status){
 
                     //NOVA CONTAGEM
-                    $('#contadorNot').html(contagem);
+                    $('#contadorNot').html(data.contagem);
                     //NOVA LISTA DE ALARMES
                     $('#listaMenuAlarmes').html();
-                    $('#listaMenuAlarmes').html(alarmes);
+                    $('#listaMenuAlarmes').html(data.alarmes);
 
                     //exit(json_encode(array('status' => $statusContagem, 'contagem' => $totalAlarmes, 'alarmes' => $alarmesNovos)));
 

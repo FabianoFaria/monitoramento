@@ -49,6 +49,37 @@
          }
 
          /*
+         * FUNÇÃO PARA FILTRAR OS CLIENTES DE ACORDO COM O USUÁRIO LOGADO
+         */
+        public function listarClienteUsuario($idCLiente)
+        {
+            $query = "SELECT clie.id, clie.nome, clie.cidade, clie.ddd, clie.telefone, clie.status_ativo, clie.dt_criacao
+                       FROM tb_cliente clie WHERE clie.id = '$idCLiente'";
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if ($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    return $retorno;
+                }
+            }
+            else
+                return false;
+
+        }
+
+         /*
          * Função responsavel por listar as filiais de um cliente
          */
 
@@ -265,19 +296,18 @@
 
                   /* retorna o select */
                   $cliente  = $retorno;
-                  $status   = true;
+                //   $status   = true;
+                   $array = array('status' => true, 'dados' => $cliente) ;
               }
               else
                 /* fim */
-                $status = false;
+                 $array = array('status' => false, 'dados' => '') ;
 
             }else{
               /* fim */
-              $status = false;
+              //$status = false;
+              $array = array('status' => false, 'dados' => '') ;
             }
-
-            $array = array('status' => true, 'dados' => $cliente) ;
-
 
           }else{
 
