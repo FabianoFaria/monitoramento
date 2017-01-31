@@ -2,7 +2,7 @@
     /* verifica se esta definido o path */
     if (! defined('EFIPATH')) exit();
 
-    $listaClientes = $modeloClie->listarCliente();
+    //$listaClientes = $modeloClie->listarCliente();
 
     /*
     * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
@@ -17,25 +17,59 @@
 
         case 'Cliente':
 
-            $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+            //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+            $usuarioAutorizado  = false;
+            $idcliente = $_SESSION['userdata']['cliente'];
+            $usuariosCliente  = $modeloClie->carregaDadosContato($_SESSION['userdata']['cliente']);
+
+            //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+            if($usuariosCliente['status']){
+                foreach ($usuariosCliente['dados'] as $usuarioCliente){
+                    if($usuarioCliente['id_cliente'] == $idcliente){
+                        $usuarioAutorizado  = true;
+                    }
+                }
+            }
+
+            if($usuarioAutorizado){
+                $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+            }else{
+                $listaClientes = false;
+            }
+
 
         break;
 
         case 'Visitante':
 
-            $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+            //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+            $usuarioAutorizado  = false;
+            $idcliente = $_SESSION['userdata']['cliente'];
+            $usuariosCliente  = $modeloClie->carregaDadosContato($_SESSION['userdata']['cliente']);
+
+            //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+            if($usuariosCliente['status']){
+                foreach ($usuariosCliente['dados'] as $usuarioCliente){
+                    if($usuarioCliente['id_cliente'] == $idcliente){
+                        $usuarioAutorizado  = true;
+                    }
+                }
+            }
+
+            if($usuarioAutorizado){
+                $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+            }else{
+                $listaClientes = false;
+            }
 
         break;
 
         case 'Tecnico':
-            //RETORNO SENDO CARREGADO DIRETO DA CLASS.MAIN
+
             $listaClientes = $modeloClie->listarCliente();
 
         break;
     }
-
-
-
 
 ?>
 
@@ -84,6 +118,7 @@ $retorno = $modelo->buscaRelacao();
                     </thead>
                     <tbdoy>
                         <?php
+
                             if($listaClientes){
 
                                 foreach ($listaClientes as $cliente) {

@@ -233,10 +233,10 @@ function verificaTempoOperacao($conn,$sim)
  */
 function verificaBateria ($conn,$sim,$tb)
 {
-    // Monta a query
+    // MONTA A QUERY
     $query = "select {$tb} from tb_dados where num_sim = {$sim} order by (dt_criacao) desc limit 1 ";
 
-    // Monta a result
+    // MONTA A RESULT
     $result = $conn->select($query);
 
     // Verifica se existe valor

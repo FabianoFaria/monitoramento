@@ -2,18 +2,93 @@
 
 if (!defined('EFIPATH')) exit();
 
-    $dadosCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
+    /*
+    * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+    */
+    switch ($_SESSION['userdata']['tipo_usu']) {
+        case 'Administrador':
+            //var_dump($_SESSION);
 
-    if($dadosCliente['status']){
-        $dadosCliente   = $dadosCliente['dados'][0];
-        $lista          = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
-        $lista          = $lista['equipamentos'];
-        $nomeCliente    = $dadosCliente['nome'];
-    }else{
-        $lista          = false;
+            $dadosCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
+
+            if($dadosCliente['status']){
+                $dadosCliente   = $dadosCliente['dados'][0];
+                $lista          = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
+                $lista          = $lista['equipamentos'];
+                $nomeCliente    = $dadosCliente['nome'];
+            }else{
+                $lista          = false;
+            }
+
+        break;
+
+        case 'Cliente':
+
+            //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+            $usuarioAutorizado  = false;
+            $idcliente = $_SESSION['userdata']['cliente'];
+            $usuariosCliente  = $modeloClie->carregaDadosContato($this->parametros[0]);
+
+            //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+            if($usuariosCliente['status']){
+                foreach ($usuariosCliente['dados'] as $usuarioCliente){
+                    if($usuarioCliente['id_cliente'] == $idcliente){
+                        $usuarioAutorizado  = true;
+                    }
+                }
+            }
+
+            if($usuarioAutorizado){
+
+                $dadosCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
+
+                if($dadosCliente['status']){
+                    $dadosCliente   = $dadosCliente['dados'][0];
+                    $lista          = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
+                    $lista          = $lista['equipamentos'];
+                    $nomeCliente    = $dadosCliente['nome'];
+                }else{
+                    $lista          = false;
+                }
+            }else{
+                $lista          = false;
+            }
+
+        break;
+
+        case 'Visitante':
+
+            //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+            $usuarioAutorizado  = false;
+            $idcliente = $_SESSION['userdata']['cliente'];
+            $usuariosCliente  = $modeloClie->carregaDadosContato($this->parametros[0]);
+
+            //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+            if($usuariosCliente['status']){
+                foreach ($usuariosCliente['dados'] as $usuarioCliente){
+                    if($usuarioCliente['id_cliente'] == $idcliente){
+                        $usuarioAutorizado  = true;
+                    }
+                }
+
+            }
+
+        break;
+
+        case 'Tecnico':
+            $dadosCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
+
+            if($dadosCliente['status']){
+                $dadosCliente   = $dadosCliente['dados'][0];
+                $lista          = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
+                $lista          = $lista['equipamentos'];
+                $nomeCliente    = $dadosCliente['nome'];
+            }else{
+                $lista          = false;
+            }
+        break;
     }
 
-    //var_dump($lista);
 
 ?>
 

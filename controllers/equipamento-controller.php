@@ -21,27 +21,36 @@ class EquipamentoController extends MainController
          // Verifica se esta logado
          $this->check_login();
 
-         //Define o titulo da pagina
-         $this->title = "Equipamento";
+        // VERIFICA AS PERMISSOES NECESSARIAS
+        if ($_SESSION['userdata']['per_co'] != 1 ){
+            // SE NAO POSSUIR
+            // REDIRECIONA PARA INDEX
+            $this->moveHome();
+        }else{
 
-         // Define os parametro da funcao
-         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "Equipamento";
 
-         // Carrega o modelo para este view
-         $modelo = $this->load_model('usuario/usuario-model');
-         // Carrega o modelo de cadastro para este view
-         $modeloEquipamento = $this->load_model('equipamento/equipamento-model');
+            // DEFINE OS PARAMETRO DA FUNCAO
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-         // Carrega view
-         require_once EFIPATH . "/views/_includes/header.php";
-         require_once EFIPATH . "/views/_includes/menu.php";
-         require_once EFIPATH . "/views/equipamento/equipamentoLista-view.php";
-         require_once EFIPATH . "/views/_includes/footer.php";
+            // CARREGA O MODELO PARA ESTE VIEW
+            $modelo = $this->load_model('usuario/usuario-model');
+            // CARREGA O MODELO DE CADASTRO PARA ESTE VIEW
+            $modeloEquipamento = $this->load_model('equipamento/equipamento-model');
+
+            // CARREGA VIEW
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/equipamento/equipamentoLista-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+        }
+
 
      }
 
      /*
-     * Função para cadastro de equipamento
+     * FUNÇÃO PARA CADASTRO DE EQUIPAMENTO
      */
 
      public function cadastrarEquipamento()
@@ -53,18 +62,26 @@ class EquipamentoController extends MainController
         // Define o titulo da pagina
         $this->title = "equipamento";
 
-        // Define os parametro da funcao
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+        // VERIFICA AS PERMISSOES NECESSARIAS
+        if ($_SESSION['userdata']['per_co'] != 1 ){
+            // SE NAO POSSUIR
+            // REDIRECIONA PARA INDEX
+            $this->moveHome();
+        }else{
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        // Carrega o modelo para este view
-        $modelo         = $this->load_model('equipamento/equipamento-model');
-        $modeloClie     = $this->load_model('cliente/cliente-model');
+            // Carrega o modelo para este view
+            $modelo         = $this->load_model('equipamento/equipamento-model');
+            $modeloClie     = $this->load_model('cliente/cliente-model');
 
-        // Carrega view
-         require_once EFIPATH . "/views/_includes/header.php";
-         require_once EFIPATH . "/views/_includes/menu.php";
-         require_once EFIPATH . "/views/equipamento/equipamentoCadastro-view.php";
-         require_once EFIPATH . "/views/_includes/footer.php";
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/equipamento/equipamentoCadastro-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
 
      }
 
@@ -79,7 +96,7 @@ class EquipamentoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+        if ($_SESSION['userdata']['per_co'] != 1  )
         {
             // Se nao possuir
             // Redireciona para index
@@ -114,7 +131,7 @@ class EquipamentoController extends MainController
          $this->check_login();
 
          // Verifica as permissoes necessarias
-         if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+         if ($_SESSION['userdata']['per_ca'] != 1 )
          {
              // Se nao possuir
              // Redireciona para index
@@ -133,7 +150,7 @@ class EquipamentoController extends MainController
      }
 
      /*
-     *  Efetua o cadastro de equipamento via JSON
+     *  EFETUA O CADASTRO DE EQUIPAMENTO VIA JSON
      */
      public function registrarEquipamentoClienteJson()
      {
@@ -152,7 +169,7 @@ class EquipamentoController extends MainController
      }
 
      /*
-     *  Função para editar o equipamento via JSON
+     *  FUNÇÃO PARA EDITAR O EQUIPAMENTO VIA JSON
      */
      public function editarEquipamentoClienteJson()
      {

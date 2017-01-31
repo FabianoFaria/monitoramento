@@ -320,12 +320,12 @@
         }
 
         /*
-        * Função que recupera os dados do contatos do cliente
+        * FUNÇÃO QUE RECUPERA OS DADOS DO CONTATOS DO CLIENTE
         */
         public function carregaDadosContato($idCliente)
         {
 
-          if(is_numeric($idCliente)){
+          if(is_numeric($idCliente) && isset($idCliente)){
 
             $query = "SELECT id, nome, sobrenome, email, telefone, celular, id_cliente
                       FROM tb_users

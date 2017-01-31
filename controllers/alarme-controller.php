@@ -14,45 +14,60 @@
         // Verifica se esta logado
         $this->check_login();
 
-        // Define o titulo da pagina
-        $this->title = "Alarmes";
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_ca'] != 1 ){
+            // SE NAO POSSUIR
+            // REDIRECIONA PARA INDEX
+            $this->moveHome();
+        }else{
 
-        // Define os parametro da funcao
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+            // Define o titulo da pagina
+            $this->title = "Alarmes";
 
-        $modelo         = $this->load_model('usuario/usuario-model');
-        $modeloCliete   = $this->load_model('cliente/cliente-model');
-        // CARREGA O MODELO PARA ESTE VIEW
-        $alarmeModelo  = $this->load_model('alarme/alarme-model');
-        $modeloEdicao  = $this->load_model('editar/editar-model');
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        // Carrega view
-        require_once EFIPATH . "/views/_includes/header.php";
-        require_once EFIPATH . "/views/_includes/menu.php";
-        require_once EFIPATH . "/views/alarme/alarmeLista-view.php";
-        require_once EFIPATH . "/views/_includes/footer.php";
+            $modelo         = $this->load_model('usuario/usuario-model');
+            $modeloCliete   = $this->load_model('cliente/cliente-model');
+            // CARREGA O MODELO PARA ESTE VIEW
+            $alarmeModelo  = $this->load_model('alarme/alarme-model');
+            $modeloEdicao  = $this->load_model('editar/editar-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/alarme/alarmeLista-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+        }
     }
 
     public function alarmeStatus(){
         // Verifica se esta logado
         $this->check_login();
 
-        // Define o titulo da pagina
-        $this->title = "alarme";
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_ca'] != 1 ){
+            // SE NAO POSSUIR
+            // REDIRECIONA PARA INDEX
+            $this->moveHome();
+        }else{
+            // Define o titulo da pagina
+            $this->title = "alarme";
 
-        // Define os parametro da funcao
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        $modelo        = $this->load_model('usuario/usuario-model');
-        // CARREGA O MODELO PARA ESTE VIEW
-        $alarmeModelo  = $this->load_model('alarme/alarme-model');
-        $modeloEdicao  = $this->load_model('editar/editar-model');
+            $modelo        = $this->load_model('usuario/usuario-model');
+            // CARREGA O MODELO PARA ESTE VIEW
+            $alarmeModelo  = $this->load_model('alarme/alarme-model');
+            $modeloEdicao  = $this->load_model('editar/editar-model');
 
-        // Carrega view
-        require_once EFIPATH . "/views/_includes/header.php";
-        require_once EFIPATH . "/views/_includes/menu.php";
-        require_once EFIPATH . "/views/alarme/alarmeLista-view.php";
-        require_once EFIPATH . "/views/_includes/footer.php";
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/alarme/alarmeLista-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+        }
     }
 
     public function gerenciarAlertas(){
@@ -61,7 +76,7 @@
         $this->check_login();
 
         // Verifica as permissoes necessaris
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ed'] != 1 )
+        if ($_SESSION['userdata']['per_ed'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index

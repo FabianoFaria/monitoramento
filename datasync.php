@@ -159,8 +159,8 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     if ($vint[0] == 0 && $vint[1] == 0 && $vint[2] == 0)
     {
         // Monta a query da ultama insercao do dado
-        $query = "select dt_criacao,e,f,g from tb_dados where num_sim = {$_POST['A']} and
-                  E != '00000' or F != '00000' or G != '00000' order by (dt_criacao) desc limit 1";
+        $query = "SELECT dt_criacao,e,f,g FROM tb_dados WHERE num_sim = {$_POST['A']} AND
+                  E > 0 OR F > 0 OR G > 0 ORDER BY (dt_criacao) DESC LIMIT 1";
         // Busca a primeira data da insecao do ultimo dado
         $resp[] = verifiSele($query,$conn);
 

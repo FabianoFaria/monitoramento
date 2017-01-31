@@ -12,22 +12,29 @@
         // Verifica se esta logado
         $this->check_login();
 
-        // Define o titulo da pagina
-        $this->title = "cliente";
+        //VERIFICAÇÂO SE USUÁRIO TEM AUTORIZAÇÃO PARA ACESSAR CLIENTES
+        if($_SESSION['userdata']['per_ca'] != 1){
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+            // Define o titulo da pagina
+            $this->title = "cliente";
 
-        // Define os parametro da funcao
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        // CARREGA O MODELO DE USUÁRIO PARA CONTROLE DE LOGIN
-        $modelo         = $this->load_model('usuario/usuario-model');
-        // CARREGA O MODELO PARA ESTE VIEW
-        $clienteModelo  = $this->load_model('cliente/cliente-model');
+            // CARREGA O MODELO DE USUÁRIO PARA CONTROLE DE LOGIN
+            $modelo         = $this->load_model('usuario/usuario-model');
+            // CARREGA O MODELO PARA ESTE VIEW
+            $clienteModelo  = $this->load_model('cliente/cliente-model');
 
-        // Carrega view
-        require_once EFIPATH . "/views/_includes/header.php";
-        require_once EFIPATH . "/views/_includes/menu.php";
-        require_once EFIPATH . "/views/cliente/clienteLista-view.php";
-        require_once EFIPATH . "/views/_includes/footer.php";
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/cliente/clienteLista-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+        }
     }
 
     public function cadastrar(){
@@ -36,7 +43,7 @@
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+        if ($_SESSION['userdata']['per_ca'] != 1 )
         {
             // Se nao possuir
             // Redireciona para index
@@ -69,7 +76,7 @@
         $this->check_login();
 
          // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+        if($_SESSION['userdata']['per_ca'] != 1 )
         {
             // Se nao possuir
             // Redireciona para index
@@ -94,15 +101,16 @@
 
     }
 
-    //Editar cliente
-
+    /*
+    * EDITAR CLIENTE
+    */
     public function editarCliente($id){
 
         // Verifica o login
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+        if ($_SESSION['userdata']['per_ca'] != 1 )
         {
             // Se nao possuir
             // Redireciona para index
@@ -129,7 +137,9 @@
 
     }
 
-    //Funções para tratar das operações via JSON
+    /*
+    * FUNÇÕES PARA TRATAR DAS OPERAÇÕES VIA JSON
+    */
 
     public function registrarClientes(){
 
@@ -146,7 +156,9 @@
 
     }
 
-    //Funções para tratar atualizar o cliente
+    /*
+    * FUNÇÕES PARA TRATAR ATUALIZAR O CLIENTE
+    */
 
     public function registrarEdicaoCliente(){
 
@@ -162,7 +174,9 @@
         }
     }
 
-    //Função para recuperar as filiais do clientes caso existam
+    /*
+    * FUNÇÃO PARA RECUPERAR AS FILIAIS DO CLIENTES CASO EXISTAM
+    */
 
     public function listarFiliaisClienteJson(){
 

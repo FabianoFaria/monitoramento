@@ -21,22 +21,32 @@
              // Verifica se esta logado
              $this->check_login();
 
-             //Define o titulo da pagina
-             $this->title = "usuario";
+            // Verifica as permissoes necessaris
+            if ($_SESSION['userdata']['per_ca'] != 1 )
+            {
+                 // Se nao possuir permissao
+                 // Redireciona para index
+                 $this->moveHome();
+            }
+            else
+            {
+                //Define o titulo da pagina
+                $this->title = "usuario";
 
-             // Define os parametro da funcao
-             $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+                // Define os parametro da funcao
+                $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-             // Carrega o modelo para este view
-             $modelo = $this->load_model('usuario/usuario-model');
-             // Carrega o modelo de cadastro para este view
-             $modeloCadastro = $this->load_model('cadastrar/cadastro-model');
+                // Carrega o modelo para este view
+                $modelo = $this->load_model('usuario/usuario-model');
+                // Carrega o modelo de cadastro para este view
+                $modeloCadastro = $this->load_model('cadastrar/cadastro-model');
 
-             // Carrega view
-             require_once EFIPATH . "/views/_includes/header.php";
-             require_once EFIPATH . "/views/_includes/menu.php";
-             require_once EFIPATH . "/views/usuario/usuarioDados-view.php";
-             require_once EFIPATH . "/views/_includes/footer.php";
+                // Carrega view
+                require_once EFIPATH . "/views/_includes/header.php";
+                require_once EFIPATH . "/views/_includes/menu.php";
+                require_once EFIPATH . "/views/usuario/usuarioDados-view.php";
+                require_once EFIPATH . "/views/_includes/footer.php";
+            }
 
         }
 
@@ -49,23 +59,32 @@
             // Verifica se esta logado
             $this->check_login();
 
-            //Define o titulo da página
-            $this->title = "usuario";
+            // Verifica as permissoes necessaris
+            if ($_SESSION['userdata']['per_ca'] != 1 )
+            {
+                 // Se nao possuir permissao
+                 // Redireciona para index
+                 $this->moveHome();
+            }
+            else
+            {
+                //Define o titulo da página
+                $this->title = "usuario";
 
-            // Define os parametro da funcao
-            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+                // Define os parametro da funcao
+                $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-            // Carrega o modelo para este view
-            $modelo = $this->load_model('usuario/usuario-model');
-            // Carrega o modelo de cadastro para este view
-            $modeloCadastro = $this->load_model('cadastrar/cadastro-model');
+                // Carrega o modelo para este view
+                $modelo = $this->load_model('usuario/usuario-model');
+                // Carrega o modelo de cadastro para este view
+                $modeloCadastro = $this->load_model('cadastrar/cadastro-model');
 
-            // Carrega view
-            require_once EFIPATH . "/views/_includes/header.php";
-            require_once EFIPATH . "/views/_includes/menu.php";
-            require_once EFIPATH . "/views/usuario/usuarioLista-view.php";
-            require_once EFIPATH . "/views/_includes/footer.php";
-
+                // Carrega view
+                require_once EFIPATH . "/views/_includes/header.php";
+                require_once EFIPATH . "/views/_includes/menu.php";
+                require_once EFIPATH . "/views/usuario/usuarioLista-view.php";
+                require_once EFIPATH . "/views/_includes/footer.php";
+            }
         }
 
         /**
@@ -173,9 +192,6 @@
         }
 
     }
-
-
-
 
 
  ?>
