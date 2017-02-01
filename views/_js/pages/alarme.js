@@ -156,7 +156,7 @@ $().ready(function() {
                 },
                 txt_email : {
                     required : "Campo é obrigatorio",
-                    email : "Email dee estar no formato correto!"
+                    email : "Email deve estar no formato correto!"
                 },
                 txt_celular : {
                     required : "Campo é obrigatorio"

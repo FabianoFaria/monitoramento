@@ -984,6 +984,13 @@ $().ready(function() {
 
     });
 
+    /*
+    *  INICIA A MODAL PARA CADASTRAR NOVAS FILIAIS
+    */
+    $('#btnAddFilial').click(function(){
 
+        $('#modalCadFilial').modal();
+
+    });
 
 });

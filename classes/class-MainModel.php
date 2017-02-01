@@ -174,31 +174,32 @@ class MainModel
          * 3 - Ambiente por Cliente
          * 4 - Ambiente por Filial
          */
-        $query = [
-            "select
-            se.id, se.id_sim as sim, e.tipo_equipamento as nome_equip, 'vinculo' as modo , 'e' as tipo , concat(s.id_cliente, '-c') as cliente , c.nome
-            from tb_sim_equipamento se
-            inner join tb_equipamento e on e.id = se.id_equipamento
-            inner join tb_sim s on s.num_sim = se.id_sim
-            inner join tb_cliente c on c.id = s.id_cliente
-            where
-            id_equipamento is not null
-            and s.id_cliente is not null
-            and se.vinc_tabela = 0
-            order by (se.dt_criacao) desc" ,
+         $query = array();
 
-            "select
-            se.id, se.id_sim as sim, e.tipo_equipamento as nome_equip, 'vinculo' as modo , 'e' as tipo , concat(s.id_filial, '-f') as cliente , f.nome
-            from tb_sim_equipamento se
-            inner join tb_equipamento e on e.id = se.id_equipamento
-            inner join tb_sim s on s.num_sim = se.id_sim
-            inner join tb_filial f on f.id = s.id_filial
-            where
-            id_equipamento is not null
-            and s.id_filial is not null
-            and se.vinc_tabela = 0
-            order by (se.dt_criacao) desc"
-        ];
+         array_push($query, "SELECT
+         se.id, se.id_sim AS sim, e.tipo_equipamento AS nome_equip, 'vinculo' AS modo , 'e' AS tipo , concat(s.id_cliente, '-c') AS cliente , c.nome
+         FROM tb_sim_equipamento se
+         INNER JOIN tb_equipamento e on e.id = se.id_equipamento
+         INNER JOIN tb_sim s on s.num_sim = se.id_sim
+         INNER JOIN tb_cliente c on c.id = s.id_cliente
+         WHERE
+         id_equipamento is not null
+         and s.id_cliente is not null
+         and se.vinc_tabela = 0
+         order by (se.dt_criacao) desc");
+
+         array_push($query, "SELECT
+         se.id, se.id_sim as sim, e.tipo_equipamento as nome_equip, 'vinculo' as modo , 'e' as tipo , concat(s.id_filial, '-f') as cliente , f.nome
+         from tb_sim_equipamento se
+         inner join tb_equipamento e on e.id = se.id_equipamento
+         inner join tb_sim s on s.num_sim = se.id_sim
+         inner join tb_filial f on f.id = s.id_filial
+         where
+         id_equipamento is not null
+         and s.id_filial is not null
+         and se.vinc_tabela = 0
+         order by (se.dt_criacao) desc");
+
 
         // Realiza o loop nas posicoes do array das querys
         // Salva os valores do select no array

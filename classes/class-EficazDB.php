@@ -52,10 +52,10 @@ class EficazDB
     public function __construct()
     {
         // Armazena os dados de conexao com o banco
-        // $this->host =     defined('HOSTNAME') ? HOSTNAME : "localhost";
-        // $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazmonitoramento";
-        // $this->username = defined('USERNAME') ? USERNAME : "eficazmonitor";
-        // $this->userpass = defined('USERPASS') ? USERPASS : "!q2W#e4R";
+        // $this->host =     defined('HOSTNAME') ? HOSTNAME : "mysql03.eficazsystem2.hospedagemdesites.ws";
+        // $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazsystem22";
+        // $this->username = defined('USERNAME') ? USERNAME : "eficazsystem22";
+        // $this->userpass = defined('USERPASS') ? USERPASS : "monitor2981";
         $this->host =     defined('HOSTNAME') ? HOSTNAME : "localhost";
         $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazsystem22";
         $this->username = defined('USERNAME') ? USERNAME : "root";

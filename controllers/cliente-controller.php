@@ -84,13 +84,13 @@
         }else{
 
             // Define o titulo da pagina
-            $this->title = "filial";
+            $this->title = "cliente";
 
             // Carrega os parametro da funcao
             $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
             // Carrega o modelo para este view
-            $modelo     = $this->load_model('cliente/cliente-model');
+            $modelo = $this->load_model('cliente/cliente-model');
 
             // Carrega view
             require_once EFIPATH . "/views/_includes/header.php";

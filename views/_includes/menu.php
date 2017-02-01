@@ -1,6 +1,6 @@
 <?php
 /* carrega dados */
-$dadosNot = $modelo->notificacao();
+//$dadosNot = $modelo->notificacao();
 
 /*
 * CARREGA MODEL PARA ALARMES, INDEPENDENTE DA PÁGINA
@@ -68,7 +68,11 @@ if($notificacaoAlertas['status']){
             <div id="logoNavBar">
               <a href="<?php echo HOME_URI; ?>/home/"><img src="<?php echo HOME_URI; ?>/views/_images/logos.png" class="imgLogoBarra"></a>
             </div>
+
         </div>
+        <!-- <div>
+            <img src="<?php echo HOME_URI; ?>/views/_images/logo-eficaz-system.png" class="img-responsive" alt="Responsive image">
+        </div> -->
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">

@@ -71,7 +71,7 @@ $().ready(function(){
             var numeroSim           = $('#num_sim').val();
 
             $.ajax({
-                url: urlP+"/eficazmonitor/configuracao/cadastrarConfiguracaoEquipamentoJson",
+                url: urlP+"/configuracao/cadastrarConfiguracaoEquipamentoJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -110,7 +110,7 @@ $().ready(function(){
             var numeroSim           = $('#num_sim').val();
 
             $.ajax({
-                url: urlP+"/eficazmonitor/configuracao/editarConfiguracaoEquipamentoJson",
+                url: urlP+"/configuracao/editarConfiguracaoEquipamentoJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -209,7 +209,7 @@ $().ready(function(){
             var numeroSim           = $('#num_sim').val();
 
             $.ajax({
-                url: urlP+"/eficazmonitor/configuracao/cadastrarConfiguracaoEquipamentoJson",
+                url: urlP+"/configuracao/cadastrarConfiguracaoEquipamentoJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -251,7 +251,7 @@ $().ready(function(){
             //console.log(parametros.length);
 
             $.ajax({
-                url: urlP+"/eficazmonitor/configuracao/editarConfiguracaoEquipamentoJson",
+                url: urlP+"/configuracao/editarConfiguracaoEquipamentoJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',

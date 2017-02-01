@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 17-Jan-2017 às 19:54
+-- Generation Time: 31-Jan-2017 às 18:56
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -68,7 +68,35 @@ INSERT INTO `tb_alerta` (`id`, `id_sim_equipamento`, `id_msg_alerta`, `nivel_ale
 (72, 13, 5, 1, 0, 4, '2017-01-17 06:25:23'),
 (73, 14, 2, 2, 0, 3, '2017-01-17 06:34:52'),
 (74, 15, 4, 1, 0, 1, '2017-01-17 06:58:51'),
-(75, 16, 5, 1, 0, 1, '2017-01-17 07:08:10');
+(75, 16, 5, 1, 0, 5, '2017-01-17 07:08:10'),
+(76, 16, 4, 1, 0, 5, '2017-01-19 13:58:37'),
+(77, 16, 3, 2, 0, 5, '2017-01-19 14:00:01'),
+(78, 16, 5, 1, 0, 5, '2017-01-19 06:49:37'),
+(79, 16, 2, 2, 0, 5, '2017-01-19 06:53:25'),
+(80, 16, 2, 2, 0, 5, '2017-01-19 06:55:18'),
+(81, 16, 2, 2, 0, 5, '2017-01-19 06:56:59'),
+(82, 12, 3, 2, 0, 2, '2017-01-20 14:52:19'),
+(83, 16, 2, 2, 0, 5, '2017-01-30 14:45:29'),
+(84, 16, 4, 1, 0, 5, '2017-01-30 14:46:45'),
+(85, 16, 2, 2, 0, 5, '2017-01-30 14:47:35'),
+(86, 16, 4, 1, 0, 5, '2017-01-30 14:48:19'),
+(87, 16, 2, 2, 0, 5, '2017-01-30 14:48:43'),
+(88, 16, 4, 1, 0, 5, '2017-01-30 14:50:51'),
+(89, 16, 2, 2, 0, 5, '2017-01-30 14:52:58'),
+(90, 16, 2, 2, 0, 5, '2017-01-30 14:57:24'),
+(91, 16, 2, 2, 0, 5, '2017-01-30 14:59:14'),
+(92, 16, 2, 2, 0, 5, '2017-01-30 03:01:36'),
+(93, 16, 2, 2, 0, 5, '2017-01-30 03:07:20'),
+(94, 16, 2, 2, 0, 5, '2017-01-30 03:14:12'),
+(95, 16, 2, 2, 0, 5, '2017-01-30 03:33:59'),
+(96, 16, 2, 2, 0, 5, '2017-01-30 03:34:59'),
+(97, 16, 2, 2, 0, 5, '2017-01-30 03:36:25'),
+(98, 16, 2, 2, 0, 5, '2017-01-30 03:55:42'),
+(99, 16, 2, 2, 0, 5, '2017-01-30 03:57:26'),
+(100, 16, 2, 2, 0, 5, '2017-01-30 04:00:34'),
+(101, 16, 2, 2, 0, 5, '2017-01-30 04:01:04'),
+(102, 16, 2, 2, 0, 5, '2017-01-30 05:39:09'),
+(103, 16, 3, 2, 0, 1, '2017-01-31 07:10:59');
 
 -- --------------------------------------------------------
 
@@ -376,11 +404,11 @@ CREATE TABLE `tb_msg_alerta` (
 
 INSERT INTO `tb_msg_alerta` (`id`, `id_users`, `mensagem`, `descricao_alarme`, `status_ativo`, `dt_criacao`) VALUES
 (1, 1, 'Verificar carregador', 'NULL', 1, '2015-08-07 14:14:05'),
-(2, 1, 'Tens&atilde;o em nível criticamente baixo', '1', 1, '2015-08-07 14:14:05'),
-(3, 1, 'Tens&atilde;o em nível criticamente alto', '1', 1, '2015-08-07 14:14:05'),
-(4, 5, 'Tens&atilde;o em nível baixo', '1', 1, '2017-01-13 10:52:23'),
-(5, 5, 'Tens&atilde;o em nível alto', '', 1, '2017-01-13 10:52:23'),
-(6, 5, 'Nível da bateria está baixo', '', 1, '2017-01-13 10:54:52');
+(2, 1, 'Tens&atilde;o em n&iacute;vel criticamente baixo', '1', 1, '2015-08-07 14:14:05'),
+(3, 1, 'Tens&atilde;o em n&iacute;vel criticamente alto', '1', 1, '2015-08-07 14:14:05'),
+(4, 5, 'Tens&atilde;o em n&iacute;vel baixo', '1', 1, '2017-01-13 10:52:23'),
+(5, 5, 'Tens&atilde;o em n&iacute;vel alto', '', 1, '2017-01-13 10:52:23'),
+(6, 5, 'N&iacute;vel da bateria está baixo', '', 1, '2017-01-13 10:54:52');
 
 -- --------------------------------------------------------
 
@@ -16644,8 +16672,8 @@ INSERT INTO `tb_parametro` (`id`, `id_equipamento`, `id_users`, `id_sim_equipame
 (4, 20, 5, 12, '9999988777', '|inicio|ecb-95|eb-111|ei-127|ea-133|eca-143||inicio|scb-96|sb-112|si-127|sa-134|sca-142||inicio|tbcb-97|tbb-113|tbi-127|tba-135|tbca-145||inicio|ccb-98|cb-114|ci-127|ca-136|cca-140||inicio|cscb-99|csb-115|csi-127|csa-137|csca-139|', '2017-01-12 12:16:58', 1),
 (5, 25, 5, 13, '99999994443333', '|inicio|ecb-98|eb-110|ei-127|ea-135|eca-145||inicio|scb-92|sb-105|si-127|sa-130|sca-140||inicio|tbcb-90|tbb-105|tbi-127|tba-135|tbca-146||inicio|ccb-|cb-|ci-|ca-|cca-||inicio|cscb-|csb-|csi-|csa-|csca-|', '2017-01-13 19:10:49', 1),
 (6, 23, 5, 14, '9999998888', '|inicio|ecb-90|eb-110|ei-127|ea-135|eca-145||inicio|scb-93|sb-110|si-127|sa-135|sca-145||inicio|tbcb-90|tbb-105|tbi-127,|tba-135|tbca-140||inicio|ccb-|cb-|ci-|ca-|cca-||inicio|cscb-|csb-|csi-|csa-|csca-|', '2017-01-16 10:34:29', 1),
-(7, 21, 5, 15, '777777777', '|inicio|ecb-89|eb-120|ei-127|ea-133|eca-145||inicio|scb-90|sb-111|si-127|sa-135|sca-145||inicio|tbcb-90|tbb-100|tbi-127|tba-130|tbca-140||inicio|ccb-|cb-|ci-|ca-|cca-||inicio|cscb-|csb-|csi-|csa-|csca-|', '2017-01-17 16:58:33', 1),
-(8, 22, 5, 16, '999999888433', '|inicio|ecb-99|eb-110|ei-127|ea-130|eca-145||inicio|scb-99|sb-110|si-127|sa-130|sca-140||inicio|tbcb-90|tbb-110|tbi-127|tba-138|tbca-140||inicio|ccb-|cb-|ci-|ca-|cca-||inicio|cscb-|csb-|csi-|csa-|csca-|', '2017-01-17 17:07:57', 1);
+(7, 21, 5, 15, '777777777', '|inicio|ecb-89|eb-120|ei-127|ea-133|eca-145||inicio|scb-90|sb-111|si-127|sa-135|sca-145||inicio|tbcb-90|tbb-100|tbi-127|tba-130|tbca-140||inicio|ccb-80|cb-105|ci-127|ca-138|cca-145||inicio|cscb-75|csb-100|csi-127|csa-135|csca-140|', '2017-01-17 16:58:33', 1),
+(8, 22, 5, 16, '999999888433', '|inicio|ecb-30|eb-60|ei-127|ea-160|eca-190||inicio|scb-99|sb-110|si-127|sa-130|sca-140||inicio|tbcb-90|tbb-110|tbi-127|tba-138|tbca-140||inicio|ccb-80|cb-100|ci-127|ca-135|cca-145||inicio|cscb-70|csb-100|csi-128|csa-140|csca-160|', '2017-01-17 17:07:57', 1);
 
 -- --------------------------------------------------------
 
@@ -16672,9 +16700,9 @@ CREATE TABLE `tb_perfil_acesso` (
 
 INSERT INTO `tb_perfil_acesso` (`id`, `cadastro`, `pesquisa`, `vinculo`, `configuracao`, `monitoramento`, `editar`, `nome`, `status_ativo`, `dt_criacao`) VALUES
 (1, 1, 1, 1, 1, 1, 1, 'Administrador', 1, '2015-08-07 14:14:04'),
-(2, 1, 1, 0, 0, 1, 0, 'Cliente', 1, '2016-12-14 17:56:32'),
+(2, 0, 1, 0, 0, 1, 0, 'Cliente', 1, '2016-12-14 17:56:32'),
 (3, 0, 1, 0, 0, 1, 0, 'Visitante', 1, '2016-12-14 17:57:40'),
-(4, 0, 1, 0, 1, 1, 1, 'Tecnico', 1, '2016-12-14 17:59:04');
+(4, 1, 1, 0, 1, 1, 1, 'Tecnico', 1, '2016-12-14 17:59:04');
 
 -- --------------------------------------------------------
 
@@ -16906,11 +16934,39 @@ CREATE TABLE `tb_tratamento_alerta` (
 --
 
 INSERT INTO `tb_tratamento_alerta` (`id`, `id_alerta`, `id_user`, `parametro`, `parametroMedido`, `parametroAtingido`, `tratamento_aplicado`) VALUES
-(70, 75, NULL, 'SaÃ­da tensÃ£o', 134.2, 130, NULL),
+(73, 78, 5, 'TensÃ£o', 178, 160, 'Teste'),
+(72, 77, 5, 'SaÃ­da tensÃ£o', 900, 130, 'Finalizado para testes'),
+(71, 76, 5, 'SaÃ­da tensÃ£o', 100, 110, 'Finalizado sem verificaÃ§Ã£o do status'),
+(70, 75, 5, 'SaÃ­da tensÃ£o', 134.2, 130, 'Finalizado para questÃµes de teste de soluÃ§Ã£o'),
 (69, 74, NULL, 'TensÃ£o', 112.7, 120, NULL),
 (68, 73, 5, 'Bateria', 89, 105, 'Aguardando equipe chegando ao local'),
 (67, 72, 5, 'SaÃ­da tensÃ£o', 134.2, 130, 'Enviado equipe de manutenÃ§Ã£o ao local'),
-(66, 71, 5, 'TensÃ£o', 0, 110, 'Teste de tratamento do alarme, retestando, retestando');
+(66, 71, 5, 'TensÃ£o', 0, 110, 'Teste de tratamento do alarme, retestando, retestando'),
+(74, 79, 5, 'TensÃ£o', 0, 60, 'Teste'),
+(75, 80, 5, 'TensÃ£o', 0, 60, 'Teste'),
+(76, 81, 5, 'TensÃ£o', 0, 60, 'testes'),
+(77, 82, 5, 'SaÃ­da tensÃ£o', 900, 134, 'Teste'),
+(78, 83, 5, 'SaÃ­da tensÃ£o', 90, 110, 'teste'),
+(79, 84, 5, 'SaÃ­da tensÃ£o', 100, 110, 'teste'),
+(80, 85, 5, 'SaÃ­da tensÃ£o', 12.7, 110, 'teste'),
+(81, 86, 5, 'Bateria', 90, 110, 'teste'),
+(82, 87, 5, 'Corrente', 0, 100, 'teste'),
+(83, 88, 5, 'Bateria', 90, 110, 'teste'),
+(84, 89, 5, 'TensÃ£o', 14.5, 60, 'teste'),
+(85, 90, 5, 'TensÃ£o', 14.5, 60, 'teste'),
+(86, 91, 5, 'TensÃ£o', 14.5, 60, 'teste'),
+(87, 92, 5, 'TensÃ£o', 9, 60, 'teste'),
+(88, 93, 5, 'TensÃ£o', 0.9, 60, 'teste'),
+(89, 94, 5, 'TensÃ£o', 9, 60, 'teste'),
+(90, 95, 5, 'TensÃ£o', 0.9, 60, 'testse'),
+(91, 96, 5, 'TensÃ£o', 9, 60, 'teste'),
+(92, 97, 5, 'TensÃ£o', 0.9, 60, 'teste'),
+(93, 98, 5, 'TensÃ£o', 9, 60, 'teste'),
+(94, 99, 5, 'TensÃ£o', 9, 60, 'teste'),
+(95, 100, 5, 'TensÃ£o', 9, 60, 'teste'),
+(96, 101, 5, 'TensÃ£o', 9, 60, 'teste'),
+(97, 102, 5, 'TensÃ£o', 9, 60, 'testes'),
+(98, 103, NULL, 'Bateria', 1270, 138, NULL);
 
 -- --------------------------------------------------------
 
@@ -16944,9 +17000,9 @@ INSERT INTO `tb_users` (`id`, `id_perfil_acesso`, `nome`, `sobrenome`, `email`, 
 (3, 1, 'Fabiano ', 'Hatori', 'fabiano@eficazSystem.com.br', '', '', 'c62d929e7b7e7b6165923a5dfc60cb56', 1, 1, 0, 1, '2016-12-05 13:38:08'),
 (4, 1, 'Allan ', 'Lima ', 'allan.lima@eficazsystem.com.br', '', '', '9091a762fd732c7d0f308540ee93ed94', 1, 1, 0, 1, '2016-12-06 19:45:00'),
 (5, 1, 'Sistema2', 'Eficaz', 'sistemaeficaz@sistema.eficazsystem.com.br', '', '', '42d8aa7cde9c78c4757862d84620c335', 1, 0, 0, 1, '2016-12-07 17:08:02'),
-(41, 2, 'Leandro ', 'Moraes', 'email@email.com.br', '(123) 1231-2312', '(132) 1312-3123', 'efe6398127928f1b2e9ef3207fb82663', 1, 48, 0, 1, '2017-01-10 17:20:48'),
-(42, 2, 'Golvea', 'Gusm&atilde;o', 'email@email.com', '(342) 2342-3423', '(423) 4234-2342', 'efe6398127928f1b2e9ef3207fb82663', 1, 49, 0, 1, '2017-01-10 17:25:08'),
-(43, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', 'efe6398127928f1b2e9ef3207fb82663', 1, 50, 0, 1, '2017-01-10 17:26:32'),
+(41, 2, 'Leandro ', 'Moraes', 'email@email.com.br', '(123) 1231-2312', '(132) 1312-3123', '9091a762fd732c7d0f308540ee93ed94', 1, 48, 0, 1, '2017-01-10 17:20:48'),
+(42, 2, 'Golvea', 'Gusm&atilde;o Ale', 'email@email.com.ge', '(342) 2342-3423', '(423) 4234-2342', 'efe6398127928f1b2e9ef3207fb82663', 1, 49, 0, 1, '2017-01-10 17:25:08'),
+(43, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', '9091a762fd732c7d0f308540ee93ed94', 1, 50, 0, 1, '2017-01-10 17:26:32'),
 (44, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', 'efe6398127928f1b2e9ef3207fb82663', 1, 50, 0, 1, '2017-01-10 17:26:33');
 
 --
@@ -17125,7 +17181,7 @@ ALTER TABLE `log`
 -- AUTO_INCREMENT for table `tb_alerta`
 --
 ALTER TABLE `tb_alerta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 --
 -- AUTO_INCREMENT for table `tb_cliente`
 --
@@ -17140,7 +17196,7 @@ ALTER TABLE `tb_contato_alerta`
 -- AUTO_INCREMENT for table `tb_dados`
 --
 ALTER TABLE `tb_dados`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=313034;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=556253;
 --
 -- AUTO_INCREMENT for table `tb_equipamento`
 --
@@ -17185,7 +17241,7 @@ ALTER TABLE `tb_tipo_equipamento`
 -- AUTO_INCREMENT for table `tb_tratamento_alerta`
 --
 ALTER TABLE `tb_tratamento_alerta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
