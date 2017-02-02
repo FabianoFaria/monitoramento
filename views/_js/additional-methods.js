@@ -1088,13 +1088,16 @@ jQuery.validator.addMethod("dateBR", function(value, element) {
 }, "Informe uma data válida.");
 
 /*
-* Valida se a data fina é maior que a data inicio
+* Valida se a data fina é maior que a data inicio, formato BR
 */
 jQuery.validator.addMethod("greaterThan",
 function(value, element, params) {
 
-    if (!/Invalid|NaN/.test(new Date(value))) {
-        return new Date(value) > new Date($(params).val());
+	var temp = value.split("/");
+	var temp2 = $(params).val().split("/");
+
+    if (!/Invalid|NaN/.test(new Date(temp[2], (temp[1] - 1), temp[0]))) {
+        return new Date(temp[2], (temp[1] - 1), temp[0]) > new Date(temp2[2], (temp2[1] - 1), temp2[0]);
     }
 
     return isNaN(value) && isNaN($(params).val())

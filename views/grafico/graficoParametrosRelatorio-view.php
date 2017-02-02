@@ -141,29 +141,33 @@
                         <div class="panel-body">
 
                             <div class="row borda-01">
+                                <div class="col-md-3">
+                                    <label class="font-texto-02">Desde :</label>
+                                </div>
                                 <div class="col-md-6 txt-center">
                                     <label class="font-texto-02">
                                         <input class="form-control" type="text" id="data_inicio_relatorio" name="data_inicio_relatorio" val="">
                                     </label>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="font-texto-02">Data inicio</label>
-                                </div>
+
                             </div>
 
                             <div class="row">
+                                <div class="col-md-3">
+                                    <label class="font-texto-02">Até :</label>
+                                </div>
+
                                 <div class="col-md-6 txt-center">
                                     <label class="font-texto-02">
                                         <input class="form-control" type="text" id="data_fim_relatorio" name="data_fim_relatorio" val="">
                                     </label>
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="font-texto-02">Data fim</label>
-                                </div>
+
                                 <div class="col-md-3">
                                     <button type="button" id="confirmParametros" class="btn btn-primary">Gerar</button>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>
