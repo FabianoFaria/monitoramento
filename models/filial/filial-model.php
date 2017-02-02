@@ -117,7 +117,6 @@
             {
                 $idUser = $_SESSION['userdata']['userId'];
 
-
                 // coleta os dados
                 $nomeFilial     = $this->tratamento($nomeFilial);
                 $idMatriz       = $this->tratamento($idMatriz);

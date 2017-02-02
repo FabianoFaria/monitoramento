@@ -130,7 +130,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nome da Filial</label>
-                            <input type="text" class="form-control" id="txt_filial" name="txt_filial" placeholder="Nome da Filial" maxlength="100" required value="">
+                            <input type="text" class="form-control" id="txt_filial" name="txt_filial" placeholder="Nome da Filial" value="">
                         </div>
                     </div><!-- fim do campo nome da filial -->
 
@@ -186,7 +186,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Cidade</label>
-                            <input type="text" class="form-control" id="txt_cidade" name="txt_cidade" placeholder="Cidade" maxlength="50" required value="">
+                            <input type="text" class="form-control" id="txt_cidade" name="txt_cidade" placeholder="Cidade" value="">
                         </div>
                     </div><!-- fim do campo Cidade -->
 
@@ -194,7 +194,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Bairro</label>
-                            <input type="text" class="form-control" id="txt_bairro" name="txt_bairro" placeholder="Cidade" maxlength="50" required value="">
+                            <input type="text" class="form-control" id="txt_bairro" name="txt_bairro" placeholder="bairro" value="">
                         </div>
                     </div><!-- fim do campo Bairro -->
 

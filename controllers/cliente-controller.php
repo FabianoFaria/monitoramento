@@ -75,7 +75,7 @@
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $filialModelo      = $this->load_model('filial/filial-model');
 
-        $registraFilial     = $filialModelo->registroFilial($_POST['nomeFilial'], $_POST['dddFilial'], $_POST['telefoneFili'], $_POST['cepFilial'], $_POST['enderecoFilial'], $_POST['numeroFili'], $_POST['cidadeFili'], $_POST['bairroFili'], $_POST['estadosFili'], $_POST['paisFili'], $_POST['idCliente']);
+        $registraFilial     = $filialModelo->registroFilial($_POST['nomeFilial'], $_POST['dddFilial'], $_POST['telefoneFili'], $_POST['cepFilial'], $_POST['enderecoFilial'], $_POST['numeroFili'], $_POST['bairroFili'], $_POST['cidadeFili'], $_POST['estadosFili'], $_POST['paisFili'], $_POST['idCliente']);
 
         exit(json_encode(array('status' => $registraFilial['status'])));
 
@@ -98,14 +98,14 @@
             $dados['id']        = $dadosFilial[0]['id'];
             $dados['estado']    = $dadosFilial[0]['id_estado'];
             $dados['pais']      = $dadosFilial[0]['id_pais'];
-            $dados['nome']      = html_entity_decode($dadosFilial[0]['nome']);
-            $dados['endereco']  = html_entity_decode($dadosFilial[0]['endereco']);
-            $dados['numero']    = html_entity_decode($dadosFilial[0]['numero']);
-            $dados['cep']       = html_entity_decode($dadosFilial[0]['cep']);
-            $dados['cidade']    = html_entity_decode($dadosFilial[0]['cidade']);
-            $dados['bairro']    = html_entity_decode($dadosFilial[0]['bairro']);
-            $dados['ddd']       = html_entity_decode($dadosFilial[0]['ddd']);
-            $dados['telefone']  = html_entity_decode($dadosFilial[0]['telefone']);
+            $dados['nome']      = html_entity_decode($dadosFilial[0]['nome'], ENT_COMPAT, 'UTF-8');
+            $dados['endereco']  = html_entity_decode($dadosFilial[0]['endereco'], ENT_COMPAT, 'UTF-8');
+            $dados['numero']    = html_entity_decode($dadosFilial[0]['numero'], ENT_COMPAT, 'UTF-8');
+            $dados['cep']       = html_entity_decode($dadosFilial[0]['cep'], ENT_COMPAT, 'UTF-8');
+            $dados['cidade']    = html_entity_decode($dadosFilial[0]['cidade'], ENT_COMPAT, 'UTF-8');
+            $dados['bairro']    = html_entity_decode($dadosFilial[0]['bairro'], ENT_COMPAT, 'UTF-8');
+            $dados['ddd']       = html_entity_decode($dadosFilial[0]['ddd'], ENT_COMPAT, 'UTF-8');
+            $dados['telefone']  = html_entity_decode($dadosFilial[0]['telefone'], ENT_COMPAT, 'UTF-8');
 
             exit(json_encode(array('status' => true, 'filial' => $dados)));
         }else{
