@@ -150,5 +150,45 @@
             return $array;
         }
 
+        /*
+        * SALVAR EDIÇÕES NA FILIAL
+        */
+        public function editarFilialJson($nomeFilial, $codigoArea, $telefone, $cepFilial, $endereco, $numero, $bairro, $cidade, $idEstado, $idPais, $idFilial){
+
+
+            // Verifica se os cambos obrigatorios nao sao nulos
+            if ($nomeFilial != "" && $telefone != "" && $cepFilial != "" && $endereco != "" && $cidade != "")
+            {
+                // COLETA OS DADOS
+                $nomeFilial     = $this->tratamento($nomeFilial);
+                $idFilial       = $this->tratamento($idFilial);
+                $codigoArea     = !empty ($codigoArea) ? $this->tratamento($codigoArea,3) : 0;
+                $telefone       = !empty ($telefone) ? $this->tratamento($telefone,3) : 0;
+                $cep            = $this->tratamento(str_replace('-','',$cepFilial) ,3);
+                $endereco       = $this->tratamento($endereco);
+                $numero         = !empty ($numero) ? $this->tratamento($numero,3) : 0;
+                $cidade         = $this->tratamento($cidade);
+                $bairro         = $this->tratamento($bairro);
+                $pais           = $this->tratamento($idPais);
+                $estado         = $this->tratamento($idEstado);
+
+                //MONTA A QUERY
+                $query = "UPDATE tb_filial SET id_estado = '$estado', id_pais = '$pais', nome = '$nomeFilial', endereco = '$endereco', numero = '$numero', cep = '$cep', cidade = '$cidade', bairro = '$bairro', ddd = '$codigoArea', telefone = '$telefone' WHERE id = '$idFilial'";
+
+                // VERIFICA SE GRAVOU COM SUCESSO
+                if ($this->db->query($query))
+                {
+                    $array = array('status' => true);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+
+        }
     }
 ?>

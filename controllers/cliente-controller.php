@@ -68,8 +68,67 @@
 
     }
 
-    //Listar filiais do cliente
+    /*
+    * REGISTRAR FILIAL DO CLIENTE JSON
+    */
+    public function cadastrarFilialClienteJson(){
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $filialModelo      = $this->load_model('filial/filial-model');
 
+        $registraFilial     = $filialModelo->registroFilial($_POST['nomeFilial'], $_POST['dddFilial'], $_POST['telefoneFili'], $_POST['cepFilial'], $_POST['enderecoFilial'], $_POST['numeroFili'], $_POST['cidadeFili'], $_POST['bairroFili'], $_POST['estadosFili'], $_POST['paisFili'], $_POST['idCliente']);
+
+        exit(json_encode(array('status' => $registraFilial['status'])));
+
+    }
+
+    /*
+    * FUNÇÃO PARA CARREGAR DADOS DA FILIAL
+    */
+    public function carregarFilialClienteJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $filialModelo      = $this->load_model('filial/filial-model');
+
+        $dadosFilial       = $filialModelo->filialEspecificaCliente($_POST['idFilail']);
+
+        if(!empty($dadosFilial)){
+
+            $dados          = array();
+
+            $dados['id']        = $dadosFilial[0]['id'];
+            $dados['estado']    = $dadosFilial[0]['id_estado'];
+            $dados['pais']      = $dadosFilial[0]['id_pais'];
+            $dados['nome']      = html_entity_decode($dadosFilial[0]['nome']);
+            $dados['endereco']  = html_entity_decode($dadosFilial[0]['endereco']);
+            $dados['numero']    = html_entity_decode($dadosFilial[0]['numero']);
+            $dados['cep']       = html_entity_decode($dadosFilial[0]['cep']);
+            $dados['cidade']    = html_entity_decode($dadosFilial[0]['cidade']);
+            $dados['bairro']    = html_entity_decode($dadosFilial[0]['bairro']);
+            $dados['ddd']       = html_entity_decode($dadosFilial[0]['ddd']);
+            $dados['telefone']  = html_entity_decode($dadosFilial[0]['telefone']);
+
+            exit(json_encode(array('status' => true, 'filial' => $dados)));
+        }else{
+            exit(json_encode(array('status' => false, 'filial' => '')));
+        }
+    }
+
+    /*
+    * SALVAR EDIÇÕES NA FILIAL
+    */
+    public function editarFilialClienteJson(){
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $filialModelo      = $this->load_model('filial/filial-model');
+
+        $registraFilial     = $filialModelo->editarFilialJson($_POST['nomeFilial'], $_POST['dddFilial'], $_POST['telefoneFili'], $_POST['cepFilial'], $_POST['enderecoFilial'], $_POST['numeroFili'], $_POST['cidadeFili'], $_POST['bairroFili'], $_POST['estadosFili'], $_POST['paisFili'], $_POST['idFilial']);
+
+        exit(json_encode(array('status' => $registraFilial['status'])));
+
+    }
+
+    /*
+    * Listar filiais do cliente
+    */
     public function listarFiliaisCliente(){
 
         // Verifica o login

@@ -79,9 +79,10 @@
                                         <td><?php echo $filia['estado']; ?></td>
                                         <td><?php echo $filia['pais']; ?></td>
                                         <td>
-                                            <a href="<?php echo HOME_URI; ?>/editar/editarFilial/<?php echo $filia['id']; ?>" class="link-tabela-moni">
-                                                <i class="fa fa-pencil-square-o fa-lg"></i>
-                                            </a>
+                                            <!-- <a href="<?php //echo HOME_URI; ?>/editar/editarFilial/<?php //echo $filia['id']; ?>" class="link-tabela-moni">
+
+                                            </a> -->
+                                            <button type="button" class="btn btn-default edditFilial" value="<?php echo $filia['id']; ?>"><i class="fa fa-pencil-square-o fa-lg"></i></button>
                                         </td>
                                         <td>
                                             <a href="<?php echo HOME_URI; ?>/cliente/removerCliente/<?php echo $filia['id']; ?>" class="link-tabela-moni">
@@ -122,7 +123,7 @@
         <div class="modal-body">
             <form id="formCadFilial" method="post">
 
-                <input type="hidden" id="idMatriz" value="" />
+                <input type="hidden" id="idMatriz" value="<?php echo $this->parametros[0]; ?>" />
 
                 <div class="row">
                     <!-- nome da filial -->
@@ -249,8 +250,153 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Cadastrar filial</button>
+          <button type="button" class="btn btn-primary" id="cadFilialBtn">Cadastrar filial</button>
         </div>
       </div>
   </div>
+</div>
+
+<!-- MODAL PARA EDIÇÃO DE FILIAL -->
+<div id="modalEditFilial" class="modal fade" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Editar Filial</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditFilial" method="post">
+
+                        <input type="hidden" id="idFilial" value="" />
+
+                        <div class="row">
+                            <!-- nome da filial -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Nome da Filial</label>
+                                    <input type="text" class="form-control" id="nome_filial" name="nome_filial" placeholder="Nome da Filial" maxlength="100" required value="">
+                                </div>
+                            </div><!-- fim do campo nome da filial -->
+
+                        </div>
+
+                        <div class="row">
+                            <!-- DDD -->
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">C&oacute;digo de &Aacute;rea</label>
+                                    <input type="text" class="form-control" id="filial_ddd" name="filial_ddd" placeholder="DDD (000)" maxlength="3" onkeypress="" value="">
+                                </div>
+                            </div><!-- fim do ddd -->
+
+                            <!-- telefone -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Telefone</label>
+                                    <input type="text" class="form-control" id="filial_telefone" name="filial_telefone" placeholder="Telefone" maxlength="9" onkeypress="" value="">
+                                </div>
+                            </div><!-- fim do telefone -->
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">CEP</label>
+                                    <input type="text" class="form-control" id="filial_cep" name="filial_cep" placeholder="CEP" maxlength="9" required onkeypress="" value="">
+                                </div>
+                            </div><!-- fim do cep -->
+
+                            <!-- endereco do cliente -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Endere&ccedil;o</label>
+                                    <input type="text" class="form-control" id="filial_endereco" name="filial_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required value="">
+                                </div>
+                            </div><!-- fim do endereco do cliente -->
+
+                            <!-- numero -->
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">N&uacute;mero</label>
+                                    <input type="text" class="form-control" id="filial_numero" name="filial_numero" placeholder="N&uacute;mero" maxlength="10" onkeypress="" value="">
+                                </div>
+                            </div><!-- fim do numero -->
+                        </div>
+
+                        <div class="row">
+                            <!-- Cidade -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Cidade</label>
+                                    <input type="text" class="form-control" id="filial_cidade" name="filial_cidade" placeholder="Cidade" maxlength="50" required value="">
+                                </div>
+                            </div><!-- fim do campo Cidade -->
+
+                            <!-- Bairro -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Bairro</label>
+                                    <input type="text" class="form-control" id="filial_bairro" name="filial_bairro" placeholder="Bairro" />
+                                </div>
+                            </div>
+                            <!-- estado -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Estado</label><br>
+                                        <select id="filial_estados" name="filial_estados" class="form-control">
+                                            <?php
+
+                                                $estados = $modelo->listaEstadosSimples();
+                                                //$modelo->listaEstado(); listaEstadosSimples
+                                                foreach ($estados as $estado) {
+                                                    if($estado['id'] == 16){
+                                                        echo "<option value='".$estado['id']."' selected>".$estado['nome']."</option>";
+                                                    }else{
+                                                        echo "<option value='".$estado['id']."'>".$estado['nome']."</option>";
+                                                    }
+                                                }
+                                                echo "<option value='999'>Estado ou condado fora do país</option>";
+                                            ?>
+                                        </select>
+                                </div>
+                            </div><!-- fim do estado -->
+                        </div>
+                        <div class="row">
+                            <!-- pais -->
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="pais">Pais</label><br>
+                                    <select id="filial_pais" name="filial_pais" class="form-control">
+                                        <?php
+                                            //$modelo->listaPaises();
+                                            $paises = $modelo->listaPaisesSimples();
+
+                                            foreach ($paises as $pais) {
+                                                if($pais['id'] == 36){
+                                                    echo "<option value='".$pais['id']."' selected>".$pais['pais']."</option>";
+                                                }else{
+                                                    echo "<option value='".$pais['id']."'>".$pais['pais']."</option>";
+                                                }
+                                            }
+
+                                        ?>
+
+                                    </select>
+
+                                </div>
+                            </div><!-- fim do pais -->
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary" id="editFilialBtn">Salvar alteração filial</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
