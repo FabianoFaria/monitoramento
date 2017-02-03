@@ -227,13 +227,13 @@ if($notificacaoAlertas['status']){
         </ul>
         <!-- /.navbar-top-links -->
 
-        <div class="navbar-default sidebar" role="">
-          <div class="sidebar-nav">
+        <div class="navbar-default sidebar" role="navigation">
+          <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <!-- HOME -->
                 <li>
                   <a href="<?php echo HOME_URI; ?>/home/" data-toggle="">
-                      <i class="fa fa-desktop fa-3x"></i> <span class="lb-side">Tela de monitoramento</span>
+                      <i class="fa fa-desktop fa-3x"></i> <span class="lb-side">Tela de monitoramento</span><span class="fa arrow"></span>
                   </a>
                   <ul class="nav nav-second-level collapse in">
                       <li>
@@ -302,6 +302,7 @@ if($notificacaoAlertas['status']){
                     <a class="link-side" href="<?php echo HOME_URI; ?>/monitoramento/">
                       <span class="icon-side"><i class="fa fa-tachometer fa-3x"></i></span>
                       <span class="lb-side">Monitorar</span>
+                      <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse in">
                         <li>
@@ -400,9 +401,10 @@ if($notificacaoAlertas['status']){
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                     <li>
                         <a href="<?php echo HOME_URI; ?>/usuario/listar" class="">
-                          <i class="fa fa-users fa-3x"></i>
-                          <span class="icon-side"></span>
-                          <spam>Usuários</span>
+                            <i class="fa fa-users fa-3x"></i>
+                            <span class="icon-side"></span>
+                            <spam>Usuários</span>
+                            <span class="fa arrow"></span>
                         </a>
                     </li>
                 <?php } ?>
