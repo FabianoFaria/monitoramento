@@ -286,7 +286,11 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
 
                     //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
 
-                    $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo']);
+                    $resultadoEnvio = $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo']);
+
+                    //POSIBILIDADE DE CADASTRO NO LOG EM CASO DE FALHA DE ENVIO
+
+                    echo $resultadoEnvio;
                 }
             }
 
