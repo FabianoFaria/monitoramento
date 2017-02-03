@@ -366,7 +366,6 @@ $().ready(function() {
 
                     if((nomeFilial != " " && endereco != " ")){
 
-
                         //Envio de dados para cadastro de filial via JSON
                         $.ajax({
                             url: urlP+"/eficazmonitor/filial/registraFilial",

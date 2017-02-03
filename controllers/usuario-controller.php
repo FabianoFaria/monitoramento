@@ -127,7 +127,7 @@
          //Efetua o tratamento das funções passadas via JSON
 
          /**
-          * Funcao que cadastra uma usuário para o cliente
+          * Funcao que cadastra uma usuário para o cliente, durante o cadastro de clientes
           */
           public function registraUsuario(){
 
@@ -155,6 +155,33 @@
               }
 
           }
+
+        /*
+        * FUNÇÃO QUE CADASTRA OS USUARIOS DOS SISTEMA NO PAINEL DE USUÁRIOS
+        */
+        public function registraUsuarioPorSistema(){
+            //CARREGA MODELO PARA ESTA FUNÇÃO
+            $UsuarioModelo    = $this->load_model('usuario/usuario-model');
+
+            //FAZ TRATAMENTO DE DADOS RECEBIDOS ANTES DE ENVIAR PARA A MODEL
+            $senha            = $_POST['senha'];
+            $confirmaSenha    = $_POST['confirmaS'];
+
+            if($senha == $confirmaSenha){
+                $senha = md5($senha);
+            }else{
+                $senha = md5('12345');
+            }
+
+            $registraUsuario  = $UsuarioModelo->registrarUsuarioParaSistema($_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $senha, $_POST['cliente'], $_POST['acesso']);
+
+            if($registraUsuario){
+                exit(json_encode(array('status' => $registraUsuario['status'])));
+            }else{
+                exit(json_encode(array('status' => $registraUsuario['status'])));
+            }
+
+        }
 
         /*
         * Função para atualizar o contato do cliente
@@ -191,6 +218,41 @@
             }
         }
 
+        /*
+        * FUNÇÃO PARA CARREGAR USÁRIO PARA EDIÇÃO
+        */
+        public function carregarDadosUsuariosJson(){
+
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $usuarioModelo          = $this->load_model('usuario/usuario-model');
+
+            $carregarDadosUsuario   = $usuarioModelo->dadosUsuario($_POST['idUsuario']);
+
+            if($carregarDadosUsuario != false){
+                exit(json_encode(array('status' => true, 'usuario' => $carregarDadosUsuario)));
+            }else{
+                exit(json_encode(array('status' => false, 'usuario' => '')));
+            }
+
+        }
+
+        /*
+        * FUNÇÃO PARA SALVAR OS DADOS DO USUÁRIO
+        */
+
+        public function atualizarUsuarioPorSistema(){
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $usuarioModelo          = $this->load_model('usuario/usuario-model');
+
+            $atualizarUsuarioJson   = $usuarioModelo->atualizarUsuarioViaSistema($_POST['idUser'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['senha'], $_POST['confirmaS'], $_POST['cliente'], $_POST['acesso']);
+
+            if($atualizarUsuarioJson['status']){
+                exit(json_encode(array('status' => true)));
+            }else{
+                exit(json_encode(array('status' => false)));
+            }
+
+        }
     }
 
 

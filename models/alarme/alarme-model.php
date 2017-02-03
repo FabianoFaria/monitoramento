@@ -205,7 +205,7 @@
               }else{
                   $array = array('status' => false, 'alerta' => '');
 
-                    $retorno[] = $row;
+                    //$retorno[] = $row;
                   }
 
             }
