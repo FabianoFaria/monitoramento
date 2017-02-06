@@ -50,6 +50,20 @@
     */
     public function envioEmailAlertaEquipamento($email, $nomeContato, $tipoEquip, $nomeEquip, $modeloEquip, $ambiente, $msg, $cliente, $sede, $indiceRecebido, $indiceUltrapassado){
 
+        require_once('class.phpmailer.php');
+
+        $mailer = new PHPMailer();
+        $mailer->IsSMTP();
+        $mailer->SMTPDebug = 1;
+        $mailer->Port = 465; //Indica a porta de conexão para a saída de e-mails
+        $mailer->Host = 'email-ssl.com.br';//Endereço do Host do SMTP Locaweb
+        $mailer->SMTPAuth = true; //define se haverá ou não autenticação no SMTP
+        $mailer->Username = 'monitoramento@sistema.eficazsystem.com.br'; //Login de autenticação do SMTP
+        $mailer->Password = 'eficaz123'; //Senha de autenticação do SMTP
+        $mailer->FromName = 'Monitoramento Eficaz'; //Nome que será exibido para o destinatário
+        $mailer->From = 'monitoramento@sistema.eficazsystem.com.br'; //Obrigatório ser a mesma caixa postal configurada no remetente do SMTP
+
+
         //Definimos Para quem vai ser enviado o email
         $remetente = $this->remetente;
         $destino = $email;
@@ -61,6 +75,8 @@
         //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
         //$headers .= 'From: "Sistema monitoramento" <'.$remetente.'>';
+
+        //$mail->addCustomHeader('X-custom-header', 'custom-value');
 
         //CARREGANDO FOLHA DE ESTILO E AFINS
         $mensagem = "";
@@ -227,7 +243,7 @@
 
                                                                 $mensagem .= '<div mc:edit="body" style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">';
                                                                     $mensagem .= "<p>";
-                                                                    $mensagem .= "Um ".$tipoEquip." ".$nomeEquip." de modelo ".$modeloEquip."  ";
+                                                                    $mensagem .= "".$tipoEquip." ".$nomeEquip." de modelo ".$modeloEquip."  ";
                                                                     $mensagem .= " localizado na sede : ".$cliente." - ".$sede." ";
                                                                     $mensagem .= "</p>";
                                                                     $mensagem .= "<p>";
@@ -278,16 +294,26 @@
 
         $mensagem .= '</html>';
 
-        echo $mensagem;
+
+        $mailer->AddAddress( $email, $nomeContato); //Destinatários
+        $mailer->Subject = $assunto;
+        $mailer->Body = $mensagem;
+
+
+        if(!$mailer->Send())
+        {
+        echo "Message was not sent";
+        echo "Mailer Error: " . $mailer->ErrorInfo; exit; }
+        print "E-mail enviado!";
 
         //$headers .= "Bcc: $EmailPadrao\r\n";
-        $arquivo = '';
-        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-f sistemaeficaz@sistema.eficazsystem.com.br");
-        if($enviaremail){
-            return true;
-        } else {
-            return false;
-        }
+        // $arquivo = '';
+        // $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-f monitoramento@sistema.eficazsystem.com.br");
+        // if($enviaremail){
+        //     return true;
+        // } else {
+        //     return false;
+        // }
 
 
     }
@@ -323,7 +349,7 @@
         $mensagem .= "</p>";
         $mensagem .= "<p>";
         $mensagem .= "Att.";
-        $mensagem .= "</p";
+        $mensagem .= "</p>";
 
 
         //$headers .= "Bcc: $EmailPadrao\r\n";
