@@ -39,7 +39,7 @@
     public function __construct()
     {
         // Armazena os dados de envio de email
-        $this->remetente =  defined('REMETENTE') ? REMETENTE : "sistemaeficaz@sistema.eficazsystem.com.br ";
+        $this->remetente =  defined('REMETENTE') ? REMETENTE : "monitoramento@sistema.eficazsystem.com.br ";
     }
 
     /*
@@ -50,19 +50,13 @@
     */
     public function envioEmailAlertaEquipamento($email, $nomeContato, $tipoEquip, $nomeEquip, $modeloEquip, $ambiente, $msg, $cliente, $sede, $indiceRecebido, $indiceUltrapassado){
 
-        require_once('class.phpmailer.php');
+        //require_once('PHPMailerAutoload.php');
 
-        $mailer = new PHPMailer();
-        $mailer->IsSMTP();
-        $mailer->SMTPDebug = 1;
-        $mailer->Port = 465; //Indica a porta de conexão para a saída de e-mails
-        $mailer->Host = 'email-ssl.com.br';//Endereço do Host do SMTP Locaweb
-        $mailer->SMTPAuth = true; //define se haverá ou não autenticação no SMTP
-        $mailer->Username = 'monitoramento@sistema.eficazsystem.com.br'; //Login de autenticação do SMTP
-        $mailer->Password = 'eficaz123'; //Senha de autenticação do SMTP
-        $mailer->FromName = 'Monitoramento Eficaz'; //Nome que será exibido para o destinatário
-        $mailer->From = 'monitoramento@sistema.eficazsystem.com.br'; //Obrigatório ser a mesma caixa postal configurada no remetente do SMTP
-
+        // $mailer = new PHPMailer();
+        //
+        // $mailer->FromName = 'Monitoramento Eficaz'; //Nome que será exibido para o destinatário
+        // $mailer->From = 'monitoramento@sistema.eficazsystem.com.br'; //Obrigatório ser a mesma caixa postal configurada no remetente do SMTP
+        // $mailer->isSendmail();
 
         //Definimos Para quem vai ser enviado o email
         $remetente = $this->remetente;
@@ -74,7 +68,10 @@
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
-        //$headers .= 'From: "Sistema monitoramento" <'.$remetente.'>';
+        // para enviar a mensagem em prioridade máxima
+        $headers .= "X-Priority: 1\n";
+        $headers .= 'From: "Sistema monitoramento" < monitoramento@sistema.eficazsystem.com.br >';
+        $headers .= "Return-Path: monitoramento@sistema.eficazsystem.com.br\r\n"; // return-path
 
         //$mail->addCustomHeader('X-custom-header', 'custom-value');
 
@@ -295,25 +292,25 @@
         $mensagem .= '</html>';
 
 
-        $mailer->AddAddress( $email, $nomeContato); //Destinatários
-        $mailer->Subject = $assunto;
-        $mailer->Body = $mensagem;
+        // $mailer->AddAddress( $email, $nomeContato); //Destinatários
+        // $mailer->Subject = $assunto;
+        // $mailer->Body = $mensagem;
 
 
-        if(!$mailer->Send())
-        {
-        echo "Message was not sent";
-        echo "Mailer Error: " . $mailer->ErrorInfo; exit; }
-        print "E-mail enviado!";
+        // if(!$mailer->Send())
+        // {
+        // echo "Message was not sent";
+        // echo "Mailer Error: " . $mailer->ErrorInfo; exit; }
+        // print "E-mail enviado!";
 
-        //$headers .= "Bcc: $EmailPadrao\r\n";
-        // $arquivo = '';
-        // $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-f monitoramento@sistema.eficazsystem.com.br");
-        // if($enviaremail){
-        //     return true;
-        // } else {
-        //     return false;
-        // }
+        // $headers .= "Bcc: $EmailPadrao\r\n";
+        $arquivo = '';
+        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-r monitoramento@sistema.eficazsystem.com.br");
+        if($enviaremail){
+            return true;
+        } else {
+            return false;
+        }
 
 
     }
