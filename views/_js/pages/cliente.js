@@ -991,7 +991,7 @@ $().ready(function() {
 
         var filial = $(this).val();
 
-        //Efetua o carregamento dos dados da filial
+        //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
         $.ajax({
             url: urlP+"/eficazmonitor/cliente/carregarFilialClienteJson",
             secureuri: false,

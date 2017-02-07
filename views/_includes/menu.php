@@ -269,14 +269,14 @@ if($notificacaoAlertas['status']){
                           <spam>Filiais</span>
                         </a> -->
                   <!--     </li> -->
-                     <!--  <li> -->
+                        <li>
                         <!-- Cadastro Fabricantes -->
-                        <!--   <a href="<?php echo HOME_URI; ?>/fabricante" class="">
+                          <a href="<?php echo HOME_URI; ?>/fabricante" class="">
                             <i class="fa fa-building fa-1x"></i>
                             <span class="icon-side"></span>
                             <spam>Fabricantes</span>
-                          </a> -->
-                      <!--   </li> -->
+                          </a>
+                        </li>
                         <li>
                           <a href="<?php echo HOME_URI; ?>/equipamento" class="">
                             <i class="fa fa-hdd-o fa-1x"></i>

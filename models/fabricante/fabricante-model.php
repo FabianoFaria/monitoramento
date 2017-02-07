@@ -60,10 +60,16 @@ class FabricanteModel extends MainModel
     {
         $idUser = $_SESSION['userdata']['userId'];
 
+        $ddd        = str_replace('(', ' ', $ddd);
+        $ddd        = str_replace(')', ' ', $ddd);
+        $telefone   = str_replace('-', '', $telefone);
+        $cep        = str_replace('-', '', $cep);
+
         // Monta a query
         $query = "insert into tb_fabricante (nome, ddd, telefone, cep, endereco, numero, cidade, bairro, id_pais, id_estado,id_users)
                   values ('$novoFabricante','$ddd','$telefone','$cep','$endereco','$numero','$cidade',
                           '$bairro','$pais','$estado','$idUser')";
+
 
         $result   = $this->db->select($query);
 
@@ -71,6 +77,39 @@ class FabricanteModel extends MainModel
         if ($result)
         {
             $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * FUNÇÃO PARA CARREGAR OS DADOS DE DETERMINADO FABRICANTE
+    */
+    public function carregarDadosFabricanteViaJson($idFabricante){
+
+        $query  = "SELECT id, id_estado, id_pais, nome, ddd, telefone, cep, endereco, numero, cidade, bairro FROM tb_fabricante WHERE id = '$idFabricante'";
+
+        /* MONTA A RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if ($result)
+        {
+            /* VERIFICA SE EXISTE VALOR */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* ARMAZENA NA ARRAY */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'dados' => $retorno[0]);
+            }
+
         }else{
             $array = array('status' => false);
         }
