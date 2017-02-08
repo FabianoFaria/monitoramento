@@ -2,7 +2,74 @@
     /* verifica se esta definido o path */
     if (! defined('EFIPATH')) exit();
 
-    $listaClientes = $modeloClie->listarCliente();
+    //$listaClientes = $modeloClie->listarCliente();
+
+    /*
+    * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+    */
+    switch ($_SESSION['userdata']['tipo_usu']) {
+        case 'Administrador':
+            //var_dump($_SESSION);
+            $listaClientes = $modeloClie->listarCliente();
+
+
+        break;
+
+        case 'Cliente':
+
+            //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+            $usuarioAutorizado  = false;
+            $idcliente = $_SESSION['userdata']['cliente'];
+            $usuariosCliente  = $modeloClie->carregaDadosContato($_SESSION['userdata']['cliente']);
+
+            //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+            if($usuariosCliente['status']){
+                foreach ($usuariosCliente['dados'] as $usuarioCliente){
+                    if($usuarioCliente['id_cliente'] == $idcliente){
+                        $usuarioAutorizado  = true;
+                    }
+                }
+            }
+
+            if($usuarioAutorizado){
+                $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+            }else{
+                $listaClientes = false;
+            }
+
+
+        break;
+
+        case 'Visitante':
+
+            //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+            $usuarioAutorizado  = false;
+            $idcliente = $_SESSION['userdata']['cliente'];
+            $usuariosCliente  = $modeloClie->carregaDadosContato($_SESSION['userdata']['cliente']);
+
+            //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+            if($usuariosCliente['status']){
+                foreach ($usuariosCliente['dados'] as $usuarioCliente){
+                    if($usuarioCliente['id_cliente'] == $idcliente){
+                        $usuarioAutorizado  = true;
+                    }
+                }
+            }
+
+            if($usuarioAutorizado){
+                $listaClientes = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+            }else{
+                $listaClientes = false;
+            }
+
+        break;
+
+        case 'Tecnico':
+
+            $listaClientes = $modeloClie->listarCliente();
+
+        break;
+    }
 
 ?>
 
@@ -18,7 +85,7 @@ $retorno = $modelo->buscaRelacao();
 
     // GERENCIADOR DE LINK
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/graficoFisicoGerador/" class="linkMenuSup">Relatôrio fisico</a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador/" class="linkMenuSup">Relatôrio fisico</a>';
 </script>
 
 <script src="<?php echo HOME_URI; ?>/views/_js/table/index.js" type="text/javascript"></script>
@@ -51,6 +118,7 @@ $retorno = $modelo->buscaRelacao();
                     </thead>
                     <tbdoy>
                         <?php
+
                             if($listaClientes){
 
                                 foreach ($listaClientes as $cliente) {

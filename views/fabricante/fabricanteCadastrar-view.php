@@ -77,7 +77,7 @@
 				            <div class="col-md-2">
 				                <div class="form-group">
 				                    <label for="exampleInputEmail1">CEP</label>
-				                    <input type="text" class="form-control" id="txt_cep" name="txt_cep" placeholder="CEP" maxlength="9" required onkeypress="return onlyNumber(event);">
+				                    <input type="text" class="form-control" id="txt_cep" name="txt_cep" placeholder="CEP">
 				                </div>
 				            </div><!-- fim do cep -->
 
@@ -94,7 +94,7 @@
 				            <div class="col-md-2">
 				                <div class="form-group">
 				                    <label for="exampleInputEmail1">N&uacute;mero</label>
-				                    <input type="text" class="form-control" id="txt_numero" name="txt_numero" placeholder="N&uacute;mero" maxlength="9"  onkeypress="return onlyNumber(event);">
+				                    <input type="text" class="form-control" id="txt_numero" name="txt_numero" placeholder="000" maxlength="9"  onkeypress="return onlyNumber(event);">
 				                </div>
 				            </div><!-- fim do numero -->
 
@@ -119,22 +119,52 @@
             			</div>
             			<div class="row">
 
-				            <!-- pais -->
-				            <div class="col-md-4">
-				                <div class="form-group">
-				                    <label for="exampleInputEmail1">Pais</label><br>
-				                    <?php $modelo->listaPaises(); ?>
-				                </div>
-				            </div><!-- fim do pais -->
+                            <!-- pais -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pais">Pais</label><br>
+                                    <select id="pais" name="pais" class="form-control">
+                                        <?php
+                                            //$modelo->listaPaises();
+                                            $paises = $modelo->listaPaisesSimples();
+
+                                            foreach ($paises as $pais) {
+                                                if($pais['id'] == 36){
+                                                    echo "<option value='".$pais['id']."' selected>".$pais['pais']."</option>";
+                                                }else{
+                                                    echo "<option value='".$pais['id']."'>".$pais['pais']."</option>";
+                                                }
+                                            }
+
+                                        ?>
+
+                                    </select>
+
+                                </div>
+                            </div><!-- fim do pais -->
 
 
-				            <!-- estado -->
-				            <div class="col-md-4">
-				                <div class="form-group">
-				                    <label for="exampleInputEmail1">Estado</label><br>
-				                    <?php $modelo->listaEstado(); ?>
-				                </div>
-				            </div><!-- fim do estado -->
+                            <!-- estado -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Estado</label><br>
+                                        <select id="estados" name="estados" class="form-control">
+                                            <?php
+
+                                                $estados = $modelo->listaEstadosSimples();
+                                                //$modelo->listaEstado(); listaEstadosSimples
+                                                foreach ($estados as $estado) {
+                                                    if($estado['id'] == 16){
+                                                        echo "<option value='".$estado['id']."' selected>".$estado['nome']."</option>";
+                                                    }else{
+                                                        echo "<option value='".$estado['id']."'>".$estado['nome']."</option>";
+                                                    }
+                                                }
+                                                echo "<option value='999'>Estado ou condado fora do país</option>";
+                                            ?>
+                                        </select>
+                                </div>
+                            </div><!-- fim do estado -->
                     	 </div>
 
                     	 <div class="row">

@@ -182,6 +182,7 @@
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                    WHERE alert.status_ativo < 5
                     ORDER BY alert.id DESC";
 
             /* MONTA A RESULT */
@@ -204,7 +205,7 @@
               }else{
                   $array = array('status' => false, 'alerta' => '');
 
-                    $retorno[] = $row;
+                    //$retorno[] = $row;
                   }
 
             }
@@ -225,7 +226,7 @@
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
-                    WHERE clie.id = '$idCliente'
+                    WHERE clie.id = '$idCliente' AND alert.status_ativo < 5
                     ORDER BY alert.id DESC";
 
             /* MONTA A RESULT */
@@ -349,7 +350,7 @@
         /*
         * RECUPERA OS ALERTAS PARA SEREM EXIBIDOS NO MENU
         */
-        public function recuperaNotificacoesAlarmesRecemCadastrados($idCliente){
+        public function recuperaNotificacoesAlarmesRecemCadastrados($idCliente, $limite = 0){
 
             if(is_numeric($idCliente)){
 
@@ -363,7 +364,7 @@
                             JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                             JOIN tb_cliente clie ON clie.id = sim.id_cliente
                             WHERE alert.status_ativo  = '1'
-                            ORDER BY alert.id DESC";
+                            ORDER BY alert.id DESC LIMIT $limite, 99";
                 }else{
                     $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
                             FROM tb_alerta alert
@@ -374,7 +375,7 @@
                             JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                             JOIN tb_cliente clie ON clie.id = sim.id_cliente
                             WHERE clie.id = '$idCliente' AND alert.status_ativo  = '1'
-                            ORDER BY alert.id DESC";
+                            ORDER BY alert.id DESC LIMIT $limite, 99";
                 }
 
                 // Monta a result

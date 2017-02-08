@@ -15,7 +15,7 @@ class VinculoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_vi'] != 1 )
+        if ($_SESSION['userdata']['per_vi'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
@@ -49,7 +49,7 @@ class VinculoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_vi'] != 1 )
+        if ($_SESSION['userdata']['per_vi'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
@@ -84,7 +84,7 @@ class VinculoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_vi'] != 1 )
+        if ($_SESSION['userdata']['per_vi'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
@@ -118,7 +118,7 @@ class VinculoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_vi'] != 1 )
+        if($_SESSION['userdata']['per_vi'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
@@ -222,7 +222,7 @@ class VinculoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_vi'] != 1 )
+        if ($_SESSION['userdata']['per_vi'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
@@ -257,7 +257,7 @@ class VinculoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_vi'] != 1 )
+        if ($_SESSION['userdata']['per_vi'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index

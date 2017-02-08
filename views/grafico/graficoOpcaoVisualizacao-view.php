@@ -306,25 +306,29 @@ var menu = document.getElementById('listadir');
                         </div>
 
                         <div class="row borda-01">
+                            <div class="col-md-3">
+                                <label class="font-texto-02">Desde : </label>
+                            </div>
+
                             <div class="col-md-6 txt-center">
                                 <label class="font-texto-02">
                                     <input class="form-control" type="text" id="data_inicio_rel" name="data_inicio_rel" val="">
                                 </label>
                             </div>
-                            <div class="col-md-6">
-                                <label class="font-texto-02">Data inicio</label>
-                            </div>
+
                         </div>
 
                         <div class="row">
+                            <div class="col-md-3">
+                                <label class="font-texto-02">Até :</label>
+                            </div>
+
                             <div class="col-md-6 txt-center">
                                 <label class="font-texto-02">
                                     <input class="form-control" type="text" id="data_fim_rel" name="data_fim_rel" val="">
                                 </label>
                             </div>
-                            <div class="col-md-6">
-                                <label class="font-texto-02">Data fim</label>
-                            </div>
+
                         </div>
 
                     </div>

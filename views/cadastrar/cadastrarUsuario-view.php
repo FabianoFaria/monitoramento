@@ -5,7 +5,6 @@ if (! defined('EFIPATH')) exit();
 // Sempre que acontecer um acao no botao de salvar
 $modelo->cadastrarUsuario();
 
-
 ?>
 
 <script type="text/javascript">

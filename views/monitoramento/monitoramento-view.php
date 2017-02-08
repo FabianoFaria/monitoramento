@@ -8,51 +8,44 @@ if (! defined('EFIPATH')) exit();
 
 <?php
 // chamando lista de valores
-$retorno = $modelo->buscaRelacao();
+//$retorno = $modelo->buscaRelacao();
 
-// Retorna a lista de clientes
+/*
+* VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+*/
+switch ($_SESSION['userdata']['tipo_usu']) {
+    case 'Administrador':
+        //var_dump($_SESSION);
+        $lista = $modeloClie->listarCliente();
 
-//Retorno sendo carregado direto da class.main
-$lista = $modeloClie->listarCliente();
+
+    break;
+
+    case 'Cliente':
+
+        $lista = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+
+    break;
+
+    case 'Visitante':
+
+        $lista = $modeloClie->listarClienteUsuario($_SESSION['userdata']['cliente']);
+
+    break;
+
+    case 'Tecnico':
+        //RETORNO SENDO CARREGADO DIRETO DA CLASS.MAIN
+        $lista = $modeloClie->listarCliente();
+
+
+    break;
+}
 
 ?>
 
 <script type="text/javascript">
-    var Movies0 = [
-        <?php
-            /* se for um array */
-            if (is_array($retorno))
-            {
-                $guarda = "";
-                foreach($retorno as $row)
-                {
-                    $statusVer = "Desativado";
-                    if ($row['status_ativo'] == 1)
-                        $statusVer = "Ativado";
 
-                    /* convert data para o padrao brasileiro */
-                    $tempo = date('d/m/Y', strtotime($row['dt_criacao']));
-
-                    /* criptografa sim */
-                    $chaveSim = base64_encode($row['num_sim']);
-
-
-                    $guarda .= "{modelsh: '{$chaveSim}',
-                                 num_sim: {$row['num_sim']},
-                                 dataTmp: '{$tempo}',
-                                 cliente: '{$modelo->converte($row['nome'],1)}',
-                                 status: '{$statusVer}' },";
-                }
-                $guarda .= ".";
-                $guarda = str_replace(",.","",$guarda);
-                echo $guarda;
-            }
-        ?>
-    ];
-    var Movies = [Movies0];
-
-
-    // gerenciador de link
+    // GERENCIADOR DE LINK
     var menu = document.getElementById('listadir');
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/monitoramento/" class="linkMenuSup">Monitoramento</a>';
 </script>

@@ -230,6 +230,180 @@ class UsuarioModel extends MainModel
         return $array;
     }
 
+
+    /*
+    * REGISTRA USUÁRIO PARA O SISTEMA
+    */
+    public function registrarUsuarioParaSistema($nome, $sobrenome, $email, $celular, $telefone, $senha, $idCliente, $acesso){
+
+        $nome      = $this->tratamento($nome);
+        $sobrenome = $this->tratamento($sobrenome);
+        $email     = $this->tratamento($email,1);
+        $perfil    = is_numeric($acesso) ? $acesso : 0 ;
+        $cliente   = $idCliente;
+        $local     = 0;
+
+        $query = "INSERT INTO tb_users(id_perfil_acesso, nome, sobrenome, email, telefone, celular, senha, local_usu, status_ativo, id_cliente) VALUES('$perfil', '$nome', '$sobrenome', '$email', '$telefone', '$celular', '$senha', '1', '1', '$cliente')";
+
+        // Verifica se gravou com sucesso
+        if ($this->db->query($query))
+        {
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    //$_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $senha, $_POST['cliente'], $_POST['acesso']
+
+    /*
+    * RECUPERAR A LISTA DE CLIENTES PARA RELACIONAR O USUARIO
+    */
+    public function listarClientesUsuario(){
+
+        $query = "SELECT id, nome FROM tb_cliente WHERE status_ativo = '1'";
+
+        /* MONTA A RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if ($result)
+        {
+            /* VERIFICA SE EXISTE VALOR */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* ARMAZENA NA ARRAY */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                /* DEVOLVE RETORNO */
+                return $retorno;
+            }
+            /* DEVOLVE RETORNO */
+            $array = array('status' => true, 'clientes' => $retorno);
+        }else{
+            $array = array('status' => false, 'clientes' => '');
+        }
+
+        return $array;
+    }
+
+    /*
+    * RECUPERA A LISTA DE PERFIS DE ACESSO
+    */
+    public function listarAcessosUsuario(){
+
+        $query = "SELECT id, nome FROM tb_perfil_acesso WHERE status_ativo = '1'";
+
+        /* MONTA A RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if ($result)
+        {
+            /* VERIFICA SE EXISTE VALOR */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* ARMAZENA NA ARRAY */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                /* DEVOLVE RETORNO */
+                return $retorno;
+            }
+            /* DEVOLVE RETORNO */
+            $array = array('status' => true, 'acessos' => $retorno);
+        }else{
+            $array = array('status' => false, 'acessos' => '');
+        }
+
+        return $array;
+    }
+
+
+    /*
+    * ATUALIZA OS DADOS ENVIADOS DO PRÓPIO USUÁRIO
+    */
+    public function atualizarUsuarioManual($id_usuario, $nome, $sobrenome, $email, $celular, $telefone, $senha, $confirmaS){
+
+        // Coletar os dados do post
+        $id_user   = $id_usuario;
+        $nome      = $this->tratamento($nome);
+        $sobrenome = $this->tratamento($sobrenome);
+        $email     = $this->tratamento($email,1);
+        if($senha == $confirmaS){
+            $senha  = ($confirmaS != '') ? md5($confirmaS) : null;
+        }else{
+            $senha  = null;
+        }
+
+        $query = "UPDATE tb_users SET ";
+          if(isset($nome)){         $query .= "nome = '$nome' ";}
+          if(isset($sobrenome)){    $query .= ", sobrenome = '$sobrenome'";}
+          if(isset($email)){        $query .= ", email = '$email'";}
+          if(isset($celular)){      $query .= ", celular = '$celular'";}
+          if(isset($telefone)){     $query .= ", telefone = '$telefone'";}
+          if(isset($senha)){        $query .= ", senha = '$senha'";}
+          $query .= " WHERE id = '$id_user'";
+
+        /* MONTA RESULT */
+        $result = $this->db->query($query);
+
+        if ($result){
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
+    /*
+    * FUNÇÃO PARA ATUALIZAR O USUÁRIO VIA SISTEMA
+    */
+    public function atualizarUsuarioViaSistema($id_usuario, $nome, $sobrenome, $email, $celular, $telefone, $senha, $confirmaS, $cliente, $acesso){
+
+        // Coletar os dados do post
+        $id_user   = $id_usuario;
+        $nome      = $this->tratamento($nome);
+        $sobrenome = $this->tratamento($sobrenome);
+        $email     = $this->tratamento($email,1);
+        if($senha == $confirmaS){
+            $senha  = ($confirmaS != '') ? md5($confirmaS) : null;
+        }else{
+            $senha  = null;
+        }
+
+        $query = "UPDATE tb_users SET ";
+          if(isset($nome)){         $query .= "nome = '$nome' ";}
+          if(isset($sobrenome)){    $query .= ", sobrenome = '$sobrenome'";}
+          if(isset($email)){        $query .= ", email = '$email'";}
+          if(isset($celular)){      $query .= ", celular = '$celular'";}
+          if(isset($telefone)){     $query .= ", telefone = '$telefone'";}
+          if(isset($senha)){        $query .= ", senha = '$senha'";}
+          if(isset($cliente)){      $query .= ", id_cliente = '$cliente'";}
+          if(isset($acesso)){       $query .= ", id_perfil_acesso = '$acesso'";}
+          $query .= " WHERE id = '$id_user'";
+
+        /* MONTA RESULT */
+        $result = $this->db->query($query);
+
+        if ($result){
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
     //Função para atualizar o usuario
     public function atualizarUsuarioJson($id_usuario, $nome, $sobrenome, $email, $celular, $telefone, $confirmaS, $idCliente)
     {

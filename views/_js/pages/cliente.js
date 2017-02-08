@@ -366,7 +366,6 @@ $().ready(function() {
 
                     if((nomeFilial != " " && endereco != " ")){
 
-
                         //Envio de dados para cadastro de filial via JSON
                         $.ajax({
                             url: urlP+"/eficazmonitor/filial/registraFilial",
@@ -985,5 +984,354 @@ $().ready(function() {
     });
 
 
+    /*
+    * INICIA MODAL PARA EDIÇÃO DE FILIAIS
+    */
+    $('.edditFilial').click(function(){
+
+        var filial = $(this).val();
+
+        //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+        $.ajax({
+            url: urlP+"/eficazmonitor/cliente/carregarFilialClienteJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+                'idFilail' : filial
+            },
+            success : function(datra)
+            {
+                if(datra.status){
+
+                    /*
+                    * MASCARA PARA INPUTS DE EDIÇÂO
+                    */
+                    $('#filial_ddd').mask('(999)');
+                    $('#filial_telefone').mask('9999-9999');
+                    $('#filial_cep').mask('99999-999');
+
+                    //alert("Cliente atualizado com sucesso!");
+
+                    $('#idFilial').val(datra.filial['id']);
+                    $('#nome_filial').val(datra.filial['nome']);
+                    $('#filial_ddd').val(datra.filial['ddd']);
+                    $('#filial_telefone').val(datra.filial['telefone']);
+                    $('#filial_cep').val(datra.filial['cep']);
+                    $('#filial_endereco').val(datra.filial['endereco']);
+                    $('#filial_numero').val(datra.filial['numero']);
+                    $('#filial_cidade').val(datra.filial['cidade']);
+                    $('#filial_bairro').val(datra.filial['bairro']);
+                    $('#filial_estados').val(datra.filial['estado']);
+                    $('#filial_pais').val(datra.filial['pais']);
+
+                    $('#modalEditFilial').modal();
+
+                }else{
+                    swal("", "Ocorreu um erro ao tentar carregar os dados filial, favor verificar os dados enviados!", "error");
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+
+                //Settar a mensagem de erro!
+                      // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                    swal("Oops...", "Ocorreu um erro ao registrar a filial, favor verificar os dados informados!", "error");
+             // Handle errors here
+             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+             // STOP LOADING SPINNER
+            }
+        });
+
+    });
+
+    /*
+    * SALVA AS EDIÇÕES DA FILIAL
+    */
+    $('#editFilialBtn').click(function(){
+
+        $('#formEditFilial').validate({
+            rules: {
+                nome_filial : {
+                    required : true
+                },
+                filial_ddd : {
+                    required : true
+                },
+                filial_telefone : {
+                    required : true
+                },
+                filial_cep : {
+                    required : true
+                },
+                filial_endereco : {
+                    required : true
+                },
+                filial_numero : {
+                    required : true
+                },
+                filial_cidade : {
+                    required : true
+                },
+                filial_bairro : {
+                    required : true
+                },
+                filial_estados : {
+                    required : true
+                },
+                filial_pais : {
+                    required : true
+                }
+            },
+            messages:{
+                nome_filial : {
+                    required : "Campo orbigatório!"
+                },
+                filial_ddd : {
+                    required : "Campo orbigatório!"
+                },
+                filial_telefone : {
+                    required : "Campo orbigatório!"
+                },
+                filial_cep : {
+                    required : "Campo orbigatório!"
+                },
+                filial_endereco : {
+                    required : "Campo orbigatório!"
+                },
+                filial_numero : {
+                    required : "Campo orbigatório!"
+                },
+                filial_cidade : {
+                    required : "Campo orbigatório!"
+                },
+                filial_bairro : {
+                    required : "Campo orbigatório!"
+                },
+                filial_estados : {
+                    required : "Campo orbigatório!"
+                },
+                filial_pais : {
+                    required : "Campo orbigatório!"
+                }
+            }
+        });
+
+        if($('#formEditFilial').valid()){
+
+            var idFilial        = $('#idFilial').val();
+            var nomeFilial      = $('#nome_filial').val();
+            var dddFilial       = $('#filial_ddd').val();
+            var telefoneFili    = $('#filial_telefone').val();
+            var cepFilial       = $('#filial_cep').val();
+            var enderecoFilial  = $('#filial_endereco').val();
+            var numeroFili      = $('#filial_numero').val();
+            var cidadeFili      = $('#filial_cidade').val();
+            var bairroFili      = $('#filial_bairro').val();
+            var estadosFili     = $('#filial_estados').val();
+            var paisFili        = $('#filial_pais').val();
+
+            //Efetua o cadastro do contato do cliente via JSON
+            $.ajax({
+                url: urlP+"/eficazmonitor/cliente/editarFilialClienteJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'idFilial' : idFilial,
+                    'nomeFilial' : nomeFilial,
+                    'dddFilial' : dddFilial,
+                    'telefoneFili' : telefoneFili,
+                    'cepFilial' : cepFilial,
+                    'enderecoFilial' : enderecoFilial,
+                    'numeroFili' : numeroFili,
+                    'cidadeFili' : cidadeFili,
+                    'bairroFili' : bairroFili,
+                    'estadosFili' : estadosFili,
+                    'paisFili' : paisFili
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
+                        //alert("Cliente atualizado com sucesso!");
+                        swal("", "Filial do cliente atualizada com sucesso!", "success");
+                        location.reload();
+                    }else{
+                        swal("", "Ocorreu um erro ao tentar editar a filial, favor verificar os dados enviados!", "error");
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+
+                    //Settar a mensagem de erro!
+                          // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                        swal("Oops...", "Ocorreu um erro ao editar a filial, tente novamente mais tarde!", "error");
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
+        }
+
+    });
+
+
+    /*
+    *  INICIA A MODAL PARA CADASTRAR NOVAS FILIAIS
+    */
+    $('#btnAddFilial').click(function(){
+
+        //EFETUA A LIMPESA DOS INPUTS ANTES DE EXIBIR A MODAL
+        $('#txt_filial').val('');
+        $('#txt_ddd').val('');
+        $('#txt_telefone').val('');
+        $('#txt_cep').val('');
+        $('#txt_endereco').val('');
+        $('#txt_numero').val('');
+        $('#txt_cidade').val('');
+        $('#txt_bairro').val('');
+        $('#estados').val('');
+        $('#pais').val('');
+
+        $('#modalCadFilial').modal();
+
+    });
+
+    /*
+    * INICIA O PROCESSO DE CADASRO DE FILIAL
+    */
+
+    $('#cadFilialBtn').click(function(){
+
+        $('#formCadFilial').validate({
+            rules: {
+                txt_filial : {
+                    required : true
+                },
+                txt_ddd : {
+                    required : true
+                },
+                txt_telefone : {
+                    required : true
+                },
+                txt_cep : {
+                    required : true
+                },
+                txt_endereco : {
+                    required : true
+                },
+                txt_numero : {
+                    required : true
+                },
+                txt_cidade : {
+                    required : true
+                },
+                txt_bairro : {
+                    required : true
+                },
+                estados : {
+                    required : true
+                },
+                pais : {
+                    required : true
+                }
+            },
+            messages:{
+                txt_filial : {
+                    required : "Campo orbigatório!"
+                },
+                txt_ddd : {
+                    required : "Campo orbigatório!"
+                },
+                txt_telefone : {
+                    required : "Campo orbigatório!"
+                },
+                txt_cep : {
+                    required : "Campo orbigatório!"
+                },
+                txt_endereco : {
+                    required : "Campo orbigatório!"
+                },
+                txt_numero : {
+                    required : "Campo orbigatório!"
+                },
+                txt_cidade : {
+                    required : "Campo orbigatório!"
+                },
+                txt_bairro : {
+                    required : "Campo orbigatório!"
+                },
+                estados : {
+                    required : "Campo orbigatório!"
+                },
+                pais : {
+                    required : "Campo orbigatório!"
+                }
+            }
+        });
+
+        if($('#formCadFilial').valid()){
+
+            var idCliente       = $('#idMatriz').val();
+            var nomeFilial      = $('#txt_filial').val();
+            var dddFilial       = $('#txt_ddd').val();
+            var telefoneFili    = $('#txt_telefone').val();
+            var cepFilial       = $('#txt_cep').val();
+            var enderecoFilial  = $('#txt_endereco').val();
+            var numeroFili      = $('#txt_numero').val();
+            var cidadeFili      = $('#txt_cidade').val();
+            var bairroFili      = $('#txt_bairro').val();
+            var estadosFili     = $('#estados').val();
+            var paisFili        = $('#pais').val();
+
+            //Efetua o cadastro do contato do cliente via JSON
+            $.ajax({
+                url: urlP+"/eficazmonitor/cliente/cadastrarFilialClienteJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'idCliente' : idCliente,
+                    'nomeFilial' : nomeFilial,
+                    'dddFilial' : dddFilial,
+                    'telefoneFili' : telefoneFili,
+                    'cepFilial' : cepFilial,
+                    'enderecoFilial' : enderecoFilial,
+                    'numeroFili' : numeroFili,
+                    'cidadeFili' : cidadeFili,
+                    'bairroFili' : bairroFili,
+                    'estadosFili' : estadosFili,
+                    'paisFili' : paisFili,
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
+                        //alert("Cliente atualizado com sucesso!");
+                        swal("", "Filial do cliente cadastrada com sucesso!", "success");
+                        location.reload();
+                    }else{
+                        swal("", "Ocorreu um erro ao tentar cadastrar a filial, favor verificar os dados enviados!", "error");
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+
+                    //Settar a mensagem de erro!
+                          // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                        swal("Oops...", "Ocorreu um erro ao registrar a filial, favor verificar os dados informados!", "error");
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
+
+        }
+
+    });
 
 });

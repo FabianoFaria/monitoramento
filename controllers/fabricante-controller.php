@@ -75,6 +75,24 @@
 
 
     }
+
+    /*
+    * CARREGA OS DADOS DO FABRICANTE PARA EDIÇÂO
+    */
+    public function carregarFabricanteJson(){
+
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+        $fabricanteModelo       = $this->load_model('fabricante/fabricante-model');
+
+        $fabricanteRegistrado   = $fabricanteModelo->carregarDadosFabricanteViaJson($_POST['idFabricante']);
+
+        if($fabricanteRegistrado){
+            exit(json_encode(array('status' => $fabricanteRegistrado['status'], 'fabricante' => $fabricanteRegistrado['dados'])));
+        }else{
+            exit(json_encode(array('status' => $fabricanteRegistrado['status'] )));
+        }
+
+    }
 }
 
 

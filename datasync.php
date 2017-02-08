@@ -12,10 +12,12 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
    isset($_POST['R']) && isset($_POST['S']) && isset($_POST['T']) && isset($_POST['U']))
 {
 
-    // Cria um objeto de da classe de conexao
+    /*
+    *  CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+    */
     $conn = new EficazDB;
 
-    // Verifica se existe erro de conexao
+    // VERIFICA SE EXISTE ERRO DE CONEXAO
     if (!$conn)
     {
         // Retorno erro
@@ -24,13 +26,15 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
         exit();
     }
 
-    // Monta a query
+    // MONTA A QUERY
     $valor = "insert into tb_dados (num_sim,b,c,d,e,f,g,h,i,j,l,m,n,o,p,q,r,s,t,u) values
                   ('{$_POST['A']}','{$_POST['B']}','{$_POST['C']}','{$_POST['D']}','{$_POST['E']}','{$_POST['F']}','{$_POST['G']}',
                    '{$_POST['H']}','{$_POST['I']}','{$_POST['J']}','{$_POST['L']}','{$_POST['M']}','{$_POST['N']}','{$_POST['O']}',
                    '{$_POST['P']}','{$_POST['Q']}','{$_POST['R']}','{$_POST['S']}','{$_POST['T']}','{$_POST['U']}')";
 
-    // Executa a query no banco e verifica se retorno erro
+    /*
+    * EXECUTA A QUERY NO BANCO E VERIFICA SE RETORNO ERRO
+    */
     if (!$conn->query($valor))
     {
         // Monta a query de log
@@ -102,7 +106,9 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
         * VERIFICAR SE A VARIAVEL $dados[0]['id_sim_equipamento'] NÃO RESOLVE O PROBLEMA
         */
 
-        //COM OS PARAMETROS CARREGADOS, INICIA A COMPARAÇÃO COM OS DADOS RECEBIDOS
+        /*
+        * COM OS PARAMETROS CARREGADOS, INICIA A COMPARAÇÃO COM OS DADOS RECEBIDOS
+        */
         $parametros = $dados[0]['parametro'];
         $idSimEquip = $dados[0]['id_sim_equipamento'];
         //var_dump($parametros);
@@ -147,20 +153,23 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     }
 
 
-    //EFETUA A AÇÃO DE ACORDO COM O RESULTADO DA COMPARAÇÃO
-
+    /*
+    * EFETUA A AÇÃO DE ACORDO COM O RESULTADO DA COMPARAÇÃO
+    */
 
     // Converte a entrada em inteiro
     $vint[] = intval($_POST['E']);
     $vint[] = intval($_POST['F']);
     $vint[] = intval($_POST['G']);
 
-    // Verifica se a entrada esta zerada
+    /*
+    * VERIFICA SE A ENTRADA ESTA ZERADA
+    */
     if ($vint[0] == 0 && $vint[1] == 0 && $vint[2] == 0)
     {
         // Monta a query da ultama insercao do dado
-        $query = "select dt_criacao,e,f,g from tb_dados where num_sim = {$_POST['A']} and
-                  E != '00000' or F != '00000' or G != '00000' order by (dt_criacao) desc limit 1";
+        $query = "SELECT dt_criacao,e,f,g FROM tb_dados WHERE num_sim = {$_POST['A']} AND
+                  E > 0 OR F > 0 OR G > 0 ORDER BY (dt_criacao) DESC LIMIT 1";
         // Busca a primeira data da insecao do ultimo dado
         $resp[] = verifiSele($query,$conn);
 
@@ -244,7 +253,7 @@ function trataValorDataSync($valor){
 }
 
 /*
-* Recebe a array com os parametros de determinada entrada de tensão variavel para comparação
+* RECEBE A ARRAY COM OS PARAMETROS DE DETERMINADA ENTRADA DE TENSÃO VARIAVEL PARA COMPARAÇÃO
 */
 function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $ParametroVerificado){
 
@@ -259,25 +268,37 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
         */
         $alarmeExiste = verificarAlarmeExistente($idSimEquip, 2);
 
+        //var_dump($alarmeExiste);
+
         if(!$alarmeExiste){
             gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 3, 2);
 
             /*
             * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
             */
+
+            //Carrega a mensagem de alerta
+            $msgAlerta          = carregarMensagemAlerta(3);
+            $msgAlerta          = $msgAlerta[0]['mensagem'];
+            //Parametros violados
+            $indiceRecebido     = $parametro;
+            $indiceUltrapassado = (float) trataValorDataSync($configuacoes[3]);
+
             //Carrega as informações do equipamento que gerou o alarme
             $equipamentoAlerta  = carregarDadosEquip($idSimEquip);
 
-            //var_dump($equipamentoAlerta);
+            // var_dump($msgAlerta);
 
             //Procura os contatos para envio de alerta da tabela tb_contato_alerta
             $listaContatos      = carregarContatosAlerta($idSimEquip);
+
+            //var_dump($listaContatos);
 
             // Cria um objeto de da classe de email
             $mailer        = new email;
 
             /*
-            * Verifica se a lista de contatos não está vazia, então inicia o envio de emails
+            * VERIFICA SE A LISTA DE CONTATOS NÃO ESTÁ VAZIA, ENTÃO INICIA O ENVIO DE EMAILS
             */
             if(!empty($listaContatos)){
                 //var_dump($retorno);
@@ -286,9 +307,19 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
 
                     //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
 
-                    $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo']);
+                    $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
+
+                    $resultadoEnvio = $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo'], $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+
+                    //POSIBILIDADE DE CADASTRO NO LOG EM CASO DE FALHA DE ENVIO
+
+
+                    echo $resultadoEnvio;
                 }
             }
+            /*
+            * Implementar função para enviar emails para os contatos da empresas caso não tenha nenhum contato cadastrado na tela de alarme
+            */
 
         }
 
@@ -322,12 +353,23 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             /*
             * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
             */
+            //Carrega a mensagem de alerta
+            $msgAlerta          = carregarMensagemAlerta(2);
+            $msgAlerta          = $msgAlerta[0]['mensagem'];
+            //Parametros violados
+            $indiceRecebido     = $parametro;
+            $indiceUltrapassado = (float) trataValorDataSync($configuacoes[1]);
+
             //Carrega as informações do equipamento que gerou o alarme
             $equipamentoAlerta  = carregarDadosEquip($idSimEquip);
+
+            //var_dump($equipamentoAlerta);
+
             //Procura os contatos para envio de alerta da tabela tb_contato_alerta
             $listaContatos      = carregarContatosAlerta($idSimEquip);
+
             // Cria um objeto de da classe de email
-            $mailer        = new email;
+            $mailer             = new email;
             /*
             * Verifica se a lista de contatos não está vazia, então inicia o envio de emails
             */
@@ -338,7 +380,9 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
 
                     //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
 
-                    $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo']);
+                    $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
+
+                    $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo'], $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
                 }
             }
 
@@ -366,6 +410,53 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
     //var_dump($configuacoes);
 
     //echo "recebi entrada de tensão ".$parametro." </br>";
+}
+
+/*
+* CARREGA A MENSAGEM DE ALERTA
+*/
+function carregarMensagemAlerta($idMensagem){
+
+    // Cria um objeto de da classe de conexao
+    $connBase    = new EficazDB;
+
+    // Um alerta com status 5 sinaliza que está finalizado, abixo disso, ainda está ativo
+    $queryAlarme = "SELECT mensagem FROM tb_msg_alerta WHERE id = '$idMensagem'";
+
+    //var_dump($queryAlarme);
+
+    // Monta a result com os parametros
+    $result = $connBase->select($queryAlarme);
+
+    if($result){
+        //var_dump($result);
+
+        // Verifica se existe valor de retorno
+        if (@mysql_num_rows ($result) > 0)
+        {
+            /* ARMAZENA NA ARRAY */
+            while ($row = @mysql_fetch_assoc ($result))
+            {
+                $retorno[] = $row;
+            }
+
+            return $retorno;
+
+        }else{
+            return false;
+        }
+
+        // Fecha a conexao
+        $connBase->close();
+
+    }else{
+        // echo  "Nada encontrado";
+        return false;
+
+        // Fecha a conexao
+        $connBase->close();
+    }
+
 }
 
 /*
@@ -536,9 +627,19 @@ function carregarDadosEquip($idSimEquip){
     // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
     $connBase   = new EficazDB;
 
-    $query      = "SELECT equip.nomeEquipamento, equip.modelo, tipoEquip.tipo_equipamento
+    // $query      = "SELECT equip.nomeEquipamento, equip.modelo, tipoEquip.tipo_equipamento, simEquip.ambiente,clieInfo.nome AS ´cliente´, fili.nome AS 'filial'
+    //                 FROM tb_equipamento equip
+    //                 JOIN tb_sim_equipamento simEquip ON equip.id = simEquip.id_equipamento
+    //                 JOIN tb_cliente clieInfo ON clieInfo.id = equip.id_cliente
+    //                 LEFT JOIN tb_filial fili ON equip.id_filial = fili.id_matriz
+    //                 JOIN tb_tipo_equipamento tipoEquip ON equip.tipo_equipamento = tipoEquip.id
+    //                 WHERE simEquip.id = '$idSimEquip'";
+
+    $query      = "SELECT equip.nomeEquipamento, equip.modelo, tipoEquip.tipo_equipamento, simEquip.ambiente,clieInfo.nome AS 'cliente', fili.nome AS 'filial'
                     FROM tb_equipamento equip
                     JOIN tb_sim_equipamento simEquip ON equip.id = simEquip.id_equipamento
+                    JOIN tb_cliente clieInfo ON clieInfo.id = equip.id_cliente
+                    LEFT JOIN tb_filial fili ON equip.id_filial = fili.id_matriz
                     JOIN tb_tipo_equipamento tipoEquip ON equip.tipo_equipamento = tipoEquip.id
                     WHERE simEquip.id = '$idSimEquip'";
 

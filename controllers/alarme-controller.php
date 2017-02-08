@@ -14,45 +14,60 @@
         // Verifica se esta logado
         $this->check_login();
 
-        // Define o titulo da pagina
-        $this->title = "Alarmes";
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_ca'] != 1 ){
+            // SE NAO POSSUIR
+            // REDIRECIONA PARA INDEX
+            $this->moveHome();
+        }else{
 
-        // Define os parametro da funcao
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+            // Define o titulo da pagina
+            $this->title = "Alarmes";
 
-        $modelo         = $this->load_model('usuario/usuario-model');
-        $modeloCliete   = $this->load_model('cliente/cliente-model');
-        // CARREGA O MODELO PARA ESTE VIEW
-        $alarmeModelo  = $this->load_model('alarme/alarme-model');
-        $modeloEdicao  = $this->load_model('editar/editar-model');
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        // Carrega view
-        require_once EFIPATH . "/views/_includes/header.php";
-        require_once EFIPATH . "/views/_includes/menu.php";
-        require_once EFIPATH . "/views/alarme/alarmeLista-view.php";
-        require_once EFIPATH . "/views/_includes/footer.php";
+            $modelo         = $this->load_model('usuario/usuario-model');
+            $modeloCliete   = $this->load_model('cliente/cliente-model');
+            // CARREGA O MODELO PARA ESTE VIEW
+            $alarmeModelo  = $this->load_model('alarme/alarme-model');
+            $modeloEdicao  = $this->load_model('editar/editar-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/alarme/alarmeLista-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+        }
     }
 
     public function alarmeStatus(){
         // Verifica se esta logado
         $this->check_login();
 
-        // Define o titulo da pagina
-        $this->title = "alarme";
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_ca'] != 1 ){
+            // SE NAO POSSUIR
+            // REDIRECIONA PARA INDEX
+            $this->moveHome();
+        }else{
+            // Define o titulo da pagina
+            $this->title = "alarme";
 
-        // Define os parametro da funcao
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        $modelo        = $this->load_model('usuario/usuario-model');
-        // CARREGA O MODELO PARA ESTE VIEW
-        $alarmeModelo  = $this->load_model('alarme/alarme-model');
-        $modeloEdicao  = $this->load_model('editar/editar-model');
+            $modelo        = $this->load_model('usuario/usuario-model');
+            // CARREGA O MODELO PARA ESTE VIEW
+            $alarmeModelo  = $this->load_model('alarme/alarme-model');
+            $modeloEdicao  = $this->load_model('editar/editar-model');
 
-        // Carrega view
-        require_once EFIPATH . "/views/_includes/header.php";
-        require_once EFIPATH . "/views/_includes/menu.php";
-        require_once EFIPATH . "/views/alarme/alarmeLista-view.php";
-        require_once EFIPATH . "/views/_includes/footer.php";
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/alarme/alarmeLista-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+        }
     }
 
     public function gerenciarAlertas(){
@@ -61,7 +76,7 @@
         $this->check_login();
 
         // Verifica as permissoes necessaris
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ed'] != 1 )
+        if ($_SESSION['userdata']['per_ed'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
@@ -322,6 +337,77 @@
 
         exit(json_encode(array('status' => $statusContagem, 'contagem' => $totalAlarmes, 'alarmes' => $alarmesNovos)));
 
+    }
+
+    /*
+    * VERIFICA SE FOI REGISTRADO UM NOVO ALARME PARA ATUALIZAR O CONTADOR VIA JSON
+    */
+    public function verificaListaNovoAlarme(){
+
+        $quantidadeAtual    = $_GET['total'];
+
+        $alarmeModelo       = $this->load_model('alarme/alarme-model');
+
+        $contagemAlarmes    = $alarmeModelo->recuperaNotificacoesAlarmesRecemCadastrados($_GET['clie'], $quantidadeAtual);
+
+        $listaAlarme        = "";
+
+        if($contagemAlarmes['status']){
+
+            $statusContagem = true;
+            //Monta a lista de alarmes que seram devolvidos ao JSON para serem exibidos no menu.
+            foreach ($contagemAlarmes['alarmes'] as $alarmeLista) {
+                $listaAlarme    .= "<tr>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i> <p> Novo</p>";
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                    $data = explode(" ", $alarmeLista['dt_criacao']);
+                        $listaAlarme    .= implode("/",array_reverse(explode("-", $data[0])));
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= $alarmeLista['nome'];
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= $alarmeLista['nomeEquipamento'];
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= "<p><b>".$alarmeLista['mensagem']."</b></p>";
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= "<h4>";
+                        $listaAlarme    .= "<span class='text-danger'>";
+                            $listaAlarme    .=$alarmeLista['parametroMedido'];
+                        $listaAlarme    .= "</span>";
+                        $listaAlarme    .= " / ";
+                        $listaAlarme    .= "<span class='text-danger'>";
+                            $listaAlarme    .=$alarmeLista['parametroMedido'];
+                        $listaAlarme    .= "</span>";
+                        $listaAlarme    .= "</h4>";
+
+                        $listaAlarme    .= $alarmeLista['nome'];
+                    $listaAlarme    .= "</td>";
+
+                    $listaAlarme    .= "<td>";
+                        $listaAlarme    .= "<button>";
+                            $listaAlarme    .= "<i class='fa fa-search '></i> Detalhes";
+                        $listaAlarme    .= "</button>";
+                    $listaAlarme    .= "</td>";
+                $listaAlarme    .= "</tr>";
+
+                $quantidadeAtual++;
+            }
+
+            $totalAlarmes   = $quantidadeAtual;
+
+        }else{
+            //Devolve nenhum dado extra em caso a busca tenha falhado
+            $statusContagem = false;
+            $totalAlarmes   = $quantidadeAtual;
+            $listaAlarme    = '';
+        }
+
+        exit(json_encode(array('statusLista' => $statusContagem, 'contagemLista' => $totalAlarmes, 'alarmesNovaLista' => $listaAlarme)));
     }
 
  }

@@ -3,46 +3,46 @@
 // Verifica se esta definido o path
 if (! defined('EFIPATH')) exit();
 
-// Aqui está sendo simplificado o processo de coleta de dados do equipamento para geração de gráficos
-$dadosEquipamento   = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
-$dadosEquipamento   = $dadosEquipamento['equipamento'][0];
-// Aqui está sendo carregado os dados de Sim, id_sim_equipamento necessarios para está página
-$dadosVinculoEquip  = $modeloEquip->detalhesEquipamentoParaConfiguracao($this->parametros[0]);
-//Aqui são os dados do cliente para exibição na tela
-$dadosClie          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
+if(is_numeric($this->parametros[0])){
 
-if($dadosClie['status']){
-    $dadosClie = $dadosClie['equipamento'][0];
-    $idClie    = $dadosClie['idClie'];
-    $nomeClie  = $dadosClie['cliente'];
-}
+    // Aqui está sendo simplificado o processo de coleta de dados do equipamento para geração de gráficos
+    $dadosEquipamento   = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
+    $dadosEquipamento   = $dadosEquipamento['equipamento'][0];
+    // Aqui está sendo carregado os dados de Sim, id_sim_equipamento necessarios para está página
+    $dadosVinculoEquip  = $modeloEquip->detalhesEquipamentoParaConfiguracao($this->parametros[0]);
+    //Aqui são os dados do cliente para exibição na tela
+    $dadosClie          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
 
-// Carrega as configuracoes de sim , configurando e tratando a url
-//METODO SENDO DESATIVADO
-//$nova_url = $modelo->confParamentroGrafico();
+    if($dadosClie['status']){
+        $dadosClie = $dadosClie['equipamento'][0];
+        $idClie    = $dadosClie['idClie'];
+        $nomeClie  = $dadosClie['cliente'];
+    }
 
-if($dadosVinculoEquip['status']){
-    $idEquip    = $dadosVinculoEquip['equipamento'][0]['id_equipamento'];
-    $idSimEquip = $dadosVinculoEquip['equipamento'][0]['id'];
-    $idSim      = $dadosVinculoEquip['equipamento'][0]['id_sim'];
+    if($dadosVinculoEquip['status']){
+        $idEquip    = $dadosVinculoEquip['equipamento'][0]['id_equipamento'];
+        $idSimEquip = $dadosVinculoEquip['equipamento'][0]['id'];
+        $idSim      = $dadosVinculoEquip['equipamento'][0]['id_sim'];
+    }else{
+        $idEquip    = null;
+        $idSimEquip = null;
+        $idSim      = null;
+    }
+
+    $equipamentoMonitorado = $dadosEquipamento['tipoEquip']." ".$dadosEquipamento['nomeEquipamento'];
+
+    //INICIA CLASS DA LISTA INICAL
+    $parametroListaIni  = array();
+    array_push($parametroListaIni, $idSim);
+    $limite             = 30;
+    $listaIni           = new ListaInicial($limite, $this->db, $parametroListaIni);
+
+    // CARREGA OS PARAMETROS CONFIGURADOS PARA O EQUIPAMENTO
+    $retorno = $modelo->loadGraficoParam($idEquip, $idSimEquip, $idSim);
+
 }else{
-    $idEquip    = null;
-    $idSimEquip = null;
-    $idSim      = null;
+    $retorno = null;
 }
-
-$equipamentoMonitorado = $dadosEquipamento['tipoEquip']." ".$dadosEquipamento['nomeEquipamento'];
-
-//INICIA CLASS DA LISTA INICAL
-$parametroListaIni  = array();
-array_push($parametroListaIni, $idSim);
-$limite             = 30;
-$listaIni           = new ListaInicial($limite, $this->db, $parametroListaIni);
-
-//var_dump($dadosEquipamento);
-
-// CARREGA OS PARAMETROS CONFIGURADOS PARA O EQUIPAMENTO
-$retorno = $modelo->loadGraficoParam($idEquip, $idSimEquip, $idSim);
 
 //var_dump($retorno);
 
@@ -727,9 +727,6 @@ else
 
         </div>
     </div>
-
-
-
 
 
         <?php

@@ -1,6 +1,12 @@
 <?php
 /* carrega dados */
-$dadosNot = $modelo->notificacao();
+//$dadosNot = $modelo->notificacao();
+
+/*
+* CARREGA MODEL PARA ALARMES, INDEPENDENTE DA PÁGINA
+*/
+$alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
+
 
 /*
 * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
@@ -9,25 +15,25 @@ switch ($_SESSION['userdata']['tipo_usu']) {
     case 'Administrador':
         //var_dump($_SESSION);
 
-        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmes();
+        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmes();
 
     break;
 
     case 'Cliente':
 
 
-        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['userId']);
+        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['cliente']);
 
     break;
 
     case 'Visitante':
 
 
-        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['userId']);
+        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['cliente']);
     break;
 
     case 'Tecnico':
-        $notificacaoAlertas = $modelo->recuperaNotificacoesAlarmes();
+        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmes();
 
     break;
 }
@@ -62,18 +68,26 @@ if($notificacaoAlertas['status']){
             <div id="logoNavBar">
               <a href="<?php echo HOME_URI; ?>/home/"><img src="<?php echo HOME_URI; ?>/views/_images/logos.png" class="imgLogoBarra"></a>
             </div>
+
         </div>
+        <!-- <div>
+            <img src="<?php echo HOME_URI; ?>/views/_images/logo-eficaz-system.png" class="img-responsive" alt="Responsive image">
+        </div> -->
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">
             <!-- TOTAL DE ALERTAS, SE EXISTIREM -->
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-exclamation-triangle fa-fw"></i> <i class="fa fa-caret-down"></i>
+                <i class="fa fa-exclamation-triangle fa-1x"></i> <i class="fa fa-caret-down fa-1x"></i>
               </a>
               <?php
-                if ($t_not != 0)
-                echo "<span id='contadorNot'>{$t_not}</span>";
+                if ($t_not != 0){
+                    echo "<span id='contadorNot'>{$t_not}</span>";
+                }else{
+                    echo "<span id='contadorNot' style='display:none;'>{$t_not}</span>";
+                }
+
               ?>
               <ul id="listaMenuAlarmes" class="dropdown-menu dropdown-messages">
                 <?php
@@ -192,20 +206,20 @@ if($notificacaoAlertas['status']){
             <!-- BOTAO VISUALIZAR DADOS DO USUÁRIO -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                    <i class="fa fa-user fa-fw"></i>
-                    <i class="fa fa-caret-down"></i>
+                    <i class="fa fa-user fa-1x"></i>
+                    <i class="fa fa-caret-down fa-1x"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/usuario/"><i class="fa fa-folder-open fa-fw"></i>Perfil do usuário</a></span></li><!-- Fim Botao Sair -->
+                <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/usuario/"><i class="fa fa-folder-open fa-1x"></i>Perfil do usuário</a></span></li><!-- Fim Botao Sair -->
                 </ul>
             </li>
             <!-- BOTAO SAIR -->
             <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                        <i class="fa fa-power-off fa-fw"></i>
+                        <i class="fa fa-power-off fa-2x"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/login/sair"><i class="fa fa-power-off fa-fw"></i>Sair do sistema!</a></span></li><!-- Fim Botao Sair -->
+                        <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/login/sair"><i class="fa fa-power-off fa-1x"></i>Sair do sistema!</a></span></li><!-- Fim Botao Sair -->
                     </ul>
                     <!-- /.dropdown-user -->
             </li>
@@ -213,13 +227,13 @@ if($notificacaoAlertas['status']){
         </ul>
         <!-- /.navbar-top-links -->
 
-        <div class="navbar-default sidebar" role="">
-          <div class="sidebar-nav">
+        <div class="navbar-default sidebar" role="navigation">
+          <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <!-- HOME -->
                 <li>
                   <a href="<?php echo HOME_URI; ?>/home/" data-toggle="">
-                      <i class="fa fa-desktop fa-3x"></i> <span class="lb-side">Tela de monitoramento</span>
+                      <i class="fa fa-desktop fa-3x"></i> <span class="lb-side">Tela de monitoramento</span><span class="fa arrow"></span>
                   </a>
                   <ul class="nav nav-second-level collapse in">
                       <li>
@@ -255,14 +269,14 @@ if($notificacaoAlertas['status']){
                           <spam>Filiais</span>
                         </a> -->
                   <!--     </li> -->
-                     <!--  <li> -->
+                        <li>
                         <!-- Cadastro Fabricantes -->
-                        <!--   <a href="<?php echo HOME_URI; ?>/fabricante" class="">
+                          <a href="<?php echo HOME_URI; ?>/fabricante" class="">
                             <i class="fa fa-building fa-1x"></i>
                             <span class="icon-side"></span>
                             <spam>Fabricantes</span>
-                          </a> -->
-                      <!--   </li> -->
+                          </a>
+                        </li>
                         <li>
                           <a href="<?php echo HOME_URI; ?>/equipamento" class="">
                             <i class="fa fa-hdd-o fa-1x"></i>
@@ -288,6 +302,7 @@ if($notificacaoAlertas['status']){
                     <a class="link-side" href="<?php echo HOME_URI; ?>/monitoramento/">
                       <span class="icon-side"><i class="fa fa-tachometer fa-3x"></i></span>
                       <span class="lb-side">Monitorar</span>
+                      <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse in">
                         <li>
@@ -370,23 +385,26 @@ if($notificacaoAlertas['status']){
                   </a>
                 </li> -->
                 <?php //} ?>
+
+                <!-- OCULTANDO O MENU DE CONFIGURAÇÔES POR ESTAR DEFAZADO COM RELAÇÂO AS ATUALIZAÇÔES QUE FORAM FEITAS ATÈ O MOMENTO-->
                 <!-- CONFIGURACAO -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
-                <li>
-                  <a class="link-side" href="<?php echo HOME_URI; ?>/configuracao/">
+                <?php //if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1) { ?>
+                <!-- <li>
+                  <a class="link-side" href="<?php //echo HOME_URI; ?>/configuracao/">
                     <span class="icon-side"><i class="fa fa-cogs fa-3x"></i></span>
                     <span class="lb-side">Configura&ccedil;&atilde;o</span>
                   </a>
-                </li>
-                <?php } ?>
+                </li> -->
+                <?php //} ?>
 
                 <!-- USUÁRIOS -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
                     <li>
                         <a href="<?php echo HOME_URI; ?>/usuario/listar" class="">
-                          <i class="fa fa-users fa-3x"></i>
-                          <span class="icon-side"></span>
-                          <spam>Usuários</span>
+                            <i class="fa fa-users fa-3x"></i>
+                            <span class="icon-side"></span>
+                            <spam>Usuários</span>
+                            <span class="fa arrow"></span>
                         </a>
                     </li>
                 <?php } ?>
@@ -413,10 +431,10 @@ if($notificacaoAlertas['status']){
                 if(data.status){
 
                     //NOVA CONTAGEM
-                    $('#contadorNot').html(contagem);
+                    $('#contadorNot').html(data.contagem);
                     //NOVA LISTA DE ALARMES
                     $('#listaMenuAlarmes').html();
-                    $('#listaMenuAlarmes').html(alarmes);
+                    $('#listaMenuAlarmes').html(data.alarmes);
 
                     //exit(json_encode(array('status' => $statusContagem, 'contagem' => $totalAlarmes, 'alarmes' => $alarmesNovos)));
 

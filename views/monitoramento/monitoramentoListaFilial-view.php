@@ -8,78 +8,113 @@ if (!defined('EFIPATH')) exit();
 <script src="<?php echo HOME_URI; ?>/views/_js/table/stream_table.js" type="text/javascript"></script>
 
 <?php
-// chamando lista de valores
+
+// CHAMANDO LISTA DE VALORES
 //$retorno = $modelo->buscaRelacaoFilial();
 
-//Retorna informacoes do cliente
-$detalhesCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
-//Retorna a lista de equipamentos do cliente para listar, seja da matriz ou da filial
-$listaEquipamentos = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
 
-if($detalhesCliente['status']){
-    $nomeCliente = $detalhesCliente['dados'][0]['nome'];
-}else{
-    $nomeCliente = 'Não informado';
+/*
+* VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+*/
+switch ($_SESSION['userdata']['tipo_usu']) {
+    case 'Administrador':
+        //var_dump($_SESSION);
+
+        //Retorna informacoes do cliente
+        $detalhesCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
+        //Retorna a lista de equipamentos do cliente para listar, seja da matriz ou da filial
+        $listaEquipamentos = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
+
+        if($detalhesCliente['status']){
+            $nomeCliente = $detalhesCliente['dados'][0]['nome'];
+        }else{
+            $nomeCliente = 'Não informado';
+        }
+
+
+    break;
+
+    case 'Cliente':
+
+        //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+        $usuarioAutorizado  = false;
+        $idcliente = $_SESSION['userdata']['cliente'];
+        $usuariosCliente  = $modeloClie->carregaDadosContato($this->parametros[0]);
+
+        //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+        if($usuariosCliente['status']){
+            foreach ($usuariosCliente['dados'] as $usuarioCliente){
+                if($usuarioCliente['id_cliente'] == $idcliente){
+                    $usuarioAutorizado  = true;
+                }
+            }
+        }
+
+        if($usuarioAutorizado){
+
+            //Retorna informacoes do cliente
+            $detalhesCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
+            //Retorna a lista de equipamentos do cliente para listar, seja da matriz ou da filial
+            $listaEquipamentos = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
+
+            if($detalhesCliente['status']){
+                $nomeCliente = $detalhesCliente['dados'][0]['nome'];
+            }else{
+                $nomeCliente = 'Não informado';
+            }
+
+        }else{
+            $listaEquipamentos['status']  = false;
+            $detalhesCliente['status']    = false;
+            $nomeCliente        = 'Não informado';
+        }
+
+
+    break;
+
+    case 'Visitante':
+
+        //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+        $usuarioAutorizado  = false;
+        $idcliente = $_SESSION['userdata']['cliente'];
+        $usuariosCliente  = $modeloClie->carregaDadosContato($this->parametros[0]);
+
+        //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+        if($usuariosCliente['status']){
+            foreach ($usuariosCliente['dados'] as $usuarioCliente){
+                if($usuarioCliente['id_cliente'] == $idcliente){
+                    $usuarioAutorizado  = true;
+                }
+            }
+        }
+
+        
+
+
+    break;
+
+    case 'Tecnico':
+
+        //Retorna informacoes do cliente
+        $detalhesCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
+        //Retorna a lista de equipamentos do cliente para listar, seja da matriz ou da filial
+        $listaEquipamentos = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
+
+        if($detalhesCliente['status']){
+            $nomeCliente = $detalhesCliente['dados'][0]['nome'];
+        }else{
+            $nomeCliente = 'Não informado';
+        }
+
+    break;
 }
 
-// $teste = base64_decode("MTM5NDkwMDczMjY5MDY");
-// var_dump($teste);
 
 ?>
 
 <script type="text/javascript">
-    // var Movies0 = [
-    //     <?php
-    //         /* se for um array */
-    //         if (is_array($retorno))
-    //         {
-    //             $guarda = "";
-    //
-    //             for ($a = 0 ; $a < sizeof($retorno) ; $a++)
-    //             {
-    //                 if (!empty($retorno[$a]))
-    //                 {
-    //                     $statusVer = "Desativado";
-    //                     if ($retorno[$a]['status_ativo'] == 1)
-    //                         $statusVer = "Ativado";
-    //
-    //                     if ($retorno[$a]['nivel'] == 'c')
-    //                         $nivel = "Matriz";
-    //                     else if ($retorno[$a]['nivel'] == 'f')
-    //                         $nivel = "Filial";
-    //                     else
-    //                         $nivel = '';
-    //
-    //                     /* convert data para o padrao brasileiro */
-    //                     $tempo = explode(" ",$retorno[$a]['dt_criacao']);
-    //                     $tempo = $tempo[0];
-    //                     $tempo = explode("-",$tempo);
-    //                     $tempo = $tempo[2]."/".$tempo[1]."/".$tempo[0];
-    //
-    //                     /* criptografa sim */
-    //                     $chaveSim = base64_encode($retorno[$a]['num_sim']);
-    //
-    //
-    //                     $guarda .= "{modelsh: '{$chaveSim}',
-    //                                  num_sim: {$retorno[$a]['num_sim']},
-    //                                  dataCriado: '{$tempo}',
-    //                                  nivel: '{$nivel}',
-    //                                  cliente: '{$modelo->converte($retorno[$a]['nome'],1)}',
-    //                                  status: '{$statusVer}' },";
-    //                 }
-    //             }
-    //
-    //             $guarda .= ".";
-    //             $guarda = str_replace(",.","",$guarda);
-    //             echo $guarda;
-    //
-    //         }
-    //     ?>
-    // ];
-    // var Movies = [Movies0];
 
-
-    // gerenciador de link
+    // GERENCIADOR DE LINK
     var menu = document.getElementById('listadir');
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/monitoramento/" class="linkMenuSup">Monitoramento</a> / <a href="<?php echo HOME_URI; ?>/monitoramento/unidades/<?php echo $this->parametros[0]; ?>"><?php echo $nomeCliente; ?></a>';
 </script>

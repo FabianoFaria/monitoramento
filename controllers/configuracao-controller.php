@@ -15,7 +15,7 @@ class ConfiguracaoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1 )
+        if ($_SESSION['userdata']['per_co'] == 1 )
         {
             // Define o titulo da pagina
             $this->title = "Configuracao";
@@ -49,7 +49,7 @@ class ConfiguracaoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1 )
+        if ($_SESSION['userdata']['per_co'] == 1 )
         {
             // Define titulo da pagina
             $this->title = "Configuracao";
@@ -88,7 +88,7 @@ class ConfiguracaoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1 )
+        if ($_SESSION['userdata']['per_co'] == 1 )
         {
             // Define titulo da pagina
             $this->title = "Configuracao";
@@ -127,7 +127,7 @@ class ConfiguracaoController extends MainController
         $this->check_login();
 
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_co'] == 1 )
+        if ($_SESSION['userdata']['per_co'] == 1 )
         {
             // Define titulo da pagina
             $this->title = "Configuracao";
@@ -162,7 +162,7 @@ class ConfiguracaoController extends MainController
         $this->check_login();
 
         // VERIFICA AS PERMISSOES NECESSARIAS
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ed'] != 1 )
+        if ($_SESSION['userdata']['per_ed'] != 1 )
         {
             // SE NAO POSSUIR PERMISSAO
             // REDIRECIONA PARA INDEX

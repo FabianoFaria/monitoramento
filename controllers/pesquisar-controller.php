@@ -12,9 +12,9 @@ class PesquisarController extends MainController
     {
         // Verifica se esta logado
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_pe'] != 1 )
+        if ($_SESSION['userdata']['per_pe'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
@@ -38,7 +38,7 @@ class PesquisarController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
-    
+
     /**
      * Funcao que gerencia o sistema de pesquisa da filial
      */
@@ -46,9 +46,9 @@ class PesquisarController extends MainController
     {
         // Verifica se esta logado
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_pe'] != 1 )
+        if($_SESSION['userdata']['per_pe'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
@@ -72,7 +72,7 @@ class PesquisarController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
-    
+
     /**
      * Funcao que gerencia o sistema de pesquisa do fabricante
      */
@@ -80,9 +80,9 @@ class PesquisarController extends MainController
     {
         // Verifica se esta logado
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_pe'] != 1 )
+        if($_SESSION['userdata']['per_pe'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
@@ -106,7 +106,7 @@ class PesquisarController extends MainController
             require_once EFIPATH . "/views/_includes/footer.php";
         }
     }
-    
+
     /**
      * Funcao que gerencia o sistema de pesquisa do equipamento
      */
@@ -114,9 +114,9 @@ class PesquisarController extends MainController
     {
         // Verifica se esta logado
         $this->check_login();
-        
+
         // Verifica as permissoes necessarias
-        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_pe'] != 1 )
+        if ($_SESSION['userdata']['per_pe'] != 1 )
         {
             // Se nao possuir permissao
             // Redireciona para index
