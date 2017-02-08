@@ -160,10 +160,12 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
 		var options = {
 			xaxis: {
-                show : false
+                show : true,
+                mode : "time"
 			},
 			selection: {
-				mode: "x"
+				mode: "x",
+                timezone: "America/Brasilia"
 			},
 			grid: {
                 hoverable: true,
@@ -281,6 +283,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                                 $serie .= "[".$dataMedida[$i].",".$valorX."],";
                                 $j = 0;
                             }
+                            //$valorX
 
                         }
                         $serie .= "]";
@@ -364,28 +367,6 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
 <div class="container-fluid">
 
-    <!-- Dados do cliente -->
-    <!-- <div class="row nome-apresentacao"> -->
-
-        <!-- Informacoes do clinte -->
-        <!-- <div class="col-md-3 col-sm-6">
-            <label class="info-monito">Cliente </label><br>
-            <label class="info-monitoDados"><?php //echo $dadosCliente['nome']; ?></label>
-        </div><!-- Fim informacao do cliente -->
-
-        <!-- Informacoes Equipamento -->
-        <!-- <div class="col-md-3 col-sm-6">
-            <label class="info-monito">Equipamento</label><br>
-            <label class="info-monitoDados"> -->
-                <?php
-                    // echo $dadosEquipamento['tipoEquip']." ";
-                    // echo $dadosEquipamento['nomeEquipamento']." ";
-                    // echo $dadosEquipamento['modelo'];
-                ?>
-            <!-- </label>
-        </div><!-- Fim Informacoes Equipamento -->
-    <!-- </div><!-- Fim Dados do cliente -->
-
     <!-- Valida se há dados para serem exibido -->
     <?php
 
@@ -441,10 +422,151 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
 </div>
 
+<div class="row">
+
+    <h3>Teste de Canvas JS</h3>
+    <div class="col-md-12">
+
+        <div id="caixaGrafico" style="width:100%;height:300px;">
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <?php
 
     //var_dump($modelo->respDate);
     //var_dump($modelo->respData);
+
+    //CARREGAR TODAS AS DATAS DO PERIODO SELECIONADO
+    //var_dump($modelo->respRawDate);
+    $dataUnix = $modelo->respRawDate;
+
+    $j     = 0;
+    $cores    = array('#4d4dff','#b366ff','#ff80df',' #ff6666','#ffb366','#ffff1a','#a6ff4d','#33ff33','#1aff66','#66d9ff',' #6666cc','#862d86', '#993366');
+
+    $serie = "";
+    //PARAMETROS SELECIONADOS
+    $testeJon  =    $modelo->respData;
+
+        foreach ($testeJon as $jon) {
+
+            //INICIA O TRATAMENTO DOS PARAMETROS PASSADOS PELO FORMULARIO
+            $amostra = explode("data:", $jon[0]);
+
+            $nomeSerie = $amostra[0];
+
+            $nomeSerie = str_replace("{name:'"," ",$nomeSerie);
+            $nomeSerie = str_replace("',"," ",$nomeSerie);
+
+            $amostra = str_replace("]"," ",$amostra[1]);
+            $amostra = str_replace("["," ",$amostra);
+            $amostra = str_replace("}"," ",$amostra);
+
+            $dataAmostra = explode(",",$amostra);
+
+            //echo sizeof($dataAmostra)." ".sizeof($dataUnix)." <br />";
+            //Inicia a montagem da série
+            $i     = 0;
+
+
+            $serie .= "{";
+                $serie .= 'type: "line",';
+                $serie .= 'showInLegend: true,';
+                $serie .= 'name: "'.$nomeSerie.'",';
+                $serie .= 'color: "'.$cores[$j].'",';
+                $serie .= 'lineThickness: 2,';
+                $serie .= 'dataPoints: [';
+
+                foreach ($dataUnix as $unix){
+                //
+                    $dataTemp = gmdate("d-m-Y H:i:s", $dataUnix[$i]);
+
+                    $serie .= '{ x: "'.$dataTemp.'", y: 310},';
+                //
+                //     $i++;
+                    //$serie .= '{ x: new Date(2010, 0, 3), y: 510 },';
+                }
+                //$serie .= '{ x: '.gmdate("d-m-Y H:i:s", $dataUnix[$i - 1]).', y: "0"}';
+
+                $serie .= ']';
+            $serie .= "},";
+
+            $j++;
+        }
+
+        //var_dump($serie);
+
+?>
+
+<script type="text/javascript">
+window.onload = function () {
+    var chart = new CanvasJS.Chart("caixaGrafico", {
+        zoomEnabled: true,
+        zoomType: "x",
+        title:{
+          text: "Enable Zooming on X & Y Axis"
+        },
+        animationEnabled: true,
+        axisX: {
+            gridColor: "Silver",
+            tickColor: "silver",
+            valueFormatString: "DD/MMM"
+        },
+        toolTip: {
+            shared: true
+        },
+        theme: "theme2",
+        axisY: {
+            gridColor: "Silver",
+            tickColor: "silver"
+        },
+        legend: {
+            verticalAlign: "center",
+            horizontalAlign: "right"
+        },
+        data: [<?php echo $serie; ?>
+        ],
+        legend: {
+            cursor: "pointer",
+            itemclick: function (e) {
+                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                }
+                else {
+                    e.dataSeries.visible = true;
+                }
+                // chart.render();
+            }
+        }
+    });
+
+    chart.render();
+}
+
+
+
+</script>
+
+<?php
+
+
+    // TESTE DO GRÁFICO COM MULTIPLAS LINHAS
+
+
+
+
+
+    // foreach ($dataUnix as $unix) {
+    //
+    //     $f++;
+    //     //echo gmdate("d-m-Y H:i:s", $unix) ."<br />";
+    // }
+    // echo $f;
 
     // foreach ($testeJon as $jon) {
     //

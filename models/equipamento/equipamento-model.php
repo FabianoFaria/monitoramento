@@ -29,7 +29,8 @@ class EquipamentoModel extends MainModel
                     JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                     LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                     LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
-                    LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id";
+                    LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id
+                    WHERE equip.status_ativo = '1'";
 
         /* MONTA A RESULT */
         $result = $this->db->select($query);

@@ -109,7 +109,8 @@ class GraficoGeradorModel extends MainModel
                 $result = $this->verificaQuery($query);
 
                 // Inicia a variavel da data
-                $respDate = "[";
+                $respDate       = "[";
+                $respRawDate    = array();
 
                 if(!empty($result)){
 
@@ -118,6 +119,8 @@ class GraficoGeradorModel extends MainModel
                     {
                         // $respDate .= "'".date('d-M-y H:i',strtotime($result[$a]['dt_criacao']))."',";
                         $respDate .= "'".$result[$a]['dt_criacao']."',";
+                        //SALVA NA ARRAY A DATA PURA
+                        array_push($respRawDate, $result[$a]['dt_criacao']);
 
                         for ($b = 0; $b < sizeof($tabela) ; $b++)
                         {
@@ -145,6 +148,7 @@ class GraficoGeradorModel extends MainModel
                 }else{
                     $respDate = "[]";
                     $respData = "{}";
+                    $respRawDate = array();
                 }
 
             }
@@ -154,12 +158,13 @@ class GraficoGeradorModel extends MainModel
         }else{
             $respDate = "[]";
             $respData = "{}";
-
+            $respRawDate = array();
         }
 
         // Converte para json
         $this->respData = $respData;
         $this->respDate = $respDate;
+        $this->respRawDate = $respRawDate;
     }
 
 
