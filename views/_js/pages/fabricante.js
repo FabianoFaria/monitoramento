@@ -107,6 +107,7 @@ $().ready(function() {
               'novoFabricante' : novoFabricante,
               'ddd' : ddd,
               'telefone' : telefone,
+              'email' : email,
               'cep' : cep,
               'endereco' : endereco,
               'numero' : numero,
@@ -120,16 +121,17 @@ $().ready(function() {
                     //tempTest = JSON(datra);
                     if(datra.status == true)
                     {
+
+                        swal('','Fabricante cadastrado com sucesso!','success');
                        	var statusCad      = datra.status;
-                       	$('#resultadoPositivo').fadeIn();
                         setTimeout(function(){
                             window.location.replace(urlP +"/eficazmonitor/fabricante/");
-                        }, 3000);
+                        }, 2000);
                     }
                     else
                     {
                         //Settar a mensagem de erro!
-                       	$('#resultadoCadastro').html("Algo não foi registrado!" +  statusCad);
+                        swal('','Ocorreu um erro ao cadastrar o fabricante!','error');
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown)
@@ -307,7 +309,6 @@ $().ready(function() {
     $('.editFabricante').click(function(){
 
         var fabricante = $(this).val();
-        console.log(fabricante);
 
         //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
         $.ajax({
@@ -335,7 +336,7 @@ $().ready(function() {
                     $('#txt_fabricante').val(datra.fabricante['nome']);
                     $('#txt_ddd').val(datra.fabricante['ddd']);
                     $('#txt_telefone').val(datra.fabricante['telefone']);
-                    $('#txt_email').val('');
+                    $('#txt_email').val(datra.fabricante['email']);
                     $('#txt_cep').val(datra.fabricante['cep']);
                     $('#txt_endereco').val(datra.fabricante['endereco']);
                     $('#txt_numero').val(datra.fabricante['numero']);
@@ -345,20 +346,6 @@ $().ready(function() {
                     $('#pais').val(datra.fabricante['id_pais']);
 
                     $('#modalCadFabricantes').modal();
-
-                    /*
-                    'id' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'5'</font> <i>(length=1)</i>
-                    'id_estado' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'8'</font> <i>(length=1)</i>
-                    'id_pais' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'36'</font> <i>(length=2)</i>
-                    'nome' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'No breaks ficticios'</font> <i>(length=19)</i>
-                    'ddd' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'41'</font> <i>(length=2)</i>
-                    'telefone' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'88888999'</font> <i>(length=8)</i>
-                    'cep' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'29105060'</font> <i>(length=8)</i>
-                    'endereco' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Rua Seis'</font> <i>(length=8)</i>
-                    'numero' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0'</font> <i>(length=1)</i>
-                    'cidade' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Vila Velha'</font> <i>(length=10)</i>
-                    'bairro' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Vila Nova'</font> <i>(length=9)</i>
-                    */
 
                 }else{
                     swal("", "Ocorreu um erro ao tentar carregar os dados filial, favor verificar os dados enviados!", "error");
@@ -379,5 +366,210 @@ $().ready(function() {
 
     });
 
+    /*
+    * SALVA AS ALTERAÇÕES DO FABRICANTE
+    */
+    $('#editFilialBtn').click(function(){
 
+        //INICIA VALIDAÇÃO DOS DADOS
+        $('#editFabrica').validate({
+    		rules: {
+			    txt_fabricante: {
+                    required: true
+			    },
+    			txt_ddd:{
+    				required : true
+                },
+                txt_telefone:{
+    				required : true
+                },
+                txt_cep:{
+    				required : true
+                },
+                txt_endereco:{
+                    required : true
+                },
+                txt_cidade:{
+                    required : true
+                },
+                txt_bairro:{
+                    required : true
+                },
+                txt_email:{
+                    required : true
+                },
+                txt_numero:{
+                    required : true
+                },
+                estado:{
+                    required : true
+                },
+                pais:{
+                    required : true
+                }
+       		},
+        	messages: {
+	    		txt_fabricante: {
+	    			required: "Nome do cliente é oblrigatorio."
+	    		},
+	    	    txt_ddd:{
+				    required : "Campo é obrigatorio"
+				},
+                txt_telefone:{
+				    required : "Campo é obrigatorio"
+				},
+                txt_cep:{
+				    required : "Campo é obrigatorio"
+				},
+                txt_endereco:{
+				    required : "Campo é obrigatorio"
+				},
+                txt_cidade:{
+				    required : "Campo é obrigatorio"
+				},
+                txt_bairro:{
+				    required : "Campo é obrigatorio"
+				},
+                txt_email:{
+				    required : "Campo é obrigatorio"
+				},
+                txt_numero:{
+                    required : "Campo é obrigatorio"
+                },
+                estado:{
+                    required : "Campo é obrigatorio"
+                },
+                pais:{
+                    required : "Campo é obrigatorio"
+                }
+
+    		}
+
+    	});
+
+        if($("#editFabrica").valid()){
+
+            var idFabricante    = $('#idFabricante').val();
+            var nomeFabricante  = $('#txt_fabricante').val();
+            var ddd             = $('#txt_ddd').val();
+            var telefone        = $('#txt_telefone').val();
+            var email           = $('#txt_email').val();
+            var cep             = $('#txt_cep').val();
+            var endereco        = $('#txt_endereco').val();
+            var cidade          = $('#txt_cidade').val();
+            var bairro          = $('#txt_bairro').val();
+            var numero          = $('#txt_numero').val();
+            var estado          = $('#estados').val();
+            var pais            = $('#pais').val();
+
+            //Efetua o cadastro via JSON
+            //Efetua cadastro do cliente via JSON
+            $.ajax({
+             url: urlP+"/eficazmonitor/fabricante/atualizarFabricanteJSON",
+             secureuri: false,
+             type : "POST",
+             dataType: 'json',
+             data      : {
+                'idFabricante' : idFabricante,
+                'fabricante' : nomeFabricante,
+                'ddd' : ddd,
+                'telefone' : telefone,
+                'email' : email,
+                'cep' : cep,
+                'endereco' : endereco,
+                'numero' : numero,
+                'bairro' : bairro,
+                'cidade' : cidade,
+                'estado' : estado,
+                'pais'   : pais
+              },
+                success : function(datra)
+                {
+                    //tempTest = JSON(datra);
+                    if(datra.status == true)
+                    {
+                        swal('','Fabricante atualizado com sucesso!','success');
+                       	var statusCad      = datra.status;
+                        setTimeout(function(){
+                            window.location.replace(urlP +"/eficazmonitor/fabricante/");
+                        }, 2000);
+                    }
+                    else
+                    {
+                        //Settar a mensagem de erro!
+                        swal('','Ocorreu um erro ao atualizar o fabricante!','error');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                }
+            });
+        }
+
+    });
+
+    /*
+    * REMOVER O FABRICANTE DOS ATIVOS
+    */
+    $('.removerFabricante').click(function(){
+
+        var fabricante = $(this).val();
+
+        swal({
+          title: "Tem certeza?",
+          text: "Esta operação não poderá ser revertida!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Sim, apagar!",
+          cancelButtonText: "Não, cancelar!",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function(isConfirm){
+          if (isConfirm) {
+            //EFETUA A REMOÇÃO DOS DADOS DA FILIAL
+            $.ajax({
+                url: urlP+"/eficazmonitor/fabricante/removerFabricanteJSON",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'idFabricante' : fabricante
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
+                        swal('','Fabricante removido com sucesso!','success');
+                        var statusCad      = datra.status;
+                        setTimeout(function(){
+                            window.location.replace(urlP +"/eficazmonitor/fabricante/");
+                        }, 2000);
+                    }else{
+                        swal("", "Ocorreu um erro ao tentar remover, favor verificar os dados enviados!", "error");
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+
+                    //Settar a mensagem de erro!
+                    // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                    swal("Oops...", "Ocorreu um erro ao remover, favor verificar mais tarde!", "error");
+                   // Handle errors here
+                   console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                   // STOP LOADING SPINNER
+                }
+            });
+        } else {
+        	swal("Cancelado", "Ação cancelado pelo usuário", "error");
+        }
+        });
+
+
+
+    });
 });

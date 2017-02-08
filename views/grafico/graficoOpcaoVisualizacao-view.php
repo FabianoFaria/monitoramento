@@ -83,7 +83,7 @@ var menu = document.getElementById('listadir');
             </div>
 
             <div class="col-md-5">
-                <div class="panel panel-red">
+                <div class="panel panel-green">
                     <div class="panel-heading">Sa&iacute;da</div>
                     <div class="panel-body">
 
@@ -152,7 +152,7 @@ var menu = document.getElementById('listadir');
 
             <div class="col-md-5">
 
-                <div class="panel panel-green">
+                <div class="panel panel-red">
                     <div class="panel-heading">Entrada</div>
                     <div class="panel-body">
                         <div class="row borda-01">

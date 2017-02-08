@@ -6,6 +6,7 @@
     $dados      = $modeloClie->carregarDadosCliente($this->parametros[0]);
     $clientes   = $modeloClie->listarCliente();
     $tiposEquip = $modelo->listarTipoEquip();
+    $fabricantes= $modeloFabri->listarFabricantes();
 
     if($clientes){
 		$dadosCliente = $clientes;

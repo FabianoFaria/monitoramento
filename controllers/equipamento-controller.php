@@ -74,6 +74,7 @@ class EquipamentoController extends MainController
             // Carrega o modelo para este view
             $modelo         = $this->load_model('equipamento/equipamento-model');
             $modeloClie     = $this->load_model('cliente/cliente-model');
+            $modeloFabri    = $this->load_model('fabricante/fabricante-model');
 
             // Carrega view
             require_once EFIPATH . "/views/_includes/header.php";

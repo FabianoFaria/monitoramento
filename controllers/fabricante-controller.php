@@ -65,7 +65,7 @@
         //CARREGA MODELO PARA ESTA FUNÇÃO
         $fabricanteModelo       = $this->load_model('fabricante/fabricante-model');
 
-        $fabricanteRegistrado   = $fabricanteModelo->registrarFabricanteJson($_POST['novoFabricante'], $_POST['ddd'], $_POST['telefone'], $_POST['cep'], $_POST['endereco'], $_POST['numero'], $_POST['bairro'], $_POST['cidade'], $_POST['estado'], $_POST['pais']);
+        $fabricanteRegistrado   = $fabricanteModelo->registrarFabricanteJson($_POST['novoFabricante'], $_POST['ddd'], $_POST['telefone'], $_POST['cep'], $_POST['endereco'], $_POST['numero'], $_POST['bairro'], $_POST['cidade'], $_POST['estado'], $_POST['pais'], $_POST['email']);
 
         if($fabricanteRegistrado){
             exit(json_encode(array('status' => $fabricanteRegistrado['status'] )));
@@ -86,10 +86,60 @@
 
         $fabricanteRegistrado   = $fabricanteModelo->carregarDadosFabricanteViaJson($_POST['idFabricante']);
 
-        if($fabricanteRegistrado){
-            exit(json_encode(array('status' => $fabricanteRegistrado['status'], 'fabricante' => $fabricanteRegistrado['dados'])));
+        if($fabricanteRegistrado['status']){
+
+            $dados['id']        = $fabricanteRegistrado['dados']['id'];
+            $dados['id_estado'] = $fabricanteRegistrado['dados']['id_estado'];
+            $dados['id_pais']   = $fabricanteRegistrado['dados']['id_pais'];
+            $dados['nome']      = html_entity_decode($fabricanteRegistrado['dados']['nome'], ENT_COMPAT, 'UTF-8');
+            $dados['ddd']       = html_entity_decode($fabricanteRegistrado['dados']['ddd'], ENT_COMPAT, 'UTF-8');
+            $dados['telefone']  = html_entity_decode($fabricanteRegistrado['dados']['telefone'], ENT_COMPAT, 'UTF-8');
+            $dados['cep']       = html_entity_decode($fabricanteRegistrado['dados']['cep'], ENT_COMPAT, 'UTF-8');
+            $dados['endereco']  = html_entity_decode($fabricanteRegistrado['dados']['endereco'], ENT_COMPAT, 'UTF-8');
+            $dados['numero']    = html_entity_decode($fabricanteRegistrado['dados']['numero'], ENT_COMPAT, 'UTF-8');
+            $dados['cidade']    = html_entity_decode($fabricanteRegistrado['dados']['cidade'], ENT_COMPAT, 'UTF-8');
+            $dados['bairro']    = html_entity_decode($fabricanteRegistrado['dados']['bairro'], ENT_COMPAT, 'UTF-8');
+            $dados['email']     = html_entity_decode($fabricanteRegistrado['dados']['email_fabricante'], ENT_COMPAT, 'UTF-8');
+
+            exit(json_encode(array('status' => $fabricanteRegistrado['status'], 'fabricante' => $dados)));
         }else{
             exit(json_encode(array('status' => $fabricanteRegistrado['status'] )));
+        }
+
+    }
+
+    /*
+    * ATUALIZAR OS DADOS DO FABRICANTES
+    */
+    public function atualizarFabricanteJSON(){
+
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+        $fabricanteModelo       = $this->load_model('fabricante/fabricante-model');
+
+        $fabricanteAtualizado   = $fabricanteModelo->atualizarFabricanteViaJson($_POST['idFabricante'], $_POST['fabricante'], $_POST['ddd'], $_POST['telefone'], $_POST['cep'], $_POST['endereco'], $_POST['numero'], $_POST['bairro'], $_POST['cidade'], $_POST['estado'], $_POST['pais'], $_POST['email']);
+
+        if($fabricanteAtualizado){
+            exit(json_encode(array('status' => $fabricanteAtualizado['status'] )));
+        }else{
+            exit(json_encode(array('status' => $fabricanteAtualizado['status'] )));
+        }
+
+    }
+
+    /*
+    * REMOVER O FABRICANTE DE ATIVOS
+    */
+    public function removerFabricanteJSON(){
+
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+        $fabricanteModelo       = $this->load_model('fabricante/fabricante-model');
+
+        $fabricanteAtualizado   = $fabricanteModelo->removerFabricanteViaJson($_POST['idFabricante']);
+
+        if($fabricanteAtualizado){
+            exit(json_encode(array('status' => $fabricanteAtualizado['status'] )));
+        }else{
+            exit(json_encode(array('status' => $fabricanteAtualizado['status'] )));
         }
 
     }
