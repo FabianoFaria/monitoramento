@@ -82,12 +82,10 @@
                                     <td><?php echo $fabricante['estado']; ?></td>
                                     <td><?php echo $fabricante['pais']; ?></td>
                                     <td>
-                                        <button class="link-tabela-moni editFabricante" value="<?php echo $fabricante['id']; ?>"><i class="fa fa-pencil-square-o fa-lg"></i></button>
+                                        <button class="btn link-tabela-moni editFabricante" value="<?php echo $fabricante['id']; ?>"><i class="fa fa-pencil-square-o fa-lg"></i></button>
                                     </td>
                                     <td>
-                                        <a href="<?php echo HOME_URI; ?>/editar/removerUsuario/<?php echo $fabricante['id']; ?>" class="link-tabela-moni">
-                                            <i class="fa  fa-times fa-lg"></i>
-                                        </a>
+                                        <button class="btn removerFabricante" value="<?php echo $fabricante['id']; ?>"><i class="fa  fa-times fa-lg"></i></button>
                                     </td>
                                 </tr>
                             <?php
@@ -110,7 +108,7 @@
     </div>
 </div>
 
-<!-- MODAL PARA CADASTRO DE FABRICANTES -->
+<!-- MODAL PARA EDIÇÃO DE FABRICANTES -->
 
 <div id="modalCadFabricantes" class="modal fade" tabindex="-1" role="dialog" >
     <div class="modal-dialog modal-lg" role="document">
@@ -267,7 +265,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" id="editFilialBtn">Editar fabricante</button>
+              <button type="button" class="btn btn-primary" id="editFilialBtn">Salvar alterações</button>
             </div>
         </div>
     </div>
