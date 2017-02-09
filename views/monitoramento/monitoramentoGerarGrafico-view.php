@@ -402,12 +402,12 @@ else
                     <div class="row">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <h4>Entrada</h4>
+                                <h4>Tensão</h4>
                             </div>
                             <div class="panel-body">
                                 <!-- ENTRADA -->
-                                <div class="col-lg-4">
-                                    <h4>Tensão</h4>
+                                <div class="col-lg-3">
+                                    <h4>Entrada</h4>
                                     <div class="row">
                                         <!-- Entrada R/S -->
                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
@@ -434,46 +434,9 @@ else
                                     </div>
 
                                 </div>
-                                <div class="col-lg-4">
-                                    <h4>Corrente</h4>
-                                    <div class="row">
-                                        <!-- Entrada Corrente -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                            <div id="containerEntradaCorente1" style="width: 100%; margin: 0 auto;"></div>
-                                            <label id="cor_e1" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-cor-ent1" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Fim entrada Corrente -->
-                                        <!-- Entrada Corrente -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                            <div id="containerEntradaCorente2" style="width: 100%; margin: 0 auto;"></div>
-                                            <label id="cor_e2" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-cor-ent2" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Fim entrada Corrente -->
-                                        <!-- Entrada Corrente -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                            <div id="containerEntradaCorente3" style="width: 100%; margin: 0 auto;"></div>
-                                            <label id="cor_e3" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-cor-ent3" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Fim entrada Corrente -->
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <h4>Potência</h4>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h4>Saída</h4>
-                            </div>
-                            <div class="panel-body">
-                                <!-- Saída -->
-                                <div class="col-lg-4">
-                                    <h4>Tensão</h4>
+                                <!-- SAÍDA -->
+                                <div class="col-lg-3">
+                                    <h4>Saída</h4>
                                     <div class="row">
                                         <!-- Saida S/T -->
                                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -500,7 +463,45 @@ else
                                     </div>
 
                                 </div>
-                                <div class="col-lg-4">
+
+                                <div class="col-lg-3">
+                                    <h4>Potência</h4>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4>Corrente</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-lg-3">
+                                    <h4>Corrente</h4>
+                                    <div class="row">
+                                        <!-- Entrada Corrente -->
+                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                            <div id="containerEntradaCorente1" style="width: 100%; margin: 0 auto;"></div>
+                                            <label id="cor_e1" class="valorVindo">0 ( v )</label>
+                                            <div id="sit-cor-ent1" class="situacaoDesligado">Carregando...</div>
+                                        </div><!-- Fim entrada Corrente -->
+                                        <!-- Entrada Corrente -->
+                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                            <div id="containerEntradaCorente2" style="width: 100%; margin: 0 auto;"></div>
+                                            <label id="cor_e2" class="valorVindo">0 ( v )</label>
+                                            <div id="sit-cor-ent2" class="situacaoDesligado">Carregando...</div>
+                                        </div><!-- Fim entrada Corrente -->
+                                        <!-- Entrada Corrente -->
+                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                            <div id="containerEntradaCorente3" style="width: 100%; margin: 0 auto;"></div>
+                                            <label id="cor_e3" class="valorVindo">0 ( v )</label>
+                                            <div id="sit-cor-ent3" class="situacaoDesligado">Carregando...</div>
+                                        </div><!-- Fim entrada Corrente -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <h4>Corrente</h4>
                                     <!-- Saida S/T -->
                                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -521,7 +522,7 @@ else
                                         <div id="sit-cor-sai3" class="situacaoDesligado">Carregando...</div>
                                     </div><!-- Saida S/T -->
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <h4>Potência</h4>
                                 </div>
 
@@ -637,9 +638,9 @@ else
                                                         document.getElementById('cargaUtilGraficoBateria').className = "progress-bar progress-bar-success";
                                                     }
                                                 });
-                                            },6000);
+                                            },5000);
 
-                                            console.log("data[0] : " + parseFloat(data[0]));
+                                            //console.log("data[0] : " + parseFloat(data[0]));
                                         </script>
 
                                     <!-- </div> -->
@@ -715,6 +716,99 @@ else
                                             ?>
                                         </label>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4>Temperaturas</h4>
+                            </div>
+                            <div class="panel-body">
+
+                                <!-- TRECHO QUE IRÁ POPULAR OS DADOS DE TEMPERATURA -->
+
+                                <script type="application/javascript">
+
+                                    //MEDIDOR DE TEMPERATURA 1
+
+                                    var temperatura1 = 0;
+                                    var temperatura2 = 0;
+
+                                    setInterval(function(){
+                                        //URL para chamar a função de medição de temperatura
+                                        var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncTemperatura.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=q&callback=?";
+                                        $.getJSON(url,  function(data) {
+
+                                            temperatura1 = parseFloat(data[0])/10;
+                                            $('#cor_temp1').html(temperatura1.toFixed(1) +" (c°)");
+                                            $('#sit-cor-temp1').html('');
+
+                                            switch (temperatura1) {
+                                                case (temperatura1 < 250):
+                                                    document.getElementById('sit-cor-temp1').className = "well well-normal-status";
+                                                break;
+                                                case (temperatura1 < 350):
+                                                    document.getElementById('sit-cor-temp1').className = "well well-atention-statuss";
+                                                break;
+                                                case (temperatura1 < 450):
+                                                    document.getElementById('sit-cor-temp1').className = "well well-danger-status well-blink";
+                                                break;
+                                            }
+
+                                            //TRATA OS RESULTADOS DA FUNÇÃO
+
+                                        });
+                                    },5000);
+
+
+                                    //Funçaõ para recolher os dados do segundo medidor
+                                    setInterval(function(){
+                                        //URL para chamar a função de medição de temperatura
+                                        var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncTemperatura.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=r&callback=?";
+                                        $.getJSON(url,  function(data) {
+
+                                            temperatura1 = parseFloat(data[0])/10;
+                                            $('#cor_temp2').html(temperatura1.toFixed(1) +" (c°)");
+                                            $('#sit-cor-temp2').html('');
+
+                                            switch (temperatura1) {
+                                                case (temperatura1 < 250):
+                                                    document.getElementById('sit-cor-temp2').className = "well well-normal-status";
+                                                break;
+                                                case (temperatura1 < 350):
+                                                    document.getElementById('sit-cor-temp2').className = "well well-atention-statuss";
+                                                break;
+                                                case (temperatura1 < 450):
+                                                    document.getElementById('sit-cor-temp2').className = "well well-danger-status well-blink";
+                                                break;
+                                            }
+
+                                            //TRATA OS RESULTADOS DA FUNÇÃO
+
+                                        });
+                                    },5000);
+
+
+                                </script>
+
+                                <div class="col-lg-3">
+                                    <h4>Medidor 1</h4>
+                                    <!-- Medidor temperatura 1 -->
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div id="containerTemperatura1" style="width:100%; margin: 0 auto"></div>
+                                        <label id="cor_temp1" class="valorVindo">0 ( c° )</label>
+                                        <div id="sit-cor-temp1" class="situacaoDesligado">Carregando...</div>
+                                    </div><!-- Saida S/T -->
+                                </div>
+                                <div class="col-lg-3">
+                                    <h4>Medidor 2</h4>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div id="containerTemperatura2" style="width:100%; margin: 0 auto"></div>
+                                        <label id="cor_temp2" class="valorVindo">0 ( c° )</label>
+                                        <div id="sit-cor-temp2" class="situacaoDesligado">Carregando...</div>
+                                    </div><!-- Saida S/T -->
                                 </div>
                             </div>
                         </div>

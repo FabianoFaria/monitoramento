@@ -13,69 +13,6 @@ $dadosCliente       = $dadosCliente['dados'][0];
 ?>
 
 <script>
-    // $(function () {
-    //     $('#container').highcharts({
-    //         title: {
-    //             text: 'Grafico de tempo',
-    //             x: -20 //center
-    //         },
-    //         subtitle: {
-    //             text: '',
-    //             x: -20
-    //         },
-    //         xAxis: {
-    //             categories:
-    //             <?php
-    //                 echo $modelo->respDate;
-    //             ?>
-    //         },
-    //         yAxis: {
-    //             title: {
-    //                 text: ''
-    //             },
-    //             plotLines: [{
-    //                 value: 0,
-    //                 width: 1,
-    //                 color: '#808080'
-    //             }]
-    //         },
-    //
-    //         tooltip: {
-    //             valueSuffix: '(V)'
-    //         },
-    //         legend: {
-    //             layout: 'vertical',
-    //             align: 'right',
-    //             verticalAlign: 'middle',
-    //             borderWidth: 1
-    //         },
-    //             plotOptions: {
-    //             spline: {
-    //                 lineWidth: 2,
-    //                 states: {
-    //                     hover: {
-    //                         lineWidth: 10
-    //                     }
-    //                 },
-    //                 marker: {
-    //                     enabled: true
-    //                 }
-    //             }
-    //         },
-    //         series: [
-    //             <?php
-    //                 $guarda = "";
-    //                 foreach($modelo->respData as $row)
-    //                 {
-    //                     $guarda .= $row[0].",";
-    //                 }
-    //                 $guarda .= ".";
-    //                 $guarda = str_replace(",.","",$guarda);
-    //                 echo $guarda;
-    //             ?>
-    //         ]
-    //     });
-    // });
 
     /*
     * REFORMULAÇÂO DO GRÁFICO
@@ -165,8 +102,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
 		var options = {
 			xaxis: {
                 show : true,
-                mode : "time",
-                timezone: "America/Brasilia"
+                mode : "time"
 			},
 			selection: {
 				mode: "x"
@@ -271,7 +207,13 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
                 var hour = date.getHours() + 3;
                 var min = date.getMinutes();
+                if(min < 10){
+                    min = "0"+min;
+                }
                 var sec = date.getSeconds();
+                if(sec < 10){
+                    sec = "0"+sec;
+                }
 
 				$("#tooltip").html(item.series.label + " ás " + day + "/ "+month+"/"+year+"  "+hour+":"+min+":"+sec+" = " + y)
 				.css({top: item.pageY+5, left: item.pageX+5})

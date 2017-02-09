@@ -101,7 +101,20 @@ class GraficoGeradorModel extends MainModel
 
                 // Adiciona o final da query
                 // $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao > '{$dataIni}' AND dt_criacao < '{$dataFim}' LIMIT 300";
-                $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim} '";
+                $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim} ' LIMIT 4360";
+                //$query .="FROM ( SELECT @row := @row +1 AS rownum, dt_criacao FROM (SELECT @row :=0) r, tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}') ) ranked WHERE rownum %30 =1";
+
+                /*
+                    Query para filtrar os dados para a cada meia horas
+                    FROM (
+                        SELECT
+                            @row := @row +1 AS rownum, dt_criacao
+                        FROM (
+                            SELECT @row :=0) r, tb_dados WHERE num_sim = '1' AND dt_criacao BETWEEN '2017-02-01' AND '2017-02-09'
+                        ) ranked
+                    WHERE rownum %30 =1
+                */
+
 
                 //var_dump( $opc, $query);
 
