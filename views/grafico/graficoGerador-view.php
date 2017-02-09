@@ -13,69 +13,6 @@ $dadosCliente       = $dadosCliente['dados'][0];
 ?>
 
 <script>
-    // $(function () {
-    //     $('#container').highcharts({
-    //         title: {
-    //             text: 'Grafico de tempo',
-    //             x: -20 //center
-    //         },
-    //         subtitle: {
-    //             text: '',
-    //             x: -20
-    //         },
-    //         xAxis: {
-    //             categories:
-    //             <?php
-    //                 echo $modelo->respDate;
-    //             ?>
-    //         },
-    //         yAxis: {
-    //             title: {
-    //                 text: ''
-    //             },
-    //             plotLines: [{
-    //                 value: 0,
-    //                 width: 1,
-    //                 color: '#808080'
-    //             }]
-    //         },
-    //
-    //         tooltip: {
-    //             valueSuffix: '(V)'
-    //         },
-    //         legend: {
-    //             layout: 'vertical',
-    //             align: 'right',
-    //             verticalAlign: 'middle',
-    //             borderWidth: 1
-    //         },
-    //             plotOptions: {
-    //             spline: {
-    //                 lineWidth: 2,
-    //                 states: {
-    //                     hover: {
-    //                         lineWidth: 10
-    //                     }
-    //                 },
-    //                 marker: {
-    //                     enabled: true
-    //                 }
-    //             }
-    //         },
-    //         series: [
-    //             <?php
-    //                 $guarda = "";
-    //                 foreach($modelo->respData as $row)
-    //                 {
-    //                     $guarda .= $row[0].",";
-    //                 }
-    //                 $guarda .= ".";
-    //                 $guarda = str_replace(",.","",$guarda);
-    //                 echo $guarda;
-    //             ?>
-    //         ]
-    //     });
-    // });
 
     /*
     * REFORMULAÇÂO DO GRÁFICO
@@ -86,12 +23,16 @@ $dadosCliente       = $dadosCliente['dados'][0];
         // var_dump($modelo->respData);
         //
         // var_dump($modelo->respDate);
+        //
+        //var_dump($modelo->respRawDate);
 
         $parametrosSelecionados = $modelo->respData;
 
         $dataMedida = str_replace("[",",",$modelo->respDate);
         $dataMedida = str_replace("]",",",$dataMedida);
         $dataMedida = explode(",",$dataMedida);
+        //$dataMedida = $modelo->respData;
+
 
         $testeJon  =    $modelo->respData;
 
@@ -164,8 +105,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                 mode : "time"
 			},
 			selection: {
-				mode: "x",
-                timezone: "America/Brasilia"
+				mode: "x"
 			},
 			grid: {
                 hoverable: true,
@@ -203,15 +143,26 @@ $dadosCliente       = $dadosCliente['dados'][0];
                         $i     = 0;
                         $j     = 0;
                         $serie = "[";
+
+
+
                         foreach ($dataAmostra as $valorX) {
                             $i++;
                             $j++;
-                            if($j == 60){
-                                $serie .= "[".$dataMedida[$i].",".$valorX."],";
-                                $j = 0;
-                            }
+                            // if($j == 60){
+                            //     $serie .= "[".$dataMedida[$i].",".$valorX."],";
+                            //     $j = 0;
+                            // }
+                            $dataTemp = gmdate("d-m-Y H:i:s", $modelo->respRawDate[($i - 1)]);
+                            //
+                            $datahora = explode(" ", $dataTemp);
+                            $dias     = explode("-", $datahora[0]);
+                            $horas    = explode(":", $datahora[1]);
+                            // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
 
-
+                             $serie .= "[ Date.UTC(".$dias[2].", ".$dias[1].", ".$dias[0].", ".$horas[0].", ".$horas[1].", ".$horas[2]."),".$valorX."],";
+                             //var_dump(gmdate("d-m-Y H:i:s", $dataMedida[$i]));
+                             //var_dump($dataMedida[$i]);
                         }
                         $serie .= "]";
 
@@ -239,10 +190,32 @@ $dadosCliente       = $dadosCliente['dados'][0];
         $("#placeholder").bind("plothover", function (event, pos, item) {
 
 			if (item) {
-				var x = item.datapoint[0].toFixed(2),
+				var x = item.datapoint[0],
 					y = item.datapoint[1].toFixed(2);
 
-				$("#tooltip").html(item.series.label + " ás " + getFormattedDate(x) + " = " + y)
+                var date = new Date(x);
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                if(month < 10){
+                    month = "0"+month;
+                }
+
+                var day = date.getDate();
+                if(day < 10){
+                    day = "0"+day;
+                }
+
+                var hour = date.getHours() + 3;
+                var min = date.getMinutes();
+                if(min < 10){
+                    min = "0"+min;
+                }
+                var sec = date.getSeconds();
+                if(sec < 10){
+                    sec = "0"+sec;
+                }
+
+				$("#tooltip").html(item.series.label + " ás " + day + "/ "+month+"/"+year+"  "+hour+":"+min+":"+sec+" = " + y)
 				.css({top: item.pageY+5, left: item.pageX+5})
 				.fadeIn(200);
 			} else {
@@ -279,10 +252,23 @@ $dadosCliente       = $dadosCliente['dados'][0];
                             /*
                             * Devido ao fato de exitir registros no BD a cada 30 segundos, foi implementado esse código para exibir no gráfico somente leituras a cada 1 min
                             */
-                            if($j == 60){
-                                $serie .= "[".$dataMedida[$i].",".$valorX."],";
-                                $j = 0;
-                            }
+                            // if($j == 60){
+                            //     $serie .= "[".$dataMedida[$i].",".$valorX."],";
+                            //     $j = 0;
+                            // }
+
+                            $dataTemp = gmdate("d-m-Y H:i:s", $modelo->respRawDate[($i - 1)]);
+                            //
+                            $datahora = explode(" ", $dataTemp);
+                            $dias     = explode("-", $datahora[0]);
+                            $horas    = explode(":", $datahora[1]);
+                            // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
+
+                            $serie .= "[ Date.UTC(".$dias[2].", ".$dias[1].", ".$dias[0].", ".$horas[0].", ".$horas[1].", ".$horas[2]."),".$valorX."],";
+
+
+                            //$serie .= "[".$dataMedida[$i].",".$valorX."],";
+
                             //$valorX
 
                         }
@@ -361,7 +347,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
 <?php
 
-    $infoCli = $modelo->buscaDadosClinte ($this->parametros[0]);
+    $infoCli = $modelo->buscaDadosClinte($this->parametros[0]);
 
 ?>
 
@@ -421,183 +407,3 @@ $dadosCliente       = $dadosCliente['dados'][0];
      ?>
 
 </div>
-
-<div class="row">
-
-    <h3>Teste de Canvas JS</h3>
-    <div class="col-md-12">
-
-        <div id="caixaGrafico" style="width:100%;height:300px;">
-
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<?php
-
-    //var_dump($modelo->respDate);
-    //var_dump($modelo->respData);
-
-    //CARREGAR TODAS AS DATAS DO PERIODO SELECIONADO
-    //var_dump($modelo->respRawDate);
-    $dataUnix = $modelo->respRawDate;
-
-    $j     = 0;
-    $cores    = array('#4d4dff','#b366ff','#ff80df',' #ff6666','#ffb366','#ffff1a','#a6ff4d','#33ff33','#1aff66','#66d9ff',' #6666cc','#862d86', '#993366');
-
-    $serie = "";
-    //PARAMETROS SELECIONADOS
-    $testeJon  =    $modelo->respData;
-
-        foreach ($testeJon as $jon) {
-
-            //INICIA O TRATAMENTO DOS PARAMETROS PASSADOS PELO FORMULARIO
-            $amostra = explode("data:", $jon[0]);
-
-            $nomeSerie = $amostra[0];
-
-            $nomeSerie = str_replace("{name:'"," ",$nomeSerie);
-            $nomeSerie = str_replace("',"," ",$nomeSerie);
-
-            $amostra = str_replace("]"," ",$amostra[1]);
-            $amostra = str_replace("["," ",$amostra);
-            $amostra = str_replace("}"," ",$amostra);
-
-            $dataAmostra = explode(",",$amostra);
-
-            //echo sizeof($dataAmostra)." ".sizeof($dataUnix)." <br />";
-            //Inicia a montagem da série
-            $i     = 0;
-
-
-            $serie .= "{";
-                $serie .= 'type: "line",';
-                $serie .= 'showInLegend: true,';
-                $serie .= 'name: "'.$nomeSerie.'",';
-                $serie .= 'color: "'.$cores[$j].'",';
-                $serie .= 'lineThickness: 2,';
-                $serie .= 'dataPoints: [';
-
-                foreach ($dataUnix as $unix){
-                //
-                    $dataTemp = gmdate("d-m-Y H:i:s", $dataUnix[$i]);
-
-                    $serie .= '{ x: "'.$dataTemp.'", y: 310},';
-                //
-                //     $i++;
-                    //$serie .= '{ x: new Date(2010, 0, 3), y: 510 },';
-                }
-                //$serie .= '{ x: '.gmdate("d-m-Y H:i:s", $dataUnix[$i - 1]).', y: "0"}';
-
-                $serie .= ']';
-            $serie .= "},";
-
-            $j++;
-        }
-
-        //var_dump($serie);
-
-?>
-
-<script type="text/javascript">
-window.onload = function () {
-    var chart = new CanvasJS.Chart("caixaGrafico", {
-        zoomEnabled: true,
-        zoomType: "x",
-        title:{
-          text: "Enable Zooming on X & Y Axis"
-        },
-        animationEnabled: true,
-        axisX: {
-            gridColor: "Silver",
-            tickColor: "silver",
-            valueFormatString: "DD/MMM"
-        },
-        toolTip: {
-            shared: true
-        },
-        theme: "theme2",
-        axisY: {
-            gridColor: "Silver",
-            tickColor: "silver"
-        },
-        legend: {
-            verticalAlign: "center",
-            horizontalAlign: "right"
-        },
-        data: [<?php echo $serie; ?>
-        ],
-        legend: {
-            cursor: "pointer",
-            itemclick: function (e) {
-                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                    e.dataSeries.visible = false;
-                }
-                else {
-                    e.dataSeries.visible = true;
-                }
-                // chart.render();
-            }
-        }
-    });
-
-    chart.render();
-}
-
-
-
-</script>
-
-<?php
-
-
-    // TESTE DO GRÁFICO COM MULTIPLAS LINHAS
-
-
-
-
-
-    // foreach ($dataUnix as $unix) {
-    //
-    //     $f++;
-    //     //echo gmdate("d-m-Y H:i:s", $unix) ."<br />";
-    // }
-    // echo $f;
-
-    // foreach ($testeJon as $jon) {
-    //
-    //     $amostra = explode("data:", $jon[0]);
-    //
-    //     $nomeSerie = $amostra[0];
-    //
-    //     $nomeSerie = str_replace("{name:'"," ",$nomeSerie);
-    //     $nomeSerie = str_replace("',"," ",$nomeSerie);
-    //
-    //     $amostra = str_replace("]"," ",$amostra[1]);
-    //     $amostra = str_replace("["," ",$amostra);
-    //
-    //     $dataAmostra = explode(",",$amostra);
-    //
-    //     //Inicia a montagem da série
-    //     $i     = 0;
-    //     $serie = "[";
-    //     foreach ($dataAmostra as $valorX) {
-    //         $i++;
-    //         $serie .= "[".$valorX.",".$dataMedida[$i]."]";
-    //
-    //     }
-    //     $serie .= "]";
-    //
-    //     // var_dump($serie);
-    //     // var_dump($nomeSerie);
-    // }
-
-
-    //var_dump($dataMedida);
-
-
- ?>
