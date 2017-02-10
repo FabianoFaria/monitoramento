@@ -39,13 +39,14 @@
         break;
     }
 
+    $usuarioLogado = $_SESSION['userdata']['firstname']." ".$_SESSION['userdata']['secondname'];
 
 ?>
 
     <script type="text/javascript">
         // gerenciador de link
         var menu = document.getElementById('listadir');
-        menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a>';
+        menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Bem vindo : <?php echo $usuarioLogado; ?></a>';
     </script>
 
     <?php
@@ -94,14 +95,14 @@
 
     <!-- MENSAGEM DE BOAS VINDAS -->
 
-    <div class="row">
-        <div class="col-md-8 barraBemvindo">
+    <!-- <div class="row">
+        <div class="col-md-8 barraBemvindo"> -->
             <!-- Titulo pagina -->
-            <label class="page-header">
-                <h4>Bem vindo, <?php echo $_SESSION['userdata']['firstname']." ".$_SESSION['userdata']['secondname']; ?></h4>
-            </label>
-        </div>
-        <div class="col-md-4 pull-right">
+            <!-- <label class="page-header">
+                <h4>Bem vindo, <?php// echo $_SESSION['userdata']['firstname']." ".$_SESSION['userdata']['secondname']; ?></h4>
+            </label> -->
+        <!-- </div>
+        <div class="col-md-4 pull-right"> -->
             <!-- <div class="panel panel-info">
                 <div class="panel-heading">
                     <i class="fa fa-clock-o  fa-fw"></i> Última atualização
@@ -114,8 +115,8 @@
                     </p>
                 </div>
             </div> -->
-        </div>
-    </div>
+        <!-- </div>
+    </div> -->
 
     <?php
 
@@ -146,11 +147,46 @@
     ?>
 
     <!-- GRÁFICO DOS ÚLTIMOS ALERTAS -->
+
+    <div class="row">
+        <div class="col-md-8 barraBemvindo">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                      <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Status dos alertas
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i>Novo</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p><i class='fa fa-exclamation-triangle  fa-2x' style='color:orange'></i>Visualizado</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p><i class='fa fa-exclamation-triangle  fa-2x' style='color:yellow'></i>Em tratamento</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p><i class='fa fa-exclamation-triangle  fa-2x' style='color:green'></i>Solucionado</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <!-- /.panel -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> Últimos registros de alarmes
+                <i class="fa fa-bar-chart-o fa-fw"></i> Registros de alarmes ativos
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -191,7 +227,7 @@
                                                             echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:yellow'></i> <p> Em tratamento</p>";
                                                         break;
                                                         case '4':
-                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:gray'></i> <p> Solucionado</p>";
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:green'></i> <p> Solucionado</p>";
                                                         break;
 
                                                         default:

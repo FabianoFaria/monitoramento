@@ -9,6 +9,10 @@
                 <title>Eficaz System - Monitoramento |<?php echo $this->title;?></title>
 	</head>
 
+        <!-- FAVICON -->
+        <link rel="shortcut icon" href="<?php echo HOME_URI; ?>/views/_images/favicon.ico">
+        <link rel="apple-touch-icon" href="<?php echo HOME_URI; ?>/views/_images/apple-icon.png">
+
         <!-- Font Files -->
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Gudea:400,700' rel='stylesheet' type='text/css'>
@@ -40,7 +44,7 @@
 
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.validate.js"></script>
         <script src="<?php echo HOME_URI; ?>/views/_js/additional-methods.js"></script>
-        
+
         <!-- Jquery UI CSS -->
         <link rel="stylesheet" type="text/css" href="<?php echo HOME_URI; ?>/views/_css/jquery.css">
 
