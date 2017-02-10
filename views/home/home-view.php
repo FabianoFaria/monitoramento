@@ -155,7 +155,7 @@
                     <div class="panel-heading" role="tab" id="headingOne">
                       <h4 class="panel-title">
                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Status dos alertas
+                            Status dos alertas  <i class="fa fa-caret-down fa-1x"></i>
                         </a>
                       </h4>
                     </div>
