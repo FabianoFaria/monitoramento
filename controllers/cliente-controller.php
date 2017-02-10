@@ -266,6 +266,21 @@
 
     }
 
+    /*
+    * FUNÇÃO PARA REMOVER CLIENTE DO SISTEMA
+    */
+    public function excluirClienteJson(){
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $clienteModelo          = $this->load_model('cliente/cliente-model');
+
+        $clienteRemovidoJSON    = $clienteModelo->excluirClienteViaJson($_POST['idCliente']);
+
+        if($clienteRemovidoJSON['status']){
+            exit(json_encode(array('status' => true)));
+        }else{
+            exit(json_encode(array('status' => false)));
+        }
+    }
  }
 
  ?>
