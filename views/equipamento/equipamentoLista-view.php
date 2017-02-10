@@ -90,9 +90,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="<?php echo HOME_URI; ?>/usuario/removerUsuario/<?php echo $equipamento['id']; ?>" class="link-tabela-moni">
-                                            <i class="fa  fa-times fa-lg"></i>
-                                        </a>
+                                        <button class="btn btnRemoveEquip" value="<?php echo $equipamento['id']; ?>"><i class="fa  fa-times fa-lg"></i></button>
                                     </td>
                                 </tr>
                             <?php

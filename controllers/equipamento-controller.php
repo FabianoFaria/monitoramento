@@ -186,6 +186,22 @@ class EquipamentoController extends MainController
             exit(json_encode(array('status' => $editarEquip['status'] )));
         }
      }
+
+     /*
+     * FUNÇÃO PARA EXCLUIR EQUIPAMENTO
+     */
+     public function removerEquipamentoJson(){
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+        $equipModelo    = $this->load_model('equipamento/equipamento-model');
+
+        $removerEquip   = $equipModelo->removerEquipamentoViaJson($_POST['idEquipamento']);
+
+        if($removerEquip){
+            exit(json_encode(array('status' => $removerEquip['status'] )));
+        }else{
+            exit(json_encode(array('status' => $removerEquip['status'] )));
+        }
+     }
 }
 
 ?>
