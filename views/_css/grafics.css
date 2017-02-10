@@ -28,7 +28,8 @@
 /* label que mostra o valor */
 .valorVindo,
 .situacaoLigado,
-.situacaoDesligado {
+.situacaoDesligado,
+.situacaoAtencao {
   width: 100%;
   position: relative;
   text-align: center;
@@ -55,6 +56,14 @@
   font-weight: 300;
   background-color: #c94e50;
 }
+.situacaoAtencao {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 300;
+    background-color: #DDDF0D;
+}
+
 /* Configuracao do fundo */
 .fundo-geraGrafico {
   background-color: #7c7f8e;

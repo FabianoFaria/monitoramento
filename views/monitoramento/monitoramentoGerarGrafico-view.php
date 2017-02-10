@@ -338,23 +338,58 @@ else
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
                                          $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoDesligado');
                                          document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Desligado';
+
+                                         console.log(leftVal + 'Desligado');
+                                     }
+                                     else if(leftVal < <?php echo $retorno[0+$mult]; ?>){
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoAtencao');
+                                         $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoDesligado well-blink');
+                                         document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Falha!';
+
+                                         console.log(leftVal + 'Falhando');
+                                     }
+                                     else if (leftVal < <?php echo $retorno[1+$mult]; ?>) {
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoDesligado');
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('well-blink');
+                                         $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoAtencao');
+                                         document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Atenção';
+
                                      }
                                      else if (leftVal > <?php echo $retorno[4+$mult]; ?>) {
                                          leftVal = <?php echo $retorno[4+$mult]; ?> // alterar para panes
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoAtencao');
+                                         $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoDesligado');
+                                         document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Crítico!';
+
+                                         console.log(leftVal + 'Ligado !!!!!'+ <?php echo $retorno[0+$mult]; ?>);
+
+                                     }
+                                     else if (leftVal > <?php echo $retorno[2+$mult]; ?>){
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoDesligado');
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('well-blink');
+                                         $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoAtencao');
+                                         document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Atenção';
+                                     }
+
+                                     else {
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoDesligado');
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('well-blink');
+                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoAtencao');
                                          $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoLigado');
                                          document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Ligado';
-                                     } else {
-                                         $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoDesligado');
-                                         $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoLigado');
-                                         document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Ligado';
+
+                                         console.log(leftVal + 'Ligado Ok!');
                                      }
 
                                      left.update(leftVal, false);
                                      document.getElementById('<?php echo $nomeDivBat.$a;?>').innerHTML = leftVal + " ( v )";
                                      chart.redraw();
 
-                                     console.log(leftVal);
+                                     //console.log(leftVal);
                                  }
                              }, 5000);
                          });
@@ -402,70 +437,136 @@ else
                     <div class="row">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <h4>Tensão</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>Tensão</h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>Corrente</h4>
+                                    </div>
+                                </div>
                             </div>
                             <div class="panel-body">
-                                <!-- ENTRADA -->
-                                <div class="col-lg-3">
-                                    <h4>Entrada</h4>
-                                    <div class="row">
-                                        <!-- Entrada R/S -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                            <div id="containerEntrada1" style="width: 100%; margin: 0 auto;"></div>
-                                            <label id="bat_e1" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-ent1" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Fim entrada R/S -->
-                                    </div>
-                                    <div class="row">
-                                        <!-- Entrada R/S -->
-                                        <div class="ol-md-12 col-sm-12 col-xs-12">
-                                            <div id="containerEntrada2" style="width: 100%; margin: 0 auto;"></div>
-                                            <label id="bat_e2" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-ent2" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Fim entrada R/S -->
-                                    </div>
-                                    <div class="row">
-                                        <!-- Entrada R/S -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div id="containerEntrada3" style="width: 100%; margin: 0 auto;"></div>
-                                            <label id="bat_e3" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-ent3" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Fim entrada R/S -->
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="well">
+
+                                            <div class="row">
+                                                <!-- ENTRADA -->
+                                                <div class="col-lg-6">
+                                                    <h4>Entrada</h4>
+                                                    <div class="row">
+                                                        <!-- Entrada R/S -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                            <div id="containerEntrada1" style="width: 100%; margin: 0 auto;"></div>
+                                                            <label id="bat_e1" class="valorVindo">0 ( v )</label>
+                                                            <div id="sit-ent1" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Fim entrada R/S -->
+                                                    </div>
+                                                    <div class="row">
+                                                        <!-- Entrada R/S -->
+                                                        <div class="ol-md-12 col-sm-12 col-xs-12">
+                                                            <div id="containerEntrada2" style="width: 100%; margin: 0 auto;"></div>
+                                                            <label id="bat_e2" class="valorVindo">0 ( v )</label>
+                                                            <div id="sit-ent2" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Fim entrada R/S -->
+                                                    </div>
+                                                    <div class="row">
+                                                        <!-- Entrada R/S -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div id="containerEntrada3" style="width: 100%; margin: 0 auto;"></div>
+                                                            <label id="bat_e3" class="valorVindo">0 ( v )</label>
+                                                            <div id="sit-ent3" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Fim entrada R/S -->
+                                                    </div>
+
+                                                </div>
+                                                <!-- SAÍDA -->
+                                                <div class="col-lg-6">
+                                                    <h4>Saída</h4>
+                                                    <div class="row">
+                                                        <!-- Saida S/T -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div id="containerTensaSaida1" style="width:100%; margin: 0 auto"></div>
+                                                            <label id="bat_s1" class="valorVindo">0 ( v )</label>
+                                                            <div id="sit-sai1" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Saida S/T -->
+                                                    </div>
+                                                    <div class="row">
+                                                        <!-- Saida S/T -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div id="containerTensaSaida2" style="width:100%; margin: 0 auto"></div>
+                                                            <label id="bat_s2" class="valorVindo">0 ( v )</label>
+                                                            <div id="sit-sai2" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Saida S/T -->
+                                                    </div>
+                                                    <div class="row">
+                                                        <!-- Saida S/T -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div id="containerTensaSaida3" style="width:100%; margin: 0 auto"></div>
+                                                            <label id="bat_s3" class="valorVindo">0 ( v )</label>
+                                                            <div id="sit-sai3" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Saida S/T -->
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                </div>
-                                <!-- SAÍDA -->
-                                <div class="col-lg-3">
-                                    <h4>Saída</h4>
-                                    <div class="row">
-                                        <!-- Saida S/T -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div id="containerTensaSaida1" style="width:100%; margin: 0 auto"></div>
-                                            <label id="bat_s1" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-sai1" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Saida S/T -->
-                                    </div>
-                                    <div class="row">
-                                        <!-- Saida S/T -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div id="containerTensaSaida2" style="width:100%; margin: 0 auto"></div>
-                                            <label id="bat_s2" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-sai2" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Saida S/T -->
-                                    </div>
-                                    <div class="row">
-                                        <!-- Saida S/T -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div id="containerTensaSaida3" style="width:100%; margin: 0 auto"></div>
-                                            <label id="bat_s3" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-sai3" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Saida S/T -->
+                                    <div class="col-md-6">
+                                        <div class="well">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <h4>Entrada</h4>
+                                                    <div class="row">
+                                                        <!-- Entrada Corrente -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                            <div id="containerEntradaCorente1" style="width: 100%; margin: 0 auto;"></div>
+                                                            <label id="cor_e1" class="valorVindo">0 ( v )</label>
+                                                            <div id="sit-cor-ent1" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Fim entrada Corrente -->
+                                                        <!-- Entrada Corrente -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                            <div id="containerEntradaCorente2" style="width: 100%; margin: 0 auto;"></div>
+                                                            <label id="cor_e2" class="valorVindo">0 ( v )</label>
+                                                            <div id="sit-cor-ent2" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Fim entrada Corrente -->
+                                                        <!-- Entrada Corrente -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                            <div id="containerEntradaCorente3" style="width: 100%; margin: 0 auto;"></div>
+                                                            <label id="cor_e3" class="valorVindo">0 ( v )</label>
+                                                            <div id="sit-cor-ent3" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Fim entrada Corrente -->
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <h4>Saída</h4>
+                                                    <!-- Saida S/T -->
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div id="containerCorrentSaida1" style="width:100%; margin: 0 auto"></div>
+                                                        <label id="cor_s1" class="valorVindo">0 ( v )</label>
+                                                        <div id="sit-cor-sai1" class="situacaoDesligado">Carregando...</div>
+                                                    </div><!-- Saida S/T -->
+                                                    <!-- Saida S/T -->
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div id="containerCorrentSaida2" style="width:100%; margin: 0 auto"></div>
+                                                        <label id="cor_s2" class="valorVindo">0 ( v )</label>
+                                                        <div id="sit-cor-sai2" class="situacaoDesligado">Carregando...</div>
+                                                    </div><!-- Saida S/T -->
+                                                    <!-- Saida S/T -->
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div id="containerCorrentSaida3" style="width:100%; margin: 0 auto"></div>
+                                                        <label id="cor_s3" class="valorVindo">0 ( v )</label>
+                                                        <div id="sit-cor-sai3" class="situacaoDesligado">Carregando...</div>
+                                                    </div><!-- Saida S/T -->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                </div>
-
-                                <div class="col-lg-3">
-                                    <h4>Potência</h4>
                                 </div>
 
                             </div>
@@ -475,55 +576,40 @@ else
                     <div class="row">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <h4>Corrente</h4>
+                                <h4>Potência</h4>
                             </div>
                             <div class="panel-body">
-                                <div class="col-lg-3">
-                                    <h4>Corrente</h4>
-                                    <div class="row">
-                                        <!-- Entrada Corrente -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                            <div id="containerEntradaCorente1" style="width: 100%; margin: 0 auto;"></div>
-                                            <label id="cor_e1" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-cor-ent1" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Fim entrada Corrente -->
-                                        <!-- Entrada Corrente -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                            <div id="containerEntradaCorente2" style="width: 100%; margin: 0 auto;"></div>
-                                            <label id="cor_e2" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-cor-ent2" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Fim entrada Corrente -->
-                                        <!-- Entrada Corrente -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                            <div id="containerEntradaCorente3" style="width: 100%; margin: 0 auto;"></div>
-                                            <label id="cor_e3" class="valorVindo">0 ( v )</label>
-                                            <div id="sit-cor-ent3" class="situacaoDesligado">Carregando...</div>
-                                        </div><!-- Fim entrada Corrente -->
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="well">
+                                            <div class="row">
+
+                                                <div class="col-lg-12">
+                                                    <h4>Ativa</h4>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div id="containerPotenciaAtiva" style="width:100%; margin: 0 auto"></div>
+                                                        <label id="cor_potA" class="valorVindo">0 ( W )</label>
+                                                        <div id="sit-cor-potA" class="situacaoDesligado">...</div>
+                                                    </div><!-- Saida S/T -->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <h4>Corrente</h4>
-                                    <!-- Saida S/T -->
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div id="containerCorrentSaida1" style="width:100%; margin: 0 auto"></div>
-                                        <label id="cor_s1" class="valorVindo">0 ( v )</label>
-                                        <div id="sit-cor-sai1" class="situacaoDesligado">Carregando...</div>
-                                    </div><!-- Saida S/T -->
-                                    <!-- Saida S/T -->
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div id="containerCorrentSaida2" style="width:100%; margin: 0 auto"></div>
-                                        <label id="cor_s2" class="valorVindo">0 ( v )</label>
-                                        <div id="sit-cor-sai2" class="situacaoDesligado">Carregando...</div>
-                                    </div><!-- Saida S/T -->
-                                    <!-- Saida S/T -->
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div id="containerCorrentSaida3" style="width:100%; margin: 0 auto"></div>
-                                        <label id="cor_s3" class="valorVindo">0 ( v )</label>
-                                        <div id="sit-cor-sai3" class="situacaoDesligado">Carregando...</div>
-                                    </div><!-- Saida S/T -->
-                                </div>
-                                <div class="col-lg-3">
-                                    <h4>Potência</h4>
+                                    <div class="col-lg-4">
+                                        <!-- <div class="well">
+                                            <div class="row">
+                                                <h4>Reativa</h4>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- <div class="well">
+                                            <div class="row">
+                                                <h4>Aparente</h4>
+                                            </div>
+                                        </div> -->
+                                    </div>
                                 </div>
 
                             </div>
@@ -594,7 +680,7 @@ else
 
                                         <script type="application/javascript">
                                             var valorBat = 0;
-                                            var maxBat = 400;
+                                            var maxBat = 420;
 
                                             setInterval(function(){  //, colocando '$idSim' no lugar de '$nova_url[0]'
                                                 var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=h&callback=?";
@@ -763,7 +849,7 @@ else
                                     },5000);
 
 
-                                    //Funçaõ para recolher os dados do segundo medidor
+                                    //MEDIDOR DE TEMPERATURA 2
                                     setInterval(function(){
                                         //URL para chamar a função de medição de temperatura
                                         var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncTemperatura.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=r&callback=?";
@@ -790,7 +876,6 @@ else
                                         });
                                     },5000);
 
-
                                 </script>
 
                                 <div class="col-lg-3">
@@ -809,6 +894,14 @@ else
                                         <label id="cor_temp2" class="valorVindo">0 ( c° )</label>
                                         <div id="sit-cor-temp2" class="situacaoDesligado">Carregando...</div>
                                     </div><!-- Saida S/T -->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!-- <div class="demo-container">
+                            			<div id="placeholder" class="demo-placeholder" style="height:300px;"></div>
+                            		</div>
+
+                                    <p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p> -->
+
                                 </div>
                             </div>
                         </div>
