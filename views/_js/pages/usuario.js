@@ -76,7 +76,7 @@ $().ready(function() {
             var idUser          = $('#txt_userId').val();
 
             $.ajax({
-                url: urlP+"/usuario/atualizarUsuarioManual",
+                url: urlP+"/eficazmonitor/usuario/atualizarUsuarioManual",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -220,7 +220,7 @@ $().ready(function() {
             var acesso      = $('#acessoCliente').val();
 
             $.ajax({
-                url: urlP+"/usuario/registraUsuarioPorSistema",
+                url: urlP+"/eficazmonitor/usuario/registraUsuarioPorSistema",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -267,7 +267,7 @@ $().ready(function() {
 
         //Efetua o carregamento dos dados da filial
         $.ajax({
-            url: urlP+"/usuario/carregarDadosUsuariosJson",
+            url: urlP+"/eficazmonitor/usuario/carregarDadosUsuariosJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',
@@ -399,7 +399,7 @@ $().ready(function() {
             var acesso      = $('#acessoUsuarioEdit').val();
 
             $.ajax({
-                url: urlP+"/usuario/atualizarUsuarioPorSistema",
+                url: urlP+"/eficazmonitor/usuario/atualizarUsuarioPorSistema",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -462,7 +462,7 @@ $().ready(function() {
 
                 //Efetua o carregamento dos dados da filial
                 $.ajax({
-                    url: urlP+"/usuario/excluirUsuariosJson",
+                    url: urlP+"/eficazmonitor/usuario/excluirUsuariosJson",
                     secureuri: false,
                     type : "POST",
                     dataType: 'json',
