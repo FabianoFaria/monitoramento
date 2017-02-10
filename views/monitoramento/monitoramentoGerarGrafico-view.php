@@ -52,7 +52,7 @@ if (empty($retorno) && isset($retorno))
     // Apresenta mensagem e link informando que nao ha resultado
     echo "<div class='mensagem-semvalor'>
             <label class='mensagem-texto'>Verifique se os parametros est&atilde;o configurados.<br>
-                <a href='".HOME_URI."/monitoramento/' class='link-mensagem'>Clique aqui para voltar</a>
+                <a href='".HOME_URI."/configuracao/configurarEquipamentoCliente/".$this->parametros[0]."' class='link-mensagem'>Clique aqui para voltar</a>
             </label></div>";
 }
 else
@@ -630,7 +630,7 @@ else
                                         <div id="wellCargabateria" class="well well-normal-status" style="margin-top:30px;height:100px;">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <span class="pull-left text-muted">0</span><span class="pull-right text-muted">400</span>
+                                                    <span class="pull-left text-muted">0</span><span class="pull-right text-muted">420</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -685,14 +685,15 @@ else
                                             setInterval(function(){  //, colocando '$idSim' no lugar de '$nova_url[0]'
                                                 var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=h&callback=?";
                                                 $.getJSON(url,  function(data) {
-                                                    valorBat = parseFloat(data[0]);
-                                                    var calcula = (valorBat*100)/maxBat;
+                                                    valorBat        = parseFloat(data[0]);
+                                                    var calcula     = (valorBat*100)/maxBat;
+                                                    var labelCarga  = parseFloat(calcula.toFixed(2));
                                                     console.log(calcula);
                                                     // document.getElementById('div-legenda').innerHTML = valorBat;
                                                     // document.getElementById('div-cargaBat').style.width = calcula+"%";
 
                                                     //Estilização do novo gráfico de bateria
-                                                    document.getElementById('cargaBateriaPorcentagem').innerHTML = calcula+"%";
+                                                    document.getElementById('cargaBateriaPorcentagem').innerHTML = labelCarga+"%";
                                                     document.getElementById('cargaUtilGraficoBateria').style.width = calcula+"%";
                                                     //Se a bateria chegar a menor de 15% muda o estilo do well
                                                     if(valorBat < <?php echo $bateriaBaixo; ?>){
