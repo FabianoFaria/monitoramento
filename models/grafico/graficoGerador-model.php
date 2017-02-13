@@ -99,13 +99,19 @@ class GraficoGeradorModel extends MainModel
                 $dataIni  = date( "Y-m-d H:i:s", strtotime($opc[13]) );
                 $dataFim  = date( "Y-m-d H:i:s", strtotime($opc[14]) );
 
-                $diff       = date_diff( date_create($opc[13]),date_create($opc[14]));
-                $diasDiff   = $diff->format("%R%a days");
+                //$diff       = $this->date_diff_bkp( date_create($opc[13]),date_create($opc[14]));
+                // $diasDiff   = $diff->format("%R%a days");
+                $datetime1 = date_create($opc[13]);
+                $datetime2 = date_create($opc[14]);
+                $intervalInDays = ($datetime2->format("U") - $datetime1->format("U"))/(3600 * 24);
+
+                $diasDiff   = $intervalInDays;
+
 
 
 
                 // $diferencaData = $diff;
-  
+
                 // Adiciona o final da query
                 // $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao > '{$dataIni}' AND dt_criacao < '{$dataFim}' LIMIT 300";
                 //$query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim} ' LIMIT 4360";
@@ -117,7 +123,7 @@ class GraficoGeradorModel extends MainModel
 
                 */
                  /*
-                  
+
                     MONTAR A NOVA QUERY A PARTIR DAQUI...
 
                 */
@@ -143,7 +149,7 @@ class GraficoGeradorModel extends MainModel
                     break;
                     case $diasDiff > 3 :
                         //MAIOR QUE TRÊS DIAS, MOSTRA A MEDIDA DE CADA HORA
-                       
+
                         //$query .=" MINUTE(dt_criacao) minut,";
                         //$query .=" DAY(dt_criacao) day,";
                         $query .=" HOUR(dt_criacao) hour,";
@@ -156,7 +162,7 @@ class GraficoGeradorModel extends MainModel
                     break;
                     default :
                         //ATÉ TRÊS DIAS, MOSTRA A CADA MINUTO
-  
+
                         $query .=" MINUTE(dt_criacao) minut,";
                         $query .=" DAY(dt_criacao) day,";
                         $query .=" HOUR(dt_criacao) hour,";
@@ -237,7 +243,7 @@ class GraficoGeradorModel extends MainModel
         $this->respData = $respData;
         $this->respDate = $respDate;
         $this->respRawDate = $respRawDate;
-        $this->respDiference = $diff;
+        $this->respDiference = $diasDiff;
     }
 
 
