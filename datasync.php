@@ -121,31 +121,31 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
         //var_dump($valoresEntrada);
 
         //TESTA OS VALORES DE ENTRADA
-        $statusB                = comparaParametrosEquipamento(($_POST['B']/10), $valoresEntrada, $idSimEquip, 'Tensão');
-        $statusC                = comparaParametrosEquipamento(($_POST['C']/10), $valoresEntrada, $idSimEquip, 'Tensão');
-        $statusD                = comparaParametrosEquipamento(($_POST['D']/10), $valoresEntrada, $idSimEquip, 'Tensão');
+        $statusB                = comparaParametrosEquipamento(($_POST['B']/10), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
+        $statusC                = comparaParametrosEquipamento(($_POST['C']/10), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
+        $statusD                = comparaParametrosEquipamento(($_POST['D']/10), $valoresEntrada, $idSimEquip, 'Tensão', 'd');
 
         $valoresSaida           = explode('|', $configuracaoSalva[2]);
         //TESTA OS VALORES DE SAÍDA
-        $statusE                = comparaParametrosEquipamento(($_POST['E']/10), $valoresSaida, $idSimEquip, 'Saída tensão');
-        $statusF                = comparaParametrosEquipamento(($_POST['F']/10), $valoresSaida, $idSimEquip, 'Saída tensão');
-        $statusG                = comparaParametrosEquipamento(($_POST['G']/10), $valoresSaida, $idSimEquip, 'Saída tensão');
+        $statusE                = comparaParametrosEquipamento(($_POST['E']/10), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
+        $statusF                = comparaParametrosEquipamento(($_POST['F']/10), $valoresSaida, $idSimEquip, 'Saída tensão', 'f');
+        $statusG                = comparaParametrosEquipamento(($_POST['G']/10), $valoresSaida, $idSimEquip, 'Saída tensão', 'g');
 
         $valoresBateria         = explode('|', $configuracaoSalva[3]);
         //TESTA OS VALORES DA BATERIA
-        $statusH                = comparaParametrosEquipamento($_POST['H'], $valoresBateria, $idSimEquip, 'Bateria');
+        $statusH                = comparaParametrosEquipamento($_POST['H'], $valoresBateria, $idSimEquip, 'Bateria', 'h');
 
         $valoresCorrente        = explode('|', $configuracaoSalva[4]);
         //TESTA OS VALORES DE CORRENTE
-        $statusI                = comparaParametrosEquipamento(($_POST['I']/10), $valoresCorrente, $idSimEquip, 'Corrente');
-        $statusJ                = comparaParametrosEquipamento(($_POST['J']/10), $valoresCorrente, $idSimEquip, 'Corrente');
-        $statusL                = comparaParametrosEquipamento(($_POST['L']/10), $valoresCorrente, $idSimEquip, 'Corrente');
+        $statusI                = comparaParametrosEquipamento(($_POST['I']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
+        $statusJ                = comparaParametrosEquipamento(($_POST['J']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'j');
+        $statusL                = comparaParametrosEquipamento(($_POST['L']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'l');
 
         $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
         //TESTA OS VALORES DE SAÍDA DE CORRENTE
-        $statusM                = comparaParametrosEquipamento(($_POST['M']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente');
-        $statusN                = comparaParametrosEquipamento(($_POST['N']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente');
-        $statusO                = comparaParametrosEquipamento(($_POST['O']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente');
+        $statusM                = comparaParametrosEquipamento(($_POST['M']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
+        $statusN                = comparaParametrosEquipamento(($_POST['N']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
+        $statusO                = comparaParametrosEquipamento(($_POST['O']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'o');
 
     }else{
         //var_dump($dados);
@@ -255,7 +255,7 @@ function trataValorDataSync($valor){
 /*
 * RECEBE A ARRAY COM OS PARAMETROS DE DETERMINADA ENTRADA DE TENSÃO VARIAVEL PARA COMPARAÇÃO
 */
-function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $ParametroVerificado){
+function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $ParametroVerificado, $pontoTabela){
 
     //var_dump($configuacoes);
 
@@ -271,7 +271,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
         //var_dump($alarmeExiste);
 
         if(!$alarmeExiste){
-            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 3, 2);
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 3, 2, $pontoTabela);
 
             /*
             * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
@@ -333,7 +333,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             //var_dump($alarmeExiste);
         if(!$alarmeExiste){
 
-            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 5, 1);
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 5, 1, $pontoTabela);
         }
 
         //echo "Alto !".$parametro." -- ".$configuacoes[3]." <br>";
@@ -348,7 +348,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             /*
             * GERAR ALARME
             */
-            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 2 ,2);
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 2 ,2, $pontoTabela);
 
             /*
             * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
@@ -398,7 +398,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             /*
             * GERAR ALARME
             */
-            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 4, 1);
+            gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 4, 1, $pontoTabela);
         }
 
         //echo "Baixo !".$parametro." ".$configuacoes[1]."<br>";
@@ -504,7 +504,7 @@ function verificarAlarmeExistente($idEquipSim, $tipoAlerta){
 /*
 * INICIA O PROCESSO DE REGISTRO DE ALARME
 */
-function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolado, $parametroAvaliado, $tipoAlarme, $nivelAlarme){
+function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolado, $parametroAvaliado, $tipoAlarme, $nivelAlarme, $pontoTabela){
 
     // Cria um objeto de da classe de conexao
     $connBase = new EficazDB;
