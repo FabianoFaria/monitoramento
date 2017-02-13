@@ -24,7 +24,7 @@
          public function listarCliente()
          {
              $query = "SELECT clie.id, clie.nome, clie.cidade, clie.ddd, clie.telefone, clie.status_ativo, clie.dt_criacao
-                        FROM tb_cliente clie";
+                        FROM tb_cliente clie WHERE clie.status_ativo = '1'";
              /* MONTA A RESULT */
              $result = $this->db->select($query);
 
@@ -54,7 +54,7 @@
         public function listarClienteUsuario($idCLiente)
         {
             $query = "SELECT clie.id, clie.nome, clie.cidade, clie.ddd, clie.telefone, clie.status_ativo, clie.dt_criacao
-                       FROM tb_cliente clie WHERE clie.id = '$idCLiente'";
+                       FROM tb_cliente clie WHERE clie.id = '$idCLiente' AND clie.status_ativo = '1'";
             /* MONTA A RESULT */
             $result = $this->db->select($query);
 
@@ -523,7 +523,7 @@
         }
 
         /*
-        * Função para listar clientes com ou sem contatos para receber alertas
+        * FUNÇÃO PARA LISTAR CLIENTES COM OU SEM CONTATOS PARA RECEBER ALERTAS
         */
 
         public function listarContatoAlarmesCliente(){
@@ -555,6 +555,30 @@
                   $array = array('status' => false, 'dados' => '');
             }else{
                  $array = array('status' => false, 'dados' => '');
+            }
+
+            return $array;
+        }
+
+        public function excluirClienteViaJson($idCliente){
+            // Coletar os dados do post
+            $id_clie   = $idCliente;
+
+            if(is_numeric($id_clie)){
+
+                $query = "UPDATE tb_cliente SET  status_ativo = '0' WHERE id = '$id_clie'";
+
+                /* monta result */
+                $result = $this->db->query($query);
+
+                if ($result){
+                  $array = array('status' => true);
+                }else{
+                  $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
             }
 
             return $array;

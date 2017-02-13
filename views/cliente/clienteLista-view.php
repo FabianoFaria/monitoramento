@@ -79,9 +79,10 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="<?php echo HOME_URI; ?>/cliente/removerCliente/<?php echo $cliente['id']; ?>" class="link-tabela-moni">
-                                                <i class="fa  fa-times fa-lg"></i>
-                                            </a>
+                                            <!-- <a href="<?php //echo HOME_URI; ?>/cliente/removerCliente/" class="link-tabela-moni">
+
+                                            </a> -->
+                                            <button class="btn btnRemoveClie" value="<?php echo $cliente['id']; ?>"><i class="fa  fa-times fa-lg"></i></button>
                                         </td>
                                     </tr>
                                 <?php

@@ -370,7 +370,7 @@ class EquipamentoModel extends MainModel
     }
 
     /*
-    * Função para registrar posicionamento do equipamento na tabela
+    * FUNÇÃO PARA REGISTRAR POSICIONAMENTO DO EQUIPAMENTO NA TABELA
     */
     public function registroPosicao($idSimEquipamento, $idNumSim, $posicao){
 
@@ -394,6 +394,32 @@ class EquipamentoModel extends MainModel
         return $array;
     }
 
+    /*
+    * REMOVER O EQUIPAMENTO SOLICITADO VIA JSON
+    */
+    public function removerEquipamentoViaJson($idEquipamento){
+        // Coletar os dados do post
+        $idEquip   = $idEquipamento;
+
+        if(is_numeric($idEquip)){
+
+            $query = "UPDATE tb_equipamento SET  status_ativo = '0' WHERE id = '$idEquip'";
+
+            /* monta result */
+            $result = $this->db->query($query);
+
+            if ($result){
+              $array = array('status' => true);
+            }else{
+              $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
 
 }
 

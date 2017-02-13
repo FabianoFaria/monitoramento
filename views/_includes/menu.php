@@ -79,70 +79,58 @@ if($notificacaoAlertas['status']){
             <!-- TOTAL DE ALERTAS, SE EXISTIREM -->
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-exclamation-triangle fa-1x"></i> <i class="fa fa-caret-down fa-1x"></i>
+                <!-- <i class="fa fa-exclamation-triangle fa-1x"></i> <i class="fa fa-caret-down fa-1x"></i> -->
+                <i class="fa fa-question-circle fa-1x"></i> <i class="fa fa-caret-down fa-1x"></i>
               </a>
+              <ul class="dropdown-menu dropdown-user">
+                  <li><span id="btn_sair"><a href="javascript:void(0)"><i class="fa fa-book fa-1x"></i>Ajuda</a></span></li><!-- Fim Botao Sair -->
+              </ul>
               <?php
-                if ($t_not != 0){
-                    echo "<span id='contadorNot'>{$t_not}</span>";
-                }else{
-                    echo "<span id='contadorNot' style='display:none;'>{$t_not}</span>";
-                }
+
+                // IMPLEMENTAVA O CONTADOR DE ALARMES
+                // SEGUNDO O ALLAN, SERIA ANBIGUO
+                // if ($t_not != 0){
+                //     echo "<span id='contadorNot'>{$t_not}</span>";
+                // }else{
+                //     echo "<span id='contadorNot' style='display:none;'>{$t_not}</span>";
+                // }
 
               ?>
-              <ul id="listaMenuAlarmes" class="dropdown-menu dropdown-messages">
+              <!-- <ul id="listaMenuAlarmes" class="dropdown-menu dropdown-messages"> -->
                 <?php
 
                     //VERIFICA SE EXISTE E EH UM ARRAY
-                     if(isset($dadosNot))
-                     {
-
-                         /*
-                         0 =>
-    array (size=12)
-      'id' => string '81' (length=2)
-      'dt_criacao' => string '2017-01-19 04:56:59' (length=19)
-      'status_ativo' => string '1' (length=1)
-      'visto' => string '0' (length=1)
-      'mensagem' => string 'Tens&atilde;o em n&iacute;vel criticamente baixo' (length=48)
-      'id_equipamento' => string '22' (length=2)
-      'nomeEquipamento' => string 'Gh' (length=2)
-      'modelo' => string '12' (length=2)
-      'nome' => string 'Nacional Industrias' (length=19)
-      'parametro' => string 'Tensão' (length=7)
-      'parametroMedido' => string '0' (length=1)
-      'parametroAtingido' => string '60' (length=2)
-
-                         */
-
-                        foreach ($dadosNot as $novoAlerta) {
+                    //  if(isset($dadosNot))
+                    //  {
+                    //     foreach ($dadosNot as $novoAlerta) {
                             ?>
 
-                            <li>
-                                <a href="<?php echo HOME_URI ?>/home/">
+                            <!-- <li>
+                                <a href="<?php //echo HOME_URI ?>/home/">
                                     <div>
-                                        <strong><?php echo $novoAlerta['nome']; ?></strong>
+                                        <strong><?php //echo $novoAlerta['nome']; ?></strong>
                                     </div>
                                     <div>
-                                       <?php echo $novoAlerta['mensagem']; ?>
+                                       <?php //echo $novoAlerta['mensagem']; ?>
                                     </div>
                                 </a>
                             </li>
-                            <li class="divider"></li>
+                            <li class="divider"></li> -->
                             <?php
-                        }
-
-                    }else{
+                    //     }
+                    //
+                    // }else{
                         ?>
-                        <li>
+                        <!-- <li>
                             <div>
                                 <strong>Nenhum alarme</strong>
                             </div>
                             <div>
                                Não há novos alarmes registrados.
                             </div>
-                        </li>
+                        </li> -->
                         <?php
-                    }
+                    //}
 
                     // verifica se existe e eh um array
                     // if (!empty($dadosNot) && is_array($dadosNot))
@@ -183,7 +171,7 @@ if($notificacaoAlertas['status']){
                     // else
                     // echo "<li>Nenhuma notifica&ccedil;&atilde;o</li>";
                 ?>
-              </ul>
+              <!-- </ul> -->
               <!-- /.dropdown-messages -->
             </li>
             <!-- PESQUISAR -->

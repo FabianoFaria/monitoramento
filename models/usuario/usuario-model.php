@@ -3,8 +3,6 @@
 class UsuarioModel extends MainModel
 {
 
-
-
     public function __construct ($db = false , $controller = null)
     {
         /* carrega a conexao */
@@ -172,7 +170,7 @@ class UsuarioModel extends MainModel
       */
     public function listagemUsuario(){
 
-        $query = "SELECT id, nome, sobrenome, email, dt_criaco FROM tb_users";
+        $query = "SELECT id, nome, sobrenome, email, dt_criaco FROM tb_users WHERE status_ativo = '1'";
 
         /* monta a result */
         $result = $this->db->select($query);
@@ -436,7 +434,32 @@ class UsuarioModel extends MainModel
           return $array;
     }
 
+    /*
+    * FUNÇÃO PARA EXCLUIR O USUÁRIO
+    */
+    public function excluirUsuarioViaJson($id_usuario){
+        // Coletar os dados do post
+        $id_user   = $id_usuario;
 
+        if(is_numeric($id_user)){
+
+            $query = "UPDATE tb_users SET  status_ativo = '0' WHERE id = '$id_user'";
+
+            /* monta result */
+            $result = $this->db->query($query);
+
+            if ($result){
+              $array = array('status' => true);
+            }else{
+              $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
 }
 
  ?>

@@ -303,4 +303,67 @@ $(document).ready(function(){
 
   });
 
+  /*
+  * REMOVER EQUIPAMENTO VIA JSON
+  */
+  $('.btnRemoveEquip').click(function(){
+
+      var idEquipamento = $(this).val();
+
+      swal({
+        title: "Tem certeza?",
+        text: "Está ação não poderá ser desfeita!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Sim, deletar!",
+        cancelButtonText: "Não, cancelar!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm) {
+
+              //Efetua o carregamento dos dados da filial
+              $.ajax({
+                  url: urlP+"/eficazmonitor/equipamento/removerEquipamentoJson",
+                  secureuri: false,
+                  type : "POST",
+                  dataType: 'json',
+                  data      : {
+                      'idEquipamento' : idEquipamento
+                  },
+                  success : function(datra)
+                  {
+                      if(datra.status){
+                          swal("Removido!", "Equipamento foi desativado no sistema!", "success");
+                          setTimeout(function(){
+                              location.reload();
+                          }, 2000);
+                      }else{
+                          //swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                          swal("Oops!", "Ocorreu um erro ao tentar remover equipamento do sistema, tente novamente mais tarde!", "error");
+                      }
+                  },
+                  error: function(jqXHR, textStatus, errorThrown)
+                  {
+
+                      //Settar a mensagem de erro!
+                            // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                          swal("Oops...", "Ocorreu um erro ao carregar, favor verificar os dados informados!", "error");
+                   // Handle errors here
+                   console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                   // STOP LOADING SPINNER
+                  }
+              });
+
+        } else {
+          swal("Cancelado", "Nenhuma ação ocorreu!", "error");
+        }
+      });
+
+  });
+
+
+
 });

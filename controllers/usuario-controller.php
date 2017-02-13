@@ -230,7 +230,17 @@
             $carregarDadosUsuario   = $usuarioModelo->dadosUsuario($_POST['idUsuario']);
 
             if($carregarDadosUsuario != false){
-                exit(json_encode(array('status' => true, 'usuario' => $carregarDadosUsuario)));
+
+                $usuario['id'] = html_entity_decode($carregarDadosUsuario['id'], ENT_COMPAT, 'UTF-8');
+                $usuario['nome'] = html_entity_decode($carregarDadosUsuario['nome'], ENT_COMPAT, 'UTF-8');
+                $usuario['sobrenome'] = html_entity_decode($carregarDadosUsuario['sobrenome'], ENT_COMPAT, 'UTF-8');
+                $usuario['email'] = html_entity_decode($carregarDadosUsuario['email'], ENT_COMPAT, 'UTF-8');
+                $usuario['telefone'] = html_entity_decode($carregarDadosUsuario['telefone'], ENT_COMPAT, 'UTF-8');
+                $usuario['celular'] = html_entity_decode($carregarDadosUsuario['celular'], ENT_COMPAT, 'UTF-8');
+                $usuario['id_cliente'] = html_entity_decode($carregarDadosUsuario['id_cliente'], ENT_COMPAT, 'UTF-8');
+                $usuario['id_perfil_acesso'] = html_entity_decode($carregarDadosUsuario['id_perfil_acesso'], ENT_COMPAT, 'UTF-8');
+
+                exit(json_encode(array('status' => true, 'usuario' => $usuario)));
             }else{
                 exit(json_encode(array('status' => false, 'usuario' => '')));
             }
@@ -254,6 +264,23 @@
             }
 
         }
+
+        /*
+        * FUNÇÃO PARA EXCLUIR O USUÁRIO
+        */
+        public function excluirUsuariosJson(){
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $usuarioModelo          = $this->load_model('usuario/usuario-model');
+
+            $usuarioUsuarioJson     = $usuarioModelo->excluirUsuarioViaJson($_POST['idUsuario']);
+
+            if($usuarioUsuarioJson['status']){
+                exit(json_encode(array('status' => true)));
+            }else{
+                exit(json_encode(array('status' => false)));
+            }
+        }
+
     }
 
 

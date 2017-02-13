@@ -88,7 +88,7 @@ switch ($_SESSION['userdata']['tipo_usu']) {
             }
         }
 
-        
+
 
 
     break;
@@ -129,7 +129,7 @@ switch ($_SESSION['userdata']['tipo_usu']) {
     <label class="titulo-pagina-cliente"><?php //echo $retorno[0]['nome']; ?></label>
 
     <label class="titulo-pagina">
-        - BI-GRAFI
+        Equipamentos para monitorar
     </label><!-- Fim Titulo pagina --><!-- Fim Titulo pagina -->
 
 
@@ -184,16 +184,16 @@ switch ($_SESSION['userdata']['tipo_usu']) {
 
                         /*
                         'id' => string '25' (length=2)
-  'equipamento' => string '1' (length=1)
-  'fabricante' => string 'Eaton' (length=5)
-  'modelo' => string '8090' (length=4)
-  'potencia' => string '100' (length=3)
-  'qnt_bateria' => string '2' (length=1)
-  'caracteristica_equip' => string 'nENHUMA' (length=7)
-  'tipo_bateria' => string 'Selada' (length=6)
-  'amperagem_bateria' => string '100' (length=3)
-  'cliente' => string 'Nacional Industrias' (length=19)
-  'filial' => string 'Filial Tr&ecirc;s' (length=17)
+                          'equipamento' => string '1' (length=1)
+                          'fabricante' => string 'Eaton' (length=5)
+                          'modelo' => string '8090' (length=4)
+                          'potencia' => string '100' (length=3)
+                          'qnt_bateria' => string '2' (length=1)
+                          'caracteristica_equip' => string 'nENHUMA' (length=7)
+                          'tipo_bateria' => string 'Selada' (length=6)
+                          'amperagem_bateria' => string '100' (length=3)
+                          'cliente' => string 'Nacional Industrias' (length=19)
+                          'filial' => string 'Filial Tr&ecirc;s' (length=17)
 
                         */
 
