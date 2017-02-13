@@ -81,13 +81,13 @@ class GraficoGeradorModel extends MainModel
                 $opc = explode(",",$this->parametros[1]);
 
                 // Monta a query para buscar os resultados
-                $query = "SELECT UNIX_TIMESTAMP(dt_criacao) AS 'dt_criacao', ";
+                $query = "SELECT UNIX_TIMESTAMP(a.dt_criacao) AS 'dt_criacao', ";
 
                 // Define os parametros
                 for ($a = 0; $a < sizeof($tabela) ; $a++)
                 {
                     if (($opc[$a] == 1) && (is_numeric($opc[$a])))
-                        $query .= $tabela[$a] . ",";
+                        $query .= 'a.'.$tabela[$a] . ",";
                 }
 
                 // Trata a ultima posicao
@@ -99,21 +99,78 @@ class GraficoGeradorModel extends MainModel
                 $dataIni  = date( "Y-m-d H:i:s", strtotime($opc[13]) );
                 $dataFim  = date( "Y-m-d H:i:s", strtotime($opc[14]) );
 
+                $diff       = date_diff( date_create($opc[13]),date_create($opc[14]));
+                $diasDiff   = $diff->format("%R%a days");
+
+
+
+                // $diferencaData = $diff;
+  
                 // Adiciona o final da query
                 // $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao > '{$dataIni}' AND dt_criacao < '{$dataFim}' LIMIT 300";
-                $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim} ' LIMIT 4360";
+                //$query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim} ' LIMIT 4360";
                 //$query .="FROM ( SELECT @row := @row +1 AS rownum, dt_criacao FROM (SELECT @row :=0) r, tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}') ) ranked WHERE rownum %30 =1";
 
                 /*
-                    Query para filtrar os dados para a cada meia horas
-                    FROM (
-                        SELECT
-                            @row := @row +1 AS rownum, dt_criacao
-                        FROM (
-                            SELECT @row :=0) r, tb_dados WHERE num_sim = '1' AND dt_criacao BETWEEN '2017-02-01' AND '2017-02-09'
-                        ) ranked
-                    WHERE rownum %30 =1
+
+                    VERIFICAR O SWICTH COM A DIFERENÇA DE DATAS
+
                 */
+                 /*
+                  
+                    MONTAR A NOVA QUERY A PARTIR DAQUI...
+
+                */
+                $query .=" FROM  tb_dados a";
+                $query .=" INNER JOIN";
+                $query .="(";
+                $query .="SELECT  DATE(dt_criacao) date,";
+
+                switch ($diasDiff) {
+                    case $diasDiff > 30 :
+                        //MAIOR QUE UM MÊS, MOSTRA A MEDIDA DE CADA DIA
+
+                        //$query .=" MINUTE(dt_criacao) minut,";
+                        $query .=" DAY(dt_criacao) day,";
+                        $query .=" HOUR(dt_criacao) hour,";
+                        $query .=" MIN(dt_criacao) min_date";
+                        $query .=" FROM    tb_dados";
+                        $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
+                        $query .=")b ON DATE(a.dt_criacao) = b.date AND";
+                        $query .=" DAY(a.dt_criacao) = b.hour AND";
+                        $query .=" a.dt_criacao = b.min_date";
+
+                    break;
+                    case $diasDiff > 3 :
+                        //MAIOR QUE TRÊS DIAS, MOSTRA A MEDIDA DE CADA HORA
+                       
+                        //$query .=" MINUTE(dt_criacao) minut,";
+                        //$query .=" DAY(dt_criacao) day,";
+                        $query .=" HOUR(dt_criacao) hour,";
+                        $query .=" MIN(dt_criacao) min_date";
+                        $query .=" FROM    tb_dados";
+                        $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
+                        $query .=")b ON DATE(a.dt_criacao) = b.date AND";
+                        $query .=" HOUR(a.dt_criacao) = b.hour AND";
+                        $query .=" a.dt_criacao = b.min_date";
+                    break;
+                    default :
+                        //ATÉ TRÊS DIAS, MOSTRA A CADA MINUTO
+  
+                        $query .=" MINUTE(dt_criacao) minut,";
+                        $query .=" DAY(dt_criacao) day,";
+                        $query .=" HOUR(dt_criacao) hour,";
+                        $query .=" MIN(dt_criacao) min_date";
+                        $query .=" FROM    tb_dados";
+                        $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
+                        $query .=")b ON DATE(a.dt_criacao) = b.date AND ";
+                        $query .=" MINUTE(a.dt_criacao) = b.minut AND ";
+                        $query .=" a.dt_criacao = b.min_date";
+
+                    break;
+                }
+
+                $query .=" WHERE a.num_sim = '{$sim_num}' AND a.dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}'";
 
 
                 //var_dump( $opc, $query);
@@ -162,6 +219,7 @@ class GraficoGeradorModel extends MainModel
                     $respDate = "[]";
                     $respData = "{}";
                     $respRawDate = array();
+                    $diff = 0;
                 }
 
             }
@@ -172,12 +230,14 @@ class GraficoGeradorModel extends MainModel
             $respDate = "[]";
             $respData = "{}";
             $respRawDate = array();
+            $diff = 0;
         }
 
         // Converte para json
         $this->respData = $respData;
         $this->respDate = $respDate;
         $this->respRawDate = $respRawDate;
+        $this->respDiference = $diff;
     }
 
 

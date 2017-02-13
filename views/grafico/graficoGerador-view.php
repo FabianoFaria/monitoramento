@@ -25,6 +25,9 @@ $dadosCliente       = $dadosCliente['dados'][0];
         // var_dump($modelo->respDate);
         //
         //var_dump($modelo->respRawDate);
+        // 
+        // var_dump($modelo->respDiference);
+
 
         $parametrosSelecionados = $modelo->respData;
 
@@ -355,6 +358,10 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
     <!-- Valida se há dados para serem exibido -->
     <?php
+
+        //
+        //var_dump($modelo->respDiference);
+        // echo $modelo->respDiference->format("%R%a days");
 
         if($modelo->respDate != "{}"){
             ?>
