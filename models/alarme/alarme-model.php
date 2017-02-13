@@ -174,7 +174,7 @@
         */
         public function alarmesGerados(){
 
-            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
@@ -182,6 +182,7 @@
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                    LEFT JOIN tb_filial fili ON clie.id = fili.id_matriz
                     WHERE alert.status_ativo < 5
                     ORDER BY alert.id DESC";
 
@@ -218,7 +219,7 @@
         */
         public function alarmesGeradosCliente($idCliente){
 
-            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
@@ -226,6 +227,7 @@
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                    LEFT JOIN tb_filial fili ON clie.id = fili.id_matriz
                     WHERE clie.id = '$idCliente' AND alert.status_ativo < 5
                     ORDER BY alert.id DESC";
 

@@ -29,7 +29,6 @@
         <!-- canvasJS -->
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.canvasjs.min"></script>
 
-
         <!-- SweetAlert JavaScript -->
         <script src="<?php echo HOME_URI; ?>/views/_js/sweetalert.min.js"></script>
 

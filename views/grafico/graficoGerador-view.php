@@ -25,7 +25,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
         // var_dump($modelo->respDate);
         //
         //var_dump($modelo->respRawDate);
-        // 
+        //
         // var_dump($modelo->respDiference);
 
 

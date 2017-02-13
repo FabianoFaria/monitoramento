@@ -586,7 +586,7 @@ else
                                             <div class="row">
 
                                                 <div class="col-lg-12">
-                                                    <h4>Ativa</h4>
+                                                    <h4>Utilizada</h4>
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div id="containerPotenciaAtiva" style="width:100%; margin: 0 auto"></div>
                                                         <label id="cor_potA" class="valorVindo">0 ( W )</label>
@@ -597,11 +597,18 @@ else
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <!-- <div class="well">
+                                        <div class="well">
                                             <div class="row">
-                                                <h4>Reativa</h4>
+                                                <div class="col-lg-12">
+                                                    <h4>Contratada</h4>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div id="containerPotenciaAtiva" style="width:100%; margin: 0 auto"></div>
+                                                        <label id="cor_potA" class="valorVindo">0 ( W )</label>
+                                                        <div id="sit-cor-potA" class="situacaoDesligado">...</div>
+                                                    </div><!-- Saida S/T -->
+                                                </div>
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <!-- <div class="well">

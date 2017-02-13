@@ -198,12 +198,13 @@
                                     <tr>
                                         <th>Status</th>
                                         <th>Data</th>
-                                        <th>Cliente</th>
+                                        <th>Local</th>
                                         <!-- <th>Módulo</th> -->
                                         <th>Equipamento</th>
+                                        <th>Ponto</th>
                                         <th>Descrição</th>
-                                        <th>Medida gerada</th>
-                                        <th>Detalhes</th>
+                                        <th>Medida que gerou alarme</th>
+                                        <th>Tratamento alarme</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -218,20 +219,25 @@
                                                 <?php
                                                     switch ($listaAlarmes['status_ativo']) {
                                                         case '1':
-                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i> <p> Novo</p>";
+                                                            //echo "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i> <p> Novo</p>";
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i>";
                                                         break;
                                                         case '2':
-                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:orange'></i> <p> Visualizado</p>";
+                                                            //echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:orange'></i> <p> Visualizado</p>";
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:orange'></i>";
                                                         break;
                                                         case '3':
-                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:yellow'></i> <p> Em tratamento</p>";
+                                                            //echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:yellow'></i> <p> Em tratamento</p>";
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:yellow'></i>";
                                                         break;
                                                         case '4':
-                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:green'></i> <p> Solucionado</p>";
+                                                            //echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:green'></i> <p> Solucionado</p>";
+                                                            echo "<i class='fa fa-exclamation-triangle  fa-2x' style='color:green'></i>";
                                                         break;
 
                                                         default:
-                                                            echo "<i class='fa  fa-check  fa-2x' style='color:green'></i> <p> Finalizado</p>";
+                                                            //echo "<i class='fa  fa-check  fa-2x' style='color:green'></i> <p> Finalizado</p>";
+                                                            echo "<i class='fa  fa-check  fa-2x' style='color:green'></i>";
                                                         break;
                                                     }
                                                 ?>
@@ -244,12 +250,19 @@
                                             </td>
                                             <td>
                                                 <?php
-                                                    echo $listaAlarmes['nome'];
+                                                    $localEspecifico = (isset($listaAlarmes['filial'])) ? $listaAlarmes['filial']: "Matriz";
+
+                                                    echo $listaAlarmes['nome']." - ".$localEspecifico;
                                                 ?>
                                             </td>
                                             <td>
                                                 <?php
                                                     echo $listaAlarmes['nomeEquipamento'];
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                    echo $listaAlarmes['caracteristica_equip'];
                                                 ?>
                                             </td>
                                             <td>
@@ -263,18 +276,38 @@
 
                                             </td>
                                             <td>
-                                                <h4>
-                                                    <span class="text-danger">
-                                                        <?php
-                                                            echo  $listaAlarmes['parametroMedido'];
-                                                        ?>
-                                                    </span>/
-                                                    <span class="text-info">
-                                                        <?php
-                                                            echo $listaAlarmes['parametroAtingido'];
-                                                        ?>
-                                                    </span>
-                                                </h4>
+                                                <p>
+                                                    <?php
+
+                                                        switch ($listaAlarmes['parametroMedido']){
+                                                            case 'Bateria':
+                                                                # code...
+                                                            break;
+                                                            case 'Temperatura':
+                                                                # code...
+                                                            break;
+                                                            /*
+                                                            TRATA CASOS DE CORRENTE E TENSÃO
+                                                            */
+                                                            default:
+                                                                ?>
+                                                                <span class="text-danger">
+                                                                    <?php
+                                                                        echo  $listaAlarmes['parametroMedido']." (V)";
+                                                                    ?>
+                                                                </span> onde o limite era
+                                                                <span class="text-info">
+                                                                    <?php
+                                                                        echo $listaAlarmes['parametroAtingido']." (V)";
+                                                                    ?>
+                                                                </span>
+                                                                <?php
+                                                            break;
+                                                        }
+
+                                                    ?>
+
+                                                </p>
                                             </td>
                                             <td>
                                                 <button class="btn btn-primary" onclick="detalharAlarme(<?php echo $listaAlarmes['id']; ?>)">
@@ -339,7 +372,7 @@
                                                 Data de geração : <span id="dataGeracao"></span>
                                         </p>
                                         <p>
-                                                Data de geração : <span id="dataVizualizacao"></span>
+                                                Data de Visualização : <span id="dataVizualizacao"></span>
                                         </p>
 
                                     </div>
@@ -444,7 +477,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#collapseOne').collapse("hide");
+    //$('#collapseOne').collapse("hide");
     $('#filtroCollapse').collapse("hide");
   });
 </script>
