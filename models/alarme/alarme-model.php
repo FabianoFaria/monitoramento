@@ -182,7 +182,7 @@
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
-                    LEFT JOIN tb_filial fili ON clie.id = fili.id_matriz
+                    LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
                     WHERE alert.status_ativo < 5
                     ORDER BY alert.id DESC";
 
@@ -227,7 +227,7 @@
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
-                    LEFT JOIN tb_filial fili ON clie.id = fili.id_matriz
+                    LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
                     WHERE clie.id = '$idCliente' AND alert.status_ativo < 5
                     ORDER BY alert.id DESC";
 
@@ -265,7 +265,7 @@
         public function recuperaDadosAlarme($idAlarme){
 
             $query = "SELECT alert.id, alert.id_sim_equipamento, alert.id_msg_alerta, alert.status_ativo, alert.visto, alert.dt_criacao, trat_alert.id AS 'tratamento_id', trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado,
-                    equip.nomeEquipamento, equip.modelo, equip.id_cliente, equip.id_filial
+                    equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, equip.id_cliente, equip.id_filial, equip.id AS 'idEquipAlert', sim_equip.id_sim AS 'simEquip'
                     FROM tb_alerta alert
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
                     JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
@@ -357,7 +357,7 @@
             if(is_numeric($idCliente)){
 
                 if($idCliente == 0){
-                    $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+                    $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
                             FROM tb_alerta alert
                             JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                             JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
@@ -365,10 +365,11 @@
                             JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                             JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                             JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                            LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
                             WHERE alert.status_ativo  = '1'
                             ORDER BY alert.id DESC LIMIT $limite, 99";
                 }else{
-                    $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+                    $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
                             FROM tb_alerta alert
                             JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                             JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
@@ -376,6 +377,7 @@
                             JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                             JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                             JOIN tb_cliente clie ON clie.id = sim.id_cliente
+                            LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
                             WHERE clie.id = '$idCliente' AND alert.status_ativo  = '1'
                             ORDER BY alert.id DESC LIMIT $limite, 99";
                 }
@@ -626,6 +628,45 @@
             return $array;
         }
 
+        /*
+        * COM O ID DO EQUIPAMENTO, PROCURA PELA ÚLTIMO DADO REGISTRADO PELO EQUIPAMENTO
+        */
+        public function recuperacaoUltimaLeituraEquip($idSim, $param){
+
+            if(is_numeric($idSim)){
+
+                $query = "SELECT id, ";
+
+                //VERIFICA QUAIS PARAMETROS SELECIONAR
+                // switch ($param) {
+                //     case 'Bateria':
+                //         # code...
+                //     break;
+                //     case 'Tensão':
+                //         # code...
+                //     break;
+                //     case 'Corrente':
+                //         # code...
+                //     break;
+                //     case 'Corrente':
+                //         # code...
+                //     break;
+                // }
+                $query .= " num_sim, b, c, d, e, f, g, h, i, j, l, m, n, o, p, q, r, s, t, u, dt_criacao ";
+
+                $query .= " FROM tb_dados WHERE num_sim = '$idSim' ORDER BY id DESC LIMIT 1";
+
+                /* EXECUTA A QUERY ESPECIFICADA */
+                //$result = $this->db->select($query);
+
+                $array = array('status' => false);
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
     }
 
 ?>

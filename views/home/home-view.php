@@ -4,7 +4,7 @@
 
     //var_dump($_SESSION);
 
-    $alarmesRegistrados = $modeloAlarme->alarmesGerados();
+    //$alarmesRegistrados = $modeloAlarme->alarmesGerados();
 
     /*
     * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
@@ -82,6 +82,10 @@
                         //Insere um linha no topo da tabela
                         $(data.alarmesNovaLista).insertBefore( "#listaAlarmesEquipamentos tbody" );
                         $('#novoAlertasCount').html(data.contagemLista);
+                        swal('Atenção!','Foi registrado um novo alarme, favor verificar.','warning' );
+                        setTimeout(function(){
+                            location.reload();
+                        }, 3500);
                     }else{
                         console.log('prossiga monitoramento!');
                     }
@@ -208,6 +212,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     <?php
 
                                         if($alarmesRegistrados['status']){
@@ -273,7 +278,6 @@
                                                         ?>
                                                     </b>
                                                 </p>
-
                                             </td>
                                             <td>
                                                 <p>
@@ -358,8 +362,8 @@
                     <div class="row">
                         <!-- Data do alarme -->
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <i class="fa fa-warning "></i> <span id="statusAlarme"></span>
+                            <div class="panel-heading" id="statusAlarme">
+                                <!-- <i class="fa fa-warning "></i> <span id="statusAlarme"></span> -->
                             </div>
 
                         </div>
@@ -369,10 +373,10 @@
                                 <div class="col-md-12">
                                     <div class="well">
                                         <p>
-                                                Data de geração : <span id="dataGeracao"></span>
+                                            <b>Data de geração : </b> <span id="dataGeracao"></span>
                                         </p>
                                         <p>
-                                                Data de Visualização : <span id="dataVizualizacao"></span>
+                                            <b>Data de Visualização : </b><span id="dataVizualizacao"></span>
                                         </p>
 
                                     </div>
@@ -383,30 +387,33 @@
                                 <div class="col-md-12">
                                     <div class="well">
                                         <p>
-                                                Vínculo equipamento : <span id="nomeCliente"></span>
+                                            <b>Vínculo equipamento : </b><span id="nomeCliente"></span>
                                         </p>
                                         <p>
-                                                Local do alarme : <span id="localAlarme"></span>
+                                            <b>Local do alarme : </b><span id="localAlarme"></span>
                                         </p>
 
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- <div class="row">
+                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="well">
 
                                         <p>
-                                            <b>Limite que gerou o alarme : </b><span id="limiteAlarme"></span>
+                                            <b>Equipamento : </b><span id="equipNome"></span>
                                         </p>
                                         <p>
-                                            <b>Descrição extra : </b><span id="informacaoesAlarme"></span>
+                                            <b>Modelo : </b><span id="equipModelo"></span>
+                                        </p>
+                                        <p>
+                                            <span id="equipCarac"></span>
                                         </p>
 
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12">

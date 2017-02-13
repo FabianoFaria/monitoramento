@@ -41,10 +41,14 @@ function detalharAlarme(idAlarme){
             //$("#statusAlarmeModal > select > option[value=" + statusAtual + "]").prop("selected",true);
 
             $('#tratamentoAlarme').html(datra.alarme['tratamento_aplicado']);
-            //MEDIDAS QUE GERARAM O ALAtmlRME
+            //MEDIDAS QUE GERARAM O ALARME
             $('#tipoMedida').html(datra.alarme['parametro']);
             $('#medidaOriginal').html(datra.alarme['parametroMedido']);
             $('#ultimaMedida').html('Não recebido ainda.');
+            //DADOS DO EQUIPAMENTO
+            $('#equipNome').html(datra.nomeEquip);
+            $('#equipModelo').html(datra.modEquip);
+            $('#equipCarac').html(datra.caracEquip);
 
             $('#idAlarme').val(idAlarme);
 

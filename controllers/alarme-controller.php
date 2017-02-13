@@ -212,36 +212,51 @@
                 $dadosFili   = '';
             }
 
+            /*
+            * DADOS DA DATA DO ALERTA
+            */
             $dataCriacao    = explode(" ", $dadosAlarme['dt_criacao']);
             $horaCriacao    = $dataCriacao[1];
             $dataCriacaoTratada = implode("/", array_reverse(explode("-", $dataCriacao[0])));
             $dataVisualizacao   = date('d/m/Y h:i:s');
 
+            /*
+            * DADOS DO STATUS DE ALERTA E MENSAGENS
+            */
             $statusAlarme    = '';
             switch ($dadosAlarme['status_ativo']) {
                 case '1':
-                    $statusAlarme = 'Alarme Reconhecido';
+                    $statusAlarme = "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i> <span>Alarme novo</span>";
                 break;
                 case '2':
-                    $statusAlarme = 'Alarme em acompanhamento';
+                    $statusAlarme = "<i class='fa fa-exclamation-triangle  fa-2x' style='color:orange'></i> <span>Alarme visualizado</span>";
                 break;
                 case '3':
-                    $statusAlarme = 'Alarme em tratamento';
+                    $statusAlarme = "<i class='fa fa-exclamation-triangle  fa-2x' style='color:yellow'></i> <span>Alarme em tratamento</span>";
                 break;
                 case '4':
-                    $statusAlarme = 'Alarme solucionado';
+                    $statusAlarme = "<i class='fa fa-exclamation-triangle  fa-2x' style='color:green'></i> <span>Alarme solucionado</span>";
                 break;
                 case '5':
-                    $statusAlarme = 'Alarme finalizado';
+                    $statusAlarme = "<i class='fa  fa-check  fa-2x' style='color:green'></i><span>Alarme Finalizado</span>";
                 break;
             }
 
             $mensagemAlerta     = $alarmeModelo->recuperaMensagemAlarme($dadosAlarme['id_msg_alerta']);
-            // array_push($dadosAlarme, $mensagemAlerta['mensagem'][0]['mensagem']);
-            // array_push($dadosAlarme, $mensagemAlerta['mensagem'][0]['descricao_alarme']);
-            //var_dump($dadosAlarme);
 
-            exit(json_encode(array('status' => true, 'cliente' => $dadosClie['dados'][0], 'filial' => $dadosFili, 'alarme' => $dadosAlarme, 'statusAlarme' => $statusAlarme, 'horaAlarme' => $horaCriacao, 'dataAlarme' => $dataCriacaoTratada, 'dataVisualizada' => $dataVisualizacao)));
+            /*
+            * DADOS DO EQUIPAMENTO
+            */
+            $nomeEquipamento        = $dadosAlarme['nomeEquipamento'];
+            $modeloEquipamento      = $dadosAlarme['modelo'];
+            $caracteristicaEquip    = $dadosAlarme['caracteristica_equip'];
+
+            /*
+            * ÚLTIMA LEITURA DO EQUIPAMENTO
+            */
+            $ultimaLeitura          = $alarmeModelo->recuperacaoUltimaLeituraEquip($dadosAlarme['simEquip'], $dadosAlarme['parametro']);
+
+            exit(json_encode(array('status' => true, 'cliente' => $dadosClie['dados'][0], 'filial' => $dadosFili, 'alarme' => $dadosAlarme, 'statusAlarme' => $statusAlarme, 'horaAlarme' => $horaCriacao, 'dataAlarme' => $dataCriacaoTratada, 'dataVisualizada' => $dataVisualizacao, 'nomeEquip' => $nomeEquipamento, 'modEquip' => $modeloEquipamento, 'caracEquip' => $caracteristicaEquip)));
         }else{
             exit(json_encode(array('status' => $dadosAlarme['status'])));
         }
@@ -359,37 +374,55 @@
             foreach ($contagemAlarmes['alarmes'] as $alarmeLista) {
                 $listaAlarme    .= "<tr>";
                     $listaAlarme    .= "<td>";
-                        $listaAlarme    .= "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i> <p> Novo</p>";
+                        //$listaAlarme    .= "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i> <p> Novo</p>";
+                        $listaAlarme    .= "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i>";
                     $listaAlarme    .= "</td>";
                     $listaAlarme    .= "<td>";
-                    $data = explode(" ", $alarmeLista['dt_criacao']);
+                        $data = explode(" ", $alarmeLista['dt_criacao']);
                         $listaAlarme    .= implode("/",array_reverse(explode("-", $data[0])));
                     $listaAlarme    .= "</td>";
                     $listaAlarme    .= "<td>";
-                        $listaAlarme    .= $alarmeLista['nome'];
+                        $localEspecifico = (isset($alarmeLista['filial'])) ? $alarmeLista['filial']: "Matriz";
+                        $listaAlarme    .= $alarmeLista['nome']." - ".$localEspecifico;
                     $listaAlarme    .= "</td>";
                     $listaAlarme    .= "<td>";
                         $listaAlarme    .= $alarmeLista['nomeEquipamento'];
                     $listaAlarme    .= "</td>";
                     $listaAlarme    .= "<td>";
+                        $listaAlarme    .= $alarmeLista['caracteristica_equip'];
+                    $listaAlarme    .= "</td>";
+                    $listaAlarme    .= "<td>";
                         $listaAlarme    .= "<p><b>".$alarmeLista['mensagem']."</b></p>";
                     $listaAlarme    .= "</td>";
                     $listaAlarme    .= "<td>";
-                        $listaAlarme    .= "<h4>";
-                        $listaAlarme    .= "<span class='text-danger'>";
-                            $listaAlarme    .=$alarmeLista['parametroMedido'];
-                        $listaAlarme    .= "</span>";
-                        $listaAlarme    .= " / ";
-                        $listaAlarme    .= "<span class='text-danger'>";
-                            $listaAlarme    .=$alarmeLista['parametroMedido'];
-                        $listaAlarme    .= "</span>";
-                        $listaAlarme    .= "</h4>";
+                        //NOVO TRECHO
+                        $listaAlarme    .= "<p>";
+                        switch ($alarmeLista['parametroMedido']){
+                            case 'Bateria':
+                                # code...
+                            break;
+                            case 'Temperatura':
+                                # code...
+                            break;
+                            /*
+                            TRATA CASOS DE CORRENTE E TENSÃO
+                            */
+                            default:
 
-                        $listaAlarme    .= $alarmeLista['nome'];
+                                $listaAlarme    .= "<span class='text-danger'>";
+                                    $listaAlarme    .=$alarmeLista['parametroMedido']." (V)";
+                                $listaAlarme    .= "</span> onde o limite era";
+                                $listaAlarme    .= "<span class='text-info'>";
+                                    $listaAlarme    .=$alarmeLista['parametroAtingido']." (V)";
+                                $listaAlarme    .= "</span>";
+
+                            break;
+                        }
+                        $listaAlarme    .= "</p>";
                     $listaAlarme    .= "</td>";
-
                     $listaAlarme    .= "<td>";
-                        $listaAlarme    .= "<button>";
+                        $idAlarme       = $alarmeLista['id'];
+                        $listaAlarme    .= "<button class='btn btn-primary' onclick='detalharAlarme(".$idAlarme.")'>";
                             $listaAlarme    .= "<i class='fa fa-search '></i> Detalhes";
                         $listaAlarme    .= "</button>";
                     $listaAlarme    .= "</td>";
