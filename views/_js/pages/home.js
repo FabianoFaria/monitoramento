@@ -49,6 +49,7 @@ function detalharAlarme(idAlarme){
             $('#equipNome').html(datra.nomeEquip);
             $('#equipModelo').html(datra.modEquip);
             $('#equipCarac').html(datra.caracEquip);
+            $('#pontoTab').html(datra.pontoTab);
 
             $('#idAlarme').val(idAlarme);
 

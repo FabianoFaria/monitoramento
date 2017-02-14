@@ -267,7 +267,12 @@
                                             </td>
                                             <td>
                                                 <?php
-                                                    echo $listaAlarmes['caracteristica_equip'];
+
+                                                    //IF ELSE PARA TRATAR DO PONTO DA TABELA QUE GEROU O ALARME
+                                                    $ponto = $this->verificarPontoTabela($listaAlarmes['pontoTabela']);
+
+                                                    echo $ponto;
+
                                                 ?>
                                             </td>
                                             <td>
@@ -408,7 +413,10 @@
                                             <b>Modelo : </b><span id="equipModelo"></span>
                                         </p>
                                         <p>
-                                            <span id="equipCarac"></span>
+                                            <b>Ponto : </b><span id="pontoTab"></span>
+                                        </p>
+                                        <p>
+                                            <b>Detalhes equipamento : </b> <span id="equipCarac"></span>
                                         </p>
 
                                     </div>

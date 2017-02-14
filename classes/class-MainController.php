@@ -110,6 +110,92 @@ class MainController extends UserLogin
             return;
         }
     }
+
+    /**
+    * Função para verificar o ponto da tabela
+    */
+    public function verificarPontoTabela($ponto){
+        //ENTRADA DE TENSÃO
+        if(($ponto == 'b') || ($ponto == 'c') || ($ponto == 'd')){
+            switch ($ponto) {
+                case 'b':
+                    $saida = "Entrada de tensão R";
+                break;
+                case 'c':
+                    $saida = "Entrada de tensão S";
+                break;
+                case 'd':
+                    $saida = "Entrada de tensão T";
+                break;
+            }
+        }
+        //SAÍDA DE TENSÃO
+        if(($ponto == 'e') || ($ponto == 'f') || ($ponto == 'g')){
+            switch ($ponto) {
+                case 'e':
+                    $saida = "Saída de tensão R";
+                break;
+                case 'f':
+                    $saida = "Saída de tensão S";
+                break;
+                case 'g':
+                    $saida = "Saída de tensão T";
+                break;
+            }
+        }
+        //ENTRADA DE CORRENTE
+        if(($ponto == 'i') || ($ponto == 'j') || ($ponto == 'l')){
+            switch ($ponto) {
+                case 'i':
+                    $saida = "Entrada de corrente R";
+                break;
+                case 'j':
+                    $saida = "Entrada de corrente S";
+                break;
+                case 'l':
+                    $saida = "Entrada de corrente T";
+                break;
+            }
+        }
+        //SAÍDA DE CORRENTE
+        if(($ponto == 'm') || ($ponto == 'n') || ($ponto == 'o')){
+            switch ($ponto) {
+                case 'm':
+                    $saida = "Saída de corrente R";
+                break;
+                case 'n':
+                    $saida = "Saída de corrente S";
+                break;
+                case 'o':
+                    $saida = "Saída de corrente T";
+                break;
+            }
+        }
+        //BATERIA
+        if(($ponto == 'h') || ($ponto == 'q')){
+            switch ($ponto) {
+                case 'h':
+                    $saida = "Bateria 1";
+                break;
+                case 'o':
+                    $saida = "Bateria 2";
+                break;
+            }
+        }
+        //TEMPERATURA
+        if(($ponto == 'q') || ($ponto == 'r')){
+            switch ($ponto) {
+                case 'q':
+                    $saida = "Temperatura 1";
+                break;
+                case 'r':
+                    $saida = "Temperatura 2";
+                break;
+            }
+        }
+        return $saida;
+    }
+
 }
 
 ?>

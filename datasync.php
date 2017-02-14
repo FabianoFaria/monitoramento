@@ -515,7 +515,7 @@ function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolad
     $data = date('Y-m-d h:i:s');
 
     //REGISTRA O ALARME NO SISTEMA
-    $queryAlarme = "INSERT INTO tb_alerta(id_sim_equipamento, id_msg_alerta, nivel_alerta, dt_criacao )
+    $queryAlarme = "INSERT INTO tb_alerta(id_sim_equipamento, id_msg_alerta, nivel_alerta, dt_criacao)
                     VALUES ('$idEquipSim', '$tipoAlarme', '$nivelAlarme', '$data')";
 
     $result = $connBase->query($queryAlarme);
@@ -539,8 +539,8 @@ function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolad
     $idAlarme = mysql_insert_id();
 
     //REGISTRA OS DETALHES DO ALARME PARA CONSULTA PELO MONITOR
-    $queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta (id_alerta, parametro, parametroMedido, parametroAtingido)
-                            VALUES ('$idAlarme', '$parametroAvaliado', '$parametroEnviado', '$parametroViolado')";
+    $queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta (id_alerta, parametro, parametroMedido, parametroAtingido, pontoTabela)
+                            VALUES ('$idAlarme', '$parametroAvaliado', '$parametroEnviado', '$parametroViolado', '$pontoTabela')";
 
     // Grava no DB
     $resultadoDetalhes = $connBase->query($queryDetalheAlarme);

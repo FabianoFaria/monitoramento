@@ -174,7 +174,7 @@
         */
         public function alarmesGerados(){
 
-            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.pontoTabela
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
@@ -219,7 +219,7 @@
         */
         public function alarmesGeradosCliente($idCliente){
 
-            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.pontoTabela
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
@@ -264,7 +264,7 @@
         */
         public function recuperaDadosAlarme($idAlarme){
 
-            $query = "SELECT alert.id, alert.id_sim_equipamento, alert.id_msg_alerta, alert.status_ativo, alert.visto, alert.dt_criacao, trat_alert.id AS 'tratamento_id', trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado,
+            $query = "SELECT alert.id, alert.id_sim_equipamento, alert.id_msg_alerta, alert.status_ativo, alert.visto, alert.dt_criacao, trat_alert.id AS 'tratamento_id', trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado, trat_alert.pontoTabela,
                     equip.nomeEquipamento, equip.modelo, equip.caracteristica_equip, equip.id_cliente, equip.id_filial, equip.id AS 'idEquipAlert', sim_equip.id_sim AS 'simEquip'
                     FROM tb_alerta alert
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id

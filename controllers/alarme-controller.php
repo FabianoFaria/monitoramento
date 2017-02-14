@@ -250,13 +250,30 @@
             $nomeEquipamento        = $dadosAlarme['nomeEquipamento'];
             $modeloEquipamento      = $dadosAlarme['modelo'];
             $caracteristicaEquip    = $dadosAlarme['caracteristica_equip'];
+            $pontoTabela            = $this->verificarPontoTabela($dadosAlarme['pontoTabela']);
 
             /*
             * ÚLTIMA LEITURA DO EQUIPAMENTO
             */
-            $ultimaLeitura          = $alarmeModelo->recuperacaoUltimaLeituraEquip($dadosAlarme['simEquip'], $dadosAlarme['parametro']);
+            $ultimaLeitura          = $alarmeModelo->recuperacaoUltimaLeituraEquip($dadosAlarme['simEquip'], $dadosAlarme['pontoTabela']);
 
-            exit(json_encode(array('status' => true, 'cliente' => $dadosClie['dados'][0], 'filial' => $dadosFili, 'alarme' => $dadosAlarme, 'statusAlarme' => $statusAlarme, 'horaAlarme' => $horaCriacao, 'dataAlarme' => $dataCriacaoTratada, 'dataVisualizada' => $dataVisualizacao, 'nomeEquip' => $nomeEquipamento, 'modEquip' => $modeloEquipamento, 'caracEquip' => $caracteristicaEquip)));
+            exit(json_encode(
+                            array(
+                                'status' => true,
+                                'cliente' => $dadosClie['dados'][0],
+                                'filial' => $dadosFili,
+                                'alarme' => $dadosAlarme,
+                                'statusAlarme' => $statusAlarme,
+                                'horaAlarme' => $horaCriacao,
+                                'dataAlarme' => $dataCriacaoTratada,
+                                'dataVisualizada' => $dataVisualizacao,
+                                'nomeEquip' => $nomeEquipamento,
+                                'modEquip' => $modeloEquipamento,
+                                'caracEquip' => $caracteristicaEquip,
+                                'pontoTab' => $pontoTabela
+                                )
+                            )
+                );
         }else{
             exit(json_encode(array('status' => $dadosAlarme['status'])));
         }
