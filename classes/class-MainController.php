@@ -196,6 +196,90 @@ class MainController extends UserLogin
         return $saida;
     }
 
+    /**
+    * Função para tratar os últimos valores recebidos
+    */
+    public function configurarTipoPontoTabela($ponto, $medida){
+        //ENTRADA DE TENSÃO
+        if(($ponto == 'b') || ($ponto == 'c') || ($ponto == 'd')){
+            switch ($ponto) {
+                case 'b':
+                    $saida = ($medida / 10)." (V)";
+                break;
+                case 'c':
+                    $saida = ($medida / 10)." (V)";
+                break;
+                case 'd':
+                    $saida = ($medida / 10)." (V)";
+                break;
+            }
+        }
+        //SAÍDA DE TENSÃO
+        if(($ponto == 'e') || ($ponto == 'f') || ($ponto == 'g')){
+            switch ($ponto) {
+                case 'e':
+                    $saida = ($medida / 10)." (V)";
+                break;
+                case 'f':
+                    $saida = ($medida / 10)." (V)";
+                break;
+                case 'g':
+                    $saida = ($medida / 10)." (V)";
+                break;
+            }
+        }
+        //ENTRADA DE CORRENTE
+        if(($ponto == 'i') || ($ponto == 'j') || ($ponto == 'l')){
+            switch ($ponto) {
+                case 'i':
+                    $saida = ($medida / 10)." (V)";
+                break;
+                case 'j':
+                    $saida = ($medida / 10)." (V)";
+                break;
+                case 'l':
+                    $saida = ($medida / 10)." (V)";
+                break;
+            }
+        }
+        //SAÍDA DE CORRENTE
+        if(($ponto == 'm') || ($ponto == 'n') || ($ponto == 'o')){
+            switch ($ponto) {
+                case 'm':
+                    $saida = ($medida / 10)." (V)";
+                break;
+                case 'n':
+                    $saida = ($medida / 10)." (V)";
+                break;
+                case 'o':
+                    $saida = ($medida / 10)." (V)";
+                break;
+            }
+        }
+        //BATERIA
+        if(($ponto == 'h') || ($ponto == 'q')){
+            switch ($ponto) {
+                case 'h':
+                    $saida = ($medida);
+                break;
+                case 'o':
+                    $saida = ($medida);
+                break;
+            }
+        }
+        //TEMPERATURA
+        if(($ponto == 'q') || ($ponto == 'r')){
+            switch ($ponto) {
+                case 'q':
+                    $saida =  number_format($medida, 1, '.', '')." (°C)";
+                break;
+                case 'r':
+                    $saida =  number_format($medida, 1, '.', '')." (°C)";
+                break;
+            }
+        }
+        return $saida;
+    }
 }
 
 ?>

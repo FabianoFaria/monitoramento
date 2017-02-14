@@ -257,6 +257,12 @@
             */
             $ultimaLeitura          = $alarmeModelo->recuperacaoUltimaLeituraEquip($dadosAlarme['simEquip'], $dadosAlarme['pontoTabela']);
 
+            if($ultimaLeitura['status']){
+                $leitura =  $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], $ultimaLeitura['equipAlarm'][0]['medida']);
+            }else{
+                $leitura = "Não recebida.";
+            }
+
             exit(json_encode(
                             array(
                                 'status' => true,
@@ -270,7 +276,8 @@
                                 'nomeEquip' => $nomeEquipamento,
                                 'modEquip' => $modeloEquipamento,
                                 'caracEquip' => $caracteristicaEquip,
-                                'pontoTab' => $pontoTabela
+                                'pontoTab' => $pontoTabela,
+                                'ultimoDado' => $leitura
                                 )
                             )
                 );

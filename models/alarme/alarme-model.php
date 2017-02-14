@@ -635,31 +635,35 @@
 
             if(is_numeric($idSim)){
 
-                $query = "SELECT id, ";
+                $query = "SELECT id, ".$param." AS 'medida'";
 
-                //VERIFICA QUAIS PARAMETROS SELECIONAR
-                // switch ($param) {
-                //     case 'Bateria':
-                //         # code...
-                //     break;
-                //     case 'Tensão':
-                //         # code...
-                //     break;
-                //     case 'Corrente':
-                //         # code...
-                //     break;
-                //     case 'Corrente':
-                //         # code...
-                //     break;
-                // }
-                $query .= " num_sim, b, c, d, e, f, g, h, i, j, l, m, n, o, p, q, r, s, t, u, dt_criacao ";
+                // $query .= " num_sim, b, c, d, e, f, g, h, i, j, l, m, n, o, p, q, r, s, t, u, dt_criacao ";
 
                 $query .= " FROM tb_dados WHERE num_sim = '$idSim' ORDER BY id DESC LIMIT 1";
 
                 /* EXECUTA A QUERY ESPECIFICADA */
-                //$result = $this->db->select($query);
+                $result = $this->db->select($query);
 
-                $array = array('status' => false);
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if($result)
+                {
+                    /* VERIFICA SE EXISTE VALOR */
+                    if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'equipAlarm' => $retorno);
+                    }else{
+                      $array = array('status' => false, 'equipAlarm' => '');
+                    }
+                }else{
+                    $array = array('status' => false, 'equipAlarm' => '');
+                }
 
             }else{
                 $array = array('status' => false);
