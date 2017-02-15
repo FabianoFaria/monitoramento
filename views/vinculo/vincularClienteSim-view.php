@@ -60,7 +60,7 @@
 
                                 }else{
                             ?>
-                                <option value="">Não há filiais disponíveis </option>
+                                <option value="0">Não há filiais disponíveis </option>
                             <?php
                                 }
 

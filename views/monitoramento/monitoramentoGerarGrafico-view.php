@@ -128,7 +128,7 @@ else
             // var_dump($cValor2);
 
             // TABELA UTILIZADAS PARA TENSÃO E CORRENTE
-            $tabela = array("b","c","d","e","f","g","i","j","l","m","n","o");
+            $tabela = array("b","c","d","e","f","g","h","j","l","m","n","o");
             $tipoES = array("R","S","T","CR","CS","CT","R","S","T","CR","CS","CT");
             $nomes = array ("entrada","saida");
 
@@ -333,7 +333,7 @@ else
 
                                      //rightVal = inc;
 
-                                     if (leftVal <= 0) {
+                                    if (leftVal <= 0) {
                                          leftVal = 0;
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
                                          $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoDesligado');
@@ -367,12 +367,14 @@ else
                                          console.log(leftVal + 'Ligado !!!!!'+ <?php echo $retorno[0+$mult]; ?>);
 
                                      }
-                                     else if (leftVal > <?php echo $retorno[2+$mult]; ?>){
+                                     else if ((leftVal > <?php echo $retorno[3+$mult]; ?>) && (leftVal < <?php echo $retorno[4+$mult]; ?>)){
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoDesligado');
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('well-blink');
                                          $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoAtencao');
                                          document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Atenção';
+
+                                          console.log(leftVal + 'Ligado Atencão!');
                                      }
 
                                      else {
@@ -413,8 +415,16 @@ else
             <!-- PAINEL CONTENDO PARTE DOS DADOS DO CLIENTE E DO EQUIPAMENTO MONITORADO -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <!-- TITULO PAINEL -->
-                    <h4 class="page-header">Monitoramento de equipamento :</h4><!-- Fim Titulo pagina -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <!-- TITULO PAINEL -->
+                            <h4 class="page-header">Monitoramento de equipamento :</h4><!-- Fim Titulo pagina -->
+                        </div>
+                        <div class="col-md-4">
+                            <a href="<?php echo HOME_URI ?>/grafico/opcaoVisualizacao/<?php echo $this->parametros[0]; ?>" class="btn btn-primary pull-right"><i class="fa fa-area-chart fa-1x"></i> Gerar relatorio gráfico</a>
+                            <a href="<?php echo HOME_URI ?>/grafico/graficoFisicoGerador" class="btn btn-primary pull-right"><i class="fa fa-clipboard fa-1x"></i> Gerar relatorio estatístico</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <!-- DETALHES DO CLIENTE -->
@@ -630,7 +640,7 @@ else
                             </div>
                             <div class="panel-body">
                                 <div class="col-lg-4">
-                                    <h4>Carga da bateria</h4>
+                                    <h4>Tensão do banco de bateria</h4>
 
                                     <!-- GRAFICO BATERIA REVISADO -->
                                     <div class="row">
@@ -690,17 +700,17 @@ else
                                             var maxBat = 420;
 
                                             setInterval(function(){  //, colocando '$idSim' no lugar de '$nova_url[0]'
-                                                var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=h&callback=?";
+                                                var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=i&callback=?";
                                                 $.getJSON(url,  function(data) {
                                                     valorBat        = parseFloat(data[0]);
                                                     var calcula     = (valorBat*100)/maxBat;
                                                     var labelCarga  = parseFloat(calcula.toFixed(2));
-                                                    console.log(calcula);
+                                                    //console.log(calcula);
                                                     // document.getElementById('div-legenda').innerHTML = valorBat;
                                                     // document.getElementById('div-cargaBat').style.width = calcula+"%";
 
                                                     //Estilização do novo gráfico de bateria
-                                                    document.getElementById('cargaBateriaPorcentagem').innerHTML = labelCarga+"%";
+                                                    document.getElementById('cargaBateriaPorcentagem').innerHTML = valorBat+" (Vdc)";
                                                     document.getElementById('cargaUtilGraficoBateria').style.width = calcula+"%";
                                                     //Se a bateria chegar a menor de 15% muda o estilo do well
                                                     if(valorBat < <?php echo $bateriaBaixo; ?>){
@@ -836,7 +846,7 @@ else
                                         $.getJSON(url,  function(data) {
 
                                             temperatura1 = parseFloat(data[0])/10;
-                                            $('#cor_temp1').html(temperatura1.toFixed(1) +" (c°)");
+                                            $('#cor_temp1').html(temperatura1.toFixed(1) +" (°C)");
                                             $('#sit-cor-temp1').html('');
 
                                             switch (temperatura1) {
@@ -864,7 +874,7 @@ else
                                         $.getJSON(url,  function(data) {
 
                                             temperatura1 = parseFloat(data[0])/10;
-                                            $('#cor_temp2').html(temperatura1.toFixed(1) +" (c°)");
+                                            $('#cor_temp2').html(temperatura1.toFixed(1) +" (°C)");
                                             $('#sit-cor-temp2').html('');
 
                                             switch (temperatura1) {
@@ -887,19 +897,19 @@ else
                                 </script>
 
                                 <div class="col-lg-3">
-                                    <h4>Medidor 1</h4>
+                                    <h4>Temperatura ambiente</h4>
                                     <!-- Medidor temperatura 1 -->
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="containerTemperatura1" style="width:100%; margin: 0 auto"></div>
-                                        <label id="cor_temp1" class="valorVindo">0 ( c° )</label>
+                                        <label id="cor_temp1" class="valorVindo">0 ( °C )</label>
                                         <div id="sit-cor-temp1" class="situacaoDesligado">Carregando...</div>
                                     </div><!-- Saida S/T -->
                                 </div>
                                 <div class="col-lg-3">
-                                    <h4>Medidor 2</h4>
+                                    <h4>Temperatura interna</h4>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="containerTemperatura2" style="width:100%; margin: 0 auto"></div>
-                                        <label id="cor_temp2" class="valorVindo">0 ( c° )</label>
+                                        <label id="cor_temp2" class="valorVindo">0 ( °C )</label>
                                         <div id="sit-cor-temp2" class="situacaoDesligado">Carregando...</div>
                                     </div><!-- Saida S/T -->
                                 </div>

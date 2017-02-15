@@ -529,7 +529,7 @@
         public function listarContatoAlarmesCliente(){
 
             $query = "SELECT clie.id, clie.nome, clie.cidade, clie.ddd, clie.telefone
-                       FROM tb_cliente clie";
+                       FROM tb_cliente clie WHERE status_ativo = '1'";
 
             /* monta result */
             $result = $this->db->select($query);

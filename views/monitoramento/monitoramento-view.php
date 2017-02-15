@@ -55,8 +55,19 @@ switch ($_SESSION['userdata']['tipo_usu']) {
 
 <div class="row">
     <div class="col-md-12">
-        <!-- Titulo pagina -->
-        <label class="page-header">Clientes configurados para monitorar</label><!-- Fim Titulo pagina -->
+        <div class="row">
+            <div class="col-md-4 pull-left">
+                <!-- Titulo pagina -->
+                <label class="page-header">Clientes configurados para monitorar</label><!-- Fim Titulo pagina -->
+            </div>
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -66,11 +77,78 @@ switch ($_SESSION['userdata']['tipo_usu']) {
         <!-- TABELA CONTENDO TODOS OS CLIENTES -->
         <div class="panel panel-default">
             <div class="panel-heading">
+                <div class="row">
+                    <form id="filtroMonitoramento" class="">
+                        <div class="col-md-3 form-group">
+                            <p>
+                                Cliente : <select id="filtroClienteLista" class="form-control">
+                                                <?php
+                                                    if($lista){
+                                                        echo "<option value=''>Selecione... </option>";
+                                                        foreach ($lista as $cliente){
+                                                            $idClie = $cliente['id'];
+                                                            $nomeClie = $cliente['nome'];
+                                                            echo "<option value='".$idClie."'>".$nomeClie."</option>";
+                                                        }
+                                                    }else{
+                                                ?>
+                                                    <option value="0">Selecione... </option>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </select>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                Local : <select id="filtroLocalLista" class="form-control">
+                                            <option value="0">Selecione... </option>
+                                        </select>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                <?php
+                                    $listaTipoEquip = $modeloEquip->listarTipoEquip();
+                                ?>
+
+                                Equipamento : <select id="filtroEquipLista" class="form-control">
+
+                                                <?php
+                                                    if($listaTipoEquip['status']){
+                                                        
+                                                        echo "<option value='0'>Todos </option>";
+
+                                                        foreach ($listaTipoEquip['equipamento'] as $typeEquipe) {
+                                                            $idType     = $typeEquipe['id'];
+                                                            $nomeType   = $typeEquipe['tipo_equipamento'];
+
+                                                            echo "<option value='".$idType."'>".$nomeType."</option>";
+                                                        }
+
+                                                    }else{
+                                                        ?>
+                                                            <option value="">Selecione... </option>
+                                                        <?php
+                                                    }
+                                                ?>
+                                            </select>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                <br />
+                                <button class="btn btn-primary" id="aplicarFiltro">Filtrar</button>
+                            </p>
+                        </div>
+
+                    </form>
+                </div>
             </div>
 
             <div class="panel-body">
                 <div class='table-responsive'>
-                    <table id="" class='table table-striped table-bordered'>
+                    <table id="listaMonitoria" class='table table-striped table-bordered'>
                         <thead>
                             <tr>
                                 <th>Nome</th>

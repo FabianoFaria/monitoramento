@@ -28,14 +28,12 @@ $dadosCliente       = $dadosCliente['dados'][0];
         //
         // var_dump($modelo->respDiference);
 
-
         $parametrosSelecionados = $modelo->respData;
 
         $dataMedida = str_replace("[",",",$modelo->respDate);
         $dataMedida = str_replace("]",",",$dataMedida);
         $dataMedida = explode(",",$dataMedida);
         //$dataMedida = $modelo->respData;
-
 
         $testeJon  =    $modelo->respData;
 
@@ -55,7 +53,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
         function getFormattedDate(x) {
             var date = new Date(x * 1000);
 
-            var month = date.getMonth() + 1;
+            var month = date.getMonth();
             var day = date.getDate();
             var hour = date.getHours();
             var min = date.getMinutes();
@@ -163,7 +161,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                             $horas    = explode(":", $datahora[1]);
                             // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
 
-                             $serie .= "[ Date.UTC(".$dias[2].", ".$dias[1].", ".$dias[0].", ".$horas[0].", ".$horas[1].", ".$horas[2]."),".$valorX."],";
+                             $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".$horas[0].", ".$horas[1].", ".$horas[2]."),".$valorX."],";
                              //var_dump(gmdate("d-m-Y H:i:s", $dataMedida[$i]));
                              //var_dump($dataMedida[$i]);
                         }
@@ -181,12 +179,12 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
         //Trata a implementação da tooltip
 
-        $("<div id='tooltip'></div>").css({
+        $("<div id='tooltip' class='panel panel-info'></div>").css({
             position: "absolute",
             display: "none",
-            border: "1px solid #fdd",
+            //border: "1px solid #fdd",
             padding: "2px",
-            "background-color": "#fee",
+            //"background-color": "#fee",
             opacity: 0.80
         }).appendTo("body");
 
@@ -208,7 +206,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     day = "0"+day;
                 }
 
-                var hour = date.getHours() + 3;
+                var hour = date.getHours() + 2;
                 var min = date.getMinutes();
                 if(min < 10){
                     min = "0"+min;
@@ -218,7 +216,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     sec = "0"+sec;
                 }
 
-				$("#tooltip").html(item.series.label + " ás " + day + "/ "+month+"/"+year+"  "+hour+":"+min+":"+sec+" = " + y)
+				$("#tooltip").html("<p>"+item.series.label + " " + day +"/"+month+"/"+year+" às "+hour+":"+min+":"+sec+"</p><p><b>"+y+" (V)</b></p>")
 				.css({top: item.pageY+5, left: item.pageX+5})
 				.fadeIn(200);
 			} else {
@@ -267,7 +265,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                             $horas    = explode(":", $datahora[1]);
                             // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
 
-                            $serie .= "[ Date.UTC(".$dias[2].", ".$dias[1].", ".$dias[0].", ".$horas[0].", ".$horas[1].", ".$horas[2]."),".$valorX."],";
+                            $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".$horas[0].", ".$horas[1].", ".$horas[2]."),".$valorX."],";
 
 
                             //$serie .= "[".$dataMedida[$i].",".$valorX."],";

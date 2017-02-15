@@ -351,7 +351,7 @@
 
         //$headers .= "Bcc: $EmailPadrao\r\n";
         $arquivo = '';
-        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-f sistemaeficaz@sistema.eficazsystem.com.br");
+        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-r sistemaeficaz@sistema.eficazsystem.com.br");
         if($enviaremail){
             return true;
         } else {

@@ -12,15 +12,6 @@
         $alertasContatos = 0;
     }
 
-    /*
-    array (size=2)
-'status' => boolean true
-'dados' =>
-array (size=11)
-  0 =>
-
-    */
-
 ?>
 
 <script type="text/javascript">

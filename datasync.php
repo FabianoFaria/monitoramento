@@ -133,11 +133,11 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
 
         $valoresBateria         = explode('|', $configuracaoSalva[3]);
         //TESTA OS VALORES DA BATERIA
-        $statusH                = comparaParametrosEquipamento($_POST['H'], $valoresBateria, $idSimEquip, 'Bateria', 'h');
+        $statusH                = comparaParametrosEquipamento($_POST['I'], $valoresBateria, $idSimEquip, 'Bateria', 'h');
 
         $valoresCorrente        = explode('|', $configuracaoSalva[4]);
         //TESTA OS VALORES DE CORRENTE
-        $statusI                = comparaParametrosEquipamento(($_POST['I']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
+        //$statusI                = comparaParametrosEquipamento(($_POST['H']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
         $statusJ                = comparaParametrosEquipamento(($_POST['J']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'j');
         $statusL                = comparaParametrosEquipamento(($_POST['L']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'l');
 
@@ -253,6 +253,24 @@ function trataValorDataSync($valor){
 }
 
 /*
+* FUNÇÃO PARA RELATAR QUEDA NO EQUIPAMENTO EM CASO DE BAIXA OU ALTA TENSÃO
+*/
+function registraFalhaEquipamento($idSim){
+
+    // MONTA A QUERY PARA SALVAR UMA FALTA
+    $query = "insert into tb_numero_falta (id_num_sim) values ('$idSim')";
+
+    // Executa a query
+    if (!$conn->query($query))
+    {
+        // Monta a query de log
+        $query = "insert into tb_log (log)  values ('Erro ao grava o numero de faltas; numero do sim [{$_POST['A']}]')";
+        // Grava o log
+        $conn->query($valor);
+    }
+}
+
+/*
 * RECEBE A ARRAY COM OS PARAMETROS DE DETERMINADA ENTRADA DE TENSÃO VARIAVEL PARA COMPARAÇÃO
 */
 function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $ParametroVerificado, $pontoTabela){
@@ -272,6 +290,11 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
 
         if(!$alarmeExiste){
             gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 3, 2, $pontoTabela);
+
+            /*
+            * REGISTRA FALHA
+            */
+            //registraFalhaEquipamento($_POST['A']);
 
             /*
             * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
@@ -301,7 +324,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             * VERIFICA SE A LISTA DE CONTATOS NÃO ESTÁ VAZIA, ENTÃO INICIA O ENVIO DE EMAILS
             */
             if(!empty($listaContatos)){
-                //var_dump($retorno);
+                var_dump($listaContatos);
 
                 foreach ($listaContatos as $contato) {
 
@@ -351,6 +374,11 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 2 ,2, $pontoTabela);
 
             /*
+            * REGISTRA FALHA
+            */
+            //registraFalhaEquipamento($_POST['A']);
+
+            /*
             * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
             */
             //Carrega a mensagem de alerta
@@ -374,7 +402,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             * Verifica se a lista de contatos não está vazia, então inicia o envio de emails
             */
             if(!empty($listaContatos)){
-                //var_dump($retorno);
+                var_dump($retorno);
 
                 foreach ($listaContatos as $contato) {
 
@@ -539,7 +567,7 @@ function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolad
     $idAlarme = mysql_insert_id();
 
     //REGISTRA OS DETALHES DO ALARME PARA CONSULTA PELO MONITOR
-    $queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta (id_alerta, parametro, parametroMedido, parametroAtingido, pontoTabela)
+    $queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta(id_alerta, parametro, parametroMedido, parametroAtingido, pontoTabela)
                             VALUES ('$idAlarme', '$parametroAvaliado', '$parametroEnviado', '$parametroViolado', '$pontoTabela')";
 
     // Grava no DB

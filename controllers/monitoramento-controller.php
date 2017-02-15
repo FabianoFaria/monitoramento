@@ -21,8 +21,9 @@ class MonitoramentoController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // Carrega o modelo
-        $modelo     = $this->load_model('monitoramento/monitoramento-model');
-        $modeloClie = $this->load_model('cliente/cliente-model');
+        $modelo         = $this->load_model('monitoramento/monitoramento-model');
+        $modeloClie     = $this->load_model('cliente/cliente-model');
+        $modeloEquip    = $this->load_model('equipamento/equipamento-model');
 
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";

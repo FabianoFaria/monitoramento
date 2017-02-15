@@ -29,7 +29,7 @@ class EquipamentoController extends MainController
         }else{
 
             //DEFINE O TITULO DA PAGINA
-            $this->title = "Equipamento";
+            $this->title = "equipamento";
 
             // DEFINE OS PARAMETRO DA FUNCAO
             $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -112,6 +112,7 @@ class EquipamentoController extends MainController
 
             // Carrega o modelo para este view
             $modelo     = $this->load_model('equipamento/equipamento-model');
+            $modeloFabri    = $this->load_model('fabricante/fabricante-model');
 
             // Carrega view
              require_once EFIPATH . "/views/_includes/header.php";

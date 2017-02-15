@@ -107,9 +107,6 @@ class GraficoGeradorModel extends MainModel
 
                 $diasDiff   = $intervalInDays;
 
-
-
-
                 // $diferencaData = $diff;
 
                 // Adiciona o final da query
@@ -136,7 +133,7 @@ class GraficoGeradorModel extends MainModel
                     case $diasDiff > 30 :
                         //MAIOR QUE UM MÊS, MOSTRA A MEDIDA DE CADA DIA
 
-                        //$query .=" MINUTE(dt_criacao) minut,";
+                        $query .=" MINUTE(dt_criacao) minut,";
                         $query .=" DAY(dt_criacao) day,";
                         $query .=" HOUR(dt_criacao) hour,";
                         $query .=" MIN(dt_criacao) min_date";
@@ -176,8 +173,7 @@ class GraficoGeradorModel extends MainModel
                     break;
                 }
 
-                $query .=" WHERE a.num_sim = '{$sim_num}' AND a.dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}'";
-
+                $query .=" WHERE a.num_sim = '{$sim_num}' AND a.dt_criacao BETWEEN '{$dataIni} 00:00:00' AND '{$dataFim} 23:59:59'";
 
                 //var_dump( $opc, $query);
 

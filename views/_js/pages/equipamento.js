@@ -82,7 +82,10 @@ $(document).ready(function(){
               	},
               	txt_qntBateria:{
               		digits : true
-              	}
+              	},
+                fabricante_opt:{
+                    required : true
+                }
             },
             messages: {
                 txt_nomeEquip:{
@@ -102,7 +105,10 @@ $(document).ready(function(){
               	},
               	txt_qntBateria:{
               		digits : "Apenas informar digitos!"
-              	}
+              	},
+                fabricante_opt:{
+                    required : "Campo obrigatório"
+                }
             }
 		});
 
@@ -115,7 +121,7 @@ $(document).ready(function(){
 			var equipamento 	= $('#txt_tipoEquip').val();
             var nomeEquipamento = $('#txt_nomeEquip').val();
 			var modEquip 		= $('#txt_modeloEquip').val();
-			var fabricante 		= $('[name=opc_fabricante]').val();
+			var fabricante 		= $('#fabricante_opt').val();
 			var quantBateria	= $('#txt_qntBateria').val();
 			var potencia		= $('#txt_potencia').val();
 			var caracteristicas	= $('#txt_caracteristica').val();
@@ -211,6 +217,9 @@ $(document).ready(function(){
         },
         txt_qntBateria:{
           digits : true
+        },
+        fabricante_opt:{
+            required : true
         }
       },
       messages: {
@@ -231,6 +240,9 @@ $(document).ready(function(){
         },
         txt_qntBateria:{
           digits : "Apenas informar digitos!"
+        },
+        fabricante_opt:{
+            required : "Campo obrigatório"
         }
       }
     });
@@ -244,7 +256,7 @@ $(document).ready(function(){
       var idFilial          = $('#filialEquipamento').val();
       var equipamento       = $('#txt_tipoEquip').val();
       var modEquip          = $('#txt_modeloEquip').val();
-      var fabricante        = $('[name=opc_fabricante]').val();
+      var fabricante        = $('#fabricante_opt').val();
       var quantBateria      = $('#txt_qntBateria').val();
       var potencia          = $('#txt_potencia').val();
       var caracteristicas   = $('#txt_caracteristica').val();

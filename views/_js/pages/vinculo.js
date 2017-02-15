@@ -11,7 +11,7 @@ function detalhesPosicao(simNumber){
 
     //Efetua a consulta na tabela de posicionamento
     $.ajax({
-        url: urlP+"/eficazmonitor/vinculo/posicoesOcupadasTabela",
+        url: urlP+"/vinculo/posicoesOcupadasTabela",
         secureuri: false,
         type : "POST",
         dataType: 'json',
@@ -73,7 +73,7 @@ $().ready(function() {
             //Efetua o cadastro via JSON
 
             $.ajax({
-             url: urlP+"/eficazmonitor/vinculo/registrarVinculoClienteJson",
+             url: urlP+"/vinculo/registrarVinculoClienteJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -94,14 +94,14 @@ $().ready(function() {
                     //alert('Vinculo cadastrado com sucesso!');
                     swal("", "'Vinculo cadastrado com sucesso!", "success");
                     setTimeout(function(){
-                        window.location.replace(urlP +"/eficazmonitor/vinculo/gerenciarVinculo/"+clienteVinculo+"/");
-                    }, 3000);
+                        window.location.replace(urlP +"/vinculo/gerenciarVinculo/"+clienteVinculo+"/");
+                    }, 2500);
                   }
                   else
                   {
                     //Settar a mensagem de erro!
                     //alert('Ocorreu um ero ao tentar cadastrar!');
-                    swal("Oops...", "Ocorreu um ero ao tentar cadastrar!", "error");
+                    swal("Oops...", "Não foi possivel cadastrar, verifique o sim para possivel duplicação!", "error");
                   }
                },
               error: function(jqXHR, textStatus, errorThrown)
@@ -157,7 +157,7 @@ $().ready(function() {
             var tipoEquipamento = $('#idTipoEquipamento').val();
 
             $.ajax({
-             url: urlP+"/eficazmonitor/vinculo/registrarVinculoEquipamentoJson",
+             url: urlP+"/vinculo/registrarVinculoEquipamentoJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -179,7 +179,7 @@ $().ready(function() {
                     //alert('Vinculo cadastrado com sucesso!');
                     swal("", resposta, "info");
                     setTimeout(function(){
-                        window.location.replace(urlP +"/eficazmonitor/equipamento/");
+                        window.location.replace(urlP +"/equipamento/");
                     }, 3000);
                   }
                   else

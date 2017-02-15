@@ -102,7 +102,25 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nome do Fabricante</label>
-                        <?php $modelo->listaFabricante(); ?>
+                        <select id="fabricante_opt" name="fabricante_opt" class="form-control">
+
+                            <option  value="" >Selecione...</option>
+                            <?php //$modelo->listaFabricante();
+
+                                if($fabricantes != false){
+
+                                    foreach ($fabricantes as $fabri) {
+                                        echo "<option  value='".$fabri['id']."' >".$fabri['nome']."</option>";
+                                    }
+
+                                }else{
+                                    echo "<option  value='' >Nennum fabricante cadastrado!</option>";
+                                }
+
+                            ?>
+
+                        </select>
+
                     </div>
                 </div><!-- fim fabricante -->
 
@@ -140,7 +158,7 @@
                  <!-- Potencia -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="Potencia">Pot&ecirc;ncia (Opcional)</label>
+                        <label for="Potencia">Pot&ecirc;ncia (Kva)</label>
                         <input type="text" class="form-control" id="txt_potencia" name="txt_potencia" placeholder="Pot&ecirc;ncia" maxlength="15"
                         value="">
                     </div>
@@ -160,7 +178,7 @@
                 <!-- Amperagem bateria -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="Amperagem">Amperagem bateria (Opcional)</label>
+                        <label for="Amperagem">Corrente  por bateria (Opcional)</label>
                         <input type="text" class="form-control" id="txt_amperagem" name="txt_amperagem" placeholder="Amperagem bateria" maxlength="10"
                         value="">
                     </div>

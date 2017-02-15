@@ -56,7 +56,7 @@ class EquipamentoModel extends MainModel
     }
 
     /*
-    * Função para carregar lista de equipamentos de cliente especifico
+    * FUNÇÃO PARA CARREGAR LISTA DE EQUIPAMENTOS DE CLIENTE ESPECIFICO
     */
     public function listarEquipamentosCliente($idCliente)
     {
@@ -102,16 +102,127 @@ class EquipamentoModel extends MainModel
         return $array;
     }
 
+    /*
+    * FILTRAR EQUIPAMENTOS DE ACORDO COM O LOCAL ESCOLHIDO
+    */
+    public function listarEquipamentosFilialCliente($idCliente, $idFili)
+    {
+        if(is_numeric($idCliente)){
+
+            $query = "SELECT equip.id, equip.nomeEquipamento, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
+                        FROM tb_equipamento equip
+                        JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
+                        LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
+                        LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
+                        LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0
+                        WHERE equip.id_cliente = '$idCliente' AND equip.id_filial = '$idFili'
+                        GROUP BY equip.id";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipamentos' => $retorno);
+                }else{
+                    $array = array('status' => false, 'equipamentos' => '');
+                }
+            }else{
+                $array = array('status' => false, 'equipamentos' => '');
+            }
+
+        }else{
+            $array = array('status' => false, 'equipamentos' => '');
+        }
+
+        return $array;
+    }
 
     /*
-    *   Carregar dados equipamento
+    * FILTRAR EQUIPAMENTOS DE ACORDO COM O LOCAL E O TIPO DE EQUIPAMENTO ESCOLHIDO
+    */
+    public function listarEquipamentosFilialClienteTipo($idCliente, $idFili, $idTipo){
+
+        if(is_numeric($idCliente) && is_numeric($idFili) && is_numeric($idTipo)){
+
+            $query = "SELECT equip.id, equip.nomeEquipamento, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip' ";
+
+            $query .= "";
+
+            $query .= " FROM tb_equipamento equip";
+            $query .= " JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante";
+            $query .= " LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id";
+            $query .= " LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id";
+            $query .= " LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0";
+            $query .= " WHERE";
+            if($idCliente != 0 ){
+                $query .= " equip.id_cliente = '$idCliente'";
+            }
+            if($idFili != 0  && $idCliente != 0 ){
+
+                $query .= " AND equip.id_filial = '$idFili'";
+            }
+            if($idTipo != 0 ){
+                if($idCliente != 0 ){
+                    $query .= " AND equip.tipo_equipamento = '$idTipo'";
+                }else{
+                    $query .= " equip.tipo_equipamento = '$idTipo'";
+                }
+            }
+
+            $query .= " GROUP BY equip.id";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipamentos' => $retorno);
+                }else{
+                    $array = array('status' => false, 'equipamentos' => '');
+                }
+            }else{
+                $array = array('status' => false, 'equipamentos' => '');
+            }
+
+        }else{
+            $array = array('status' => false, 'equipamentos' => '');
+        }
+
+        return $array;
+    }
+
+    /*
+    *   CARREGAR DADOS EQUIPAMENTO
     */
 
     public function dadosEquipamentoCliente($idEquipamento)
     {
 
         if(is_numeric($idEquipamento)){
-            $query = "SELECT equip.id, equip.id_cliente, equip.id_filial, equip.tipo_equipamento, equip.nomeEquipamento, equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria, clie.id as 'idClie', clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
+            $query = "SELECT equip.id, equip.id_cliente, equip.id_filial, equip.tipo_equipamento, equip.nomeEquipamento, equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria, equip.id_fabricante, clie.id as 'idClie', clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
                       FROM tb_equipamento equip
                       LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                       LEFT JOIN tb_cliente clie ON clie.id = equip.id_cliente
@@ -221,7 +332,7 @@ class EquipamentoModel extends MainModel
 
         $query = "UPDATE tb_equipamento SET ";
           if(isset($nomeEquipamento)){  $query .= "nomeEquipamento = '$nomeEquipamento' ,";}
-          if(isset($id_fabricante)){  $query .= "id_fabricante = '$idFabricante' ,";}
+          if(isset($idFabricante)){  $query .= "id_fabricante = '$idFabricante' ,";}
           if(isset($cliente)){  $query .= "id_cliente = '$cliente' ,";}
           if(isset($filial)){  $query .= "id_filial = '$filial' ,";}
           if(isset($equipamento)){  $query .= "tipo_equipamento = '$equipamento' ,";}

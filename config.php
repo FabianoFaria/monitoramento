@@ -21,7 +21,7 @@ define('USERPASS' , '');
 define('DBNAME' , 'eficazsystem22');
 
 // localhost
-// hostname
+// // hostname
 // define('HOSTNAME' , 'mysql03.eficazsystem2.hospedagemdesites.ws');
 // // usuario da base
 // define('USERNAME' , 'eficazsystem22');
