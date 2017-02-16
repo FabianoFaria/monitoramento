@@ -100,10 +100,14 @@ switch ($_SESSION['userdata']['tipo_usu']) {
                             </p>
                         </div>
                         <div class="col-md-3">
-                            <p>
+                            <!-- <p>
                                 Local : <select id="filtroLocalLista" class="form-control">
                                             <option value="0">Selecione... </option>
                                         </select>
+                            </p> -->
+                            <p>
+                                Local : <input type="text" class="form-control" id="filtroLocalAutoComplete" name="filtroLocalAutoComplete" value="">
+                                <input type="hidden" id="localId" value="" />
                             </p>
                         </div>
                         <div class="col-md-3">
@@ -116,7 +120,7 @@ switch ($_SESSION['userdata']['tipo_usu']) {
 
                                                 <?php
                                                     if($listaTipoEquip['status']){
-                                                        
+
                                                         echo "<option value='0'>Todos </option>";
 
                                                         foreach ($listaTipoEquip['equipamento'] as $typeEquipe) {

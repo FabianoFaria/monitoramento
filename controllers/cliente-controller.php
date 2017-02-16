@@ -207,6 +207,40 @@
     }
 
     /*
+    * CARREGAR FILIAIZ DE ACORDO COM O CLIENTE VIA AUTOCOMPLETE VIA JSON
+    */
+    public function carregarListaFilialAutoCompleteJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $clienteModelo  = $this->load_model('cliente/cliente-model');
+
+        $dadosFiliais   = $clienteModelo->carregarFiliaisAutoCompleteCliente($_GET['filtroClie'], $_GET['term']);
+
+        if(!empty($dadosFiliais['status'])){
+
+            $filiArry = array();
+
+            $lista = $dadosFiliais['filiais'];
+
+            foreach ($lista as $fili) {
+
+                $filial = array('id' => $fili['id'], 'label' => $fili['nome']);
+
+                array_push($filiArry, $filial);
+            }
+
+            // $teste = json_encode($filiArry);
+            // var_dump($teste);
+
+            exit(json_encode($filiArry));
+        }else{
+            exit(json_encode(array('status' => false, 'filiais' => '')));
+        }
+
+
+    }
+
+    /*
     * CARREGAR EQUIPAMENTOS DE FILIAL ESPECIFICA VIA JSON
     */
     public function carregarListaEquipamentoFilialJson(){
@@ -318,6 +352,7 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
+                                <th>Cliente</th>
                                 <th>local</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
@@ -332,6 +367,9 @@
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $tabela     .=$equip['modelo'];
+                            $tabela         .="</td>";
+                            $tabela         .="<td>";
+                                $tabela     .=$equip['cliente'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $tabela     .= (isset($equip['filial'])) ? $equip['filial'] : "Matriz";

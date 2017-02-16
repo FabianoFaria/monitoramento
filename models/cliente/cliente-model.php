@@ -127,6 +127,45 @@
             return $array;
          }
 
+         /*
+         * CARREGA OS DADOS DAS FILIAIS DO CLIENTE PARA AUTOCOMPLETE
+         */
+         public function carregarFiliaisAutoCompleteCliente($idCliente, $termo){
+            if(is_numeric($idCliente)){
+
+                $query = "SELECT id, nome FROM tb_filial WHERE nome LIKE '%$termo%' AND id_matriz = '$idCliente'";
+
+                /* MONTA A RESULT */
+                $result = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if ($result)
+                {
+                  /* VERIFICA SE EXISTE VALOR */
+                  if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'filiais' => $retorno);
+                  }else{
+                      $array = array('status' => false, 'filiais' => '');
+                  }
+                }else{
+                  $array = array('status' => false, 'filiais' => '');
+                }
+
+            }else{
+                $array = array('status' => false, 'filiais' => '');
+            }
+
+            return $array;
+         }
+
 
          /**
           * Funcao que cadastra o cliente
