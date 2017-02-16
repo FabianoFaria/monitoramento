@@ -142,7 +142,7 @@ switch ($_SESSION['userdata']['tipo_usu']) {
                         <div class="col-md-3">
                             <p>
                                 <br />
-                                <button class="btn btn-primary" id="aplicarFiltro">Filtrar</button>
+                                <button class="btn btn-primary" id="limparFiltro">Limpar filtro</button>
                             </p>
                         </div>
 

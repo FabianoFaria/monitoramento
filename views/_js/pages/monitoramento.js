@@ -10,6 +10,12 @@ $().ready(function() {
 
 });
 
+/*
+* FUNÇÃO PARA LIMPAR FILTROS
+*/
+$('#limparFiltro').click(function(){
+    location.reload();
+});
 
 /*
 * FUNÇÃO PARA APLICAR NOS FILTRO
