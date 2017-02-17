@@ -104,10 +104,79 @@ $retorno = $modelo->buscaRelacao();
         <!-- TABELA CONTENDO OS USUÁRIOS CADASTRADOS -->
         <div class="panel panel-default">
             <div class="panel-heading">
+                <div class="row">
+                    <form id="filtroMonitoramento" class="">
+                        <div class="col-md-3 form-group">
+                            <p>
+                                Cliente : <select id="filtroClienteListaEstatistica" class="form-control">
+                                                <?php
+                                                    if($listaClientes){
+                                                        echo "<option value=''>Selecione... </option>";
+                                                        foreach ($listaClientes as $cliente){
+                                                            $idClie = $cliente['id'];
+                                                            $nomeClie = $cliente['nome'];
+                                                            echo "<option value='".$idClie."'>".$nomeClie."</option>";
+                                                        }
+                                                    }else{
+                                                ?>
+                                                    <option value="0">Selecione... </option>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </select>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <!-- <p>
+                                Local : <select id="filtroLocalLista" class="form-control">
+                                            <option value="0">Selecione... </option>
+                                        </select>
+                            </p> -->
+                            <p>
+                                Local : <input type="text" class="form-control" id="filtroLocalAutoCompleteEstatistica" name="filtroLocalAutoCompleteEstatistica" value="">
+                                <input type="hidden" id="localId" value="" />
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                <?php
+                                    $listaTipoEquip = $modeloEquip->listarTipoEquip();
+                                ?>
 
+                                Equipamento : <select id="filtroEquipListaEstatistica" class="form-control">
+
+                                                <?php
+                                                    if($listaTipoEquip['status']){
+
+                                                        echo "<option value='0'>Todos </option>";
+
+                                                        foreach ($listaTipoEquip['equipamento'] as $typeEquipe) {
+                                                            $idType     = $typeEquipe['id'];
+                                                            $nomeType   = $typeEquipe['tipo_equipamento'];
+
+                                                            echo "<option value='".$idType."'>".$nomeType."</option>";
+                                                        }
+
+                                                    }else{
+                                                        ?>
+                                                            <option value="">Selecione... </option>
+                                                        <?php
+                                                    }
+                                                ?>
+                                            </select>
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                <br />
+                                <button class="btn btn-primary" id="limparFiltro">Limpar filtro</button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="panel-body">
-                <table class='table table-striped table-bordered'>
+                <table class='table table-striped table-bordered' id="listaMonitoria">
                     <thead>
                         <tr>
                             <th class="tdbdbottom">Cliente</th>

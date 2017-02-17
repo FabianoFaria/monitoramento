@@ -1,55 +1,39 @@
 <?php
+
     /* verifica se esta definido o path */
     if (! defined('EFIPATH')) exit();
-
 
     // Require composer autoload
     require_once EFIPATH.'/classes/mpdf/mpdf.php';
 
+    /*
+    * EFETUA O TRATAMENTO DOS PARAMETROS DE DATA_INICIO_REL
+    */
+    $dataInicio     = implode("-", array_reverse(explode(",",($this->parametros[2]))));
+    $dataFim        = implode("-", array_reverse(explode(",",($this->parametros[3]))));
+
 
     /*
-    * Prepara os dados para serem exibidos no PDF
+    * PREPARA OS DADOS PARA SEREM EXIBIDOS NO PDF
     */
     $dadosCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
 
+    //EQUIPAMENTO ESPECIFICADO
     if($dadosCliente['status']){
         $dadosCliente   = $dadosCliente['dados'][0];
-        $lista          = $modeloEquip->listarEquipamentosCliente($this->parametros[0]);
-        $lista          = $lista['equipamentos'];
+        $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[1]);
+        $lista          = $lista['equipamento'];
         $nomeCliente    = $dadosCliente['nome'];
     }else{
         $lista          = false;
     }
 
-    /*
-    * EFETUA O TRATAMENTO DOS PARAMETROS DE DATA_INICIO_REL
-    */
-    $dataInicio     = implode("-", array_reverse(explode(",",($this->parametros[1]))));
-    $dataFim        = implode("-", array_reverse(explode(",",($this->parametros[2]))));
+    //RECUPERA O TOTAL DE ALARMES REGISTRADOS DURANTE O PERIOODO, PARA O EQUIPAMENTO SELECIONADO
+    $alarmesGeral  = $modeloAlarme->totalAlarmesGeradoEquipamento($lista[0]['id'], $dataInicio, $dataFim);
 
-    //RECUPERA O TOTAL DE ALARMES REGISTRADOS DURANTE O PERIOODO
-    $totalAlertas       = 0;
-    $totalEquipamentos  = $modeloAlarme->totalEquipamentosClientes($this->parametros[0]);
-
-    if($totalEquipamentos['status']){
-
-        $equipamentos = $totalEquipamentos['equipamentos'];
-
-        //var_dump(count($equipamentos));
-        foreach ($equipamentos as $equipamento){
-
-            $alarmesGeral  = $modeloAlarme->totalAlarmesGeradoEquipamento($equipamento['id_equipamento'], $dataInicio, $dataFim);
-
-            if($alarmesGeral['status']){
-                //EFETUA A SOMA DE ALERTAS GERADOS
-                $totalAlertas = $totalAlertas + $alarmesGeral['alarmes'][0]['total'];
-
-
-            }
-            //EXIBE MEDIDADS MINIMAS E MAXIMAS REGISTRADAS PELO(S) EQUIPAMENTO(S).
-
-        }
-
+    if($alarmesGeral['status']){
+        //EFETUA A SOMA DE ALERTAS GERADOS
+        $totalAlertas = $totalAlertas + $alarmesGeral['alarmes'][0]['total'];
     }
 
     /*
@@ -118,12 +102,12 @@
         $htmlRealatorio .="</div>";
     $htmlRealatorio .="</div>";
 
-    //VERIFICAÇÃO SE EXISTEM EQUIPAMENTOS PARA EXIBIR
-    if($totalEquipamentos['status']){
+
+    if($alarmesGeral['status']){
 
         $htmlRealatorio .="<div class='row'>";
             $htmlRealatorio .="<div class='col-md-12'>";
-                $htmlRealatorio .="<h4 class='text-header'>Lista de equipamentos </h4>";
+                $htmlRealatorio .="<h4 class='text-header'>Lista de alarmes </h4>";
             $htmlRealatorio .="</div>";
         $htmlRealatorio .="</div>";
 
@@ -133,32 +117,27 @@
             $htmlRealatorio .="<div class='col-md-12'>";
 
 
-                //FOREACH PARA EXIBIÇÃO DOS EQUIPAMENTOS
-                foreach ($equipamentos as $equipamento){
+                //DETALHE DO EQUIPAMENTO
+                $htmlRealatorio .="<div class='panel panel-default'>";
+                    $htmlRealatorio .="<div class='panel-heading'>";
+                        $htmlRealatorio .= $lista[0]['tipoEquip']." ". $lista[0]['nomeEquipamento']." ". $lista[0]['modelo'];
+                    $htmlRealatorio .="</div>";
 
-                    if(isset($equipamento['nomeEquipamento'])){
 
-                        $htmlRealatorio .="<div class='panel panel-default'>";
-
-                            $htmlRealatorio .="<div class='panel-heading'>";
-                                $htmlRealatorio .= $equipamento['tipo_equipamento']." ".$equipamento['nomeEquipamento']." ".$equipamento['modelo'];
-                            $htmlRealatorio .="</div>";
-
-                            $htmlRealatorio .="<div class='panel-body'>";
-
-                            //MONTA A TABELA COM OS ALARMES GERADOS PELO EQUIPAMENTO
-                            $htmlRealatorio .="<div class='row'>";
-
+                    $htmlRealatorio .="<div class='panel-body'>";
+                        //MONTA A TABELA COM OS ALARMES GERADOS PELO EQUIPAMENTO
+                        $htmlRealatorio .="<div class='row'>";
                             //TOTAL DE ALARMES DO EQUIPAMENTO
                             $totalAlarmes  = 0;
-                            $alarmesGeral  = $modeloAlarme->totalAlarmesGeradoEquipamento($equipamento['id_equipamento'], $dataInicio, $dataFim);
+                            $alarmesGeral  = $modeloAlarme->totalAlarmesGeradoEquipamento($lista[0]['id'], $dataInicio, $dataFim);
 
                             if($alarmesGeral['status']){
 
                                 $totalAlarmes = $alarmesGeral['alarmes'][0]['total'];
+
                             }
 
-                            $alarmEquip    = $modeloAlarme->recuperaAlarmesEquipamento($equipamento['id_equipamento'], $dataInicio, $dataFim);
+                            $alarmEquip    = $modeloAlarme->recuperaAlarmesEquipamento($lista[0]['id'], $dataInicio, $dataFim);
 
                             //INICIO DA TABELA
                             $htmlRealatorio .="<div class='col-md-12'>";
@@ -172,7 +151,7 @@
                                                     <th>Data Origem</th>
                                                     <th>Status</th>
                                                     <th>Mensagem</th>
-                                                    <th>Parametro</th>
+
                                                     <th>Medida</th>
                                                     <th>Tratamento</th>
                                                 </tr>
@@ -217,26 +196,28 @@
                                                 $htmlRealatorio .= "<td>";
                                                     $htmlRealatorio .= $alarm['mensagem'];
                                                 $htmlRealatorio .= "</td>";
+                                                // $htmlRealatorio .= "<td>";
+                                                //     $htmlRealatorio .= $alarm['parametro'];
+                                                // $htmlRealatorio .= "</td>";
                                                 $htmlRealatorio .= "<td>";
-                                                    $htmlRealatorio .= $alarm['parametro'];
-                                                $htmlRealatorio .= "</td>";
-                                                $htmlRealatorio .= "<td>";
-                                                    switch ($alarm['parametro']){
-                                                        case 'Bateria':
-                                                            # code...
-                                                        break;
-                                                        case 'Temperatura':
-                                                            # code...
-                                                        break;
-                                                        /*
-                                                        TRATA CASOS DE CORRENTE E TENSÃO
-                                                        */
-                                                        default:
 
-                                                            $htmlRealatorio .= "<span class='text-danger'>".$alarm['parametroMedido']." (V) </span> / <span class='text-primary'> ".$alarm['parametroAtingido']." (V)</span>";
+                                                switch ($alarm['parametro']){
+                                                    case 'Bateria':
+                                                        # code...
+                                                    break;
+                                                    case 'Temperatura':
+                                                        # code...
+                                                    break;
+                                                    /*
+                                                    TRATA CASOS DE CORRENTE E TENSÃO
+                                                    */
+                                                    default:
 
-                                                        break;
-                                                    }
+                                                        $htmlRealatorio .= "<span class='text-danger'>".$alarm['parametroMedido']." (V) </span> / <span class='text-primary'> ".$alarm['parametroAtingido']." (V)</span>";
+
+                                                    break;
+                                                }
+
                                                 $htmlRealatorio .= "</td>";
                                                 $htmlRealatorio .= "<td>";
                                                     $htmlRealatorio .= (isset($alarm['tratamento_aplicado'])) ? $alarm['tratamento_aplicado'] : "";
@@ -254,14 +235,12 @@
 
                             $htmlRealatorio .="</div>";
 
-
-                            $htmlRealatorio .="</div>";
-
+                        //FIM DO ROW
                         $htmlRealatorio .="</div>";
 
-                        $htmlRealatorio .="</div>";
-                    }
-                }
+                    $htmlRealatorio .="</div>";
+
+                $htmlRealatorio .="</div>";
 
             $htmlRealatorio .="</div>";
         $htmlRealatorio .="</div>";
@@ -276,7 +255,6 @@
         $htmlRealatorio .="</div>";
 
     }
-
 
     //FIM DO HTML
     $htmlRealatorio .= "</body>";

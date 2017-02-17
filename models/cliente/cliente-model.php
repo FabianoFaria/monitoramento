@@ -359,6 +359,55 @@
         }
 
         /*
+        * FUNÇÃO PARA CARREGAR DADO DO CLIENTE COM BASE NO EQUIPAMENTO FORNECIDO
+        */
+        public function carregarDadosClienteEquipamento($idEquipamento){
+
+            if(is_numeric($idEquipamento)){
+
+                $query = "SELECT
+                          c.id, c.nome , c.endereco, c.numero, c.cep, c.cidade, c.bairro, c.ddd, c.telefone , p.nome as pais ,
+                          e.nome as estado , p.id as idpais, e.id as idestado
+                          FROM tb_cliente c
+                          INNER JOIN tb_pais p on p.id = c.id_pais
+                          INNER JOIN tb_estado e on e.id = c.id_estado
+                          INNER JOIN tb_equipamento equip on equip.id_cliente = c.id
+                          WHERE equip.id = '$idEquipamento'";
+
+                /* monta result */
+                $result = $this->db->select($query);
+
+                if ($result){
+                  /* verifica se existe valor */
+                  if (@mysql_num_rows($result)>0)
+                  {
+                      /* pega os valores e monta um array */
+                      while ($row = @mysql_fetch_assoc($result))
+                          $retorno[] = $row;
+
+                      /* retorna o select */
+                      $cliente  = $retorno;
+                    //   $status   = true;
+                       $array = array('status' => true, 'dados' => $cliente) ;
+                  }
+                  else
+                    /* fim */
+                     $array = array('status' => false, 'dados' => '') ;
+
+                }else{
+                  /* fim */
+                  //$status = false;
+                  $array = array('status' => false, 'dados' => '') ;
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
+        /*
         * FUNÇÃO QUE RECUPERA OS DADOS DO CONTATOS DO CLIENTE
         */
         public function carregaDadosContato($idCliente)
