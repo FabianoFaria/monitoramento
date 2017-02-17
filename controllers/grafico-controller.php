@@ -26,9 +26,9 @@ class GraficoController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // Carrega o modelo para este view
-        $modelo     = $this->load_model('grafico/grafico-model');
-
-        $modeloClie = $this->load_model('cliente/cliente-model');
+        $modelo         = $this->load_model('grafico/grafico-model');
+        $modeloEquip    = $this->load_model('equipamento/equipamento-model');
+        $modeloClie     = $this->load_model('cliente/cliente-model');
 
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";

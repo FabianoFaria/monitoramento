@@ -14,7 +14,7 @@ $().ready(function() {
 * FUNÇÃO PARA LIMPAR FILTROS
 */
 $('#limparFiltro').click(function(){
-    location.reload();
+    window.location.replace(urlP +"/eficazmonitor/monitoramento/");
 });
 
 /*
@@ -27,6 +27,9 @@ $('#filtroClienteLista').change(function() {
     var idCliente = $(this).val();
 
     if(idCliente != ''){
+        
+        $('#filtroLocalAutoComplete').val("");
+
         //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
         $.ajax({
             url: urlP+"/eficazmonitor/cliente/carregarListaFilialClienteJson",
