@@ -207,8 +207,10 @@
                   $array = array('status' => false, 'alerta' => '');
 
                     //$retorno[] = $row;
-                  }
+              }
 
+            }else{
+              $array = array('status' => false, 'alerta' => '');
             }
 
             return $array;

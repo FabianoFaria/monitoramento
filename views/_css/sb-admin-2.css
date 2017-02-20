@@ -528,3 +528,10 @@ table.dataTable thead .sorting:after {
 .legendLabel{
     color: #0d0d0e;
 }
+
+/*
+* Propiedade do menu principal do sistema
+*/
+.menuPrincipalGeral{
+  margin-top: 90px;
+}

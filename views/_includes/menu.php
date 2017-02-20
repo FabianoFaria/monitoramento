@@ -66,7 +66,7 @@ if($notificacaoAlertas['status']){
                 <span class="icon-bar"></span>
             </button>
             <div id="logoNavBar">
-              <a href="<?php echo HOME_URI; ?>/home/"><img src="<?php echo HOME_URI; ?>/views/_images/logos.png" class="imgLogoBarra"></a>
+              <a href="<?php echo HOME_URI; ?>/home/"><img src="<?php echo HOME_URI; ?>/views/_images/logo-eficaz-system_small.png" class="img-responsive"></a>
             </div>
 
         </div>
@@ -215,7 +215,7 @@ if($notificacaoAlertas['status']){
         </ul>
         <!-- /.navbar-top-links -->
 
-        <div class="navbar-default sidebar" role="navigation">
+        <div class="navbar-default sidebar menuPrincipalGeral" role="navigation">
           <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <!-- HOME -->
