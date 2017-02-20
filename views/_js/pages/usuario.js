@@ -14,11 +14,11 @@ $().ready(function() {
                 	 }
                 });
 
-                 //Ao verificar se os dados de contato do usuário 
+                 //Ao verificar se os dados de contato do usuário
                 if($('#edit_usuario').valid()){
 
                         console.log('Continue...');
-                	
+
                 }
 
 	});
@@ -32,7 +32,7 @@ $().ready(function() {
 
 
     $('#txt_telefone_usuario').mask('(999) 9999-9999');
-    $('#txt_celular_usuario').mask('(999) 9999-9999');
+    $('#txt_celular_usuario').mask('(999) 99999-9999');
 
     /*
     * FUNÇÃO PARA ATUALIZAR O USUÁRIO

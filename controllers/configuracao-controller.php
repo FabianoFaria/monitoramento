@@ -179,6 +179,7 @@ class ConfiguracaoController extends MainController
             $modelo         = $this->load_model('configuracao/configuracao-model');
             $modeloEquip    = $this->load_model('equipamento/equipamento-model');
             $modeloClie     = $this->load_model('cliente/cliente-model');
+            $modeloAlarm    = $this->load_model('alarme/alarme-model');
 
             // CARREGA A VIEW
             require_once EFIPATH . "/views/_includes/header.php";

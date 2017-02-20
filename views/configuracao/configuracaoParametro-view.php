@@ -5,7 +5,21 @@ if (!defined('EFIPATH')) exit();
 // Carregaas configurações do equipamento, se existirem
 $configuracaoEquip  = $modelo->carregarConfiguracaoEquip($this->parametros[0]);
 $detalhesEquip      = $modeloEquip->detalhesEquipamentoParaConfiguracao($this->parametros[0]);
+$dadosEquipamento   = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
 
+//CARREGAR CONTATOS QUE RECEBERÃO OS EMAILS DE ALERTA
+if($dadosEquipamento['status']){
+
+    $idFilial   = $dadosEquipamento['equipamento'][0]['id_filial'];
+    $idCliente  = $dadosEquipamento['equipamento'][0]['id_cliente'];
+    /*
+        'id_cliente' => string '48' (length=2)
+        'id_filial' => string '0' (length=1)
+    */
+
+    $listaContatos = $modeloAlarm->listarContatoAlarmes($idCliente, $idFilial);
+
+}
 
 
 if($configuracaoEquip['status']){
@@ -26,6 +40,8 @@ if($detalhesEquip['status']){
 }
 
 //var_dump($configuracaoSalva);
+
+var_dump($detalhesEquip);
 
 // Carrega os clientes
 //$retorno = $modelo->carregaParametroForm();
@@ -394,256 +410,12 @@ if($detalhesEquip['status']){
                         </div>
                         <div class="col-md-4 ">
                             <div class="form-group">
-                                <button id="salvarConfiguracaoParametros" type="button" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar parametros</button>
+                                <button id="salvarConfiguracaoParametros" type="button" name="btn_salvar" class="btn btn-info btn-group btn-group-justified" value="Salvar">Salvar parametros</button>
                             </div>
                          </div>
                     </div>
 
                 </form>
-
-                <!-- form contendo os dados do cliente -->
-                <!-- <form id="formConfiguracaoParametros" method="post"> -->
-
-                        <!-- <div class="row">
-                            <div class="col-lg-12">
-                               <div class="panel panel-default">
-                                   <div class="panel-heading">
-                                      ENTRADA
-                                   </div>
-                                   <div class="panel-body"> -->
-
-                                       <?php
-
-                                        //    for ($a=1; $a<4; $a++)
-                                        //    {
-                                           //
-                                        //        //Caso seja uma edição de configuração
-                                        //        if(!is_numeric($parametrosEquip)){
-                                        //            // AMOSTRA STRING ESPERADA : 'eb-1-0|et1-1-0|ei-1-0|et2-1-0|ea-1-0|'
-                                        //            $valoresEntrada = explode('|', $configuracaoSalva[$a]);
-                                           //
-                                        //        }
-
-                                        ?>
-                                            <!-- <div class="row">
-
-                                                <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <label class="page-header" for="exampleInputEmail1">Entrada <?php echo $a?> </label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-2">
-                                                    <div class="form-group has-error">
-                                                        <label for="exampleInputEmail1" class="control-label">Valor crítico baixo</label>
-                                                        <input type="text" class="form-control" id="eb-<?php echo $a;?>" name="eb-<?php echo $a;?>" placeholder="000,00" maxlength="7" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[0]) : ""; ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-2">
-                                                    <div class="form-group has-warning">
-                                                        <label for="exampleInputEmail1" class="control-label">Valor baixo</label>
-                                                        <input type="text" class="form-control" id="et-<?php echo $a;?>" name="et-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[1]) : ""; ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-2">
-                                                    <div class="form-group has-success">
-                                                        <label for="exampleInputEmail1" class="control-label">Valor Ideal</label>
-                                                        <input type="text" class="form-control" id="ei-<?php echo $a;?>" name="ei-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[2]) : ""; ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-2">
-                                                    <div class="form-group has-warning">
-                                                        <label for="exampleInputEmail1" class="control-label">Valor alto</label>
-                                                        <input type="text" class="form-control" id="et2-<?php echo $a;?>" name="et2-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[3]) : ""; ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-2">
-                                                    <div class="form-group has-error">
-                                                        <label for="exampleInputEmail1" class="control-label">Valor crítico alto</label>
-                                                        <input type="text" class="form-control " id="ea-<?php echo $a;?>" name="ea-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
-                                                    </div>
-                                                </div>
-
-                                            </div> -->
-                                        <?php
-                                           //
-                                        //    }
-
-                                       ?>
-
-                                   <!-- </div>
-                                   <div class="panel-footer">
-
-                                   </div>
-                               </div>
-                           </div>
-                       </div> -->
-
-                       <!-- <div class="row">
-                           <div class="col-lg-12">
-                              <div class="panel panel-default">
-                                  <div class="panel-heading">
-                                      SAÍDA
-                                  </div>
-                                  <div class="panel-body"> -->
-
-                                    <?php
-
-                                        // for ($a=1; $a<4; $a++)
-                                        // {
-                                        //     //Caso seja uma edição de configuração
-                                        //     if(!is_numeric($parametrosEquip)){
-                                        //         // AMOSTRA STRING ESPERADA : 'eb-1-0|et1-1-0|ei-1-0|et2-1-0|ea-1-0|'
-                                        //         $valoresEntrada = explode('|', $configuracaoSalva[$a + 3]);
-                                        //
-                                        //     }
-                                    ?>
-                                        <!-- <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label class="page-header" for="exampleInputEmail1">Saída <?php echo $a?> </label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-error">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor crítico baixo</label>
-                                                    <input type="text" class="form-control" id="sb-<?php echo $a;?>" name="sb-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[0]) : ""; ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-warning">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor baixo</label>
-                                                    <input type="text" class="form-control" id="st1-<?php echo $a;?>" name="st1-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[1]) : ""; ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-success">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor Ideal</label>
-                                                    <input type="text" class="form-control" id="si-<?php echo $a;?>" name="si-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[2]) : ""; ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-warning">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor alto</label>
-                                                    <input type="text" class="form-control" id="st2-<?php echo $a;?>" name="st2-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[3]) : ""; ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-error">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor crítico alto</label>
-                                                    <input type="text" class="form-control" id="sa-<?php echo $a;?>" name="sa-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                    <?php
-
-                                        // }
-
-                                    ?>
-
-                                  <!-- </div>
-                                  <div class="panel-footer">
-
-                                  </div>
-                              </div>
-                          </div>
-                       </div> -->
-
-                       <!-- <div class="row">
-                           <div class="col-lg-12">
-                              <div class="panel panel-default">
-                                  <div class="panel-heading">
-                                      TENSÃO BATERIA(S)
-                                  </div>
-                                  <div class="panel-body"> -->
-
-                                    <?php
-
-                                        // for ($a=1; $a<3; $a++)
-                                        // {
-                                        //
-                                        //     //Caso seja uma edição de configuração
-                                        //     if(!is_numeric($parametrosEquip)){
-                                        //         // AMOSTRA STRING ESPERADA : 'eb-1-0|et1-1-0|ei-1-0|et2-1-0|ea-1-0|'
-                                        //         $valoresEntrada = explode('|', $configuracaoSalva[$a + 6]);
-                                        //
-                                        //     }
-                                    ?>
-                                        <!-- <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group ">
-                                                    <label class="page-header" for="exampleInputEmail1">Tensão <?php echo $a?> </label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-error">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor crítico baixo</label>
-                                                    <input type="text" class="form-control" id="tb-<?php echo $a;?>" name="tb-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[0]) : ""; ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-warning">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor baixo</label>
-                                                    <input type="text" class="form-control" id="tt1-<?php echo $a;?>" name="tt1-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[1]) : ""; ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-success">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor Ideal</label>
-                                                    <input type="text" class="form-control" id="ti-<?php echo $a;?>" name="ti-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[2]) : ""; ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-warning">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor alto</label>
-                                                    <input type="text" class="form-control" id="tt2-<?php echo $a;?>" name="tt2-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[3]) : ""; ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group has-error">
-                                                    <label for="exampleInputEmail1" class="control-label">Valor crítico alto</label>
-                                                    <input type="text" class="form-control" id="ta-<?php echo $a;?>" name="ta-<?php echo $a;?>" placeholder="000,00" maxlength="7" onkeypress="" value="<?php echo  (!is_numeric($parametrosEquip)) ? $this->trataValor($valoresEntrada[4]) : ""; ?>">
-                                                </div>
-                                            </div>
-                                        </div> -->
-
-                                    <?php
-
-                                        // }
-
-                                    ?>
-<!--
-                                  </div>
-                                  <div class="panel-footer">
-
-                                  </div>
-                              </div>
-                          </div>
-                       </div> -->
-                       <!-- <div class="row">
-                           <div class="col-md-4">
-                           </div>
-                           <div class="col-md-4 ">
-                               <div class="form-group">
-                                   <button id="salvarConfiguracaoParam" type="button" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar parametros</button>
-                               </div>
-                            </div>
-                        </div>
-                </form> -->
 
             <?php
                 }else{
@@ -666,5 +438,95 @@ if($detalhesEquip['status']){
             <?php
                 }
             ?>
+    </div>
+</div>
+<div class="row">
+    <div class="md-col-12">
+
+        <label class="page-header">Gerenciar recebimento de alarmes</label>
+
+        <?php
+
+            var_dump($listaContatos);
+        ?>
+
+        <!-- Contatos de alarme já cadastrados -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- TABELA CONTENDO TODOS OS CLIENTES -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>
+                                    Contatos já cadastrados
+                                </h5>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control" id="listarSedes">
+                                    <option value=""> Selecione a matriz ou filial</option>
+                                    <?php
+                                        if($filiais !=0){
+                                            echo "<option value='0'> Matriz </option>";
+                                            foreach ($filiais as $filial) {
+                                                echo "<option value='".$filial['id']."'> ".$filial['nome']." </option>";
+                                            }
+                                        }else{
+                                            echo "<option value='0'> Contato matriz </option>";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class='table-responsive'>
+                                <table id="stream_table_contatos" class='table table-striped table-bordered'>
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Função</th>
+                                            <th>Email</th>
+                                            <th>Celular</th>
+                                            <th>Observação</th>
+                                            <th class="txt-center">Editar</th>
+                                            <th class="txt-center">Excluir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+
+                                            foreach ($listaContatos['contatos'] as $contato) {
+
+                                                /*
+                                                array (size=2)
+                                                'status' => boolean true
+                                                'contatos' =>
+                                                array (size=1)
+                                                  0 =>
+                                                    array (size=8)
+                                                      'id' => string '7' (length=1)
+                                                      'id_cliente' => string '48' (length=2)
+                                                      'id_filial' => string '9' (length=1)
+                                                      'nome_contato' => string 'Contato B' (length=9)
+                                                      'funcao' => string 'Monitor' (length=7)
+                                                      'email' => string 'email@email.com' (length=15)
+                                                      'celular' => string '3213213213213' (length=13)
+                                                      'observacao' => string 'Nenhuma' (length=7)
+                                                */
+                                            }
+
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

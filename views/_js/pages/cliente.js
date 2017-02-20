@@ -29,12 +29,12 @@ $().ready(function() {
     //Adição de máscara de edição
 
     $('#txt_ddd').mask('(999)');
-    $('#txt_telefone').mask('9999-9999');
+    $('#txt_telefone').mask("99999-9999");
     $('#txt_cep').mask('99999-999');
-    $('#txt_telefone_contato').mask('(999) 9999-9999');
-    $('#txt_celular_contato').mask('(999) 9999-9999');
+    $('#txt_telefone_contato').mask('(999) 99999-9999');
+    $('#txt_celular_contato').mask('(999) 99999-9999');
 
-    $('.telefonaFilial').mask('9999-9999');
+    $('.telefonaFilial').mask('9999-99999');
 
     //Collapse dados do usuário
     $('#accordionCliente').hide();
@@ -162,6 +162,8 @@ $().ready(function() {
 
             //Após concluir o cadastro, trava os campos do formulario da empresa cliente
 
+            $('#validarResponsavel').fadeOut();
+
             $('#cadCliete input').prop('readonly', true);
 
             $('#accordionCliente').fadeIn();
@@ -274,6 +276,8 @@ $().ready(function() {
                  // STOP LOADING SPINNER
                 }
             });
+
+            $('#validarContatoCliente').fadeOut();
 
             $('#cadContatoCliente input').prop('readonly', true);
 
@@ -409,6 +413,7 @@ $().ready(function() {
 
             }else{
                 //FINALIZA O PROCESSO DE CADASTRO DE EMPRESAS CLIENTES
+                swal("","Cadastro de cliente foi concluido!","success");
 
                 setTimeout(function(){
                         window.location.replace(urlP +"/eficazmonitor/cliente/");

@@ -21,12 +21,12 @@
         /* FUNÇÃO RESPONSAVEL PELA LISTAGEM DE CONTATOS PARA RECEBER O ALARME
         *
         */
-        public function listarContatoAlarmes($idCliente, $idFilial = 0)
+        public function listarContatoAlarmes($idCliente, $idFilial = 0, $todos = 0)
         {
             if(is_numeric($idCliente)){
 
                 //Verifica se foi selecionado alguma filial
-                if($idFilial == 0){
+                if($todos == 1){
 
                     //Procura por contatos apenas do cliente
                     $query = "SELECT contAlert.id, contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.funcao, contAlert.email, contAlert.celular, contAlert.observacao
@@ -37,7 +37,7 @@
                     //Procura por contatos da filial selecionada
                     $query = "SELECT contAlert.id, contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.funcao, contAlert.email, contAlert.celular, contAlert.observacao
                             FROM tb_contato_alerta contAlert
-                            WHERE contAlert.id_cliente  = $idCliente AND contAlert.id_filial = $idFilial";
+                            WHERE contAlert.id_cliente  = '$idCliente' AND contAlert.id_filial = '$idFilial'";
                 }
 
                 /* MONTA A RESULT */
