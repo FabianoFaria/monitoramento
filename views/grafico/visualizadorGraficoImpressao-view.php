@@ -289,8 +289,23 @@
 
     $mpdf->SetTitle('Relatorio cliente ');
 
+    $stylesheet = HOME_URI.'/views/_css/bootstrap.min.css';
+    //require_once HOME_URI.'/views/_css/bootstrap.css';
+    function http_get_contents($url)
+    {
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      if(FALSE === ($retval = curl_exec($ch))) {
+        error_log(curl_error($ch));
+      } else {
+        return $retval;
+      }
+    }
+
     // Write some HTML code:
-    $mpdf->WriteHTML($stylesheet,1);
+    $mpdf->WriteHTML(http_get_contents($stylesheet),1);
     $mpdf->WriteHTML($htmlRealatorio,2);
 
     // Output a PDF file directly to the browser
