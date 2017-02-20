@@ -60,7 +60,7 @@
                 <div class="panel-body">
 
                 	<!-- form contendo os dados do cliente -->
-                    <form id="editCliete" method="post">
+                    <form id="editCliete" method="post" enctype="multipart/form-data">
                     	<div class="row">
                     		 <!-- nome do cliente -->
                           <div class="col-md-4">
@@ -85,6 +85,15 @@
                             </div>
                           </div><!-- fim do telefone -->
                         </div>
+                        <!-- imagem cliente -->
+                        <!-- <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="imputImageImgUser">Imagem do cliente</label>
+                                    <input type="file" id="imputImageImgUser" name="imputImageImgUser" />
+                                </div>
+                            </div>
+                        </div> -->
                         <div class="row">
                           <!-- endereco do cliente -->
                           <div class="col-md-6">
@@ -135,8 +144,23 @@
                           <!-- pais -->
                           <div class="col-md-5">
                             <div class="form-group">
-                              <label for="pais">Pais</label><br>
-                              <?php $modelo->listaPaises(); ?>
+                              <label for="paises">Pais</label><br>
+                              <select id="paises" name="paises" class="form-control">
+                              <?php
+                                //$modelo->listaPaises();
+
+                                    $paises = $modelo->listaPaisesSimples();
+
+                                    foreach ($paises as $pais) {
+                                        if($pais['id'] == $dadosCliente['idpais']){
+                                            echo "<option value='".$pais['id']."' selected>".$pais['pais']."</option>";
+                                        }else{
+                                            echo "<option value='".$pais['id']."'>".$pais['pais']."</option>";
+                                        }
+                                    }
+
+                                ?>
+                                </select>
                             </div>
                           </div><!-- fim do pais -->
 
@@ -144,8 +168,22 @@
                           <!-- estado -->
                           <div class="col-md-5">
                             <div class="form-group">
-                              <label for="estado">Estado</label><br>
-                              <?php $modelo->listaEstado(); ?>
+                              <label for="estados">Estado</label><br>
+                              <select id="estados" name="estados" class="form-control">
+                                  <?php
+
+                                      $estadosFili = $modelo->listaEstadosSimples();
+                                      //$modelo->listaEstado(); listaEstadosSimples
+                                      foreach ($estadosFili as $estado) {
+                                          if($estado['id'] == $dadosCliente['idestado']){
+                                              echo "<option value='".$estado['id']."' selected>".$estado['nome']."</option>";
+                                          }else{
+                                              echo "<option value='".$estado['id']."'>".$estado['nome']."</option>";
+                                          }
+                                      }
+                                      echo "<option value='999'>Estado ou condado fora do país</option>";
+                                  ?>
+                              </select>
                             </div>
                           </div><!-- fim do estado -->
 

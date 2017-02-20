@@ -421,8 +421,10 @@ else
                             <h4 class="page-header">Monitoramento de equipamento :</h4><!-- Fim Titulo pagina -->
                         </div>
                         <div class="col-md-4">
-                            <a href="<?php echo HOME_URI ?>/grafico/opcaoVisualizacao/<?php echo $this->parametros[0]; ?>" class="btn btn-primary pull-right"><i class="fa fa-area-chart fa-1x"></i> Gerar relatorio gráfico</a>
-                            <a href="<?php echo HOME_URI ?>/grafico/graficoFisicoGerador" class="btn btn-primary pull-right"><i class="fa fa-clipboard fa-1x"></i> Gerar relatorio estatístico</a>
+                            <div class="list-group">
+                                <a href="<?php echo HOME_URI ?>/grafico/opcaoVisualizacao/<?php echo $idEquip; ?>" class="btn-primary list-group-item"><i class="fa fa-area-chart fa-1x"></i> Gerar relatorio gráfico</a>
+                                <a href="<?php echo HOME_URI ?>/grafico/graficoFisicoParametrosEquipamentoCliente/<?php echo $idEquip; ?>" class="btn-primary list-group-item"><i class="fa fa-clipboard fa-1x"></i> Gerar relatorio estatístico</a>
+                            </div>
                         </div>
                     </div>
                 </div>

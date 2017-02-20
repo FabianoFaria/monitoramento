@@ -483,22 +483,10 @@
 
                         <div class="row">
                             <div class="col-md-4">
-
                             </div>
                             <div class="col-md-4">
-                                <div id="resultadoPositivo" class="panel panel-green" style="display:none;">
-                                    <div class="panel-heading">
-                                        Cadastro concluido
-                                    </div>
-                                    <div class="panel-body">
-                                        <p>
-                                            Cadastro de cliente foi concluido com susceso! Você será redirecionando em breve.
-                                        </p>
-                                    </div>
-                                    <div class="panel-footer">
-
-                                    </div>
-                                </div>
+                            </div>
+                            <div class="col-md-4">
                             </div>
                         </div>
                     </div>

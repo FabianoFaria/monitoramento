@@ -494,8 +494,24 @@ $().ready(function() {
             var numero          = $('#txt_numero').val();
             var bairro          = $('#txt_bairro').val();
             var cidade          = $('#txt_cidade').val();
-            var estado          = $('#estado').val();
-            var pais            = $('#pais').val();
+            var estado          = $('#estados').val();
+            var pais            = $('#paises').val();
+            // var formUpload      = document.getElementById('imputImageImgUser');
+            //var formData = new FormData();
+
+            // var fd = new FormData();
+            // fd.append('file', $("#imputImageImgUser"));
+            // fd.append('idCliente', $("#txt_idCliente").val());
+            // fd.append('nomeCliente', $("#txt_cliente").val());
+            // fd.append('ddd', $("#txt_ddd").val());
+            // fd.append('telefone', $("#txt_telefone").val());
+            // fd.append('cep', $("#txt_cep").val());
+            // fd.append('endereco', $("#txt_endereco").val());
+            // fd.append('numero', $("#txt_numero").val());
+            // fd.append('bairro', $("#txt_bairro").val());
+            // fd.append('cidade', $("#txt_cidade").val());
+            // fd.append('estado', $("#estado").val());
+            // fd.append('pais', $("#pais").val());
 
             //Efetua cadastro do cliente via JSON
             $.ajax({
@@ -503,7 +519,8 @@ $().ready(function() {
              secureuri: false,
              type : "POST",
              dataType: 'json',
-             data      : {
+             data      :
+             {
               'idCliente' : idCliente,
               'nome_cliente' : nomeCliente,
               'ddd' : ddd,
@@ -515,8 +532,8 @@ $().ready(function() {
               'cidade' : cidade,
               'estado' : estado,
               'pais'   : pais
-              },
-                   success : function(datra)
+             },
+                success : function(datra)
                     {
                        //tempTest = JSON(datra);
                        if(datra.status == true)

@@ -223,7 +223,7 @@
               <h4 class="modal-title" id="myModalLabel">Editar Usuário</h4>
             </div>
             <div class="modal-body">
-                <form id="formEditUser" method="post">
+                <form id="formEditUser" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
