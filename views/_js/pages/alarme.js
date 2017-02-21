@@ -18,7 +18,7 @@ $('#myModal').on('hidden.bs.modal', function (e) {
 
 
 /*
-* Carrega os dados para posterior cahamda de modal para edição
+* CARREGA OS DADOS PARA POSTERIOR CAHAMDA DE MODAL PARA EDIÇÃO
 */
 function atualizarContato(id_contatoAlerta)
 {
@@ -220,7 +220,7 @@ $().ready(function() {
     });
 
     /*
-    * Função para salvar as alterações efetuadas no contato
+    * FUNÇÃO PARA SALVAR AS ALTERAÇÕES EFETUADAS NO CONTATO
     */
     $('#registraAlteracao').click(function(){
 

@@ -190,6 +190,23 @@
     }
 
     /*
+    * Função para remover um contato da lista
+    */
+    public function removerContatosAlarmesJson(){
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $alarmeModelo     = $this->load_model('alarme/alarme-model');
+
+        $contatoRemovido  = $alarmeModelo->removerContatoLista($_POST['idContato']);
+
+        if($contatoRemovido['status']){
+            exit(json_encode(array('status' => $contatoRemovido['status'])));
+        }else{
+            exit(json_encode(array('status' => $contatoRemovido['status'])));
+        }
+    }
+
+
+    /*
     * Função para carregar os dados do Alarme via JSON
     */
     public function carregarDetalhesAlarmeJson(){

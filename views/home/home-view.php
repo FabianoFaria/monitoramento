@@ -97,31 +97,6 @@
 
     </script>
 
-    <!-- MENSAGEM DE BOAS VINDAS -->
-
-    <!-- <div class="row">
-        <div class="col-md-8 barraBemvindo"> -->
-            <!-- Titulo pagina -->
-            <!-- <label class="page-header">
-                <h4>Bem vindo, <?php// echo $_SESSION['userdata']['firstname']." ".$_SESSION['userdata']['secondname']; ?></h4>
-            </label> -->
-        <!-- </div>
-        <div class="col-md-4 pull-right"> -->
-            <!-- <div class="panel panel-info">
-                <div class="panel-heading">
-                    <i class="fa fa-clock-o  fa-fw"></i> Última atualização
-                </div>
-                <div class="panel-body">
-                    <p>
-                        <?php // Exibe alguma coisa como: Monday 8th of August 2005 03:12:46 PM
-                            //echo date('d/ m/ Y, g:i a');
-                        ?>
-                    </p>
-                </div>
-            </div> -->
-        <!-- </div>
-    </div> -->
-
     <?php
 
         //Se usuário for administrador

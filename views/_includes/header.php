@@ -10,7 +10,7 @@
 	</head>
 
         <!-- FAVICON -->
-        <link rel="shortcut icon" href="<?php echo HOME_URI; ?>/views/_images/favicon.ico">
+        <link rel="shortcut icon" href="<?php echo HOME_URI; ?>/views/_images/favicon2.ico">
         <link rel="apple-touch-icon" href="<?php echo HOME_URI; ?>/views/_images/apple-icon.png">
 
         <!-- Font Files -->

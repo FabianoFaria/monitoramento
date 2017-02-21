@@ -142,6 +142,26 @@
 
         }
 
+        public function removerContatoLista($idContato){
+
+            if(is_numeric($idContato)){
+
+                $query = "DELETE FROM tb_contato_alerta WHERE id = $idContato";
+
+                if ($this->db->query($query))
+                {
+                    $array = array('status' => true);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
         /*
         * Função para salvar as alterações do contato
         */
