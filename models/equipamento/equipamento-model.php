@@ -24,11 +24,39 @@ class EquipamentoModel extends MainModel
     */
     public function listarEquipamentos()
     {
-        $query = "SELECT equip.id, equip.tipo_equipamento as 'equipamento', tipo_equip.tipo_equipamento, fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', simEquip.id_sim as 'sim_clie'
+        /*
+            id_users,
+            id_fabricante,
+            id_cliente,
+            id_filial,
+            tipo_equipamento,
+            nomeModeloEquipamento,
+            correnteBateria,
+            potencia,
+            tensaoBancoBateria,
+            correnteBancoBateria,
+            qnt_bateria,
+            quantidade_banco_bateria,
+            quantidade_bateria_por_banco,
+            tipo_bateria,
+            localBateria
+        */
+
+        $query = "SELECT
+        equip.id,
+        equip.nomeModeloEquipamento,
+         equip.tipo_equipamento as 'equipamento',
+          tipo_equip.tipo_equipamento, fabri.nome as 'fabricante',
+          equip.potencia,
+          equip.qnt_bateria,
+          equip.tipo_bateria,
+           equip.localBateria,
+          clie.nome as 'cliente', fili.nome as 'filial',  simEquip.id_sim as 'sim_clie'
                     FROM tb_equipamento equip
                     JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                     LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                     LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
+                    LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0
                     LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id
                     WHERE equip.status_ativo = '1'";
 
@@ -155,8 +183,14 @@ class EquipamentoModel extends MainModel
     public function listarEquipamentosFilialClienteTipo($idCliente, $idFili, $idTipo){
 
         if(is_numeric($idCliente) && is_numeric($idFili) && is_numeric($idTipo)){
-
-            $query = "SELECT equip.id, equip.nomeEquipamento, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip' ";
+            $query = "SELECT equip.id,
+             equip.nomeModeloEquipamento,
+             equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante',
+             equip.potencia,
+             equip.qnt_bateria,
+             equip.tipo_bateria,
+             equip.localBateria,
+             equip.amperagem_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip' ";
 
             $query .= "";
 
@@ -222,7 +256,43 @@ class EquipamentoModel extends MainModel
     {
 
         if(is_numeric($idEquipamento)){
-            $query = "SELECT equip.id, equip.id_cliente, equip.id_filial, equip.tipo_equipamento, equip.nomeEquipamento, equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria, equip.id_fabricante, clie.id as 'idClie', clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
+
+            /*
+                id_users,
+                id_fabricante,
+                id_cliente,
+                id_filial,
+                tipo_equipamento,
+                nomeModeloEquipamento,
+                correnteBateria,
+                potencia,
+                tensaoBancoBateria,
+                correnteBancoBateria,
+                qnt_bateria,
+                quantidade_banco_bateria,
+                quantidade_bateria_por_banco,
+                tipo_bateria,
+                localBateria
+            */
+
+
+            $query = "SELECT
+                    equip.id,
+                    equip.id_fabricante,
+                    equip.id_cliente,
+                    equip.id_filial,
+                    equip.tipo_equipamento,
+                    equip.nomeModeloEquipamento,
+                    equip.correnteBateria,
+                    equip.potencia,
+                    equip.tensaoBancoBateria,
+                    equip.correnteBancoBateria,
+                    equip.qnt_bateria,
+                    equip.quantidade_banco_bateria,
+                    equip.quantidade_bateria_por_banco,
+                    equip.tipo_bateria,
+                    equip.localBateria,
+                    clie.id as 'idClie', clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
                       FROM tb_equipamento equip
                       LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                       LEFT JOIN tb_cliente clie ON clie.id = equip.id_cliente
@@ -266,11 +336,29 @@ class EquipamentoModel extends MainModel
     * Registra vis JSON os dados do equipamento
     */
 
-    public function registrarEquipamentoJson($idCliente, $idFilial, $equipamento, $nomeEquipamento, $modEquip, $fabricante, $quantBateria, $caracteristicas, $amperagem, $tipoBateria, $potencia){
+    public function registrarEquipamentoJson($idCliente, $idFilial, $equipamento, $fabricante, $nomeModelo, $correnteBateria, $potencia, $tensaoBancoBat, $correnteBanco, $quantBat, $quantBancoBat, $quantBatPorBanc, $tipoBateria, $localBateria){
 
         // Verifica se os cambos obrigatorios nao sao nulos
-        if ($idCliente != "" && $equipamento != "" && $modEquip != "" && $fabricante != "")
+        if ($idCliente != "" && $equipamento != "" && $equipamento != "" && $fabricante != "")
         {
+
+            /*
+                id_users,
+                id_fabricante,
+                id_cliente,
+                id_filial,
+                tipo_equipamento,
+                nomeModeloEquipamento,
+                correnteBateria,potencia,
+                tensaoBancoBateria,
+                correnteBancoBateria,
+                qnt_bateria,
+                quantidade_banco_bateria,
+                quantidade_bateria_por_banco,
+                tipo_bateria,
+                localBateria
+            */
+
 
             // Trata os valores
             $idUser         = $_SESSION['userdata']['userId'];
@@ -278,17 +366,25 @@ class EquipamentoModel extends MainModel
             $idFilial       = ($idFilial == '') ? 0 : $idFilial;
             $idFabri        = $fabricante;
             $tipoEquip      = $equipamento;
-            $nomeEquipamento = isset($nomeEquipamento) && !empty ($nomeEquipamento) ? $this->converte($this->tratamento($nomeEquipamento)) : '';
-            $modeloEquip    = isset($modEquip) && !empty ($modEquip) ? $this->converte($this->tratamento($modEquip)) : '';
+            $nomeEquipamento = isset($nomeModelo) && !empty ($nomeModelo) ? $this->converte($this->tratamento($nomeModelo)) : '';
+
             $potencia       = isset($potencia) && !empty ($potencia) ? $this->converte($this->tratamento($potencia)) : '';
-            $qntBateria     = isset($quantBateria) && !empty ($quantBateria) ? $this->converte($this->tratamento($quantBateria)) : 0;
-            $caracteristica = isset($caracteristicas) && !empty ($caracteristicas) ? $this->converte($this->tratamento($caracteristicas)) : '';
+            $tensaoBancoBat = isset($tensaoBancoBat) && !empty ($tensaoBancoBat) ? $this->converte($this->tratamento($tensaoBancoBat)) : '';
+            $correnteBanco  = isset($correnteBanco) && !empty ($correnteBanco) ? $this->converte($this->tratamento($correnteBanco)) : '';
+            $correnteBateria = isset($correnteBateria) && !empty ($correnteBateria) ? $this->converte($this->tratamento($correnteBateria)) : '';
+
+            $qntBateria     = isset($quantBat) && !empty ($quantBat) ? $this->converte($this->tratamento($quantBat)) : 0;
+            $quantBancoBat  = isset($quantBancoBat) && !empty ($quantBancoBat) ? $this->converte($this->tratamento($quantBancoBat)) : 0;
+            $quantBatPorBanc = isset($quantBatPorBanc) && !empty ($quantBatPorBanc) ? $this->converte($this->tratamento($quantBatPorBanc)) : 0;
+
             $tipoBateria    = isset($tipoBateria) ? $tipoBateria : '';
-            $amperagem      = isset($amperagem) && !empty ($amperagem) ? $this->converte($this->tratamento($amperagem)) : '';
+            $localBateria   = isset($localBateria) ? $localBateria : '';
 
             // Se nao estiver em branco
             // Realiza a insercao no banco
-            $query          = "INSERT INTO tb_equipamento (id_users, id_fabricante, id_cliente, id_filial, tipo_equipamento, nomeEquipamento, modelo, potencia,qnt_bateria, caracteristica_equip, tipo_bateria, amperagem_bateria) VALUES ('$idUser','$idFabri', '$idCliente', '$idFilial','$tipoEquip','$nomeEquipamento','$modeloEquip','$potencia','$qntBateria','$caracteristica','$tipoBateria','$amperagem')";
+            $query          = "INSERT INTO tb_equipamento (
+                id_users,id_fabricante,id_cliente,id_filial,tipo_equipamento,nomeModeloEquipamento,correnteBateria,potencia,tensaoBancoBateria,correnteBancoBateria,qnt_bateria,quantidade_banco_bateria,quantidade_bateria_por_banco,tipo_bateria,localBateria)
+                VALUES ('$idUser','$idFabri','$idCliente','$idFilial','$tipoEquip','$nomeEquipamento','$correnteBateria','$potencia','$tensaoBancoBat','$correnteBanco','$qntBateria','$quantBancoBat','$quantBatPorBanc','$tipoBateria','$localBateria')";
 
             //var_dump($query);
 
@@ -312,37 +408,70 @@ class EquipamentoModel extends MainModel
     *   Editar equipamento via JSON
     */
 
-    public function editarEquipamentoJson($nomeEquipamento, $idEquip, $idFabricante, $idCliente, $idFilial, $equipamento, $modEquip, $caracteristicas, $quantBateria, $amperagem, $tipoBateria, $potencia)
+    public function editarEquipamentoJson(
+        $idEquip,
+        $idCliente,
+        $idFilial,
+        $equipamento,
+        $idFabricante,
+        $nomeModelo,
+        $correnteBateria,
+        $potencia,
+        $tensaoBancoBat,
+        $correnteBanco,
+        $quantBat,
+        $quantBancoBat,
+        $quantBatPorBanc,
+        $tipoBateria,
+        $localBateria)
     {
 
         // Armazena o retorno do post
-        $nomeEquipamento    = $this->tratamento($nomeEquipamento);
+
         $idEquip            = $this->tratamento($idEquip);
-        $idFabricante       = $this->tratamento($idFabricante);
+
         $cliente            = $this->tratamento($idCliente);
         $filial             = $this->tratamento($idFilial);
         $equipamento        = $this->tratamento($equipamento);
-        $modEquip           = $this->tratamento($modEquip);
-        $caracteristicas    = $this->tratamento($caracteristicas);
-        $quantBateria       = $this->tratamento($quantBateria);
-        $amperagem          = $this->tratamento($amperagem);
-        $tipoBateria        = $this->tratamento($tipoBateria);
+        $idFabricante       = $this->tratamento($idFabricante);
+        $nomeModelo         = $this->tratamento($nomeModelo);
+
+        $correnteBateria    = $this->tratamento($correnteBateria);
         $potencia           = $this->tratamento($potencia);
+        $tensaoBancoBat     = $this->tratamento($tensaoBancoBat);
+        $correnteBanco      = $this->tratamento($correnteBanco);
+
+        $quantBat           = $this->tratamento($quantBat);
+        $quantBancoBat      = $this->tratamento($quantBancoBat);
+        $quantBatPorBanc    = $this->tratamento($quantBatPorBanc);
+
+        $tipoBateria        = $this->tratamento($tipoBateria);
+        $localBateria       = $this->tratamento($localBateria);
 
 
         $query = "UPDATE tb_equipamento SET ";
-          if(isset($nomeEquipamento)){  $query .= "nomeEquipamento = '$nomeEquipamento' ,";}
-          if(isset($idFabricante)){  $query .= "id_fabricante = '$idFabricante' ,";}
           if(isset($cliente)){  $query .= "id_cliente = '$cliente' ,";}
           if(isset($filial)){  $query .= "id_filial = '$filial' ,";}
           if(isset($equipamento)){  $query .= "tipo_equipamento = '$equipamento' ,";}
-          if(isset($modEquip)){  $query .= "modelo = '$modEquip' ,";}
-          if(isset($caracteristicas)){  $query .= "caracteristica_equip = '$caracteristicas' ,";}
-          if(isset($quantBateria)){  $query .= "qnt_bateria = '$quantBateria' ,";}
-          if(isset($amperagem)){  $query .= "amperagem_bateria = '$amperagem' ,";}
+          if(isset($idFabricante)){  $query .= "id_fabricante = '$idFabricante' ,";}
+
+          if(isset($nomeModelo)){  $query .= "nomeModeloEquipamento  = '$nomeModelo' ,";}
+
+          if(isset($correnteBateria)){  $query .= "correnteBateria  = '$correnteBateria' ,";}
+          if(isset($potencia)){  $query .= "potencia = '$potencia' ,";}
+          if(isset($tensaoBancoBat)){  $query .= "tensaoBancoBateria  = '$tensaoBancoBat' ,";}
+          if(isset($correnteBanco)){  $query .= "correnteBancoBateria  = '$correnteBanco' ,";}
+
+          if(isset($quantBat)){  $query .= "qnt_bateria = '$quantBat' ,";}
+          if(isset($quantBancoBat)){  $query .= "quantidade_banco_bateria  = '$quantBancoBat' ,";}
+          if(isset($quantBatPorBanc)){  $query .= "quantidade_bateria_por_banco = '$quantBatPorBanc' ,";}
+
           if(isset($tipoBateria)){  $query .= "tipo_bateria = '$tipoBateria' ,";}
-          if(isset($potencia)){  $query .= "potencia = '$potencia' ";}
+          if(isset($localBateria)){  $query .= "localBateria  = '$localBateria' ";}
+
         $query .= " WHERE id = '$idEquip'";
+
+        // var_dump($query);
 
         /* monta result */
           $result = $this->db->query($query);

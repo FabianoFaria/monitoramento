@@ -35,16 +35,18 @@
 <div class="row">
     <div class="col-lg-12">
         <!-- TITULO PAGINA -->
-        <label class="page-header">Registrar novo equipamento</label><!-- Fim Titulo pagina -->
+        <h3 class="page-header">Registrar novo equipamento</h3><!-- Fim Titulo pagina -->
     </div>
 </div>
 
  <div class="row">
     <div class="col-lg-12">
 
-        <!-- formulario de cadastro -->
+        <!-- FORMULARIO DE CADASTRO -->
         <form id="novoEquipamento" method="post">
             <div class="row">
+
+                <h4 class="page-header">Cliente e local do equipamento</h4>
 
                 <div class="col-md-4">
                     <div class="form-group">
@@ -65,6 +67,7 @@
                         </select>
                     </div>
                 </div><!-- fim fabricante -->
+
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Filial com o equipamento : </label>
@@ -74,7 +77,11 @@
                     </div>
                 </div><!-- fim filial -->
 
-                <!-- Tipo de equipamento -->
+            </div>
+
+            <div class="row">
+
+                <!-- TIPO DE EQUIPAMENTO -->
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="tipoEquipamento">Tipo de Equipamento</label>
@@ -95,10 +102,7 @@
                     </div>
                 </div><!-- fim tipo do equipamento -->
 
-            </div>
-
-            <div class="row">
-                <!-- fabricante -->
+                <!-- FABRICANTE -->
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nome do Fabricante</label>
@@ -124,70 +128,98 @@
                     </div>
                 </div><!-- fim fabricante -->
 
-                <!-- Tipo de equipamento -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="nomeEquipamento">Nome do Equipamento</label>
-                        <input type="text" class="form-control" id="txt_nomeEquip" name="txt_nomeEquip" placeholder="Tipo de Equipamento" maxlength="80"
-                        value="">
-                    </div>
-                </div><!-- fim tipo do equipamento -->
-
                 <!-- Modelo de equipamento -->
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="modeloEquipamento">Modelo de Equipamento</label>
-                        <input type="text" class="form-control" id="txt_modeloEquip" name="txt_modeloEquip" placeholder="Modelo de Equipamento" maxlength="80"
+                        <input type="text" class="form-control" id="txt_nomeModeloEquip" name="txt_nomeModeloEquip" placeholder="Modelo de Equipamento" maxlength="80"
                         required value="">
                     </div>
                 </div><!-- fim modelo do equipamento -->
 
+            </div>
 
+            <div class="row">
+
+                <h4 class="page-header">Bateria do equipamento</h4>
+
+                <!-- Corrente da bateria -->
+               <div class="col-md-4">
+                   <div class="form-group">
+                       <label for="Potencia">Corrente da bateria (V)</label>
+                       <input type="text" class="form-control" id="txt_correnteBat" name="txt_correnteBat" placeholder="Corrente da bateria" maxlength="15"
+                       value="">
+                   </div>
+               </div><!-- fim corrente da bateria -->
+
+                <!-- POTENCIA -->
+               <div class="col-md-4">
+                   <div class="form-group">
+                       <label for="Potencia">Pot&ecirc;ncia (Kva)</label>
+                       <input type="text" class="form-control" id="txt_potencia" name="txt_potencia" placeholder="Pot&ecirc;ncia" maxlength="15"
+                       value="">
+                   </div>
+               </div><!-- fim potencia -->
 
             </div>
+
             <div class="row">
-                 <!-- Quantidade de bateria -->
+
+                <!-- TENSÃO BANCO DE BATERIA -->
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="qntBateria">Quantidade de bateria (Opcional)</label>
-                        <input type="text" class="form-control" id="txt_qntBateria" name="txt_qntBateria" placeholder="Quantidade de bateria" maxlength="5"
-                        onkeypress="retun onlyNumber(event);" value="">
-                    </div>
+                   <div class="form-group">
+                       <label for="Potencia">Tensão do banco de bateria (V)</label>
+                       <input type="text" class="form-control" id="txt_tensao_bancoBat" name="txt_tensao_bancoBat" placeholder="Tesão banco de bateria" maxlength="15"
+                       value="">
+                   </div>
+                </div><!-- TENSÃO BANCO DE BATERIA -->
+
+                <!-- CORRENTE BANCO DE BATERIA -->
+                <div class="col-md-4">
+                   <div class="form-group">
+                       <label for="Potencia">Corrente do banco de bateria (A)</label>
+                       <input type="text" class="form-control" id="txt_correnteBancoBat" name="txt_correnteBancoBat" placeholder="Corrente do banco de bateria" maxlength="15"
+                       value="">
+                   </div>
+                </div><!-- CORRENTE BANCO DE BATERIA -->
+
+            </div>
+
+            <div class="row">
+
+                <!-- Quantidade de bateria -->
+                <div class="col-md-4">
+                   <div class="form-group">
+                       <label for="qntBateria">Quantidade de bateria (Opcional)</label>
+                       <input type="text" class="form-control" id="txt_qntBateria" name="txt_qntBateria" placeholder="Quantidade de bateria" maxlength="5"
+                       onkeypress="retun onlyNumber(event);" value="">
+                   </div>
                 </div><!-- fim quantidade de bateria -->
 
-                 <!-- Potencia -->
+                <!-- Quantidade de banco de bateria -->
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="Potencia">Pot&ecirc;ncia (Kva)</label>
-                        <input type="text" class="form-control" id="txt_potencia" name="txt_potencia" placeholder="Pot&ecirc;ncia" maxlength="15"
-                        value="">
-                    </div>
-                </div><!-- fim potencia -->
+                  <div class="form-group">
+                      <label for="qntBateria">Quantidade de banco de bateria (Opcional)</label>
+                      <input type="text" class="form-control" id="txt_qntBancoBateria" name="txt_qntBancoBateria" placeholder="Quantidade de bateria" maxlength="5"
+                      onkeypress="retun onlyNumber(event);" value="">
+                  </div>
+                </div><!-- fim quantidade de bateria -->
 
-                <!-- Caracteristica do equipamento -->
+                <!-- Quantidade de banco de bateria -->
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="caracteristica">Caracter&iacute;sticas equipamento (Opcional)</label>
-                        <input type="text" class="form-control" id="txt_caracteristica" name="txt_caracteristica" placeholder="Caracter&iacute;sticas equipamento"
-                        maxlength="30" value="">
-                    </div>
-                </div><!-- fim Caracteristica do equipamento -->
+                     <div class="form-group">
+                         <label for="qntBateria">Quantidade de bateria por banco (Opcional)</label>
+                         <input type="text" class="form-control" id="txt_qntBateriaPorBanco" name="txt_qntBateriaPorBanco" placeholder="Quantidade de bateria por banco" maxlength="5"
+                         onkeypress="retun onlyNumber(event);" value="">
+                     </div>
+                </div><!-- fim quantidade de bateria -->
 
             </div>
-            <div class="row">
-                <!-- Amperagem bateria -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="Amperagem">Corrente  por bateria (Opcional)</label>
-                        <input type="text" class="form-control" id="txt_amperagem" name="txt_amperagem" placeholder="Amperagem bateria" maxlength="10"
-                        value="">
-                    </div>
-                </div><!-- fim Amperagem bateria -->
 
-                <!-- Tipo de bateria -->
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="tipoBateria">Tipo de bateria (Opcional)</label>
+                        <label for="tipoBateria">Tipo de bateria</label>
                         <select id="opc_tipoBateria" name="opc_tipoBateria" spellcheck="false" class="form-control">
                             <option value=''>Selecione um tipo de bateria</option>
                             <option value='Selada'>Selada</option>
@@ -197,16 +229,27 @@
                     </div>
                 </div><!-- fim Tipo de bateria -->
 
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="tipoBateria">Banco de bateria externo/interno</label>
+                        <select id="opc_localBat" name="opc_localBat" spellcheck="false" class="form-control">
+                            <option value=''>Selecione um tipo de bateria</option>
+                            <option value='Interna'>Interna</option>
+                            <option value='Externa'>Externa</option>
+                        </select>
+                    </div>
+                </div><!-- fim Tipo de bateria -->
+
             </div>
 
-            <!-- botao de enviar -->
             <div class="row">
                 <div class="col-md-4">
                 </div>
                 <div class="col-md-4">
-                    <div class=" txt-center"><button id="validarCadastroEquipamento" type="button" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar equipamento</button></div>
+                    <div class=" txt-center"><button id="validarCadastroEquipamento" type="button" name="btn_salvar" class="btn btn-info btn-lg btn-block" value="Salvar">Salvar equipamento</button></div>
                 </div>
-            </div><!-- fim do botao de envio -->
+            </div>
         </form>
+
     </div>
 </div>

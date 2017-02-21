@@ -50,9 +50,9 @@
                                 <th>Fabricante</th>
                                 <!-- <th>Potencia</th>-->
                                 <th>Cliente</th>
+                                <th>Local</th>
                                 <!-- <th>Quantidade baterias</th> -->
                                 <th>N° SIM</th>
-                                <th>Caracteristica</th>
                                 <!-- <th>Tipo bateria</th> -->
                                 <th class="txt-center">Configurar parametros</th>
                                 <th class="txt-center">Editar equipamento</th>
@@ -67,13 +67,23 @@
                             ?>
                                 <tr>
                                     <td><?php echo $equipamento['tipo_equipamento']; ?></td>
-                                    <td><?php echo $equipamento['modelo']; ?></td>
+                                    <td><?php echo $equipamento['nomeModeloEquipamento']; ?></td>
                                     <td><?php echo $equipamento['fabricante']; ?></td>
                                     <!-- <td><?php //echo $equipamento['potencia']; ?></td> -->
                                     <td><?php echo $equipamento['cliente']?></td>
+                                    <td><?php
+
+                                            if(isset($equipamento['filial'])){
+                                                echo $equipamento['filial'];
+                                            }else{
+                                                echo 'Matriz';
+                                            }
+
+                                        ?>
+                                    </td>
                                     <!-- <td><?php //echo $equipamento['qnt_bateria']; ?></td> -->
                                     <td><?php echo (isset($equipamento['sim_clie'])) ? $equipamento['sim_clie'] : "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> Vincular N° SIM </a>"; ?></td>
-                                    <td><?php echo $equipamento['caracteristica_equip']; ?></td>
+
                                     <!-- <td><?php //echo $equipamento['tipo_bateria']; ?></td> -->
                                     <td><?php //echo $equipamento['amperagem_bateria']; ?>
                                         <a href="<?php echo HOME_URI; ?>/configuracao/configurarEquipamentoCliente/<?php echo $equipamento['id'] ?>" class="link-tabela-moni">

@@ -272,13 +272,13 @@ if($notificacaoAlertas['status']){
                             <spam>Equipamentos</span>
                           </a>
                         </li>
-                        <li>
-                            <a href="<?php echo HOME_URI; ?>/alarme" class="">
+                        <!-- <li>
+                            <a href="">/alarme" class="">
                               <i class="fa fa-volume-up fa-1x"></i>
                               <span class="icon-side"></span>
                               <spam>Alarmes</span>
                             </a>
-                        </li>
+                        </li> -->
 
                        </ul>
                       <!-- /.nav-second-level -->

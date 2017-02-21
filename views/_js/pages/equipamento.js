@@ -6,6 +6,17 @@ $(document).ready(function(){
     var host = pathArray[2];
     var urlP = protocol + '//' + host;
 
+    /*
+    * APLICAÇÃO DE MASCARAS PARA OS CAMPOS DO FORMULARIOS
+    */
+
+    $('#txt_correnteBat').mask('999.99');
+    $('#txt_potencia').mask('999.99');
+    $('#txt_tensao_bancoBat').mask('999.99');
+    $('#txt_correnteBancoBat').mask('999.99');
+    $('#txt_qntBateria').mask('999');
+    $('#txt_qntBancoBateria').mask('999');
+    $('#txt_qntBateriaPorBanco').mask('999');
 
 	/*
 	*	JSON Listener para listar as filiais do cliente caso existam
@@ -65,50 +76,71 @@ $(document).ready(function(){
 
 		$('#novoEquipamento').validate({
 			rules: {
-                txt_nomeEquip:{
-                    required : true
-                },
+
                 clienteEquipamento:{
                     required : true
                 },
-              	txt_tipoEquip:{
+                txt_nomeModeloEquip:{
+                    required : true
+                },
+                txt_tipoEquip:{
               		required : true
-              	},
-              	txt_modeloEquip:{
-              		required : true
-              	},
-              	txt_modeloEquip:{
-              		required : true
-              	},
-              	txt_qntBateria:{
-              		digits : true
               	},
                 fabricante_opt:{
                     required : true
+                },
+                txt_correnteBat:{
+                    required : true
+                },
+                txt_potencia : {
+                    required : true
+                },
+                txt_tensao_bancoBat :{
+                    required : true
+                },
+                txt_correnteBancoBat :{
+                    required : true
+                },
+                opc_tipoBateria :{
+                    required : true
+                },
+                opc_localBat :{
+                    required : true
                 }
+
             },
             messages: {
-                txt_nomeEquip:{
+                clienteEquipamento:{
                     required : "Campo obrigatório"
                 },
-                clienteEquipamento: {
+                txt_nomeModeloEquip:{
                     required : "Campo obrigatório"
                 },
-              	txt_tipoEquip:{
-              		required : "Campo obrigatório"
-              	},
-              	txt_modeloEquip:{
-              		required : "Campo obrigatório"
-              	},
-              	txt_modeloEquip:{
-              		required : "Campo obrigatório"
-              	},
-              	txt_qntBateria:{
-              		digits : "Apenas informar digitos!"
-              	},
+                txt_tipoEquip:{
+                    required : "Campo obrigatório"
+                },
                 fabricante_opt:{
                     required : "Campo obrigatório"
+                },
+                txt_correnteBat:{
+                    required : "Campo obrigatório"
+                },
+                txt_potencia : {
+                    required : "Campo obrigatório"
+                },
+                txt_tensao_bancoBat :{
+                    required : "Campo obrigatório"
+                },
+                txt_correnteBancoBat :{
+                    required : "Campo obrigatório"
+                },
+                opc_tipoBateria :{
+                    required : "Campo obrigatório"
+                },
+                opc_localBat :{
+                    required : "Campo obrigatório"
                 }
+
             }
 		});
 
@@ -116,17 +148,24 @@ $(document).ready(function(){
 
 			//$("#scope_input").val(ui.value).change();
 
-			var idCliente 		= $('#clienteEquipamento').val();
-			var idFilial  		= $('#filialEquipamento').val();
-			var equipamento 	= $('#txt_tipoEquip').val();
-            var nomeEquipamento = $('#txt_nomeEquip').val();
-			var modEquip 		= $('#txt_modeloEquip').val();
-			var fabricante 		= $('#fabricante_opt').val();
-			var quantBateria	= $('#txt_qntBateria').val();
-			var potencia		= $('#txt_potencia').val();
-			var caracteristicas	= $('#txt_caracteristica').val();
-			var amperagem 		= $('#txt_amperagem').val();
-			var tipoBateria 	= $('#opc_tipoBateria').val();
+            var idCliente 		= $('#clienteEquipamento').val();
+            var idFilial  		= $('#filialEquipamento').val();
+
+            var equipamento 	= $('#txt_tipoEquip').val();
+            var fabricante 		= $('#fabricante_opt').val();
+            var nomeModelo      = $('#txt_nomeModeloEquip').val();
+
+            var correnteBat     = $('#txt_correnteBat').val();
+            var potencia        = $('#txt_potencia').val();
+            var tensaoBanco     = $('#txt_tensao_bancoBat').val();
+            var correnteBanco   = $('#txt_correnteBancoBat').val();
+
+            var quantBat        = $('#txt_qntBateria').val();
+            var quantBancoBat   = $('#txt_qntBancoBateria').val();
+            var quantBatPorBanc = $('#txt_qntBateriaPorBanco').val();
+
+            var tipoBat         = $('#opc_tipoBateria').val();
+            var localBat        = $('#opc_localBat').val();
 
 			//Verifica se um fabricante foi selecionado!
 
@@ -143,14 +182,17 @@ $(document).ready(function(){
 	              'idCliente' 		: idCliente,
 	              'idFilial'  		: idFilial,
 	              'equipamento'  	: equipamento,
-                  'nomeEquipamento' : nomeEquipamento,
-	              'modEquip'  		: modEquip,
-	              'fabricante'  	: fabricante,
-	              'quantBateria'  	: quantBateria,
-	              'caracteristicas' : caracteristicas,
-	              'amperagem'  		: amperagem,
-	              'tipoBateria'  	: tipoBateria,
-	              'potencia'		: potencia
+                  'fabricante'  	: fabricante,
+                  'nomeModelo'      : nomeModelo,
+                  'correnteBateria' : correnteBat,
+                  'potencia'        : potencia,
+                  'tensaoBancoBat'  : tensaoBanco,
+                  'correnteBanco'   : correnteBanco,
+                  'quantBat'        : quantBat,
+                  'quantBancoBat'   : quantBancoBat,
+                  'quantBatPorBanc' : quantBatPorBanc,
+                  'tipoBateria'     : tipoBat,
+                  'localBateria'    : localBat
                 },
 
                    success : function(datra)
@@ -200,68 +242,95 @@ $(document).ready(function(){
 
     $('#editarEquipamento').validate({
       rules: {
-        txt_nomeEquip:{
-            required : true
-        },
-        clienteEquipamento:{
-          required : true
-        },
-        txt_tipoEquip:{
-          required : true
-        },
-        txt_modeloEquip:{
-          required : true
-        },
-        txt_modeloEquip:{
-          required : true
-        },
-        txt_qntBateria:{
-          digits : true
-        },
-        fabricante_opt:{
-            required : true
-        }
+          clienteEquipamento:{
+              required : true
+          },
+          txt_nomeModeloEquip:{
+              required : true
+          },
+          txt_tipoEquip:{
+              required : true
+          },
+          fabricante_opt:{
+              required : true
+          },
+          txt_correnteBat:{
+              required : true
+          },
+          txt_potencia : {
+              required : true
+          },
+          txt_tensao_bancoBat :{
+              required : true
+          },
+          txt_correnteBancoBat :{
+              required : true
+          },
+          opc_tipoBateria :{
+              required : true
+          },
+          opc_localBat :{
+              required : true
+          }
+
       },
       messages: {
-        txt_nomeEquip:{
-         required : "Campo obrigatório"
-        },
-        clienteEquipamento: {
-          required : "Campo obrigatório"
-        },
-        txt_tipoEquip:{
-          required : "Campo obrigatório"
-        },
-        txt_modeloEquip:{
-          required : "Campo obrigatório"
-        },
-        txt_modeloEquip:{
-          required : "Campo obrigatório"
-        },
-        txt_qntBateria:{
-          digits : "Apenas informar digitos!"
-        },
-        fabricante_opt:{
-            required : "Campo obrigatório"
-        }
+          clienteEquipamento:{
+              required : "Campo obrigatório"
+          },
+          txt_nomeModeloEquip:{
+              required : "Campo obrigatório"
+          },
+          txt_tipoEquip:{
+              required : "Campo obrigatório"
+          },
+          fabricante_opt:{
+              required : "Campo obrigatório"
+          },
+          txt_correnteBat:{
+              required : "Campo obrigatório"
+          },
+          txt_potencia : {
+              required : "Campo obrigatório"
+          },
+          txt_tensao_bancoBat :{
+              required : "Campo obrigatório"
+          },
+          txt_correnteBancoBat :{
+              required : "Campo obrigatório"
+          },
+          opc_tipoBateria :{
+              required : "Campo obrigatório"
+          },
+          opc_localBat :{
+              required : "Campo obrigatório"
+          }
       }
     });
 
     if($('#editarEquipamento').valid()){
       //console.log('prossiga com a edição!!');
 
-      var nomeEquipamento   = $('#txt_nomeEquip').val();
       var idEquip           = $('#idEquip').val();
-      var idCliente         = $('#clienteEquipamento').val();
-      var idFilial          = $('#filialEquipamento').val();
-      var equipamento       = $('#txt_tipoEquip').val();
-      var modEquip          = $('#txt_modeloEquip').val();
-      var fabricante        = $('#fabricante_opt').val();
-      var quantBateria      = $('#txt_qntBateria').val();
-      var potencia          = $('#txt_potencia').val();
-      var caracteristicas   = $('#txt_caracteristica').val();
-      var amperagem         = $('#txt_amperagem').val();
-      var tipoBateria       = $('#opc_tipoBateria').val();
+
+      var idCliente 		= $('#clienteEquipamento').val();
+      var idFilial  		= $('#filialEquipamento').val();
+
+      var equipamento 	 = $('#txt_tipoEquip').val();
+      var fabricante 		= $('#fabricante_opt').val();
+      var nomeModelo      = $('#txt_nomeModeloEquip').val();
+
+      var correnteBat     = $('#txt_correnteBat').val();
+      var potencia        = $('#txt_potencia').val();
+      var tensaoBanco     = $('#txt_tensao_bancoBat').val();
+      var correnteBanco   = $('#txt_correnteBancoBat').val();
+
+      var quantBat        = $('#txt_qntBateria').val();
+      var quantBancoBat   = $('#txt_qntBancoBateria').val();
+      var quantBatPorBanc = $('#txt_qntBateriaPorBanco').val();
+
+      var tipoBat         = $('#opc_tipoBateria').val();
+      var localBat        = $('#opc_localBat').val();
 
       //Efetua o registro do equipamento no BD
 
@@ -271,19 +340,21 @@ $(document).ready(function(){
         type : "POST",
         dataType: 'json',
         data      : {
-          'nomeEquipamento' : nomeEquipamento,
           'idEquip'         : idEquip,
-          'idCliente'       : idCliente,
-          'idFilial'        : idFilial,
-          'equipamento'     : equipamento,
-          'modEquip'        : modEquip,
-          'fabricante'      : fabricante,
-          'quantBateria'    : quantBateria,
-          'caracteristicas' : caracteristicas,
-          'amperagem'       : amperagem,
-          'tipoBateria'     : tipoBateria,
-          'potencia'        : potencia
-
+          'idCliente' 		: idCliente,
+          'idFilial'  		: idFilial,
+          'equipamento'  	: equipamento,
+          'fabricante'  	: fabricante,
+          'nomeModelo'      : nomeModelo,
+          'correnteBateria' : correnteBat,
+          'potencia'        : potencia,
+          'tensaoBancoBat'  : tensaoBanco,
+          'correnteBanco'   : correnteBanco,
+          'quantBat'        : quantBat,
+          'quantBancoBat'   : quantBancoBat,
+          'quantBatPorBanc' : quantBatPorBanc,
+          'tipoBateria'     : tipoBat,
+          'localBateria'    : localBat
         },
         success : function(datra)
           {
