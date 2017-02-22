@@ -39,6 +39,8 @@ if($detalhesEquip['status']){
     $equipDetalhe = 0;
 }
 
+//var_dump($dadosEquipamento);
+
 //var_dump($configuracaoSalva);
 
 //var_dump($detalhesEquip);
@@ -429,6 +431,9 @@ if($detalhesEquip['status']){
                         </div>
                         <div class="panel-body">
                             <p>Favor verificar o vínculo do equipamento com um número SIM antes de registrar as configurações!</p>
+                            <p>
+                                <a href="<?php echo HOME_URI ?>/vinculo/vincularEquipamentoSim/<?php echo $this->parametros[0]; ?>"><b>Vincular equipamento a um SIM!</b></a>
+                            </p>
                         </div>
                         <div class="panel-footer">
 
@@ -590,20 +595,34 @@ if($detalhesEquip['status']){
 
                                         <?php
 
-                                            foreach ($listaContatos['contatos'] as $contato) {
+                                            if($listaContatos['status']){
 
-                                            ?>
-                                                <tr>
-                                                <td> <?php echo  $contato['nome_contato']; ?></td>
-                                                <td> <?php echo  $contato['funcao']; ?> </td>
-                                                <td> <?php echo  $contato['email']; ?></td>
-                                                <td> <?php echo  $contato['celular']; ?></td>
-                                                <td> <?php echo  $contato['observacao']; ?></td>
-                                                <td id='linkConta_<?php echo $contato['id']; ?>'><a href='javascript:void(0);' onClick='atualizarContato("<?php echo $contato['id']; ?>")'><i class='fa fa-eye '></i></a></td>
-                                                <td><a href='javascript:void(0);' onClick='removerContato(<?php echo $contato['id']; ?>)'><i class='fa fa-times '></i></a></td>
-                                                </tr>
-                                            <?php
+                                                foreach ($listaContatos['contatos'] as $contato) {
+
+                                                ?>
+                                                    <tr>
+                                                    <td> <?php echo  $contato['nome_contato']; ?></td>
+                                                    <td> <?php echo  $contato['funcao']; ?> </td>
+                                                    <td> <?php echo  $contato['email']; ?></td>
+                                                    <td> <?php echo  $contato['celular']; ?></td>
+                                                    <td> <?php echo  $contato['observacao']; ?></td>
+                                                    <td id='linkConta_<?php echo $contato['id']; ?>'><a href='javascript:void(0);' onClick='atualizarContato("<?php echo $contato['id']; ?>")'><i class='fa fa-eye '></i></a></td>
+                                                    <td><a href='javascript:void(0);' onClick='removerContato(<?php echo $contato['id']; ?>)'><i class='fa fa-times '></i></a></td>
+                                                    </tr>
+                                                <?php
+                                                }
+
+                                            }else{
+                                                ?>
+                                                    <tr>
+                                                        <td colspan="7">
+                                                            Nenhum contato cadastrado ainda.
+                                                        </td>
+                                                    </tr>
+                                                <?php
                                             }
+
+
 
                                         ?>
                                     </tbody>

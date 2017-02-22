@@ -11,7 +11,7 @@ function detalhesPosicao(simNumber){
 
     //Efetua a consulta na tabela de posicionamento
     $.ajax({
-        url: urlP+"/vinculo/posicoesOcupadasTabela",
+        url: urlP+"/eficazmonitor/vinculo/posicoesOcupadasTabela",
         secureuri: false,
         type : "POST",
         dataType: 'json',
@@ -37,6 +37,59 @@ function detalhesPosicao(simNumber){
     });
 }
 
+/*
+* INICIA PROCESSO DE DESATIVAÇÃO DE DE SIM
+*/
+function removerSim(simNumber){
+
+    swal({
+      title: "Tem certeza?",
+      text: "Esta ação não poderá ser desfeita!!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Sim, remover!",
+      cancelButtonText: "Não, cancelar!",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    },
+    function(isConfirm){
+      if (isConfirm) {
+
+          //Requisita chamada AJAX para efetuar remoção do vinculo
+          //Efetua a consulta na tabela de posicionamento
+          $.ajax({
+              url: urlP+"/eficazmonitor/vinculo/removerVinculoSim",
+              secureuri: false,
+              type : "POST",
+              dataType: 'json',
+              data      : {
+                  'numeroSim' : simNumber
+              },
+              success : function(datra)
+              {
+                  // $('#posOcupadas').html(datra.html);
+                  // $('#posicoesTabela').modal();
+                  swal('','SIM foi removido com suscceso!','success');
+              },
+              error: function(jqXHR, textStatus, errorThrown)
+              {
+                  //Settar a mensagem de erro!
+                  // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                  swal("Oops...", "Número SIM não foi encontrado! Verifique os dados informados.", "error");
+                  // Handle errors here
+                  console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                  // STOP LOADING SPINNER
+              }
+
+          });
+
+      } else {
+    	swal("Cancelado", "Nenhuma ação foi executada!", "error");
+      }
+    });
+}
+
 $('#posicoesTabela').on('hidden.bs.modal', function (e) {
     $('#posOcupadas').html('');
 })
@@ -52,11 +105,29 @@ $().ready(function() {
         $('#vincularSimCliente').validate({
             rules: {
                 txt_numSim: {
+                    required : true,
+                    remote: {
+                      url: urlP+"/eficazmonitor/vinculo/verificarSimExistente",
+                      type: "post",
+                      data: {
+                        num_sim : function() {
+                          //return  $("#txt_numSim" ).val();
+                          return document.getElementById("txt_numSim").value;
+                        }
+                      }
+                    }
+
+                },
+                filialVincular: {
                     required : true
                 }
             },
             messages: {
                 txt_numSim: {
+                    required : "Campo é obrigatorio",
+                    remote: "Número SIM já se encontra registrado no sistema!"
+                },
+                filialVincular: {
                     required : "Campo é obrigatorio"
                 }
             }
@@ -69,18 +140,20 @@ $().ready(function() {
             var clienteVinculo  = $('#idCliente').val();
             var flilialOpt      = $('#filialVincular').val();
             var num_sim         = $('#txt_numSim').val();
+            var ambiente        = $('#ambienteSim').val()
 
             //Efetua o cadastro via JSON
 
             $.ajax({
-             url: urlP+"/vinculo/registrarVinculoClienteJson",
+             url: urlP+"/eficazmonitor/vinculo/registrarVinculoClienteJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
              data      : {
               'idCliente' : clienteVinculo,
               'idFilial' : flilialOpt,
-              'num_sim' : num_sim
+              'num_sim' : num_sim,
+              'ambiente' : ambiente
               },
               success : function(datra)
                {
@@ -94,7 +167,7 @@ $().ready(function() {
                     //alert('Vinculo cadastrado com sucesso!');
                     swal("", "'Vinculo cadastrado com sucesso!", "success");
                     setTimeout(function(){
-                        window.location.replace(urlP +"/vinculo/gerenciarVinculo/"+clienteVinculo+"/");
+                        window.location.replace(urlP +"/eficazmonitor/vinculo/gerenciarVinculo/"+clienteVinculo+"/");
                     }, 2500);
                   }
                   else
@@ -130,19 +203,13 @@ $().ready(function() {
                 },
                 txt_numeroSerie :{
                     required : true
-                },
-                txt_ambiente :{
-                    required : true
-                 }
+                }
             },
             messages: {
                 simVinculadoCliente: {
                     required : "Campo é obrigatorio"
                 },
                 txt_numeroSerie :{
-                    required : "Campo é obrigatorio"
-                },
-                txt_ambiente :{
                     required : "Campo é obrigatorio"
                 }
             }
@@ -157,7 +224,7 @@ $().ready(function() {
             var tipoEquipamento = $('#idTipoEquipamento').val();
 
             $.ajax({
-             url: urlP+"/vinculo/registrarVinculoEquipamentoJson",
+             url: urlP+"/eficazmonitor/vinculo/registrarVinculoEquipamentoJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -177,9 +244,9 @@ $().ready(function() {
                   if(datra.status == true)
                   {
                     //alert('Vinculo cadastrado com sucesso!');
-                    swal("", resposta, "info");
+                    swal("", resposta, "success");
                     setTimeout(function(){
-                        window.location.replace(urlP +"/equipamento/");
+                        window.location.replace(urlP +"/eficazmonitor/equipamento/");
                     }, 3000);
                   }
                   else
@@ -200,6 +267,108 @@ $().ready(function() {
 
     });
 
+    /*
+    * FILTRA OS LOCAIS ATRAVES DE AUTO COMPLETE
+    */
+     $("#filtroLocalAutoComplete")
+       // don't navigate away from the field on tab when selecting an item
+       .on( "keydown", function( event ) {
 
+         var idClie = $('#idCliente').val();
+
+         /*
+         * VERIFICA SE FOI SELECIONADO UM CLIENTE
+         */
+         if(idClie != ''){
+             if ( event.keyCode === $.ui.keyCode.TAB &&
+                 $( this ).autocomplete( "instance" ).menu.active ) {
+               event.preventDefault();
+             }
+         }else{
+            swal('','Selecione um cliente antes!','info');
+         }
+         /*
+         * RETORNA OS EQUIPAMENTOS DA MATRIZ
+         */
+        //  if(){
+        //      console.log('Chamando a matriz');
+        //  } IMPLEMENTAR
+
+       })
+       .autocomplete({
+         source: function( request, response ) {
+           $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#idCliente").val(), {
+             term: extractLast( request.term )
+           }, response
+       );
+         },
+         search: function() {
+           // custom minLength
+           var term = extractLast( this.value );
+           if ( term.length < 2 ) {
+             return false;
+           }
+         },
+         focus: function() {
+           // prevent value inserted on focus
+           return false;
+         },
+         select: function( event, ui ) {
+
+            $('#localId').val(ui.item.id);
+
+            //GERA A TABELA DE EQUIPAMENTOS CONFORME O LOCAL ESCOLHIDO
+            var idFilial    = ui.item.id;
+            var idCliente   = $('#idCliente').val();
+
+            if(idFilial != ''){
+                //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+                $.ajax({
+                    url: urlP+"/eficazmonitor/vinculo/carregarListaSimFilialJson",
+                    secureuri: false,
+                    type : "POST",
+                    dataType: 'json',
+                    data      : {
+                        'idCliente' : idCliente,
+                        'idFilial' : idFilial
+                    },
+                    success : function(datra)
+                    {
+                        if(datra.status){
+
+                            /*
+                            * PREENCHE TABELA COM EQUIPAMENTOS
+                            */
+                            $('#listaSims').html(datra.html);
+
+                        }else{
+
+                            // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                            $('#listaSims').html(datra.html);
+                        }
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        //Settar a mensagem de erro!
+                        // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                        swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
+                         // Handle errors here
+                         console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                         // STOP LOADING SPINNER
+                    }
+                });
+            }
+        }
+     });
+
+     /* FUNÇÕES ADICIONAIS DE AUTOCOMPLETE
+     */
+     function split( val ) {
+       return val.split( /,\s*/ );
+     }
+     function extractLast( term ) {
+       return split( term ).pop();
+     }
 
 });

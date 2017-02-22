@@ -502,8 +502,9 @@ class VinculoModel extends MainModel
     {
         if(is_numeric($idCliente)){
 
-            $query = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, fili.nome AS 'filial'
+            $query = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, clie.nome AS 'cliente', fili.nome AS 'filial'
                         FROM tb_sim sim
+                        JOIN tb_cliente clie ON sim.id_cliente = clie.id
                         LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
                         WHERE sim.id_cliente = $idCliente AND sim.status_ativo = 1";
 
@@ -536,6 +537,50 @@ class VinculoModel extends MainModel
             $array = array('status' => false);
         }
 
+        return $array;
+    }
+
+    /*
+    * Função para retornar lista de sims de acordo com o cliente e filial
+    */
+    public function listarSimsFilialClienteTipo($idCliente, $idFilial){
+
+        if(is_numeric($idCliente) && is_numeric($idFilial)){
+
+            $query = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, clie.nome AS 'cliente', fili.nome AS 'filial'
+                        FROM tb_sim sim
+                        JOIN tb_cliente clie ON sim.id_cliente = clie.id
+                        LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
+                        WHERE sim.id_cliente = '$idCliente' AND sim.id_filial = '$idFilial' AND sim.status_ativo = 1";
+
+            // Monta a result
+            $result = $this->db->select($query);
+
+            // Verifica se existe resposta
+            if($result)
+            {
+                // Verifica se existe resultado
+                if (@mysql_num_rows($result) > 0)
+                {
+                    // Converte para array
+                    while ($row = @mysql_fetch_assoc($result))
+                        // Armazena no array de retorno
+                        $retorno[] = $row;
+
+                    // Retorna o valor
+                    $array = array('status' => true, 'sims' => $retorno);
+                }else{
+                    $array = array('status' => false, 'sims' => '');
+                }
+                // Fim
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
         return $array;
     }
 
@@ -634,7 +679,7 @@ class VinculoModel extends MainModel
     /*
     * Função para registrar o vinculo via JSON
     */
-    public function cadastrarVinculoCliente($idCliente, $idFilial, $numSim)
+    public function cadastrarVinculoCliente($idCliente, $idFilial, $numSim, $ambiente)
     {
         if(is_numeric($idCliente)){
 
@@ -642,7 +687,9 @@ class VinculoModel extends MainModel
                 $idFilial = 0;
             }
 
-            $query = "INSERT INTO tb_sim (num_sim, id_cliente, id_filial) VALUES ('$numSim', '$idCliente', '$idFilial')";
+            $ambiente  = $this->tratamento($ambiente);
+
+            $query = "INSERT INTO tb_sim (num_sim, id_cliente, id_filial, ambiente_local_sim) VALUES ('$numSim', '$idCliente', '$idFilial', '$ambiente')";
 
             //var_dump($query);
 
@@ -664,11 +711,15 @@ class VinculoModel extends MainModel
     * Função para registrar vinculo com equipamento
     */
 
-    public function cadastrarVinculoEquipamento($idEquipamento, $simVinculado, $numero_serie, $ambiente){
+    public function cadastrarVinculoEquipamento($idEquipamento, $simVinculado, $ambiente){
 
         if(is_numeric($idEquipamento)){
 
-            $query = "INSERT INTO tb_sim_equipamento (id_equipamento, id_sim, num_serie, ambiente) VALUES ('$idEquipamento', '$simVinculado', '$numero_serie', '$ambiente')";
+            /*
+            * O número de série é o mesmo que o número SIM
+            */
+
+            $query = "INSERT INTO tb_sim_equipamento (id_equipamento, id_sim, num_serie, ambiente) VALUES ('$idEquipamento', '$simVinculado', '$simVinculado', '$ambiente')";
 
             // Verifica se gravou com sucesso
             if ($this->db->query($query))
@@ -676,6 +727,59 @@ class VinculoModel extends MainModel
                 //var_dump($query);
                 $idGerada  = mysql_insert_id();
                 $array = array('status' => true, 'id_sim_equipamento' => $idGerada);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * REMOVER VINCULO COM O SIM
+    */
+    public function removerVinculoCliente($simNUmber){
+
+        $query = "UPDATE tb_sim SET status_ativo = '0' WHERE num_sim = '$simNUmber'";
+
+        // Verifica se gravou com sucesso
+        if ($this->db->query($query))
+        {
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
+    /*
+    * VERIFICAR SE NÚMERO SIM JÁ EXISTE NO SISTEMA
+    */
+    public function verificarSimExistente($numSim){
+
+        $query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$numSim'";
+
+        // Monta a result
+        $result = $this->db->select($query);
+
+        // Verifica se existe resposta
+        if($result){
+
+            // Verifica se existe resultado
+            if (@mysql_num_rows($result) > 0)
+            {
+                // Converte para array
+                while ($row = @mysql_fetch_assoc($result))
+                    // Armazena no array de retorno
+                    $retorno[] = $row;
+
+                // Retorna o valor
+                $array = array('status' => true);
             }else{
                 $array = array('status' => false);
             }

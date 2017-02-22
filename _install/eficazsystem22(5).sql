@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 31-Jan-2017 às 18:56
+-- Generation Time: 22-Fev-2017 às 20:35
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -65,9 +65,9 @@ CREATE TABLE `tb_alerta` (
 
 INSERT INTO `tb_alerta` (`id`, `id_sim_equipamento`, `id_msg_alerta`, `nivel_alerta`, `visto`, `status_ativo`, `dt_criacao`) VALUES
 (71, 13, 2, 2, 0, 5, '2017-01-16 03:58:21'),
-(72, 13, 5, 1, 0, 4, '2017-01-17 06:25:23'),
-(73, 14, 2, 2, 0, 3, '2017-01-17 06:34:52'),
-(74, 15, 4, 1, 0, 1, '2017-01-17 06:58:51'),
+(72, 13, 5, 1, 0, 5, '2017-01-17 06:25:23'),
+(73, 14, 2, 2, 0, 5, '2017-01-17 06:34:52'),
+(74, 15, 4, 1, 0, 5, '2017-01-17 06:58:51'),
 (75, 16, 5, 1, 0, 5, '2017-01-17 07:08:10'),
 (76, 16, 4, 1, 0, 5, '2017-01-19 13:58:37'),
 (77, 16, 3, 2, 0, 5, '2017-01-19 14:00:01'),
@@ -75,7 +75,7 @@ INSERT INTO `tb_alerta` (`id`, `id_sim_equipamento`, `id_msg_alerta`, `nivel_ale
 (79, 16, 2, 2, 0, 5, '2017-01-19 06:53:25'),
 (80, 16, 2, 2, 0, 5, '2017-01-19 06:55:18'),
 (81, 16, 2, 2, 0, 5, '2017-01-19 06:56:59'),
-(82, 12, 3, 2, 0, 2, '2017-01-20 14:52:19'),
+(82, 12, 3, 2, 0, 5, '2017-01-20 14:52:19'),
 (83, 16, 2, 2, 0, 5, '2017-01-30 14:45:29'),
 (84, 16, 4, 1, 0, 5, '2017-01-30 14:46:45'),
 (85, 16, 2, 2, 0, 5, '2017-01-30 14:47:35'),
@@ -96,7 +96,61 @@ INSERT INTO `tb_alerta` (`id`, `id_sim_equipamento`, `id_msg_alerta`, `nivel_ale
 (100, 16, 2, 2, 0, 5, '2017-01-30 04:00:34'),
 (101, 16, 2, 2, 0, 5, '2017-01-30 04:01:04'),
 (102, 16, 2, 2, 0, 5, '2017-01-30 05:39:09'),
-(103, 16, 3, 2, 0, 1, '2017-01-31 07:10:59');
+(103, 16, 3, 2, 0, 5, '2017-01-31 07:10:59'),
+(104, 12, 4, 1, 0, 5, '2017-02-06 12:27:55'),
+(105, 12, 4, 1, 0, 5, '2017-02-06 12:28:48'),
+(106, 12, 4, 1, 0, 5, '2017-02-06 13:08:45'),
+(107, 12, 4, 1, 0, 5, '2017-02-06 13:14:14'),
+(108, 12, 3, 2, 0, 5, '2017-02-06 13:15:09'),
+(109, 12, 3, 2, 0, 5, '2017-02-06 13:16:00'),
+(110, 12, 3, 2, 0, 5, '2017-02-06 03:12:29'),
+(111, 12, 3, 2, 0, 5, '2017-02-06 05:31:06'),
+(112, 12, 3, 2, 0, 5, '2017-02-06 05:42:46'),
+(113, 12, 3, 2, 0, 5, '2017-02-06 05:44:50'),
+(114, 12, 3, 2, 0, 5, '2017-02-06 06:19:17'),
+(115, 12, 3, 2, 0, 5, '2017-02-06 06:22:12'),
+(116, 12, 3, 2, 0, 5, '2017-02-06 06:49:00'),
+(117, 12, 3, 2, 0, 5, '2017-02-06 06:52:15'),
+(118, 12, 3, 2, 0, 5, '2017-02-06 06:53:14'),
+(119, 12, 3, 2, 0, 5, '2017-02-06 06:56:43'),
+(120, 12, 3, 2, 0, 5, '2017-02-06 06:59:03'),
+(121, 12, 3, 2, 0, 5, '2017-02-06 07:00:53'),
+(122, 12, 4, 1, 0, 5, '2017-02-06 07:01:51'),
+(123, 12, 2, 2, 0, 5, '2017-02-06 07:02:23'),
+(124, 12, 2, 2, 0, 5, '2017-02-06 07:04:30'),
+(125, 12, 2, 2, 0, 5, '2017-02-06 07:05:39'),
+(126, 12, 2, 2, 0, 5, '2017-02-06 07:16:46'),
+(127, 12, 2, 2, 0, 5, '2017-02-06 07:18:17'),
+(128, 12, 2, 2, 0, 5, '2017-02-06 07:25:00'),
+(129, 12, 2, 2, 0, 5, '2017-02-06 07:51:46'),
+(130, 12, 2, 2, 0, 5, '2017-02-06 08:02:56'),
+(131, 12, 2, 2, 0, 5, '2017-02-06 08:07:12'),
+(132, 12, 2, 2, 0, 5, '2017-02-06 08:09:47'),
+(133, 12, 2, 2, 0, 5, '2017-02-06 08:19:05'),
+(134, 12, 2, 2, 0, 5, '2017-02-06 08:20:37'),
+(135, 12, 2, 2, 0, 5, '2017-02-06 09:56:21'),
+(136, 12, 2, 2, 0, 5, '2017-02-07 12:21:04'),
+(137, 16, 2, 2, 0, 5, '2017-02-09 07:31:29'),
+(138, 12, 2, 2, 0, 5, '2017-02-09 07:32:24'),
+(139, 12, 2, 2, 0, 5, '2017-02-13 06:15:28'),
+(140, 12, 2, 2, 0, 5, '2017-02-13 06:15:36'),
+(141, 14, 2, 2, 0, 5, '2017-02-13 06:19:02'),
+(142, 14, 3, 2, 0, 5, '2017-02-13 06:30:34'),
+(143, 14, 4, 1, 0, 5, '2017-02-13 06:30:58'),
+(144, 14, 2, 2, 0, 5, '2017-02-13 06:33:12'),
+(145, 14, 2, 2, 0, 5, '2017-02-13 06:45:22'),
+(146, 14, 2, 2, 0, 5, '2017-02-13 06:48:03'),
+(147, 14, 2, 2, 0, 5, '2017-02-13 06:49:29'),
+(148, 14, 2, 2, 0, 5, '2017-02-13 06:50:05'),
+(149, 14, 2, 2, 0, 5, '2017-02-13 06:50:53'),
+(151, 14, 2, 2, 0, 5, '2017-02-14 12:40:16'),
+(152, 12, 2, 2, 0, 5, '2017-02-14 03:44:18'),
+(153, 12, 5, 1, 0, 5, '2017-02-14 06:10:17'),
+(154, 12, 3, 2, 0, 5, '2017-02-14 06:16:45'),
+(155, 12, 2, 2, 0, 5, '2017-02-14 06:21:36'),
+(156, 12, 2, 2, 0, 5, '2017-02-14 06:22:38'),
+(157, 16, 2, 2, 0, 5, '2017-02-14 09:16:41'),
+(158, 16, 2, 2, 0, 1, '2017-02-14 09:17:21');
 
 -- --------------------------------------------------------
 
@@ -129,9 +183,17 @@ CREATE TABLE `tb_cliente` (
 INSERT INTO `tb_cliente` (`id`, `id_users`, `id_pais`, `id_estado`, `nome`, `endereco`, `numero`, `cep`, `cidade`, `bairro`, `ddd`, `telefone`, `foto`, `status_ativo`, `dt_criacao`) VALUES
 (1, 1, 36, 16, 'Eficaz System', 'Rua Norberto de Brito', 1131, '83005290', 'S&atilde;o Jos&eacute; dos Pinhais', 'Centro', 41, 31551706, '', 1, '2015-08-07 18:23:09'),
 (2, 2, 36, 16, 'Jose', 'Rua Norberto de Brito', 1131, '83005290', 'S&atilde;o Jos&eacute; dos Pinhais', 'Centro', 41, 11111111, '', 1, '2015-09-11 16:29:53'),
-(48, 5, 36, 16, 'Correntes Andromeda', 'Alameda Viam&atilde;o', 0, '85862220', 'Foz do Igua&ccedil;u', 'Jardim Nacional', 23, 12321312, '', 1, '2017-01-10 17:20:22'),
-(49, 5, 36, 16, 'Distribuidora Coral', '...', 0, '27262090', '...', '...', 932, 23124234, '', 1, '2017-01-10 17:24:48'),
-(50, 5, 36, 17, 'Nacional Industrias', 'Rua do Luar', 0, '53402395', 'Paulista', 'Fragoso', 23, 23234234, '', 1, '2017-01-10 17:26:09');
+(48, 5, 36, 16, 'Correntes Andromeda', 'Alameda Viam&atilde;o', 0, '85862220', 'Foz do IguaÃ§u', 'Jardim Nacional', 23, 12321312, '', 1, '2017-01-10 17:20:22'),
+(49, 5, 36, 19, 'Gemania Editado', 'Rua Ot&aacute;vio Mangabeira', 0, '25555120', 'SÃ£o JoÃ£o de Meriti', 'Jardim Meriti', 932, 23124234, '', 1, '2017-01-10 17:24:48'),
+(50, 5, 36, 17, 'Nacional Industrias', 'Rua do Luar', 0, '53402395', 'Paulista', 'Fragoso', 23, 23234234, '', 1, '2017-01-10 17:26:09'),
+(51, 5, 36, 13, 'Temporario', 'Rua Quatro', 0, '39402827', 'Montes Claros', 'Novo Delfino', 234, 23424234, '', 0, '2017-02-10 19:22:52'),
+(52, 5, 36, 25, 'Teste cadastro', 'Rua Benedito Lopes Silva', 34, '19904190', 'Ourinhos', 'Vila Nossa Senhora de F&aacute;tima', 123, 12313123, '', 0, '2017-02-20 17:45:23'),
+(53, 5, 36, 8, 'Teste cadastro 2', 'Rua Aleixo Netto', 23234234, '29055260', 'Vit&oacute;ria', 'Praia do Canto', 123, 31231231, '', 0, '2017-02-20 17:46:38'),
+(54, 5, 36, 22, 'Teste cadastro trÃªs', 'Rua Idelfonso da Silva', 234234, '76908242', 'Ji-Paran&aacute;', 'S&atilde;o Francisco', 923, 21312312, '', 0, '2017-02-20 17:47:52'),
+(55, 5, 36, 19, 'Teste Quatro', 'Rua Almirante Midosi', 324, '25055440', 'Duque de Caxias', 'Jardim Gramacho', 923, 20902309, '', 0, '2017-02-20 18:07:04'),
+(56, 5, 36, 8, 'Teste botÃ£o', 'Servid&atilde;o Caf&eacute; Filho', 234, '29175399', 'Serra', 'Residencial Jacara&iacute;pe', 213, 23423423, '', 0, '2017-02-20 18:32:21'),
+(57, 5, 36, 14, 'Cliente Excluir', 'Travessa Vit&oacute;ria-R&eacute;gia', 23432, '68035480', 'Santar&eacute;m', 'Amparo', 123, 123123123, '', 0, '2017-02-20 18:57:53'),
+(58, 5, 36, 25, 'Artur Serralheiria', 'Rua Elvio Pucci', 3423, '14406785', 'Franca', 'Polo Industrial S&atilde;o Bernardo', 123, 123123123, '', 1, '2017-02-22 12:04:12');
 
 -- --------------------------------------------------------
 
@@ -160,7 +222,10 @@ INSERT INTO `tb_contato_alerta` (`id`, `id_cliente`, `id_filial`, `nome_contato`
 (9, 48, 11, 'Contato Duma', 'Monitor', 'email@email.com', '232324234', 'Nenhuma'),
 (8, 48, 10, 'Contato C', 'Monitor D', 'contato@email.com2', '123123213', 'Nenhuma'),
 (6, 48, 0, 'Contato A', 'Monitor', 'contatoa@email.com', '3213123213231', 'nenhuma'),
-(7, 48, 9, 'Contato B', 'Monitor', 'email@email.com', '3213213213213', 'Nenhuma');
+(7, 48, 9, 'Contato B', 'Monitor', 'email@email.com', '3213213213213', 'Nenhuma adiÃ§Ã£o'),
+(14, 50, 0, 'Contato ABCD', 'monitor', 'UsuarioTeste@email.com.br', '(12) 3213-21312', 'Nennhum'),
+(13, 48, 9, 'Contato Cbr', 'Contador', 'contatoC@email.com.br', '1213123213213', 'Teste'),
+(16, 49, 0, 'Teste contato', 'Nenhuma', 'email@email.com', '(23) 1312-32132', 'Teste');
 
 -- --------------------------------------------------------
 
@@ -207,13 +272,16 @@ CREATE TABLE `tb_equipamento` (
   `id_filial` int(11) NOT NULL COMMENT 'Id da filial do cliente onde será instalado o equipamento',
   `id_users` int(11) NOT NULL,
   `tipo_equipamento` int(11) NOT NULL,
-  `nomeEquipamento` varchar(100) NOT NULL,
-  `modelo` varchar(100) NOT NULL,
+  `nomeModeloEquipamento` varchar(100) NOT NULL,
+  `correnteBateria` varchar(15) NOT NULL,
   `potencia` varchar(15) DEFAULT NULL,
+  `tensaoBancoBateria` varchar(15) NOT NULL,
+  `correnteBancoBateria` varchar(15) NOT NULL,
   `qnt_bateria` decimal(5,0) DEFAULT NULL,
-  `caracteristica_equip` varchar(45) DEFAULT NULL,
+  `quantidade_banco_bateria` int(5) NOT NULL,
+  `quantidade_bateria_por_banco` int(5) NOT NULL,
   `tipo_bateria` varchar(20) DEFAULT NULL,
-  `amperagem_bateria` varchar(20) DEFAULT NULL,
+  `localBateria` varchar(50) NOT NULL,
   `status_ativo` smallint(6) NOT NULL DEFAULT '1',
   `dt_criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -222,13 +290,28 @@ CREATE TABLE `tb_equipamento` (
 -- Extraindo dados da tabela `tb_equipamento`
 --
 
-INSERT INTO `tb_equipamento` (`id`, `id_fabricante`, `id_cliente`, `id_filial`, `id_users`, `tipo_equipamento`, `nomeEquipamento`, `modelo`, `potencia`, `qnt_bateria`, `caracteristica_equip`, `tipo_bateria`, `amperagem_bateria`, `status_ativo`, `dt_criacao`) VALUES
-(20, 1, 48, 0, 5, 1, 'C130', '345', '200', '2', 'Nenhuma caracteristica', 'Automotiva', '123', 1, '2017-01-10 18:17:41'),
-(21, 1, 49, 0, 5, 1, 'Termodinamico', 'NRV', '123', '2', 'Nenhuma Caracteristica extra', 'Selada', '100', 1, '2017-01-10 18:19:26'),
-(22, 1, 50, 0, 5, 1, 'Gh', '12', '112', '2', 'Nenhuma em especial', 'EstacionÃ¡ria', '123', 1, '2017-01-10 18:20:21'),
-(23, 1, 48, 9, 5, 1, 'Fgh', '13', '120', '2', 'Nenhuma', 'Automotiva', '120', 1, '2017-01-10 18:21:05'),
-(24, 1, 50, 15, 5, 1, 'Hju', '8090', '100', '2', 'nENHUMA', 'Selada', '100', 1, '2017-01-10 18:22:01'),
-(25, 1, 50, 15, 5, 1, 'Hju', '8090', '100', '2', 'nENHUMA', 'Selada', '100', 1, '2017-01-10 18:22:01');
+INSERT INTO `tb_equipamento` (`id`, `id_fabricante`, `id_cliente`, `id_filial`, `id_users`, `tipo_equipamento`, `nomeModeloEquipamento`, `correnteBateria`, `potencia`, `tensaoBancoBateria`, `correnteBancoBateria`, `qnt_bateria`, `quantidade_banco_bateria`, `quantidade_bateria_por_banco`, `tipo_bateria`, `localBateria`, `status_ativo`, `dt_criacao`) VALUES
+(20, 4, 48, 0, 5, 1, 'C130', '', '200', '', '', '2', 0, 0, 'Automotiva', '', 1, '2017-01-10 18:17:41'),
+(21, 1, 49, 0, 5, 1, 'Termodinamico', '', '123', '', '', '2', 0, 0, 'Selada', '', 0, '2017-01-10 18:19:26'),
+(22, 1, 50, 0, 5, 1, 'Gh', '', '112', '', '', '2', 0, 0, 'Estacion&aacute;ria', '', 1, '2017-01-10 18:20:21'),
+(23, 1, 48, 9, 5, 1, 'Fgh', '', '120', '', '', '2', 0, 0, 'Automotiva', '', 1, '2017-01-10 18:21:05'),
+(24, 1, 50, 15, 5, 1, 'Hju', '', '100', '', '', '2', 0, 0, 'Selada', '', 0, '2017-01-10 18:22:01'),
+(25, 1, 50, 15, 5, 1, 'ATW-700', '120.0', '100', '123.33', '100.0', '2', 0, 0, 'Selada', 'Externa', 1, '2017-01-10 18:22:01'),
+(26, 1, 1, 0, 5, 1, '', '', '30', '', '', '0', 0, 0, '', '', 0, '2017-02-21 16:26:35'),
+(27, 1, 1, 0, 5, 1, '', '', '30', '', '', '0', 0, 0, '', '', 0, '2017-02-21 16:26:44'),
+(28, 1, 1, 0, 5, 1, '', '', '30', '', '', '0', 0, 0, '', '', 0, '2017-02-21 16:26:45'),
+(29, 1, 1, 0, 5, 1, '', '', '30', '', '', '0', 0, 0, '', '', 0, '2017-02-21 16:26:45'),
+(30, 2, 49, 0, 5, 1, 'DGT-800', '124.00', '123.33', '123.33', '333.22', '3', 2, 2, 'Automotiva', 'Interna', 0, '2017-02-21 19:20:00'),
+(31, 2, 48, 12, 5, 1, 'DGT-9000', '123.33', '2', '233.33', '221.33', '0', 0, 0, 'EstacionÃ¡ria', 'Interna', 1, '2017-02-22 11:47:01'),
+(32, 2, 48, 12, 5, 1, 'DGT-9000', '123.33', '2', '233.33', '221.33', '0', 0, 0, 'EstacionÃ¡ria', 'Interna', 0, '2017-02-22 11:47:02'),
+(33, 4, 2, 0, 5, 1, 'PTR-900', '324.4', '322.2', '100.0', '111.11', '0', 0, 0, 'Automotiva', 'Externa', 1, '2017-02-22 11:54:12'),
+(34, 4, 2, 0, 5, 1, 'PTR-900', '324.4', '322.2', '100.0', '111.11', '0', 0, 0, 'Automotiva', 'Externa', 0, '2017-02-22 11:54:12'),
+(35, 4, 2, 0, 5, 2, 'KSC-red', '333', '222', '222', '222.22', '0', 0, 0, 'Automotiva', 'Externa', 0, '2017-02-22 11:55:04'),
+(36, 4, 2, 0, 5, 2, 'TST 200', '3', '2', '1', '2', '0', 0, 0, 'Automotiva', 'Interna', 0, '2017-02-22 11:55:35'),
+(37, 4, 2, 0, 5, 2, 'TST 200', '3', '2', '1', '2', '0', 0, 0, 'Automotiva', 'Interna', 0, '2017-02-22 11:55:35'),
+(38, 4, 2, 0, 5, 2, 'TST 200', '3', '2', '1', '2', '0', 0, 0, 'Automotiva', 'Interna', 1, '2017-02-22 11:55:35'),
+(39, 4, 2, 0, 5, 1, 'GDH-teste', '2', '2', '2', '2', '0', 0, 0, 'Automotiva', 'Externa', 1, '2017-02-22 12:02:33'),
+(40, 2, 1, 0, 5, 2, 'FER-teste', '3', '3', '3', '3', '0', 0, 0, 'Selada', 'Interna', 1, '2017-02-22 12:03:03');
 
 -- --------------------------------------------------------
 
@@ -291,6 +374,7 @@ CREATE TABLE `tb_fabricante` (
   `nome` varchar(100) NOT NULL,
   `ddd` smallint(6) DEFAULT NULL,
   `telefone` int(11) DEFAULT NULL,
+  `email_fabricante` varchar(80) NOT NULL,
   `cep` decimal(9,0) NOT NULL,
   `endereco` varchar(220) NOT NULL,
   `numero` int(11) DEFAULT NULL,
@@ -304,9 +388,20 @@ CREATE TABLE `tb_fabricante` (
 -- Extraindo dados da tabela `tb_fabricante`
 --
 
-INSERT INTO `tb_fabricante` (`id`, `id_estado`, `id_pais`, `id_users`, `nome`, `ddd`, `telefone`, `cep`, `endereco`, `numero`, `cidade`, `bairro`, `status_ativo`, `dt_criacao`) VALUES
-(1, 16, 36, 1, 'Eaton', 0, 0, '83005290', 'Rua Norberto de Brito', 0, 'S&atilde;o Jos&eacute; dos Pinhais', 'Centro', 1, '2015-08-07 18:23:55'),
-(2, 13, 36, 5, 'Engetron', 32, 320120101, '32001010', 'Via Socrates Mariani Bittencourt', 1099, 'Contagem', 'Cinco', 1, '2016-12-16 18:21:22');
+INSERT INTO `tb_fabricante` (`id`, `id_estado`, `id_pais`, `id_users`, `nome`, `ddd`, `telefone`, `email_fabricante`, `cep`, `endereco`, `numero`, `cidade`, `bairro`, `status_ativo`, `dt_criacao`) VALUES
+(1, 16, 36, 1, 'Eaton', 0, 0, '', '83005290', 'Rua Norberto de Brito', 0, 'S&atilde;o Jos&eacute; dos Pinhais', 'Centro', 1, '2015-08-07 18:23:55'),
+(2, 13, 36, 5, 'Engetron', 32, 320120101, '', '32001010', 'Via Socrates Mariani Bittencourt', 1099, 'Contagem', 'Cinco', 1, '2016-12-16 18:21:22'),
+(4, 16, 36, 5, 'RFK Nobreaks', 41, 32774038, '', '81650040', 'Rua Carlos de Laet', 890, 'Curitiba', 'BoqueirÃ£o', 1, '2017-02-07 16:34:31'),
+(5, 8, 36, 5, 'No breaks ficticios', 41, 88888999, '', '29105060', 'Rua Seis', 0, 'Vila Velha', 'Vila Nova', 0, '2017-02-07 16:39:38'),
+(6, 12, 36, 5, 'No breaks Ficticium ', 41, 34324234, '', '79645290', 'Rua JoÃ£o Martins MontalvÃ£o', 0, 'TrÃªs Lagoas', 'Jardim Paranapunga', 0, '2017-02-07 18:04:30'),
+(7, 13, 36, 5, 'No Breaks Fael', 12, 12321312, '', '35162369', 'Rua Felipe dos Santos', 90, 'Ipatinga', 'Cidade Nobre', 0, '2017-02-08 10:27:23'),
+(8, 13, 36, 5, 'No Breaks Fael', 12, 12321312, '', '35162369', 'Rua Felipe dos Santos', 90, 'Ipatinga', 'Cidade Nobre', 0, '2017-02-08 10:27:26'),
+(9, 13, 36, 5, 'No Breaks Fael', 12, 12321312, '', '35162369', 'Rua Felipe dos Santos', 90, 'Ipatinga', 'Cidade Nobre', 0, '2017-02-08 10:27:26'),
+(10, 13, 36, 5, 'No Breaks Fael', 12, 12321312, '', '35162369', 'Rua Felipe dos Santos', 90, 'Ipatinga', 'Cidade Nobre', 1, '2017-02-08 10:27:26'),
+(11, 13, 36, 5, 'No Breaks Fael', 12, 12321312, '', '35162369', 'Rua Felipe dos Santos', 90, 'Ipatinga', 'Cidade Nobre', 0, '2017-02-08 10:27:33'),
+(12, 13, 36, 5, 'No Breaks Fael 111', 12, 12321312, 'Nona@email.com.ebt', '35162369', 'Rua Felipe dos Santos', 90, 'Ipatinga', 'Cidade Nobre', 0, '2017-02-08 10:27:34'),
+(13, 21, 36, 5, 'GKJ Equipamentos', 12, 12932143, 'gjk@email.com.br', '97060850', 'Rua S&atilde;o Dimas', 0, 'Santa Maria', 'DiÃ¡cono JoÃ£o Luiz Pozzobon', 1, '2017-02-08 10:30:44'),
+(14, 17, 36, 5, 'Teste de fabricante', 123, 12312312, 'eeeeee@email.com', '53413180', 'Rua Vit&oacute;ria R&eacute;gia', 312312321, 'Paulista', 'Paratibe', 0, '2017-02-10 19:37:01');
 
 -- --------------------------------------------------------
 
@@ -340,14 +435,17 @@ CREATE TABLE `tb_filial` (
 INSERT INTO `tb_filial` (`id`, `id_matriz`, `id_estado`, `id_pais`, `id_users`, `nome`, `endereco`, `numero`, `cep`, `cidade`, `bairro`, `ddd`, `telefone`, `foto`, `status_ativo`, `dt_criacao`) VALUES
 (7, 46, 13, 36, 5, 'Filail reserva', 'Rua Maria Rosa de Souza', 0, '38181543', 'Arax&amp;aacute;', 'Jardim Nat&amp;aacute;lia', 23, 23423423, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:12:44'),
 (8, 47, 27, 36, 5, 'Filial Tocantins', 'Avenida Tocantins', 0, '77066044', 'Palmas', 'Setor Morada do Sol Taquaralto', 32, 333333333, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:18:25'),
-(9, 48, 5, 36, 5, 'Groud Zeros', 'Rua Barra da Ribeira', 0, '44056519', 'Feira de Santana', 'Mangabeira', 23, 232343243, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:53'),
-(10, 48, 25, 36, 5, 'Peace Walker', 'Avenida Ant&ocirc;nio Pagliato', 9999, '13057067', 'Campinas', 'Residencial Citt&aacute; Di Firenze', 32, 234234324, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:54'),
-(11, 48, 17, 36, 5, 'Phanton Pain', 'Rua Joaquim Alves Correia', 0, '54753690', 'Camaragibe', 'Vila da Inabi', 23, 234234343, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:54'),
-(12, 48, 7, 36, 5, 'Snake Eater', 'QR 510 Conjunto 3', 0, '72312603', 'Bras&iacute;lia', 'Samambaia Sul Samambaia', 933, 324324324, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:54'),
-(13, 50, 7, 36, 5, 'Filial Dois', 'Quadra 4 Bloco N', 0, '73360414', 'Bras&iacute;lia', 'Setor Residencial Leste Planaltina', 23, 234234234, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49'),
+(9, 48, 5, 36, 5, 'Filial Zeros', 'Rua Barra da Ribeira', 0, '44056519', 'Feira de Santana', 'Mangabeira', 23, 232343243, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:53'),
+(10, 48, 25, 36, 5, 'Filial Beta', 'Avenida Ant&ocirc;nio Pagliato', 9999, '13057067', 'Campinas', 'Residencial Citt&aacute; Di Firenze', 32, 234234324, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:54'),
+(11, 48, 17, 36, 5, 'Filial phanton', 'Rua Joaquim Alves Correia', 0, '54753690', 'Camaragibe', 'Vila da Inabi', 23, 234234343, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:54'),
+(12, 48, 7, 36, 5, 'Filial Eater', 'QR 510 Conjunto 3', 0, '72312603', 'Bras&iacute;lia', 'Samambaia Sul Samambaia', 933, 324324324, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:22:54'),
+(13, 50, 7, 36, 5, 'Filial Dois 3', 'Quadra 4 Bloco T', 0, '73360414', 'Bras&iacute;lia', 'Setor Residencial Leste Planaltina', 23, 234234234, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49'),
 (14, 50, 25, 36, 5, 'Filial Zero', 'Rua Kanebo', 0, '13213090', 'Jundia&iacute;', 'Distrito Industrial', 23, 423423423, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49'),
-(15, 50, 9, 36, 5, 'Filial Tr&ecirc;s', 'Avenida Lagoa', 0, '73814505', 'Formosa', 'Village', 89, 234324234, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49'),
-(16, 50, 21, 36, 5, 'Filial Um', 'Acesso O Dois', 0, '91791220', 'Porto Alegre', 'Restinga', 23, 234234234, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49');
+(15, 50, 9, 36, 5, 'Filial Ant&ocirc;nio ', 'Avenida Lagoa', 0, '73814505', 'Formosa', 'Village', 89, 234324234, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49'),
+(16, 50, 21, 36, 5, 'Filial Um', 'Acesso O Dois', 0, '91791220', 'Porto Alegre', 'Restinga', 23, 234234234, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-01-10 17:28:49'),
+(17, 50, 17, 36, 5, 'Filial da Paulista', 'Travessa Oitenta', 342, '53409066', 'Jardim Paulista', 'Paulista', 34, 38182391, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-02-02 11:45:02'),
+(18, 50, 17, 36, 5, 'Filial da Paulista', 'Travessa Oitenta', 342, '53409066', 'Jardim Paulista', 'Paulista', 34, 38182391, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-02-02 11:45:24'),
+(19, 50, 13, 36, 5, 'Filial de BH', 'Rua Azal&eacute;ia', 99, '30510410', 'Nova Gameleira', 'Belo Horizonte', 64, 12313123, 'a881bd9c3f3b8446ef35ac350a06691a.jpg', 1, '2017-02-02 11:46:41');
 
 -- --------------------------------------------------------
 
@@ -381,7 +479,119 @@ INSERT INTO `tb_log` (`id`, `log`, `dt_criacao`) VALUES
 (13, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :12', '2017-01-13 13:21:20'),
 (14, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :12', '2017-01-13 13:22:22'),
 (15, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :12', '2017-01-13 13:23:02'),
-(16, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :12', '2017-01-13 13:24:04');
+(16, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :12', '2017-01-13 13:24:04'),
+(17, 'Erro ao gravar o cadastro : [insert into tb_users (id_perfil_acesso, nome, sobrenome, email, senha, local_usu, id_cliente)\r\n                                          values (1,Usu&aacute;rio,Teste,UsuarioTeste@email.com.br,4297f44b13955235245b2497399d7a93,1,49)]', '2017-02-03 12:01:19'),
+(18, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:07'),
+(19, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:10'),
+(20, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:13'),
+(21, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:16'),
+(22, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:18'),
+(23, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:21'),
+(24, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:24'),
+(25, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:28'),
+(26, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:30'),
+(27, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:33'),
+(28, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:36'),
+(29, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:39'),
+(30, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:42'),
+(31, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:45'),
+(32, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:48'),
+(33, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:51'),
+(34, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:54'),
+(35, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:17:57'),
+(36, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:00'),
+(37, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:03'),
+(38, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:06'),
+(39, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:09'),
+(40, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:12'),
+(41, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:15'),
+(42, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:17'),
+(43, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:19'),
+(44, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:21'),
+(45, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:23'),
+(46, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:25'),
+(47, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:27'),
+(48, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:33'),
+(49, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:35'),
+(50, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:37'),
+(51, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:39'),
+(52, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:42'),
+(53, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:43'),
+(54, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:45'),
+(55, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:47'),
+(56, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:49'),
+(57, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:51'),
+(58, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:53'),
+(59, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:55'),
+(60, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:58'),
+(61, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:18:59'),
+(62, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:01'),
+(63, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:03'),
+(64, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:05'),
+(65, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:07'),
+(66, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:09'),
+(67, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:11'),
+(68, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:13'),
+(69, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:15'),
+(70, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:17'),
+(71, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:19'),
+(72, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:21'),
+(73, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:23'),
+(74, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:25'),
+(75, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:27'),
+(76, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:32'),
+(77, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:32'),
+(78, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:34'),
+(79, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:36'),
+(80, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:38'),
+(81, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:40'),
+(82, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:42'),
+(83, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:44'),
+(84, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:46'),
+(85, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:48'),
+(86, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:50'),
+(87, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:52'),
+(88, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:54'),
+(89, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:56'),
+(90, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:19:58'),
+(91, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:00'),
+(92, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:02'),
+(93, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:04'),
+(94, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:06'),
+(95, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:08'),
+(96, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:10'),
+(97, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:12'),
+(98, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:14'),
+(99, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:16'),
+(100, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:18'),
+(101, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:20'),
+(102, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:22'),
+(103, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:24'),
+(104, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:26'),
+(105, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:28'),
+(106, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:30'),
+(107, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:32'),
+(108, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:34'),
+(109, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:36'),
+(110, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:38'),
+(111, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:40'),
+(112, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:42'),
+(113, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:44'),
+(114, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:46'),
+(115, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:48'),
+(116, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:50'),
+(117, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:52'),
+(118, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:54'),
+(119, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:56'),
+(120, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:20:58'),
+(121, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:21:00'),
+(122, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:21:02'),
+(123, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:21:05'),
+(124, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:21:06'),
+(125, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:21:08'),
+(126, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:21:10'),
+(127, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:21:12'),
+(128, 'Erro ao tentar registrar um alerta para o equipamento de id_sim :14', '2017-02-14 10:21:14');
 
 -- --------------------------------------------------------
 
@@ -16369,7 +16579,8 @@ INSERT INTO `tb_numero_falta` (`id`, `id_num_sim`, `num_falta`, `dt_criacao`) VA
 (15923, '13949007326906', 1, '2016-12-16 01:46:59'),
 (15924, '13949007326906', 1, '2016-12-16 03:10:56'),
 (15925, '13949007326906', 1, '2016-12-16 09:28:25'),
-(15926, '13949007326906', 1, '2016-12-16 20:02:50');
+(15926, '13949007326906', 1, '2016-12-16 20:02:50'),
+(15927, '9999988777', 1, '2017-02-14 13:59:11');
 
 -- --------------------------------------------------------
 
@@ -16669,7 +16880,7 @@ CREATE TABLE `tb_parametro` (
 --
 
 INSERT INTO `tb_parametro` (`id`, `id_equipamento`, `id_users`, `id_sim_equipamento`, `num_sim`, `parametro`, `dt_criacao`, `status_ativo`) VALUES
-(4, 20, 5, 12, '9999988777', '|inicio|ecb-95|eb-111|ei-127|ea-133|eca-143||inicio|scb-96|sb-112|si-127|sa-134|sca-142||inicio|tbcb-97|tbb-113|tbi-127|tba-135|tbca-145||inicio|ccb-98|cb-114|ci-127|ca-136|cca-140||inicio|cscb-99|csb-115|csi-127|csa-137|csca-139|', '2017-01-12 12:16:58', 1),
+(4, 20, 5, 12, '9999988777', '|inicio|ecb-95|eb-111|ei-127|ea-133|eca-143||inicio|scb-96|sb-112|si-127|sa-134|sca-142||inicio|tbcb-97|tbb-113|tbi-127|tba-380|tbca-395||inicio|ccb-0|cb-0|ci-0|ca-0|cca-0||inicio|cscb-0|csb-0|csi-0|csa-0|csca-0|', '2017-01-12 12:16:58', 1),
 (5, 25, 5, 13, '99999994443333', '|inicio|ecb-98|eb-110|ei-127|ea-135|eca-145||inicio|scb-92|sb-105|si-127|sa-130|sca-140||inicio|tbcb-90|tbb-105|tbi-127|tba-135|tbca-146||inicio|ccb-|cb-|ci-|ca-|cca-||inicio|cscb-|csb-|csi-|csa-|csca-|', '2017-01-13 19:10:49', 1),
 (6, 23, 5, 14, '9999998888', '|inicio|ecb-90|eb-110|ei-127|ea-135|eca-145||inicio|scb-93|sb-110|si-127|sa-135|sca-145||inicio|tbcb-90|tbb-105|tbi-127,|tba-135|tbca-140||inicio|ccb-|cb-|ci-|ca-|cca-||inicio|cscb-|csb-|csi-|csa-|csca-|', '2017-01-16 10:34:29', 1),
 (7, 21, 5, 15, '777777777', '|inicio|ecb-89|eb-120|ei-127|ea-133|eca-145||inicio|scb-90|sb-111|si-127|sa-135|sca-145||inicio|tbcb-90|tbb-100|tbi-127|tba-130|tbca-140||inicio|ccb-80|cb-105|ci-127|ca-138|cca-145||inicio|cscb-75|csb-100|csi-127|csa-135|csca-140|', '2017-01-17 16:58:33', 1),
@@ -16798,7 +17009,52 @@ INSERT INTO `tb_posicao` (`id`, `id_sim_equipamento`, `id_num_sim`, `posicao`, `
 (117, 16, '999999888433', 'l', 1, '2017-01-17 17:06:56'),
 (118, 16, '999999888433', 'm', 1, '2017-01-17 17:06:56'),
 (119, 16, '999999888433', 'n', 1, '2017-01-17 17:06:56'),
-(120, 16, '999999888433', 'o', 1, '2017-01-17 17:06:56');
+(120, 16, '999999888433', 'o', 1, '2017-01-17 17:06:56'),
+(121, 17, '444444455555', 'a', 1, '2017-02-22 18:21:40'),
+(122, 17, '444444455555', 'b', 1, '2017-02-22 18:21:40'),
+(123, 17, '444444455555', 'c', 1, '2017-02-22 18:21:40'),
+(124, 17, '444444455555', 'd', 1, '2017-02-22 18:21:40'),
+(125, 17, '444444455555', 'e', 1, '2017-02-22 18:21:40'),
+(126, 17, '444444455555', 'f', 1, '2017-02-22 18:21:40'),
+(127, 17, '444444455555', 'g', 1, '2017-02-22 18:21:40'),
+(128, 17, '444444455555', 'h', 1, '2017-02-22 18:21:41'),
+(129, 17, '444444455555', 'i', 1, '2017-02-22 18:21:41'),
+(130, 17, '444444455555', 'j', 1, '2017-02-22 18:21:41'),
+(131, 17, '444444455555', 'k', 1, '2017-02-22 18:21:41'),
+(132, 17, '444444455555', 'l', 1, '2017-02-22 18:21:41'),
+(133, 17, '444444455555', 'm', 1, '2017-02-22 18:21:41'),
+(134, 17, '444444455555', 'n', 1, '2017-02-22 18:21:41'),
+(135, 17, '444444455555', 'o', 1, '2017-02-22 18:21:41'),
+(136, 18, '111112222221111', 'a', 1, '2017-02-22 18:23:59'),
+(137, 18, '111112222221111', 'b', 1, '2017-02-22 18:23:59'),
+(138, 18, '111112222221111', 'c', 1, '2017-02-22 18:23:59'),
+(139, 18, '111112222221111', 'd', 1, '2017-02-22 18:23:59'),
+(140, 18, '111112222221111', 'e', 1, '2017-02-22 18:23:59'),
+(141, 18, '111112222221111', 'f', 1, '2017-02-22 18:23:59'),
+(142, 18, '111112222221111', 'g', 1, '2017-02-22 18:23:59'),
+(143, 18, '111112222221111', 'h', 1, '2017-02-22 18:23:59'),
+(144, 18, '111112222221111', 'i', 1, '2017-02-22 18:23:59'),
+(145, 18, '111112222221111', 'j', 1, '2017-02-22 18:23:59'),
+(146, 18, '111112222221111', 'k', 1, '2017-02-22 18:23:59'),
+(147, 18, '111112222221111', 'l', 1, '2017-02-22 18:23:59'),
+(148, 18, '111112222221111', 'm', 1, '2017-02-22 18:23:59'),
+(149, 18, '111112222221111', 'n', 1, '2017-02-22 18:23:59'),
+(150, 18, '111112222221111', 'o', 1, '2017-02-22 18:23:59'),
+(151, 19, '99', 'a', 1, '2017-02-22 19:03:23'),
+(152, 19, '99', 'b', 1, '2017-02-22 19:03:23'),
+(153, 19, '99', 'c', 1, '2017-02-22 19:03:23'),
+(154, 19, '99', 'd', 1, '2017-02-22 19:03:23'),
+(155, 19, '99', 'e', 1, '2017-02-22 19:03:23'),
+(156, 19, '99', 'f', 1, '2017-02-22 19:03:23'),
+(157, 19, '99', 'g', 1, '2017-02-22 19:03:23'),
+(158, 19, '99', 'h', 1, '2017-02-22 19:03:23'),
+(159, 19, '99', 'i', 1, '2017-02-22 19:03:23'),
+(160, 19, '99', 'j', 1, '2017-02-22 19:03:23'),
+(161, 19, '99', 'k', 1, '2017-02-22 19:03:23'),
+(162, 19, '99', 'l', 1, '2017-02-22 19:03:23'),
+(163, 19, '99', 'm', 1, '2017-02-22 19:03:23'),
+(164, 19, '99', 'n', 1, '2017-02-22 19:03:23'),
+(165, 19, '99', 'o', 1, '2017-02-22 19:03:23');
 
 -- --------------------------------------------------------
 
@@ -16839,6 +17095,7 @@ CREATE TABLE `tb_sim` (
   `num_sim` decimal(15,0) NOT NULL,
   `id_cliente` int(11) DEFAULT NULL,
   `id_filial` int(11) DEFAULT NULL,
+  `ambiente_local_sim` text NOT NULL,
   `status_ativo` smallint(6) NOT NULL DEFAULT '1',
   `dt_criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -16847,17 +17104,22 @@ CREATE TABLE `tb_sim` (
 -- Extraindo dados da tabela `tb_sim`
 --
 
-INSERT INTO `tb_sim` (`num_sim`, `id_cliente`, `id_filial`, `status_ativo`, `dt_criacao`) VALUES
-('777777777', 49, 0, 1, '2017-01-10 17:59:42'),
-('9999988777', 48, 10, 1, '2017-01-10 17:59:11'),
-('9999996666', 50, 0, 1, '2017-01-10 18:00:00'),
-('9999998888', 48, 9, 1, '2017-01-10 17:58:38'),
-('9999999911', 48, 0, 1, '2017-01-10 17:58:21'),
-('999998888854', 50, 14, 1, '2017-01-10 18:00:41'),
-('999999888433', 50, 14, 1, '2017-01-10 18:00:58'),
-('9999999666655', 50, 13, 1, '2017-01-10 18:00:15'),
-('99999994443333', 50, 15, 1, '2017-01-10 18:01:12'),
-('999995555533332', 50, 16, 1, '2017-01-10 18:01:34');
+INSERT INTO `tb_sim` (`num_sim`, `id_cliente`, `id_filial`, `ambiente_local_sim`, `status_ativo`, `dt_criacao`) VALUES
+('99', 2, 0, '', 1, '2017-02-14 17:39:45'),
+('777777777', 49, 0, '', 1, '2017-01-10 17:59:42'),
+('9999988777', 48, 10, '', 1, '2017-01-10 17:59:11'),
+('9999996666', 50, 0, '', 1, '2017-01-10 18:00:00'),
+('9999998888', 48, 9, '', 1, '2017-01-10 17:58:38'),
+('9999999911', 48, 0, '', 1, '2017-01-10 17:58:21'),
+('444444455555', 49, 0, '', 1, '2017-02-22 18:19:22'),
+('999998888854', 50, 14, '', 1, '2017-01-10 18:00:41'),
+('999999888433', 50, 14, '', 1, '2017-01-10 18:00:58'),
+('4646464446646', 48, 10, 'Ambiente ao lado da entrada principal', 0, '2017-02-22 17:10:20'),
+('9999999666655', 50, 13, '', 1, '2017-01-10 18:00:15'),
+('11111111111112', 48, 10, 'Lado esquerdo da entrada principal', 0, '2017-02-22 17:22:27'),
+('99999994443333', 50, 15, '', 1, '2017-01-10 18:01:12'),
+('111112222221111', 48, 12, '', 1, '2017-02-22 18:23:46'),
+('999995555533332', 50, 16, '', 1, '2017-01-10 18:01:34');
 
 -- --------------------------------------------------------
 
@@ -16885,7 +17147,10 @@ INSERT INTO `tb_sim_equipamento` (`id`, `id_equipamento`, `id_sim`, `num_serie`,
 (13, 25, '99999994443333', '111111111111111112', 'Desconhecido', 0, 1, '2017-01-11 10:29:51'),
 (14, 23, '9999998888', '3213123213', 'R', 0, 1, '2017-01-11 12:11:07'),
 (15, 21, '777777777', '9999998', 'NÃ£o informado', 0, 1, '2017-01-17 16:57:29'),
-(16, 22, '999999888433', '11111222223333', 'Nenhuma caracteristica adicional', 0, 1, '2017-01-17 17:06:56');
+(16, 22, '999999888433', '11111222223333', 'Nenhuma caracteristica adicional', 0, 1, '2017-01-17 17:06:56'),
+(17, 30, '444444455555', NULL, 'Teste de observaÃ§Ã£o.', 0, 1, '2017-02-22 18:21:40'),
+(18, 31, '111112222221111', NULL, '', 0, 1, '2017-02-22 18:23:59'),
+(19, 33, '99', '99', '', 0, 1, '2017-02-22 19:03:22');
 
 -- --------------------------------------------------------
 
@@ -16923,6 +17188,7 @@ CREATE TABLE `tb_tratamento_alerta` (
   `id` int(11) NOT NULL,
   `id_alerta` int(11) NOT NULL,
   `id_user` int(11) DEFAULT NULL,
+  `pontoTabela` varchar(2) NOT NULL COMMENT 'Ponto na tabela que gerou o alarme.',
   `parametro` varchar(200) NOT NULL,
   `parametroMedido` float NOT NULL,
   `parametroAtingido` float NOT NULL,
@@ -16933,40 +17199,94 @@ CREATE TABLE `tb_tratamento_alerta` (
 -- Extraindo dados da tabela `tb_tratamento_alerta`
 --
 
-INSERT INTO `tb_tratamento_alerta` (`id`, `id_alerta`, `id_user`, `parametro`, `parametroMedido`, `parametroAtingido`, `tratamento_aplicado`) VALUES
-(73, 78, 5, 'TensÃ£o', 178, 160, 'Teste'),
-(72, 77, 5, 'SaÃ­da tensÃ£o', 900, 130, 'Finalizado para testes'),
-(71, 76, 5, 'SaÃ­da tensÃ£o', 100, 110, 'Finalizado sem verificaÃ§Ã£o do status'),
-(70, 75, 5, 'SaÃ­da tensÃ£o', 134.2, 130, 'Finalizado para questÃµes de teste de soluÃ§Ã£o'),
-(69, 74, NULL, 'TensÃ£o', 112.7, 120, NULL),
-(68, 73, 5, 'Bateria', 89, 105, 'Aguardando equipe chegando ao local'),
-(67, 72, 5, 'SaÃ­da tensÃ£o', 134.2, 130, 'Enviado equipe de manutenÃ§Ã£o ao local'),
-(66, 71, 5, 'TensÃ£o', 0, 110, 'Teste de tratamento do alarme, retestando, retestando'),
-(74, 79, 5, 'TensÃ£o', 0, 60, 'Teste'),
-(75, 80, 5, 'TensÃ£o', 0, 60, 'Teste'),
-(76, 81, 5, 'TensÃ£o', 0, 60, 'testes'),
-(77, 82, 5, 'SaÃ­da tensÃ£o', 900, 134, 'Teste'),
-(78, 83, 5, 'SaÃ­da tensÃ£o', 90, 110, 'teste'),
-(79, 84, 5, 'SaÃ­da tensÃ£o', 100, 110, 'teste'),
-(80, 85, 5, 'SaÃ­da tensÃ£o', 12.7, 110, 'teste'),
-(81, 86, 5, 'Bateria', 90, 110, 'teste'),
-(82, 87, 5, 'Corrente', 0, 100, 'teste'),
-(83, 88, 5, 'Bateria', 90, 110, 'teste'),
-(84, 89, 5, 'TensÃ£o', 14.5, 60, 'teste'),
-(85, 90, 5, 'TensÃ£o', 14.5, 60, 'teste'),
-(86, 91, 5, 'TensÃ£o', 14.5, 60, 'teste'),
-(87, 92, 5, 'TensÃ£o', 9, 60, 'teste'),
-(88, 93, 5, 'TensÃ£o', 0.9, 60, 'teste'),
-(89, 94, 5, 'TensÃ£o', 9, 60, 'teste'),
-(90, 95, 5, 'TensÃ£o', 0.9, 60, 'testse'),
-(91, 96, 5, 'TensÃ£o', 9, 60, 'teste'),
-(92, 97, 5, 'TensÃ£o', 0.9, 60, 'teste'),
-(93, 98, 5, 'TensÃ£o', 9, 60, 'teste'),
-(94, 99, 5, 'TensÃ£o', 9, 60, 'teste'),
-(95, 100, 5, 'TensÃ£o', 9, 60, 'teste'),
-(96, 101, 5, 'TensÃ£o', 9, 60, 'teste'),
-(97, 102, 5, 'TensÃ£o', 9, 60, 'testes'),
-(98, 103, NULL, 'Bateria', 1270, 138, NULL);
+INSERT INTO `tb_tratamento_alerta` (`id`, `id_alerta`, `id_user`, `pontoTabela`, `parametro`, `parametroMedido`, `parametroAtingido`, `tratamento_aplicado`) VALUES
+(73, 78, 5, '', 'TensÃ£o', 178, 160, 'Teste'),
+(72, 77, 5, '', 'SaÃ­da tensÃ£o', 900, 130, 'Finalizado para testes'),
+(71, 76, 5, '', 'SaÃ­da tensÃ£o', 100, 110, 'Finalizado sem verificaÃ§Ã£o do status'),
+(70, 75, 5, '', 'SaÃ­da tensÃ£o', 134.2, 130, 'Finalizado para questÃµes de teste de soluÃ§Ã£o'),
+(69, 74, 5, '', 'TensÃ£o', 112.7, 120, 'Teste'),
+(68, 73, 5, '', 'Bateria', 89, 105, 'Aguardando equipe chegando ao local'),
+(67, 72, 5, '', 'SaÃ­da tensÃ£o', 134.2, 130, 'Enviado equipe de manutenÃ§Ã£o ao local'),
+(66, 71, 5, '', 'TensÃ£o', 0, 110, 'Teste de tratamento do alarme, retestando, retestando'),
+(74, 79, 5, '', 'TensÃ£o', 0, 60, 'Teste'),
+(75, 80, 5, '', 'TensÃ£o', 0, 60, 'Teste'),
+(76, 81, 5, '', 'TensÃ£o', 0, 60, 'testes'),
+(77, 82, 5, '', 'SaÃ­da tensÃ£o', 900, 134, 'Teste'),
+(78, 83, 5, '', 'SaÃ­da tensÃ£o', 90, 110, 'teste'),
+(79, 84, 5, '', 'SaÃ­da tensÃ£o', 100, 110, 'teste'),
+(80, 85, 5, '', 'SaÃ­da tensÃ£o', 12.7, 110, 'teste'),
+(81, 86, 5, '', 'Bateria', 90, 110, 'teste'),
+(82, 87, 5, '', 'Corrente', 0, 100, 'teste'),
+(83, 88, 5, '', 'Bateria', 90, 110, 'teste'),
+(84, 89, 5, '', 'TensÃ£o', 14.5, 60, 'teste'),
+(85, 90, 5, '', 'TensÃ£o', 14.5, 60, 'teste'),
+(86, 91, 5, '', 'TensÃ£o', 14.5, 60, 'teste'),
+(87, 92, 5, '', 'TensÃ£o', 9, 60, 'teste'),
+(88, 93, 5, '', 'TensÃ£o', 0.9, 60, 'teste'),
+(89, 94, 5, '', 'TensÃ£o', 9, 60, 'teste'),
+(90, 95, 5, '', 'TensÃ£o', 0.9, 60, 'testse'),
+(91, 96, 5, '', 'TensÃ£o', 9, 60, 'teste'),
+(92, 97, 5, '', 'TensÃ£o', 0.9, 60, 'teste'),
+(93, 98, 5, '', 'TensÃ£o', 9, 60, 'teste'),
+(94, 99, 5, '', 'TensÃ£o', 9, 60, 'teste'),
+(95, 100, 5, '', 'TensÃ£o', 9, 60, 'teste'),
+(96, 101, 5, '', 'TensÃ£o', 9, 60, 'teste'),
+(97, 102, 5, '', 'TensÃ£o', 9, 60, 'testes'),
+(98, 103, 5, '', 'Bateria', 1270, 138, 'Finalizado'),
+(99, 104, 5, '', 'TensÃ£o', 100.7, 111, 'NOK'),
+(100, 105, 5, '', 'TensÃ£o', 100.7, 111, 'teste'),
+(101, 106, 5, '', 'TensÃ£o', 100.7, 111, 'teste'),
+(102, 107, 5, '', 'TensÃ£o', 100.7, 111, 'teste'),
+(103, 108, 5, '', 'TensÃ£o', 146, 133, 'Teste'),
+(104, 109, 5, '', 'TensÃ£o', 146, 133, 'teste'),
+(105, 110, 5, '', 'TensÃ£o', 146, 133, 'teset'),
+(106, 111, 5, '', 'TensÃ£o', 146, 133, 'teste'),
+(107, 112, 5, '', 'TensÃ£o', 146, 133, 'teste'),
+(108, 113, 5, '', 'TensÃ£o', 146, 133, 'tetset'),
+(109, 114, 5, '', 'TensÃ£o', 146, 133, 'teteste'),
+(110, 115, 5, '', 'TensÃ£o', 146, 133, 'Ok'),
+(111, 116, 5, '', 'TensÃ£o', 146, 133, 'Teste'),
+(112, 117, 5, '', 'TensÃ£o', 146, 133, 'Teste'),
+(113, 118, 5, '', 'TensÃ£o', 146, 133, 'Teste'),
+(114, 119, 5, '', 'TensÃ£o', 146, 133, 'Re'),
+(115, 120, 5, '', 'TensÃ£o', 146, 133, 'Teste'),
+(116, 121, 5, '', 'TensÃ£o', 146, 133, 'Fe'),
+(117, 122, 5, '', 'TensÃ£o', 99.7, 111, 'testes'),
+(118, 123, 5, '', 'TensÃ£o', 94.7, 111, 'Resdfsdf'),
+(119, 124, 5, '', 'TensÃ£o', 94.7, 111, 'Awe'),
+(120, 125, 5, '', 'TensÃ£o', 94.7, 111, 'Teste'),
+(121, 126, 5, '', 'TensÃ£o', 94.7, 111, 'Testes'),
+(122, 127, 5, '', 'TensÃ£o', 94.7, 111, 'Testes'),
+(123, 128, 5, '', 'TensÃ£o', 94.7, 111, 'Teste'),
+(124, 129, 5, '', 'TensÃ£o', 94.7, 111, 'Teste'),
+(125, 130, 5, '', 'TensÃ£o', 94.7, 111, 'Teste'),
+(126, 131, 5, '', 'TensÃ£o', 94.7, 111, 'Teste'),
+(127, 132, 5, '', 'TensÃ£o', 94.7, 111, 'Teste'),
+(128, 133, 5, '', 'TensÃ£o', 94.7, 111, 'Teste'),
+(129, 134, 5, '', 'TensÃ£o', 94.7, 111, 'Teste'),
+(130, 135, 5, '', 'TensÃ£o', 89, 111, 'Teste'),
+(131, 136, 5, '', 'TensÃ£o', 89, 111, 'e'),
+(132, 137, 5, '', 'SaÃ­da tensÃ£o', 90, 110, 'Terminado'),
+(133, 138, 5, '', 'SaÃ­da tensÃ£o', 90, 112, 'Teste'),
+(134, 139, 5, '', 'TensÃ£o', 89, 111, 'Teste'),
+(135, 140, 5, '', 'TensÃ£o', 89, 111, 'Terminado'),
+(136, 141, 5, '', 'TensÃ£o', 89, 110, 'Teste'),
+(137, 142, 5, '', 'SaÃ­da tensÃ£o', 145.6, 135, 'Teste'),
+(138, 143, 5, '', 'Bateria', 90, 105, 'Teste'),
+(139, 144, 5, '', 'TensÃ£o', 1, 110, 'qwer'),
+(140, 145, 5, '', 'TensÃ£o', 0, 110, 'teste'),
+(141, 146, 5, '', 'SaÃ­da tensÃ£o', 90, 110, 'testes'),
+(142, 147, 5, '', 'TensÃ£o', 0.1, 110, 'teste'),
+(143, 148, 5, '', 'TensÃ£o', 80, 110, 'Teste'),
+(144, 149, 5, '', 'TensÃ£o', 8.9, 110, 'Teste'),
+(145, 151, 5, 'b', 'TensÃ£o', 89, 110, 'teste'),
+(146, 152, 5, 'b', 'TensÃ£o', 86, 111, 'Teste'),
+(147, 153, 5, 'e', 'SaÃ­da tensÃ£o', 134.9, 134, 'Teste'),
+(148, 154, 5, 'h', 'Bateria', 233, 135, 'Teste'),
+(149, 155, 5, 'i', 'Corrente', 0, 114, 'Teste'),
+(150, 156, 5, 'b', 'TensÃ£o', 89, 111, 'Teste'),
+(151, 157, 5, 'e', 'SaÃ­da tensÃ£o', 90, 110, 'Teste'),
+(152, 158, NULL, 'e', 'SaÃ­da tensÃ£o', 90, 110, NULL);
 
 -- --------------------------------------------------------
 
@@ -16998,12 +17318,23 @@ INSERT INTO `tb_users` (`id`, `id_perfil_acesso`, `nome`, `sobrenome`, `email`, 
 (1, 1, 'Roberto', 'Shimokawa', 'sistemaeficaz@eficazsystem.com.br', '', '', '3fde6bb0541387e4ebdadf7c2ff31123', 1, 0, 0, 1, '2015-08-07 14:14:04'),
 (2, 1, 'Leonardo', 'Hilgemberg Lopes', 'projetos@eficazsystem.com.br', '', '', '3fde6bb0541387e4ebdadf7c2ff31123', 1, 0, 0, 1, '2015-08-07 14:14:04'),
 (3, 1, 'Fabiano ', 'Hatori', 'fabiano@eficazSystem.com.br', '', '', 'c62d929e7b7e7b6165923a5dfc60cb56', 1, 1, 0, 1, '2016-12-05 13:38:08'),
-(4, 1, 'Allan ', 'Lima ', 'allan.lima@eficazsystem.com.br', '', '', '9091a762fd732c7d0f308540ee93ed94', 1, 1, 0, 1, '2016-12-06 19:45:00'),
-(5, 1, 'Sistema2', 'Eficaz', 'sistemaeficaz@sistema.eficazsystem.com.br', '', '', '42d8aa7cde9c78c4757862d84620c335', 1, 0, 0, 1, '2016-12-07 17:08:02'),
+(4, 2, 'Allan ', 'Lima ', 'allan.lima@eficazsystem.com.br', '(342) 3423-4234', '(234) 2342-3423', '2472592351b44a1a218001b6cf4885c1', 1, 1, 0, 1, '2016-12-06 19:45:00'),
+(5, 1, 'Sistema2', 'Eficaz', 'sistemaeficaz@sistema.eficazsystem.com.br', '(012) 3323-2222', '(041) 2312-3123', '42d8aa7cde9c78c4757862d84620c335', 1, 0, 0, 1, '2016-12-07 17:08:02'),
 (41, 2, 'Leandro ', 'Moraes', 'email@email.com.br', '(123) 1231-2312', '(132) 1312-3123', '9091a762fd732c7d0f308540ee93ed94', 1, 48, 0, 1, '2017-01-10 17:20:48'),
-(42, 2, 'Golvea', 'Gusm&atilde;o Ale', 'email@email.com.ge', '(342) 2342-3423', '(423) 4234-2342', 'efe6398127928f1b2e9ef3207fb82663', 1, 49, 0, 1, '2017-01-10 17:25:08'),
-(43, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', '9091a762fd732c7d0f308540ee93ed94', 1, 50, 0, 1, '2017-01-10 17:26:32'),
-(44, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', 'efe6398127928f1b2e9ef3207fb82663', 1, 50, 0, 1, '2017-01-10 17:26:33');
+(42, 2, 'Golvea', 'Gusm&atilde;o', 'email@email.com.ge', '(342) 2342-3423', '(423) 4234-2342', 'efe6398127928f1b2e9ef3207fb82663', 1, 49, 0, 1, '2017-01-10 17:25:08'),
+(43, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', '9091a762fd732c7d0f308540ee93ed94', 1, 50, 0, 0, '2017-01-10 17:26:32'),
+(44, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', 'efe6398127928f1b2e9ef3207fb82663', 1, 50, 0, 0, '2017-01-10 17:26:33'),
+(45, 2, 'Sistema 3', 'Usu&aacute;rrio', 'sistema@email.com.br', '(423) 4234-2342', '(232) 4234-2342', 'efe6398127928f1b2e9ef3207fb82663', 1, 48, 0, 0, '2017-02-03 17:07:30'),
+(46, 2, 'Kilo', 'Reb', 'email@email.com', '(324) 2342-3423', '(234) 2342-3432', 'd41d8cd98f00b204e9800998ecf8427e', 1, 50, 0, 0, '2017-02-03 17:36:47'),
+(47, 2, 'Kilo', 'Reb terceiro', 'email@email.com.us', '(324) 2342-3423', '(234) 2342-3432', 'd41d8cd98f00b204e9800998ecf8427e', 1, 50, 0, 0, '2017-02-03 17:37:03'),
+(48, 2, 'Kilo', 'Reb terceiro', 'email@email.com.us', '(324) 2342-3423', '(234) 2342-3432', '7815696ecbf1c96e6894b779456d330e', 1, 50, 0, 0, '2017-02-03 17:38:55'),
+(49, 2, 'Laradios', 'TuRvos', 'temporario@emeil.com', '(123) 1231-2312', '(321) 3213-2132', 'efe6398127928f1b2e9ef3207fb82663', 1, 48, 0, 0, '2017-02-10 18:51:49'),
+(50, 2, 'TEmporario br', 'Usser', 'Emaasid@email.com.23', '(123) 1231-2312', '(312) 3123-2131', 'efe6398127928f1b2e9ef3207fb82663', 1, 51, 0, 0, '2017-02-10 19:23:17'),
+(51, 2, 'Contato', 'Zero', 'zeroEmail@email.com.br', '(123) 1231-2312', '(123) 2132-1312', 'f5bb0c8de146c67b44babbf4e6584cc0', 1, 52, 0, 0, '2017-02-20 17:45:42'),
+(52, 2, 'Contato ', 'Um', '1231231@email.com.br', '(123) 1232-1321', '(123) 1232-4234', 'b26986ceee60f744534aaab928cc12df', 1, 53, 0, 0, '2017-02-20 17:46:55'),
+(53, 2, 'Contato ', 'Quatro', 'quatro@email.com.br', '(928) 3324-2343', '(234) 2948-2342', '4297f44b13955235245b2497399d7a93', 1, 54, 0, 0, '2017-02-20 17:48:18'),
+(54, 2, 'Contato', 'Quatro', 'quatro@email.com', '(303) 2949-2340', '(012) 9823-0948', 'f5bb0c8de146c67b44babbf4e6584cc0', 1, 55, 0, 0, '2017-02-20 18:07:31'),
+(55, 2, 'Contato ', 'Bot&atilde;o', '12332@email.com.br', '(432) 4234-2342', '(234) 2342-3423', '4297f44b13955235245b2497399d7a93', 1, 56, 0, 0, '2017-02-20 18:33:38');
 
 --
 -- Indexes for dumped tables
@@ -17181,42 +17512,52 @@ ALTER TABLE `log`
 -- AUTO_INCREMENT for table `tb_alerta`
 --
 ALTER TABLE `tb_alerta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 --
 -- AUTO_INCREMENT for table `tb_cliente`
 --
 ALTER TABLE `tb_cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT for table `tb_contato_alerta`
 --
 ALTER TABLE `tb_contato_alerta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `tb_dados`
 --
 ALTER TABLE `tb_dados`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=556253;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=604954;
 --
 -- AUTO_INCREMENT for table `tb_equipamento`
 --
 ALTER TABLE `tb_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+--
+-- AUTO_INCREMENT for table `tb_fabricante`
+--
+ALTER TABLE `tb_fabricante`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `tb_filial`
 --
 ALTER TABLE `tb_filial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `tb_log`
 --
 ALTER TABLE `tb_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 --
 -- AUTO_INCREMENT for table `tb_msg_alerta`
 --
 ALTER TABLE `tb_msg_alerta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `tb_numero_falta`
+--
+ALTER TABLE `tb_numero_falta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15928;
 --
 -- AUTO_INCREMENT for table `tb_parametro`
 --
@@ -17226,12 +17567,12 @@ ALTER TABLE `tb_parametro`
 -- AUTO_INCREMENT for table `tb_posicao`
 --
 ALTER TABLE `tb_posicao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 --
 -- AUTO_INCREMENT for table `tb_sim_equipamento`
 --
 ALTER TABLE `tb_sim_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `tb_tipo_equipamento`
 --
@@ -17241,12 +17582,12 @@ ALTER TABLE `tb_tipo_equipamento`
 -- AUTO_INCREMENT for table `tb_tratamento_alerta`
 --
 ALTER TABLE `tb_tratamento_alerta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

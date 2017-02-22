@@ -27,7 +27,7 @@ $('#filtroClienteLista').change(function() {
     var idCliente = $(this).val();
 
     if(idCliente != ''){
-        
+
         $('#filtroLocalAutoComplete').val("");
 
         //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
@@ -139,7 +139,7 @@ $('#filtroLocalLista').change(function() {
 });
 
 /*
-* FILTRA OS LOCAIS ATRAVEZ DE AUTO COMPLETE
+* FILTRA OS LOCAIS ATRAVES DE AUTO COMPLETE
 */
  $("#filtroLocalAutoComplete")
    // don't navigate away from the field on tab when selecting an item

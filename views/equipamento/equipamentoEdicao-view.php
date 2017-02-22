@@ -43,9 +43,6 @@
  		array(1) { [0]=> array(12) { ["id"]=> string(1) "4" ["id_cliente"]=> string(1) "2" ["id_filial"]=> string(1) "0" ["tipo_equipamento"]=> string(6) "tretre" ["modelo"]=> string(5) "erter" ["potencia"]=> string(4) "4453" ["qnt_bateria"]=> string(5) "23323" ["caracteristica_equip"]=> string(5) "23423" ["tipo_bateria"]=> string(13) "Estacionária" ["amperagem_bateria"]=> string(5) "23423" ["cliente"]=> string(4) "Jose" ["filial"]=> NULL } }
 	*/
 
-    var_dump($equipamentoCarregado);
-
-
 ?>
 
 <div class="row">
@@ -64,12 +61,12 @@
                         <input id="filialEquipamento" name="filialEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_filial']; ?>">
                         <input id="nomeCliente" name="nomeCliente" type='text'  class="form-control" value="<?php echo $equipamentoCarregado['cliente']; ?>">
                     </div>
-                </div><!-- fim fabricante -->
+                </div><!-- fim cliente -->
 
         		<div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Filial com o equipamento : </label>
-                        <input id="nomeFilial" name="nomeFilial" type='text'  class="form-control" value="<?php echo (isset($equipamentoCarregado['filial'])) ? $equipamentoCarregado['filial']: " "; ?>">
+                        <input id="nomeFilial" name="nomeFilial" type='text'  class="form-control" value="<?php echo (isset($equipamentoCarregado['filial'])) ? $equipamentoCarregado['filial']: "Matriz"; ?>">
                     </div>
                 </div><!-- fim filial -->
 
@@ -137,8 +134,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="modeloEquipamento">Modelo de Equipamento</label>
-                        <input type="text" class="form-control" id="txt_nomeModeloEquip" name="txt_nomeModeloEquip" placeholder="Modelo de Equipamento" maxlength="80"
-                        required value="">
+                        <input type="text" class="form-control" id="txt_nomeModeloEquip" name="txt_nomeModeloEquip" placeholder="Modelo de Equipamento" value="<?php echo  $equipamentoCarregado['nomeModeloEquipamento']; ?>">
                     </div>
                 </div><!-- fim modelo do equipamento -->
             </div>
@@ -234,8 +230,8 @@
                         <label for="tipoBateria">Banco de bateria externo/interno</label>
                         <select id="opc_localBat" name="opc_localBat" spellcheck="false" class="form-control">
                             <option value='' <?php echo ($equipamentoCarregado['localBateria'] == '') ? 'selected' : ''; ?> >Selecione um tipo de bateria</option>
-                            <option value='Automotiva' <?php echo ($equipamentoCarregado['localBateria'] == 'Externa') ? 'selected' : ''; ?> >Externa</option>
-                            <option value='Estacion&aacute;ria' <?php echo ($equipamentoCarregado['localBateria'] == 'Interna') ? 'selected' : ''; ?> >Interna</option>
+                            <option value='Externa' <?php echo ($equipamentoCarregado['localBateria'] == 'Externa') ? 'selected' : ''; ?> >Externa</option>
+                            <option value='Interna' <?php echo ($equipamentoCarregado['localBateria'] == 'Interna') ? 'selected' : ''; ?> >Interna</option>
                         </select>
                     </div>
                 </div><!-- fim Tipo de bateria -->

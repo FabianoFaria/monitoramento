@@ -3,7 +3,7 @@
     if (! defined('EFIPATH')) exit;
 
     /* Carrega os dados do cliente */
-    $dados       = $modeloClie->listarCliente();
+    //$dados       = $modeloClie->listarCliente();
     $equipamento = $modelo->dadosEquipamentoCliente($this->parametros[0]);
 
     if($equipamento['status']){
@@ -48,13 +48,15 @@
                         <label for="numeroSerie">Equipamento para vincular</label>
                         <input type="hidden" id="idEquipamento" name="idEquipamento" value="<?php echo $dadosEquipamentos['id'];?>" />
                         <input type="hidden" id="idTipoEquipamento" name="idTipoEquipamento" value="<?php echo $dadosEquipamentos['tipo_equipamento'];?>" />
-                        <input type="text" id="equipamentoVincular" class="form-control" value="<?php echo $dadosEquipamentos['nomeEquipamento']." ".$dadosEquipamentos['modelo']; ?>" >
+                        <input type="text" id="equipamentoVincular" class="form-control" value="<?php echo $dadosEquipamentos['tipoEquip']." ".$dadosEquipamentos['nomeModeloEquipamento']; ?>" disabled="">
                     </div>
                 </div>
 
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label for="numeroSerie">Selecione o SIM vinculado ao cliente ou filial</label>
+                        <!-- SELECT PARA VINCULAR O SIM AO CLIENTE OU FILIAL -->
+
+                        <label for="numeroSerie">Selecione o número de série para vincular</label>
                         <?php
                             $count = 0;
                             $opcoes = "<option value=''>Selecione um SIM</option>";
@@ -86,20 +88,20 @@
             <div class="row">
 
                 <!-- Numero de serie -->
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                     <div class="form-group">
                         <label for="numeroSerie">N&uacute;mero de s&eacute;rie (Opcional)</label>
                         <input type="text" class="form-control" id="txt_numeroSerie" name="txt_numeroSerie" placeholder="N&uacute;mero de s&eacute;rie"
                         maxlength="30" onkeypress="return onlyNumber(event);" value="">
                     </div>
-                </div><!-- fim Numero de serie -->
+                </div>-->
+                <!-- fim Numero de serie -->
 
                 <!-- Ambiente -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="ambiente">Ambiente (Opcional)</label>
-                        <input type="text" class="form-control" id="txt_ambiente" name="txt_ambiente" placeholder="Ambiente" maxlength="50"
-                        value="">
+                        <label for="ambiente">Observações do equipamento (Opcional)</label>
+                        <textarea class="form-control" id="txt_ambiente" name="txt_ambiente"></textarea>
                     </div>
                 </div><!-- fim Ambiente -->
 
@@ -113,6 +115,33 @@
 
         </form>
 
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- TITULO PAGINA -->
+        <label class="page-header">Gerenciar sims do cliente : <?php echo $dadosCliente['dados'][0]['cliente']; ?></label><!-- Fim Titulo pagina -->
+        <p>
+            <a href="<?php echo HOME_URI; ?>/vinculo/gerenciarVinculo/<?php echo $dadosEquipamentos['id_cliente']; ?>">Gerenciar sims</a>
+        </p>
+        <?php
+            //var_dump($dadosCliente);
+
+            /*
+            C:\wamp64\www\eficazmonitor\views\vinculo\vincularSimEquipamento-view.php:128:
+            array (size=2)
+            'status' => boolean true
+            'dados' =>
+            array (size=1)
+              0 =>
+                array (size=3)
+                  'cliente' => string 'Correntes Andromeda' (length=19)
+                  'filial' => string 'Filial Eater' (length=12)
+                  'num_sim' => null
+            */
+        ?>
 
     </div>
 </div>

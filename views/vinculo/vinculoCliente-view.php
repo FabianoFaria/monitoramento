@@ -58,68 +58,105 @@
 <div class="row">
     <div class="col-md-12">
 
-        <!-- Cadastra do cliente -->
-       	<div class="panel-group" id="accordionVinculoClie" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-            	<div class="panel-heading" role="tab" id="headingOne">
-                  <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordionContatoClie" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      <i class="fa  fa-building-o  "></i> Sims vinculados ao cliente
-                    </a>
-                  </h4>
+        <!-- TABELA CONTENDO TODOS OS CLIENTES -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <form id="filtroSimCliente" class="">
+                        <div class="col-md-3 form-group">
+                            <!-- <p>
+                                Local : <select id="filtroLocalLista" class="form-control">
+                                            <option value="0">Selecione... </option>
+                                        </select>
+                            </p> -->
+                            <input type="hidden" id="idCliente" value="<?php echo $this->parametros[0]; ?>" />
+                            <p>
+                                Filtrar por filial : <input type="text" class="form-control" id="filtroLocalAutoComplete" name="filtroLocalAutoComplete" value="">
+                                <input type="hidden" id="localId" value="" />
+                            </p>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                    <div class='table-responsive'>
-                        <table id="stream_table" class='table table-striped table-bordered'>
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Número do Sim
-                                    </th>
-                                    <th>
-                                        Posicionamento da tabela
-                                    </th>
-                                    <th>
-                                        Excluir
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    if($vinculos['status']){
+            <div class="panel-body">
+                <div class='table-responsive'>
+                    <table id="listaSims" class='table table-striped table-bordered'>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Local
+                                </th>
+                                <th>
+                                    Número do Sim
+                                </th>
+                                <th>
+                                    Posicionamento da tabela
+                                </th>
+                                <th>
+                                    Excluir
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                if($vinculos['status']){
 
-                                        foreach ($dadosVinculo as $vinculo) {
+                                    //var_dump($vinculos);
 
-                                            echo "<tr><td>".$vinculo['num_sim']."</td><td><a href='javascript:void(0)' onClick='detalhesPosicao(".$vinculo['num_sim'].")'><i class='fa fa-eye '></i></a></td><td><a href='#' class='removeVinculo'><i class='fa fa-times'></i></a></td></tr>";
+                                    foreach ($vinculos['sims'] as $vinculo) {
 
-                                        }
+                                        ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $vinculo['cliente']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo (isset($vinculo['filial'])) ? $vinculo['filial'] : 'Matriz'; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $vinculo['num_sim']; ?>
+                                                </td>
+                                                <td>
+                                                    <a href='javascript:void(0)' onClick='detalhesPosicao(<?php echo $vinculo['num_sim']; ?>)'><i class='fa fa-eye '></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href='javascript:void(0)' onClick='removerSim(<?php echo $vinculo['num_sim']; ?>)'><i class="fa  fa-times fa-lg"></i></i></a>
+                                                </td>
+                                            </tr>
+
+                                        <?php
+
                                     }
-                                    else{
+                                }
+                                else{
 
-                                ?>
-                                    <td colspan="3">
+                            ?>
+                                <tr>
+                                    <td colspan="5">
                                         Nenhum SIM cadastrado até o momento
                                     </td>
-                                <?php
+                                </tr>
 
-                                    }
-                                ?>
+                            <?php
+
+                                }
+                            ?>
 
 
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
         </div>
 
     </div>
 </div>
 
-<!-- Modal exibindo as posições já ocupadas pelo sim informado! -->
+
+<!-- MODAL EXIBINDO AS POSIÇÕES JÁ OCUPADAS PELO SIM INFORMADO! -->
 
 <div  id="posicoesTabela" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">

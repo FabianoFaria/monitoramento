@@ -211,9 +211,9 @@ class EquipamentoController extends MainController
             $_POST['quantBat'],
             $_POST['quantBancoBat'],
             $_POST['quantBatPorBanc'],
-             $_POST['tipoBateria'],
-             $_POST['localBateria']
-             );
+            $_POST['tipoBateria'],
+            $_POST['localBateria']
+            );
 
         if($editarEquip){
             exit(json_encode(array('status' => $editarEquip['status'] )));

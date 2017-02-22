@@ -146,6 +146,10 @@ $(document).ready(function(){
 
 		if($('#novoEquipamento').valid()){
 
+            /*
+            * Remove o botão #validarCadastroEquipamento
+            */
+            $('#validarCadastroEquipamento').unbind();
 			//$("#scope_input").val(ui.value).change();
 
             var idCliente 		= $('#clienteEquipamento').val();

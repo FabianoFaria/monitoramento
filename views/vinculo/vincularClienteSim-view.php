@@ -45,13 +45,14 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <input type="hidden" id="idCliente" name="idCliente" value="<?php echo $this->parametros[0]; ?>" />
-                        <label for="exampleInputEmail1">Filial (Opcional)</label><br>
-                        <select id="filialVincular" class="form-control">
+                        <label for="exampleInputEmail1">Matriz ou filial</label><br>
+                        <select id="filialVincular" name="filialVincular" class="form-control">
                             <?php
 
                                 if(isset($dadosFiliais)){
                                     ?>
-                                        <option value="">Selecione Uma filial </option>
+                                        <option value="">Selecione uma filial </option>
+                                        <option value="0">Vicular a Matriz </option>
                                     <?php
 
                                         foreach ($dadosFiliais as $filial) {
@@ -60,7 +61,7 @@
 
                                 }else{
                             ?>
-                                <option value="0">Não há filiais disponíveis </option>
+                                <option value="0">Vicular a Matriz </option>
                             <?php
                                 }
 
@@ -76,6 +77,14 @@
                         <input type="text" class="form-control" id="txt_numSim" name="txt_numSim" placeholder="C&oacute;digo do SIM" maxlength="20" onkeypress="return onlyNumber(event);" required>
                     </div>
                 </div><!-- fim do Codigo SIM -->
+
+                <!-- Ambiente / local -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ambiente / Local  (Opcional)</label>
+                        <textarea id="ambienteSim" name="ambienteSim" class="form-control"></textarea>
+                    </div>
+                </div><!-- fim do Ambiente / local -->
 
             </div>
 

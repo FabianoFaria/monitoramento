@@ -292,7 +292,7 @@ class VinculoController extends MainController
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
 
-        $vinculoRegistrado  = $vinculoModelo->cadastrarVinculoCliente($_POST['idCliente'],$_POST['idFilial'],$_POST['num_sim']);
+        $vinculoRegistrado  = $vinculoModelo->cadastrarVinculoCliente($_POST['idCliente'],$_POST['idFilial'],$_POST['num_sim'], $_POST['ambiente']);
 
         if($vinculoRegistrado['status']){
             exit(json_encode(array('status' => $vinculoRegistrado['status'])));
@@ -358,7 +358,7 @@ class VinculoController extends MainController
 
             //INICIA O PROCESSO DE VINCULO COM A TABELA
 
-            $vinculoEquipamento = $vinculoModelo->cadastrarVinculoEquipamento($_POST['idEquipamento'], $_POST['simVinculado'], $_POST['numero_serie'], $_POST['ambiente']);
+            $vinculoEquipamento = $vinculoModelo->cadastrarVinculoEquipamento($_POST['idEquipamento'], $_POST['simVinculado'], $_POST['ambiente']);
 
             if($vinculoEquipamento['status']){
 
@@ -427,6 +427,129 @@ class VinculoController extends MainController
         }else{
             exit(json_encode(array('status' => false, 'html' => "<tr><td colspan='2'>Sim informado não está correto!</td></tr>")));
         }
+
+    }
+
+    /*
+    * RECUPERA A LISTA DE SIMS QUE FORAM CADASTRADOS PARA DETERMINADA FILIAL
+    */
+    public function  carregarListaSimFilialJson(){
+
+        if(is_numeric($_POST['idCliente'])){
+
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $vinculoModelo  = $this->load_model('vinculo/vinculo-model');
+
+            $dadosSims      = $vinculoModelo->listarSimsFilialClienteTipo($_POST['idCliente'], $_POST['idFilial']);
+
+            if($dadosSims['status']){
+
+                //MONTA A TABELA DE EQUIPAMENTOS
+                $listaSim         = $dadosSims['sims'];
+
+                $tabela         = "";
+                $tabela         .="<thead><tr>
+                                    <th>Cliente</th>
+                                    <th>Local</th>
+                                    <th>Sim</th>
+                                    <th>Ocupação do Sim</th>
+                                    <th class='txt-center'>Excluir</th>
+                                    </tr></thead>";
+                if($dadosSims['status']){
+                    $tabela         .="<tbody>";
+                        foreach ($listaSim as $sim) {
+
+                            $tabela         .="<tr>";
+
+                            $tabela         .="<td>";
+                                $tabela     .=$sim['cliente'];
+                            $tabela         .="</td>";
+                            $tabela         .="<td>";
+                                $tabela     .=$sim['filial'];
+                            $tabela         .="</td>";
+                            $tabela         .="<td>";
+                                $tabela     .=$sim['num_sim'];
+                            $tabela         .="</td>";
+                            $tabela         .="<td>";
+                                //$link       = HOME_URI."/vinculo/graficoFisicoParametrosEquipamentoCliente/".$sim['num_sim']."";
+                                $tabela     .= "<a href='javascript:void(0)' onClick='detalhesPosicao(".$sim['num_sim'].")'><i class='fa fa-list-alt fa-2x'></i></a>";
+                            $tabela         .="</td>";
+                            $tabela         .="<td>";
+                                //$link       = HOME_URI."/vinculo/graficoFisicoParametrosEquipamentoCliente/".$sim['num_sim']."";
+                                $tabela     .= "<a href='javascript:void(0)' onClick='removerSim(".$sim['num_sim'].")'><i class='fa fa-times fa-lg'></i></a>";
+                            $tabela         .="</td>";
+
+                            $tabela         .="</tr>";
+                        }
+                    $tabela         .="</tbody>";
+
+                }else{
+                    $tabela         .="<tbody>";
+                        $tabela         .="<tr>";
+                            $tabela         .="<td colspan='4'>Nenhum SIM cadastrado até o momento</td>";
+                        $tabela         .="</tr>";
+                    $tabela         .="</tbody>";
+
+
+                }
+
+                exit(json_encode(array('status' => true, 'html' => $tabela)));
+
+            }else{
+                //GERA TABELA VAZIA
+                $tabela         ="<thead><tr>
+                                    <th>Cliente</th>
+                                    <th>Local</th>
+                                    <th>Sim</th>
+                                    <th>Ocupação do Sim</th>
+                                    <th class='txt-center'>Excluir</th>
+                                    </tr></thead>";
+                $tabela         .="<tbody>";
+                    $tabela         .="<tr>";
+                        $tabela         .="<td colspan='4'>Nenhum SIM cadastrado até o momento</td>";
+                    $tabela         .="</tr>";
+                $tabela         .="</tbody>";
+
+                exit(json_encode(array('status' => false, 'html' => $tabela)));
+            }
+
+
+        }
+    }
+
+    /*
+    * REMOVE SIM DA LISTA DE ATIVOS
+    */
+    public function removerVinculoSim(){
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
+
+        $vinculoRemovido  = $vinculoModelo->removerVinculoCliente($_POST['numeroSim']);
+
+        if($vinculoRemovido['status']){
+            exit(json_encode(array('status' => $vinculoRemovido['status'])));
+        }else{
+            exit(json_encode(array('status' => $vinculoRemovido['status'])));
+        }
+    }
+
+    /*
+    * VERIFICA SE SIM EXISTE E ESTÁ ATIVO NO SISTEMA
+    */
+    public function verificarSimExistente(){
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
+
+        $vinculoExistente   = $vinculoModelo->verificarSimExistente($_POST['num_sim']);
+
+        if($vinculoExistente['status']){
+            // false DE EXISTENTE, LOGO IMPROPIO PARA SEGUIR
+            echo json_encode( false );
+        }else{
+            //TRUE DE NÚMERO SIM NÃO EXISTENTE, CADASTRO PODE SEGUIR
+            echo json_encode( true );
+        }
+
 
     }
 }
