@@ -149,12 +149,13 @@
 
                         foreach ($equipamentos as $equipamento){
 
-                            if(isset($equipamento['nomeEquipamento'])){
+                            if(isset($equipamento['tipo_equipamento'])){
+
                                 ?>
 
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
-                                        <?php echo $equipamento['tipo_equipamento']." ".$equipamento['nomeEquipamento']." ".$equipamento['modelo']; ?>
+                                        <?php echo $equipamento['tipo_equipamento']." ".$equipamento['nomeModeloEquipamento']; ?>
                                     </div>
                                     <div class="panel-body">
                                         <div class="row">
@@ -269,7 +270,7 @@
                         ?>
                             <div class="panel panel-info">
                                 <div class="panel-heading">
-                                    <?php echo $lista[0]['tipoEquip']." ".$lista[0]['nomeEquipamento']." ".$lista[0]['modelo']; ?>
+                                    <?php echo $lista[0]['tipoEquip']." ".$lista[0]['nomeModeloEquipamento']; ?>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">

@@ -90,7 +90,7 @@ class EquipamentoModel extends MainModel
     {
         if(is_numeric($idCliente)){
 
-            $query = "SELECT equip.id, equip.nomeEquipamento, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
+            $query = "SELECT equip.id, equip.nomeModeloEquipamento, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.potencia, equip.qnt_bateria, equip.tipo_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
                         FROM tb_equipamento equip
                         JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                         LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
@@ -137,7 +137,7 @@ class EquipamentoModel extends MainModel
     {
         if(is_numeric($idCliente)){
 
-            $query = "SELECT equip.id, equip.nomeEquipamento, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.modelo, equip.potencia, equip.qnt_bateria, equip.caracteristica_equip, equip.tipo_bateria, equip.amperagem_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
+            $query = "SELECT equip.id, equip.nomeModeloEquipamento, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.potencia, equip.qnt_bateria, equip.tipo_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
                         FROM tb_equipamento equip
                         JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                         LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
@@ -190,7 +190,7 @@ class EquipamentoModel extends MainModel
              equip.qnt_bateria,
              equip.tipo_bateria,
              equip.localBateria,
-             equip.amperagem_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip' ";
+             clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip' ";
 
             $query .= "";
 

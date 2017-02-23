@@ -224,6 +224,12 @@ class GraficoGeradorModel extends MainModel
                     $diff = 0;
                 }
 
+            }else{
+                //CASO O EQUIPAMENTO NÃO POSSUA DADOS SALVOS NO BD AINDA
+                $respDate = "[]";
+                $respData = "{}";
+                $respRawDate = array();
+                $diasDiff = 0;
             }
 
             //var_dump($resultadoSim);
@@ -232,7 +238,7 @@ class GraficoGeradorModel extends MainModel
             $respDate = "[]";
             $respData = "{}";
             $respRawDate = array();
-            $diff = 0;
+            $diasDiff = 0;
         }
 
         // Converte para json

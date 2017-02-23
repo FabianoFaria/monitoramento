@@ -138,9 +138,8 @@ switch ($_SESSION['userdata']['tipo_usu']) {
         <table id="" class='table table-striped table-bordered'>
             <thead>
                 <tr>
+                    <th>Tipo</th>
                     <th>Nome equipamento</th>
-                    <th>Modelo</th>
-                    <th>Característica</th>
                     <th>Cliente</th>
                     <th>Filial/Matriz</th>
                     <th>Monitorar</th>
@@ -162,13 +161,10 @@ switch ($_SESSION['userdata']['tipo_usu']) {
             ?>
                 <tr>
                     <td>
-                        <?php echo $equipamento['nomeEquipamento']; ?>
+                        <?php echo $equipamento['tipoEquip']; ?>
                     </td>
                     <td>
-                        <?php echo $equipamento['modelo']; ?>
-                    </td>
-                    <td>
-                        <?php echo $equipamento['caracteristica_equip']; ?>
+                        <?php echo $equipamento['nomeModeloEquipamento']; ?>
                     </td>
                     <td>
                         <?php echo $equipamento['cliente']; ?>

@@ -523,7 +523,7 @@
 
             if(is_numeric($idCliente)){
 
-                $query = "SELECT clie.id, sim.num_sim, sim_equip.id_equipamento, sim_equip.num_serie, tp_equip.tipo_equipamento, equip.nomeEquipamento, equip.modelo
+                $query = "SELECT clie.id, sim.num_sim, sim_equip.id_equipamento, sim_equip.num_serie, tp_equip.tipo_equipamento, equip.nomeModeloEquipamento
                             FROM tb_cliente clie
                             JOIN tb_sim sim ON sim.id_cliente = clie.id
                             LEFT JOIN tb_sim_equipamento sim_equip ON sim_equip.id_sim = sim.num_sim

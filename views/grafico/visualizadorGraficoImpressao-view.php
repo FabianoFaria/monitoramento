@@ -136,12 +136,12 @@
                 //FOREACH PARA EXIBIÇÃO DOS EQUIPAMENTOS
                 foreach ($equipamentos as $equipamento){
 
-                    if(isset($equipamento['nomeEquipamento'])){
+                    if(isset($equipamento['nomeModeloEquipamento'])){
 
                         $htmlRealatorio .="<div class='panel panel-default'>";
 
                             $htmlRealatorio .="<div class='panel-heading'>";
-                                $htmlRealatorio .= $equipamento['tipo_equipamento']." ".$equipamento['nomeEquipamento']." ".$equipamento['modelo'];
+                                $htmlRealatorio .= $equipamento['tipo_equipamento']." ".$equipamento['nomeModeloEquipamento'];
                             $htmlRealatorio .="</div>";
 
                             $htmlRealatorio .="<div class='panel-body'>";

@@ -203,7 +203,7 @@
                                 ?>
                                     <tr>
                                         <td><?php echo $equipamento['tipoEquip']; ?></td>
-                                        <td><?php echo $equipamento['modelo']; ?></td>
+                                        <td><?php echo $equipamento['nomeModeloEquipamento']; ?></td>
                                         <td><?php echo $equipamento['cliente']?></td>
                                         <td>
                                             <?php echo (isset($equipamento['filial'])) ? $equipamento['filial'] : "Matriz"; ?>

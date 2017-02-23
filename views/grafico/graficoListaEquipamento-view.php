@@ -141,7 +141,7 @@ if (!defined('EFIPATH')) exit();
                                 <th>Cliente</th>
                                 <th>Sede</th>
 
-                                <th>Caracteristica</th>
+                                <!-- <th>Caracteristica</th> -->
                                 <!-- <th>Tipo bateria</th> -->
                                 <th class="txt-center">Verificar relatôrio equipamento</th>
                             </tr>
@@ -154,16 +154,14 @@ if (!defined('EFIPATH')) exit();
                             ?>
                                 <tr>
                                     <td><?php echo $equipamento['tipoEquip']; ?></td>
-                                    <td><?php echo $equipamento['modelo']; ?></td>
+                                    <td><?php echo $equipamento['nomeModeloEquipamento']; ?></td>
                                     <td><?php echo $equipamento['fabricante']; ?></td>
                                     <!-- <td><?php //echo $equipamento['potencia']; ?></td> -->
                                     <td><?php echo $equipamento['cliente']?></td>
                                     <td>
                                         <?php echo (isset($equipamento['filial'])) ? $equipamento['filial'] : "Matriz"; ?>
                                     </td>
-                                    <!-- <td><?php //echo $equipamento['qnt_bateria']; ?></td> -->
-                                    <td><?php echo $equipamento['caracteristica_equip']; ?></td>
-                                    <!-- <td><?php //echo $equipamento['tipo_bateria']; ?></td> -->
+                                    
                                     <td><?php //echo $equipamento['amperagem_bateria']; ?>
                                         <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/<?php echo $equipamento['id'] ?>" class="link-tabela-moni">
                                             <i class="fa fa-clipboard  fa-2x "></i>

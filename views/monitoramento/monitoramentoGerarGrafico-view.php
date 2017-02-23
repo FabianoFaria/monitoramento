@@ -29,7 +29,7 @@ if(is_numeric($this->parametros[0])){
         $idSim      = null;
     }
 
-    $equipamentoMonitorado = $dadosEquipamento['tipoEquip']." ".$dadosEquipamento['nomeEquipamento'];
+    $equipamentoMonitorado = $dadosEquipamento['tipoEquip']." ".$dadosEquipamento['nomeModeloEquipamento'];
 
     //INICIA CLASS DA LISTA INICAL
     $parametroListaIni  = array();
@@ -440,7 +440,7 @@ else
                         <div class="col-lg-6">
                             <h4>Equipamento</h4>
                             <p>
-                                <?php echo $dadosEquipamento['tipoEquip']." ".$dadosEquipamento['nomeEquipamento']; ?>
+                                <?php echo $dadosEquipamento['tipoEquip']." ".$dadosEquipamento['nomeModeloEquipamento']; ?>
                             </p>
                         </div>
                     </div>

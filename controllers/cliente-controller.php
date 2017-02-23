@@ -160,7 +160,7 @@
                             $tabela     .= html_entity_decode($equip['tipoEquip']);
                         $tabela         .="</td>";
                         $tabela         .="<td>";
-                            $tabela     .=html_entity_decode($equip['modelo']);
+                            $tabela     .=html_entity_decode($equip['nomeModeloEquipamento']);
                         $tabela         .="</td>";
                         $tabela         .="<td>";
                             $tabela     .= (isset($equip['filial'])) ? html_entity_decode($equip['filial']) : "Matriz";
@@ -252,7 +252,7 @@
                             $tabela     .=html_entity_decode($equip['tipoEquip']);
                         $tabela         .="</td>";
                         $tabela         .="<td>";
-                            $tabela     .=html_entity_decode($equip['modelo']);
+                            $tabela     .=html_entity_decode($equip['nomeModeloEquipamento']);
                         $tabela         .="</td>";
                         $tabela         .="<td>";
                             $tabela     .= (isset($equip['filial'])) ? html_entity_decode($equip['filial']) : "Matriz";
@@ -344,7 +344,7 @@
                             $tabela     .=html_entity_decode($equip['tipoEquip']);
                         $tabela         .="</td>";
                         $tabela         .="<td>";
-                            $tabela     .=html_entity_decode($equip['modelo']);
+                            $tabela     .=html_entity_decode($equip['nomeModeloEquipamento']);
                         $tabela         .="</td>";
                         $tabela         .="<td>";
                             $tabela     .= (isset($equip['filial'])) ? html_entity_decode($equip['filial']) : "Matriz";
@@ -457,7 +457,7 @@
                                 $tabela     .=html_entity_decode($equip['tipoEquip']);
                             $tabela         .="</td>";
                             $tabela         .="<td>";
-                                $tabela     .=html_entity_decode($equip['modelo']);
+                                $tabela     .=html_entity_decode($equip['nomeModeloEquipamento']);
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $tabela     .= (isset($equip['filial'])) ? html_entity_decode($equip['filial']) : "Matriz";
@@ -532,7 +532,7 @@
                                 $tabela     .=html_entity_decode($equip['tipoEquip']);
                             $tabela         .="</td>";
                             $tabela         .="<td>";
-                                $tabela     .=html_entity_decode($equip['modelo']);
+                                $tabela     .=html_entity_decode($equip['nomeModeloEquipamento']);
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $tabela     .= (isset($equip['filial'])) ? html_entity_decode($equip['filial']) : "Matriz";
@@ -607,7 +607,7 @@
                                 $tabela     .=html_entity_decode($equip['tipoEquip']);
                             $tabela         .="</td>";
                             $tabela         .="<td>";
-                                $tabela     .=html_entity_decode($equip['modelo']);
+                                $tabela     .=html_entity_decode($equip['nomeModeloEquipamento']);
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $tabela     .= (isset($equip['filial'])) ? html_entity_decode($equip['filial']) : "Matriz";
@@ -700,7 +700,7 @@
                                 $tabela     .=$equip['tipoEquip'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
-                                $tabela     .=$equip['modelo'];
+                                $tabela     .=$equip['nomeModeloEquipamento'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $tabela     .=$equip['cliente'];
@@ -795,7 +795,7 @@
                                 $tabela     .=$equip['tipoEquip'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
-                                $tabela     .=$equip['modelo'];
+                                $tabela     .=$equip['nomeModeloEquipamento'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $tabela     .=$equip['cliente'];
@@ -890,7 +890,7 @@
                                 $tabela     .=$equip['tipoEquip'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
-                                $tabela     .=$equip['modelo'];
+                                $tabela     .=$equip['nomeModeloEquipamento'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $tabela     .=$equip['cliente'];
