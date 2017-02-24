@@ -473,7 +473,7 @@ else
                                                         <!-- Entrada R/S -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                                                             <div id="containerEntrada1" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label id="bat_e1" class="valorVindo">0 ( v )</label>
+                                                            <label id="bat_e1" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-ent1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
@@ -481,7 +481,7 @@ else
                                                         <!-- Entrada R/S -->
                                                         <div class="ol-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerEntrada2" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label id="bat_e2" class="valorVindo">0 ( v )</label>
+                                                            <label id="bat_e2" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-ent2" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
@@ -489,7 +489,7 @@ else
                                                         <!-- Entrada R/S -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerEntrada3" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label id="bat_e3" class="valorVindo">0 ( v )</label>
+                                                            <label id="bat_e3" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-ent3" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
@@ -502,7 +502,7 @@ else
                                                         <!-- Saida S/T -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerTensaSaida1" style="width:100%; margin: 0 auto"></div>
-                                                            <label id="bat_s1" class="valorVindo">0 ( v )</label>
+                                                            <label id="bat_s1" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-sai1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
@@ -510,7 +510,7 @@ else
                                                         <!-- Saida S/T -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerTensaSaida2" style="width:100%; margin: 0 auto"></div>
-                                                            <label id="bat_s2" class="valorVindo">0 ( v )</label>
+                                                            <label id="bat_s2" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-sai2" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
@@ -518,7 +518,7 @@ else
                                                         <!-- Saida S/T -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerTensaSaida3" style="width:100%; margin: 0 auto"></div>
-                                                            <label id="bat_s3" class="valorVindo">0 ( v )</label>
+                                                            <label id="bat_s3" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-sai3" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
@@ -593,41 +593,131 @@ else
                             <div class="panel-body">
 
                                 <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="well">
-                                            <div class="row">
 
-                                                <div class="col-lg-12">
-                                                    <h4>Utilizada</h4>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <div id="containerPotenciaAtiva" style="width:100%; margin: 0 auto"></div>
-                                                        <label id="cor_potA" class="valorVindo">0 ( W )</label>
-                                                        <div id="sit-cor-potA" class="situacaoDesligado">...</div>
-                                                    </div><!-- Saida S/T -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                    <script>
+                                        setInterval(function(){
+
+                                            //ENTRADA R
+                                            var tempEntR = $('#bat_e1').html();
+                                            var tempSaiR = $('#cor_e1').html();
+
+                                            var entR    = tempEntR.split(' ');
+                                            var saiR    = tempSaiR.split(' ');
+
+                                            var potEntR = new Number(entR[0]) * new Number(saiR[0]);
+                                            $('#entrR').html(potEntR + " (w)");
+
+                                            //ENTRADA S
+                                            var tempEntS = $('#bat_e2').html();
+                                            var tempSaiS = $('#cor_e2').html();
+
+                                            var entS    = tempEntS.split(' ');
+                                            var saiS    = tempSaiS.split(' ');
+
+                                            var potEntS = new Number(entS[0]) * new Number(saiS[0]);
+                                            $('#entrS').html(potEntR + " (w)");
+
+
+                                            //ENTRADA T
+                                            var tempEntT = $('#bat_e3').html();
+                                            var tempSaiT = $('#cor_e3').html();
+
+                                            var entT    = tempEntT.split(' ');
+                                            var saiT    = tempSaiT.split(' ');
+
+                                            var potEntT = new Number(entT[0]) * new Number(saiT[0]);
+                                            $('#entrT').html(potEntT + " (w)");
+
+                                            //SAÍDA R
+                                            var tempCorEntR = $('#bat_s1').html();
+                                            var tempCorSaiR = $('#cor_s1').html();
+
+                                            var corEntR    = tempCorEntR.split(' ');
+                                            var corSaiR    = tempCorSaiR.split(' ');
+
+                                            var potSaiR = new Number(corEntR[0]) * new Number(corSaiR[0]);
+                                            $('#saiR').html(potSaiR + " (w)");
+
+                                            //SAÍDA S
+                                            var tempCorEntS = $('#bat_s2').html();
+                                            var tempCorSaiS = $('#cor_s2').html();
+
+                                            var corEntS    = tempCorEntS.split(' ');
+                                            var corSaiS    = tempCorSaiS.split(' ');
+
+                                            var potSaiS = new Number(corEntS[0]) * new Number(corSaiS[0]);
+                                            $('#saiS').html(potSaiS + " (w)");
+
+                                            //SAÍDA T
+                                            var tempCorEntT = $('#bat_s3').html();
+                                            var tempCorSaiT = $('#cor_s3').html();
+
+                                            var corEntT    = tempCorEntT.split(' ');
+                                            var corSaiT    = tempCorSaiT.split(' ');
+
+                                            var potSaiT = new Number(corEntT[0]) * new Number(corSaiT[0]);
+                                            $('#saiT').html(potSaiT + " (w)");
+
+                                        },5000);
+                                    </script>
+
+                                    <div class="col-lg-6">
                                         <div class="well">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <h4>Contratada</h4>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <div id="containerPotenciaAtiva" style="width:100%; margin: 0 auto"></div>
-                                                        <label id="cor_potA" class="valorVindo">0 ( W )</label>
-                                                        <div id="sit-cor-potA" class="situacaoDesligado">...</div>
-                                                    </div><!-- Saida S/T -->
-                                                </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Potência
+                                                            </th>
+                                                            <th>
+                                                                R
+                                                            </th>
+                                                            <th>
+                                                                S
+                                                            </th>
+                                                            <th>
+                                                                T
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                Entrada
+                                                            </td>
+                                                            <td>
+                                                                <span id="entrR"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span id="entrS"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span id="entrT"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Saída
+                                                            </td>
+                                                            <td>
+                                                                <span id="saiR"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span id="saiS"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span id="saiT"></span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <!-- <div class="well">
-                                            <div class="row">
-                                                <h4>Aparente</h4>
-                                            </div>
-                                        </div> -->
+
+                                    <div class="col-lg-6">
+
                                     </div>
                                 </div>
 
@@ -753,7 +843,7 @@ else
 
 
                                 </div>
-                                <div class="col-lg-4">
+                                <!-- <div class="col-lg-4">
                                     <h4>Equipamento ligado?</h4>
                                     <div class="div-nbLigado">
                                         <script type="application/javascript">
@@ -789,7 +879,7 @@ else
                                         </script>
                                         <div id="fundoBaseNobreak" class="well"><label id="nobreakLigado"></label></div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-4">
                                     <h4>Tempo de operação</h4>
                                     <div class="div-tempoOperacao">

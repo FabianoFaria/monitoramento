@@ -427,10 +427,10 @@
                         $listaAlarme    .= $alarmeLista['nome']." - ".$localEspecifico;
                     $listaAlarme    .= "</td>";
                     $listaAlarme    .= "<td>";
-                        $listaAlarme    .= $alarmeLista['nomeEquipamento'];
+                        $listaAlarme    .= $alarmeLista['nomeModeloEquipamento'];
                     $listaAlarme    .= "</td>";
                     $listaAlarme    .= "<td>";
-                        $listaAlarme    .= $alarmeLista['caracteristica_equip'];
+                        //$listaAlarme    .= $alarmeLista;
                     $listaAlarme    .= "</td>";
                     $listaAlarme    .= "<td>";
                         $listaAlarme    .= "<p><b>".$alarmeLista['mensagem']."</b></p>";

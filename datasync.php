@@ -137,7 +137,7 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
 
         $valoresCorrente        = explode('|', $configuracaoSalva[4]);
         //TESTA OS VALORES DE CORRENTE
-        //$statusI                = comparaParametrosEquipamento(($_POST['H']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
+        //$statusI                = comparaParametrosEquipamento(($_POST['I']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
         $statusJ                = comparaParametrosEquipamento(($_POST['J']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'j');
         $statusL                = comparaParametrosEquipamento(($_POST['L']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'l');
 
@@ -694,6 +694,25 @@ function carregarDadosEquip($idSimEquip){
 
     return $retorno;
 }
+
+/*
+* RECEBE OS DADOS DO EQUIPAMENTO E EFETUA O CALCULO DE POTENCIA SIMPLES
+*/
+function calculaPotenciaSimples($idSim, $paramTensao, $paramCorren, $sentido, $param){
+    /*
+    * $sentido = ENTRADA OU SAIDA, $param = R,S,T
+    */
+
+    // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+    $connBase   = new EficazDB;
+
+
+    // Fecha a conexao
+    $connBase->close();
+
+    return $retorno;
+}
+
 
 
 ?>

@@ -237,7 +237,7 @@
                                             </td>
                                             <td>
                                                 <?php
-                                                    echo $listaAlarmes['nomeEquipamento'];
+                                                    echo $listaAlarmes['nomeModeloEquipamento'];
                                                 ?>
                                             </td>
                                             <td>

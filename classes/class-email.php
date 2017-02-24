@@ -69,7 +69,7 @@
         //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
         // para enviar a mensagem em prioridade máxima
-        $headers .= "X-Priority: 1\n";
+        //$headers .= "X-Priority: 1\n";
         $headers .= 'From: "Sistema monitoramento" < monitoramento@sistema.eficazsystem.com.br >';
         $headers .= "Return-Path: monitoramento@sistema.eficazsystem.com.br\r\n"; // return-path
 
@@ -543,6 +543,10 @@
 
 
     }
+
+    /*
+    * FUNÇÃO PARA TESTE DE PHPMAILER
+    */
 
 }
 

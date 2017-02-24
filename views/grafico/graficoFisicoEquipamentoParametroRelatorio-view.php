@@ -14,6 +14,9 @@
 
             if($dadosCliente['status']){
                 $dadosCliente   = $dadosCliente['dados'][0];
+
+                $idClienteForm  = $dadosCliente['id'];
+
                 $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
                 $lista          = $lista['equipamento'];
                 $nomeCliente    = $dadosCliente['nome'];
@@ -31,18 +34,23 @@
 
             //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
             if($usuariosCliente['status']){
+
                 foreach ($usuariosCliente['dados'] as $usuarioCliente){
-                    if($usuarioCliente['id_cliente'] == $idcliente){
+
+                    if(intval($usuarioCliente['id']) == $idcliente){
                         $usuarioAutorizado  = true;
                     }
                 }
             }
 
             if($usuarioAutorizado){
-                $dadosCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
+                $dadosCliente   = $modeloClie->carregarDadosCliente($idcliente);
 
                 if($dadosCliente['status']){
                     $dadosCliente   = $dadosCliente['dados'][0];
+
+                    $idClienteForm  = $idcliente;
+
                     $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
                     $lista          = $lista['equipamento'];
                     $nomeCliente    = $dadosCliente['nome'];
@@ -133,7 +141,7 @@
             <div class="col-lg-6">
                 <form id="periodoRelatorio" method=post>
                     <!-- Formulario a seleção de data para o relatôrio -->
-                    <input id="idcliente" type="hidden" value="<?php echo $dadosCliente['id']; ?>" />
+                    <input id="idcliente" type="hidden" value="<?php echo $idClienteForm; ?>" />
                     <input id="idEquip" type="hidden" value="<?php echo $this->parametros[0]; ?>" />
                     <div class="panel panel-info">
                         <div class="panel-heading">Período relatôrio</div>

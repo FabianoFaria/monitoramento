@@ -235,7 +235,7 @@ class MainModel
     */
     public function recuperaNotificacoesAlarmes(){
 
-        $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+        $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeModeloEquipamento, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
                 FROM tb_alerta alert
                 JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                 JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
@@ -273,7 +273,7 @@ class MainModel
 
         if(is_numeric($idCliente)){
 
-            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeEquipamento, equip.modelo, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeModeloEquipamento, clie.nome, trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
