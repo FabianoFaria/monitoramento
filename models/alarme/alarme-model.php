@@ -287,11 +287,13 @@
         public function recuperaDadosAlarme($idAlarme){
 
             $query = "SELECT alert.id, alert.id_sim_equipamento, alert.id_msg_alerta, alert.status_ativo, alert.visto, alert.dt_criacao, trat_alert.id AS 'tratamento_id', trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado, trat_alert.pontoTabela,
-                    equip.nomeModeloEquipamento, equip.id_cliente, equip.id_filial, equip.id AS 'idEquipAlert', sim_equip.id_sim AS 'simEquip'
+                    equip.nomeModeloEquipamento, equip.id_cliente, equip.id_filial, equip.id AS 'idEquipAlert', tpEquip.tipo_equipamento, sim_equip.id_sim AS 'simEquip', sim.ambiente_local_sim
                     FROM tb_alerta alert
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
                     JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
+                    JOIN tb_sim sim ON sim_equip.id_sim = sim.num_sim
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                    JOIN tb_tipo_equipamento tpEquip ON equip.tipo_equipamento = tpEquip.id
                     WHERE alert.id = '$idAlarme'";
 
             /* MONTA A RESULT */

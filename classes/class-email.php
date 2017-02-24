@@ -39,7 +39,7 @@
     public function __construct()
     {
         // Armazena os dados de envio de email
-        $this->remetente =  defined('REMETENTE') ? REMETENTE : "monitoramento@sistema.eficazsystem.com.br ";
+        $this->remetente =  defined('REMETENTE') ? REMETENTE : "monitoramento@sistema.eficazsystem.com.br";
     }
 
     /*
@@ -547,7 +547,47 @@
     /*
     * FUNÇÃO PARA TESTE DE PHPMAILER
     */
+    public function enviarAvisoNormalidade($nomeContato, $emailDestino, $tipoEquip, $nomeEquipamento){
 
+        //Definimos Para quem vai ser enviado o email
+        $remetente = $this->remetente;
+        $destino = $emailDestino;
+        $assunto = "Equipamento ".$tipoEquip." ".$nomeEquipamento." retornou ao funcionamento normal!";
+
+        // É necessário indicar que o formato do e-mail é html
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
+        //$headers .= 'From: "Sistema monitoramento" <'.$remetente.'>';
+
+        $mensagem = "<h3>Olá, ".$nomeContato."</h3>";
+        $mensagem .= "<p>";
+        $mensagem .= "Foi detectado que o equipamento ".$tipoEquip." ".$nomeEquipamento.", voltou ao seu funcionamento em nível normal.";
+        $mensagem .= "</p>";
+        $mensagem .= "";
+        $mensagem .= "<p>";
+        $mensagem .= "Os dados do alerta já foram registrados e podem ser acessados através do sistema.";
+        $mensagem .= "</p>";
+
+        $mensagem .= "<p>";
+        $mensagem .= "Att.";
+        $mensagem .= "</p>";
+
+        $mensagem .= "<p>";
+        $mensagem .= "Eficaz system - Sistema de monitoramento";
+        $mensagem .= "</p>";
+
+
+        //$headers .= "Bcc: $EmailPadrao\r\n";
+        $arquivo = '';
+        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-r monitoramento@sistema.eficazsystem.com.br");
+        if($enviaremail){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }
 
 ?>

@@ -370,7 +370,10 @@
                                             <b>Vínculo equipamento : </b><span id="nomeCliente"></span>
                                         </p>
                                         <p>
-                                            <b>Local do alarme : </b><span id="localAlarme"></span>
+                                            <b>Sede onde ocorreu o alarme : </b><span id="localAlarme"></span>
+                                        </p>
+                                        <p>
+                                            <b>Área ou setor </b> : <span id="localizacaoAlarme"></span>
                                         </p>
 
                                     </div>
@@ -380,18 +383,14 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="well">
-
+                                        <p>
+                                            <b>Tipo de equipamento : </b><span id="equipTipo"></span>
+                                        </p>
                                         <p>
                                             <b>Equipamento : </b><span id="equipNome"></span>
                                         </p>
                                         <p>
-                                            <b>Modelo : </b><span id="equipModelo"></span>
-                                        </p>
-                                        <p>
                                             <b>Ponto : </b><span id="pontoTab"></span>
-                                        </p>
-                                        <p>
-                                            <b>Detalhes equipamento : </b> <span id="equipCarac"></span>
                                         </p>
 
                                     </div>

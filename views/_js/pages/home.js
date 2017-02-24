@@ -46,11 +46,11 @@ function detalharAlarme(idAlarme){
             $('#medidaOriginal').html(datra.alarme['parametroMedido']);
             $('#ultimaMedida').html('Não recebido ainda.');
             //DADOS DO EQUIPAMENTO
+            $('#equipTipo').html(datra.tipoEquip);
             $('#equipNome').html(datra.nomeEquip);
-            $('#equipModelo').html(datra.modEquip);
-            $('#equipCarac').html(datra.caracEquip);
             $('#pontoTab').html(datra.pontoTab);
             $('#ultimaMedida').html(datra.ultimoDado);
+            $('#localizacaoAlarme').html(datra.localizacaoEquip);
 
             $('#idAlarme').val(idAlarme);
 

@@ -264,10 +264,10 @@
             /*
             * DADOS DO EQUIPAMENTO
             */
-            $nomeEquipamento        = $dadosAlarme['nomeEquipamento'];
-            $modeloEquipamento      = $dadosAlarme['modelo'];
-            $caracteristicaEquip    = $dadosAlarme['caracteristica_equip'];
+            $tipoEquip              = $dadosAlarme['tipo_equipamento'];
+            $nomeEquipamento        = $dadosAlarme['nomeModeloEquipamento'];
             $pontoTabela            = $this->verificarPontoTabela($dadosAlarme['pontoTabela']);
+            $localEquip             = ($dadosAlarme['ambiente_local_sim'] == ' ') ? $dadosAlarme['ambiente_local_sim'] : "Não informado.";
 
             /*
             * ÚLTIMA LEITURA DO EQUIPAMENTO
@@ -290,11 +290,11 @@
                                 'horaAlarme' => $horaCriacao,
                                 'dataAlarme' => $dataCriacaoTratada,
                                 'dataVisualizada' => $dataVisualizacao,
+                                'tipoEquip' => $tipoEquip,
                                 'nomeEquip' => $nomeEquipamento,
-                                'modEquip' => $modeloEquipamento,
-                                'caracEquip' => $caracteristicaEquip,
                                 'pontoTab' => $pontoTabela,
-                                'ultimoDado' => $leitura
+                                'ultimoDado' => $leitura,
+                                'localizacaoEquip' => $localEquip
                                 )
                             )
                 );
