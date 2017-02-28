@@ -96,7 +96,7 @@ class EquipamentoModel extends MainModel
                         LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                         LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
                         LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0
-                        WHERE equip.id_cliente = '$idCliente'
+                        WHERE equip.id_cliente = '$idCliente' AND equip.status_ativo = '1'
                         GROUP BY equip.id";
 
             /* MONTA A RESULT */

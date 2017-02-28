@@ -580,7 +580,7 @@
 
         //$headers .= "Bcc: $EmailPadrao\r\n";
         $arquivo = '';
-        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-r monitoramento@sistema.eficazsystem.com.br");
+        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-r sistemaeficaz@sistema.eficazsystem.com.br");
         if($enviaremail){
             return true;
         } else {
@@ -588,6 +588,57 @@
         }
 
     }
+
+    /*
+    * TESTE DE FUNÇÃO PHP MAILER
+    */
+    public function enviaPhpMailer($nomeContato, $emailDestino, $tipoEquip, $nomeEquipamento){
+
+        // Inclui o arquivo class.phpmailer.php localizado na pasta phpmailer
+        require_once("class.phpmailer.php");
+
+
+        // Inicia a classe PHPMailer
+        $mail = new PHPMailer();
+
+        $mail->SetLanguage("br");
+        $mail->IsMail();
+
+        $Email->From = "sistemaeficaz@sistema.eficazsystem.com.br";
+        $Email->FromName = "Sistema de monitoramento - Eficaz System";
+
+        // Define os destinatário(s)
+        // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        $mail->AddAddress(  $emailDestino, $nomeContato);
+        //$mail->AddAddress('ciclano@site.net');
+
+        // Define os dados técnicos da Mensagem
+        // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        $mail->IsHTML(true); // Define que o e-mail será enviado como HTML
+        //$mail->CharSet = 'iso-8859-1'; // Charset da mensagem (opcional)
+
+        // Define a mensagem (Texto e Assunto)
+        // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        $mail->Subject  = "Mensagem Teste"; // Assunto da mensagem
+        $mail->Body = "Este é o corpo da mensagem de teste, em <b>HTML</b>!  :)";
+        $mail->AltBody = "Este é o corpo da mensagem de teste, em Texto Plano! \r\n :)";
+
+        // Envia o e-mail
+        $enviado = $mail->Send();
+        // Limpa os destinatários e os anexos
+        $mail->ClearAllRecipients();
+        $mail->ClearAttachments();
+        // Exibe uma mensagem de resultado
+        if ($enviado) {
+          echo "E-mail enviado com sucesso!";
+        } else {
+          echo "Não foi possível enviar o e-mail.";
+          echo "<b>Informações do erro:</b> " . $mail->ErrorInfo;
+        }
+
+    }
+
+
 }
 
 ?>

@@ -605,7 +605,7 @@ else
                                             var saiR    = tempSaiR.split(' ');
 
                                             var potEntR = new Number(entR[0]) * new Number(saiR[0]);
-                                            $('#entrR').html(potEntR + " (w)");
+                                            $('#entrR').html(potEntR.toFixed(2) + " (w)");
 
                                             //ENTRADA S
                                             var tempEntS = $('#bat_e2').html();
@@ -615,7 +615,7 @@ else
                                             var saiS    = tempSaiS.split(' ');
 
                                             var potEntS = new Number(entS[0]) * new Number(saiS[0]);
-                                            $('#entrS').html(potEntR + " (w)");
+                                            $('#entrS').html(potEntR.toFixed(2) + " (w)");
 
 
                                             //ENTRADA T
@@ -626,7 +626,7 @@ else
                                             var saiT    = tempSaiT.split(' ');
 
                                             var potEntT = new Number(entT[0]) * new Number(saiT[0]);
-                                            $('#entrT').html(potEntT + " (w)");
+                                            $('#entrT').html(potEntT.toFixed(2) + " (w)");
 
                                             //SAÍDA R
                                             var tempCorEntR = $('#bat_s1').html();
@@ -636,7 +636,7 @@ else
                                             var corSaiR    = tempCorSaiR.split(' ');
 
                                             var potSaiR = new Number(corEntR[0]) * new Number(corSaiR[0]);
-                                            $('#saiR').html(potSaiR + " (w)");
+                                            $('#saiR').html(potSaiR.toFixed(2) + " (w)");
 
                                             //SAÍDA S
                                             var tempCorEntS = $('#bat_s2').html();
@@ -646,7 +646,7 @@ else
                                             var corSaiS    = tempCorSaiS.split(' ');
 
                                             var potSaiS = new Number(corEntS[0]) * new Number(corSaiS[0]);
-                                            $('#saiS').html(potSaiS + " (w)");
+                                            $('#saiS').html(potSaiS.toFixed(2) + " (w)");
 
                                             //SAÍDA T
                                             var tempCorEntT = $('#bat_s3').html();
@@ -656,7 +656,7 @@ else
                                             var corSaiT    = tempCorSaiT.split(' ');
 
                                             var potSaiT = new Number(corEntT[0]) * new Number(corSaiT[0]);
-                                            $('#saiT').html(potSaiT + " (w)");
+                                            $('#saiT').html(potSaiT.toFixed(2) + " (w)");
 
                                         },5000);
                                     </script>

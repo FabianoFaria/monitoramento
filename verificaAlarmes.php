@@ -135,8 +135,8 @@
                             /*
                                 ATUALIZA O STATUS DO ALARME
                             */
-                            // $statusAtualizado = atualizarStatusAlarme($id_alerta);
-                            // $statusTratamento = atualizaTratamentoAlarme($id_alerta);
+                            $statusAtualizado = atualizarStatusAlarme($id_alerta);
+                            $statusTratamento = atualizaTratamentoAlarme($id_alerta);
 
                             /*
                                 APÓS ATUALIZAR STATUS DOS ALARMES, ENVIAR EMAIL CONFIRMANDO O RETORNO DO EQUIPAMENTP A NORMALIZADE
@@ -166,6 +166,9 @@
 
                                     $emailEnviado = $mailer->enviarAvisoNormalidade($nome, $email, $tipoEquip, $equipamento);
 
+                                    var_dump($emailEnviado);
+
+                                    $emailEnviadoPhp = $mailer->enviaPhpMailer($nome, $email, $tipoEquip, $equipamento);
                                 }
 
                             }
@@ -489,7 +492,7 @@
         $query = "UPDATE tb_alerta SET status_ativo = '4' WHERE id = '$idAlerta'";
 
         /* monta result */
-        $result = $this->db->query($query);
+        $result = $conn->query($query);
 
         if ($result){
           $array = array('status' => true);
@@ -526,7 +529,7 @@
         $query = "UPDATE tb_tratamento_alerta SET tratamento_aplicado = 'Nível de alimentação do equipamento voltou ao normal.' WHERE id_alerta = '$idAlerta'";
 
         /* monta result */
-        $result = $this->db->query($query);
+        $result = $conn->query($query);
 
         if ($result){
           $array = array('status' => true);
