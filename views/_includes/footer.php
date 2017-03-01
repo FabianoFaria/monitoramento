@@ -3,7 +3,7 @@
                 <footer>
                     <div class="row">
                         <div class="col-lg-12">
-                            <p class="">© 2016 - <?php echo date('Y'); ?> Eficaz system - Sistema de monitoramento. Todos os direitos reservados.</p>
+                            <p class="">© 2016 - <?php echo date('Y'); ?> Eficaz system - Sistema de Monitoramento Infraweb. Todos os direitos reservados.</p>
                         </div>
                     </div>
                 </footer>

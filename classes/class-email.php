@@ -597,7 +597,6 @@
         // Inclui o arquivo class.phpmailer.php localizado na pasta phpmailer
         require_once("class.phpmailer.php");
 
-
         // Inicia a classe PHPMailer
         $mail = new PHPMailer();
 

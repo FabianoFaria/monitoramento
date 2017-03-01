@@ -263,12 +263,19 @@
                                                 <p>
                                                     <?php
 
-                                                        switch ($listaAlarmes['parametroMedido']){
+                                                        //echo $listaAlarmes['parametro'];
+
+                                                        switch ($listaAlarmes['parametro']){
                                                             case 'Bateria':
                                                                 # code...
                                                             break;
                                                             case 'Temperatura':
                                                                 # code...
+                                                            break;
+                                                            case 'Equipamento mestre'
+                                                                ?>
+                                                                    Dados não estão sendo recebidos.
+                                                                <?php
                                                             break;
                                                             /*
                                                             TRATA CASOS DE CORRENTE E TENSÃO
@@ -401,7 +408,7 @@
                                 <div class="col-md-12">
                                     <div class="well">
                                         <p>
-                                            <b>Medida que gerou o alarme : </b><span id="tipoMedida"></span>
+                                            <b>Origem do alarme : </b><span id="tipoMedida"></span>
                                         </p>
                                         <p>
                                             <b>Medida que gerou o alarme : </b><span id="medidaOriginal"></span>

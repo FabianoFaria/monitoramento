@@ -115,6 +115,10 @@ class MainController extends UserLogin
     * Função para verificar o ponto da tabela
     */
     public function verificarPontoTabela($ponto){
+        //EQUIPAMENTO inteiro
+        if(($ponto == 'a')){
+            $saida = "Equipamento mestre";
+        }
         //ENTRADA DE TENSÃO
         if(($ponto == 'b') || ($ponto == 'c') || ($ponto == 'd')){
             switch ($ponto) {
