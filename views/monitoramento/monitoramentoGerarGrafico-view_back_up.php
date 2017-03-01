@@ -491,9 +491,6 @@ else
                             </div>
 
 
-
-
-
                             <script type="application/javascript">
                                 var valorBat = 0;
                                 var maxBat = 400;
