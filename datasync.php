@@ -498,7 +498,8 @@ function verificarAlarmeExistente($idEquipSim, $tipoAlerta){
 
 
     // Um alerta com status 5 sinaliza que está finalizado, abixo disso, ainda está ativo
-    $queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 5";
+    // ATUALIZAÇÃO - Com status 4, significa que o alarme foi solucionado, sendo assim, está apto a registrar outros alarmes
+    $queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 4";
 
     //var_dump($queryAlarme);
 

@@ -630,8 +630,6 @@ else
                                             var potEntT = new Number(entT[0]) * new Number(saiT[0]);
                                             $('#entrT').html(potEntT.toFixed(2) + " (w)");
 
-                                            //SOMA DA ENTRADA DE POTÊNCIA -- CORRIGIR AS VARIAVEIS QUE COMPOE A SOMA
-                                            var totalEntradaPot = potEntR + potEntR + potEntT;
 
                                             //SAÍDA R
                                             var tempCorEntR = $('#bat_s1').html();
@@ -663,13 +661,25 @@ else
                                             var potSaiT = new Number(corEntT[0]) * new Number(corSaiT[0]);
                                             $('#saiT').html(potSaiT.toFixed(2) + " (w)");
 
+                                            //SOMA DA ENTRADA DE POTÊNCIA -- CORRIGIR AS VARIAVEIS QUE COMPOE A SOMA
+                                            var totalEntradaPot = potEntR + potEntR + potEntT;
+                                            var percentualEntradaPot = (totalEntradaPot * 100) / ((potenciaEquip * 1000) * 0.85);
+
+                                            //Estilização do gráfico de entrada de potência
+                                            // document.getElementById('cargaEntradaPotenciaPorcentagem').innerHTML = percentualEntradaPot.toFixed(2)+" %";
+                                            // document.getElementById('cargaEntradaPotencia').style.width = percentualEntradaPot+"%";
+
                                             //SOMA DE SAÍDA DE POTÊNCIA
                                             var totalSaidaPot       = potSaiR + potSaiS + potSaiT;
-                                            var percentualSaidaPot  = (totalSaidaPot * 100) / potenciaEquip;
+                                            var percentualSaidaPot  = (totalSaidaPot * 100) / ((potenciaEquip * 1000) * 0.85);
+                                            var percentualDisponivel = 100 - percentualSaidaPot;
 
-                                            //Estilização do novo gráfico de bateria
+                                            //Estilização do gráfico de saída de potência
+                                            document.getElementById('potenciaSaidaConsumida').innerHTML = percentualSaidaPot.toFixed(2)+" %";
                                             document.getElementById('cargaSaidaPotenciaPorcentagem').innerHTML = percentualSaidaPot.toFixed(2)+" %";
                                             document.getElementById('cargaSaidaPotencia').style.width = percentualSaidaPot+"%";
+                                            document.getElementById('cargaDisponivelPotencia').style.width = percentualDisponivel+"%";
+                                            document.getElementById('potenciaPorcentagemDisponivel').innerHTML = percentualDisponivel.toFixed(2)+" %";
 
                                         },5000);
                                     </script>
@@ -735,19 +745,19 @@ else
                                             <!-- GRAFICO POTÊNCIA ENTRADA -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <span class="pull-left text-muted">0</span><span class="pull-right text-muted"><?php echo $dadosEquipamento['potencia']; ?>(Kva) Entrada</span>
+                                                    <span class="pull-left text-muted">Potência equipamento</span><span class="pull-right text-muted"><?php echo $dadosEquipamento['potencia']; ?>(Kva)</span>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <div id="consumoEntradaPotencia">
+                                                    <!-- <div id="consumoEntradaPotencia">
                                                         <div class="progress progress-striped active">
-                                                            <div id="cargaEntradaPotencia" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                            <div id="cargaEntradaPotencia" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                                                 <span id="cargaEntradaPotenciaPorcentagem" class=""></span>
                                                             </div>
 
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <h4 id="mensagemCargaEntradaPotencia" class="text-center"></h4>
                                                 </div>
                                             </div>
@@ -755,17 +765,35 @@ else
                                             <!-- GRÁFICO DE POTÊNCIA SAÍDA -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <span class="pull-left text-muted">0</span><span class="pull-right text-muted"><?php echo $dadosEquipamento['potencia']; ?>(Kva) Saída</span>
+                                                    <!-- <span class="pull-left text-muted">0</span> -->
+                                                    <span class="pull-left text-muted">Potência consumida</span>
+                                                    <span id="potenciaSaidaConsumida" class="pull-right text-center"></span>
+                                                    <!-- <span class="pull-right text-muted"><?php //echo $dadosEquipamento['potencia']; ?>(Kva)</span> -->
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4 class="text-center"></h4>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <!-- <span class="pull-left text-muted">0</span> -->
+                                                    <span class="pull-left text-muted">Potência disponível</span>
+                                                    <span id="potenciaPorcentagemDisponivel" class="pull-right text-center"></span>
+                                                    <!-- <span class="pull-right text-muted"><?php //echo $dadosEquipamento['potencia']; ?>(Kva)</span> -->
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div id="consumoSaidaPotencia">
                                                         <div class="progress progress-striped active">
-                                                            <div id="cargaSaidaPotencia" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                            <div id="cargaSaidaPotencia" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                                                 <span id="cargaSaidaPotenciaPorcentagem" class=""></span>
                                                             </div>
+                                                            <div id="cargaDisponivelPotencia" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <h4 id="mensagemCargaSaidaPotencia" class="text-center"></h4>
@@ -936,7 +964,7 @@ else
                                     </div>
                                 </div> -->
                                 <div class="col-lg-4">
-                                    <h4>Tempo de operação</h4>
+                                    <h4>Tempo de autonomia estimado</h4>
                                     <div class="div-tempoOperacao">
 
                                         <?php
@@ -960,11 +988,12 @@ else
 
                                         <label id="lb-tempoOperacao">
                                             <?php
-                                                if ($conv < 2 )
-                                                  echo $conv . " Dia";
-                                                else
-                                                  echo $conv . " Dias";
+                                                // if ($conv < 2 )
+                                                //   echo $conv . " Dia";
+                                                // else
+                                                //   echo $conv . " Dias";
                                             ?>
+                                            0 Minutos
                                         </label>
                                     </div>
                                 </div>
@@ -1044,7 +1073,7 @@ else
                                 </script>
 
                                 <div class="col-lg-3">
-                                    <h4>Temperatura ambiente</h4>
+                                    <h4>Temp. ambiente</h4>
                                     <!-- Medidor temperatura 1 -->
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="containerTemperatura1" style="width:100%; margin: 0 auto"></div>
@@ -1053,7 +1082,7 @@ else
                                     </div><!-- Saida S/T -->
                                 </div>
                                 <div class="col-lg-3">
-                                    <h4>Temperatura banco de bateria</h4>
+                                    <h4>Temp. banco de bateria</h4>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="containerTemperatura2" style="width:100%; margin: 0 auto"></div>
                                         <label id="cor_temp2" class="valorVindo">0 ( °C )</label>
