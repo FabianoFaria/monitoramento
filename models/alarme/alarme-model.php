@@ -322,6 +322,48 @@
         }
 
         /*
+        *
+        */
+        public function recuperacaoTratamentosAlarme($idAlarme){
+
+            if(is_numeric($idAlarme)){
+
+                $query = "SELECT trat.id, trat.id_user, trat.tratamento_aplicado, trat.data_tratamento, user.nome, user.sobrenome
+                        FROM tb_tratamento_provisorio trat
+                        LEFT JOIN tb_users user ON user.id = trat.id_user
+                        WHERE trat.id_alerta = '$idAlarme'";
+
+                /* MONTA A RESULT */
+                $result = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if ($result)
+                {
+                  /* VERIFICA SE EXISTE VALOR */
+                  if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'tratamentos' => $retorno);
+                  }else{
+                      $array = array('status' => false, 'tratamentos' => '');
+                  }
+                }
+
+            }else{
+                $array = array('status' => false, 'tratamentos' => '');
+            }
+
+
+            return $array;
+        }
+
+        /*
         * Efetua a contagem de alarmes para atualização de contagem.
         */
         public function contagemNovosAlarmes($idClie){
@@ -492,6 +534,32 @@
             return $array;
         }
 
+        /*
+        * REGISTRA O TRATAMENTO PROVISORIO DO ALARME
+        */
+        public function registrarTratamentoProvisorioAlarme($idAlarme, $tratamento){
+
+            if(is_numeric($idAlarme)){
+
+                $id_usuer   = $_SESSION['userdata']['userId'];
+
+                $query = "INSERT INTO tb_tratamento_provisorio (id_alerta, id_user, tratamento_aplicado) VALUES ('$idAlarme','$id_usuer','$tratamento')";
+
+                if ($this->db->query($query))
+                {
+                    $array = array('status' => true);
+                }else{
+                    $array = array('status' => false);
+                }
+
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
 
         /*
         * ATUALIZA O STATUS DO ALARME
@@ -574,7 +642,7 @@
                 $query = "SELECT COUNT(alert.id) AS 'total' FROM tb_alerta alert
                         JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
                         JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
-                        WHERE equip.id = '$idequipamento' AND alert.dt_criacao BETWEEN '$dataInicio 00:00:00' AND '$dataFim 00:00:00'";
+                        WHERE equip.id = '$idequipamento' AND alert.dt_criacao BETWEEN '$dataInicio 00:00:00' AND '$dataFim 23:59:59'";
 
                 /* EXECUTA A QUERY ESPECIFICADA */
                 $result = $this->db->select($query);
@@ -619,7 +687,7 @@
                             JOIN tb_alerta alert ON alert.id_sim_equipamento = sim_equip.id
                             JOIN tb_msg_alerta msg_alert ON msg_alert.id = alert.id_msg_alerta
                             JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
-                            WHERE sim_equip.id_equipamento = '$idequipamento' AND alert.dt_criacao BETWEEN '$dataInicio 00:00:00' AND '$dataFim 00:00:00'
+                            WHERE sim_equip.id_equipamento = '$idequipamento' AND alert.dt_criacao BETWEEN '$dataInicio 00:00:00' AND '$dataFim 23:59:59'
                             ORDER BY alert.id DESC";
 
                 /* EXECUTA A QUERY ESPECIFICADA */

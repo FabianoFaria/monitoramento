@@ -280,6 +280,36 @@
                 $leitura = "Não recebida.";
             }
 
+            /*
+            * TRATAMENTOS REGISTRADOS PARA O ALARME
+            */
+            $tratamentosRegistrados = $alarmeModelo->recuperacaoTratamentosAlarme($_POST['idAlarme']);
+
+            if($tratamentosRegistrados['status']){
+
+                $tratamentos = "";
+                foreach ($tratamentosRegistrados['tratamentos'] as $trat) {
+                    $tratamentos .= "<tr>";
+                        $tratamentos .= "<td>";
+                            $tratamentos .= $trat['nome']." ".$trat['sobrenome'];
+                        $tratamentos .= "</td>";
+                        $tratamentos .= "<td>";
+                            $tratamentos .= $trat['tratamento_aplicado'];
+                        $tratamentos .= "</td>";
+                        $tratamentos .= "<td>";
+
+                            $dateRaw      = explode(" ", $trat['data_tratamento']);
+                            $diaTrat      = $dateRaw[0];
+
+                            $tratamentos .= implode("/", array_reverse(explode("-", $diaTrat))) ." ".$dateRaw[1];
+                        $tratamentos .= "</td>";
+                    $tratamentos .= "</tr>";
+                }
+
+            }else{
+                $tratamentos = "<tr><td colspan='3'>Nenhum tratamento aplicado.</td></tr>";
+            }
+
             exit(json_encode(
                             array(
                                 'status' => true,
@@ -294,6 +324,7 @@
                                 'nomeEquip' => $nomeEquipamento,
                                 'pontoTab' => $pontoTabela,
                                 'ultimoDado' => $leitura,
+                                'tratamentos' => $tratamentos,
                                 'localizacaoEquip' => $localEquip
                                 )
                             )
@@ -311,7 +342,18 @@
 
         $alarmeModelo       = $this->load_model('alarme/alarme-model');
 
-        $registroTratamento = $alarmeModelo->registrarTratamentoAlarme($_POST['idAlarme'], $_POST['msgTrat']);
+        //SE STATUS NÂO FOR '5', IRÁ REGISTRAR TRATAMENTO PROVISORIO DO ALARME
+        if($_POST['statusAlm'] < 5){
+
+            //REGISTRA TRATAMENTO PROVISORIO DO ALARME
+            $registroTratamento = $alarmeModelo->registrarTratamentoProvisorioAlarme($_POST['idAlarme'], $_POST['msgTrat']);
+
+        }else{
+
+            //REGISTRA TRATAMENTO DEFINITIVO DO ALARME
+            $registroTratamento = $alarmeModelo->registrarTratamentoAlarme($_POST['idAlarme'], $_POST['msgTrat']);
+
+        }
 
         if($registroTratamento['status']){
 

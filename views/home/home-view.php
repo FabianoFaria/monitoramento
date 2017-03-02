@@ -347,79 +347,122 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <!-- Data do alarme -->
-                        <div class="panel panel-default">
-                            <div class="panel-heading" id="statusAlarme">
-                                <!-- <i class="fa fa-warning "></i> <span id="statusAlarme"></span> -->
-                            </div>
-
-                        </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="well">
-                                        <p>
-                                            <b>Data de geração : </b> <span id="dataGeracao"></span>
-                                        </p>
-                                        <p>
-                                            <b>Data de Visualização : </b><span id="dataVizualizacao"></span>
-                                        </p>
 
+                                <!-- DATA DO ALARME -->
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <b>Status e data do alarme</b>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p>
+                                                <b>Data de geração : </b> <span id="dataGeracao"></span>
+                                            </p>
+                                            <p>
+                                                <b>Data de Visualização : </b><span id="dataVizualizacao"></span>
+                                            </p>
+                                            <div class="panel-heading" id="statusAlarme">
+                                                <!-- <i class="fa fa-warning "></i> <span id="statusAlarme"></span> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- DADOS DOS LOCAL DO EQUIPAMENTO -->
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <b>Detalhes do local</b>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p>
+                                                <b>Vínculo equipamento : </b><span id="nomeCliente"></span>
+                                            </p>
+                                            <p>
+                                                <b>Sede onde ocorreu o alarme : </b><span id="localAlarme"></span>
+                                            </p>
+                                            <p>
+                                                <b>Área ou setor </b> : <span id="localizacaoAlarme"></span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="well">
-                                        <p>
-                                            <b>Vínculo equipamento : </b><span id="nomeCliente"></span>
-                                        </p>
-                                        <p>
-                                            <b>Sede onde ocorreu o alarme : </b><span id="localAlarme"></span>
-                                        </p>
-                                        <p>
-                                            <b>Área ou setor </b> : <span id="localizacaoAlarme"></span>
-                                        </p>
-
+                                <!-- TIPO DO EQUIPAMENTO -->
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <b>Detalhes do equipamento</b>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p>
+                                                <b>Tipo de equipamento : </b><span id="equipTipo"></span>
+                                            </p>
+                                            <p>
+                                                <b>Equipamento : </b><span id="equipNome"></span>
+                                            </p>
+                                            <p>
+                                                <b>Ponto : </b><span id="pontoTab"></span>
+                                            </p>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <!-- DADOS DO ALARME -->
+                                <div class="col-md-6">
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <b>Detalhes do alarme</b>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p>
+                                                <b>Origem do alarme : </b><span id="tipoMedida"></span>
+                                            </p>
+                                            <p>
+                                                <b>Medida que gerou o alarme : </b><span id="medidaOriginal"></span>
+                                            </p>
+                                            <p>
+                                                <b>Última medida Registrada : </b><span id="ultimaMedida"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
+                            <!-- TRATAMENTOS JÁ APLICADOS -->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="well">
-                                        <p>
-                                            <b>Tipo de equipamento : </b><span id="equipTipo"></span>
-                                        </p>
-                                        <p>
-                                            <b>Equipamento : </b><span id="equipNome"></span>
-                                        </p>
-                                        <p>
-                                            <b>Ponto : </b><span id="pontoTab"></span>
-                                        </p>
-
+                                        <div class="panel panel-default">
+                                           <div class="panel-heading">
+                                               <b>Tratamentos já aplicados</b>
+                                           </div>
+                                           <div class="panel-body">
+                                                <div class="table-responsive">
+                                                    <table id="tratamentosAplicados" class="table table-striped table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Usuário</th>
+                                                                <th>Ação efetivada</th>
+                                                                <th>Data</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                           </div>
+                                       </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="well">
-                                        <p>
-                                            <b>Origem do alarme : </b><span id="tipoMedida"></span>
-                                        </p>
-                                        <p>
-                                            <b>Medida que gerou o alarme : </b><span id="medidaOriginal"></span>
-                                        </p>
-                                        <p>
-                                            <b>Última medida Registrada : </b><span id="ultimaMedida"></span>
-                                        </p>
-
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="well">

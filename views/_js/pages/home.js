@@ -52,6 +52,9 @@ function detalharAlarme(idAlarme){
             $('#ultimaMedida').html(datra.ultimoDado);
             $('#localizacaoAlarme').html(datra.localizacaoEquip);
 
+            //ULTIMOS TRATAMENTOS
+            $('#tratamentosAplicados tbody').html(datra.tratamentos);
+
             $('#idAlarme').val(idAlarme);
 
             $('#detalhesAlarme').modal({
