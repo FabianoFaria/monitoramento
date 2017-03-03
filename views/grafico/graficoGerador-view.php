@@ -84,7 +84,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     d = new Date(<?php echo $dataMedida[1]; ?> * 1000);
 
                 // go to the first Saturday
-
+                //A CADA 2 DIAS CRIA UMA MARCAÇÃO
                 d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 1) % 7))
                 d.setUTCSeconds(0);
                 d.setUTCMinutes(0);
@@ -107,7 +107,9 @@ $dadosCliente       = $dadosCliente['dados'][0];
             var options = {
                 xaxis: {
                     show : true,
-                    mode : "time"
+                    mode : "time",
+                    timeformat: "%d/%m/%Y <br /> %H:%M:%S - %P",
+                    timezone: "America/Sao_Paulo"
                 },
                 selection: {
                     mode: "x"
@@ -165,7 +167,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                                 $horas    = explode(":", $datahora[1]);
                                 // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
 
-                                 $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".$horas[0].", ".$horas[1].", ".$horas[2]."),".$valorX."],";
+                                 $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".($horas[0] - 3).", ".$horas[1].", ".$horas[2]."),".$valorX."],";
                                  //var_dump(gmdate("d-m-Y H:i:s", $dataMedida[$i]));
                                  //var_dump($dataMedida[$i]);
                             }
@@ -210,7 +212,8 @@ $dadosCliente       = $dadosCliente['dados'][0];
                         day = "0"+day;
                     }
 
-                    var hour = date.getHours() + 2;
+                    //var hour = date.getHours();
+                    var hour = date.getHours() + 3;
                     var min = date.getMinutes();
                     if(min < 10){
                         min = "0"+min;
@@ -269,7 +272,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                                 $horas    = explode(":", $datahora[1]);
                                 // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
 
-                                $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".$horas[0].", ".$horas[1].", ".$horas[2]."),".$valorX."],";
+                                $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".($horas[0] - 3).", ".$horas[1].", ".$horas[2]."),".$valorX."],";
 
 
                                 //$serie .= "[".$dataMedida[$i].",".$valorX."],";
@@ -297,7 +300,8 @@ $dadosCliente       = $dadosCliente['dados'][0];
                 },
                 xaxis: {
                     ticks: [],
-                    mode: "time"
+                    // mode: "time",
+                    timezone: "America/Sao_Paulo"
                 },
                 yaxis: {
                     ticks: [],
@@ -332,9 +336,6 @@ $dadosCliente       = $dadosCliente['dados'][0];
                 plot.setSelection(ranges);
             });
 
-            // Add the Flot version string to the footer
-
-            $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
         });
     <?php
     }
