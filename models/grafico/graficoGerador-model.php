@@ -94,10 +94,14 @@ class GraficoGeradorModel extends MainModel
                 $query .= ".";
                 $query = str_replace(",.","",$query);
 
+                //RECUPERA OS HORÁRIOS PASSADOS PELO USUÁRIO
+                $horaIni  = $opc[15];
+                $horaFim  = $opc[16];
+
                 // Recupera as datas de inicio e fim de periodo
 
-                $dataIni  = date( "Y-m-d 00:00:00", strtotime($opc[13]) );
-                $dataFim  = date( "Y-m-d 23:59:59", strtotime($opc[14]) );
+                $dataIni  = date( "Y-m-d ".$horaIni.":00", strtotime($opc[13]) );
+                $dataFim  = date( "Y-m-d ".$horaFim.":59", strtotime($opc[14]) );
 
                 //$diff       = $this->date_diff_bkp( date_create($opc[13]),date_create($opc[14]));
                 // $diasDiff   = $diff->format("%R%a days");

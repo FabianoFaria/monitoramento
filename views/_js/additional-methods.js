@@ -1097,11 +1097,42 @@ function(value, element, params) {
 	var temp2 = $(params).val().split("/");
 
     if (!/Invalid|NaN/.test(new Date(temp[2], (temp[1] - 1), temp[0]))) {
-        return new Date(temp[2], (temp[1] - 1), temp[0]) > new Date(temp2[2], (temp2[1] - 1), temp2[0]);
+        return new Date(temp[2], (temp[1] - 1), temp[0]) >= new Date(temp2[2], (temp2[1] - 1), temp2[0]);
     }
 
     return isNaN(value) && isNaN($(params).val())
-        || (Number(value) > Number($(params).val()));
+        || (Number(value) >= Number($(params).val()));
 },'Must be greater than {0}.');
+
+/*
+* Valida se o horário escolhido possui X tempo de intevalo
+*/
+jQuery.validator.addMethod("diferencaHorarios",
+function(value, element, params) {
+	hora1 = value.split(":"); //horário de origem para ser validado.
+   	hora2 = $(params).val().split(":"); //Id do horário para comparar.
+
+	// var d = new Date();
+    // var data1 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), hora1[0], hora1[1]);
+    // var data2 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), hora2[0], hora2[1]);
+
+	var first = new Date();
+	first.setHours(0, hora1[0], hora1[1], 0);
+
+	var second = new Date();
+	second.setHours(0, hora2[0], hora2[1], 0);
+
+	var diffSeconds = first - second
+
+	//console.log("Diff in seconds: " + (diffSeconds/1000));
+
+	//return data1 > data2;
+	if((diffSeconds / 1000) > 9){
+		return true;
+	}else{
+		return false;
+	}
+
+}, 'Deve haver pelo menos 10 minutos de diferença entre os horários');
 
 }));

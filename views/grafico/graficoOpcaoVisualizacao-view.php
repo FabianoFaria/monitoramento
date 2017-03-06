@@ -8,9 +8,14 @@ if (!defined('EFIPATH')) exit();
 
 ?>
 
+<!-- CSS do dataPicker -->
+<link href="<?php echo HOME_URI; ?>/views/_css/wickedpicker.min.css" rel="stylesheet" type="text/css">
+<!-- Jquery do dataPicker -->
+<script src="<?php echo HOME_URI; ?>/views/_js/wickedpicker.min.js"></script>
+
 <script>
 var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/" class="linkMenuSup">Relatôrios</a> / <a href="<?php echo HOME_URI; ?>/grafico/listaFilial/<?php echo $equipamento['id_cliente']; ?>"> Cliente :<?php echo $equipamento['cliente']; ?></a> / <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/<?php echo $this->parametros[0]; ?>">Equipamento <?php echo $equipamento['nomeEquipamento']; ?></a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/" class="linkMenuSup">Relatôrios</a> / <a href="<?php echo HOME_URI; ?>/grafico/listaFilial/<?php echo $equipamento['id_cliente']; ?>"> Cliente :<?php echo $equipamento['cliente']; ?></a> / <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/<?php echo $this->parametros[0]; ?>">Equipamento <?php echo $equipamento['nomeModeloEquipamento']; ?></a>';
 
 
 </script>
@@ -300,8 +305,11 @@ var menu = document.getElementById('listadir');
                     <div class="panel-body">
 
                         <div class="row borda-01">
-                            <div class="col-md-12 txt-center">
+                            <div class="col-md-9 txt-center">
                                 <label class="font-texto-02">Período</label>
+                            </div>
+                            <div class="col-md-3 txt-left">
+                                <label class="font-texto-02">Horário</label>
                             </div>
                         </div>
 
@@ -310,9 +318,31 @@ var menu = document.getElementById('listadir');
                                 <label class="font-texto-02">Desde : </label>
                             </div>
 
-                            <div class="col-md-6 txt-center">
+                            <div class="col-md-4 txt-center">
                                 <label class="font-texto-02">
                                     <input class="form-control" type="text" id="data_inicio_rel" name="data_inicio_rel" val="">
+                                </label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="font-texto-02">Das: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="font-texto-02">
+                                    <!-- <select id="horaInicio" name="horaInicio" class="form-control">
+                                        <?php
+
+                                            // for($i = 0; $i < 24; $i++){
+                                            //     if($i < 10){
+                                            //         $hora = "0".$i;
+                                            //         echo "<option value='$hora'>".$hora."h</option>";
+                                            //     }else{
+                                            //         echo "<option value='$i'>".$i."h</option>";
+                                            //     }
+                                            // }
+
+                                        ?>
+                                    </select> -->
+                                    <input type="text" id="timepickerOne" name="timepickerOne" class="timepicker form-control"/>
                                 </label>
                             </div>
 
@@ -323,9 +353,36 @@ var menu = document.getElementById('listadir');
                                 <label class="font-texto-02">Até :</label>
                             </div>
 
-                            <div class="col-md-6 txt-center">
+                            <div class="col-md-4 txt-center">
                                 <label class="font-texto-02">
                                     <input class="form-control" type="text" id="data_fim_rel" name="data_fim_rel" val="">
+                                </label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="font-texto-02">Até: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="font-texto-02">
+                                    <!-- <select id="horaFim" name="horaFim" class="form-control">
+                                        <?php
+
+                                            // for($i = 0; $i < 24; $i++){
+                                            //     if($i < 10){
+                                            //         $hora = "0".$i;
+                                            //         echo "<option value='$hora'>".$hora."h</option>";
+                                            //     }else{
+                                            //         if($i == 23){
+                                            //             echo "<option value='23' selected>23h</option>";
+                                            //         }else{
+                                            //             echo "<option value='$i'>".$i."h</option>";
+                                            //         }
+                                            //
+                                            //     }
+                                            // }
+
+                                        ?>
+                                    </select> -->
+                                    <input type="text" id="timepickerTwo" name="timepickerTwo" class="timepicker form-control"/>
                                 </label>
                             </div>
 

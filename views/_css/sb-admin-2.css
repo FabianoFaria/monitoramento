@@ -445,6 +445,21 @@ table.dataTable thead .sorting:after {
   cursor: default;
 }
 
+.testePicker{
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 2px 5px 2px 5px;
+    background-color: #ff3e3e;
+    position: absolute;
+    line-height: 15px;
+    border-radius: 7px;
+    margin-left: 5px;
+    top: 2px;
+    cursor: default;
+}
+
 @media (max-width: 767px) {
   ul.timeline:before {
     left: 40px;

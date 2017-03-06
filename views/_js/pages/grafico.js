@@ -25,12 +25,20 @@ function geraGrafico(link)
     var entt1cc = $("#chk_entrada_t1cc").is(":checked");
     var batent = $("#bat_entrada_r1tc").is(":checked");
 
+    /*
+        COLETA AS DATAS INFORMADAS
+    */
     var from    = $("#data_inicio_rel").val().split("/");
     var dataIni = from[2]+"-"+from[1]+"-"+from[0];
 
     var to    = $("#data_fim_rel").val().split("/");
     var dataFim = to[2]+"-"+to[1]+"-"+to[0];
 
+    /*
+        COLETA OS HORÁRIOS INFORMADOS
+    */
+    var horasDas    = $("#timepickerOne").val();
+    var horasAte    = $("#timepickerTwo").val();
 
     if (!entr1t) entr1t = 0; else entr1t = 1;
     if (!ents1t) ents1t = 0; else ents1t = 1;
@@ -47,7 +55,7 @@ function geraGrafico(link)
     if (!entt1cc) entt1cc = 0; else entt1cc = 1;
     if (!batent) batent = 0; else batent = 1;
 
-    var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c+ "," + entr1tc + "," + ents1tc + "," + entt1tc + "," + entr1cc + "," + ents1cc + "," + entt1cc + "," + batent + "," + dataIni + "," + dataFim;
+    var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c+ "," + entr1tc + "," + ents1tc + "," + entt1tc + "," + entr1cc + "," + ents1cc + "," + entt1cc + "," + batent + "," + dataIni + "," + dataFim + ","+ horasDas +","+horasAte;
     window.location.href = link + url;
 
 }
@@ -87,6 +95,27 @@ $().ready(function() {
     $('#data_fim_rel').mask('99/99/9999');
 
 
+    //OptionsPicker
+    var optionsPicker = {
+        twentyFour: true,
+        upArrow: 'wickedpicker__controls__control-up',
+        downArrow: 'wickedpicker__controls__control-down',
+        title: 'Horário escolhido',
+        now: "00:00"
+    }
+    var optionsPickerTwo = {
+        twentyFour: true,
+        upArrow: 'wickedpicker__controls__control-up',
+        downArrow: 'wickedpicker__controls__control-down',
+        title: 'Horário escolhido',
+        now: "23:59"
+    }
+
+    // DATA PICKER
+    $('#timepickerOne').wickedpicker(optionsPicker);
+    $('#timepickerTwo').wickedpicker(optionsPickerTwo);
+
+
     //TRATA os daderar os dados para gerar o gráfico
 
     $('#btn_gerarGrafico').click(function(){
@@ -100,6 +129,9 @@ $().ready(function() {
                         dateBR : true,
                         greaterThan : "#data_inicio_rel"
                     },
+                    timepickerTwo : {
+                        diferencaHorarios : "#timepickerOne"
+                    },
                     data_inicio_rel : {
                         required : true,
                         dateBR : true
@@ -111,6 +143,9 @@ $().ready(function() {
                         required : "Campo obrigatôrio.",
                         dateBR : "Favor informar uma data válida!",
                         greaterThan : "Data final deve ser maior que a data inicial!"
+                    },
+                    timepickerTwo :{
+                        diferencaHorarios : "Horário final deve ter pelo menos 10 minutos de diferença."
                     },
                     data_inicio_rel : {
                         required : "Campo obrigatôrio.",
