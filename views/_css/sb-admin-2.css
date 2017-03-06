@@ -535,3 +535,23 @@ table.dataTable thead .sorting:after {
 .menuPrincipalGeral{
   margin-top: 90px;
 }
+
+/*
+* Label da legenda de canvas
+*/
+.dateLabel{
+    font-size: 12px;
+    margin-top: 15px;
+    -webkit-transform: rotate(310deg);  /* to support Safari and Android browser */
+    -ms-transform: rotate(310deg);      /* to support IE 9 */
+    transform: rotate(310deg);
+}
+/*
+* Correcao de alturas entre o flot graph e o textos
+*/
+.flot-base{
+    height: 505px;
+}
+.flot-overlay{
+    height: 505px;
+}

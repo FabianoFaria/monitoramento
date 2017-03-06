@@ -108,7 +108,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                 xaxis: {
                     show : true,
                     mode : "time",
-                    timeformat: "%d/%m/%Y <br /> %H:%M:%S - %P",
+                    timeformat: "<div class='dateLabel'>%d / %m / %y <br /> %H:%M:%S</div>",
                     timezone: "America/Sao_Paulo"
                 },
                 selection: {
@@ -396,13 +396,13 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
                             <div class="row">
                                 <div class="demo-container">
-                                    <div id="placeholder" class="demo-placeholder col-md-12" style="height:450px;background-color:#cccccc;">
+                                    <div id="placeholder" class="demo-placeholder col-md-12" style="height:510px;background-color:#ffffff;">
                                     </div>
                                 </div >
                             </div>
                             <div class="row">
                                 <div class="col-md-1"></div>
-                                <div id="overview" class="col-md-10" style="height:150px;background-color: #635757cc;color:#ffffff;">
+                                <div id="overview" class="col-md-10" style="margin-top:30px;height:150px;background-color: #635757cc;color:#ffffff;">
 
 
                                 </div>
