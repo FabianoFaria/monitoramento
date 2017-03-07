@@ -304,15 +304,18 @@ if($notificacaoAlertas['status']){
                 <li>
                   <a class="link-side" href="#">
                     <span class="icon-side"><i class="fa fa-area-chart fa-3x"></i></span>
-                    <span class="lb-side">Relatório</span>
+                    <span class="lb-side">Relatórios</span>
                     <span class="fa arrow"></span>
                   </a>
                   <ul class="nav nav-second-level collapse in">
                       <li>
-                          <a href="<?php echo HOME_URI; ?>/grafico/"><i class="fa fa-area-chart fa-1x"></i><span> Relatorio gráfico</span></a>
+                          <a href="<?php echo HOME_URI; ?>/grafico/"><i class="fa fa-area-chart fa-1x"></i><span> Relatório gráfico</span></a>
                       </li>
                       <li>
-                          <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador"><i class="fa fa-clipboard fa-1x"></i> Relatorio de estatisticas</a>
+                          <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador"><i class="fa fa-clipboard fa-1x"></i> Relatório de equiapamentos</a>
+                      </li>
+                      <li>
+                           <a href="<?php echo HOME_URI; ?>/grafico/graficoTratamentoAlarme"><i class="fa fa-volume-up fa-1x"></i> Relatório de alarmes</a>
                       </li>
                   </ul>
                 </li>
@@ -410,26 +413,31 @@ if($notificacaoAlertas['status']){
        * Efetua a atualização do contador de alarmes a cada periodo de tempo
        */
 
-          var dotValue = $('#contadorNot').html();
+       /*
+        FUNÇÃO DE CONTADOR DE ALARMES NO MENU FOI DESATIVADO
+       */
 
-          setInterval(function(){
-            var url = "<?php echo HOME_URI; ?>/alarme/verificaNovoAlarme?clie=<?php echo $_SESSION['userdata']['cliente']; ?>&total="+dotValue;
-            $.getJSON(url,  function(data) {
 
-                if(data.status){
-
-                    //NOVA CONTAGEM
-                    $('#contadorNot').html(data.contagem);
-                    //NOVA LISTA DE ALARMES
-                    $('#listaMenuAlarmes').html();
-                    $('#listaMenuAlarmes').html(data.alarmes);
-
-                    //exit(json_encode(array('status' => $statusContagem, 'contagem' => $totalAlarmes, 'alarmes' => $alarmesNovos)));
-
-                }else{
-                    console.log('prossiga!');
-                }
-            });
+        //   var dotValue = $('#contadorNot').html();
+          //
+        //   setInterval(function(){
+        //     var url = "<?php echo HOME_URI; ?>/alarme/verificaNovoAlarme?clie=<?php echo $_SESSION['userdata']['cliente']; ?>&total="+dotValue;
+        //     $.getJSON(url,  function(data) {
+          //
+        //         if(data.status){
+          //
+        //             //NOVA CONTAGEM
+        //             $('#contadorNot').html(data.contagem);
+        //             //NOVA LISTA DE ALARMES
+        //             $('#listaMenuAlarmes').html();
+        //             $('#listaMenuAlarmes').html(data.alarmes);
+          //
+        //             //exit(json_encode(array('status' => $statusContagem, 'contagem' => $totalAlarmes, 'alarmes' => $alarmesNovos)));
+          //
+        //         }else{
+        //             console.log('prossiga!');
+        //         }
+        //     });
 
             //   dotValue++;
             //   $('#contadorNot').html(dotValue);

@@ -342,14 +342,15 @@
 
         $alarmeModelo       = $this->load_model('alarme/alarme-model');
 
-        //SE STATUS NÂO FOR '5', IRÁ REGISTRAR TRATAMENTO PROVISORIO DO ALARME
-        if($_POST['statusAlm'] < 5){
+        //SE STATUS NÂO FOR '4', IRÁ REGISTRAR TRATAMENTO PROVISORIO DO ALARME
+        if($_POST['statusAlm'] < 4){
 
             //REGISTRA TRATAMENTO PROVISORIO DO ALARME
             $registroTratamento = $alarmeModelo->registrarTratamentoProvisorioAlarme($_POST['idAlarme'], $_POST['msgTrat']);
 
         }else{
-
+            // REGISTRO DO TRATAMENTO DEFINITIVO DO ALARME FOI ALTERADO PARA TERMINAR COM STATUS 'SOLUCIONADO'
+            // POIS O STATUS FINALIZADO CAIU EM DESUSO
             //REGISTRA TRATAMENTO DEFINITIVO DO ALARME
             $registroTratamento = $alarmeModelo->registrarTratamentoAlarme($_POST['idAlarme'], $_POST['msgTrat']);
 

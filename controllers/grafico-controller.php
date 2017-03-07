@@ -398,5 +398,42 @@ class GraficoController extends MainController
 
     }
 
+    /*
+    * CARREGA OS DADOS NECESSARIOS PARA TRAZER OS ALARMES COM DETALHES DE TRATAMENTO
+    */
+    public function graficoTratamentoAlarme(){
+
+        // Verifica se esta logado
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['local'] != 1 && $_SESSION['userdata']['per_ca'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+
+        }else{
+
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "grafico";
+
+            // DEFINE OS PARAMETRO DA FUNCAO
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+            // Carrega o modelo para este view
+            $modeloClie     = $this->load_model('cliente/cliente-model');
+            $modeloEquip    = $this->load_model('equipamento/equipamento-model');
+            $modeloAlarme   = $this->load_model('alarme/alarme-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/grafico/graficoFisicoVisualizador-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+
+    }
 }
 ?>

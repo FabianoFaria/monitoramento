@@ -100,7 +100,7 @@
 							gerarAlarmeEquipamento($equipamento['idSimEquip'], $dados['num_sim'],$dataAtual);
 						}
 
-
+						var_dump($alarmeExiste);
 						//$id_sim_equip, $numSim, $data
 					}
 
@@ -331,7 +331,7 @@
 
 		$query = "SELECT alert.id, alert.id_sim_equipamento
 					FROM tb_alerta alert
-					WHERE alert.id_sim_equipamento = '$idSimEquip' AND alert.id_msg_alerta = '8' AND alert.status_ativo < 5";
+					WHERE alert.id_sim_equipamento = '$idSimEquip' AND alert.id_msg_alerta = '8' AND alert.status_ativo < 4";
 
 		/*
 		 * EXECUTA A QUERY NO BANCO E VERIFICA SE RETORNO ERRO

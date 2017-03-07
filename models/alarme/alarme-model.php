@@ -194,6 +194,10 @@
         */
         public function alarmesGerados(){
 
+            /*
+                CLUSULA WHERE FOI ALTERADA PARA < 4 POIS O status_ativo = 5 foi removido
+            */
+
             $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeModeloEquipamento, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.pontoTabela
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
@@ -203,7 +207,7 @@
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
                     LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
-                    WHERE alert.status_ativo < 5
+                    WHERE alert.status_ativo < 4
                     ORDER BY alert.id DESC";
 
             /* MONTA A RESULT */
@@ -241,6 +245,10 @@
         */
         public function alarmesGeradosCliente($idCliente){
 
+            /*
+                CLUSULA WHERE FOI ALTERADA PARA < 4 POIS O status_ativo = 5 foi removido
+            */
+
             $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeModeloEquipamento, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.pontoTabela
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
@@ -250,7 +258,7 @@
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
                     LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
-                    WHERE clie.id = '$idCliente' AND alert.status_ativo < 5
+                    WHERE clie.id = '$idCliente' AND alert.status_ativo < 4
                     ORDER BY alert.id DESC";
 
             /* MONTA A RESULT */

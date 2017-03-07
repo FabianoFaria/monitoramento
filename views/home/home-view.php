@@ -475,7 +475,7 @@
                                                             <option value="2">Visualizado</option>
                                                             <option value="3">Em tratamento</option>
                                                             <option value="4">Solucionado</option>
-                                                            <option value="5">Finalizado</option>
+                                                            <!-- <option value="5">Finalizado</option> -->
                                                         </select>
                                                     </div>
                                                 </div>
