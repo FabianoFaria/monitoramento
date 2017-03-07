@@ -223,6 +223,10 @@ $dadosCliente       = $dadosCliente['dados'][0];
                         sec = "0"+sec;
                     }
 
+                    if(hour > 23){
+                        hour = hour - 24;
+                    }
+
                     $("#tooltip").html("<p>"+item.series.label + " " + day +"/"+month+"/"+year+" às "+hour+":"+min+":"+sec+"</p><p><b>"+y+" (V)</b></p>")
                     .css({top: item.pageY+5, left: item.pageX+5})
                     .fadeIn(200);

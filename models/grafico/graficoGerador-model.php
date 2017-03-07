@@ -137,8 +137,17 @@ class GraficoGeradorModel extends MainModel
                 $query .= " FROM tb_dados";
                 $query .= " WHERE dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}' AND num_sim = '{$sim_num}'";
 
-                switch ($diasDiff) {
-                    case $diasDiff > 60 :
+                if($diasDiff > 60){
+                    $query .=" GROUP BY DATE(dt_criacao)";
+                }elseif($diasDiff > 1){
+                    $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao)";
+                }else{
+                    $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao), MINUTE(dt_criacao)";
+                }
+
+
+                // switch ($diasDiff) {
+                //     case ($diasDiff > 60) :
                         //MAIOR QUE UM MÊS, MOSTRA A MEDIDA DE CADA DIA
 
                         // $query .=" MINUTE(dt_criacao) minut,";
@@ -150,10 +159,10 @@ class GraficoGeradorModel extends MainModel
                         // $query .=")b ON DATE(a.dt_criacao) = b.date AND";
                         // $query .=" DAY(a.dt_criacao) = b.hour AND";
                         // $query .=" a.dt_criacao = b.min_date";
-                        $query .=" GROUP BY DATE(dt_criacao)";
+                        // $query .=" GROUP BY DATE(dt_criacao)";
 
-                    break;
-                    case $diasDiff > 1 :
+                    // break;
+                    // case $diasDiff > 1 :
                         //MAIOR QUE TRÊS DIAS, MOSTRA A MEDIDA DE CADA HORA
 
                         //$query .=" MINUTE(dt_criacao) minut,";
@@ -165,9 +174,9 @@ class GraficoGeradorModel extends MainModel
                         // $query .=")b ON DATE(a.dt_criacao) = b.date AND";
                         // $query .=" HOUR(a.dt_criacao) = b.hour AND";
                         // $query .=" a.dt_criacao = b.min_date";
-                        $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao)";
-                    break;
-                    default :
+                        // $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao)";
+                    // break;
+                    // default :
                         //ATÉ TRÊS DIAS, MOSTRA A CADA MINUTO
 
                         // $query .=" MINUTE(dt_criacao) minut,";
@@ -180,15 +189,15 @@ class GraficoGeradorModel extends MainModel
                         // $query .=" MINUTE(a.dt_criacao) = b.minut AND ";
                         // $query .=" a.dt_criacao = b.min_date";
 
-                        $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao), MINUTE(dt_criacao)";
+                        // $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao), MINUTE(dt_criacao)";
 
-                    break;
-                }
+                //     break;
+                // }
 
                 //$query .=" WHERE a.num_sim = '' AND a.dt_criacao BETWEEN ' 00:00:00' AND ' 23:59:59' ORDER BY a.dt_criacao DESC ";
 
                 //var_dump( $opc, $query, $diasDiff);
-                //var_dump($query);
+                var_dump($query);
 
                 // Busca os dados no banco
                 $result = $this->verificaQuery($query);

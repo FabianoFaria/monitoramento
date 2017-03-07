@@ -39,6 +39,10 @@
         <link rel="stylesheet" type="text/css" href="<?php echo HOME_URI; ?>/views/_css/jquery-ui.css">
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery-ui.js" type="text/javascript"></script>
 
+        <!-- CSS do dataPicker -->
+        <link href="<?php echo HOME_URI; ?>/views/_css/wickedpicker.min.css" rel="stylesheet" type="text/css">
+        <!-- Jquery do dataPicker -->
+        <script src="<?php echo HOME_URI; ?>/views/_js/wickedpicker.min.js"></script>
 
         <!-- Js Files da página atual, se existir -->
 

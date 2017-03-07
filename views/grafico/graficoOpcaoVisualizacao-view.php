@@ -8,11 +8,6 @@ if (!defined('EFIPATH')) exit();
 
 ?>
 
-<!-- CSS do dataPicker -->
-<link href="<?php echo HOME_URI; ?>/views/_css/wickedpicker.min.css" rel="stylesheet" type="text/css">
-<!-- Jquery do dataPicker -->
-<script src="<?php echo HOME_URI; ?>/views/_js/wickedpicker.min.js"></script>
-
 <script>
 var menu = document.getElementById('listadir');
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/" class="linkMenuSup">Relatôrios</a> / <a href="<?php echo HOME_URI; ?>/grafico/listaFilial/<?php echo $equipamento['id_cliente']; ?>"> Cliente :<?php echo $equipamento['cliente']; ?></a> / <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/<?php echo $this->parametros[0]; ?>">Equipamento <?php echo $equipamento['nomeModeloEquipamento']; ?></a>';
