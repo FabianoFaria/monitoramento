@@ -421,7 +421,7 @@ if($notificacaoAlertas['status']){
         //   var dotValue = $('#contadorNot').html();
           //
         //   setInterval(function(){
-        //     var url = "<?php echo HOME_URI; ?>/alarme/verificaNovoAlarme?clie=<?php echo $_SESSION['userdata']['cliente']; ?>&total="+dotValue;
+        //     var url = "<?php //echo HOME_URI; ?>/alarme/verificaNovoAlarme?clie=<?php //echo $_SESSION['userdata']['cliente']; ?>&total="+dotValue;
         //     $.getJSON(url,  function(data) {
           //
         //         if(data.status){
@@ -442,7 +442,7 @@ if($notificacaoAlertas['status']){
             //   dotValue++;
             //   $('#contadorNot').html(dotValue);
 
-          },5000);
+        //   },5000);
 
       </script>
 

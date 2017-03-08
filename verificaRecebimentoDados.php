@@ -100,7 +100,7 @@
 							gerarAlarmeEquipamento($equipamento['idSimEquip'], $dados['num_sim'],$dataAtual);
 						}
 
-						var_dump($alarmeExiste);
+						//var_dump($alarmeExiste);
 						//$id_sim_equip, $numSim, $data
 					}
 

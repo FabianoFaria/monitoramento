@@ -284,6 +284,59 @@ $().ready(function() {
     });
 
     /*
+    * FUNÇÃO PARA TRATAR OS PARAMETROS E GERAR DETALHES DOS ALARMES DO EQUIPAMENTO
+    */
+    $('#confirmParametrosRelatorioDetalharAlarmeEquipamento').click(function(){
+        $("#periodoRelatorio").validate({
+
+            rules: {
+
+                data_fim_relatorio : {
+                    required : true,
+                    dateBR : true,
+                    greaterThan : "#data_inicio_relatorio"
+                },
+                data_inicio_relatorio : {
+                    required : true,
+                    dateBR : true
+                }
+            },
+            messages: {
+
+                data_fim_relatorio : {
+                    required : "Campo obrigatôrio.",
+                    dateBR : "Favor informar uma data válida!",
+                    greaterThan : "Data final deve ser maior que a data inicial!"
+                },
+                data_inicio_relatorio : {
+                    required : "Campo obrigatôrio.",
+                    dateBR : "Favor informar uma data válida!"
+                }
+            }
+
+        });
+
+        if($("#periodoRelatorio").valid()){
+
+            var idClient    = $('#idcliente').val();
+            var idEquip     = $('#idEquip').val();
+
+            var from    = $("#data_inicio_relatorio").val().split("/");
+            var dataIni = from[2]+"-"+from[1]+"-"+from[0];
+
+            var to    = $("#data_fim_relatorio").val().split("/");
+            var dataFim = to[2]+"-"+to[1]+"-"+to[0];
+
+            //Concatena os parametros em uma string e passa para o link
+            var url     = idClient+"/"+idEquip+"/"+from+"/"+to;
+            var link    = urlP+"/eficazmonitor/grafico/gerarRelatorioAlarmeDetalheEquipamentoCliente/"
+            window.location.href = link + url;
+
+        }
+
+    });
+
+    /*
     * FUNÇÃO PARA LIMPAR FILTROS
     */
     $('#limparFiltro').click(function(){
@@ -727,4 +780,208 @@ $().ready(function() {
 
     });
 
+    /*
+    * FILTRAR CLIENTES PARA RELATÓRIO DETALHADO DE ALARMES
+    */
+    $("#filtroClienteAlarmeDetalhado").change(function(){
+
+        var idCliente = $(this).val();
+
+        if(idCliente != ''){
+
+            $('#filtroLocalAutoCompleteAlarmeDetalhado').val("");
+
+            //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+            $.ajax({
+                url: urlP+"/eficazmonitor/cliente/carregarListaFilialClienteAlarmesDetalhados",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'idCliente' : idCliente
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
+
+                        /*
+                        * PREENCHE O SELECT ALVO
+                        */
+                        $('#filtroLocalLista').html(datra.filiais);
+
+
+                        /*
+                        * PREENCHE TABELA COM EQUIPAMENTOS
+                        */
+                        $('#listaMonitoria').html(datra.equipamentos);
+
+                        /*
+                        * RETIRA O VALOR DO ID DE FILIAL
+                        */
+                        $('#localId').val(0);
+
+                    }else{
+                        //$('#filtroLocalLista').html(datra.filiais);
+                        // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                        $('#listaMonitoria').html(datra.equipamentos);
+                        $('#localId').val(0);
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+
+                    //Settar a mensagem de erro!
+                          // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                        swal("Oops...", "Ocorreu um erro ao carregar as filiais, favor verificar os dados informados!", "error");
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
+        }else{
+            $('#filtroClienteAlarmeDetalhado').html("<option value=''> Selecione...</option>");
+        }
+    });
+
+    /*
+    * FILTRA OS EQUIPAMENTOS DE ACORDO COM A ESCOLHA DO LOCAL PARA DETALHAMENTO DE ALARMES
+    */
+
+    $("#filtroLocalAutoCompleteAlarmeDetalhado")
+        // don't navigate away from the field on tab when selecting an item
+        .on( "keydown", function( event ) {
+
+            var idClie = $('#filtroClienteAlarmeDetalhado').val();
+
+            /*
+            * VERIFICA SE FOI SELECIONADO UM CLIENTE
+            */
+            if(idClie != ''){
+                if ( event.keyCode === $.ui.keyCode.TAB &&
+                    $( this ).autocomplete( "instance" ).menu.active ) {
+                  event.preventDefault();
+                }
+            }else{
+               swal('','Selecione um cliente antes!','info');
+            }
+
+        }).autocomplete({
+        source: function( request, response ) {
+            $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteAlarmeDetalhado").val(), {
+              term: extractLast( request.term )
+            }, response
+        );
+        },
+        search: function() {
+            // custom minLength
+            var term = extractLast( this.value );
+              if ( term.length < 2 ) {
+                return false;
+            }
+        },
+        focus: function() {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function( event, ui ) {
+
+            $('#localId').val(ui.item.id);
+
+            //GERA A TABELA DE EQUIPAMENTOS CONFORME O LOCAL ESCOLHIDO
+            var idFilial    = ui.item.id;
+            var idCliente   = $('#filtroClienteAlarmeDetalhado').val();
+
+            if(idFilial != ''){
+                //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+                $.ajax({
+                    url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialAlarmeDetalhadoJson",
+                    secureuri: false,
+                    type : "POST",
+                    dataType: 'json',
+                    data      : {
+                        'idCliente' : idCliente,
+                        'idFilial' : idFilial
+                    },
+                    success : function(datra)
+                    {
+                        if(datra.status){
+
+                            /*
+                            * PREENCHE TABELA COM EQUIPAMENTOS
+                            */
+                            $('#listaMonitoria').html(datra.equipamentos);
+
+                        }else{
+
+                            // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                            $('#listaMonitoria').html(datra.equipamentos);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        //Settar a mensagem de erro!
+                        // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                        swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
+                        // Handle errors here
+                        console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                        // STOP LOADING SPINNER
+                    }
+                });
+            }
+        }
+    });
+
+    /*
+    * FILTRAR EQUIPAMENTOS DE ACORDO COM O CLIENTE, FILIAL E O TIPO DE EQUIPAMENTO PARA DETALHAMENTO DE ALARMES
+    */
+    $('#filtroEquipAlarmeDetalhado').change(function(){
+
+        var idTipoEquip = $(this).val();
+        var idCliente   = $('#filtroClienteAlarmeDetalhado').val();
+        var idFilial    = $('#localId').val();
+
+        if(idTipoEquip != ''){
+            //EFETUA O CARREGAMENTO DOS DADOS DOS EQUIPAMENTOS POR TIPO
+            $.ajax({
+                url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialTipoAlarmeDetalheJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'idCliente': idCliente,
+                    'idFilial' : idFilial,
+                    'idTipo'   : idTipoEquip
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
+
+                        /*
+                        * PREENCHE TABELA COM EQUIPAMENTOS
+                        */
+                        $('#listaMonitoria').html(datra.equipamentos);
+
+                    }else{
+
+                        // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                        $('#listaMonitoria').html(datra.equipamentos);
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+
+                    //Settar a mensagem de erro!
+                        // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                        swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
+        }
+    });
 });

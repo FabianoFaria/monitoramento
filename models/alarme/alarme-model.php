@@ -690,11 +690,12 @@
         {
             if(is_numeric($idequipamento)){
 
-                $query = "SELECT sim_equip.id, sim_equip.id_equipamento, sim_equip.id_sim, sim_equip.num_serie, alert.id as 'alertId', alert.status_ativo, alert.dt_criacao, trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado, msg_alert.mensagem
+                $query = "SELECT sim_equip.id, sim_equip.id_equipamento, sim_equip.id_sim, sim_equip.num_serie, alert.id as 'alertId', alert.status_ativo, alert.dt_criacao, trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado, msg_alert.mensagem, usr.id AS 'userId', usr.nome AS 'usr_nome', usr.sobrenome
                             FROM tb_sim_equipamento sim_equip
                             JOIN tb_alerta alert ON alert.id_sim_equipamento = sim_equip.id
                             JOIN tb_msg_alerta msg_alert ON msg_alert.id = alert.id_msg_alerta
                             JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                            LEFT JOIN tb_users usr ON usr.id = trat_alert.id_user
                             WHERE sim_equip.id_equipamento = '$idequipamento' AND alert.dt_criacao BETWEEN '$dataInicio 00:00:00' AND '$dataFim 23:59:59'
                             ORDER BY alert.id DESC";
 
@@ -721,6 +722,25 @@
                 }else{
                     $array = array('status' => false, 'equipAlarm' => '');
                 }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
+        /*
+        * CARREGA OS TRATAMENTOS REGISTRADOS PARA O ALARME
+        */
+        public function carregaTratamentosAlarme($idAlarm){
+
+            if(is_numeric($idAlarm)){
+
+                // $query = "SELECT
+                //             FROM tb_tratamento_provisorio trat_prov
+                //             WHERE trat_prov.id = '$idAlarm'";
+
 
             }else{
                 $array = array('status' => false);

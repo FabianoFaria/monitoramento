@@ -450,10 +450,11 @@
         $contagemAlarmes    = $alarmeModelo->recuperaNotificacoesAlarmesRecemCadastrados($_GET['clie'], $quantidadeAtual);
 
         $listaAlarme        = "";
+        $totalNovo          = 0;
 
         if($contagemAlarmes['status']){
 
-            $statusContagem = true;
+
             //Monta a lista de alarmes que seram devolvidos ao JSON para serem exibidos no menu.
             foreach ($contagemAlarmes['alarmes'] as $alarmeLista) {
                 $listaAlarme    .= "<tr>";
@@ -512,10 +513,18 @@
                     $listaAlarme    .= "</td>";
                 $listaAlarme    .= "</tr>";
 
-                $quantidadeAtual++;
+                $totalNovo++;
             }
 
-            $totalAlarmes   = $quantidadeAtual;
+            $totalAlarmes   = $totalNovo;
+
+            if($totalNovo > $quantidadeAtual){
+
+                $statusContagem = true;
+
+            }else{
+                $statusContagem = false;
+            }
 
         }else{
             //Devolve nenhum dado extra em caso a busca tenha falhado

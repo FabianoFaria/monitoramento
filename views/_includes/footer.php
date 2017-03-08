@@ -23,8 +23,9 @@
 
         <!-- FLOAT Js -->
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.flot.js"></script>
-        <script src="<?php echo HOME_URI; ?>/views/_js/jquery.flot.selection.js"></script>
+        <!-- <script src="<?php echo HOME_URI; ?>/views/_js/jquery.flot.selection.js"></script> -->
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.flot.time.js"></script>
+        <script src="<?php echo HOME_URI; ?>/views/_js/jquery.flot.navigate.js"></script>
 
         <!-- canvasJS -->
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.canvasjs.min"></script>

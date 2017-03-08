@@ -109,11 +109,26 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     show : true,
                     mode : "time",
                     timeformat: "<div class='dateLabel'>%d / %m / %y <br /> %H:%M:%S</div>",
-                    timezone: "America/Sao_Paulo"
-                },
-                selection: {
-                    mode: "x"
-                },
+                    timezone: "America/Sao_Paulo",
+                    /*
+                        Como o xaxis está em milisegundos, nada mais certo que configurar o zoomRange em milisegundos também
+                    */
+                    // set the lowest (zoomed all the way in) range on the x axis to 2 hours
+                    zoomRange: [60000, 6000000000],
+                    // set the pan limits slightly outside the data range
+                    // panRange: [min_time*0.9, max_time*1.1]
+    			},
+    			yaxis: {
+                    zoomRange: [1, 250],
+				    panRange: [-10, 250]
+                    // set the lowest range on the y-axis to 5 dollars
+                    // zoomRange: [5, null],
+                    // // set the pan limits slightly outside the data range
+                    // panRange: [30, 90]
+    			},
+                // selection: {
+                //     mode: "xy"
+                // },
                 grid: {
                     hoverable: true,
                     markings: weekendAreas
@@ -125,7 +140,13 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     points: {
                         show: true
                     }
-                }
+                },
+    			zoom: {
+    				interactive: true
+    			},
+    			pan: {
+    				interactive: true
+    			}
             };
 
             var plot = $.plot("#placeholder", [
@@ -311,10 +332,11 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     ticks: [],
                     min: 0,
                     autoscaleMargin: 0.1
-                },
-                selection: {
-                    mode: "x"
                 }
+                // ,
+                // selection: {
+                //     mode: "x"
+                // }
             });
 
             // now connect the two
