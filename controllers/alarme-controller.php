@@ -533,7 +533,7 @@
             $listaAlarme    = '';
         }
 
-        exit(json_encode(array('statusLista' => $statusContagem, 'contagemLista' => $totalAlarmes, 'alarmesNovaLista' => $listaAlarme)));
+        exit(json_encode(array('statusLista' => $statusContagem, 'contagemLista' => $totalAlarmes, 'alarmesNovaLista' => $listaAlarme, 'contagemAntiga' => $quantidadeAtual)));
     }
 
  }

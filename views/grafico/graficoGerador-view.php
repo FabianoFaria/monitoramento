@@ -78,6 +78,9 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
             // helper for returning the weekends in a period
 
+            var axisMax = 0;
+            var axisMin = 0;
+
             function weekendAreas(axes) {
 
                 var markings = [],
@@ -114,13 +117,13 @@ $dadosCliente       = $dadosCliente['dados'][0];
                         Como o xaxis está em milisegundos, nada mais certo que configurar o zoomRange em milisegundos também
                     */
                     // set the lowest (zoomed all the way in) range on the x axis to 2 hours
-                    zoomRange: [60000, 6000000000],
+                    zoomRange: [60000, 600000000],
                     // set the pan limits slightly outside the data range
-                    // panRange: [min_time*0.9, max_time*1.1]
+                    //panRange: [axisMin*0.9, axisMax*1.1]
     			},
     			yaxis: {
                     zoomRange: [1, 250],
-				    panRange: [-10, 250]
+				    panRange: [-5, 230]
                     // set the lowest range on the y-axis to 5 dollars
                     // zoomRange: [5, null],
                     // // set the pan limits slightly outside the data range
@@ -147,6 +150,11 @@ $dadosCliente       = $dadosCliente['dados'][0];
     			pan: {
     				interactive: true
     			}
+                // ,
+                // legend:{
+                //      margin:30,
+                //     container: $("#legendPlace")
+                // }
             };
 
             var plot = $.plot("#placeholder", [
@@ -257,87 +265,90 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
             });
 
-            var overview = $.plot("#overview",
-                [
-                    <?php
-                        foreach ($testeJon as $jon) {
-
-                            $amostra = explode("data:", $jon[0]);
-
-                            $nomeSerie = $amostra[0];
-
-                            $nomeSerie = str_replace("{name:'"," ",$nomeSerie);
-                            $nomeSerie = str_replace("',"," ",$nomeSerie);
-
-                            $amostra = str_replace("]"," ",$amostra[1]);
-                            $amostra = str_replace("["," ",$amostra);
-                            $amostra = str_replace("}"," ",$amostra);
-
-                            $dataAmostra = explode(",",$amostra);
-
-                            //Inicia a montagem da série
-                            $i     = 0;
-                            $j     = 0;
-                            $serie = "[";
-                            foreach ($dataAmostra as $valorX) {
-                                $i++;
-                                $j++;
-                                /*
-                                * Devido ao fato de exitir registros no BD a cada 30 segundos, foi implementado esse código para exibir no gráfico somente leituras a cada 1 min
-                                */
-                                // if($j == 60){
-                                //     $serie .= "[".$dataMedida[$i].",".$valorX."],";
-                                //     $j = 0;
-                                // }
-
-                                $dataTemp = gmdate("d-m-Y H:i:s", $modelo->respRawDate[($i - 1)]);
-                                //
-                                $datahora = explode(" ", $dataTemp);
-                                $dias     = explode("-", $datahora[0]);
-                                $horas    = explode(":", $datahora[1]);
-                                // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
-
-                                $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".($horas[0] - 3).", ".$horas[1].", ".$horas[2]."),".$valorX."],";
-
-
-                                //$serie .= "[".$dataMedida[$i].",".$valorX."],";
-
-                                //$valorX
-
-                            }
-                            $serie .= "]";
-
-                            // var_dump($serie);
-                            // var_dump($nomeSerie);
-                            ?>
-                        {    data : <?php echo $serie; ?>, label : "<?php echo $nomeSerie; ?>"},
-                            <?php
-                        }
-                    ?>
-                ],
-                {
-                series: {
-                    lines: {
-                        show: true,
-                        lineWidth: 1
-                    },
-                    shadowSize: 0
-                },
-                xaxis: {
-                    ticks: [],
-                    // mode: "time",
-                    timezone: "America/Sao_Paulo"
-                },
-                yaxis: {
-                    ticks: [],
-                    min: 0,
-                    autoscaleMargin: 0.1
-                }
-                // ,
-                // selection: {
-                //     mode: "x"
-                // }
-            });
+            /*
+                Overview sendo colocado em desuso
+            */
+            // var overview = $.plot("#overview",
+            //     [
+            //         <?php
+            //             foreach ($testeJon as $jon) {
+            //
+            //                 $amostra = explode("data:", $jon[0]);
+            //
+            //                 $nomeSerie = $amostra[0];
+            //
+            //                 $nomeSerie = str_replace("{name:'"," ",$nomeSerie);
+            //                 $nomeSerie = str_replace("',"," ",$nomeSerie);
+            //
+            //                 $amostra = str_replace("]"," ",$amostra[1]);
+            //                 $amostra = str_replace("["," ",$amostra);
+            //                 $amostra = str_replace("}"," ",$amostra);
+            //
+            //                 $dataAmostra = explode(",",$amostra);
+            //
+            //                 //Inicia a montagem da série
+            //                 $i     = 0;
+            //                 $j     = 0;
+            //                 $serie = "[";
+            //                 foreach ($dataAmostra as $valorX) {
+            //                     $i++;
+            //                     $j++;
+            //                     /*
+            //                     * Devido ao fato de exitir registros no BD a cada 30 segundos, foi implementado esse código para exibir no gráfico somente leituras a cada 1 min
+            //                     */
+            //                     // if($j == 60){
+            //                     //     $serie .= "[".$dataMedida[$i].",".$valorX."],";
+            //                     //     $j = 0;
+            //                     // }
+            //
+            //                     $dataTemp = gmdate("d-m-Y H:i:s", $modelo->respRawDate[($i - 1)]);
+            //                     //
+            //                     $datahora = explode(" ", $dataTemp);
+            //                     $dias     = explode("-", $datahora[0]);
+            //                     $horas    = explode(":", $datahora[1]);
+            //                     // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
+            //
+            //                     $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".($horas[0] - 3).", ".$horas[1].", ".$horas[2]."),".$valorX."],";
+            //
+            //
+            //                     //$serie .= "[".$dataMedida[$i].",".$valorX."],";
+            //
+            //                     //$valorX
+            //
+            //                 }
+            //                 $serie .= "]";
+            //
+            //                 // var_dump($serie);
+            //                 // var_dump($nomeSerie);
+            //                 ?>
+            //             {    data : <?php //echo $serie; ?>, label : "<?php //echo $nomeSerie; ?>"},
+            //                 <?php
+            //             }
+            //         ?>
+            //     ],
+            //     {
+            //     series: {
+            //         lines: {
+            //             show: true,
+            //             lineWidth: 1
+            //         },
+            //         shadowSize: 0
+            //     },
+            //     xaxis: {
+            //         ticks: [],
+            //         // mode: "time",
+            //         timezone: "America/Sao_Paulo"
+            //     },
+            //     yaxis: {
+            //         ticks: [],
+            //         min: 0,
+            //         autoscaleMargin: 0.1
+            //     }
+            //     // ,
+            //     // selection: {
+            //     //     mode: "x"
+            //     // }
+            // });
 
             // now connect the two
 
@@ -355,12 +366,13 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
                 // don't fire event on the overview to prevent eternal loop
 
-                overview.setSelection(ranges, true);
+                //overview.setSelection(ranges, true);
             });
 
-            $("#overview").bind("plotselected", function (event, ranges) {
-                plot.setSelection(ranges);
-            });
+
+            // $("#overview").bind("plotselected", function (event, ranges) {
+            //     plot.setSelection(ranges);
+            // });
 
         });
     <?php
@@ -424,26 +436,46 @@ $dadosCliente       = $dadosCliente['dados'][0];
                                 <div class="demo-container">
                                     <div id="placeholder" class="demo-placeholder col-md-12" style="height:510px;background-color:#ffffff;">
                                     </div>
-                                </div >
+                                </div>
                             </div>
                             <div class="row">
+                                <div id="legendPlace" class="col-md-12">
+
+                                </div>
+                            </div>
+                            <!-- Gráfico de #overview caiu em desuso pois se mostrou desnecessario para o atual formato do gráfico -->
+                            <!-- <div class="row">
                                 <div class="col-md-1"></div>
                                 <div id="overview" class="col-md-10" style="margin-top:30px;height:150px;background-color: #635757cc;color:#ffffff;">
 
 
                                 </div>
                                 <div class="col-md-1"></div>
-                            </div>
+                            </div> -->
 
-                            <p class="message"></p>
 
-                            <h4 class="text-center">Clique e arraste no quadro menor para escolher a área do gráfico para efetuar o zoom.</h4>
+
 
                         </div>
 
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="well">
+                        <p class="message"></p>
+
+                        <p class="text-left"><i class="fa fa-dribbble -up fa-1x"></i> Roda do mouse : Zoom +, Zoom -</p>
+                        <p class="text-left"><i class="fa fa-hand-o-up fa-1x"></i> Botão principal do mouse : Arrastar gráfico</p>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+
             <?php
 
         }else{

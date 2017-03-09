@@ -53,8 +53,11 @@
 
         //LOCAL PARA GUARDAR A QUANTIDADE DE NOVOS ALARMES
         if($alarmesRegistrados['status']){
+
+            // echo sizeof($alarmesRegistrados['alerta']);
+            //var_dump($notificacaoAlertas);
             ?>
-            <span id="novoAlertasCount" style="display:none;"><?php echo sizeof($notificacaoAlertas['alarmes']); ?></span>
+            <span id="novoAlertasCount" style="display:none;"><?php echo sizeof($alarmesRegistrados['alerta']); ?></span>
             <?php
         }else{
             ?>
@@ -80,7 +83,7 @@
 
                     if(data.statusLista){
                         //Insere um linha no topo da tabela
-                        $(data.alarmesNovaLista).insertBefore( "#listaAlarmesEquipamentos tbody" );
+                        //$(data.alarmesNovaLista).insertBefore( "#listaAlarmesEquipamentos tbody" );
                         $('#novoAlertasCount').html(data.contagemLista);
                         swal('Atenção!','Foi registrado um novo alarme, favor verificar.','warning' );
                         setTimeout(function(){

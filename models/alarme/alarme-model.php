@@ -441,7 +441,8 @@
                             JOIN tb_cliente clie ON clie.id = sim.id_cliente
                             LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
                             WHERE alert.status_ativo  = '1'
-                            ORDER BY alert.id DESC LIMIT $limite, 99";
+                            ORDER BY alert.id DESC";
+
                 }else{
                     $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeModeloEquipamento, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido
                             FROM tb_alerta alert
@@ -453,9 +454,10 @@
                             JOIN tb_cliente clie ON clie.id = sim.id_cliente
                             LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
                             WHERE clie.id = '$idCliente' AND alert.status_ativo  = '1'
-                            ORDER BY alert.id DESC LIMIT $limite, 99";
-                }
+                            ORDER BY alert.id DESC";
 
+                }
+                //-- LIMIT $limite, 99";
                 // Monta a result
                 $result = $this->db->select($query);
 
@@ -737,8 +739,9 @@
 
             if(is_numeric($idAlarm)){
 
-                // $query = "SELECT
+                // $query = "SELECT trat_prov.tratamento_aplicado, trat_prov.data_tratamento, trat_prov.id AS 'tratamentoId', usrs.id AS 'userId', usrs.nome, usrs.sobrenome
                 //             FROM tb_tratamento_provisorio trat_prov
+                //             LEFT JOIN tb_users usrs ON usrs.id = trat_prov.id_user
                 //             WHERE trat_prov.id = '$idAlarm'";
 
 

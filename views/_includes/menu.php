@@ -11,45 +11,45 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
 /*
 * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
 */
-switch ($_SESSION['userdata']['tipo_usu']) {
-    case 'Administrador':
-        //var_dump($_SESSION);
+// switch ($_SESSION['userdata']['tipo_usu']) {
+//     case 'Administrador':
+//         //var_dump($_SESSION);
+//
+//         $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmes();
+//
+//     break;
+//
+//     case 'Cliente':
+//
+//
+//         $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['cliente']);
+//
+//     break;
+//
+//     case 'Visitante':
+//
+//
+//         $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['cliente']);
+//     break;
+//
+//     case 'Tecnico':
+//         $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmes();
+//
+//     break;
+// }
 
-        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmes();
-
-    break;
-
-    case 'Cliente':
-
-
-        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['cliente']);
-
-    break;
-
-    case 'Visitante':
-
-
-        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmesCliente($_SESSION['userdata']['cliente']);
-    break;
-
-    case 'Tecnico':
-        $notificacaoAlertas = $alarmeModeloStatus->recuperaNotificacoesAlarmes();
-
-    break;
-}
-
-if($notificacaoAlertas['status']){
-    /* CARREGA TOTAL DE NOTIFICACAO */
-    //$t_not = sizeof($dadosNot);
-
-    /* NO LUGAR DE NOTIFICAÇÃO, ESTÁ SENDO COLOCADO, AS NOTIFICAÇÕES DE ALARMES */
-    $t_not      = sizeof($notificacaoAlertas['alarmes']);
-    $dadosNot   = $notificacaoAlertas['alarmes'];
-
-}else {
-    $t_not      = 0;
-    $dadosNot   = null;
-}
+// if($notificacaoAlertas['status']){
+//     /* CARREGA TOTAL DE NOTIFICACAO */
+//     //$t_not = sizeof($dadosNot);
+//
+//     /* NO LUGAR DE NOTIFICAÇÃO, ESTÁ SENDO COLOCADO, AS NOTIFICAÇÕES DE ALARMES */
+//     $t_not      = sizeof($notificacaoAlertas['alarmes']);
+//     $dadosNot   = $notificacaoAlertas['alarmes'];
+//
+// }else {
+//     $t_not      = 0;
+//     $dadosNot   = null;
+// }
 
 ?>
 
@@ -314,9 +314,9 @@ if($notificacaoAlertas['status']){
                       <li>
                           <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador"><i class="fa fa-clipboard fa-1x"></i> Relatório de equiapamentos</a>
                       </li>
-                      <li>
-                           <a href="<?php echo HOME_URI; ?>/grafico/graficoTratamentoAlarme"><i class="fa fa-volume-up fa-1x"></i> Relatório de alarmes</a>
-                      </li>
+                      <!-- <li>
+                           <a href="<?php //echo HOME_URI; ?>/grafico/graficoTratamentoAlarme"><i class="fa fa-volume-up fa-1x"></i> Relatório de alarmes</a>
+                      </li> -->
                   </ul>
                 </li>
                 <?php } ?>

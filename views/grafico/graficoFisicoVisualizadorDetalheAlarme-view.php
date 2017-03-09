@@ -210,7 +210,7 @@
                                                                     <?php
 
                                                                         //CARREGA OS TRATAMENTOS REGISTRADOS PARA O ALARME
-                                                                        //$tratamentosAlarme = $modeloAlarme->carregaTratamentosAlarme($alarm['alertId']);
+                                                                        $tratamentosAlarme = $modeloAlarme->carregaTratamentosAlarme($alarm['alertId']);
 
                                                                     ?>
                                                                 </tbody>
