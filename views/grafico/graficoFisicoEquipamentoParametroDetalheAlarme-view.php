@@ -119,7 +119,7 @@
 <script type="text/javascript">
     // gerenciador de link
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador" class="linkMenuSup">Relatôrio fisico </a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoEquipamentoCliente/<?php echo $this->parametros[0]; ?>"> Cliente :<?php echo $nomeCliente; ?></a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoTratamentoAlarme" class="linkMenuSup">Relatôrio alarme detalhado </a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoParametrosEquipamentoAlarmeDetalhado/<?php echo $this->parametros[0]; ?>"> Cliente :<?php echo $nomeCliente; ?></a>';
 </script>
 
 <?php

@@ -71,10 +71,10 @@
 
             $htmlRealatorio .="<div class='panel panel-default'>";
                 $htmlRealatorio .="<div class='panel-heading'>";
-                $htmlRealatorio .="<h4 class='text-header'>Eficaz System - sistema de monitoramento.</h4>";
+                $htmlRealatorio .="<h4 class='text-header'>Eficaz System - sistema de monitoramento InfraWeb.</h4>";
                 $htmlRealatorio .="</div>";
                 $htmlRealatorio .="<div class='panel-body'>";
-                    $htmlRealatorio .="<h4><small>Relatôrio de alarmes gerados pelos equipamentos do cliente.</small></h4>";
+                    $htmlRealatorio .="<h4><small>Relatório de alarmes gerados pelos equipamentos do cliente.</small></h4>";
                 $htmlRealatorio .="</div>";
             $htmlRealatorio .="</div>";
 

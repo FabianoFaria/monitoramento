@@ -578,8 +578,19 @@
 
             if(is_numeric($statusAlarme) && is_numeric($idAlarme)){
 
-                $query      = "UPDATE tb_alerta SET status_ativo = '$statusAlarme'
-                            WHERE id = '$idAlarme'";
+                /*
+                    Caso o alarme esteja sendo fechado
+                */
+                if($statusAlarme == 4){
+
+                    $dtFechamento = date('Y-m-d H:i:s');
+
+                    $query      = "UPDATE tb_alerta SET status_ativo = '$statusAlarme', dt_fechamento = '$dtFechamento'
+                                WHERE id = '$idAlarme'";
+                }else{
+                    $query      = "UPDATE tb_alerta SET status_ativo = '$statusAlarme'
+                                WHERE id = '$idAlarme'";
+                }
 
                 if ($this->db->query($query))
                 {
@@ -692,7 +703,7 @@
         {
             if(is_numeric($idequipamento)){
 
-                $query = "SELECT sim_equip.id, sim_equip.id_equipamento, sim_equip.id_sim, sim_equip.num_serie, alert.id as 'alertId', alert.status_ativo, alert.dt_criacao, trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado, msg_alert.mensagem, usr.id AS 'userId', usr.nome AS 'usr_nome', usr.sobrenome
+                $query = "SELECT sim_equip.id, sim_equip.id_equipamento, sim_equip.id_sim, sim_equip.num_serie, alert.id as 'alertId', alert.status_ativo, alert.dt_criacao, alert.dt_fechamento, trat_alert.parametro, trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.tratamento_aplicado, msg_alert.mensagem, usr.id AS 'userId', usr.nome AS 'usr_nome', usr.sobrenome
                             FROM tb_sim_equipamento sim_equip
                             JOIN tb_alerta alert ON alert.id_sim_equipamento = sim_equip.id
                             JOIN tb_msg_alerta msg_alert ON msg_alert.id = alert.id_msg_alerta
@@ -739,11 +750,36 @@
 
             if(is_numeric($idAlarm)){
 
-                // $query = "SELECT trat_prov.tratamento_aplicado, trat_prov.data_tratamento, trat_prov.id AS 'tratamentoId', usrs.id AS 'userId', usrs.nome, usrs.sobrenome
-                //             FROM tb_tratamento_provisorio trat_prov
-                //             LEFT JOIN tb_users usrs ON usrs.id = trat_prov.id_user
-                //             WHERE trat_prov.id = '$idAlarm'";
+                $query = "SELECT trat_prov.tratamento_aplicado, trat_prov.data_tratamento, trat_prov.id AS 'tratamentoId', usrs.id AS 'userId', usrs.nome, usrs.sobrenome
+                            FROM tb_tratamento_provisorio trat_prov
+                            LEFT JOIN tb_users usrs ON usrs.id = trat_prov.id_user
+                            WHERE trat_prov.id_alerta = '$idAlarm'
+                            ORDER BY trat_prov.data_tratamento ASC";
 
+                /* EXECUTA A QUERY ESPECIFICADA */
+                $result = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if($result){
+
+                    /* VERIFICA SE EXISTE VALOR */
+                    if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'alarmTrat' => $retorno);
+                    }else{
+                      $array = array('status' => false, 'alarmTrat' => '');
+                    }
+
+                }else{
+                    $array = array('status' => false);
+                }
 
             }else{
                 $array = array('status' => false);

@@ -314,9 +314,9 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
                       <li>
                           <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador"><i class="fa fa-clipboard fa-1x"></i> Relatório de equiapamentos</a>
                       </li>
-                      <!-- <li>
-                           <a href="<?php //echo HOME_URI; ?>/grafico/graficoTratamentoAlarme"><i class="fa fa-volume-up fa-1x"></i> Relatório de alarmes</a>
-                      </li> -->
+                      <li>
+                           <a href="<?php echo HOME_URI; ?>/grafico/graficoTratamentoAlarme"><i class="fa fa-volume-up fa-1x"></i> Relatório de alarmes</a>
+                      </li>
                   </ul>
                 </li>
                 <?php } ?>

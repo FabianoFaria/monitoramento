@@ -39,7 +39,7 @@
 
     // gerenciador de link
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/" class="linkMenuSup">Relatôrios </a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoTratamentoAlarme" class="linkMenuSup">Relatôrios alarme detalhado</a>';
 </script>
 
 
