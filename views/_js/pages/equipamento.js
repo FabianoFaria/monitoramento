@@ -106,6 +106,12 @@ $(document).ready(function(){
                 },
                 opc_localBat :{
                     required : true
+                },
+				opc_tipoEntrada :{
+                    required : true
+                },
+				opc_tipoSaida :{
+                    required : true
                 }
 
             },
@@ -139,8 +145,13 @@ $(document).ready(function(){
                 },
                 opc_localBat :{
                     required : "Campo obrigatório"
+                },
+				opc_tipoEntrada :{
+                    required : "Campo obrigatório"
+                },
+				opc_tipoSaida :{
+                    required : "Campo obrigatório"
                 }
-
             }
 		});
 
@@ -171,6 +182,9 @@ $(document).ready(function(){
             var tipoBat         = $('#opc_tipoBateria').val();
             var localBat        = $('#opc_localBat').val();
 
+			var tipoEntrada  	= $('#opc_tipoEntrada').val();
+			var tipoSaida  		= $('#opc_tipoSaida').val();
+
 			//Verifica se um fabricante foi selecionado!
 
 			//if($.isNumeric(fabricante)){
@@ -196,7 +210,9 @@ $(document).ready(function(){
                   'quantBancoBat'   : quantBancoBat,
                   'quantBatPorBanc' : quantBatPorBanc,
                   'tipoBateria'     : tipoBat,
-                  'localBateria'    : localBat
+                  'localBateria'    : localBat,
+				  'tipoEntrada'  	: tipoEntrada,
+				  'tipoSaida'  		: tipoSaida
                 },
 
                    success : function(datra)
@@ -275,7 +291,13 @@ $(document).ready(function(){
           },
           opc_localBat :{
               required : true
-          }
+          },
+		  opc_tipoEntrada :{
+			  required : true
+		  },
+		  opc_tipoSaida :{
+			  required : true
+		  }
 
       },
       messages: {
@@ -308,7 +330,13 @@ $(document).ready(function(){
           },
           opc_localBat :{
               required : "Campo obrigatório"
-          }
+          },
+		  opc_tipoEntrada :{
+			 required : "Campo obrigatório"
+		 },
+		 opc_tipoSaida :{
+			 required : "Campo obrigatório"
+		 }
       }
     });
 
@@ -336,6 +364,9 @@ $(document).ready(function(){
       var tipoBat         = $('#opc_tipoBateria').val();
       var localBat        = $('#opc_localBat').val();
 
+	  var tipoEntrada     = $('#opc_tipoEntrada').val();
+      var tipoSaida      = $('#opc_tipoSaida').val();
+
       //Efetua o registro do equipamento no BD
 
       $.ajax({
@@ -358,7 +389,9 @@ $(document).ready(function(){
           'quantBancoBat'   : quantBancoBat,
           'quantBatPorBanc' : quantBatPorBanc,
           'tipoBateria'     : tipoBat,
-          'localBateria'    : localBat
+          'localBateria'    : localBat,
+		  'tipoEntrada'     : tipoEntrada,
+          'tipoSaida'    	: tipoSaida
         },
         success : function(datra)
           {

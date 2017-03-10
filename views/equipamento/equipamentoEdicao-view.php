@@ -38,6 +38,8 @@
 
 <?php
 
+    //var_dump($equipamentoCarregado);
+
 	/*
 
  		array(1) { [0]=> array(12) { ["id"]=> string(1) "4" ["id_cliente"]=> string(1) "2" ["id_filial"]=> string(1) "0" ["tipo_equipamento"]=> string(6) "tretre" ["modelo"]=> string(5) "erter" ["potencia"]=> string(4) "4453" ["qnt_bateria"]=> string(5) "23323" ["caracteristica_equip"]=> string(5) "23423" ["tipo_bateria"]=> string(13) "Estacionária" ["amperagem_bateria"]=> string(5) "23423" ["cliente"]=> string(4) "Jose" ["filial"]=> NULL } }
@@ -137,6 +139,32 @@
                         <input type="text" class="form-control" id="txt_nomeModeloEquip" name="txt_nomeModeloEquip" placeholder="Modelo de Equipamento" value="<?php echo  $equipamentoCarregado['nomeModeloEquipamento']; ?>">
                     </div>
                 </div><!-- fim modelo do equipamento -->
+            </div>
+
+            <div class="row">
+                <!-- Entrada de equipamento -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="modeloEquipamento">Tipo entrada do equipamento</label>
+                        <select id="opc_tipoEntrada" name="opc_tipoEntrada" spellcheck="false" class="form-control">
+                            <option value='1' <?php echo ($equipamentoCarregado['tipo_entrada'] == '1') ? 'selected' : ''; ?> >Monofásico</option>
+                            <option value='2' <?php echo ($equipamentoCarregado['tipo_entrada'] == '2') ? 'selected' : ''; ?> >Bifásico</option>
+                            <option value='3' <?php echo ($equipamentoCarregado['tipo_entrada'] == '3') ? 'selected' : ''; ?> >Trifásico</option>
+                        </select>
+                    </div>
+                </div><!-- fim entrada do equipamento -->
+
+                <!-- Saída de equipamento -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="modeloEquipamento">Tipo saída do equipamento</label>
+                        <select id="opc_tipoSaida" name="opc_tipoSaida" spellcheck="false" class="form-control">
+                            <option value='1' <?php echo ($equipamentoCarregado['tipo_saida'] == '1') ? 'selected' : ''; ?> >Monofásico</option>
+                            <option value='2' <?php echo ($equipamentoCarregado['tipo_saida'] == '2') ? 'selected' : ''; ?> >Bifásico</option>
+                            <option value='3' <?php echo ($equipamentoCarregado['tipo_saida'] == '3') ? 'selected' : ''; ?> >Trifásico</option>
+                        </select>
+                    </div>
+                </div><!-- fim saída do equipamento -->
             </div>
 
             <div class="row">

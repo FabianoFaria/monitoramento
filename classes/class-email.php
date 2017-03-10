@@ -71,7 +71,7 @@
         // para enviar a mensagem em prioridade máxima
         //$headers .= "X-Priority: 1\n";
         $headers .= 'From: "Sistema monitoramento Infraweb" <'.$remetente.'>';
-        $headers .= "Return-Path: monitoramento@sistema.eficazsystem.com.br\r\n"; // return-path
+        //$headers .= "Return-Path: monitoramento@sistema.eficazsystem.com.br\r\n"; // return-path
 
         //$mail->addCustomHeader('X-custom-header', 'custom-value');
 

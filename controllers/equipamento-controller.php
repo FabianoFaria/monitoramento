@@ -160,7 +160,7 @@ class EquipamentoController extends MainController
         //CARREGA MODELO PARA ESTA FUNÇÃO
         $equipModelo            = $this->load_model('equipamento/equipamento-model');
 
-        $equipamentoRegistrado  = $equipModelo->registrarEquipamentoJson($_POST['idCliente'],$_POST['idFilial'],$_POST['equipamento'],$_POST['fabricante'],$_POST['nomeModelo'],$_POST['correnteBateria'],$_POST['potencia'],$_POST['tensaoBancoBat'],$_POST['correnteBanco'],$_POST['quantBat'],$_POST['quantBancoBat'],$_POST['quantBatPorBanc'],$_POST['tipoBateria'],$_POST['localBateria']);
+        $equipamentoRegistrado  = $equipModelo->registrarEquipamentoJson($_POST['idCliente'],$_POST['idFilial'],$_POST['equipamento'],$_POST['fabricante'],$_POST['nomeModelo'],$_POST['correnteBateria'],$_POST['potencia'],$_POST['tensaoBancoBat'],$_POST['correnteBanco'],$_POST['quantBat'],$_POST['quantBancoBat'],$_POST['quantBatPorBanc'],$_POST['tipoBateria'],$_POST['localBateria'], $_POST['tipoEntrada'], $_POST['tipoSaida']);
 
         if($equipamentoRegistrado){
             exit(json_encode(array('status' => $equipamentoRegistrado['status'] )));
@@ -212,7 +212,9 @@ class EquipamentoController extends MainController
             $_POST['quantBancoBat'],
             $_POST['quantBatPorBanc'],
             $_POST['tipoBateria'],
-            $_POST['localBateria']
+            $_POST['localBateria'],
+            $_POST['tipoEntrada'],
+            $_POST['tipoSaida']
             );
 
         if($editarEquip){

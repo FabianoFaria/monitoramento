@@ -325,7 +325,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             */
             if(!empty($listaContatos)){
 
-                var_dump($equipamentoAlerta);
+                //var_dump($equipamentoAlerta);
 
                 foreach ($listaContatos as $contato) {
 

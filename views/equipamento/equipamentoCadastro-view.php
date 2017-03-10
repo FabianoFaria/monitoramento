@@ -140,6 +140,33 @@
             </div>
 
             <div class="row">
+                <!-- Entrada de equipamento -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="modeloEquipamento">Tipo entrada do equipamento</label>
+                        <select id="opc_tipoEntrada" name="opc_tipoEntrada" spellcheck="false" class="form-control">
+                            <option value=''>Selecione...</option>
+                            <option value='1'>Monofásico</option>
+                            <option value='2'>Bifásico</option>
+                            <option value='3'>Trifásico</option>
+                        </select>
+                    </div>
+                </div><!-- fim entrada do equipamento -->
+                <!-- Saída de equipamento -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="modeloEquipamento">Tipo saída do equipamento</label>
+                        <select id="opc_tipoSaida" name="opc_tipoSaida" spellcheck="false" class="form-control">
+                            <option value=''>Selecione...</option>
+                            <option value='1'>Monofásico</option>
+                            <option value='2'>Bifásico</option>
+                            <option value='3'>Trifásico</option>
+                        </select>
+                    </div>
+                </div><!-- fim saída do equipamento -->
+            </div>
+
+            <div class="row">
 
                 <h4 class="page-header">Bateria do equipamento</h4>
 
