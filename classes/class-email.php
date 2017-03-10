@@ -70,7 +70,7 @@
         $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
         // para enviar a mensagem em prioridade máxima
         //$headers .= "X-Priority: 1\n";
-        $headers .= 'From: "Sistema monitoramento" < monitoramento@sistema.eficazsystem.com.br >';
+        $headers .= 'From: "Sistema monitoramento Infraweb" <'.$remetente.'>';
         $headers .= "Return-Path: monitoramento@sistema.eficazsystem.com.br\r\n"; // return-path
 
         //$mail->addCustomHeader('X-custom-header', 'custom-value');
@@ -331,7 +331,7 @@
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
-        //$headers .= 'From: "Sistema monitoramento" <'.$remetente.'>';
+        $headers .= 'From: "Sistema monitoramento Infraweb" <'.$remetente.'>';
 
         $mensagem = "<h3>Olá, ".$solicitante."</h3>";
         $mensagem .= "<p>";
@@ -351,7 +351,7 @@
 
         //$headers .= "Bcc: $EmailPadrao\r\n";
         $arquivo = '';
-        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-r sistemaeficaz@sistema.eficazsystem.com.br");
+        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-r".$remetente);
         if($enviaremail){
             return true;
         } else {
@@ -558,7 +558,7 @@
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
-        //$headers .= 'From: "Sistema monitoramento" <'.$remetente.'>';
+        $headers .= 'From: "Sistema monitoramento Infraweb" <'.$remetente.'>';
 
         $mensagem = "<h3>Olá, ".$nomeContato."</h3>";
         $mensagem .= "<p>";
@@ -637,7 +637,48 @@
 
     }
 
+    /*
+    * FUNÇÃO PARA ENVIO DE EMAIL PARA NOTIFICAR APARELHO NÃO RESPONDENDO
+    */
+    public function envioEmailAlertaEquipamentoNaoResponde($email, $nome_contato, $tipo_equipamento, $nomeModeloEquipamento, $ambiente, $nomeClie){
 
+        //Definimos Para quem vai ser enviado o email
+        $remetente = $this->remetente;
+        $destino = $email;
+        $assunto = "ALERTA - Equipamento mestre não está respondendo!";
+
+        // É necessário indicar que o formato do e-mail é html
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8"."\r\n";
+        $headers .= 'From: "Sistema monitoramento Infraweb" <'.$remetente.'>';
+
+        $mensagem = "<h3>Olá, ".$nome_contato."</h3>";
+        $mensagem .= "<p>";
+        $mensagem .= "Foi detectado que o equipamento responsável pelo monitoramento do  ".$tipo_equipamento." ".$nomeModeloEquipamento.", não está enviando dados.";
+        $mensagem .= "</p>";
+        $mensagem .= "";
+        $mensagem .= "<p>";
+        $mensagem .= "Os dados do alerta já foram registrados e podem ser acessados através do sistema.";
+        $mensagem .= "</p>";
+
+        $mensagem .= "<p>";
+        $mensagem .= "Att.";
+        $mensagem .= "</p>";
+
+        $mensagem .= "<p>";
+        $mensagem .= "Eficaz system - Sistema de monitoramento Infraweb";
+        $mensagem .= "</p>";
+
+        //$headers .= "Bcc: $EmailPadrao\r\n";
+        $arquivo = '';
+        $enviaremail = mail($destino, $assunto, $mensagem, $headers,"-r monitoramento@sistema.eficazsystem.com.br");
+        if($enviaremail){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>

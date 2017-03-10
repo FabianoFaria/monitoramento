@@ -83,6 +83,13 @@
 					// var_dump(time());
 					// var_dump(strtotime($dataAtual));
 
+
+
+					//var_dump($listaContatos);
+
+
+
+
 					/*
 						CASO A DIFERENÇA SEJA MAIOR QUE 10MIN
 					*/
@@ -98,6 +105,36 @@
 								INICIA O PROCESSO DE GERAR ALARME DO EQUIPAMENTO
 							*/
 							gerarAlarmeEquipamento($equipamento['idSimEquip'], $dados['num_sim'],$dataAtual);
+
+							/*
+								INICIA PROCESSO DE GERAR EMAILS
+							*/
+							$listaContatos = carregarContatosEquiapemtno($equipamento['id_cliente'], $equipamento['id_filial']);
+
+							if($listaContatos){
+
+								foreach ($listaContatos as $contato){
+
+									$mailer = new email;
+
+									$nome = $contato['nome_contato'];
+									$email = $contato['email'];
+
+									//CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
+
+				                    $localEquip = (isset($equipamento['nomeFili'])) ? ' filial '.$equipamento['nomeFili'] : 'Matriz';
+
+									$resultadoEnvio = $mailer->envioEmailAlertaEquipamentoNaoResponde($contato['email'], $contato['nome_contato'], $equipamento['tipo_equipamento'], $equipamento['nomeModeloEquipamento'], $equipamento['ambiente'], $equipamento['nomeClie']);
+
+									//var_dump($resultadoEnvio);
+								}
+							}
+
+						}else{
+							/*
+								REGISTRA NO BD OS DADOS ZERADOS PARA RELATÓRIOS POSTERIORES
+							*/
+							registraDadosZeradosEquipamento($dados['num_sim']);
 						}
 
 						//var_dump($alarmeExiste);
@@ -133,9 +170,12 @@
         }
 
 
-          $query = "SELECT equip.id,equip.id_cliente, equip.id_filial, equip.nomeModeloEquipamento, equip.status_ativo, simEquip.id as 'idSimEquip'
+          $query = "SELECT equip.id,equip.id_cliente, equip.id_filial, equip.nomeModeloEquipamento, equip.status_ativo, simEquip.id as 'idSimEquip', simEquip.ambiente, clie.nome AS 'nomeClie', fili.nome AS 'nomeFili', tpEquip.tipo_equipamento
                         FROM tb_equipamento equip
+						JOIN tb_tipo_equipamento tpEquip ON equip.tipo_equipamento = tpEquip.id
+						JOIN tb_cliente clie ON equip.id_cliente = clie.id
 						JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id
+						LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
                         WHERE equip.status_ativo = '1'";
 
           /*
@@ -360,5 +400,83 @@
 
 	}
 
+	/*
+	* REGISTRA NA TABELA DADOS, A FALHA DO EQUIPAMENTOS
+	*/
+	function registraDadosZeradosEquipamento($numSim){
+
+		/*
+		*  CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+		*/
+		$conn = new EficazDB;
+
+		// VERIFICA SE EXISTE ERRO DE CONEXAO
+		if (!$conn)
+		{
+			// Retorno erro
+			header('HTTP/1.1 404 Not Found');
+			// Finaliza a execucao
+			exit();
+		}
+
+		/*
+			REGISTRA O EQUIPAMENTO COMO DESLIGADO NO BD ATÉ RECEBER NOVOS DADOS
+		*/
+	    $queryDadosVazios = "insert into tb_dados (num_sim,b,c,d,e,f,g,h,i,j,l,m,n,o,p,q,r,s,t,u) values
+	                  ('$numSim','0','0','0','0','0','0',
+	                   '0','0','0','0','0','0','0',
+	                   '0','0','0','0','0','0')";
+
+		$result = $conn->query($queryDadosVazios);
+
+		// Fecha a conexao
+		$conn->close();
+
+	}
+
+	/*
+    * CARREGA OS CONTATOS DE EMAIL DO EQUIPAMENTO
+    */
+    function carregarContatosEquiapemtno($idClie, $idFili){
+
+        /*
+        *  CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+        */
+        $conn = new EficazDB;
+
+        // VERIFICA SE EXISTE ERRO DE CONEXAO
+        if (!$conn)
+        {
+            // Retorno erro
+            header('HTTP/1.1 404 Not Found');
+            // Finaliza a execucao
+            exit();
+        }
+
+        $query = "SELECT nome_contato, email FROM tb_contato_alerta WHERE id_cliente = '$idClie' AND id_filial = '$idFili'";
+
+        /* monta result */
+        $result =  $conn->select($query);
+
+        /* VERIFICA SE EXISTE VALOR */
+        if (@mysql_num_rows($result) > 0)
+        {
+            /* ARMAZENA NA ARRAY */
+            while ($rowEquip = @mysql_fetch_assoc ($result))
+            {
+                $retornoEquip[] = $rowEquip;
+            }
+
+            $dados = $retornoEquip;
+
+            // Fecha a conexao
+            $conn->close();
+
+        }else{
+            $dados = false;
+        }
+
+        return $dados;
+    }
 
 ?>

@@ -324,7 +324,8 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             * VERIFICA SE A LISTA DE CONTATOS NÃO ESTÁ VAZIA, ENTÃO INICIA O ENVIO DE EMAILS
             */
             if(!empty($listaContatos)){
-                var_dump($listaContatos);
+
+                var_dump($equipamentoAlerta);
 
                 foreach ($listaContatos as $contato) {
 
@@ -332,7 +333,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
 
                     $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
 
-                    $resultadoEnvio = $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo'], $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+                    $resultadoEnvio = $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], " ", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
 
                     //POSIBILIDADE DE CADASTRO NO LOG EM CASO DE FALHA DE ENVIO
 
@@ -410,7 +411,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
 
                     $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
 
-                    $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeEquipamento'], $equipamentoAlerta[0]['modelo'], $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+                    $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
                 }
             }
 
@@ -664,13 +665,23 @@ function carregarDadosEquip($idSimEquip){
     //                 JOIN tb_tipo_equipamento tipoEquip ON equip.tipo_equipamento = tipoEquip.id
     //                 WHERE simEquip.id = '$idSimEquip'";
 
-    $query      = "SELECT equip.nomeEquipamento, equip.modelo, tipoEquip.tipo_equipamento, simEquip.ambiente,clieInfo.nome AS 'cliente', fili.nome AS 'filial'
-                    FROM tb_equipamento equip
-                    JOIN tb_sim_equipamento simEquip ON equip.id = simEquip.id_equipamento
-                    JOIN tb_cliente clieInfo ON clieInfo.id = equip.id_cliente
-                    LEFT JOIN tb_filial fili ON equip.id_filial = fili.id_matriz
-                    JOIN tb_tipo_equipamento tipoEquip ON equip.tipo_equipamento = tipoEquip.id
-                    WHERE simEquip.id = '$idSimEquip'";
+    // $query      = "SELECT equip.nomeEquipamento, equip.modelo, tipoEquip.tipo_equipamento, simEquip.ambiente,clieInfo.nome AS 'cliente', fili.nome AS 'filial'
+    //                 FROM tb_equipamento equip
+    //                 JOIN tb_sim_equipamento simEquip ON equip.id = simEquip.id_equipamento
+    //                 JOIN tb_cliente clieInfo ON clieInfo.id = equip.id_cliente
+    //                 LEFT JOIN tb_filial fili ON equip.id_filial = fili.id_matriz
+    //                 JOIN tb_tipo_equipamento tipoEquip ON equip.tipo_equipamento = tipoEquip.id
+    //                 WHERE simEquip.id = '$idSimEquip'";
+
+    //QUERY ATUALIZADA
+
+    $query  = "SELECT equip.nomeModeloEquipamento, tipoEquip.tipo_equipamento, simEquip.ambiente, clieInfo.nome AS 'cliente', fili.nome AS 'filial'
+                FROM tb_equipamento equip
+                JOIN tb_sim_equipamento simEquip ON equip.id = simEquip.id_equipamento
+                JOIN tb_cliente clieInfo ON clieInfo.id = equip.id_cliente
+                LEFT JOIN tb_filial fili ON equip.id_filial = fili.id_matriz
+                JOIN tb_tipo_equipamento tipoEquip ON equip.tipo_equipamento = tipoEquip.id
+                WHERE simEquip.id = '$idSimEquip'";
 
     // Monta a result
     $result = $connBase->select($query);
