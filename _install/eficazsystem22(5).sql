@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 10-Mar-2017 às 18:23
+-- Generation Time: 13-Mar-2017 às 19:31
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -324,7 +324,7 @@ CREATE TABLE `tb_equipamento` (
 --
 
 INSERT INTO `tb_equipamento` (`id`, `id_fabricante`, `id_cliente`, `id_filial`, `id_users`, `tipo_equipamento`, `tipo_entrada`, `tipo_saida`, `nomeModeloEquipamento`, `correnteBateria`, `potencia`, `tensaoBancoBateria`, `correnteBancoBateria`, `qnt_bateria`, `quantidade_banco_bateria`, `quantidade_bateria_por_banco`, `tipo_bateria`, `localBateria`, `status_ativo`, `dt_criacao`) VALUES
-(20, 4, 48, 0, 5, 1, 0, 0, 'C130', '120', '50', '3', '3', '2', 0, 0, 'Automotiva', 'Interna', 1, '2017-01-10 18:17:41'),
+(20, 4, 48, 0, 5, 1, 3, 3, 'C130', '120', '50', '3', '3', '2', 0, 0, 'Automotiva', 'Interna', 1, '2017-01-10 18:17:41'),
 (21, 1, 49, 0, 5, 1, 0, 0, 'Termodinamico', '', '123', '', '', '2', 0, 0, 'Selada', '', 0, '2017-01-10 18:19:26'),
 (22, 1, 50, 0, 5, 1, 0, 0, 'Gh', '', '112', '', '', '2', 0, 0, 'Estacion&aacute;ria', '', 1, '2017-01-10 18:20:21'),
 (23, 1, 48, 9, 5, 1, 0, 0, 'Fgh', '', '120', '', '', '2', 0, 0, 'Automotiva', '', 1, '2017-01-10 18:21:05'),
@@ -345,7 +345,8 @@ INSERT INTO `tb_equipamento` (`id`, `id_fabricante`, `id_cliente`, `id_filial`, 
 (38, 4, 2, 0, 5, 2, 0, 0, 'TST 200', '3', '2', '1', '2', '0', 0, 0, 'Automotiva', 'Interna', 1, '2017-02-22 11:55:35'),
 (39, 4, 2, 0, 5, 1, 0, 0, 'GDH-teste', '2', '2', '2', '2', '0', 0, 0, 'Automotiva', 'Externa', 1, '2017-02-22 12:02:33'),
 (40, 2, 1, 0, 5, 2, 0, 0, 'FER-teste', '3', '3', '3', '3', '0', 0, 0, 'Selada', 'Interna', 1, '2017-02-22 12:03:03'),
-(41, 2, 58, 0, 5, 2, 3, 1, 'EGTM 9000', '120', '5', '120', '100', '0', 0, 0, 'Automotiva', 'Interna', 1, '2017-03-10 17:25:41');
+(41, 2, 58, 0, 5, 2, 3, 1, 'EGTM 9000', '120', '5', '120', '100', '0', 0, 0, 'Automotiva', 'Interna', 1, '2017-03-10 17:25:41'),
+(42, 13, 48, 0, 5, 2, 1, 1, 'MediTemp 950', '', '', '', '', '0', 0, 0, 'Selada', 'Interna', 1, '2017-03-13 13:03:18');
 
 -- --------------------------------------------------------
 
@@ -16941,7 +16942,7 @@ CREATE TABLE `tb_parametro` (
 --
 
 INSERT INTO `tb_parametro` (`id`, `id_equipamento`, `id_users`, `id_sim_equipamento`, `num_sim`, `parametro`, `dt_criacao`, `status_ativo`) VALUES
-(4, 20, 5, 12, '9999988777', '|inicio|ecb-95|eb-111|ei-127|ea-133|eca-143||inicio|scb-96|sb-112|si-127|sa-134|sca-142||inicio|tbcb-97|tbb-113|tbi-127|tba-380|tbca-395||inicio|ccb-90|cb-100|ci-127|ca-135|cca-140||inicio|cscb-90|csb-105|csi-127|csa-134|csca-140|', '2017-01-12 12:16:58', 1),
+(4, 20, 5, 12, '9999988777', '|inicio|ecb-95|eb-111|ei-127|ea-133|eca-143||inicio|scb-96|sb-112|si-127|sa-134|sca-142||inicio|tbcb-97|tbb-113|tbi-127|tba-380|tbca-395||inicio|ccb-0,02|cb-0,05|ci-127|ca-135|cca-140||inicio|cscb-0,1|csb-0,04|csi-127|csa-134|csca-140|', '2017-01-12 12:16:58', 1),
 (5, 25, 5, 13, '99999994443333', '|inicio|ecb-98|eb-110|ei-127|ea-135|eca-145||inicio|scb-92|sb-105|si-127|sa-130|sca-140||inicio|tbcb-90|tbb-105|tbi-127|tba-135|tbca-146||inicio|ccb-|cb-|ci-|ca-|cca-||inicio|cscb-|csb-|csi-|csa-|csca-|', '2017-01-13 19:10:49', 1),
 (6, 23, 5, 14, '9999998888', '|inicio|ecb-90|eb-110|ei-127|ea-135|eca-145||inicio|scb-93|sb-110|si-127|sa-135|sca-145||inicio|tbcb-90|tbb-105|tbi-127,|tba-135|tbca-140||inicio|ccb-|cb-|ci-|ca-|cca-||inicio|cscb-|csb-|csi-|csa-|csca-|', '2017-01-16 10:34:29', 1),
 (7, 21, 5, 15, '777777777', '|inicio|ecb-89|eb-120|ei-127|ea-133|eca-145||inicio|scb-90|sb-111|si-127|sa-135|sca-145||inicio|tbcb-90|tbb-100|tbi-127|tba-130|tbca-140||inicio|ccb-80|cb-105|ci-127|ca-138|cca-145||inicio|cscb-75|csb-100|csi-127|csa-135|csca-140|', '2017-01-17 16:58:33', 1),
@@ -17115,7 +17116,9 @@ INSERT INTO `tb_posicao` (`id`, `id_sim_equipamento`, `id_num_sim`, `posicao`, `
 (162, 19, '99', 'l', 1, '2017-02-22 19:03:23'),
 (163, 19, '99', 'm', 1, '2017-02-22 19:03:23'),
 (164, 19, '99', 'n', 1, '2017-02-22 19:03:23'),
-(165, 19, '99', 'o', 1, '2017-02-22 19:03:23');
+(165, 19, '99', 'o', 1, '2017-02-22 19:03:23'),
+(166, 20, '9999988777', 'p', 1, '2017-03-13 13:15:34'),
+(167, 20, '9999988777', 'q', 1, '2017-03-13 13:15:34');
 
 -- --------------------------------------------------------
 
@@ -17193,7 +17196,7 @@ CREATE TABLE `tb_sim_equipamento` (
   `id_equipamento` int(11) DEFAULT NULL,
   `id_sim` decimal(15,0) NOT NULL,
   `num_serie` decimal(30,0) DEFAULT NULL,
-  `ambiente` varchar(50) DEFAULT NULL,
+  `ambiente` text,
   `vinc_tabela` smallint(6) NOT NULL DEFAULT '0',
   `status_ativo` smallint(6) NOT NULL DEFAULT '1',
   `dt_criacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -17211,7 +17214,8 @@ INSERT INTO `tb_sim_equipamento` (`id`, `id_equipamento`, `id_sim`, `num_serie`,
 (16, 22, '999999888433', '11111222223333', 'Nenhuma caracteristica adicional', 0, 1, '2017-01-17 17:06:56'),
 (17, 30, '444444455555', NULL, 'Teste de observaÃ§Ã£o.', 0, 1, '2017-02-22 18:21:40'),
 (18, 31, '111112222221111', NULL, '', 0, 1, '2017-02-22 18:23:59'),
-(19, 33, '99', '99', '', 0, 1, '2017-02-22 19:03:22');
+(19, 33, '99', '99', '', 0, 1, '2017-02-22 19:03:22'),
+(20, 42, '9999988777', '9999988777', 'Medidor de temperatura para teste de equipamentos diferentes no mesmo sim.', 0, 1, '2017-03-13 13:15:34');
 
 -- --------------------------------------------------------
 
@@ -17652,12 +17656,12 @@ ALTER TABLE `tb_contato_alerta`
 -- AUTO_INCREMENT for table `tb_dados`
 --
 ALTER TABLE `tb_dados`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=651781;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=651799;
 --
 -- AUTO_INCREMENT for table `tb_equipamento`
 --
 ALTER TABLE `tb_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `tb_fabricante`
 --
@@ -17692,12 +17696,12 @@ ALTER TABLE `tb_parametro`
 -- AUTO_INCREMENT for table `tb_posicao`
 --
 ALTER TABLE `tb_posicao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 --
 -- AUTO_INCREMENT for table `tb_sim_equipamento`
 --
 ALTER TABLE `tb_sim_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `tb_tipo_equipamento`
 --

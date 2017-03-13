@@ -128,7 +128,7 @@ else
             // var_dump($cValor2);
 
             // TABELA UTILIZADAS PARA TENSÃO E CORRENTE
-            $tabela = array("b","c","d","e","f","g","h","j","l","m","n","o");
+            $tabela = array("b","c","d","e","f","g","i","j","l","m","n","o");
             $tipoES = array("R","S","T","CR","CS","CT","R","S","T","CR","CS","CT");
             $nomes = array ("entrada","saida");
 
@@ -275,7 +275,7 @@ else
                              pane: [{ startAngle: -45, endAngle: 45, background: null, center: ['54%', '95%'], size: 150 /* tamanho do painel */ }],
                              yAxis: [{
                                  min: 0,
-                                 max: <?php echo $retorno[4+$mult]; ?>,
+                                 max: <?php echo number_format($retorno[4+$mult], 2, '.', ''); ?>,
                                  minorTickPosition: 'outside',
                                  tickPosition: 'outside',
                                  labels: {
@@ -284,23 +284,23 @@ else
                                  },
                                  plotBands: [{
                                      from: 0,
-                                     to: <?php echo $retorno[0+$mult]; ?>,
+                                     to: <?php echo str_replace(',','.', $retorno[0+$mult]); ?>,
                                      color: '#DF5353' // red
                                  }, {
-                                     from: <?php echo $retorno[0+$mult]; ?>,
-                                     to: <?php echo $retorno[1+$mult]; ?>,
+                                     from: <?php echo str_replace(',','.', $retorno[0+$mult]); ?>,
+                                     to: <?php echo str_replace(',','.', $retorno[1+$mult]); ?>,
                                      color: '#DDDF0D' // yellow
                                  }, {
-                                     from: <?php echo $retorno[1+$mult]; ?>,
-                                     to: <?php echo $retorno[2+$mult]; ?>,
+                                     from: <?php echo str_replace(',','.',$retorno[1+$mult]); ?>,
+                                     to: <?php echo str_replace(',','.',$retorno[2+$mult]); ?>,
                                      color: '#55BF3B' // green
                                  }, {
-                                     from: <?php echo $retorno[2+$mult]; ?>,
-                                     to: <?php echo $retorno[3+$mult]; ?>,
+                                     from: <?php echo str_replace(',','.',$retorno[2+$mult]); ?>,
+                                     to: <?php echo str_replace(',','.',$retorno[3+$mult]); ?>,
                                      color: '#DDDF0D' // yellow
                                  }, {
-                                     from: <?php echo $retorno[3+$mult]; ?>,
-                                     to: <?php echo $retorno[4+$mult]; ?>,
+                                     from: <?php echo str_replace(',','.',$retorno[3+$mult]); ?>,
+                                     to: <?php echo str_replace(',','.',$retorno[4+$mult]); ?>,
                                      color: '#DF5353' // red
                                  }],
 
@@ -325,7 +325,7 @@ else
                                          //right = chart.series[1].points[0],
                                          leftVal,
                                          //rightVal,
-                                         inc = parseFloat(valor/10);
+                                         inc = parseFloat(valor/100);
 
 
                                      leftVal =  inc;
@@ -339,7 +339,7 @@ else
                                          $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoDesligado');
                                          document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Desligado';
 
-                                         console.log(leftVal + 'Desligado');
+                                         console.log(leftVal + ' Desligado');
                                      }
                                      else if(leftVal < <?php echo $retorno[0+$mult]; ?>){
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
@@ -364,7 +364,7 @@ else
                                          $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoDesligado');
                                          document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Crítico!';
 
-                                         console.log(leftVal + 'Ligado !!!!!'+ <?php echo $retorno[0+$mult]; ?>);
+                                         console.log(leftVal + 'Ligado !!!!!'+ <?php echo number_format((float)$retorno[0+$mult], 2, '.', ''); ?>);
 
                                      }
                                      else if ((leftVal > <?php echo $retorno[3+$mult]; ?>) && (leftVal < <?php echo $retorno[4+$mult]; ?>)){
@@ -875,7 +875,7 @@ else
                                             var maxBat = 420;
 
                                             setInterval(function(){  //, colocando '$idSim' no lugar de '$nova_url[0]'
-                                                var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=i&callback=?";
+                                                var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=h&callback=?";
                                                 $.getJSON(url,  function(data) {
                                                     valorBat        = parseFloat(data[0]);
                                                     var calcula     = (valorBat*100)/maxBat;

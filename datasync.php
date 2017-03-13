@@ -121,31 +121,31 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
         //var_dump($valoresEntrada);
 
         //TESTA OS VALORES DE ENTRADA
-        $statusB                = comparaParametrosEquipamento(($_POST['B']/10), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
-        $statusC                = comparaParametrosEquipamento(($_POST['C']/10), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
-        $statusD                = comparaParametrosEquipamento(($_POST['D']/10), $valoresEntrada, $idSimEquip, 'Tensão', 'd');
+        $statusB                = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
+        $statusC                = comparaParametrosEquipamento(($_POST['C']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
+        $statusD                = comparaParametrosEquipamento(($_POST['D']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'd');
 
         $valoresSaida           = explode('|', $configuracaoSalva[2]);
         //TESTA OS VALORES DE SAÍDA
-        $statusE                = comparaParametrosEquipamento(($_POST['E']/10), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
-        $statusF                = comparaParametrosEquipamento(($_POST['F']/10), $valoresSaida, $idSimEquip, 'Saída tensão', 'f');
-        $statusG                = comparaParametrosEquipamento(($_POST['G']/10), $valoresSaida, $idSimEquip, 'Saída tensão', 'g');
+        $statusE                = comparaParametrosEquipamento(($_POST['E']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
+        $statusF                = comparaParametrosEquipamento(($_POST['F']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'f');
+        $statusG                = comparaParametrosEquipamento(($_POST['G']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'g');
 
         $valoresBateria         = explode('|', $configuracaoSalva[3]);
         //TESTA OS VALORES DA BATERIA
-        $statusH                = comparaParametrosEquipamento($_POST['I'], $valoresBateria, $idSimEquip, 'Bateria', 'h');
+        $statusH                = comparaParametrosEquipamento(($_POST['H']/100), $valoresBateria, $idSimEquip, 'Bateria', 'h');
 
         $valoresCorrente        = explode('|', $configuracaoSalva[4]);
         //TESTA OS VALORES DE CORRENTE
-        //$statusI                = comparaParametrosEquipamento(($_POST['I']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
-        $statusJ                = comparaParametrosEquipamento(($_POST['J']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'j');
-        $statusL                = comparaParametrosEquipamento(($_POST['L']/10), $valoresCorrente, $idSimEquip, 'Corrente', 'l');
+        $statusI                = comparaParametrosEquipamento(($_POST['I']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
+        $statusJ                = comparaParametrosEquipamento(($_POST['J']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'j');
+        $statusL                = comparaParametrosEquipamento(($_POST['L']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'l');
 
         $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
         //TESTA OS VALORES DE SAÍDA DE CORRENTE
-        $statusM                = comparaParametrosEquipamento(($_POST['M']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
-        $statusN                = comparaParametrosEquipamento(($_POST['N']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
-        $statusO                = comparaParametrosEquipamento(($_POST['O']/10), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'o');
+        $statusM                = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
+        $statusN                = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
+        $statusO                = comparaParametrosEquipamento(($_POST['O']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'o');
 
     }else{
         //var_dump($dados);
