@@ -197,7 +197,7 @@ class GraficoGeradorModel extends MainModel
                 //$query .=" WHERE a.num_sim = '' AND a.dt_criacao BETWEEN ' 00:00:00' AND ' 23:59:59' ORDER BY a.dt_criacao DESC ";
 
                 //var_dump( $opc, $query, $diasDiff);
-                var_dump($query);
+                //var_dump($query);
 
                 // Busca os dados no banco
                 $result = $this->verificaQuery($query);
@@ -225,7 +225,8 @@ class GraficoGeradorModel extends MainModel
                             }
 
                             if ($opc[$b] == 1)
-                                $respData[$tabela[$b]][0] .= "".intval(floatval($result[$a][$tabela[$b]]/10)).",";
+                                //$respData[$tabela[$b]][0] .= "".intval(floatval($result[$a][$tabela[$b]]/100)).",";
+                                $respData[$tabela[$b]][0] .= "".floatval($result[$a][$tabela[$b]]/100).",";
                         }
                     }
 

@@ -388,7 +388,7 @@ else
                                      }
 
                                      left.update(leftVal, false);
-                                     document.getElementById('<?php echo $nomeDivBat.$a;?>').innerHTML = leftVal + " ( v )";
+                                     document.getElementById('<?php echo $nomeDivBat.$a;?>').innerHTML = leftVal + "";
                                      chart.redraw();
 
                                      //console.log(leftVal);
@@ -473,7 +473,7 @@ else
                                                         <!-- Entrada R/S -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                                                             <div id="containerEntrada1" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label id="bat_e1" class="valorVindo" value="">0 ( v )</label>
+                                                            <label class="valorVindo" value=""><span id="bat_e1">0</span> ( v )</label>
                                                             <div id="sit-ent1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
@@ -481,7 +481,7 @@ else
                                                         <!-- Entrada R/S -->
                                                         <div class="ol-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerEntrada2" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label id="bat_e2" class="valorVindo" value="">0 ( v )</label>
+                                                            <label class="valorVindo" value=""><span id="bat_e2">0</span> ( v )</label>
                                                             <div id="sit-ent2" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
@@ -489,7 +489,7 @@ else
                                                         <!-- Entrada R/S -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerEntrada3" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label id="bat_e3" class="valorVindo" value="">0 ( v )</label>
+                                                            <label class="valorVindo" value=""><span id="bat_e3">0</span> ( v )</label>
                                                             <div id="sit-ent3" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
@@ -502,7 +502,7 @@ else
                                                         <!-- Saida S/T -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerTensaSaida1" style="width:100%; margin: 0 auto"></div>
-                                                            <label id="bat_s1" class="valorVindo" value="">0 ( v )</label>
+                                                            <label class="valorVindo" value=""><span id="bat_s1">0</span> ( v )</label>
                                                             <div id="sit-sai1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
@@ -510,7 +510,7 @@ else
                                                         <!-- Saida S/T -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerTensaSaida2" style="width:100%; margin: 0 auto"></div>
-                                                            <label id="bat_s2" class="valorVindo" value="">0 ( v )</label>
+                                                            <label class="valorVindo" value=""><span id="bat_s2">0</span> ( v )</label>
                                                             <div id="sit-sai2" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
@@ -518,7 +518,7 @@ else
                                                         <!-- Saida S/T -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerTensaSaida3" style="width:100%; margin: 0 auto"></div>
-                                                            <label id="bat_s3" class="valorVindo" value="">0 ( v )</label>
+                                                            <label class="valorVindo" value=""><span id="bat_s3">0</span> ( v )</label>
                                                             <div id="sit-sai3" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
@@ -537,19 +537,19 @@ else
                                                         <!-- Entrada Corrente -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                                                             <div id="containerEntradaCorente1" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label id="cor_e1" class="valorVindo">0 ( v )</label>
+                                                            <label class="valorVindo"><span id="cor_e1">0</span> ( A )</label>
                                                             <div id="sit-cor-ent1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada Corrente -->
                                                         <!-- Entrada Corrente -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                                                             <div id="containerEntradaCorente2" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label id="cor_e2" class="valorVindo">0 ( v )</label>
+                                                            <label class="valorVindo"><span id="cor_e2" >0</span> ( A )</label>
                                                             <div id="sit-cor-ent2" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada Corrente -->
                                                         <!-- Entrada Corrente -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                                                             <div id="containerEntradaCorente3" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label id="cor_e3" class="valorVindo">0 ( v )</label>
+                                                            <label class="valorVindo"> <span id="cor_e3" >0</span> ( A )</label>
                                                             <div id="sit-cor-ent3" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada Corrente -->
                                                     </div>
@@ -559,19 +559,19 @@ else
                                                     <!-- Saida S/T -->
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div id="containerCorrentSaida1" style="width:100%; margin: 0 auto"></div>
-                                                        <label id="cor_s1" class="valorVindo">0 ( v )</label>
+                                                        <label class="valorVindo"><span id="cor_s1">0</span> ( A )</label>
                                                         <div id="sit-cor-sai1" class="situacaoDesligado">Carregando...</div>
                                                     </div><!-- Saida S/T -->
                                                     <!-- Saida S/T -->
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div id="containerCorrentSaida2" style="width:100%; margin: 0 auto"></div>
-                                                        <label id="cor_s2" class="valorVindo">0 ( v )</label>
+                                                        <label  class="valorVindo"><span id="cor_s2">0</span> ( A )</label>
                                                         <div id="sit-cor-sai2" class="situacaoDesligado">Carregando...</div>
                                                     </div><!-- Saida S/T -->
                                                     <!-- Saida S/T -->
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div id="containerCorrentSaida3" style="width:100%; margin: 0 auto"></div>
-                                                        <label id="cor_s3" class="valorVindo">0 ( v )</label>
+                                                        <label  class="valorVindo"><span id="cor_s3">0</span> ( A )</label>
                                                         <div id="sit-cor-sai3" class="situacaoDesligado">Carregando...</div>
                                                     </div><!-- Saida S/T -->
                                                 </div>
@@ -1021,7 +1021,7 @@ else
                                         var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncTemperatura.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=q&callback=?";
                                         $.getJSON(url,  function(data) {
 
-                                            temperatura1 = parseFloat(data[0])/10;
+                                            temperatura1 = parseFloat(data[0])/100;
                                             $('#cor_temp1').html(temperatura1.toFixed(1) +" (°C)");
                                             $('#sit-cor-temp1').html('');
 
@@ -1049,7 +1049,7 @@ else
                                         var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncTemperatura.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=r&callback=?";
                                         $.getJSON(url,  function(data) {
 
-                                            temperatura1 = parseFloat(data[0])/10;
+                                            temperatura1 = parseFloat(data[0])/100;
                                             $('#cor_temp2').html(temperatura1.toFixed(1) +" (°C)");
                                             $('#sit-cor-temp2').html('');
 
@@ -1077,7 +1077,7 @@ else
                                     <!-- Medidor temperatura 1 -->
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="containerTemperatura1" style="width:100%; margin: 0 auto"></div>
-                                        <label id="cor_temp1" class="valorVindo">0 ( °C )</label>
+                                        <label class="valorVindo"><span id="cor_temp1"> 0</span> ( °C )</label>
                                         <div id="sit-cor-temp1" class="situacaoDesligado">Carregando...</div>
                                     </div><!-- Saida S/T -->
                                 </div>
@@ -1085,7 +1085,7 @@ else
                                     <h4>Temp. banco de bateria</h4>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="containerTemperatura2" style="width:100%; margin: 0 auto"></div>
-                                        <label id="cor_temp2" class="valorVindo">0 ( °C )</label>
+                                        <label class="valorVindo"><span id="cor_temp2"></span> ( °C )</label>
                                         <div id="sit-cor-temp2" class="situacaoDesligado">Carregando...</div>
                                     </div><!-- Saida S/T -->
                                 </div>

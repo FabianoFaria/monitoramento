@@ -561,5 +561,61 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     */
     function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolado, $parametroAvaliado, $tipoAlarme, $nivelAlarme, $pontoTabela){
 
+        // Cria um objeto de da classe de conexao
+        $connBase = new EficazDB;
+
+        $data = date('Y-m-d h:i:s');
+
+        //REGISTRA O ALARME NO SISTEMA
+        $queryAlarme = "INSERT INTO tb_alerta(id_sim_equipamento, id_msg_alerta, nivel_alerta, dt_criacao)
+                        VALUES ('$idEquipSim', '$tipoAlarme', '$nivelAlarme', '$data')";
+
+        $result = $connBase->query($queryAlarme);
+
+        $idGerada  = mysql_insert_id();
+
+        if(!$result)
+        {
+            // Monta a query de log
+            $query = "insert into tb_log (log)  values ('Erro ao tentar registrar um alerta para o equipamento de id_sim :".$idEquipSim."')";
+
+            // Grava o log
+            $connBase->query($query);
+
+            // Retona o erro
+            header('HTTP/1.1 404 Not Found');
+            // Finaliza a execucao
+            exit();
+        }
+
+        $idAlarme = mysql_insert_id();
+
+        //REGISTRA OS DETALHES DO ALARME PARA CONSULTA PELO MONITOR
+        $queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta(id_alerta, parametro, parametroMedido, parametroAtingido, pontoTabela)
+                                VALUES ('$idAlarme', '$parametroAvaliado', '$parametroEnviado', '$parametroViolado', '$pontoTabela')";
+
+        // Grava no DB
+        $resultadoDetalhes = $connBase->query($queryDetalheAlarme);
+
+        if(!$resultadoDetalhes)
+        {
+            // Monta a query de log
+            $query = "insert into tb_log (log)  values ('Erro ao tentar registrar um alerta para o equipamento de id_sim :".$idEquipSim."')";
+
+            // Grava o log
+            $connBase->query($query);
+
+            // Retona o erro
+            header('HTTP/1.1 404 Not Found');
+            // Finaliza a execucao
+            exit();
+        }else{
+            // Fecha a conexao
+            $connBase->close();
+
+            // Retorna mensagem de sucesso
+            //header ('HTTP/1.1 200 OK');
+        }
+
     }
 ?>
