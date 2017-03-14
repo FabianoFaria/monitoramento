@@ -190,10 +190,10 @@ class MainController extends UserLogin
         if(($ponto == 'q') || ($ponto == 'r')){
             switch ($ponto) {
                 case 'q':
-                    $saida = "Temperatura 1";
+                    $saida = "Temperatura Ambiente";
                 break;
                 case 'r':
-                    $saida = "Temperatura 2";
+                    $saida = "Temperatura Banco Bateria";
                 break;
             }
         }
@@ -208,79 +208,84 @@ class MainController extends UserLogin
         if(($ponto == 'b') || ($ponto == 'c') || ($ponto == 'd')){
             switch ($ponto) {
                 case 'b':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (V)";
                 break;
                 case 'c':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (V)";
                 break;
                 case 'd':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (V)";
                 break;
             }
-        }
+        }else
         //SAÍDA DE TENSÃO
         if(($ponto == 'e') || ($ponto == 'f') || ($ponto == 'g')){
             switch ($ponto) {
                 case 'e':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (V)";
                 break;
                 case 'f':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (V)";
                 break;
                 case 'g':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (V)";
                 break;
             }
-        }
+        }else
         //ENTRADA DE CORRENTE
         if(($ponto == 'i') || ($ponto == 'j') || ($ponto == 'l')){
             switch ($ponto) {
                 case 'i':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (A)";
                 break;
                 case 'j':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (A)";
                 break;
                 case 'l':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (A)";
                 break;
             }
-        }
+        }else
         //SAÍDA DE CORRENTE
         if(($ponto == 'm') || ($ponto == 'n') || ($ponto == 'o')){
             switch ($ponto) {
                 case 'm':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (A)";
                 break;
                 case 'n':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (A)";
                 break;
                 case 'o':
-                    $saida = ($medida / 10)." (V)";
+                    $saida = ($medida / 100)." (A)";
                 break;
             }
-        }
+        }else
         //BATERIA
-        if(($ponto == 'h') || ($ponto == 'q')){
+        if(($ponto == 'h') || ($ponto == 'p')){
             switch ($ponto) {
                 case 'h':
-                    $saida = ($medida);
+                    $saida = ($medida / 100)." (V)";
                 break;
-                case 'o':
-                    $saida = ($medida);
+                case 'p':
+                    $saida = ($medida / 100)." (V)";
                 break;
             }
-        }
+        }else
         //TEMPERATURA
         if(($ponto == 'q') || ($ponto == 'r')){
             switch ($ponto) {
                 case 'q':
-                    $saida =  number_format($medida, 1, '.', '')." (°C)";
+                    // $saida =  number_format($medida, 1, '.', '')." (°C)";
+                    $saida =  ($medida / 100)." (°C)";
                 break;
                 case 'r':
-                    $saida =  number_format($medida, 1, '.', '')." (°C)";
+                    //$saida =  number_format($medida, 1, '.', '')." (°C)";
+                    $saida =   ($medida / 100)." (°C)";
                 break;
             }
+        }
+        else{
+            $saida = " Nenhum dado reconhecido";
         }
         return $saida;
     }

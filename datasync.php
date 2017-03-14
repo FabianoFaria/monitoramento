@@ -147,6 +147,12 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
         $statusN                = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
         $statusO                = comparaParametrosEquipamento(($_POST['O']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'o');
 
+        //TESTA OS VALORES DE TEMPERATURA
+        $valoresTempAmbiente    = explode('|', $configuracaoSalva[6]);
+        $statusQ                = comparaParametrosEquipamento(($_POST['Q']/100), $valoresTempAmbiente, $idSimEquip, 'Temperatura ambiente', 'q');
+        $valoresTempBancoBat    = explode('|', $configuracaoSalva[7]);
+        $statusR                = comparaParametrosEquipamento(($_POST['R']/100), $valoresTempBancoBat, $idSimEquip, 'Temperatura banco bateria', 'r');
+
     }else{
         //var_dump($dados);
         $parametros = 0;
@@ -403,7 +409,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
             * Verifica se a lista de contatos não está vazia, então inicia o envio de emails
             */
             if(!empty($listaContatos)){
-                var_dump($retorno);
+                //var_dump($retorno);
 
                 foreach ($listaContatos as $contato) {
 

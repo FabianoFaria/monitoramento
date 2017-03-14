@@ -180,6 +180,24 @@ $().ready(function(){
 
         paramConcatenados = paramConcatenados.concat('|inicio|cscb-'+cscb+'|csb-'+csb+'|csi-'+csi+'|csa-'+csa+'|csca-'+csca+'|');
 
+        //Recupera os valores de temperatura ambiente
+        var tacb  = $('#tacb').val();
+        var tasb  = $('#tasb').val();
+        var tasi  = $('#tasi').val();
+        var tasa  = $('#tasa').val();
+        var tasca = $('#tasca').val();
+
+        paramConcatenados = paramConcatenados.concat('|inicio|tacb-'+tacb+'|tasb-'+tasb+'|tasi-'+tasi+'|tasa-'+tasa+'|tasca-'+tasca+'|');
+
+        //Recupera os valores de temperatura banco de bateria
+        var tbbcb  = $('#tbbcb').val();
+        var tbbb   = $('#tbbb').val();
+        var tbbsi  = $('#tbbsi').val();
+        var tbbsa  = $('#tbbsa').val();
+        var tbbsca = $('#tbbsca').val();
+
+        paramConcatenados = paramConcatenados.concat('|inicio|tbbcb-'+tbbcb+'|tbbb-'+tbbb+'|tbbsi-'+tbbsi+'|tbbsa-'+tbbsa+'|tbbsca-'+tbbsca+'|');
+
         var idCOnfiguracao = $('#idParametros').val();
         /*
         * Verificação se á sendo esta sendo efetuado uma edição ou cadastro de uma nova configuração

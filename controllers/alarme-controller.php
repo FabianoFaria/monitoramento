@@ -281,6 +281,11 @@
             }
 
             /*
+            * DADO QUE GEROU ALARME
+            */
+            $dadoGeradorAlarme = $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], ($dadosAlarme['parametroMedido'] * 100));
+
+            /*
             * TRATAMENTOS REGISTRADOS PARA O ALARME
             */
             $tratamentosRegistrados = $alarmeModelo->recuperacaoTratamentosAlarme($_POST['idAlarme']);
@@ -316,6 +321,7 @@
                                 'cliente' => $dadosClie['dados'][0],
                                 'filial' => $dadosFili,
                                 'alarme' => $dadosAlarme,
+                                'dadoGerouAlarme' => $dadoGeradorAlarme,
                                 'statusAlarme' => $statusAlarme,
                                 'horaAlarme' => $horaCriacao,
                                 'dataAlarme' => $dataCriacaoTratada,

@@ -43,8 +43,8 @@ function detalharAlarme(idAlarme){
             $('#tratamentoAlarme').html(datra.alarme['tratamento_aplicado']);
             //MEDIDAS QUE GERARAM O ALARME
             $('#tipoMedida').html(datra.alarme['parametro']);
-            $('#medidaOriginal').html(datra.alarme['parametroMedido']);
-            $('#ultimaMedida').html('Não recebido ainda.');
+            $('#medidaOriginal').html(datra.dadoGerouAlarme);
+            //$('#ultimaMedida').html('Não recebido ainda.');
             //DADOS DO EQUIPAMENTO
             $('#equipTipo').html(datra.tipoEquip);
             $('#equipNome').html(datra.nomeEquip);

@@ -1022,7 +1022,7 @@ else
                                         $.getJSON(url,  function(data) {
 
                                             temperatura1 = parseFloat(data[0])/100;
-                                            $('#cor_temp1').html(temperatura1.toFixed(1) +" (°C)");
+                                            $('#cor_temp1').html(temperatura1.toFixed(1) +"");
                                             $('#sit-cor-temp1').html('');
 
                                             switch (temperatura1) {
@@ -1050,7 +1050,7 @@ else
                                         $.getJSON(url,  function(data) {
 
                                             temperatura1 = parseFloat(data[0])/100;
-                                            $('#cor_temp2').html(temperatura1.toFixed(1) +" (°C)");
+                                            $('#cor_temp2').html(temperatura1.toFixed(1) +"");
                                             $('#sit-cor-temp2').html('');
 
                                             switch (temperatura1) {
@@ -1085,7 +1085,7 @@ else
                                     <h4>Temp. banco de bateria</h4>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="containerTemperatura2" style="width:100%; margin: 0 auto"></div>
-                                        <label class="valorVindo"><span id="cor_temp2"></span> ( °C )</label>
+                                        <label class="valorVindo"><span id="cor_temp2"> 0</span> ( °C )</label>
                                         <div id="sit-cor-temp2" class="situacaoDesligado">Carregando...</div>
                                     </div><!-- Saida S/T -->
                                 </div>

@@ -272,16 +272,55 @@
                                                             case 'Bateria':
                                                                 # code...
                                                             break;
-                                                            case 'Temperatura':
-                                                                # code...
+                                                            case 'Temperatura ambiente':
+                                                                ?>
+                                                                <span class="text-danger">
+                                                                    <?php
+                                                                        echo  $listaAlarmes['parametroMedido']." (°C)";
+                                                                    ?>
+                                                                </span> onde o limite era
+                                                                <span class="text-info">
+                                                                    <?php
+                                                                        echo $listaAlarmes['parametroAtingido']." (°C)";
+                                                                    ?>
+                                                                </span>
+                                                                <?php
+                                                            break;
+                                                            case 'Temperatura banco bateria':
+                                                                ?>
+                                                                <span class="text-danger">
+                                                                    <?php
+                                                                        echo  $listaAlarmes['parametroMedido']." (°C)";
+                                                                    ?>
+                                                                </span> onde o limite era
+                                                                <span class="text-info">
+                                                                    <?php
+                                                                        echo $listaAlarmes['parametroAtingido']." (°C)";
+                                                                    ?>
+                                                                </span>
+                                                                <?php
                                                             break;
                                                             case 'Equipamento mestre'
                                                                 ?>
                                                                     Dados não estão sendo recebidos.
                                                                 <?php
                                                             break;
+                                                            case 'Corrente'
+                                                                ?>
+                                                                <span class="text-danger">
+                                                                    <?php
+                                                                        echo  $listaAlarmes['parametroMedido']." (A)";
+                                                                    ?>
+                                                                </span> onde o limite era
+                                                                <span class="text-info">
+                                                                    <?php
+                                                                        echo $listaAlarmes['parametroAtingido']." (A)";
+                                                                    ?>
+                                                                </span>
+                                                                <?php
+                                                            break;
                                                             /*
-                                                            TRATA CASOS DE CORRENTE E TENSÃO
+                                                            TRATA CASOS DE TENSÃO
                                                             */
                                                             default:
                                                                 ?>
