@@ -422,6 +422,7 @@ class UsuarioModel extends MainModel
           if(isset($senha)){        $query .= ", senha = '$senha'";}
           $query .= " WHERE id = '$id_user'";
 
+          //var_dump($query);
           /* monta result */
           $result = $this->db->query($query);
 
