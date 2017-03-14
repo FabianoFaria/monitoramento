@@ -159,6 +159,17 @@
         $dadosFiliais   = $clienteModelo->carregarFiliaisCliente($_POST['idCliente']);
         $dadosEquips    = $equipeModelo->listarEquipamentosCliente($_POST['idCliente']);
 
+        //MONTA A TABELA DE EQUIPAMENTOS
+        $listaEquip          = $dadosEquips['equipamentos'];
+
+        $tabela         = "";
+        $tabela         .="<thead><tr>
+                            <th>Equipamento</th>
+                            <th>Modelo</th>
+                            <th>local</th>
+                            <th class='txt-center'>Monitorar</th>
+                            </tr></thead>";
+
         if(!empty($dadosFiliais['status'])){
 
             //MONTA A LISTA PARA O SELECT
@@ -171,17 +182,6 @@
 
                 $lista .= "<option value='".$idClie."'>".$nomeFili."</option>";
             }
-
-            //MONTA A TABELA DE EQUIPAMENTOS
-            $listaEquip          = $dadosEquips['equipamentos'];
-
-            $tabela         = "";
-            $tabela         .="<thead><tr>
-                                <th>Equipamento</th>
-                                <th>Modelo</th>
-                                <th>local</th>
-                                <th class='txt-center'>Monitorar</th>
-                                </tr></thead>";
 
             if($listaEquip){
                 $tabela         .="<tbody>";
@@ -223,18 +223,40 @@
             //GERA LISTA DE SELECT VAZIA
             $lista = "<option value='0'> Matriz </option>";
 
-            //GERA TABELA VAZIA
-            $tabela         ="<thead><tr>
-                                <th>Equipamento</th>
-                                <th>Modelo</th>
-                                <th>local</th>
-                                <th class='txt-center'>Monitorar</th>
-                                </tr></thead>";
-            $tabela         .="<tbody>";
-                $tabela         .="<tr>";
-                    $tabela         .="<td colspan='4'>Nenhum equipamento cadastrado até o momento</td>";
-                $tabela         .="</tr>";
-            $tabela         .="</tbody>";
+            if($listaEquip){
+                $tabela         .="<tbody>";
+
+                foreach ($listaEquip as $equip) {
+
+                    $tabela         .="<tr>";
+
+                        $tabela         .="<td>";
+                            $tabela     .= html_entity_decode($equip['tipoEquip']);
+                        $tabela         .="</td>";
+                        $tabela         .="<td>";
+                            $tabela     .=html_entity_decode($equip['nomeModeloEquipamento']);
+                        $tabela         .="</td>";
+                        $tabela         .="<td>";
+                            $tabela     .= (isset($equip['filial'])) ? html_entity_decode($equip['filial']) : "Matriz";
+                        $tabela         .="</td>";
+                        $tabela         .="<td>";
+                            $link       = HOME_URI."/monitoramento/gerarGrafico/".$equip['id']."";
+                            $tabela     .= "<a href='".$link."'><i class='fa fa-picture-o fa-2x'></i></a>";
+                        $tabela         .="</td>";
+
+                    $tabela         .="</tr>";
+                }
+
+                $tabela         .="</tbody>";
+
+            }else{
+                $tabela         .="<tbody>";
+                    $tabela         .="<tr>";
+                        $tabela         .="<td colspan='4'>Nenhum equipamento cadastrado até o momento</td>";
+                    $tabela         .="</tr>";
+                $tabela         .="</tbody>";
+
+            }
 
             exit(json_encode(array('status' => false, 'filiais' => $lista, 'equipamentos' => $tabela)));
         }
@@ -343,6 +365,17 @@
         $dadosFiliais   = $clienteModelo->carregarFiliaisCliente($_POST['idCliente']);
         $dadosEquips    = $equipeModelo->listarEquipamentosCliente($_POST['idCliente']);
 
+        //MONTA A TABELA DE EQUIPAMENTOS
+        $listaEquip          = $dadosEquips['equipamentos'];
+
+        $tabela         = "";
+        $tabela         .="<thead><tr>
+                            <th>Equipamento</th>
+                            <th>Modelo</th>
+                            <th>local</th>
+                            <th class='txt-center'>Relatôrio</th>
+                            </tr></thead>";
+
         if(!empty($dadosFiliais['status'])){
 
             //MONTA A LISTA PARA O SELECT
@@ -355,17 +388,6 @@
 
                 $lista .= "<option value='".$idClie."'>".$nomeFili."</option>";
             }
-
-            //MONTA A TABELA DE EQUIPAMENTOS
-            $listaEquip          = $dadosEquips['equipamentos'];
-
-            $tabela         = "";
-            $tabela         .="<thead><tr>
-                                <th>Equipamento</th>
-                                <th>Modelo</th>
-                                <th>local</th>
-                                <th class='txt-center'>Relatôrio</th>
-                                </tr></thead>";
 
             if($listaEquip){
                 $tabela         .="<tbody>";
@@ -407,18 +429,41 @@
             //GERA LISTA DE SELECT VAZIA
             $lista = "<option value='0'> Matriz </option>";
 
-            //GERA TABELA VAZIA
-            $tabela         ="<thead><tr>
-                                <th>Equipamento</th>
-                                <th>Modelo</th>
-                                <th>local</th>
-                                <th class='txt-center'>Estatistica</th>
-                                </tr></thead>";
-            $tabela         .="<tbody>";
-                $tabela         .="<tr>";
-                    $tabela         .="<td colspan='4'>Nenhum equipamento cadastrado até o momento</td>";
-                $tabela         .="</tr>";
-            $tabela         .="</tbody>";
+            //GERA TABELA DE EQUIPAMENTOS
+            if($listaEquip){
+                $tabela         .="<tbody>";
+
+                foreach ($listaEquip as $equip) {
+
+                    $tabela         .="<tr>";
+
+                        $tabela         .="<td>";
+                            $tabela     .=html_entity_decode($equip['tipoEquip']);
+                        $tabela         .="</td>";
+                        $tabela         .="<td>";
+                            $tabela     .=html_entity_decode($equip['nomeModeloEquipamento']);
+                        $tabela         .="</td>";
+                        $tabela         .="<td>";
+                            $tabela     .= (isset($equip['filial'])) ? html_entity_decode($equip['filial']) : "Matriz";
+                        $tabela         .="</td>";
+                        $tabela         .="<td>";
+                            $link       = HOME_URI."/grafico/graficoFisicoParametrosEquipamentoCliente/".$equip['id']."";
+                            $tabela     .= "<a href='".$link."'><i class='fa fa-list-alt  fa-2x'></i></a>";
+                        $tabela         .="</td>";
+
+                    $tabela         .="</tr>";
+                }
+
+                $tabela         .="</tbody>";
+
+            }else{
+                $tabela         .="<tbody>";
+                    $tabela         .="<tr>";
+                        $tabela         .="<td colspan='4'>Nenhum equipamento cadastrado até o momento</td>";
+                    $tabela         .="</tr>";
+                $tabela         .="</tbody>";
+
+            }
 
             exit(json_encode(array('status' => false, 'filiais' => $lista, 'equipamentos' => $tabela)));
         }

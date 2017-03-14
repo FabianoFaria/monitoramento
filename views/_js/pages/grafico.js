@@ -222,7 +222,7 @@ $().ready(function() {
 
             //Concatena os parametros em uma string e passa para o link
             var url     = idClient+"/"+from+"/"+to;
-            var link    = urlP+"/grafico/gerarRelatorioCliente/"
+            var link    = urlP+"/eficazmonitor/grafico/gerarRelatorioCliente/"
             window.location.href = link + url;
 
         }
@@ -275,7 +275,7 @@ $().ready(function() {
 
             //Concatena os parametros em uma string e passa para o link
             var url     = idClient+"/"+idEquip+"/"+from+"/"+to;
-            var link    = urlP+"/grafico/gerarRelatorioEquipamentoCliente/"
+            var link    = urlP+"/eficazmonitor/grafico/gerarRelatorioEquipamentoCliente/"
             window.location.href = link + url;
 
         }
@@ -329,7 +329,7 @@ $().ready(function() {
 
             //Concatena os parametros em uma string e passa para o link
             var url     = idClient+"/"+idEquip+"/"+from+"/"+to;
-            var link    = urlP+"/grafico/gerarRelatorioAlarmeDetalheEquipamentoCliente/"
+            var link    = urlP+"/eficazmonitor/grafico/gerarRelatorioAlarmeDetalheEquipamentoCliente/"
             window.location.href = link + url;
 
         }
@@ -356,7 +356,7 @@ $().ready(function() {
 
             //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
             $.ajax({
-                url: urlP+"/cliente/carregarListaFilialClienteRelatoriosJson",
+                url: urlP+"/eficazmonitor/cliente/carregarListaFilialClienteRelatoriosJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -438,7 +438,7 @@ $().ready(function() {
       })
       .autocomplete({
         source: function( request, response ) {
-          $.getJSON( urlP+"/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteLista").val(), {
+          $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteLista").val(), {
             term: extractLast( request.term )
           }, response
       );
@@ -465,7 +465,7 @@ $().ready(function() {
            if(idFilial != ''){
                //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
                $.ajax({
-                   url: urlP+"/cliente/carregarListaEquipamentoFilialRelatoriosJson",
+                   url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialRelatoriosJson",
                    secureuri: false,
                    type : "POST",
                    dataType: 'json',
@@ -524,7 +524,7 @@ $().ready(function() {
         if(idTipoEquip != ''){
             //EFETUA O CARREGAMENTO DOS DADOS DOS EQUIPAMENTOS POR TIPO
             $.ajax({
-                url: urlP+"/cliente/carregarListaEquipamentoFilialTipoRelatorioJson",
+                url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialTipoRelatorioJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -578,7 +578,7 @@ $().ready(function() {
 
             //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
             $.ajax({
-                url: urlP+"/cliente/carregarListaFilialClienteEstatisticaJson",
+                url: urlP+"/eficazmonitor/cliente/carregarListaFilialClienteEstatisticaJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -662,7 +662,7 @@ $().ready(function() {
       })
       .autocomplete({
         source: function( request, response ) {
-          $.getJSON( urlP+"/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteListaEstatistica").val(), {
+          $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteListaEstatistica").val(), {
             term: extractLast( request.term )
           }, response
       );
@@ -689,7 +689,7 @@ $().ready(function() {
            if(idFilial != ''){
                //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
                $.ajax({
-                   url: urlP+"/cliente/carregarListaEquipamentoFilialEstatisticaJson",
+                   url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialEstatisticaJson",
                    secureuri: false,
                    type : "POST",
                    dataType: 'json',
@@ -739,7 +739,7 @@ $().ready(function() {
         if(idTipoEquip != ''){
             //EFETUA O CARREGAMENTO DOS DADOS DOS EQUIPAMENTOS POR TIPO
             $.ajax({
-                url: urlP+"/cliente/carregarListaEquipamentoFilialTipoEstatisticaJson",
+                url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialTipoEstatisticaJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -793,7 +793,7 @@ $().ready(function() {
 
             //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
             $.ajax({
-                url: urlP+"/cliente/carregarListaFilialClienteAlarmesDetalhados",
+                url: urlP+"/eficazmonitor/cliente/carregarListaFilialClienteAlarmesDetalhados",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -869,7 +869,7 @@ $().ready(function() {
 
         }).autocomplete({
         source: function( request, response ) {
-            $.getJSON( urlP+"/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteAlarmeDetalhado").val(), {
+            $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteAlarmeDetalhado").val(), {
               term: extractLast( request.term )
             }, response
         );
@@ -896,7 +896,7 @@ $().ready(function() {
             if(idFilial != ''){
                 //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
                 $.ajax({
-                    url: urlP+"/cliente/carregarListaEquipamentoFilialAlarmeDetalhadoJson",
+                    url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialAlarmeDetalhadoJson",
                     secureuri: false,
                     type : "POST",
                     dataType: 'json',
@@ -945,7 +945,7 @@ $().ready(function() {
         if(idTipoEquip != ''){
             //EFETUA O CARREGAMENTO DOS DADOS DOS EQUIPAMENTOS POR TIPO
             $.ajax({
-                url: urlP+"/cliente/carregarListaEquipamentoFilialTipoAlarmeDetalheJson",
+                url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialTipoAlarmeDetalheJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',

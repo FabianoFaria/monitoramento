@@ -182,7 +182,14 @@ class EquipamentoModel extends MainModel
     */
     public function listarEquipamentosFilialClienteTipo($idCliente, $idFili, $idTipo){
 
-        if(is_numeric($idCliente) && is_numeric($idFili) && is_numeric($idTipo)){
+        //Trata questões de filial não selecionada
+        if(is_numeric($idFili)){
+            $idFilial = $idFili;
+        }else{
+            $idFilial = 0;
+        }
+
+        if(($idCliente != "") && is_numeric($idCliente) && is_numeric($idTipo)){
             $query = "SELECT equip.id,
              equip.nomeModeloEquipamento,
              equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante',
@@ -199,11 +206,11 @@ class EquipamentoModel extends MainModel
             $query .= " LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id";
             $query .= " LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id";
             $query .= " LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0";
-            $query .= " WHERE";
+            $query .= " WHERE equip.status_ativo = '1' ";
             if($idCliente != 0 ){
-                $query .= " equip.id_cliente = '$idCliente'";
+                $query .= "AND equip.id_cliente = '$idCliente'";
             }
-            if($idFili != 0  && $idCliente != 0 ){
+            if($idFilial != 0  && $idCliente != 0 ){
 
                 $query .= " AND equip.id_filial = '$idFili'";
             }
@@ -211,7 +218,7 @@ class EquipamentoModel extends MainModel
                 if($idCliente != 0 ){
                     $query .= " AND equip.tipo_equipamento = '$idTipo'";
                 }else{
-                    $query .= " equip.tipo_equipamento = '$idTipo'";
+                    $query .= "AND equip.tipo_equipamento = '$idTipo'";
                 }
             }
 
