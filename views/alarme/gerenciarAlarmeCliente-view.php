@@ -2,9 +2,27 @@
 <?php
     if (! defined('EFIPATH')) exit;
 
-    $filiaisCliente     = $modelo->carregarFiliaisCliente($this->parametros[0]);
-    $contatosCliente    = $modeloAlarm->listarContatoAlarmes($this->parametros[0]);
-
+    /*
+    * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+    */
+    switch ($_SESSION['userdata']['tipo_usu']) {
+        case 'Administrador':
+            $filiaisCliente     = $modelo->carregarFiliaisCliente($this->parametros[0]);
+            $contatosCliente    = $modeloAlarm->listarContatoAlarmes($this->parametros[0]);
+        break;
+        case 'Tecnico':
+            $filiaisCliente     = $modelo->carregarFiliaisCliente($this->parametros[0]);
+            $contatosCliente    = $modeloAlarm->listarContatoAlarmes($this->parametros[0]);
+        break;
+        case 'Cliente':
+            $filiaisCliente     = $modelo->carregarFiliaisCliente($this->parametros[0]);
+            $contatosCliente    = $modeloAlarm->listarContatoAlarmesCliente($this->parametros[0]);
+        break;
+        case 'Visitante':
+            $filiaisCliente     = $modelo->carregarFiliaisCliente($this->parametros[0]);
+            $contatosCliente    = $modeloAlarm->listarContatoAlarmesCliente($this->parametros[0]);
+        break;
+    }
 
     if($filiaisCliente['status']){
         $filiais = $filiaisCliente['filiais'];
@@ -18,7 +36,8 @@
         $contatos = 0;
     }
 
-    //var_dump($filiais);
+    //var_dump($contatosCliente);
+
 ?>
 
 <script type="text/javascript">
@@ -37,11 +56,11 @@
         <!-- TABELA CONTENDO TODOS OS CLIENTES -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a role="button" data-toggle="collapse" data-parent="#painelCadastro" href="#collapseCadastro" aria-expanded="true" aria-controls="collapseOne">
+                <a role="button" data-toggle="collapse" data-parent="#painelCadastro" href="" aria-expanded="true" aria-controls="collapseOne">
                   <i class="fa fa-user-md "></i> Cadastrar novo contato para alarme
                 </a>
             </div>
-            <div id="collapseCadastro" class="panel-collapse collapse out" role="tabpanel" aria-labelledby="headingOne">
+            <div id="collapseCadastro" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                     <!-- formulario de cadastro -->
                     <form id="novoContatoAlarme" method="post">
@@ -137,19 +156,19 @@
                         </h5>
                     </div>
                     <div class="col-md-6">
-                        <select class="form-control" id="listarSedes">
+                        <!-- <select class="form-control" id="listarSedes">
                             <option value=""> Selecione a matriz ou filial</option>
                             <?php
-                                if($filiais !=0){
-                                    echo "<option value='0'> Matriz </option>";
-                                    foreach ($filiais as $filial) {
-                                        echo "<option value='".$filial['id']."'> ".$filial['nome']." </option>";
-                                    }
-                                }else{
-                                    echo "<option value='0'> Contato matriz </option>";
-                                }
+                                // if($filiais !=0){
+                                //     echo "<option value='0'> Matriz </option>";
+                                //     foreach ($filiais as $filial) {
+                                //         echo "<option value='".$filial['id']."'> ".$filial['nome']." </option>";
+                                //     }
+                                // }else{
+                                //     echo "<option value='0'> Contato matriz </option>";
+                                // }
                             ?>
-                        </select>
+                        </select> -->
                     </div>
                 </div>
             </div>
@@ -164,13 +183,49 @@
                                     <th>Função</th>
                                     <th>Email</th>
                                     <th>Celular</th>
-                                    <th>Observação</th>
+                                    <th>Cliente</th>
+                                    <th>Local</th>
                                     <th class="txt-center">Editar</th>
                                     <th class="txt-center">Excluir</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php
 
+                                    if($contatos != 0){
+                                        foreach ($contatosCliente['contatos'] as $contato) {
+                                            //var_dump($contato);
+                                        ?>
+                                            <tr>
+                                                <?php
+                                                    $contaId = $contato['id'];
+                                                ?>
+                                                <td><?php echo $contato['nome_contato']; ?></td>
+                                                <td><?php echo $contato['funcao']; ?></td>
+                                                <td><?php echo $contato['email']; ?></td>
+                                                <td><?php echo $contato['celular']; ?></td>
+                                                <td><?php echo $contato['clieNome']; ?></td>
+                                                <td><?php echo (isset($contato['filiNome'])) ? $contato['filiNome'] : "Matriz"; ?></td>
+                                                <td id='linkConta_<?php echo $contaId; ?>'><a href='javascript:void(0);' onClick='atualizarContato(<?php echo $contato['id']; ?>)'><i class='fa fa-eye '></i></a></td>
+
+                                                <td><a href='javascript:void(0);' class='excluirContato' onCLick='removerContatoListaAlarmes(<?php echo $contaId; ?>)'><i class='fa fa-times '></i></a></td>
+                                            </tr>
+                                        <?php
+
+                                        }
+                                    }else{
+
+                                    ?>
+                                        <tr>
+                                            <td colspan="7">
+                                                Nenhum contato cadastrado no momento
+                                            </td>
+                                        </tr>
+                                    <?php
+
+                                    }
+
+                                ?>
                             </tbody>
                         </table>
                     </div>

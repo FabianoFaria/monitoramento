@@ -2,7 +2,23 @@
 <?php
     if (! defined('EFIPATH')) exit;
 
-    $clientes = $modeloCliete->listarContatoAlarmesCliente();
+    /*
+    * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+    */
+    switch ($_SESSION['userdata']['tipo_usu']) {
+        case 'Administrador':
+            $clientes = $modeloCliete->listarContatoAlarmesCliente();
+        break;
+        case 'Tecnico':
+            $clientes = $modeloCliete->listarContatoAlarmesCliente();
+        break;
+        case 'Cliente':
+            $clientes = $modeloCliete->listarContatoAlarmesClienteUsuario($_SESSION['userdata']['cliente']);
+        break;
+        case 'Visitante':
+            $clientes = $modeloCliete->listarContatoAlarmesClienteUsuario($_SESSION['userdata']['cliente']);
+        break;
+    }
 
     //var_dump($clientes);
 

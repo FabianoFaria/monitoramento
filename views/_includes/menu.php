@@ -321,9 +321,23 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
                 </li>
                 <?php } ?>
                 <!-- ALARMES -->
-                <!-- <li>
-                  <a href="<?php //echo HOME_URI; ?>/alarme/"><i class="fa fa-volume-up fa-3x"></i> <span class="lb-side">Alarmes</span></a>
-                </li> -->
+                <li>
+                    <a class="link-side" href="#">
+                      <span class="icon-side"><i class="fa fa-envelope-o fa-3x"></i></span>
+                      <span class="lb-side">Recebimento alarmes</span>
+                      <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse in">
+                        <li>
+                             <a href="<?php echo HOME_URI; ?>/alarme/"><i class="fa fa-fax fa-1x"></i> <span class="lb-side"> Envio por locais</span></a>
+                        </li>
+                        <li>
+                             <a href="<?php echo HOME_URI; ?>/alarme/alarmePorEquipamento"><i class="fa fa-crosshairs fa-1x"></i> <span class="lb-side">Envio por equipamento</span></a>
+                        </li>
+                    </ul>
+
+
+                </li>
 
                 <!-- CLIENTES -->
                 <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>

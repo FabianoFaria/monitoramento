@@ -16,7 +16,8 @@ $('#myModal').on('hidden.bs.modal', function (e) {
     $('#txt_obs_edit').val('');
 })
 
-
+    $('#txt_celular').mask('999 999999999');
+    $('#txt_celular_edit').mask('999 999999999');
 /*
 * CARREGA OS DADOS PARA POSTERIOR CAHAMDA DE MODAL PARA EDIÇÃO
 */
@@ -67,6 +68,68 @@ function atualizarContato(id_contatoAlerta)
     });
 
 }
+
+/*
+* REMOVE O CONTATO DA LISTA DE RECEBIMENTO
+*/
+function removerContatoListaAlarmes(id_contatoAlerta)
+{
+    console.log(id_contatoAlerta);
+
+    swal({
+      title: "Tem certeza?",
+      text: "Esta ação não podera ser desfeita!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Sim, remover!",
+      cancelButtonText: "Não, cancelar!",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    },
+    function(isConfirm){
+      if (isConfirm) {
+
+        $.ajax({
+         url: urlP+"/eficazmonitor/alarme/removerContatosAlarmesJson",
+         secureuri: false,
+         type : "POST",
+         dataType: 'json',
+         data      : {
+          'idContato' : id_contatoAlerta
+         },
+          success : function(datra)
+           {
+              //tempTest = JSON(datra);
+              if(datra.status == true)
+              {
+                //alert('Vinculo cadastrado com sucesso!');
+                swal("", "'Contato removido com sucesso!", "success");
+                setTimeout(function(){
+                    location.reload();
+                }, 2000);
+              }
+              else
+              {
+                //Settar a mensagem de erro!
+                //alert('Ocorreu um ero ao tentar cadastrar!');
+                swal("Oops...", "Ocorreu um ero ao tentar remover!", "error");
+              }
+           },
+          error: function(jqXHR, textStatus, errorThrown)
+           {
+           // Handle errors here
+           console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+           // STOP LOADING SPINNER
+           }
+       });
+
+      } else {
+        swal("Cancelado", "Nenhuma ação foi aplicada.", "error");
+      }
+    });
+}
+
 
 $().ready(function() {
 

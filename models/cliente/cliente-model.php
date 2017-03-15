@@ -617,7 +617,44 @@
         public function listarContatoAlarmesCliente(){
 
             $query = "SELECT clie.id, clie.nome, clie.cidade, clie.ddd, clie.telefone
-                       FROM tb_cliente clie WHERE status_ativo = '1'";
+                       FROM tb_cliente clie WHERE clie.status_ativo = '1'";
+
+            /* monta result */
+            $result = $this->db->select($query);
+
+            if($result){
+
+                /* verifica se existe valor */
+                if (@mysql_num_rows($result)>0)
+                {
+                    /* pega os valores e monta um array */
+                    while ($row = @mysql_fetch_assoc($result))
+                        $retorno[] = $row;
+
+                    /* retorna o select */
+                    $cliente  = $retorno;
+                    $status   = true;
+
+                    $array = array('status' => true, 'dados' => $cliente) ;
+                }
+                else
+                  /* fim */
+                  // $status = false;
+                  $array = array('status' => false, 'dados' => '');
+            }else{
+                 $array = array('status' => false, 'dados' => '');
+            }
+
+            return $array;
+        }
+
+        /*
+        * FUNÇÃO PARA LISTAR CLIENTES COM OU SEM CONTATOS PARA RECEBER ALERTAS, PARA USUÁRIOS
+        */
+        public function listarContatoAlarmesClienteUsuario($idCliente){
+
+            $query = "SELECT clie.id, clie.nome, clie.cidade, clie.ddd, clie.telefone
+                       FROM tb_cliente clie WHERE clie.status_ativo = '1' AND clie.id = '$idCliente'";
 
             /* monta result */
             $result = $this->db->select($query);

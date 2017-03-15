@@ -29,14 +29,18 @@
                 if($todos == 1){
 
                     //Procura por contatos apenas do cliente
-                    $query = "SELECT contAlert.id, contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.funcao, contAlert.email, contAlert.celular, contAlert.observacao
+                    $query = "SELECT contAlert.id, contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.funcao, contAlert.email, contAlert.celular, contAlert.observacao, clie.nome AS 'clieNome', fili.nome AS 'filiNome'
                             FROM tb_contato_alerta contAlert
+                            JOIN tb_cliente clie ON clie.id = contAlert.id_cliente
+                            LEFT JOIN tb_filial fili ON fili.id = contAlert.id_filial
                             WHERE contAlert.id_cliente  = $idCliente";
 
                 }else{
                     //Procura por contatos da filial selecionada
-                    $query = "SELECT contAlert.id, contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.funcao, contAlert.email, contAlert.celular, contAlert.observacao
+                    $query = "SELECT contAlert.id, contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.funcao, contAlert.email, contAlert.celular, contAlert.observacao, clie.nome AS 'clieNome', fili.nome AS 'filiNome'
                             FROM tb_contato_alerta contAlert
+                            JOIN tb_cliente clie ON clie.id = contAlert.id_cliente
+                            LEFT JOIN tb_filial fili ON fili.id = contAlert.id_filial
                             WHERE contAlert.id_cliente  = '$idCliente' AND contAlert.id_filial = '$idFilial'";
                 }
 
@@ -72,6 +76,50 @@
             return $array;
         }
 
+        /*
+        * FUNÇÃO RESPONSAVEL PELA LISTAGEM DE CONTATOS PARA RECEBER O ALARME PARA O USUÁRIO CLIENTE
+        */
+        public function listarContatoAlarmesCliente($idCliente){
+
+            if(is_numeric($idCliente)){
+
+                //Procura por contatos apenas do cliente
+                $query = "SELECT contAlert.id, contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.funcao, contAlert.email, contAlert.celular, contAlert.observacao, clie.nome AS 'clieNome', fili.nome AS 'filiNome'
+                        FROM tb_contato_alerta contAlert
+                        JOIN tb_cliente clie ON clie.id = contAlert.id_cliente
+                        LEFT JOIN tb_filial fili ON fili.id = contAlert.id_filial
+                        WHERE contAlert.id_cliente  = '$idCliente'";
+
+                /* MONTA A RESULT */
+                $result = $this->db->select($query);
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if ($result)
+                {
+                  /* VERIFICA SE EXISTE VALOR */
+                  if (@mysql_num_rows($result) > 0)
+                  {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                      /* DEVOLVE RETORNO */
+                      $array = array('status' => true, 'contatos' => $retorno);
+                  }else{
+                      $array = array('status' => false, 'contatos' => '');
+                  }
+                }else{
+                  $array = array('status' => false, 'contatos' => '');
+                }
+
+            }else{
+                $array = array('status' => false, 'contatos' => '');
+            }
+
+            return $array;
+        }
 
         /*
         * Função para efetuar cdastro do contato de alarme via JSON
