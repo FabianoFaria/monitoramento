@@ -60,7 +60,7 @@
             $this->check_login();
 
             // Verifica as permissoes necessaris
-            if ($_SESSION['userdata']['per_ca'] != 1 )
+            if ($_SESSION['userdata']['per_pe'] != 1 )
             {
                  // Se nao possuir permissao
                  // Redireciona para index

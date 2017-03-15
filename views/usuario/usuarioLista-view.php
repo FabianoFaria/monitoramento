@@ -1,6 +1,33 @@
 <!-- LISTAR USUÁRIOS VIEW -->
 <?php
     if (! defined('EFIPATH')) exit;
+
+    /*
+    * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
+    */
+    switch ($_SESSION['userdata']['tipo_usu']) {
+        case 'Administrador':
+            $lista      = $modelo->listagemUsuario();
+            $listaClie  = $modelo->listarClientesUsuario();
+            $listaAcess = $modelo->listarAcessosUsuario();
+        break;
+        case 'Tecnico':
+            $lista      = $modelo->listagemUsuarioCliente($_SESSION['userdata']['cliente']);
+            $listaClie  = $modelo->buscaClienteUsuario($_SESSION['userdata']['cliente']);
+            $listaAcess = $modelo->listarAcessosUsuarioParaUsuario();
+        break;
+        case 'Cliente':
+            $lista      = $modelo->listagemUsuarioCliente($_SESSION['userdata']['cliente']);
+            $listaClie  = $modelo->buscaClienteUsuario($_SESSION['userdata']['cliente']);
+            $listaAcess = $modelo->listarAcessosUsuarioParaUsuario();
+        break;
+        case 'Visitante':
+            $lista      = $modelo->listagemUsuarioCliente($_SESSION['userdata']['cliente']);
+            $listaClie  = $modelo->buscaClienteUsuario($_SESSION['userdata']['cliente']);
+            $listaAcess = $modelo->listarAcessosUsuarioParaUsuario();
+        break;
+    }
+
 ?>
 
 <script type="text/javascript">
@@ -8,14 +35,6 @@
     var menu = document.getElementById('listadir');
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/usuario/listar">Listar usuários</a>';
 </script>
-
-<?php
-
-    $lista      = $modelo->listagemUsuario();
-    $listaClie  = $modelo->listarClientesUsuario();
-    $listaAcess = $modelo->listarAcessosUsuario();
-
- ?>
 
 <div class="row">
     <div class="col-lg-12">
@@ -43,6 +62,7 @@
                             <tr>
                                 <th>Nome</th>
                                 <th>Email</th>
+                                <th>Cliente</th>
                                 <th>Data criação</th>
                                 <th class="txt-center">Editar</th>
                                 <th class="txt-center">Excluir</th>
@@ -53,11 +73,18 @@
                                if($lista){
 
                                    foreach ($lista as $usuario) {
+
+                                       //var_dump($usuario);
                            ?>
                                <tr>
                                    <td><?php echo $usuario['nome']." ".$usuario['sobrenome']; ?></td>
                                    <td><?php echo $usuario['email']; ?></td>
-                                   <td><?php echo implode("/", array_reverse(explode("-", $usuario['dt_criaco']))); ?></td>
+                                   <td><?php echo (isset($usuario['cliente'])) ? $usuario['cliente'] : "Usuário sistema"; ?></td>
+                                   <td><?php
+
+                                        $dataTemp = explode(' ', $usuario['dt_criaco']);
+
+                                        echo implode("/", array_reverse(explode("-", $dataTemp[0]))); ?></td>
                                    <td>
                                        <!-- <a href="<?php //echo HOME_URI; ?>/usuario/editarTerceiros/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
                                            <i class="fa fa-pencil-square-o fa-lg"></i>
@@ -179,6 +206,8 @@
                                     <?php
                                         //$modelo->loadClienteFilial();
                                         echo "<option value=''> Selecione... </option>";
+                                        echo ($_SESSION['userdata']['cliente'] == 0) ? "<option value='0'> Usuário sistema </option>" : "";
+
                                         foreach ($listaClie as $cliente) {
                                             echo "<option value='".$cliente['id']."'>".$cliente['nome']."</option>";
                                         }

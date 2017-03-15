@@ -389,7 +389,7 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
                 <?php //} ?>
 
                 <!-- USUÁRIOS -->
-                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_ca'] == 1) { ?>
+                <?php if ($_SESSION['userdata']['local'] == 1 && $_SESSION['userdata']['per_pe'] == 1) { ?>
                     <li>
                         <a href="<?php echo HOME_URI; ?>/usuario/listar" class="">
                             <i class="fa fa-users fa-3x"></i>

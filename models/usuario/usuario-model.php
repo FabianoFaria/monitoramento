@@ -170,7 +170,17 @@ class UsuarioModel extends MainModel
       */
     public function listagemUsuario(){
 
-        $query = "SELECT id, nome, sobrenome, email, dt_criaco FROM tb_users WHERE status_ativo = '1'";
+        $query = "SELECT
+                    usr.id,
+                    usr.nome,
+                    usr.sobrenome,
+                    usr.email,
+                    usr.dt_criaco,
+                    usr.id_cliente,
+                    clie.nome AS 'cliente'
+                FROM tb_users usr
+                LEFT JOIN tb_cliente clie ON clie.id = usr.id_cliente
+                WHERE usr.status_ativo = '1'";
 
         /* monta a result */
         $result = $this->db->select($query);
@@ -194,6 +204,46 @@ class UsuarioModel extends MainModel
         else
             return false;
 
+    }
+
+    /**
+     * Funcao que lista os usuários cadastrados para determinado cliente
+     *
+     */
+    public function listagemUsuarioCliente($idCliente){
+        $query = "SELECT
+                    usr.id,
+                    usr.nome,
+                    usr.sobrenome,
+                    usr.email,
+                    usr.dt_criaco,
+                    usr.id_cliente,
+                    clie.nome AS 'cliente'
+                FROM tb_users usr
+                LEFT JOIN tb_cliente clie ON clie.id = usr.id_cliente
+                WHERE usr.status_ativo = '1' AND clie.id = '$idCliente'";
+
+        /* monta a result */
+        $result = $this->db->select($query);
+
+        /* verifica se existe resposta */
+        if ($result)
+        {
+            /* verifica se existe valor */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* armazena na array */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                /* devolve retorno */
+                return $retorno;
+            }
+        }
+        else
+            return false;
     }
 
     //Funções para tratamento de dados via JSON
@@ -291,6 +341,41 @@ class UsuarioModel extends MainModel
     }
 
     /*
+    * RECUPERAR A LISTA DE CLIENTES PARA CLIENTES
+    */
+    public function buscaClienteUsuario($idClienteUsuario){
+        $query = "SELECT id, nome FROM tb_cliente WHERE status_ativo = '1' AND id = '$idClienteUsuario'";
+
+        /* MONTA A RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if ($result)
+        {
+            /* VERIFICA SE EXISTE VALOR */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* ARMAZENA NA ARRAY */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                /* DEVOLVE RETORNO */
+                return $retorno;
+            }
+            /* DEVOLVE RETORNO */
+            $array = array('status' => true, 'clientes' => $retorno);
+        }else{
+            $array = array('status' => false, 'clientes' => '');
+        }
+
+        return $array;
+
+    }
+
+
+    /*
     * RECUPERA A LISTA DE PERFIS DE ACESSO
     */
     public function listarAcessosUsuario(){
@@ -324,6 +409,44 @@ class UsuarioModel extends MainModel
         return $array;
     }
 
+    /*
+    * RECUPERA A LISTA DE PERFIS DE ACESSO PARA USUÁRIOS
+    */
+    public function listarAcessosUsuarioParaUsuario(){
+
+        /*
+        * Query irá trazer todos os perfis de acesso, exceto o de administrador e tecnico
+        */
+        $query = "SELECT id, nome FROM tb_perfil_acesso
+                    WHERE status_ativo = '1' AND id > '1' AND id < '4'";
+
+        /* MONTA A RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if ($result)
+        {
+            /* VERIFICA SE EXISTE VALOR */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* ARMAZENA NA ARRAY */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                /* DEVOLVE RETORNO */
+                return $retorno;
+            }
+            /* DEVOLVE RETORNO */
+            $array = array('status' => true, 'acessos' => $retorno);
+        }else{
+            $array = array('status' => false, 'acessos' => '');
+        }
+
+        return $array;
+
+    }
 
     /*
     * ATUALIZA OS DADOS ENVIADOS DO PRÓPIO USUÁRIO
