@@ -59,7 +59,7 @@ class GraficoGeradorModel extends MainModel
 
         // CRIA AS TABELAS
         $tabela = array("b","c","d","e","f","g","i", "j", "l", "m", "n", "o", "h");
-        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T", "corrente R", "Corrente S", "Corrente T", "Corrente Saida R", "Corrente Saida S", "Corrente Saida T", "Bateria");
+        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T", "Corrente R", "Corrente S", "Corrente T", "Corrente Saida R", "Corrente Saida S", "Corrente Saida T", "Bateria");
 
         // CONVERTE DA BASE 64
         //$sim_num = base64_decode($this->parametros[0]);

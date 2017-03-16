@@ -230,7 +230,7 @@ else
                         $nomeDivBat = "bat_s";
 
                         $mult = 5;
-                    }elseif($b > 5 && $b < 9){
+                    }elseif($b > 6 && $b < 10){
                         // SE O VALOR DO LOOP FOR IGUAL OU MAIOR QUE 5
                         // ALTERA O NOME DO ID E TEXTO
                         $container = "containerEntradaCorente";
@@ -318,6 +318,7 @@ else
                                      var url =  "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=1&706f73546162656c61=<?php echo $t;?>&callback=?";
                                      $.getJSON(url,  function(data) {
                                          valor = parseFloat(data[0]);
+
                                      });
 
                                      var left = chart.series[0].points[0],
@@ -336,23 +337,7 @@ else
                                          leftVal = 0;
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoLigado');
                                          $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoDesligado');
-
-                                         <?php
-
-                                            //CASO ESTEJA MEDINDO UMA TENSÃO
-                                            if($b < 6){
-                                        ?>
-                                            document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Desligado';
-
-                                        <?php
-                                            //CASO ESTEJA MEDINDO UMA CORRENTE
-                                            }else{
-                                        ?>
-                                            document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Consumo';
-                                        <?php
-                                            }
-                                         ?>
-
+                                         document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Desligado';
 
                                          console.log(leftVal + ' Desligado');
                                      }
@@ -397,29 +382,13 @@ else
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('well-blink');
                                          $("#<?php echo $nomeDiv.$a;?>").removeClass('situacaoAtencao');
                                          $("#<?php echo $nomeDiv.$a;?>").addClass('situacaoLigado');
-
-                                         <?php
-
-                                            //CASO ESTEJA MEDINDO UMA TENSÃO
-                                            if($b < 6){
-                                        ?>
-                                            document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Ligado';
-
-                                        <?php
-                                            //CASO ESTEJA MEDINDO UMA CORRENTE
-                                            }else{
-                                        ?>
-                                            document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Normal';
-                                        <?php
-                                            }
-                                         ?>
-
+                                         document.getElementById('<?php echo $nomeDiv.$a;?>').innerHTML = 'Ligado';
 
                                          console.log(leftVal + 'Ligado Ok!');
                                      }
 
                                      left.update(leftVal, false);
-                                     document.getElementById('<?php echo $nomeDivBat.$a;?>').innerHTML = leftVal + "";
+                                     document.getElementById('<?php echo $nomeDivBat.$a;?>').innerHTML = leftVal + " ( v )";
                                      chart.redraw();
 
                                      //console.log(leftVal);
@@ -504,7 +473,7 @@ else
                                                         <!-- Entrada R/S -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                                                             <div id="containerEntrada1" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_e1">0</span> ( v )</label>
+                                                            <label id="bat_e1" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-ent1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
@@ -512,7 +481,7 @@ else
                                                         <!-- Entrada R/S -->
                                                         <div class="ol-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerEntrada2" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_e2">0</span> ( v )</label>
+                                                            <label id="bat_e2" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-ent2" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
@@ -520,7 +489,7 @@ else
                                                         <!-- Entrada R/S -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerEntrada3" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_e3">0</span> ( v )</label>
+                                                            <label id="bat_e3" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-ent3" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
@@ -533,7 +502,7 @@ else
                                                         <!-- Saida S/T -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerTensaSaida1" style="width:100%; margin: 0 auto"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_s1">0</span> ( v )</label>
+                                                            <label id="bat_s1" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-sai1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
@@ -541,7 +510,7 @@ else
                                                         <!-- Saida S/T -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerTensaSaida2" style="width:100%; margin: 0 auto"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_s2">0</span> ( v )</label>
+                                                            <label id="bat_s2" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-sai2" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
@@ -549,7 +518,7 @@ else
                                                         <!-- Saida S/T -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div id="containerTensaSaida3" style="width:100%; margin: 0 auto"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_s3">0</span> ( v )</label>
+                                                            <label id="bat_s3" class="valorVindo" value="">0 ( v )</label>
                                                             <div id="sit-sai3" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
@@ -568,19 +537,19 @@ else
                                                         <!-- Entrada Corrente -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                                                             <div id="containerEntradaCorente1" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo"><span id="cor_e1">0</span> ( A )</label>
+                                                            <label id="cor_e1" class="valorVindo">0 ( v )</label>
                                                             <div id="sit-cor-ent1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada Corrente -->
                                                         <!-- Entrada Corrente -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                                                             <div id="containerEntradaCorente2" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo"><span id="cor_e2" >0</span> ( A )</label>
+                                                            <label id="cor_e2" class="valorVindo">0 ( v )</label>
                                                             <div id="sit-cor-ent2" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada Corrente -->
                                                         <!-- Entrada Corrente -->
                                                         <div class="col-md-12 col-sm-12 col-xs-12 ">
                                                             <div id="containerEntradaCorente3" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo"> <span id="cor_e3" >0</span> ( A )</label>
+                                                            <label id="cor_e3" class="valorVindo">0 ( v )</label>
                                                             <div id="sit-cor-ent3" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada Corrente -->
                                                     </div>
@@ -590,19 +559,19 @@ else
                                                     <!-- Saida S/T -->
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div id="containerCorrentSaida1" style="width:100%; margin: 0 auto"></div>
-                                                        <label class="valorVindo"><span id="cor_s1">0</span> ( A )</label>
+                                                        <label id="cor_s1" class="valorVindo">0 ( v )</label>
                                                         <div id="sit-cor-sai1" class="situacaoDesligado">Carregando...</div>
                                                     </div><!-- Saida S/T -->
                                                     <!-- Saida S/T -->
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div id="containerCorrentSaida2" style="width:100%; margin: 0 auto"></div>
-                                                        <label  class="valorVindo"><span id="cor_s2">0</span> ( A )</label>
+                                                        <label id="cor_s2" class="valorVindo">0 ( v )</label>
                                                         <div id="sit-cor-sai2" class="situacaoDesligado">Carregando...</div>
                                                     </div><!-- Saida S/T -->
                                                     <!-- Saida S/T -->
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div id="containerCorrentSaida3" style="width:100%; margin: 0 auto"></div>
-                                                        <label  class="valorVindo"><span id="cor_s3">0</span> ( A )</label>
+                                                        <label id="cor_s3" class="valorVindo">0 ( v )</label>
                                                         <div id="sit-cor-sai3" class="situacaoDesligado">Carregando...</div>
                                                     </div><!-- Saida S/T -->
                                                 </div>
@@ -1052,8 +1021,8 @@ else
                                         var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncTemperatura.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=q&callback=?";
                                         $.getJSON(url,  function(data) {
 
-                                            temperatura1 = parseFloat(data[0])/100;
-                                            $('#cor_temp1').html(temperatura1.toFixed(1) +"");
+                                            temperatura1 = parseFloat(data[0])/10;
+                                            $('#cor_temp1').html(temperatura1.toFixed(1) +" (°C)");
                                             $('#sit-cor-temp1').html('');
 
                                             switch (temperatura1) {
@@ -1080,8 +1049,8 @@ else
                                         var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncTemperatura.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=r&callback=?";
                                         $.getJSON(url,  function(data) {
 
-                                            temperatura1 = parseFloat(data[0])/100;
-                                            $('#cor_temp2').html(temperatura1.toFixed(1) +"");
+                                            temperatura1 = parseFloat(data[0])/10;
+                                            $('#cor_temp2').html(temperatura1.toFixed(1) +" (°C)");
                                             $('#sit-cor-temp2').html('');
 
                                             switch (temperatura1) {
@@ -1108,7 +1077,7 @@ else
                                     <!-- Medidor temperatura 1 -->
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="containerTemperatura1" style="width:100%; margin: 0 auto"></div>
-                                        <label class="valorVindo"><span id="cor_temp1"> 0</span> ( °C )</label>
+                                        <label id="cor_temp1" class="valorVindo">0 ( °C )</label>
                                         <div id="sit-cor-temp1" class="situacaoDesligado">Carregando...</div>
                                     </div><!-- Saida S/T -->
                                 </div>
@@ -1116,7 +1085,7 @@ else
                                     <h4>Temp. banco de bateria</h4>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="containerTemperatura2" style="width:100%; margin: 0 auto"></div>
-                                        <label class="valorVindo"><span id="cor_temp2"> 0</span> ( °C )</label>
+                                        <label id="cor_temp2" class="valorVindo">0 ( °C )</label>
                                         <div id="sit-cor-temp2" class="situacaoDesligado">Carregando...</div>
                                     </div><!-- Saida S/T -->
                                 </div>

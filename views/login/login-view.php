@@ -12,7 +12,7 @@
 
         <title>Eficaz System - Monitoramento | Login Monitor</title>
         <!-- Font files -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
         <!-- Bootstrap -->
         <link href="<?php echo HOME_URI; ?>/views/_css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -26,6 +26,10 @@
         <script src="<?php echo HOME_URI; ?>/views/_js/bootstrap.min.js"> </script>
 
     </head>
+
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="<?php echo HOME_URI; ?>/views/_images/favicon2.ico">
+    <link rel="apple-touch-icon" href="<?php echo HOME_URI; ?>/views/_images/apple-icon.png">
 
     <body>
 

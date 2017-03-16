@@ -256,7 +256,20 @@ $dadosCliente       = $dadosCliente['dados'][0];
                         hour = hour - 24;
                     }
 
-                    $("#tooltip").html("<p>"+item.series.label + " " + day +"/"+month+"/"+year+" às "+hour+":"+min+":"+sec+"</p><p><b>"+y+" (V)</b></p>")
+                    var tipoMedidaTemp = item.series.label.split(" ");
+                    var tipoMedida     = tipoMedidaTemp[1];
+                    var notacaoToolTip = "";
+                    
+                    if(tipoMedida == "Bateria"){
+                        notacaoToolTip = "(V)";
+                    }
+                    else if(tipoMedida == "Corrente"){
+                        notacaoToolTip = "(A)";
+                    }else{
+                        notacaoToolTip = "(V)";
+                    }
+
+                    $("#tooltip").html("<p>"+item.series.label + " " + day +"/"+month+"/"+year+" às "+hour+":"+min+":"+sec+"</p><p><b>"+y+" "+notacaoToolTip+"</b></p>")
                     .css({top: item.pageY+5, left: item.pageX+5})
                     .fadeIn(200);
                 } else {

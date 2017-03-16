@@ -64,6 +64,7 @@
             // CARREGA O MODELO PARA ESTE VIEW
             $alarmeModelo  = $this->load_model('alarme/alarme-model');
             $modeloEdicao  = $this->load_model('editar/editar-model');
+            $modeloEquip   = $this->load_model('equipamento/equipamento-model');
 
             // Carrega view
             require_once EFIPATH . "/views/_includes/header.php";

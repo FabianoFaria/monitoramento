@@ -239,6 +239,74 @@ class EquipamentoController extends MainController
             exit(json_encode(array('status' => $removerEquip['status'] )));
         }
      }
+
+    /*
+    * FUNÇÃO PARA FILTRAR EQUIPAMENTOS POR CLIENTE
+    */
+    public function filtrarEquipamentosPorCliente(){
+
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+        $equipModelo = $this->load_model('equipamento/equipamento-model');
+
+        $equipamentosPorCliente = $equipModelo->listarEquipamentosCliente($_POST['idCliente']);
+
+        if($equipamentosPorCliente['status']){
+
+            $listaEquipamentos  = $equipamentosPorCliente['equipamentos'];
+
+            $tabela         = "";
+            $tabela         .="<thead><tr>
+                                <th>Equipamento</th>
+                                <th>Modelo</th>
+                                <th>Cliente</th>
+                                <th>local</th>
+                                <th class='txt-center'>Gerenciar contatos</th>
+                                </tr></thead>";
+            $tabela         .="<tbody>";
+
+            foreach ($listaEquipamentos as $equipamento) {
+                $tabela         .="<tr>";
+                    $tabela         .="<td>";
+                        $tabela     .=$equipamento['tipoEquip'];
+                    $tabela         .="</td>";
+                    $tabela         .="<td>";
+                        $tabela     .=$equipamento['nomeModeloEquipamento'];
+                    $tabela         .="</td>";
+                    $tabela         .="<td>";
+                        $tabela     .=$equipamento['cliente'];
+                    $tabela         .="</td>";
+                    $tabela         .="<td>";
+                        $tabela     .= (isset($equipamento['filial'])) ? $equipamento['filial'] : "Matriz";
+                    $tabela         .="</td>";
+                    $tabela         .="<td>";
+                        $link       = HOME_URI."/equipamento/gerenciarContatosEquipamentos/".$equipamento['id']."";
+                        $tabela     .= "<a href='".$link."'><i class='fa fa-list-alt fa-2x'></i></a>";
+                    $tabela         .="</td>";
+                $tabela         .="</tr>";
+            }
+
+            $tabela         .="</tbody>";
+
+            exit(json_encode(array('status' => $equipamentosPorCliente['status'], 'equipamentos' => $tabela)));
+        }else{
+            exit(json_encode(array('status' => $equipamentosPorCliente['status'] )));
+        }
+
+    }
+
+    /*
+    * FUNÇÃO PARA FILTRAR EQUIPAMENTOS POR CLIENTE E FILIAL
+    */
+    public function carregarListaFilialAutoCompleteJson(){
+
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+        $equipModelo = $this->load_model('equipamento/equipamento-model');
+
+        $dadosFiliaisEquipamento = $equipModelo->carregarFiliaisAutoCompleteCliente($_GET['filtroClie'], $_GET['term']);
+
+
+    }
+
 }
 
 ?>

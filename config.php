@@ -8,7 +8,7 @@ define('UP_EFIPATH' , EFIPATH . '/views/_uploads');
 define('HOME_URI' , 'http://127.0.0.1/eficazmonitor'); // versao desenvolvedor
 //define('HOME_URI' , 'http://eficazsystem.com.br/eficazmonitor');
 //define('HOME_URI' , 'http://monitor.eficazsystem.com.br');
-
+//define('HOME_URI , 'https://monitor.eficazsystem.com.br');  // versao produção segura
 /* configuracao da base de dados */
 
 // hostname
