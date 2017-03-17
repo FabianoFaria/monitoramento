@@ -54,13 +54,33 @@
 
     //CSS DA(S) PÁGINA HTML
     $stylesheet = HOME_URI.'/views/_css/bootstrap.min.css';
+    $cert       = HOME_URI.'/views/certificado/wwwmonitoreficazsystemcombr.pem';
 
     function http_get_contents($url)
     {
       $ch = curl_init();
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+      curl_setopt($ch, CURLOPT_CAINFO, $cert);
       curl_setopt($ch, CURLOPT_TIMEOUT, 1);
       curl_setopt($ch, CURLOPT_URL, $url);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+      /*
+
+        curl_setopt($ch, CURLOPT_POST, 1 );
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $postResult = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+         print curl_error($ch);
+        }
+        curl_close($ch);
+      */
+
       if(FALSE === ($retval = curl_exec($ch))) {
         error_log(curl_error($ch));
       } else {
@@ -331,6 +351,18 @@
     $mpdf = new mPDF();
 
     $mpdf->SetTitle('Relatorio cliente ');
+
+    $url = $stylesheet;
+
+    $streamSSL = stream_context_create(array(
+        "ssl"=>array(
+            "cafile" => $cert,
+            "verify_peer"=> true,
+            "verify_peer_name"=> true
+        )
+    ));
+
+    //var_dump(http_get_contents($stylesheet));
 
     // Write some HTML code:
     $mpdf->WriteHTML(http_get_contents($stylesheet),1);

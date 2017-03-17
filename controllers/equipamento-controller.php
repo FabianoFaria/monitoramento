@@ -297,14 +297,179 @@ class EquipamentoController extends MainController
     /*
     * FUNÇÃO PARA FILTRAR EQUIPAMENTOS POR CLIENTE E FILIAL
     */
-    public function carregarListaFilialAutoCompleteJson(){
+    public function carregarListaEquipamentoFilialRelatoriosJson(){
 
         //CARREGA MODELO PARA ESTA FUNÇÃO
         $equipModelo = $this->load_model('equipamento/equipamento-model');
 
-        $dadosFiliaisEquipamento = $equipModelo->carregarFiliaisAutoCompleteCliente($_GET['filtroClie'], $_GET['term']);
+        $dadosFiliaisEquipamento = $equipModelo->listarEquipamentosFilialCliente($_POST['idCliente'], $_POST['idFilial']);
 
+        $tabela         = "";
+        $tabela         .="<thead><tr>
+                            <th>Equipamento</th>
+                            <th>Modelo</th>
+                            <th>Cliente</th>
+                            <th>local</th>
+                            <th class='txt-center'>Gerenciar contatos</th>
+                            </tr></thead>";
 
+        if($dadosFiliaisEquipamento['status']){
+
+            $listaEquipamentos  = $dadosFiliaisEquipamento['equipamentos'];
+
+            $tabela         .="<tbody>";
+
+            foreach ($listaEquipamentos as $equipamento) {
+                $tabela         .="<tr>";
+                    $tabela         .="<td>";
+                        $tabela     .=$equipamento['tipoEquip'];
+                    $tabela         .="</td>";
+                    $tabela         .="<td>";
+                        $tabela     .=$equipamento['nomeModeloEquipamento'];
+                    $tabela         .="</td>";
+                    $tabela         .="<td>";
+                        $tabela     .=$equipamento['cliente'];
+                    $tabela         .="</td>";
+                    $tabela         .="<td>";
+                        $tabela     .= (isset($equipamento['filial'])) ? $equipamento['filial'] : "Matriz";
+                    $tabela         .="</td>";
+                    $tabela         .="<td>";
+                        $link       = HOME_URI."/equipamento/gerenciarContatosEquipamentos/".$equipamento['id']."";
+                        $tabela     .= "<a href='".$link."'><i class='fa fa-list-alt fa-2x'></i></a>";
+                    $tabela         .="</td>";
+                $tabela         .="</tr>";
+            }
+
+            $tabela         .="</tbody>";
+
+            exit(json_encode(array('status' => $dadosFiliaisEquipamento['status'], 'equipamentos' => $tabela )));
+
+        }else{
+
+            $tabela         .="<tbody>";
+            $tabela         .="<tr>";
+            $tabela         .="<td colspan='5'>";
+            $tabela         .="Nenhum equipamento encontrado";
+            $tabela         .="</td>";
+            $tabela         .="<tr>";
+            $tabela         .="</tbody>";
+
+            exit(json_encode(array('status' => $dadosFiliaisEquipamento['status'], 'equipamentos' => $tabela )));
+        }
+
+    }
+
+    /*
+    * CARREGA LISTA DE EQUIPAMENTOS POR CLIENTE, FILIAL, TIPO PARA RELATÔRIOS
+    */
+    public function carregarListaEquipamentoFilialTipoRelatorioJson(){
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        if($_POST['idCliente'] == ""){
+            $idClie = 0;
+        }else{
+            $idClie = $_POST['idCliente'];
+        }
+
+        if($_POST['idCliente'] == ""){
+            $idFili = 0;
+        }else{
+            $idFili = $_POST['idFilial'];
+        }
+
+        if($_POST['idTipo'] == ""){
+            $idTipo = 0;
+        }else{
+            $idTipo = $_POST['idTipo'];
+        }
+
+        $dadosEquips    = $equipeModelo->listarEquipamentosFilialClienteTipo($idClie, $idFili, $idTipo);
+
+        $tabela         = "";
+        $tabela         .="<thead><tr>
+                            <th>Equipamento</th>
+                            <th>Modelo</th>
+                            <th>Cliente</th>
+                            <th>local</th>
+                            <th class='txt-center'>Monitorar</th>
+                            </tr></thead>";
+
+        if(!empty($dadosEquips['status'])){
+            //MONTA A TABELA DE EQUIPAMENTOS
+            $listaEquip          = $dadosEquips['equipamentos'];
+
+            if($listaEquip){
+                $tabela         .="<tbody>";
+                    foreach ($listaEquip as $equip) {
+                        $tabela         .="<tr>";
+                            $tabela         .="<td>";
+                                $tabela     .=$equip['tipoEquip'];
+                            $tabela         .="</td>";
+                            $tabela         .="<td>";
+                                $tabela     .=$equip['nomeModeloEquipamento'];
+                            $tabela         .="</td>";
+                            $tabela         .="<td>";
+                                $tabela     .=$equip['cliente'];
+                            $tabela         .="</td>";
+                            $tabela         .="<td>";
+                                $tabela     .= (isset($equip['filial'])) ? $equip['filial'] : "Matriz";
+                            $tabela         .="</td>";
+                            $tabela         .="<td>";
+                                $link       = HOME_URI."/equipamento/gerenciarContatosEquipamentos/".$equip['id']."";
+                                $tabela     .= "<a href='".$link."'><i class='fa fa-list-alt fa-2x'></i></a>";
+                            $tabela         .="</td>";
+                        $tabela         .="</tr>";
+                    }
+
+                $tabela         .="</tbody>";
+            }else{
+                $tabela         .="<tbody>";
+                    $tabela         .="<tr>";
+                        $tabela         .="<td colspan='5'>Nenhum equipamento cadastrado até o momento</td>";
+                    $tabela         .="</tr>";
+                $tabela         .="</tbody>";
+            }
+
+            exit(json_encode(array('status' => true, 'equipamentos' => $tabela)));
+
+        }else{
+            $tabela         .="<tbody>";
+                $tabela         .="<tr>";
+                    $tabela         .="<td colspan='4'>Nenhum equipamento cadastrado até o momento</td>";
+                $tabela         .="</tr>";
+            $tabela         .="</tbody>";
+
+            exit(json_encode(array('status' => false, 'equipamentos' => $tabela)));
+        }
+    }
+
+    /*
+    * CARREGA A TELA DE GERENCIAMENTO DE EMAILS PARA O EQUIPAMENTO
+    */
+    public function gerenciarContatosEquipamentos(){
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_pe'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            // Carrega o modelo para este view
+            $modeloEquip   = $this->load_model('equipamento/equipamento-model');
+            $modeloClie    = $this->load_model('cliente/cliente-model');
+
+            // Carrega view
+             require_once EFIPATH . "/views/_includes/header.php";
+             require_once EFIPATH . "/views/_includes/menu.php";
+             require_once EFIPATH . "/views/equipamento/equipamentoGerenciarContatos-view.php";
+             require_once EFIPATH . "/views/_includes/footer.php";
+        }
     }
 
 }

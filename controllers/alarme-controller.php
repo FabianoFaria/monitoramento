@@ -493,7 +493,7 @@
         $totalNovo          = 0;
 
         if($contagemAlarmes['status']){
-
+            //$totalNovo++;
 
             //Monta a lista de alarmes que seram devolvidos ao JSON para serem exibidos no menu.
             foreach ($contagemAlarmes['alarmes'] as $alarmeLista) {

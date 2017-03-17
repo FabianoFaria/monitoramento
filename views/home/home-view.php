@@ -270,7 +270,18 @@
 
                                                         switch ($listaAlarmes['parametro']){
                                                             case 'Bateria':
-                                                                # code...
+                                                                ?>
+                                                                <span class="text-danger">
+                                                                    <?php
+                                                                        echo  $listaAlarmes['parametroMedido']." (V)";
+                                                                    ?>
+                                                                </span> onde o limite era
+                                                                <span class="text-info">
+                                                                    <?php
+                                                                        echo $listaAlarmes['parametroAtingido']." (V)";
+                                                                    ?>
+                                                                </span>
+                                                                <?php
                                                             break;
                                                             case 'Temperatura ambiente':
                                                                 ?>

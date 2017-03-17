@@ -123,7 +123,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
     			},
     			yaxis: {
                     zoomRange: [1, 250],
-				    panRange: [-5, 230]
+				    panRange: [-5, 430]
                     // set the lowest range on the y-axis to 5 dollars
                     // zoomRange: [5, null],
                     // // set the pan limits slightly outside the data range
@@ -259,7 +259,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     var tipoMedidaTemp = item.series.label.split(" ");
                     var tipoMedida     = tipoMedidaTemp[1];
                     var notacaoToolTip = "";
-                    
+
                     if(tipoMedida == "Bateria"){
                         notacaoToolTip = "(V)";
                     }

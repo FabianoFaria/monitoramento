@@ -240,7 +240,7 @@
 
                                                                 $mensagem .= '<div mc:edit="body" style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">';
                                                                     $mensagem .= "<p>";
-                                                                    $mensagem .= "".$tipoEquip." ".$nomeEquip." de modelo ".$modeloEquip."  ";
+                                                                    $mensagem .= "".$tipoEquip." ".$nomeEquip."  ";
                                                                     $mensagem .= " localizado na sede : ".$cliente." - ".$sede." ";
                                                                     $mensagem .= "</p>";
                                                                     $mensagem .= "<p>";

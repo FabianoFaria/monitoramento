@@ -705,8 +705,15 @@ else
                                             var percentualSaidaPot  = (totalSaidaPot * 100) / ((potenciaEquip * 1000) * 0.85);
                                             var percentualDisponivel = 100 - percentualSaidaPot;
 
+                                            //VALOR DE POTENCIA SENDO CONSUMIDA ATUALMENTE
+
+                                            var potenciaConsumida  =  (((potenciaEquip * 100) * percentualSaidaPot) / 100) / 100;
+                                            //console.log('POTENCIA CONSMIDA ATUALMENTE '+ potenciaConsumida.toFixed(2));
+
+
+
                                             //Estilização do gráfico de saída de potência
-                                            document.getElementById('potenciaSaidaConsumida').innerHTML = percentualSaidaPot.toFixed(2)+" %";
+                                            document.getElementById('potenciaSaidaConsumida').innerHTML = potenciaConsumida.toFixed(2)+" (Kva)";
                                             document.getElementById('cargaSaidaPotenciaPorcentagem').innerHTML = percentualSaidaPot.toFixed(2)+" %";
                                             document.getElementById('cargaSaidaPotencia').style.width = percentualSaidaPot+"%";
                                             document.getElementById('cargaDisponivelPotencia').style.width = percentualDisponivel+"%";
@@ -908,7 +915,7 @@ else
                                             setInterval(function(){  //, colocando '$idSim' no lugar de '$nova_url[0]'
                                                 var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=h&callback=?";
                                                 $.getJSON(url,  function(data) {
-                                                    valorBat        = parseFloat(data[0]);
+                                                    valorBat        = (parseFloat(data[0]) / 100);
                                                     var calcula     = (valorBat*100)/maxBat;
                                                     var labelCarga  = parseFloat(calcula.toFixed(2));
                                                     //console.log(calcula);

@@ -290,7 +290,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
         /*
         * GERAR ALERTA
         */
-        $alarmeExiste = verificarAlarmeExistente($idSimEquip, 2);
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
 
         //var_dump($alarmeExiste);
 
@@ -358,7 +358,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
         /*
         * GERAR ALARME
         */
-        $alarmeExiste = verificarAlarmeExistente($idSimEquip, 1);
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
 
             //var_dump($alarmeExiste);
         if(!$alarmeExiste){
@@ -371,7 +371,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
         /*
         * GERAR ALERTA
         */
-        $alarmeExiste = verificarAlarmeExistente($idSimEquip, 3);
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
 
         if(!$alarmeExiste){
 
@@ -426,7 +426,7 @@ function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $P
         //echo "Critico baixo!".$parametro." ".$configuacoes[0]."<br>";
     }elseif($parametro < (float) trataValorDataSync($configuacoes[1])){
 
-        $alarmeExiste = verificarAlarmeExistente($idSimEquip, 4);
+        $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
 
         if(!$alarmeExiste){
 
@@ -506,7 +506,18 @@ function verificarAlarmeExistente($idEquipSim, $tipoAlerta){
 
     // Um alerta com status 5 sinaliza que está finalizado, abixo disso, ainda está ativo
     // ATUALIZAÇÃO - Com status 4, significa que o alarme foi solucionado, sendo assim, está apto a registrar outros alarmes
-    $queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 4";
+    //$queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 4";
+    // ATUALIZAÇÃO  - Com a verificação do ponto de tabela, permite agora o equipamento gerar mais de um tipo de alerta
+    $queryAlarme = "SELECT alert.id
+                    FROM tb_alerta alert
+                    JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                    WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 4 AND trat_alert.pontoTabela = '$tipoAlerta'";
+    /*
+    SELECT alert.id
+    FROM tb_alerta alert
+    JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+    WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 4 AND trat_alert = 'b'
+    */
 
     //var_dump($queryAlarme);
 

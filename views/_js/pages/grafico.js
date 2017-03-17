@@ -410,6 +410,7 @@ $().ready(function() {
 
     /*
     * FILTRA OS EQUIPAMENTOS DE ACORDO COM A ESCOLHA DO LOCAL
+    * DEMANDA AS FUNÇÕES SPLIT E AUTOCOMPLETE
     */
     $("#filtroLocalAutoComplete")
       // don't navigate away from the field on tab when selecting an item
@@ -505,7 +506,7 @@ $().ready(function() {
 
    /* FUNÇÕES ADICIONAIS DE AUTOCOMPLETE
    */
-   function split( val ) {
+   function split(val) {
      return val.split( /,\s*/ );
    }
    function extractLast( term ) {
