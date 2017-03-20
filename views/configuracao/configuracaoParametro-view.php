@@ -531,6 +531,50 @@ if($detalhesEquip['status']){
                          </div>
                     </div>
 
+                    <!-- CARREGA AS CONFIGURAÇÔES DE CARREGARDOR DE BATERIA -->
+                    <script>
+
+                        /*
+                        * PARAMETROS PARA ALARME DE CARREGADOR DE BATERIA, CARREGANDO A QUANTIDADE DE BATERIAS POR BANCOS
+                        */
+                        var parametrosBateriasPorBanco          = "";
+                        var id_equipamento_carregar_parametro   = $('#id_equip').val();
+
+                        $.ajax({
+                            url: "<?php echo HOME_URI; ?>/configuracao/cadastrarConfiguracaoCarregadorBateriaJson",
+                            secureuri: false,
+                            type : "POST",
+                            dataType: 'json',
+                            data      : {
+                                'id_equipamento' : id_equipamento_carregar_parametro
+                            },
+                            success : function(datra)
+                            {
+                                if(datra.status){
+                                    //FOI CARREGADO A QUANTIDADE DE BATERIAS POR BANCO, GERANDO AS MEDIDAS PARA CONFIGURAÇÂO DO CARREGADOR
+                                    //parametrosBateriasPorBanco = datra.parametros;
+                                    $('#valorCarregadorBateriaTemp').html(datra.parametros);
+                                    //CONCATENA OS VALORES CARREGADOS COM OS PARAMETROS DA QUANTIDADE DE BATERIA POR BANCO
+                                    //paramConcatenados = paramConcatenados.concat(datra.parametros);
+                                }else{
+                                    //AO OCORRER ERRO DE CARREGAMENTO DA QUANTIDADE DE BATERIA POR BANCO, DEIXA AS MEDIDA COM UM VALOR ZERADO
+                                    //parametrosBateriasPorBanco = datra.parametros;
+                                    $('#valorCarregadorBateriaTemp').html(datra.parametros);
+                                    //CONCATENA OS VALORES CARREGADOS COM OS PARAMETROS DA QUANTIDADE DE BATERIA POR BANCO
+                                    // paramConcatenados = paramConcatenados.concat(datra.parametros);
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown)
+                            {
+                             // Handle errors here
+                             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                             // STOP LOADING SPINNER
+                            }
+                        });
+                    </script>
+
+                    <span id="valorCarregadorBateriaTemp" style="display:none"></span>
+
                 </form>
 
             <?php

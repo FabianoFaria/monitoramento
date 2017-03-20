@@ -226,6 +226,47 @@ class ConfiguracaoController extends MainController
 
     }
 
+    /*
+    * CARREGA A QUANTIDADE DE BATERIAS POR BANCOS PARA CONFIGURAR OS PARAMETROS PARA CARREGADOR DE BATERIA
+    */
+
+    public function cadastrarConfiguracaoCarregadorBateriaJson(){
+
+        $equipModelo        = $this->load_model('equipamento/equipamento-model');
+
+        $bateriasPorBanco   = $equipModelo->quantidadeBateriaPorBanco($_POST['id_equipamento']);
+
+        // var_dump($bateriasPorBanco);
+
+        if($bateriasPorBanco['status']){
+
+            //INICIA MONTAGEM DOS PARAMETROS
+
+            $quantidade = $bateriasPorBanco['quantidade'][0]['quantidade_bateria_por_banco'];
+
+            //CRITICO BAIXO
+            $critB = $quantidade * 13.4;
+            //BAIXO
+            $baixo = $quantidade * 13.6;
+            //IDEAL
+            $ideal = $quantidade * 13.7;
+            //ALTO
+            $alto = $quantidade * 13.8;
+            //CRITICO ALTO
+            $critA = $quantidade * 14;
+
+            $parametros = "|inicio|cabatcb-".$critB."|cabatb-".$baixo."|cabatsi-".$ideal."|cabatsa-".$alto."|cabatca-".$critA."|";
+
+            exit(json_encode(array('status' => true, 'parametros' => $parametros)));
+        }else{
+
+            //RETORNA OS PARAMETROS ZERADOS
+
+            $parametros = "|inicio|cabatcb-0|cabatb-0|cabatsi-0|cabatsa-0|cabatca-0|";
+
+            exit(json_encode(array('status' => false, 'parametros' => $parametros)));
+        }
+    }
 
     /*
     *  Trata as strings dos valores das configurações dos equipamento

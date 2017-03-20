@@ -654,6 +654,49 @@ class EquipamentoModel extends MainModel
     }
 
     /*
+    * RETORNA A QUANTIDADE DE BATERIAS POR BANCO
+    */
+    public function quantidadeBateriaPorBanco($idEquip){
+
+        if(is_numeric($idEquip)){
+
+            $query = "SELECT quantidade_bateria_por_banco FROM tb_equipamento WHERE id = '$idEquip' AND status_ativo = '1'";
+            //var_dump($query);
+
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'quantidade' => $retorno);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
     * REMOVER O EQUIPAMENTO SOLICITADO VIA JSON
     */
     public function removerEquipamentoViaJson($idEquipamento){

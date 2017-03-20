@@ -1,7 +1,7 @@
 <?php
 
     /*
-        Arquivo para efetuar a verificação dos alarmes e se possivel fechar os alarmes que voltaram ao normal.
+        ARQUIVO PARA EFETUAR A VERIFICAÇÃO DOS ALARMES E SE POSSIVEL FECHAR OS ALARMES QUE VOLTARAM AO NORMAL.
     */
 
     // Inclui a classe de conexa

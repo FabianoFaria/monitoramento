@@ -112,7 +112,16 @@ $(document).ready(function(){
                 },
 				opc_tipoSaida :{
                     required : true
-                }
+                },
+				txt_qntBateria :{
+					required : true
+				},
+				txt_qntBancoBateria :{
+					required : true
+				},
+				txt_qntBateriaPorBanco :{
+					required : true
+				}
 
             },
             messages: {
@@ -151,7 +160,16 @@ $(document).ready(function(){
                 },
 				opc_tipoSaida :{
                     required : "Campo obrigatório"
-                }
+                },
+				txt_qntBateria :{
+					required : "Campo obrigatório"
+				},
+				txt_qntBancoBateria :{
+					required : "Campo obrigatório"
+				},
+				txt_qntBateriaPorBanco :{
+					required : "Campo obrigatório"
+				}
             }
 		});
 
@@ -297,6 +315,15 @@ $(document).ready(function(){
 		  },
 		  opc_tipoSaida :{
 			  required : true
+		  },
+		  txt_qntBateria :{
+			  required : true
+		  },
+		  txt_qntBancoBateria :{
+			  required : true
+		  },
+		  txt_qntBateriaPorBanco :{
+			  required : true
 		  }
 
       },
@@ -335,6 +362,15 @@ $(document).ready(function(){
 			 required : "Campo obrigatório"
 		 },
 		 opc_tipoSaida :{
+			 required : "Campo obrigatório"
+		 },
+		 txt_qntBateria :{
+			 required : "Campo obrigatório"
+		 },
+		 txt_qntBancoBateria :{
+			 required : "Campo obrigatório"
+		 },
+		 txt_qntBateriaPorBanco :{
 			 required : "Campo obrigatório"
 		 }
       }

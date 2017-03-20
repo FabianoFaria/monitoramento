@@ -860,7 +860,7 @@ else
                                         <div id="wellCargabateria" class="well well-normal-status" style="margin-top:30px;height:100px;">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <span class="pull-left text-muted">0</span><span class="pull-right text-muted">420</span>
+                                                    <span class="pull-left text-muted">0%</span><span class="pull-right text-muted">100%</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -919,7 +919,9 @@ else
                                                     var calcula     = (valorBat*100)/maxBat;
                                                     var labelCarga  = parseFloat(calcula.toFixed(2));
                                                     //console.log(calcula);
-                                                    // document.getElementById('div-legenda').innerHTML = valorBat;
+
+                                                    //FORNECE O MESMO DADO PARA O INPUT DE CALCULO PARA TENSÃO DE CARREGADOR DE BATERIA
+                                                    document.getElementById('valorVariavelTensaoBateria').value = valorBat;
                                                     // document.getElementById('div-cargaBat').style.width = calcula+"%";
 
                                                     //Estilização do novo gráfico de bateria
@@ -1002,28 +1004,26 @@ else
                                     </div>
                                 </div> -->
                                 <div class="col-lg-4">
+                                    <?php
+                                        // Coleta a data atual
+                                        $dtAtual = date ("Y/m/d H:i:s");
+                                        // Substitui os tracos por barra da data
+                                        $respData = str_replace("-","/",$respData);
+
+                                        //echo "<pre>". $dtAtual . "<br>" . $respData . "</pre>";
+
+                                        // Converter data para tempo
+                                        $dtAtual = strtotime($dtAtual);
+                                        $respData = strtotime($respData);
+
+                                        // Calcula a diferenca
+                                        $diff = $dtAtual - $respData;
+
+                                        // Converte para dias
+                                        $conv = floor($diff/3600/24);
+                                    ?>
                                     <h4>Tempo de autonomia estimado</h4>
-                                    <div class="div-tempoOperacao">
-
-                                        <?php
-                                            // Coleta a data atual
-                                            $dtAtual = date ("Y/m/d H:i:s");
-                                            // Substitui os tracos por barra da data
-                                            $respData = str_replace("-","/",$respData);
-
-                                            //echo "<pre>". $dtAtual . "<br>" . $respData . "</pre>";
-
-                                            // Converter data para tempo
-                                            $dtAtual = strtotime($dtAtual);
-                                            $respData = strtotime($respData);
-
-                                            // Calcula a diferenca
-                                            $diff = $dtAtual - $respData;
-
-                                            // Converte para dias
-                                            $conv = floor($diff/3600/24);
-                                        ?>
-
+                                    <!-- <div class="div-tempoOperacao">
                                         <label id="lb-tempoOperacao">
                                             <?php
                                                 // if ($conv < 2 )
@@ -1033,6 +1033,118 @@ else
                                             ?>
                                             0 Minutos
                                         </label>
+                                    </div> -->
+                                    <!-- GRAFICO AUTONOMIA BATERIA REVISADO -->
+                                    <div class="row">
+                                        <div id="wellAutonomiaBateria" class="well well-normal-status" style="margin-top:30px;height:100px;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="pull-left text-muted">0%</span><span class="pull-right text-muted">100%</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="cargaAutonomiaBateria">
+                                                        <div class="progress progress-striped active">
+                                                            <div id="cargaUtilAutonomiaBateria" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                                <span id="cargaAutonomiaBateriaPorcentagem" class=""></span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <h4 id="mensagemAutonomiaBateria" class="text-center"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h4>Tensão do carregador por bateria</h4>
+                                    <!-- RECUPERA QUANTIDADE DE BATERIAS E CONFIGURAÇÂO DE CARREGADOR -->
+                                    <?php
+
+                                        $configuracoesCarregador = $retorno;
+                                        $quantidadeBateriaBanco  = $modeloEquip->quantidadeBateriaPorBanco($this->parametros[0]);
+
+                                        //var_dump($quantidadeBateriaBanco);
+                                        //var_dump($valorCriticBaixo, $valorBaixo, $valorIdeal, $valorAlto, $valorCriticoAlto);
+
+                                    ?>
+
+                                    <!-- GRAFICO CARREGADOR BATERIA -->
+                                    <!-- QUANTIDADE DE BATERIA POR BANCO -->
+                                    <input id="quantidadeBateriaPorBanco" type="hidden" name="quantidadeBateriaPorBanco" value="<?php echo $quantidadeBateriaBanco['quantidade'][0]['quantidade_bateria_por_banco']; ?>" />
+                                    <input id="valorVariavelTensaoBateria" type="hidden" name="valorVariavelTensaoBateria" value="">
+
+                                    <input id="carregadorCritAlto" type="hidden" name="carregadorCritAlto" value="<?php echo (isset($configuracoesCarregador[39])) ? $configuracoesCarregador[39] : '0'; ?>" />
+                                    <input id="carregadorAlto" type="hidden" name="carregadorAlto" value="<?php echo (isset($configuracoesCarregador[38])) ? $configuracoesCarregador[38] : '0'; ?>" />
+                                    <input id="carregadorIdeal" type="hidden" name="carregadorIdeal" value="<?php echo (isset($configuracoesCarregador[37])) ? $configuracoesCarregador[37] : '0'; ?>" />
+                                    <input id="carregadorBaixo" type="hidden" name="carregadorBaixo" value="<?php echo (isset($configuracoesCarregador[36])) ? $configuracoesCarregador[36] : '0'; ?>" />
+                                    <input id="carregadorCritBaixo" type="hidden" name="carregadorCritBaixo" value="<?php echo (isset($configuracoesCarregador[35])) ? $configuracoesCarregador[35] : '0'; ?>" />
+
+                                    <script>
+
+                                        setInterval(function(){
+
+                                            var quantidadeBateria = $('#quantidadeBateriaPorBanco').val();
+
+                                            var valorrCritAlto  = $('#carregadorCritAlto').val();
+                                            var valorrAlto      = $('#carregadorAlto').val();
+                                            var valorrIdeal     = $('#carregadorIdeal').val();
+                                            var valorrBaixo     = $('#carregadorBaixo').val();
+                                            var valorrCritBaixo = $('#carregadorCritBaixo').val();
+
+                                            //RECUPERA O VALOR DA TENSÃO DA BATERIA
+
+                                            var tensaoBancoBateria = $('#valorVariavelTensaoBateria').val();
+
+                                            var tensaoPorBateria   = tensaoBancoBateria/quantidadeBateria;
+
+                                            if(tensaoBancoBateria > valorrCritAlto){
+                                                document.getElementById('cargaCarregadorBateria').style.width = "90%";
+                                                document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-danger";
+                                            }else if(tensaoBancoBateria >= valorrAlto){
+                                                document.getElementById('cargaCarregadorBateria').style.width = "75%";
+                                                document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-warning";
+                                            }else if(tensaoBancoBateria < valorrCritBaixo){
+                                                document.getElementById('cargaCarregadorBateria').style.width = "20%";
+                                                document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-danger";
+                                            }else if(tensaoBancoBateria <= valorrBaixo){
+                                                document.getElementById('cargaCarregadorBateria').style.width = "40%";
+                                                document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-warning";
+                                            }else{
+                                                document.getElementById('cargaCarregadorBateria').style.width = "60%";
+                                                document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-success";
+                                            }
+
+                                            //Estilização do novo gráfico de bateria
+                                            document.getElementById('cargaCarregadorBateriaPorcentagem').innerHTML = tensaoPorBateria+"(V) / Bat";
+                                            console.log(tensaoBancoBateria+" tensao banco bateria!!");
+                                        },5000);
+
+                                    </script>
+
+                                    <div class="row">
+                                        <div id="wellCarregadorBateria" class="well well-normal-status" style="margin-top:30px;height:100px;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <span class="pull-left text-muted">Min</span><span class="pull-right text-muted">Max</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="carregadorBateria">
+                                                        <div class="progress progress-striped active">
+                                                            <div id="cargaCarregadorBateria" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                                <span id="cargaCarregadorBateriaPorcentagem" class=""></span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <h4 id="mensagemAutonomiaBateria" class="text-center"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

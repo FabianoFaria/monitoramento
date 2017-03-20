@@ -41,7 +41,6 @@ class ConfiguracaoModel extends MainModel
         }
     }
 
-
     /* busca todos os esquipamentos e ambientes vinculados a cliente e filial */
     public function buscaRelacaoFilial()
     {

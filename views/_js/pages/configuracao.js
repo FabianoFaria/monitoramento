@@ -198,6 +198,10 @@ $().ready(function(){
 
         paramConcatenados = paramConcatenados.concat('|inicio|tbbcb-'+tbbcb+'|tbbb-'+tbbb+'|tbbsi-'+tbbsi+'|tbbsa-'+tbbsa+'|tbbsca-'+tbbsca+'|');
 
+
+        var configCarregador    = $('#valorCarregadorBateriaTemp').html();
+        paramConcatenados       = paramConcatenados.concat(configCarregador);
+
         var idCOnfiguracao = $('#idParametros').val();
         /*
         * Verificação se á sendo esta sendo efetuado uma edição ou cadastro de uma nova configuração

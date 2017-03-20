@@ -54,20 +54,19 @@
 
     //CSS DA(S) PÁGINA HTML
     $stylesheet = HOME_URI.'/views/_css/bootstrap.min.css';
-    $cert       = HOME_URI.'/views/certificado/wwwmonitoreficazsystemcombr.pem';
+    //$cert       = HOME_URI.'/views/certificado/wwwmonitoreficazsystemcombr.pem';
 
     function http_get_contents($url)
     {
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-      curl_setopt($ch, CURLOPT_CAINFO, $cert);
       curl_setopt($ch, CURLOPT_TIMEOUT, 1);
       curl_setopt($ch, CURLOPT_URL, $url);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
       /*
-
+         curl_setopt($ch, CURLOPT_CAINFO, $cert);
         curl_setopt($ch, CURLOPT_POST, 1 );
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);

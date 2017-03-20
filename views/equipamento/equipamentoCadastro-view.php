@@ -217,7 +217,7 @@
                 <!-- Quantidade de bateria -->
                 <div class="col-md-4">
                    <div class="form-group">
-                       <label for="qntBateria">Quantidade de bateria (Opcional)</label>
+                       <label for="qntBateria">Quantidade de bateria </label>
                        <input type="text" class="form-control" id="txt_qntBateria" name="txt_qntBateria" placeholder="Quantidade de bateria" maxlength="5"
                        onkeypress="retun onlyNumber(event);" value="">
                    </div>
@@ -226,7 +226,7 @@
                 <!-- Quantidade de banco de bateria -->
                 <div class="col-md-4">
                   <div class="form-group">
-                      <label for="qntBateria">Quantidade de banco de bateria (Opcional)</label>
+                      <label for="qntBateria">Quantidade de banco de bateria </label>
                       <input type="text" class="form-control" id="txt_qntBancoBateria" name="txt_qntBancoBateria" placeholder="Quantidade de bateria" maxlength="5"
                       onkeypress="retun onlyNumber(event);" value="">
                   </div>
@@ -235,7 +235,7 @@
                 <!-- Quantidade de banco de bateria -->
                 <div class="col-md-4">
                      <div class="form-group">
-                         <label for="qntBateria">Quantidade de bateria por banco (Opcional)</label>
+                         <label for="qntBateria">Quantidade de bateria por banco</label>
                          <input type="text" class="form-control" id="txt_qntBateriaPorBanco" name="txt_qntBateriaPorBanco" placeholder="Quantidade de bateria por banco" maxlength="5"
                          onkeypress="retun onlyNumber(event);" value="">
                      </div>

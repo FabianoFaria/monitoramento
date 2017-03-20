@@ -90,7 +90,7 @@ class MonitoramentoModel extends MainModel
                     //     $valor[] = $row2[2];
                     // }
 
-                    for($i = 1; $i <=5; $i++){
+                    for($i = 1; $i <=8; $i++){
                         //var_dump($retorno[0]);
 
                         $row2 = explode("|", $retorno[$i]);
