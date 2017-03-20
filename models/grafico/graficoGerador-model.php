@@ -58,8 +58,8 @@ class GraficoGeradorModel extends MainModel
     {
 
         // CRIA AS TABELAS
-        $tabela = array("b","c","d","e","f","g","i", "j", "l", "m", "n", "o", "h");
-        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T", "Corrente R", "Corrente S", "Corrente T", "Corrente Saida R", "Corrente Saida S", "Corrente Saida T", "Bateria");
+        $tabela = array("b","c","d","e","f","g","i", "j", "l", "m", "n", "o", "h", "p","q");
+        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T", "Corrente R", "Corrente S", "Corrente T", "Corrente Saida R", "Corrente Saida S", "Corrente Saida T", "Bateria", "Ambiente","Banco bateria");
 
         // CONVERTE DA BASE 64
         //$sim_num = base64_decode($this->parametros[0]);
@@ -128,73 +128,77 @@ class GraficoGeradorModel extends MainModel
                     MONTAR A NOVA QUERY A PARTIR DAQUI...
 
                 */
-                // $query .=" FROM  tb_dados a";
+                $query .=" FROM  tb_dados a";
 
-                // $query .=" INNER JOIN";
-                // $query .="(";
-                // $query .="SELECT  DATE(dt_criacao) date,";
+                $query .=" INNER JOIN";
+                $query .="(";
+                $query .="SELECT  DATE(dt_criacao) date,";
 
-                $query .= " FROM tb_dados";
-                $query .= " WHERE dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}' AND num_sim = '{$sim_num}'";
+                /*
+                * TOMAR CUIDADO COM AS VERSÕES DE MYSQL, POIS A QUERY É COMPLETAMENTE DIFERENTE.
+                */
+                // Inicio versão em produção
+                // $query .= " FROM tb_dados";
+                // $query .= " WHERE dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}' AND num_sim = '{$sim_num}'";
+                //
+                // if($diasDiff > 60){
+                //     $query .=" GROUP BY DATE(dt_criacao)";
+                // }elseif($diasDiff > 1){
+                //     $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao)";
+                // }else{
+                //     $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao), MINUTE(dt_criacao)";
+                // }
+                // Final da versão em produção
 
-                if($diasDiff > 60){
-                    $query .=" GROUP BY DATE(dt_criacao)";
-                }elseif($diasDiff > 1){
-                    $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao)";
-                }else{
-                    $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao), MINUTE(dt_criacao)";
-                }
-
-
-                // switch ($diasDiff) {
-                //     case ($diasDiff > 60) :
+                switch ($diasDiff) {
+                    case ($diasDiff > 60) :
                         //MAIOR QUE UM MÊS, MOSTRA A MEDIDA DE CADA DIA
 
-                        // $query .=" MINUTE(dt_criacao) minut,";
-                        // $query .=" DAY(dt_criacao) day,";
-                        // $query .=" HOUR(dt_criacao) hour,";
-                        // $query .=" MIN(dt_criacao) min_date";
-                        // $query .=" FROM    tb_dados";
-                        // $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
-                        // $query .=")b ON DATE(a.dt_criacao) = b.date AND";
-                        // $query .=" DAY(a.dt_criacao) = b.hour AND";
-                        // $query .=" a.dt_criacao = b.min_date";
-                        // $query .=" GROUP BY DATE(dt_criacao)";
+                        $query .=" MINUTE(dt_criacao) minut,";
+                        $query .=" DAY(dt_criacao) day,";
+                        $query .=" HOUR(dt_criacao) hour,";
+                        $query .=" MIN(dt_criacao) min_date";
+                        $query .=" FROM    tb_dados";
+                        $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
+                        $query .=")b ON DATE(a.dt_criacao) = b.date AND";
+                        $query .=" DAY(a.dt_criacao) = b.hour AND";
+                        $query .=" a.dt_criacao = b.min_date";
+                        $query .=" GROUP BY DATE(dt_criacao)";
 
-                    // break;
-                    // case $diasDiff > 1 :
+                    break;
+                    case $diasDiff > 1 :
                         //MAIOR QUE TRÊS DIAS, MOSTRA A MEDIDA DE CADA HORA
 
-                        //$query .=" MINUTE(dt_criacao) minut,";
-                        //$query .=" DAY(dt_criacao) day,";
-                        // $query .=" HOUR(dt_criacao) hour,";
-                        // $query .=" MIN(dt_criacao) min_date";
-                        // $query .=" FROM    tb_dados";
-                        // $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
-                        // $query .=")b ON DATE(a.dt_criacao) = b.date AND";
-                        // $query .=" HOUR(a.dt_criacao) = b.hour AND";
-                        // $query .=" a.dt_criacao = b.min_date";
-                        // $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao)";
-                    // break;
-                    // default :
+                        $query .=" MINUTE(dt_criacao) minut,";
+                        $query .=" DAY(dt_criacao) day,";
+                        $query .=" HOUR(dt_criacao) hour,";
+                        $query .=" MIN(dt_criacao) min_date";
+                        $query .=" FROM    tb_dados";
+                        $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
+                        $query .=")b ON DATE(a.dt_criacao) = b.date AND";
+                        $query .=" HOUR(a.dt_criacao) = b.hour AND";
+                        $query .=" a.dt_criacao = b.min_date";
+                        $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao)";
+                    break;
+                    default :
                         //ATÉ TRÊS DIAS, MOSTRA A CADA MINUTO
 
-                        // $query .=" MINUTE(dt_criacao) minut,";
-                        // $query .=" DAY(dt_criacao) day,";
-                        // $query .=" HOUR(dt_criacao) hour,";
-                        // $query .=" MIN(dt_criacao) min_date";
-                        // $query .=" FROM    tb_dados";
-                        // $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
-                        // $query .=")b ON DATE(a.dt_criacao) = b.date AND ";
-                        // $query .=" MINUTE(a.dt_criacao) = b.minut AND ";
-                        // $query .=" a.dt_criacao = b.min_date";
+                        $query .=" MINUTE(dt_criacao) minut,";
+                        $query .=" DAY(dt_criacao) day,";
+                        $query .=" HOUR(dt_criacao) hour,";
+                        $query .=" MIN(dt_criacao) min_date";
+                        $query .=" FROM    tb_dados";
+                        $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
+                        $query .=")b ON DATE(a.dt_criacao) = b.date AND ";
+                        $query .=" MINUTE(a.dt_criacao) = b.minut AND ";
+                        $query .=" a.dt_criacao = b.min_date";
 
-                        // $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao), MINUTE(dt_criacao)";
+                        $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao), MINUTE(dt_criacao)";
 
-                //     break;
-                // }
+                    break;
+                }
 
-                //$query .=" WHERE a.num_sim = '' AND a.dt_criacao BETWEEN ' 00:00:00' AND ' 23:59:59' ORDER BY a.dt_criacao DESC ";
+                $query .=" WHERE a.num_sim = '' AND a.dt_criacao BETWEEN ' 00:00:00' AND ' 23:59:59' ORDER BY a.dt_criacao DESC ";
 
                 //var_dump( $opc, $query, $diasDiff);
                 //var_dump($query);

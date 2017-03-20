@@ -31,13 +31,13 @@ var menu = document.getElementById('listadir');
 
             <div class="col-md-5">
                 <div class="panel panel-green">
-                    <div class="panel-heading">Entrada</div>
+                    <div class="panel-heading">Tensão</div>
                     <div class="panel-body">
 
 
                         <div class="row borda-01">
                             <div class="col-md-12 txt-center">
-                                <label class="font-texto-02">Entrada</label>
+                                <label class="font-texto-02">Opções</label>
                             </div>
                         </div>
 
@@ -56,7 +56,7 @@ var menu = document.getElementById('listadir');
                             </div>
                         </div>
 
-
+                        <!-- Entrada -->
                         <div class="row">
                             <div class="col-md-2 txt-center">
                                 <label class="font-texto-02">
@@ -74,42 +74,11 @@ var menu = document.getElementById('listadir');
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <label class="font-texto-02">Tens&atilde;o</label>
+                                <label class="font-texto-02">Entrada</label>
                             </div>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                <div class="panel panel-green">
-                    <div class="panel-heading">Sa&iacute;da</div>
-                    <div class="panel-body">
-
-
-
-                        <div class="row borda-01">
-                            <div class="col-md-12 txt-center">
-                                <label class="font-texto-02">Sa&iacute;da</label>
-                            </div>
-                        </div>
-
-                        <div class="row borda-01">
-                            <div class="col-md-2 txt-center">
-                                <label class="font-texto-02">R</label>
-                            </div>
-                            <div class="col-md-2 txt-center">
-                                <label class="font-texto-02">S</label>
-                            </div>
-                            <div class="col-md-2 txt-center">
-                                <label class="font-texto-02">T</label>
-                            </div>
-                            <div class="col-md-6 txt-center">
-                                <label class="font-texto-02">FASES</label>
-                            </div>
-                        </div>
-
+                        <!-- Saída -->
 
                         <div class="row">
                             <div class="col-md-2 txt-center">
@@ -128,36 +97,22 @@ var menu = document.getElementById('listadir');
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <label class="font-texto-02">Tens&atilde;o</label>
+                                <label class="font-texto-02">Saída</label>
                             </div>
                         </div>
-
 
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-2">
-                <!-- <div class="panel panel-default">
-                    <div class="panel-heading">Panel heading without title</div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div> -->
-            </div>
-
-        </div>
-
-        <div class="row">
-
             <div class="col-md-5">
-
                 <div class="panel panel-red">
-                    <div class="panel-heading">Entrada</div>
+                    <div class="panel-heading">Corrente</div>
                     <div class="panel-body">
+
                         <div class="row borda-01">
                             <div class="col-md-12 txt-center">
-                                <label class="font-texto-02">Entrada</label>
+                                <label class="font-texto-02">Opções</label>
                             </div>
                         </div>
 
@@ -193,38 +148,7 @@ var menu = document.getElementById('listadir');
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <label class="font-texto-02">Corrente</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-md-5">
-                <div class="panel panel-red">
-                    <div class="panel-heading">Saída</div>
-
-                    <div class="panel-body">
-
-                        <div class="row borda-01">
-                            <div class="col-md-12 txt-center">
-                                <label class="font-texto-02">Saída</label>
-                            </div>
-                        </div>
-
-                        <div class="row borda-01">
-                            <div class="col-md-2 txt-center">
-                                <label class="font-texto-02">R</label>
-                            </div>
-                            <div class="col-md-2 txt-center">
-                                <label class="font-texto-02">S</label>
-                            </div>
-                            <div class="col-md-2 txt-center">
-                                <label class="font-texto-02">T</label>
-                            </div>
-                            <div class="col-md-6 txt-center">
-                                <label class="font-texto-02">FASES</label>
+                                <label class="font-texto-02">Entrada</label>
                             </div>
                         </div>
 
@@ -245,18 +169,21 @@ var menu = document.getElementById('listadir');
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <label class="font-texto-02">Corrente</label>
+                                <label class="font-texto-02">Saída</label>
                             </div>
                         </div>
 
                     </div>
-
                 </div>
-
-
             </div>
 
             <div class="col-md-2">
+                <!-- <div class="panel panel-default">
+                    <div class="panel-heading">Panel heading without title</div>
+                    <div class="panel-body">
+                        Panel content
+                    </div>
+                </div> -->
             </div>
 
         </div>
@@ -291,6 +218,67 @@ var menu = document.getElementById('listadir');
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">Temperatura</div>
+
+                    <div class="panel-body">
+
+                        <div class="row borda-01">
+                            <div class="col-md-12 txt-center">
+                                <label class="font-texto-02">Locais</label>
+                            </div>
+                        </div>
+
+                        <div class="row borda-01">
+
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">
+                                    <input type="checkbox" id="temp_ambiente" name="parametrosGraficos">
+                                </label>
+                            </div>
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02"></label>
+                            </div>
+                            <div class="col-md-6 txt-center">
+                                <label class="font-texto-02">Ambiente</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">
+                                    <input type="checkbox" id="temp_banco_bat" name="parametrosGraficos">
+                                </label>
+                            </div>
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02"></label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="font-texto-02">Banco Bateria</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="col-md-2">
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-5">
+
             </div>
 
             <div class="col-md-5">
