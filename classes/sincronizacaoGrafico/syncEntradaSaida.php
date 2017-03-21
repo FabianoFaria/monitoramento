@@ -133,7 +133,7 @@ function verificaLigado($conn,$sim)
 function verificaEntradaSaida ($conn,$tb,$sim)
 {
     // Coleta os dados
-    $result = $conn->select ("SELECT {$tb} FROM tb_dados WHErE num_sim={$sim} AND status_ativo=1 ORDER BY (dt_criacao) DESC LIMIT 1");
+    $result = $conn->select ("SELECT {$tb} FROM tb_dados WHERE num_sim={$sim} AND status_ativo=1 ORDER BY (dt_criacao) DESC LIMIT 1");
     // Verifica se existe uma resposta
     if ($result)
     {

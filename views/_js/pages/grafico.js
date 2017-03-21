@@ -25,6 +25,11 @@ function geraGrafico(link)
     var entt1cc = $("#chk_entrada_t1cc").is(":checked");
     var batent = $("#bat_entrada_r1tc").is(":checked");
 
+    //VARIAVEIS DE COLETA DE TEMPERATURA
+    var tempAmb     = $("#temp_ambiente").is(":checked");
+    var tempBanco   = $("#temp_banco_bat").is(":checked");
+
+
     /*
         COLETA AS DATAS INFORMADAS
     */
@@ -55,7 +60,10 @@ function geraGrafico(link)
     if (!entt1cc) entt1cc = 0; else entt1cc = 1;
     if (!batent) batent = 0; else batent = 1;
 
-    var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c+ "," + entr1tc + "," + ents1tc + "," + entt1tc + "," + entr1cc + "," + ents1cc + "," + entt1cc + "," + batent + "," + dataIni + "," + dataFim + ","+ horasDas +","+horasAte;
+    if (!tempAmb) tempAmb = 0; else tempAmb = 1;
+    if (!tempBanco) tempBanco = 0; else tempBanco = 1;
+
+    var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c+ "," + entr1tc + "," + ents1tc + "," + entt1tc + "," + entr1cc + "," + ents1cc + "," + entt1cc + "," + batent +","+tempAmb+","+tempBanco+ "," + dataIni + "," + dataFim + ","+ horasDas +","+horasAte;
     window.location.href = link + url;
 
 }

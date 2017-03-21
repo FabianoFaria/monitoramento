@@ -12,23 +12,23 @@ define('HOME_URI' , 'http://127.0.0.1/eficazmonitor'); // versao desenvolvedor
 /* configuracao da base de dados */
 
 // hostname
-define('HOSTNAME' , '127.0.0.1');
-// usuario da base
-define('USERNAME' , 'root');
-// senha
-define('USERPASS' , '');
-// nome da base de dados
-define('DBNAME' , 'eficazsystem22');
-
-// localhost
-// // hostname
-// define('HOSTNAME' , 'mysql03.eficazsystem2.hospedagemdesites.ws');
+// define('HOSTNAME' , '127.0.0.1');
 // // usuario da base
-// define('USERNAME' , 'eficazsystem22');
+// define('USERNAME' , 'root');
 // // senha
-// define('USERPASS' , 'monitor2981');
+// define('USERPASS' , '');
 // // nome da base de dados
 // define('DBNAME' , 'eficazsystem22');
+
+// localhost
+// hostname
+define('HOSTNAME' , 'mysql03.eficazsystem2.hospedagemdesites.ws');
+// usuario da base
+define('USERNAME' , 'eficazsystem22');
+// senha
+define('USERPASS' , 'monitor2981');
+// nome da base de dados
+define('DBNAME' , 'eficazsystem22');
 
 
 /* modo desenvolvedor */

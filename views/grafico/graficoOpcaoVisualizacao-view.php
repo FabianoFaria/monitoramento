@@ -196,7 +196,7 @@ var menu = document.getElementById('listadir');
                     <div class="panel-body">
                         <div class="row borda-01">
                             <div class="col-md-12 txt-center">
-                                <label class="font-texto-02">Bateria</label>
+                                <label class="font-texto-02"></label>
                             </div>
                         </div>
                         <div class="row borda-01">
@@ -213,7 +213,7 @@ var menu = document.getElementById('listadir');
                             </div>
 
                             <div class="col-md-6">
-                                <label class="font-texto-02">Bateria</label>
+                                <label class="font-texto-02">Tensão da bateria</label>
                             </div>
                         </div>
                     </div>

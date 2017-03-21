@@ -12,7 +12,6 @@
             //var_dump($_SESSION);
             $listaClientes = $modeloClie->listarCliente();
 
-
         break;
 
         case 'Cliente':
@@ -188,26 +187,26 @@ $retorno = $modelo->buscaRelacao();
                     <tbdoy>
                         <?php
 
-                            if($listaClientes){
-
-                                foreach ($listaClientes as $cliente) {
-
-                                    $data           = explode(" ",$cliente['dt_criacao']);
-                                    $dataCliente    = $data[0];
+                            // if($listaClientes){
+                            //
+                            //     foreach ($listaClientes as $cliente) {
+                            //
+                            //         $data           = explode(" ",$cliente['dt_criacao']);
+                            //         $dataCliente    = $data[0];
 
                                     ?>
-                                    <tr>
-                                        <td><?php echo $cliente['nome']?></td>
-                                        <td><?php echo implode("/", array_reverse(explode("-", $dataCliente))); ?></td>
-                                        <td><?php echo ($cliente['status_ativo'] == 1) ? "Ativo": "Desativado" ; ?></td>
-                                        <td><a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoEquipamentoCliente/<?php echo $cliente['id']; ?>"><i class="fa fa-file-text-o fa-2x"></i></a></td>
-                                    </tr>
+                                    <!-- <tr>
+                                        <td><?php //echo $cliente['nome']?></td>
+                                        <td><?php //echo implode("/", array_reverse(explode("-", $dataCliente))); ?></td>
+                                        <td><?php //echo ($cliente['status_ativo'] == 1) ? "Ativo": "Desativado" ; ?></td>
+                                        <td><a href="<?php //echo HOME_URI; ?>/grafico/graficoFisicoEquipamentoCliente/<?php //echo $cliente['id']; ?>"><i class="fa fa-file-text-o fa-2x"></i></a></td>
+                                    </tr> -->
                                     <?php
-                                }
-
-                            }else{
-                                echo "<tr><td colspan='4'>Nenhum cliente disponivel. </td></tr>";
-                            }
+                            //     }
+                            //
+                            // }else{
+                            //     echo "<tr><td colspan='4'>Nenhum cliente disponivel. </td></tr>";
+                            // }
                         ?>
                     </tbody>
                 </table>

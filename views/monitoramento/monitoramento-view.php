@@ -163,26 +163,26 @@ switch ($_SESSION['userdata']['tipo_usu']) {
                         </thead>
                         <tbody>
                             <?php
-                                if($lista)
-                                {
-                                    foreach ($lista as $cliente){
+                                // if($lista)
+                                // {
+                                //     foreach ($lista as $cliente){
                                 ?>
-                                    <tr>
-                                        <td><?php echo $cliente['nome']; ?></td>
-                                        <td><?php echo $cliente['cidade']; ?></td>
-                                        <td><?php echo "(".$cliente['ddd'].") ".$cliente['telefone']; ?></td>
-                                        <td><a href="<?php echo HOME_URI; ?>/monitoramento/unidades/<?php echo  $cliente['id']; ?>"><i class="fa  fa-camera-retro fa-2x"></i></a></td>
-                                    </tr>
+                                    <!-- <tr>
+                                        <td><?php //echo $cliente['nome']; ?></td>
+                                        <td><?php //echo $cliente['cidade']; ?></td>
+                                        <td><?php //echo "(".$cliente['ddd'].") ".$cliente['telefone']; ?></td>
+                                        <td><a href="<?php //echo HOME_URI; ?>/monitoramento/unidades/<?php //echo  $cliente['id']; ?>"><i class="fa  fa-camera-retro fa-2x"></i></a></td>
+                                    </tr> -->
                                 <?php
-                                    }
-                                }
-                                else{
+                                //     }
+                                // }
+                                // else{
                                 ?>
-                                    <tr>
+                                    <!-- <tr>
                                         <td colspan="4">Nenhum cliente cadastrado até o momento</td>
-                                    </tr>
+                                    </tr> -->
                                 <?php
-                                }
+                                //}
                             ?>
                         </tbody>
                     </table>

@@ -710,8 +710,6 @@ else
                                             var potenciaConsumida  =  (((potenciaEquip * 100) * percentualSaidaPot) / 100) / 100;
                                             //console.log('POTENCIA CONSMIDA ATUALMENTE '+ potenciaConsumida.toFixed(2));
 
-
-
                                             //Estilização do gráfico de saída de potência
                                             document.getElementById('potenciaSaidaConsumida').innerHTML = potenciaConsumida.toFixed(2)+" (Kva)";
                                             document.getElementById('cargaSaidaPotenciaPorcentagem').innerHTML = percentualSaidaPot.toFixed(2)+" %";
@@ -920,6 +918,10 @@ else
                                                     var labelCarga  = parseFloat(calcula.toFixed(2));
                                                     //console.log(calcula);
 
+                                                    if(valorBat > 0){
+                                                        valorBat = valorBat + 6;
+                                                    }
+
                                                     //FORNECE O MESMO DADO PARA O INPUT DE CALCULO PARA TENSÃO DE CARREGADOR DE BATERIA
                                                     document.getElementById('valorVariavelTensaoBateria').value = valorBat;
                                                     // document.getElementById('div-cargaBat').style.width = calcula+"%";
@@ -972,7 +974,7 @@ else
                                         <script type="application/javascript">
                                             var valorLigado = 0;
                                             setInterval(function(){  //, colocando '$idSim' no lugar de '$nova_url[0]'
-                                                var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=2&&callback=?";
+                                                var url = "<?php //echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=2&&callback=?";
                                                 $.getJSON(url,  function(data) {
                                                     valorLigado = parseFloat(data[0]);
                                                 });
@@ -1003,26 +1005,26 @@ else
                                         <div id="fundoBaseNobreak" class="well"><label id="nobreakLigado"></label></div>
                                     </div>
                                 </div> -->
-                                <div class="col-lg-4">
+                                <!-- <div class="col-lg-4"> -->
                                     <?php
                                         // Coleta a data atual
-                                        $dtAtual = date ("Y/m/d H:i:s");
-                                        // Substitui os tracos por barra da data
-                                        $respData = str_replace("-","/",$respData);
-
-                                        //echo "<pre>". $dtAtual . "<br>" . $respData . "</pre>";
-
-                                        // Converter data para tempo
-                                        $dtAtual = strtotime($dtAtual);
-                                        $respData = strtotime($respData);
-
-                                        // Calcula a diferenca
-                                        $diff = $dtAtual - $respData;
-
-                                        // Converte para dias
-                                        $conv = floor($diff/3600/24);
+                                        // $dtAtual = date ("Y/m/d H:i:s");
+                                        // // Substitui os tracos por barra da data
+                                        // $respData = str_replace("-","/",$respData);
+                                        //
+                                        // //echo "<pre>". $dtAtual . "<br>" . $respData . "</pre>";
+                                        //
+                                        // // Converter data para tempo
+                                        // $dtAtual = strtotime($dtAtual);
+                                        // $respData = strtotime($respData);
+                                        //
+                                        // // Calcula a diferenca
+                                        // $diff = $dtAtual - $respData;
+                                        //
+                                        // // Converte para dias
+                                        //$conv = floor($diff/3600/24);
                                     ?>
-                                    <h4>Tempo de autonomia estimado</h4>
+                                    <!-- <h4>Tempo de autonomia estimado</h4> -->
                                     <!-- <div class="div-tempoOperacao">
                                         <label id="lb-tempoOperacao">
                                             <?php
@@ -1035,7 +1037,7 @@ else
                                         </label>
                                     </div> -->
                                     <!-- GRAFICO AUTONOMIA BATERIA REVISADO -->
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div id="wellAutonomiaBateria" class="well well-normal-status" style="margin-top:30px;height:100px;">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -1057,7 +1059,7 @@ else
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-4">
                                     <h4>Tensão do carregador por bateria</h4>
                                     <!-- RECUPERA QUANTIDADE DE BATERIAS E CONFIGURAÇÂO DE CARREGADOR -->
@@ -1103,22 +1105,27 @@ else
                                             if(tensaoBancoBateria > valorrCritAlto){
                                                 document.getElementById('cargaCarregadorBateria').style.width = "90%";
                                                 document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-danger";
+                                                document.getElementById('mensagemCarregadorBateria').innerHTML = "Carregador criticamente alto!";
                                             }else if(tensaoBancoBateria >= valorrAlto){
                                                 document.getElementById('cargaCarregadorBateria').style.width = "75%";
                                                 document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-warning";
+                                                document.getElementById('mensagemCarregadorBateria').innerHTML = "Carregador em nível alto!";
                                             }else if(tensaoBancoBateria < valorrCritBaixo){
                                                 document.getElementById('cargaCarregadorBateria').style.width = "20%";
                                                 document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-danger";
+                                                document.getElementById('mensagemCarregadorBateria').innerHTML = "Carregador desativado!";
                                             }else if(tensaoBancoBateria <= valorrBaixo){
                                                 document.getElementById('cargaCarregadorBateria').style.width = "40%";
                                                 document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-warning";
+                                                document.getElementById('mensagemCarregadorBateria').innerHTML = "Carregador em nível baixo.";
                                             }else{
                                                 document.getElementById('cargaCarregadorBateria').style.width = "60%";
                                                 document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-success";
+                                                document.getElementById('mensagemCarregadorBateria').innerHTML = "Carregador em nível normal.";
                                             }
 
                                             //Estilização do novo gráfico de bateria
-                                            document.getElementById('cargaCarregadorBateriaPorcentagem').innerHTML = tensaoPorBateria+"(V) / Bat";
+                                            document.getElementById('cargaCarregadorBateriaPorcentagem').innerHTML = tensaoPorBateria.toFixed(2)+"(Vdc) / Bat";
                                             console.log(tensaoBancoBateria+" tensao banco bateria!!");
                                         },5000);
 
@@ -1141,7 +1148,7 @@ else
 
                                                         </div>
                                                     </div>
-                                                    <h4 id="mensagemAutonomiaBateria" class="text-center"></h4>
+                                                    <h4 id="mensagemCarregadorBateria" class="text-center"></h4>
                                                 </div>
                                             </div>
                                         </div>
