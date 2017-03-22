@@ -294,6 +294,7 @@ class EquipamentoModel extends MainModel
                     equip.potencia,
                     equip.tensaoBancoBateria,
                     equip.correnteBancoBateria,
+                    equip.tensaoMinBarramento,
                     equip.qnt_bateria,
                     equip.quantidade_banco_bateria,
                     equip.quantidade_bateria_por_banco,
@@ -345,7 +346,7 @@ class EquipamentoModel extends MainModel
     * Registra vis JSON os dados do equipamento
     */
 
-    public function registrarEquipamentoJson($idCliente, $idFilial, $equipamento, $fabricante, $nomeModelo, $correnteBateria, $potencia, $tensaoBancoBat, $correnteBanco, $quantBat, $quantBancoBat, $quantBatPorBanc, $tipoBateria, $localBateria, $equipamentoEntrada, $equipamentoSaida){
+    public function registrarEquipamentoJson($idCliente, $idFilial, $equipamento, $fabricante, $nomeModelo, $correnteBateria, $potencia, $tensaoBancoBat, $correnteBanco, $quantBat, $quantBancoBat, $quantBatPorBanc, $tipoBateria, $localBateria, $equipamentoEntrada, $equipamentoSaida, $tensaoMinBarramento){
 
         // Verifica se os cambos obrigatorios nao sao nulos
         if ($idCliente != "" && $equipamento != "" && $equipamento != "" && $fabricante != "")
@@ -393,10 +394,13 @@ class EquipamentoModel extends MainModel
             $entradaEquipamento = isset($equipamentoEntrada) && !empty ($equipamentoEntrada) ? $this->converte($this->tratamento($equipamentoEntrada)) : 0;
             $saidaEquipamento   = isset($equipamentoSaida) && !empty ($equipamentoSaida) ? $this->converte($this->tratamento($equipamentoSaida)) : 0;
 
+            // TRATAMENTO DA TENSÃO MINIMA DO BARRAMENTO, CASO NÃO TENHA SIDO INFORMADA SERÁ SALVO O PADRÃO 10.5
+            $tensaoMinBarramento = isset($tensaoMinBarramento) && !empty($tensaoMinBarramento) ? $this->converte($this->tratamento($tensaoMinBarramento)) : 10.5;
+
             // Se nao estiver em branco
             // Realiza a insercao no banco
-            $query          = "INSERT INTO tb_equipamento (id_users,id_fabricante,id_cliente,id_filial,tipo_equipamento,nomeModeloEquipamento,correnteBateria,potencia,tensaoBancoBateria,correnteBancoBateria,qnt_bateria,quantidade_banco_bateria,quantidade_bateria_por_banco,tipo_bateria,localBateria,tipo_entrada,tipo_saida )
-                VALUES ('$idUser','$idFabri','$idCliente','$idFilial','$tipoEquip','$nomeEquipamento','$correnteBateria','$potencia','$tensaoBancoBat','$correnteBanco','$qntBateria','$quantBancoBat','$quantBatPorBanc','$tipoBateria','$localBateria', '$entradaEquipamento','$saidaEquipamento')";
+            $query          = "INSERT INTO tb_equipamento (id_users,id_fabricante,id_cliente,id_filial,tipo_equipamento,nomeModeloEquipamento,correnteBateria,potencia,tensaoBancoBateria,correnteBancoBateria,qnt_bateria,quantidade_banco_bateria,quantidade_bateria_por_banco,tipo_bateria,localBateria,tipo_entrada,tipo_saida,tensaoMinBarramento)
+                VALUES ('$idUser','$idFabri','$idCliente','$idFilial','$tipoEquip','$nomeEquipamento','$correnteBateria','$potencia','$tensaoBancoBat','$correnteBanco','$qntBateria','$quantBancoBat','$quantBatPorBanc','$tipoBateria','$localBateria', '$entradaEquipamento','$saidaEquipamento', '$tensaoMinBarramento')";
 
             //var_dump($query);
 
@@ -437,7 +441,8 @@ class EquipamentoModel extends MainModel
         $tipoBateria,
         $localBateria,
         $tipoEntrada,
-        $tipoSaida)
+        $tipoSaida,
+        $tensaoMinBarramento)
     {
 
         // Armazena o retorno do post
@@ -465,6 +470,8 @@ class EquipamentoModel extends MainModel
         $tipoEntrada        = $this->tratamento($tipoEntrada);
         $tipoSaida          = $this->tratamento($tipoSaida);
 
+        $tensaoMinBarramento = $this->tratamento($tensaoMinBarramento);
+
         $query = "UPDATE tb_equipamento SET ";
           if(isset($cliente)){  $query .= "id_cliente = '$cliente' ,";}
           if(isset($filial)){  $query .= "id_filial = '$filial' ,";}
@@ -484,6 +491,8 @@ class EquipamentoModel extends MainModel
 
           if(isset($tipoBateria)){  $query .= "tipo_bateria = '$tipoBateria' ,";}
           if(isset($localBateria)){  $query .= "localBateria  = '$localBateria', ";}
+
+          if(isset($tensaoMinBarramento)){  $query .= "tensaoMinBarramento  = '$tensaoMinBarramento', ";}
 
           if(isset($tipoEntrada)){  $query .= "tipo_entrada = '$tipoEntrada' ,";}
           if(isset($tipoSaida)){  $query .= "tipo_saida  = '$tipoSaida' ";}
@@ -720,6 +729,47 @@ class EquipamentoModel extends MainModel
             $array = array('status' => false);
         }
 
+        return $array;
+    }
+
+    /*
+    * CARREGA OS DADOS DE CONTATO DO EQUIPAMENTO
+    */
+    public function dadosContatosEquipamentos($idEquipamento){
+
+        if(is_numeric($idEquipamento)){
+
+            $query = "SELECT id, id_cliente, id_filial, id_equipamento, nomnome_contatoe, funcao, email, celular, observacao
+                        FROM tb_contato_alerta_equip
+                        WHERE status_ativo = '1' AND id = '$idEquipamento'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'contatos' => $retorno);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+
+        }
         return $array;
     }
 

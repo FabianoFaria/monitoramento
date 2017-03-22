@@ -160,7 +160,7 @@ class EquipamentoController extends MainController
         //CARREGA MODELO PARA ESTA FUNÇÃO
         $equipModelo            = $this->load_model('equipamento/equipamento-model');
 
-        $equipamentoRegistrado  = $equipModelo->registrarEquipamentoJson($_POST['idCliente'],$_POST['idFilial'],$_POST['equipamento'],$_POST['fabricante'],$_POST['nomeModelo'],$_POST['correnteBateria'],$_POST['potencia'],$_POST['tensaoBancoBat'],$_POST['correnteBanco'],$_POST['quantBat'],$_POST['quantBancoBat'],$_POST['quantBatPorBanc'],$_POST['tipoBateria'],$_POST['localBateria'], $_POST['tipoEntrada'], $_POST['tipoSaida']);
+        $equipamentoRegistrado  = $equipModelo->registrarEquipamentoJson($_POST['idCliente'],$_POST['idFilial'],$_POST['equipamento'],$_POST['fabricante'],$_POST['nomeModelo'],$_POST['correnteBateria'],$_POST['potencia'],$_POST['tensaoBancoBat'],$_POST['correnteBanco'],$_POST['quantBat'],$_POST['quantBancoBat'],$_POST['quantBatPorBanc'],$_POST['tipoBateria'],$_POST['localBateria'], $_POST['tipoEntrada'], $_POST['tipoSaida'], $_POST['tensaoMinBarramento']);
 
         if($equipamentoRegistrado){
             exit(json_encode(array('status' => $equipamentoRegistrado['status'] )));
@@ -214,7 +214,8 @@ class EquipamentoController extends MainController
             $_POST['tipoBateria'],
             $_POST['localBateria'],
             $_POST['tipoEntrada'],
-            $_POST['tipoSaida']
+            $_POST['tipoSaida'],
+            $_POST['tensaoMinBarramento']
             );
 
         if($editarEquip){
@@ -459,6 +460,8 @@ class EquipamentoController extends MainController
             // Redireciona para index
             $this->moveHome();
         }else{
+            // Define o titulo da pagina
+            $this->title = "equipamento";
 
             // Carrega o modelo para este view
             $modeloEquip   = $this->load_model('equipamento/equipamento-model');
@@ -469,6 +472,23 @@ class EquipamentoController extends MainController
              require_once EFIPATH . "/views/_includes/menu.php";
              require_once EFIPATH . "/views/equipamento/equipamentoGerenciarContatos-view.php";
              require_once EFIPATH . "/views/_includes/footer.php";
+        }
+    }
+
+    /*
+    * CADASTRO DE CONTATO DE EQUIPAMENTO
+    */
+    public function registrarContatoAlarmeJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $alarmeModelo      = $this->load_model('alarme/alarme-model');
+
+        $contatoCadastrado = $alarmeModelo->registraContatoAlarmeJson($_POST['idMatriz'], $_POST['sedeContato'],$_POST['nomeContato'], $_POST['funcaoContato'], $_POST['emailContato'], $_POST['celularContato'], $_POST['obsContato']);
+
+        if($contatoCadastrado['status']){
+            exit(json_encode(array('status' => $contatoCadastrado['status'])));
+        }else{
+            exit(json_encode(array('status' => $contatoCadastrado['status'])));
         }
     }
 

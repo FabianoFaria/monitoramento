@@ -1113,7 +1113,7 @@ else
                                             }else if(tensaoBancoBateria < valorrCritBaixo){
                                                 document.getElementById('cargaCarregadorBateria').style.width = "20%";
                                                 document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-danger";
-                                                document.getElementById('mensagemCarregadorBateria').innerHTML = "Carregador desativado!";
+                                                document.getElementById('mensagemCarregadorBateria').innerHTML = "Carregador em rampa!";
                                             }else if(tensaoBancoBateria <= valorrBaixo){
                                                 document.getElementById('cargaCarregadorBateria').style.width = "40%";
                                                 document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-warning";

@@ -174,7 +174,7 @@
                 <!-- Corrente da bateria -->
                <div class="col-md-4">
                    <div class="form-group">
-                       <label for="Potencia">Corrente da bateria (V)</label>
+                       <label for="Potencia">Corrente da bateria (A)</label>
                        <input type="text" class="form-control" id="txt_correnteBat" name="txt_correnteBat" placeholder="Corrente da bateria" value="<?php echo $equipamentoCarregado['correnteBateria']; ?>">
                    </div>
                </div><!-- fim corrente da bateria -->
@@ -202,11 +202,18 @@
                 <!-- CORRENTE BANCO DE BATERIA -->
                 <div class="col-md-4">
                    <div class="form-group">
-                       <label for="Potencia">Corrente do banco de bateria (A)</label>
+                       <label for="Potencia">Corrente nominal das baterias (A)</label>
                        <input type="text" class="form-control" id="txt_correnteBancoBat" name="txt_correnteBancoBat" placeholder="Corrente do banco de bateria" value="<?php echo $equipamentoCarregado['correnteBancoBateria']; ?>">
                    </div>
                 </div><!-- CORRENTE BANCO DE BATERIA -->
 
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Potencia">Tensão minima do barramento (Vdc)</label>
+                        <input type="text" class="form-control" id="txt_tensaoMinBarramentoBat" name="txt_tensaoMinBarramentoBat" placeholder="Tensão minima do barramento" maxlength="15"
+                        value="<?php echo $equipamentoCarregado['tensaoMinBarramento']; ?>">
+                    </div>
+                </div>
             </div>
 
             <div class="row">
@@ -214,7 +221,7 @@
                 <!-- Quantidade de bateria -->
                 <div class="col-md-4">
                    <div class="form-group">
-                       <label for="qntBateria">Quantidade de bateria (Opcional)</label>
+                       <label for="qntBateria">Quantidade de bateria </label>
                        <input type="text" class="form-control" id="txt_qntBateria" name="txt_qntBateria" placeholder="Quantidade de bateria" maxlength="5"
                        onkeypress="retun onlyNumber(event);" value="<?php echo $equipamentoCarregado['qnt_bateria']; ?>">
                    </div>
@@ -223,7 +230,7 @@
                 <!-- Quantidade de banco de bateria -->
                 <div class="col-md-4">
                   <div class="form-group">
-                      <label for="qntBateria">Quantidade de banco de bateria (Opcional)</label>
+                      <label for="qntBateria">Quantidade de banco de bateria </label>
                       <input type="text" class="form-control" id="txt_qntBancoBateria" name="txt_qntBancoBateria" placeholder="Quantidade de bateria" maxlength="5"
                       onkeypress="retun onlyNumber(event);" value="<?php echo $equipamentoCarregado['quantidade_banco_bateria']; ?>">
                   </div>
@@ -232,7 +239,7 @@
                 <!-- Quantidade de banco de bateria -->
                 <div class="col-md-4">
                      <div class="form-group">
-                         <label for="qntBateria">Quantidade de bateria por banco (Opcional)</label>
+                         <label for="qntBateria">Quantidade de bateria por banco </label>
                          <input type="text" class="form-control" id="txt_qntBateriaPorBanco" name="txt_qntBateriaPorBanco" placeholder="Quantidade de bateria por banco" maxlength="5"
                          onkeypress="retun onlyNumber(event);" value="<?php echo $equipamentoCarregado['quantidade_bateria_por_banco']; ?>">
                      </div>

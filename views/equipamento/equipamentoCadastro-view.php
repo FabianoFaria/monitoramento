@@ -173,7 +173,7 @@
                 <!-- Corrente da bateria -->
                <div class="col-md-4">
                    <div class="form-group">
-                       <label for="Potencia">Corrente da bateria (V)</label>
+                       <label for="Potencia">Corrente da bateria (A)</label>
                        <input type="text" class="form-control" id="txt_correnteBat" name="txt_correnteBat" placeholder="Corrente da bateria" maxlength="15"
                        value="">
                    </div>
@@ -204,12 +204,19 @@
                 <!-- CORRENTE BANCO DE BATERIA -->
                 <div class="col-md-4">
                    <div class="form-group">
-                       <label for="Potencia">Corrente do banco de bateria (A)</label>
+                       <label for="Potencia">Corrente nominal das baterias(A)</label>
                        <input type="text" class="form-control" id="txt_correnteBancoBat" name="txt_correnteBancoBat" placeholder="Corrente do banco de bateria" maxlength="15"
                        value="">
                    </div>
                 </div><!-- CORRENTE BANCO DE BATERIA -->
 
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Potencia">Tensão minima do barramento (Vdc)</label>
+                        <input type="text" class="form-control" id="txt_tensaoMinBarramentoBat" name="txt_tensaoMinBarramentoBat" placeholder="Tensão minima do barramento" maxlength="15"
+                        value="">
+                    </div>
+                </div>
             </div>
 
             <div class="row">

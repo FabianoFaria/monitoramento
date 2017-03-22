@@ -17,6 +17,7 @@ $(document).ready(function(){
     $('#txt_qntBateria').mask('999');
     $('#txt_qntBancoBateria').mask('999');
     $('#txt_qntBateriaPorBanco').mask('999');
+	$('#txt_tensaoMinBarramentoBat').mask('99.9');
 
 	/*
 	*	JSON Listener para listar as filiais do cliente caso existam
@@ -121,6 +122,9 @@ $(document).ready(function(){
 				},
 				txt_qntBateriaPorBanco :{
 					required : true
+				},
+				txt_tensaoMinBarramentoBat : {
+					min: 10.0
 				}
 
             },
@@ -169,6 +173,9 @@ $(document).ready(function(){
 				},
 				txt_qntBateriaPorBanco :{
 					required : "Campo obrigatório"
+				},
+				txt_tensaoMinBarramentoBat : {
+					min: "Valor minimo é de 10.0"
 				}
             }
 		});
@@ -192,6 +199,8 @@ $(document).ready(function(){
             var potencia        = $('#txt_potencia').val();
             var tensaoBanco     = $('#txt_tensao_bancoBat').val();
             var correnteBanco   = $('#txt_correnteBancoBat').val();
+
+			var tensaoMinBarramento = $('#txt_tensaoMinBarramentoBat').val();
 
             var quantBat        = $('#txt_qntBateria').val();
             var quantBancoBat   = $('#txt_qntBancoBateria').val();
@@ -230,7 +239,8 @@ $(document).ready(function(){
                   'tipoBateria'     : tipoBat,
                   'localBateria'    : localBat,
 				  'tipoEntrada'  	: tipoEntrada,
-				  'tipoSaida'  		: tipoSaida
+				  'tipoSaida'  		: tipoSaida,
+				  'tensaoMinBarramento' : tensaoMinBarramento
                 },
 
                    success : function(datra)
@@ -324,8 +334,10 @@ $(document).ready(function(){
 		  },
 		  txt_qntBateriaPorBanco :{
 			  required : true
+		  },
+		  txt_tensaoMinBarramentoBat : {
+				min: 10.0
 		  }
-
       },
       messages: {
           clienteEquipamento:{
@@ -372,6 +384,9 @@ $(document).ready(function(){
 		 },
 		 txt_qntBateriaPorBanco :{
 			 required : "Campo obrigatório"
+		 },
+		 txt_tensaoMinBarramentoBat : {
+			   min: "Valor minimo é de 10.0"
 		 }
       }
     });
@@ -403,6 +418,8 @@ $(document).ready(function(){
 	  var tipoEntrada     = $('#opc_tipoEntrada').val();
       var tipoSaida      = $('#opc_tipoSaida').val();
 
+	  var tensaoMinBarramento = $('#txt_tensaoMinBarramentoBat').val();
+
       //Efetua o registro do equipamento no BD
 
       $.ajax({
@@ -427,7 +444,8 @@ $(document).ready(function(){
           'tipoBateria'     : tipoBat,
           'localBateria'    : localBat,
 		  'tipoEntrada'     : tipoEntrada,
-          'tipoSaida'    	: tipoSaida
+          'tipoSaida'    	: tipoSaida,
+		  'tensaoMinBarramento' : tensaoMinBarramento
         },
         success : function(datra)
           {
@@ -520,6 +538,105 @@ $(document).ready(function(){
 
   });
 
+
+	/*
+	* INICIA PROCESSO DE CADASTRO DE CONTATO DE EQUIPAMENTO
+	*/
+	$('#registrarContato').click(function(){
+
+		$('#novoContatoAlarme').validate({
+			rules: {
+				sedeContato: {
+					required : true
+				},
+				txt_nomeContato : {
+					required : true
+				},
+				txt_funcao :{
+					required : true
+				},
+				txt_email : {
+					required : true,
+					email   : true
+				},
+				txt_celular : {
+					required : true
+				}
+			},
+			messages: {
+				sedeContato: {
+                    required : "Campo é obrigatorio"
+                },
+                txt_nomeContato : {
+                    required : "Campo é obrigatorio"
+                },
+                txt_funcao : {
+                    required : "Campo é obrigatorio"
+                },
+                txt_email : {
+                    required : "Campo é obrigatorio",
+                    email : "Email deve estar no formato correto!"
+                },
+                txt_celular : {
+                    required : "Campo é obrigatorio"
+                }
+			}
+		});
+
+		if($('#novoContatoAlarme').valid()){
+
+            var idMatriz    = $('#idMatriz').val();
+            var sedeContato = $('#sedeContato').val();
+            var nomeContato = $('#txt_nomeContato').val();
+            var funcaoContato = $('#txt_funcao').val();
+            var emailContato = $('#txt_email').val();
+            var celularContato = $('#txt_celular').val();
+            var obsContato = $('#txt_obs').val();
+
+            $.ajax({
+             url: urlP+"/eficazmonitor/equipamento/registrarContatoAlarmeJson",
+             secureuri: false,
+             type : "POST",
+             dataType: 'json',
+             data      : {
+              'idMatriz' : idMatriz,
+              'sedeContato' : sedeContato,
+              'nomeContato' : nomeContato,
+              'funcaoContato' : funcaoContato,
+              'emailContato' : emailContato,
+              'celularContato' : celularContato,
+              'obsContato' : obsContato
+             },
+              success : function(datra)
+               {
+
+                  //tempTest = JSON(datra);
+                  if(datra.status == true)
+                  {
+
+                    //alert('Vinculo cadastrado com sucesso!');
+                    swal("", "'Contato registrado com sucesso!", "success");
+                    setTimeout(function(){
+                        location.reload();
+                    }, 2000);
+                  }
+                  else
+                  {
+                    //Settar a mensagem de erro!
+                    //alert('Ocorreu um ero ao tentar cadastrar!');
+                    swal("Oops...", "Ocorreu um ero ao tentar cadastrar!", "error");
+                  }
+               },
+              error: function(jqXHR, textStatus, errorThrown)
+               {
+               // Handle errors here
+               console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+               // STOP LOADING SPINNER
+               }
+           });
+        }
+
+	});
 
 
 });
