@@ -313,7 +313,14 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
         // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
         $connBase   = new EficazDB;
 
-        $query  = "SELECT equip.nomeModeloEquipamento, tipoEquip.tipo_equipamento, simEquip.ambiente, clieInfo.nome AS 'cliente', fili.nome AS 'filial',equip.tipo_entrada, equip.tipo_saida
+        $query  = "SELECT
+                    equip.nomeModeloEquipamento,
+                    tipoEquip.tipo_equipamento,
+                    simEquip.ambiente,
+                    clieInfo.nome AS 'cliente',
+                    fili.nome AS 'filial',
+                    equip.tipo_entrada,
+                    equip.tipo_saida
                     FROM tb_equipamento equip
                     JOIN tb_sim_equipamento simEquip ON equip.id = simEquip.id_equipamento
                     JOIN tb_cliente clieInfo ON clieInfo.id = equip.id_cliente

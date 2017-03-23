@@ -733,6 +733,34 @@ class EquipamentoModel extends MainModel
     }
 
     /*
+    * REMOVER OS PARAMETROS DO EQUIPAMENTO SOLICITADO VIA JSON
+    */
+    public function removerParametrosEquipamentoViaJson($idEquipamento){
+
+        // Coletar os dados do post
+        $idEquip   = $idEquipamento;
+
+        if(is_numeric($idEquip)){
+
+            $query = "UPDATE tb_parametro SET  status_ativo = '0' WHERE id_equipamento = '$idEquip'";
+
+            /* monta result */
+            $result = $this->db->query($query);
+
+            if ($result){
+              $array = array('status' => true);
+            }else{
+              $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
     * CARREGA OS DADOS DE CONTATO DO EQUIPAMENTO
     */
     public function dadosContatosEquipamentos($idEquipamento){

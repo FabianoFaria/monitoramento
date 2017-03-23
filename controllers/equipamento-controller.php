@@ -235,6 +235,9 @@ class EquipamentoController extends MainController
         $removerEquip   = $equipModelo->removerEquipamentoViaJson($_POST['idEquipamento']);
 
         if($removerEquip){
+
+            $removerParamEquip = $equipModelo->removerParametrosEquipamentoViaJson($_POST['idEquipamento']);
+
             exit(json_encode(array('status' => $removerEquip['status'] )));
         }else{
             exit(json_encode(array('status' => $removerEquip['status'] )));
