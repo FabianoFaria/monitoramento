@@ -56,7 +56,7 @@
         */
         $postB = verificaValorPosicaoQuery($_POST['B'],$protocolos);
         $postC = verificaValorPosicaoQuery($_POST['C'],$protocolos);
-        $postD = verificaValorPosicaoQuery($_POST['C'],$protocolos);
+        $postD = verificaValorPosicaoQuery($_POST['D'],$protocolos);
 
         $postE = verificaValorPosicaoQuery($_POST['E'],$protocolos);
         $postF = verificaValorPosicaoQuery($_POST['F'],$protocolos);

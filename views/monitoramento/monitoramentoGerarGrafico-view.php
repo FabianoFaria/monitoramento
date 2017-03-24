@@ -1051,8 +1051,6 @@ else
                                                 var diferencaTotal = (diffHrs * 60) + diffMins;
                                                 var temporestante  = tempoEstimado - diferencaTotal;
 
-
-
                                                 console.log("Tempo estimado em minutos :"+ tempoEstimado+ " Tempo da ultima carga :"+ ultimaCarga);
                                                 console.log("Diferença de tempo  :"+ timeDiff+ " Diferença em horas e minutos :"+ diffHrs +":"+ diffMins);
                                                 console.log("Minutos restantes :"+ temporestante);
@@ -1070,7 +1068,13 @@ else
                                                     document.getElementById('cargaUtilAutonomiaBateria').style.width = "25%";
                                                     document.getElementById('cargaUtilAutonomiaBateria').className = "progress-bar progress-bar-warning";
                                                 }
-                                                document.getElementById('cargaAutonomiaBateriaPorcentagem').innerHTML = temporestante.toFixed(0)+" (min)";
+
+
+                                                if(temporestante >= 0){
+                                                    document.getElementById('cargaAutonomiaBateriaPorcentagem').innerHTML = temporestante.toFixed(0)+" (min)";
+                                                }else{
+                                                    document.getElementById('cargaAutonomiaBateriaPorcentagem').innerHTML = 0+" (min)";
+                                                }
 
                                             });
                                         },5000);
