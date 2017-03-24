@@ -495,6 +495,13 @@ class EquipamentoController extends MainController
         }
     }
 
+    /*
+    * EFETUA O CALCULO DA ESTIMATIVA DA BATERIA, BASEADO EM DADOS DO EQUIPAMENTO
+    *
+    */
+    public function estimativaBateriaEquipamento(){
+
+    }
 }
 
 ?>

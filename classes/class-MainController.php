@@ -176,12 +176,12 @@ class MainController extends UserLogin
             }
         }
         //BATERIA
-        if(($ponto == 'h') || ($ponto == 'q')){
+        if(($ponto == 'h') || ($ponto == 'p')){
             switch ($ponto) {
                 case 'h':
                     $saida = "Bateria";
                 break;
-                case 'o':
+                case 'p':
                     $saida = "Bateria 2";
                 break;
             }

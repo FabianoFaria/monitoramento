@@ -304,6 +304,7 @@
                                     $statusB                = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
                                 }
 
                                 $valoresCorrente        = explode('|', $configuracaoSalva[4]);
@@ -313,6 +314,7 @@
                                     $statusI  = comparaParametrosEquipamento(($_POST['I']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'i');
                                 }
 
                             break;
@@ -328,12 +330,14 @@
                                     $statusB                = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
                                 }
 
                                 if($valorValidoC > 0){
                                     $statusC                = comparaParametrosEquipamento(($_POST['C']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'c');
                                 }
 
                                 $valoresCorrente        = explode('|', $configuracaoSalva[4]);
@@ -343,18 +347,22 @@
 
                                 if($valorValidoI > 0){
                                     $statusI  = comparaParametrosEquipamento(($_POST['I']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
-                                else{
+                                }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'i');
                                 }
 
                                 if($valorValidoJ > 0){
                                     $statusJ   = comparaParametrosEquipamento(($_POST['J']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'j');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'j');
                                 }
 
                             break;
                             case '3':
+
+                                $valoresCorrente        = explode('|', $configuracaoSalva[4]);
 
                                 $valorValidoB =  verificaProtocoloPosicaoTebela($_POST['B'], $protocolos);
                                 $valorValidoC =  verificaProtocoloPosicaoTebela($_POST['C'], $protocolos);
@@ -364,19 +372,26 @@
                                     $statusB                = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
+
                                 }
 
                                 if($valorValidoC > 0){
                                     $statusC                = comparaParametrosEquipamento(($_POST['C']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'c');
                                 }
 
                                 if($valorValidoD > 0){
                                     $statusD                = comparaParametrosEquipamento(($_POST['D']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'd');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'd');
                                 }
+
+                                $valoresCorrente        = explode('|', $configuracaoSalva[4]);
 
                                 $valorValidoI =  verificaProtocoloPosicaoTebela($_POST['I'], $protocolos);
                                 $valorValidoJ =  verificaProtocoloPosicaoTebela($_POST['J'], $protocolos);
@@ -384,20 +399,23 @@
 
                                 if($valorValidoI > 0){
                                     $statusI  = comparaParametrosEquipamento(($_POST['I']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
-                                else{
+                                }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'i');
                                 }
 
                                 if($valorValidoJ > 0){
                                     $statusJ   = comparaParametrosEquipamento(($_POST['J']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'j');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'j');
                                 }
 
                                 if($valorValidoL > 0){
                                     $statusL   = comparaParametrosEquipamento(($_POST['L']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'l');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'l');
                                 }
 
                             break;
@@ -417,8 +435,9 @@
 
                                 if($valorValidoE > 0){
                                     $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'e');
-                                else{
+                                }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
                                 }
 
                                 $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
@@ -427,8 +446,9 @@
 
                                 if($valorValidoM > 0){
                                     $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'm');
-                                else{
+                                }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
                                 }
 
                             break;
@@ -442,14 +462,16 @@
 
                                 if($valorValidoE > 0){
                                     $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'e');
-                                else{
+                                }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
                                 }
 
                                 if($valorValidoF > 0){
                                     $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'f');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'f');
                                 }
 
                                 $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
@@ -459,14 +481,16 @@
 
                                 if($valorValidoM > 0){
                                     $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'm');
-                                else{
+                                }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
                                 }
 
                                 if($valorValidoN > 0){
                                     $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'n');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
                                 }
 
                             break;
@@ -481,20 +505,23 @@
 
                                 if($valorValidoE > 0){
                                     $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'e');
-                                else{
+                                }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
                                 }
 
                                 if($valorValidoF > 0){
                                     $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'f');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'f');
                                 }
 
                                 if($valorValidoG > 0){
                                     $statusG   = comparaParametrosEquipamento(($_POST['G']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'g');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'g');
                                 }
 
                                 $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
@@ -505,20 +532,23 @@
 
                                 if($valorValidoM > 0){
                                     $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'm');
-                                else{
+                                }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
                                 }
 
                                 if($valorValidoN > 0){
                                     $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'n');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
                                 }
 
                                 if($valorValidoO > 0){
                                     $statusO    = comparaParametrosEquipamento(($_POST['O']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'o');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
+                                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'o');
                                 }
 
                             break;
@@ -535,15 +565,17 @@
 
 
                         if($valorValidoH > 0){
-                            $statusH   = comparaParametrosEquipamento(($_POST['H']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'h');
+                            $statusH   = comparaParametrosEquipamento(($_POST['H']/100), $valoresBateria, $idSimEquip, 'Bateria', 'h');
                         }else{
                             //GERA ALARME DE PROTOCOLO
+                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'h');
                         }
 
                         if($valorValidoP > 0){
-                            $statusP    = comparaParametrosEquipamento(($_POST['P']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'p');
+                            $statusP    = comparaParametrosEquipamento(($_POST['P']/100), $valoresBateria, $idSimEquip, 'Bateria', 'p');
                         }else{
                             //GERA ALARME DE PROTOCOLO
+                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'p');
                         }
 
                         /*
@@ -558,6 +590,7 @@
                             $statusQ    = comparaParametrosEquipamento(($_POST['Q']/100), $valoresCorrenteSaida, $idSimEquip, 'Temperatura ambiente', 'q');
                         }else{
                             //GERA ALARME DE PROTOCOLO
+                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Temperatura ambiente', 9, 1, 'q');
                         }
 
                         #Temperatura banco bateria r
@@ -568,6 +601,7 @@
                             $statusR    = comparaParametrosEquipamento(($_POST['R']/100), $valoresCorrenteSaida, $idSimEquip, 'Temperatura Banco de bateria', 'r');
                         }else{
                             //GERA ALARME DE PROTOCOLO
+                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Temperatura Banco de bateria', 9, 1, 'r');
                         }
 
                     break;
@@ -575,6 +609,9 @@
 
             }
 
+        }else{
+            //var_dump($dados);
+            $parametros = 0;
         }
 
         /*
@@ -597,6 +634,345 @@
 * FUNÇÕES QUE SERÃO UTILIZADAS NESTA ROTINA
 *
 */
+
+    /*
+    * INICIA O PROCESSO DE PROCURA DE CONTATOS PARA ENVIO DE ALERTA
+    */
+    function carregarContatosAlerta($idSimEquipamento){
+
+        // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+        $connBase      = new EficazDB;
+
+        $queryContatos = "SELECT contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.email, contAlert.celular
+                            FROM tb_contato_alerta contAlert
+                            JOIN tb_sim sim ON sim.id_cliente = contAlert.id_cliente
+                            JOIN tb_sim_equipamento simEquip ON simEquip.id_sim = sim.num_sim
+                            WHERE simEquip.id = '$idSimEquipamento'";
+
+        // Monta a result
+        $result = $connBase->select($queryContatos);
+
+        // Verifica se existe valor de retorno
+        if (@mysql_num_rows ($result) > 0)
+        {
+            /* ARMAZENA NA ARRAY */
+            while ($row = @mysql_fetch_assoc ($result))
+            {
+                $retorno[] = $row;
+            }
+
+        }else{
+            // Se nao existir valor de retorno
+            // Armazena 0 no vetor
+            $retorno[] = 0;
+        }
+
+        // Fecha a conexao
+        $connBase->close();
+
+        return $retorno;
+    }
+
+    /*
+    * INICIA O PROCESSO DE REGISTRO DE ALARME
+    */
+    function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolado, $parametroAvaliado, $tipoAlarme, $nivelAlarme, $pontoTabela){
+
+        // Cria um objeto de da classe de conexao
+        $connBase = new EficazDB;
+
+        $data = date('Y-m-d h:i:s');
+
+        //REGISTRA O ALARME NO SISTEMA
+        $queryAlarme = "INSERT INTO tb_alerta(id_sim_equipamento, id_msg_alerta, nivel_alerta, dt_criacao)
+                        VALUES ('$idEquipSim', '$tipoAlarme', '$nivelAlarme', '$data')";
+
+        $result = $connBase->query($queryAlarme);
+
+        $idGerada  = mysql_insert_id();
+
+        if(!$result)
+        {
+            // Monta a query de log
+            $query = "insert into tb_log (log)  values ('Erro ao tentar registrar um alerta para o equipamento de id_sim :".$idEquipSim."')";
+
+            // Grava o log
+            $connBase->query($query);
+
+            // Retona o erro
+            header('HTTP/1.1 404 Not Found');
+            // Finaliza a execucao
+            exit();
+        }
+
+        $idAlarme = mysql_insert_id();
+
+        //REGISTRA OS DETALHES DO ALARME PARA CONSULTA PELO MONITOR
+        $queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta(id_alerta, parametro, parametroMedido, parametroAtingido, pontoTabela)
+                                VALUES ('$idAlarme', '$parametroAvaliado', '$parametroEnviado', '$parametroViolado', '$pontoTabela')";
+
+        // Grava no DB
+        $resultadoDetalhes = $connBase->query($queryDetalheAlarme);
+
+        if(!$resultadoDetalhes)
+        {
+            // Monta a query de log
+            $query = "insert into tb_log (log)  values ('Erro ao tentar registrar um alerta para o equipamento de id_sim :".$idEquipSim."')";
+
+            // Grava o log
+            $connBase->query($query);
+
+            // Retona o erro
+            header('HTTP/1.1 404 Not Found');
+            // Finaliza a execucao
+            exit();
+        }else{
+
+            // Fecha a conexao
+            $connBase->close();
+
+            // Retorna mensagem de sucesso
+            //header ('HTTP/1.1 200 OK');
+        }
+    }
+
+    /*
+    * CARREGA A MENSAGEM DE ALERTA
+    */
+    function carregarMensagemAlerta($idMensagem){
+
+        // Cria um objeto de da classe de conexao
+        $connBase    = new EficazDB;
+
+        // Um alerta com status 5 sinaliza que está finalizado, abixo disso, ainda está ativo
+        $queryAlarme = "SELECT mensagem FROM tb_msg_alerta WHERE id = '$idMensagem'";
+
+        // Monta a result com os parametros
+        $result = $connBase->select($queryAlarme);
+
+        if($result){
+            //var_dump($result);
+
+            // Verifica se existe valor de retorno
+            if (@mysql_num_rows ($result) > 0)
+            {
+                /* ARMAZENA NA ARRAY */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                return $retorno;
+
+            }else{
+                return false;
+            }
+
+            // Fecha a conexao
+            $connBase->close();
+
+        }else{
+            // echo  "Nada encontrado";
+            return false;
+
+            // Fecha a conexao
+            $connBase->close();
+        }
+
+    }
+
+    /*
+    * VERIFICA SE JÁ EXISTE ALGUM ALARME ATIVO PARA O EQUIPAMENTO
+    */
+    function verificarAlarmeExistente($idEquipSim, $tipoAlerta){
+        //PROCURA NA TABELA DE ALARME, ALGUM REGISTRO DO EQUIPAMENTO COMPROMETIDO
+        // Cria um objeto de da classe de conexao
+        $connBase    = new EficazDB;
+
+        // Um alerta com status 5 sinaliza que está finalizado, abixo disso, ainda está ativo
+        // ATUALIZAÇÃO - Com status 4, significa que o alarme foi solucionado, sendo assim, está apto a registrar outros alarmes
+        //$queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 4";
+        // ATUALIZAÇÃO  - Com a verificação do ponto de tabela, permite agora o equipamento gerar mais de um tipo de alerta
+        $queryAlarme = "SELECT alert.id
+                        FROM tb_alerta alert
+                        JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
+                        WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 4 AND trat_alert.pontoTabela = '$tipoAlerta'";
+
+        // Monta a result com os parametros
+        $result = $connBase->select($queryAlarme);
+
+        if($result){
+            //var_dump($result);
+
+            // Verifica se existe valor de retorno
+            if (@mysql_num_rows ($result) > 0)
+            {
+                return true;
+            }else{
+                return false;
+            }
+
+            // Fecha a conexao
+            $connBase->close();
+
+        }else{
+            // echo  "Nada encontrado";
+            return false;
+
+            // Fecha a conexao
+            $connBase->close();
+        }
+    }
+
+    /*
+    *  Trata as strings dos valores das configurações dos equipamento
+    */
+    function trataValorDataSync($valor){
+        //Formato da string esperado : 'et1-2-0'
+        $temp = explode("-", $valor);
+        return (float) $temp[1];
+    }
+
+    /*
+    * RECEBE A ARRAY COM OS PARAMETROS DE DETERMINADA ENTRADA DE TENSÃO, CORRENTE, BATERIA E TEMPERATURA VARIAVEL PARA COMPARAÇÃO
+    * AQUI OCORRE A VERIFICAÇÃO SE O PARAMETRO GEROU ALARME OU NÃO
+    */
+    function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $ParametroVerificado, $pontoTabela){
+        /*
+        * TESTA OS PARAMETROS ATRAVÉS DE IF E ELSES
+        */
+        if($parametro > (float) trataValorDataSync($configuacoes[4])){
+            /*
+            * VERIFICA ALERTA EXISTNTE E TENTA GERAR ALERTA PARA CRITICO ALTO
+            */
+            //$alarmeExiste = verificarAlarmeExistente($idSimEquip, 2);
+            $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
+
+            if(!$alarmeExiste){
+
+                gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 3, 2, $pontoTabela);
+
+                /*
+                * REGISTRA FALHA
+                */
+                //registraFalhaEquipamento($_POST['A']);
+
+                /*
+                * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
+                */
+
+                //Carrega a mensagem de alerta
+                $msgAlerta          = carregarMensagemAlerta(3);
+                $msgAlerta          = $msgAlerta[0]['mensagem'];
+                //Parametros violados
+                $indiceRecebido     = $parametro;
+                $indiceUltrapassado = (float) trataValorDataSync($configuacoes[3]);
+
+                //Carrega as informações do equipamento que gerou o alarme
+                $equipamentoAlerta  = carregarDadosEquip($idSimEquip);
+
+                //Procura os contatos para envio de alerta da tabela tb_contato_alerta
+                $listaContatos      = carregarContatosAlerta($idSimEquip);
+
+                // Cria um objeto de da classe de email
+                $mailer        = new email;
+
+                /*
+                * VERIFICA SE A LISTA DE CONTATOS NÃO ESTÁ VAZIA, ENTÃO INICIA O ENVIO DE EMAILS
+                */
+                if(!empty($listaContatos)){
+                    foreach ($listaContatos as $contato) {
+
+                        //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
+
+                        $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
+
+                        $resultadoEnvio = $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], " ", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+
+                        //POSIBILIDADE DE CADASTRO NO LOG EM CASO DE FALHA DE ENVIO
+
+                        echo $resultadoEnvio;
+                    }
+                }
+            }
+
+        }elseif($parametro > (float) trataValorDataSync($configuacoes[3])){
+            /*
+            * VERIFICA ALERTA EXISTNTE E TENTA GERAR ALERTA PARA ALTO
+            */
+            $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
+
+            if(!$alarmeExiste){
+
+                gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 5, 1, $pontoTabela);
+            }
+
+        }elseif($parametro < (float) trataValorDataSync($configuacoes[0])){
+            /*
+            * VERIFICA ALERTA EXISTNTE E TENTA GERAR ALERTA PARA CRITICO BAIXO
+            */
+            $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
+
+            if(!$alarmeExiste){
+
+                /*
+                * GERAR ALARME
+                */
+                gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 2 ,2, $pontoTabela);
+
+                /*
+                * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
+                */
+                //Carrega a mensagem de alerta
+                $msgAlerta          = carregarMensagemAlerta(2);
+                $msgAlerta          = $msgAlerta[0]['mensagem'];
+                //Parametros violados
+                $indiceRecebido     = $parametro;
+                $indiceUltrapassado = (float) trataValorDataSync($configuacoes[1]);
+
+                //Carrega as informações do equipamento que gerou o alarme
+                $equipamentoAlerta  = carregarDadosEquip($idSimEquip);
+
+                //var_dump($equipamentoAlerta);
+
+                //Procura os contatos para envio de alerta da tabela tb_contato_alerta
+                $listaContatos      = carregarContatosAlerta($idSimEquip);
+
+                // Cria um objeto de da classe de email
+                $mailer             = new email;
+
+                /*
+                * Verifica se a lista de contatos não está vazia, então inicia o envio de emails
+                */
+                if(!empty($listaContatos)){
+                    //var_dump($retorno);
+
+                    foreach ($listaContatos as $contato) {
+
+                        //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
+
+                        $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
+
+                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+                    }
+                }
+            }
+        }elseif($parametro < (float) trataValorDataSync($configuacoes[1])){
+
+            $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
+
+            if(!$alarmeExiste){
+
+                /*
+                * GERAR ALARME
+                */
+                gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[1]), $ParametroVerificado, 4, 1, $pontoTabela);
+            }
+        }else{
+            //Nada acontece
+            echo "OK ! ".$parametro."<br>";
+        }
+    }
 
     /*
     * RETORNA VALOR CORRETO PARA A QUERY, CASO SEJA ENCONTRADO UM PROTOCOLO, IRÁ RETORNAR ZERO

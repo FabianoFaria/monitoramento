@@ -44,7 +44,6 @@ if(is_numeric($this->parametros[0])){
     $retorno = null;
 }
 
-//var_dump($retorno);
 
 if (empty($retorno) && isset($retorno))
 {
@@ -1005,7 +1004,7 @@ else
                                         <div id="fundoBaseNobreak" class="well"><label id="nobreakLigado"></label></div>
                                     </div>
                                 </div> -->
-                                <!-- <div class="col-lg-4"> -->
+                                <div class="col-lg-4">
                                     <?php
                                         // Coleta a data atual
                                         // $dtAtual = date ("Y/m/d H:i:s");
@@ -1024,20 +1023,61 @@ else
                                         // // Converte para dias
                                         //$conv = floor($diff/3600/24);
                                     ?>
-                                    <!-- <h4>Tempo de autonomia estimado</h4> -->
-                                    <!-- <div class="div-tempoOperacao">
-                                        <label id="lb-tempoOperacao">
-                                            <?php
-                                                // if ($conv < 2 )
-                                                //   echo $conv . " Dia";
-                                                // else
-                                                //   echo $conv . " Dias";
-                                            ?>
-                                            0 Minutos
-                                        </label>
-                                    </div> -->
+                                    <h4>Tempo de autonomia estimado</h4>
+                                    <script type="application/javascript">
+
+                                        setInterval(function(){
+                                            var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncAutonomiaBateria.php?6e756d65726f=<?php echo $idSim;?>&706f73546162656c61=<?php echo $idEquip?>&callback=?";
+                                            $.getJSON(url,  function(data) {
+
+                                                var tempoEstimadoHora   = parseFloat(data[1]);
+                                                var data_registro       = data[3];
+                                                var correnteNominalBateria = parseFloat(data[5]);
+
+                                                var tempoTemp           = data_registro.split(" ");
+                                                var dataCarga           = tempoTemp[0].split("-");
+                                                var horario             = tempoTemp[1].split(":");
+                                                var ultimaCarga         = new Date(dataCarga[0],(dataCarga[1] - 1),dataCarga[2], horario[0], horario[1], horario[2]);
+
+                                                //CALCULA O TEMPO ESTIMADO DE AUTONOMIA DA BATERIA EM MINUTOS
+
+                                                var tempoEstimado  = (60 * correnteNominalBateria) / tempoEstimadoHora;
+
+                                                var horaAtual   = new Date();
+                                                //var timeDiff    = Math.abs(ultimaCarga.getTime() - horaAtual.getTime());
+                                                var timeDiff    = (horaAtual - ultimaCarga);
+                                                var diffHrs     = Math.floor((timeDiff % 86400000) / 3600000); // hours
+                                                var diffMins    = Math.round(((timeDiff % 86400000) % 3600000) / 60000);
+                                                var diferencaTotal = (diffHrs * 60) + diffMins;
+                                                var temporestante  = tempoEstimado - diferencaTotal;
+
+
+
+                                                console.log("Tempo estimado em minutos :"+ tempoEstimado+ " Tempo da ultima carga :"+ ultimaCarga);
+                                                console.log("Diferença de tempo  :"+ timeDiff+ " Diferença em horas e minutos :"+ diffHrs +":"+ diffMins);
+                                                console.log("Minutos restantes :"+ temporestante);
+
+                                                //Porcentagem da bateria
+                                                var bateriaRestante   = (temporestante*100)/ tempoEstimado;
+                                                //var bateriaRestante   = 24;
+
+                                                if(bateriaRestante >= 25 ) {
+                                                    document.getElementById('cargaUtilAutonomiaBateria').style.width = bateriaRestante+"%";
+                                                }else if(bateriaRestante < 10){
+                                                    document.getElementById('cargaUtilAutonomiaBateria').style.width ="25%";
+                                                    document.getElementById('cargaUtilAutonomiaBateria').className = "progress-bar progress-bar-danger";
+                                                }else if(bateriaRestante < 25){
+                                                    document.getElementById('cargaUtilAutonomiaBateria').style.width = "25%";
+                                                    document.getElementById('cargaUtilAutonomiaBateria').className = "progress-bar progress-bar-warning";
+                                                }
+                                                document.getElementById('cargaAutonomiaBateriaPorcentagem').innerHTML = temporestante.toFixed(0)+" (min)";
+
+                                            });
+                                        },5000);
+
+                                    </script>
                                     <!-- GRAFICO AUTONOMIA BATERIA REVISADO -->
-                                    <!-- <div class="row">
+                                    <div class="row">
                                         <div id="wellAutonomiaBateria" class="well well-normal-status" style="margin-top:30px;height:100px;">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -1059,7 +1099,7 @@ else
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="col-lg-4">
                                     <h4>Tensão do carregador por bateria</h4>
                                     <!-- RECUPERA QUANTIDADE DE BATERIAS E CONFIGURAÇÂO DE CARREGADOR -->
