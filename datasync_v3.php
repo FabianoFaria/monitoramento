@@ -83,10 +83,16 @@
         /*
         * MONTA A QUERY
         */
+        // $valor = "insert into tb_dados (num_sim,b,c,d,e,f,g,h,i,j,l,m,n,o,p,q,r,s,t,u) values
+        //               ('{$_POST['A']}','{$postB}','{$postC}','{$postD}','{$postE}','{$postF}','{$postG}',
+        //                '{$postH}','{$postI}','{$postJ}','{$postL}','{$postM}','{$postN}','{$postO}',
+        //                '{$postP}','{$postQ}','{$postR}','{$postS}','{$postT}','{$postU}')";
+
+        // MONTA A QUERY
         $valor = "insert into tb_dados (num_sim,b,c,d,e,f,g,h,i,j,l,m,n,o,p,q,r,s,t,u) values
-                      ('{$_POST['A']}','{$postB}','{$postC}','{$postD}','{$postE}','{$postF}','{$postG}',
-                       '{$postH}','{$postI}','{$postJ}','{$postL}','{$postM}','{$postN}','{$postO}',
-                       '{$postP}','{$postQ}','{$postR}','{$postS}','{$postT}','{$postU}')";
+                    ('{$_POST['A']}','{$_POST['B']}','{$_POST['C']}','{$_POST['D']}','{$_POST['E']}','{$_POST['F']}','{$_POST['G']}',
+                    '{$_POST['H']}','{$_POST['I']}','{$_POST['J']}','{$_POST['L']}','{$_POST['M']}','{$_POST['N']}','{$_POST['O']}',
+                    '{$_POST['P']}','{$_POST['Q']}','{$_POST['R']}','{$_POST['S']}','{$_POST['T']}','{$_POST['U']}')";
 
         /*
         * EXECUTA A QUERY NO BANCO E VERIFICA SE RETORNO ERRO
@@ -168,7 +174,7 @@
 
                             if($valorE && $valorM){
                                 //Testa se é possivel calcular a potência R
-                                if((isset($_POST['E']) && ($_POST['E'] != 0)) && (isset($_POST['M']) && ($_POST['M'] != 0))){
+                                if((isset($_POST['E']) && ($_POST['E'] > 0)) && (isset($_POST['M']) && ($_POST['M'] > 0))){
 
                                     $potenciaR = ($_POST['E'] / 100 ) * ($_POST['M'] / 100 );
 
@@ -182,7 +188,7 @@
 
                             if($valorF && $valorN){
                                 //Testa se é possivel calcular a potência S
-                                if((isset($_POST['F']) && ($_POST['F'] != 0)) && (isset($_POST['N']) && ($_POST['N'] != 0))){
+                                if((isset($_POST['F']) && ($_POST['F'] > 0)) && (isset($_POST['N']) && ($_POST['N'] > 0))){
 
                                     $potenciaS = ($_POST['F'] / 100 ) * ($_POST['N'] / 100 );
 
@@ -196,7 +202,7 @@
 
                             if($valorF && $valorN){
                                 //Testa se é possivel calcular a potência T
-                                if((isset($_POST['G']) && ($_POST['G'] != 0)) && (isset($_POST['O']) && ($_POST['O'] != 0))){
+                                if((isset($_POST['G']) && ($_POST['G'] > 0)) && (isset($_POST['O']) && ($_POST['O'] > 0))){
 
                                     $potenciaT = ($_POST['G'] / 100 ) * ($_POST['O'] / 100 );
 
@@ -234,20 +240,20 @@
                         $statusEntrada = 0;
                         switch ($equipamentoAnalizado[0]['tipo_entrada']) {
                             case '1':
-                                if(isset($_POST['B']) && ($_POST['B'] != 0)){
+                                if(isset($_POST['B']) && ($_POST['B'] > 15)){
                                     $statusEntrada = 1;
                                 }
-                            default;
+                            break;
                             case '2':
-                                if(isset($_POST['B']) && ($_POST['B'] != 0) && isset($_POST['C']) && ($_POST['C'] != 0)){
+                                if(isset($_POST['B']) && ($_POST['B'] > 15) && isset($_POST['C']) && ($_POST['C'] > 15)){
                                     $statusEntrada = 1;
                                 }
-                            default;
+                            break;
                             case '3':
-                                if(isset($_POST['B']) && ($_POST['B'] != 0) && isset($_POST['C']) && ($_POST['C'] != 0) && isset($_POST['D']) && ($_POST['D'] != 0)){
+                                if(isset($_POST['B']) && ($_POST['B'] > 15) && isset($_POST['C']) && ($_POST['C'] > 15) && isset($_POST['D']) && ($_POST['D'] > 15)){
                                     $statusEntrada = 1;
                                 }
-                            default;
+                            break;
                         }
 
                         echo "<p> Fim potência consumida --> </p> ";

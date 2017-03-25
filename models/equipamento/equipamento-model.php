@@ -761,6 +761,34 @@ class EquipamentoModel extends MainModel
     }
 
     /*
+    * REMOVER AS POSIÇÕES DO EQUIPAMENTO NO SIM
+    */
+    public function removerPosicoesTabelaEquipamentoViaJson($idSimEquip, $numEquipSim){
+
+        if(is_numeric($idSimEquip)){
+
+            $query = "UPDATE tb_posicao
+                        SET status_ativo = '0'
+                        WHERE id_sim_equipamento = '$idSimEquip' AND id_num_sim = '$numEquipSim'";
+
+            /* monta result */
+            $result = $this->db->query($query);
+
+            if ($result){
+              $array = array('status' => true);
+            }else{
+              $array = array('status' => false);
+            }
+
+        }else{
+
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
     * CARREGA OS DADOS DE CONTATO DO EQUIPAMENTO
     */
     public function dadosContatosEquipamentos($idEquipamento){

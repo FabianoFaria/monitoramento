@@ -640,7 +640,7 @@ class VinculoModel extends MainModel
 
             $query = "SELECT pos.posicao
                       FROM  tb_posicao pos
-                      WHERE pos.id_num_sim = '$numeroSim'";
+                      WHERE pos.id_num_sim = '$numeroSim' AND pos.status_ativo = '1'";
 
             // Monta a result
             $result = $this->db->select($query);

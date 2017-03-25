@@ -279,7 +279,13 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
                               <spam>Alarmes</span>
                             </a>
                         </li> -->
-
+                        <li>
+                            <a href="<?php echo HOME_URI; ?>/configuracao/configuracoesSistema" class="">
+                              <i class="fa fa-gears fa-1x"></i>
+                              <span class="icon-side"></span>
+                              <spam>Configurações</span>
+                            </a>
+                        </li>
                        </ul>
                       <!-- /.nav-second-level -->
                   </li>

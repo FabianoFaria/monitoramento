@@ -229,7 +229,6 @@ class ConfiguracaoController extends MainController
     /*
     * CARREGA A QUANTIDADE DE BATERIAS POR BANCOS PARA CONFIGURAR OS PARAMETROS PARA CARREGADOR DE BATERIA
     */
-
     public function cadastrarConfiguracaoCarregadorBateriaJson(){
 
         $equipModelo        = $this->load_model('equipamento/equipamento-model');
@@ -276,6 +275,39 @@ class ConfiguracaoController extends MainController
         //Formato da string esperado : 'et1-2-0'
         $temp = explode('-', $valor);
         return str_replace('.',',',$temp[1]);
+    }
+
+    /*
+    * Tela de configuração de variaveis de calculo no sistema
+    */
+    public function configuracoesSistema(){
+
+        // VERIFICA SE ESTA LOGADO
+        $this->check_login();
+
+        // VERIFICA AS PERMISSOES NECESSARIAS
+        if ($_SESSION['userdata']['per_co'] != 1 )
+        {
+            // SE NAO POSSUIR PERMISSAO
+            // REDIRECIONA PARA INDEX
+            $this->moveHome();
+
+        }else{
+
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "configuracao";
+
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $modelConfiguracao = $this->load_model('configuracao/configuracao-model');
+
+            // CARREGA A VIEW
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/configuracao/configuracaoSistema-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+
     }
 
 }

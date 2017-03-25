@@ -232,11 +232,20 @@ class EquipamentoController extends MainController
         //CARREGA MODELO PARA ESTA FUNÇÃO
         $equipModelo    = $this->load_model('equipamento/equipamento-model');
 
-        $removerEquip   = $equipModelo->removerEquipamentoViaJson($_POST['idEquipamento']);
+        $dadosEquipamento   = $equipModelo->detalhesEquipamentoParaConfiguracao($_POST['idEquipamento']);
+
+        $idSimEquipamento       = $dadosEquipamento[0]['id'];
+        $numeroSimEquipamento   = $dadosEquipamento[0]['id_sim'];
+
+        $removerEquip       = $equipModelo->removerEquipamentoViaJson($_POST['idEquipamento']);
 
         if($removerEquip){
 
+            //REMOVE OS PARAMETROS CADASTRADOS PARA O EQUIPAMENTO
             $removerParamEquip = $equipModelo->removerParametrosEquipamentoViaJson($_POST['idEquipamento']);
+
+            //REMOVE DA TABELA DE POSIÇÕES AS POSIÇÕES OCUPADAS NO EQUIPAMENTO PELO SIM
+            $removePosicoesEquipamento  = $equipModelo->removerPosicoesTabelaEquipamentoViaJson($idSimEquipamento, $numeroSimEquipamento);
 
             exit(json_encode(array('status' => $removerEquip['status'] )));
         }else{
