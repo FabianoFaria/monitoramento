@@ -100,7 +100,8 @@ $().ready(function() {
     /*
     * Função para efetuar o registro do vinculo do SIM com o cliente
     */
-    $('#salvarVinculo').click(function(){
+    $('#salvarVinculo').click(function(e){
+        e.preventDefault();
 
         $('#vincularSimCliente').validate({
             rules: {

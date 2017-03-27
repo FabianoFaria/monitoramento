@@ -495,7 +495,7 @@ class EquipamentoController extends MainController
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $alarmeModelo      = $this->load_model('alarme/alarme-model');
 
-        $contatoCadastrado = $alarmeModelo->registraContatoAlarmeJson($_POST['idMatriz'], $_POST['sedeContato'],$_POST['nomeContato'], $_POST['funcaoContato'], $_POST['emailContato'], $_POST['celularContato'], $_POST['obsContato']);
+        $contatoCadastrado = $alarmeModelo->registraContatoEquipamentoAlarmeJson($_POST['idMatriz'], $_POST['idFilial'], $_POST['idEquipamento'], $_POST['sedeContato'],$_POST['nomeContato'], $_POST['funcaoContato'], $_POST['emailContato'], $_POST['celularContato'], $_POST['obsContato']);
 
         if($contatoCadastrado['status']){
             exit(json_encode(array('status' => $contatoCadastrado['status'])));

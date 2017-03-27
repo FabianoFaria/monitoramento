@@ -103,6 +103,7 @@
                             <button type="submit" class="btn btn-primary" name="solicitarSenha">Enviar email</button>
                         </div>
                     </form>
+                    
                 </div>
               </div>
             </div>

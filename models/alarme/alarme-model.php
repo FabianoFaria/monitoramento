@@ -122,6 +122,30 @@
         }
 
         /*
+        * Função para cadastro de contatos de alarme por equipamento via Json
+        */
+        public function registraContatoEquipamentoAlarmeJson($idMatriz, $idFilial, $idEquipamento, $sedeContato, $nomeContato, $funcaoContato, $emailContato, $celularContato, $obsContato){
+
+            if(is_numeric($idMatriz)){
+
+                $query = "INSERT INTO  tb_contato_alerta_equip (id_cliente, id_filial, id_equipamento, nome_contato, funcao, email, celular, observacao )
+                            VALUES ('$idMatriz','$sedeContato', '$idEquipamento', '$nomeContato', '$funcaoContato', '$emailContato', '$celularContato', '$obsContato')";
+
+                if ($this->db->query($query))
+                {
+                    $array = array('status' => true);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
+        /*
         * Função para efetuar cdastro do contato de alarme via JSON
         */
 
@@ -148,6 +172,46 @@
             return $array;
         }
 
+        /*
+        * Função para carregar os dados dos contatos por equipamento para edição
+        */
+        public function carregarContatoEquipamentosAlarmes($idContato){
+            if(is_numeric($idContato)){
+
+                $query = "SELECT contactEquip.id, contactEquip.nome_contato, contactEquip.funcao, contactEquip.email, contactEquip.celular, contactEquip.observacao
+                          FROM tb_contato_alerta_equip contactEquip
+                          WHERE contact.id = $idContato";
+
+                /* VERIFICA SE EXISTE RESPOSTA */
+                if($result)
+                {
+                    /* VERIFICA SE EXISTE VALOR */
+                    if (@mysql_num_rows($result) > 0)
+                    {
+                      /* ARMAZENA NA ARRAY */
+                      while ($row = @mysql_fetch_assoc ($result))
+                      {
+                        $retorno[] = $row;
+                      }
+
+                        /* DEVOLVE RETORNO */
+                        $array = array('status' => true, 'contato' => $retorno);
+                    }else{
+                        $array = array('status' => false, 'contato' => '');
+                    }
+                }else{
+
+                    $array = array('status' => false, 'contato' => '');
+                }
+
+            }else{
+
+                $array = array('status' => false);
+
+            }
+
+            return $array;
+        }
 
         /*
         * Função para carregar os dados dos contatos para edição
@@ -190,6 +254,33 @@
 
         }
 
+        /*
+        * Função para remover o contato de equipamento da lista
+        */
+
+        public function removerContatoEquipamentoLista($idContato){
+
+            if(is_numeric($idContato)){
+
+                $query = "DELETE FROM tb_contato_alerta_equip WHERE id = $idContato";
+
+                if ($this->db->query($query))
+                {
+                    $array = array('status' => true);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+            return $array;
+        }
+
+        /*
+        * Função para remover o contato da lista
+        */
+
         public function removerContatoLista($idContato){
 
             if(is_numeric($idContato)){
@@ -203,6 +294,28 @@
                     $array = array('status' => false);
                 }
 
+            }else{
+                $array = array('status' => false);
+            }
+
+            return $array;
+        }
+
+        /*
+        * Função para salvar as alterações do contato de equipamento
+        */
+        public function atualizarContatoEquipamento($idEdit, $nomeEdit, $funcaoEdit, $emailEdit, $celularEdit, $obserEdit){
+            if(is_numeric($idEdit)){
+
+                $query = "UPDATE tb_contato_alerta SET nome_contato = '$nomeEdit', funcao = '$funcaoEdit', email = '$emailEdit', celular = '$celularEdit', observacao = '$obserEdit'
+                            WHERE id = '$idEdit'";
+
+                if ($this->db->query($query))
+                {
+                    $array = array('status' => true);
+                }else{
+                    $array = array('status' => false);
+                }
             }else{
                 $array = array('status' => false);
             }

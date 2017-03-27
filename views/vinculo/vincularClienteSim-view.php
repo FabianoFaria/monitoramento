@@ -74,7 +74,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">C&oacute;digo do SIM</label>
-                        <input type="text" class="form-control" id="txt_numSim" name="txt_numSim" placeholder="C&oacute;digo do SIM" maxlength="20" onkeypress="return onlyNumber(event);" required>
+                        <input type="text" class="form-control" id="txt_numSim" name="txt_numSim" placeholder="C&oacute;digo do SIM" maxlength="20" required>
                     </div>
                 </div><!-- fim do Codigo SIM -->
 

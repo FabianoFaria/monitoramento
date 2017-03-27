@@ -585,13 +585,15 @@ $(document).ready(function(){
 
 		if($('#novoContatoAlarme').valid()){
 
-            var idMatriz    = $('#idMatriz').val();
-            var sedeContato = $('#sedeContato').val();
-            var nomeContato = $('#txt_nomeContato').val();
-            var funcaoContato = $('#txt_funcao').val();
-            var emailContato = $('#txt_email').val();
-            var celularContato = $('#txt_celular').val();
-            var obsContato = $('#txt_obs').val();
+            var idMatriz    	= $('#idMatriz').val();
+			var id_filial    	= $('#idFilial').val();
+			var idEquipamento 	= $('#idEquipamento').val();
+            var sedeContato 	= $('#sedeContato').val();
+            var nomeContato	 	= $('#txt_nomeContato').val();
+            var funcaoContato 	= $('#txt_funcao').val();
+            var emailContato 	= $('#txt_email').val();
+            var celularContato 	= $('#txt_celular').val();
+            var obsContato 		= $('#txt_obs').val();
 
             $.ajax({
              url: urlP+"/eficazmonitor/equipamento/registrarContatoAlarmeJson",
@@ -600,6 +602,8 @@ $(document).ready(function(){
              dataType: 'json',
              data      : {
               'idMatriz' : idMatriz,
+			  'idFilial' : id_filial,
+			  'idEquipamento' : idEquipamento,
               'sedeContato' : sedeContato,
               'nomeContato' : nomeContato,
               'funcaoContato' : funcaoContato,

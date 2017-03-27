@@ -106,7 +106,8 @@
                 <form id="novoContatoAlarme" method="post">
                     <div class="row">
 
-                        <input id="idMatriz" name="idMatriz" type="hidden" value="<?php echo $lista[0]['id_cliente']; ?>"
+                        <input id="idMatriz" name="idMatriz" type="hidden" value="<?php echo $lista[0]['id_cliente']; ?>">
+                        <input id="idFilial" name="idFilial" type="hidden" value="<?php echo $lista[0]['id_filial']; ?>">
                         <input id="idEquipamento" name="idEquipamento" type="hidden" value="<?php echo $this->parametros[0]; ?>" />
 
                         <div class="col-md-4">

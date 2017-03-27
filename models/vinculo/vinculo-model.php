@@ -551,7 +551,7 @@ class VinculoModel extends MainModel
                         FROM tb_sim sim
                         JOIN tb_cliente clie ON sim.id_cliente = clie.id
                         LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
-                        WHERE sim.id_cliente = '$idCliente' AND sim.id_filial = '$idFilial' AND sim.status_ativo = 1";
+                        WHERE sim.id_cliente = '$idCliente' AND sim.id_filial = '$idFilial' AND sim.status_ativo = '1'";
 
             // Monta a result
             $result = $this->db->select($query);
@@ -762,7 +762,7 @@ class VinculoModel extends MainModel
     */
     public function verificarSimExistente($numSim){
 
-        $query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$numSim'";
+        $query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$numSim' AND status_ativo = '1'";
 
         // Monta a result
         $result = $this->db->select($query);

@@ -544,10 +544,10 @@ class VinculoController extends MainController
 
         if($vinculoExistente['status']){
             // false DE EXISTENTE, LOGO IMPROPIO PARA SEGUIR
-            echo json_encode( false );
+            echo json_encode(false);
         }else{
             //TRUE DE NÚMERO SIM NÃO EXISTENTE, CADASTRO PODE SEGUIR
-            echo json_encode( true );
+            echo json_encode(true);
         }
 
 
