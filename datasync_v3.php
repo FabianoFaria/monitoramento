@@ -680,6 +680,43 @@
     }
 
     /*
+    * INICIA O PROCESSO DE PROCURA DE CONTATOS PARA ENVIO DE ALERTA DE DETERMINADO EQUIPAMENTO
+    */
+    function carregarContatosAlertaEquipamento($idSimEquipamento){
+
+        // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+        $connBase      = new EficazDB;
+
+        $queryContatos = "SELECT contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.email, contAlert.celular
+                            FROM tb_contato_alerta_equip contAlert
+                            JOIN tb_sim sim ON sim.id_cliente = contAlert.id_cliente
+                            JOIN tb_sim_equipamento simEquip ON simEquip.id_sim = sim.num_sim
+                            WHERE simEquip.id = '$idSimEquipamento'";
+
+        // Monta a result
+        $result = $connBase->select($queryContatos);
+
+        // Verifica se existe valor de retorno
+        if (@mysql_num_rows ($result) > 0){
+            /* ARMAZENA NA ARRAY */
+            while ($row = @mysql_fetch_assoc ($result))
+            {
+                                    $retorno[] = $row;
+            }
+
+        }else{
+            // Se nao existir valor de retorno
+            // Armazena 0 no vetor
+            $retorno[] = 0;
+        }
+
+        // Fecha a conexao
+        $connBase->close();
+
+        return $retorno;
+    }
+
+    /*
     * INICIA O PROCESSO DE REGISTRO DE ALARME
     */
     function gerarAlarmeEquipamento($idEquipSim, $parametroEnviado, $parametroViolado, $parametroAvaliado, $tipoAlarme, $nivelAlarme, $pontoTabela){
@@ -880,6 +917,9 @@
                 //Procura os contatos para envio de alerta da tabela tb_contato_alerta
                 $listaContatos      = carregarContatosAlerta($idSimEquip);
 
+                //Procura os contatos de determinado equipamento para enviar EMAILS
+                $listaContatosEquip = carregarContatosAlertaEquipamento($idSimEquip);
+
                 // Cria um objeto de da classe de email
                 $mailer        = new email;
 
@@ -898,6 +938,23 @@
                         //POSIBILIDADE DE CADASTRO NO LOG EM CASO DE FALHA DE ENVIO
 
                         echo $resultadoEnvio;
+                    }
+                }
+
+                /*
+                * Verifica se a lista de contatos do equipamento não está vazia, então inicia o envio de emails
+                */
+                if(!empty($listaContatosEquip)){
+
+                    foreach ($listaContatosEquip as $contato) {
+
+                        var_dump($contato);
+
+                        //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
+
+                        $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
+
+                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
                     }
                 }
             }
@@ -944,6 +1001,8 @@
                 //Procura os contatos para envio de alerta da tabela tb_contato_alerta
                 $listaContatos      = carregarContatosAlerta($idSimEquip);
 
+                $listaContatosEquip = carregarContatosAlertaEquipamento($idSimEquip);
+
                 // Cria um objeto de da classe de email
                 $mailer             = new email;
 
@@ -956,6 +1015,24 @@
                     foreach ($listaContatos as $contato) {
 
                         //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
+
+                        $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
+
+                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+                    }
+                }
+
+                /*
+                * Verifica se a lista de contatos do equipamento não está vazia, então inicia o envio de emails
+                */
+                if(!empty($listaContatosEquip)){
+
+
+
+                    foreach ($listaContatosEquip as $contato) {
+                        //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
+
+                        var_dump($contato);
 
                         $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
 

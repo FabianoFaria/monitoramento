@@ -88,14 +88,14 @@ class GraficoGeradorModel extends MainModel
                 {
                     if (($opc[$a] == 1) && (is_numeric($opc[$a]))){
 
-                        // if($tabela[$a] == 'h'){
-                        //     //$query .= ''.$tabela[$a] . " + (800) AS 'h',";
-                        //     $query .= ' IF(h > 0, h + 600, h) AS "h",';
-                        // }else{
-                        //     $query .= ''.$tabela[$a] . ",";
-                        // }
+                        if($tabela[$a] == 'h'){
+                            //$query .= ''.$tabela[$a] . " + (800) AS 'h',";
+                            $query .= ' IF(h > 0, h + 900, h) AS "h",';
+                        }else{
+                            $query .= ''.$tabela[$a] . ",";
+                        }
 
-                        $query .= ''.$tabela[$a] . ",";
+                        //$query .= ''.$tabela[$a] . ",";
                     }
 
                 }

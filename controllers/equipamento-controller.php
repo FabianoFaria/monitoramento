@@ -504,6 +504,57 @@ class EquipamentoController extends MainController
         }
     }
 
+    /*
+    * Função para carregar os dados de um determinado contato via JSON
+    */
+    public function carregarContatosAlarmesJson()
+    {
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $alarmeModelo      = $this->load_model('alarme/alarme-model');
+
+        $contatoAlarmes    = $alarmeModelo->carregarContatoEquipamentosAlarmes($_POST['idContato']);
+
+        if($contatoAlarmes['status']){
+            exit(json_encode(array('status' => $contatoAlarmes['status'], 'contato' => $contatoAlarmes['contato'][0])));
+        }else{
+            exit(json_encode(array('status' => $contatoAlarmes['status'])));
+        }
+
+    }
+
+    /*
+    * Função para remover um contato da lista
+    */
+    public function removerContatosAlarmesJson(){
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $alarmeModelo     = $this->load_model('alarme/alarme-model');
+
+        $contatoRemovido  = $alarmeModelo->removerContatoEquipamentoLista($_POST['idContato']);
+
+        if($contatoRemovido['status']){
+            exit(json_encode(array('status' => $contatoRemovido['status'])));
+        }else{
+            exit(json_encode(array('status' => $contatoRemovido['status'])));
+        }
+    }
+
+    /*
+    * Função para efetuar o registro dos dados do contato
+    */
+    public function salvarEditContatoAlarmeJson()
+    {
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $alarmeModelo       = $this->load_model('alarme/alarme-model');
+
+        $contatoAtualizado  = $alarmeModelo->atualizarContatoEquipamento($_POST['idEdit'], $_POST['nomeEdit'], $_POST['funcaoEdit'], $_POST['emailEdit'], $_POST['celularEdit'], $_POST['obserEdit']);
+
+        if($contatoAtualizado['status']){
+            exit(json_encode(array('status' => $contatoAtualizado['status'])));
+        }else{
+            exit(json_encode(array('status' => $contatoAtualizado['status'])));
+        }
+    }
+
 }
 
 ?>

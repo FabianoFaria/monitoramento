@@ -1,10 +1,10 @@
-$(document).ready(function(){
+//Ajustes iniciais da página de cadastro
+var pathArray = window.location.href.split( '/' );
+var protocol = pathArray[0];
+var host = pathArray[2];
+var urlP = protocol + '//' + host;
 
-	//Ajustes iniciais da página de cadastro
-    var pathArray = window.location.href.split( '/' );
-    var protocol = pathArray[0];
-    var host = pathArray[2];
-    var urlP = protocol + '//' + host;
+$(document).ready(function(){
 
     /*
     * APLICAÇÃO DE MASCARAS PARA OS CAMPOS DO FORMULARIOS
@@ -277,6 +277,98 @@ $(document).ready(function(){
 
 	});
 
+	/*
+	* FUNÇÃO PARA SALVAR AS ALTERAÇÕES EFETUADAS NO CONTATO
+	*/
+	$('#registraAlteracao').click(function(){
+
+		$('#edicaoContatoAlarme').validate({
+			rules: {
+				txt_nomeContato_edit : {
+					required : true
+				},
+				txt_funcao_edit :{
+					required : true
+				},
+				txt_email_edit : {
+					required : true,
+					email   : true
+				},
+				txt_celular_edit : {
+					required : true
+				}
+			},
+			messages: {
+				txt_nomeContato_edit : {
+					required : "Campo obrigatório"
+				},
+				txt_funcao_edit :{
+					required : "Campo obrigatório"
+				},
+				txt_email_edit : {
+					required : "Campo obrigatório",
+					email   : "Favor informar um email válido!"
+				},
+				txt_celular_edit : {
+					required : "Campo obrigatório"
+				}
+			}
+
+		});
+
+		if($('#edicaoContatoAlarme').valid()){
+
+			var idEdit      = $('#idContatoEditar').val();
+			var nomeEdit    = $('#txt_nomeContato_edit').val();
+			var funcaoEdit  = $('#txt_funcao_edit').val();
+			var emailEdit   = $('#txt_email_edit').val();
+			var celularEdit = $('#txt_celular_edit').val();
+			var obserEdit   = $('#txt_obs_edit').val();
+
+			$.ajax({
+			 url: urlP+"/eficazmonitor/equipamento/salvarEditContatoAlarmeJson",
+			 secureuri: false,
+			 type : "POST",
+			 dataType: 'json',
+			 data      : {
+			  'idEdit' : idEdit,
+			  'nomeEdit' : nomeEdit,
+			  'funcaoEdit' : funcaoEdit,
+			  'emailEdit' : emailEdit,
+			  'celularEdit' : celularEdit,
+			  'obserEdit' : obserEdit
+			 },
+			  success : function(datra)
+			   {
+				  //tempTest = JSON(datra);
+				  if(datra.status == true)
+				  {
+					//alert('Vinculo cadastrado com sucesso!');
+					swal("", "'Contato editado com sucesso!", "success");
+					$('#editContato').modal('hide');
+					setTimeout(function(){
+						location.reload();
+					}, 2000);
+				  }
+				  else
+				  {
+					//Settar a mensagem de erro!
+					//alert('Ocorreu um ero ao tentar cadastrar!');
+					swal("Oops...", "Ocorreu um ero ao tentar editar!", "error");
+				  }
+			   },
+			  error: function(jqXHR, textStatus, errorThrown)
+			   {
+			   // Handle errors here
+			   console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+			   // STOP LOADING SPINNER
+			   }
+		   });
+
+		}
+
+	});
+
 
   $('#nomeCliente').attr('readonly', true);
   $('#nomeFilial').attr('readonly', true);
@@ -538,7 +630,6 @@ $(document).ready(function(){
 
   });
 
-
 	/*
 	* INICIA PROCESSO DE CADASTRO DE CONTATO DE EQUIPAMENTO
 	*/
@@ -642,5 +733,112 @@ $(document).ready(function(){
 
 	});
 
-
 });
+
+/*
+* INICIA PROCESSO DE CARREGAR CONTATO PARA EDIÇÃO
+*/
+function atualizarContatoEquip(id_contatoAlerta){
+	$.ajax({
+		url: urlP+"/eficazmonitor/equipamento/carregarContatosAlarmesJson",
+		secureuri: false,
+		type : "POST",
+		dataType: 'json',
+		data      : {
+		  'idContato' : id_contatoAlerta
+		},
+		success : function(datra)
+		{
+			//tempTest = JSON(datra);
+			if(datra.status == true)
+			{
+				var id             	= datra.contato['id'];
+				var nomeContato		= datra.contato['nome_contato'];
+				var funcao	        = datra.contato['funcao'];
+				var email	        = datra.contato['email'];
+				var celular	    	= datra.contato['celular'];
+				var observacao	    = datra.contato['observacao'];
+
+			  $('#idContatoEditar').val(id);
+			  $('#txt_nomeContato_edit').val(nomeContato);
+			  $('#txt_funcao_edit').val(funcao);
+			  $('#txt_email_edit').val(email);
+			  $('#txt_celular_edit').val(celular);
+			  $('#txt_obs_edit').val(observacao);
+
+			   $('#editContato').modal();
+			}
+			else
+			{
+			  swal("", "Ocorreu um erro ao tentar recuperar os dados do contato, favor verificar o contato escolhido.", "error");
+
+			}
+		 },
+		error: function(jqXHR, textStatus, errorThrown)
+		{
+		  // Handle errors here
+		  console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+		  // STOP LOADING SPINNER
+		}
+	});
+}
+
+/*
+* INICIA PROCESSO DE REMOVER CONTATO DA LISTA
+*/
+function removerContatoEquipamentoListaAlarmes(id_contatoAlerta){
+	console.log(id_contatoAlerta);
+
+    swal({
+      title: "Tem certeza?",
+      text: "Esta ação não podera ser desfeita!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Sim, remover!",
+      cancelButtonText: "Não, cancelar!",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    },
+    function(isConfirm){
+      if (isConfirm) {
+
+        $.ajax({
+         url: urlP+"/eficazmonitor/equipamento/removerContatosAlarmesJson",
+         secureuri: false,
+         type : "POST",
+         dataType: 'json',
+         data      : {
+          'idContato' : id_contatoAlerta
+         },
+          success : function(datra)
+           {
+              //tempTest = JSON(datra);
+              if(datra.status == true)
+              {
+                //alert('Vinculo cadastrado com sucesso!');
+                swal("", "'Contato removido com sucesso!", "success");
+                setTimeout(function(){
+                    location.reload();
+                }, 2000);
+              }
+              else
+              {
+                //Settar a mensagem de erro!
+                //alert('Ocorreu um ero ao tentar cadastrar!');
+                swal("Oops...", "Ocorreu um ero ao tentar remover!", "error");
+              }
+           },
+          error: function(jqXHR, textStatus, errorThrown)
+           {
+           // Handle errors here
+           console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+           // STOP LOADING SPINNER
+           }
+       });
+
+      } else {
+        swal("Cancelado", "Nenhuma ação foi aplicada.", "error");
+      }
+    });
+}

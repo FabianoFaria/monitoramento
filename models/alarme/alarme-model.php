@@ -180,7 +180,10 @@
 
                 $query = "SELECT contactEquip.id, contactEquip.nome_contato, contactEquip.funcao, contactEquip.email, contactEquip.celular, contactEquip.observacao
                           FROM tb_contato_alerta_equip contactEquip
-                          WHERE contact.id = $idContato";
+                          WHERE contactEquip.id = '$idContato'";
+
+                /* MONTA A RESULT */
+                $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
                 if($result)
@@ -220,7 +223,9 @@
 
             if(is_numeric($idContato)){
 
-                $query = "SELECT contact.id, contact.nome_contato, contact.funcao, contact.email, contact.celular, contact.observacao FROM tb_contato_alerta contact WHERE contact.id = $idContato";
+                $query = "SELECT contact.id, contact.nome_contato, contact.funcao, contact.email, contact.celular, contact.observacao
+                          FROM tb_contato_alerta contact
+                          WHERE contact.id = $idContato";
 
                 /* MONTA A RESULT */
                 $result = $this->db->select($query);
@@ -307,7 +312,7 @@
         public function atualizarContatoEquipamento($idEdit, $nomeEdit, $funcaoEdit, $emailEdit, $celularEdit, $obserEdit){
             if(is_numeric($idEdit)){
 
-                $query = "UPDATE tb_contato_alerta SET nome_contato = '$nomeEdit', funcao = '$funcaoEdit', email = '$emailEdit', celular = '$celularEdit', observacao = '$obserEdit'
+                $query = "UPDATE tb_contato_alerta_equip SET nome_contato = '$nomeEdit', funcao = '$funcaoEdit', email = '$emailEdit', celular = '$celularEdit', observacao = '$obserEdit'
                             WHERE id = '$idEdit'";
 
                 if ($this->db->query($query))

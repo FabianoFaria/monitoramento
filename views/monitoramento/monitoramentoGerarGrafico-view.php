@@ -918,7 +918,7 @@ else
                                                     //console.log(calcula);
 
                                                     if(valorBat > 0){
-                                                        valorBat = valorBat + 6;
+                                                        valorBat = valorBat + 9;
                                                     }
 
                                                     //FORNECE O MESMO DADO PARA O INPUT DE CALCULO PARA TENSÃO DE CARREGADOR DE BATERIA

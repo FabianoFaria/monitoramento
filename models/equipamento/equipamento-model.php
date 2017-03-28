@@ -795,9 +795,10 @@ class EquipamentoModel extends MainModel
 
         if(is_numeric($idEquipamento)){
 
-            $query = "SELECT id, id_cliente, id_filial, id_equipamento, nomnome_contatoe, funcao, email, celular, observacao
-                        FROM tb_contato_alerta_equip
-                        WHERE status_ativo = '1' AND id = '$idEquipamento'";
+            $query = "SELECT contEquip.id, contEquip.id_cliente, contEquip.id_filial, contEquip.id_equipamento, clie.nome AS 'clieNome', contEquip.nome_contato, contEquip.funcao, contEquip.email, contEquip.celular, contEquip.observacao
+                        FROM tb_contato_alerta_equip contEquip
+                        JOIN tb_cliente clie ON clie.id = contEquip.id_cliente
+                        WHERE id_equipamento = '$idEquipamento'";
 
             /* MONTA RESULT */
             $result = $this->db->select($query);

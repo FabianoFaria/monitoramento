@@ -133,7 +133,7 @@
 
                             </div>
                             <div class="col-md-4">
-                                <button type="button" id="registrarContato" class="btn btn-info">Registrar contato para alarme</button>
+                                <button type="button" id="registrarContato" class="btn btn-info btn-lg btn-block">Registrar contato para alarme</button>
                             </div>
                         </div>
                     </form>

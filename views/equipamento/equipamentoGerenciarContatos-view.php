@@ -55,11 +55,17 @@
                     $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
                     $lista          = $lista['equipamento'];
                     $nomeCliente    = $dadosCliente['nome'];
+
+                    $listaContatosEquio = $modeloEquip->dadosContatosEquipamentos($this->parametros[0]);
+
                 }else{
-                    $lista          = false;
+                    $lista              = false;
+
+                    $listaContatosEquio = array();
                 }
             }else{
-                $lista          = false;
+                $lista              = false;
+                $listaContatosEquio = array();
             }
 
             $filiaisCliente     = $modeloClie->carregarFiliaisCliente($this->parametros[0]);
@@ -168,7 +174,7 @@
 
                         </div>
                         <div class="col-md-4">
-                            <button type="button" id="registrarContato" class="btn btn-info">Registrar contato para contato</button>
+                            <button type="button" id="registrarContato" class="btn btn-info btn-lg btn-block">Registrar contato para contato</button>
                         </div>
                     </div>
                 </form>
@@ -216,6 +222,26 @@
 
                                     if($listaContatosEquio['status']){
 
+                                        foreach ($listaContatosEquio['contatos'] as $contato) {
+                                                    //var_dump($contato);
+                                                ?>
+                                                    <tr>
+                                                        <?php
+                                                            $contaId = $contato['id'];
+                                                        ?>
+                                                        <td><?php echo $contato['nome_contato']; ?></td>
+                                                        <td><?php echo $contato['funcao']; ?></td>
+                                                        <td><?php echo $contato['email']; ?></td>
+                                                        <td><?php echo $contato['celular']; ?></td>
+                                                        <td><?php echo $contato['clieNome']; ?></td>
+                                                        <td><?php echo (isset($contato['filiNome'])) ? $contato['filiNome'] : "Matriz"; ?></td>
+                                                        <td id='linkConta_<?php echo $contaId; ?>'><a href='javascript:void(0);' onClick='atualizarContatoEquip(<?php echo $contato['id']; ?>)'><i class='fa fa-eye '></i></a></td>
+
+                                                        <td><a href='javascript:void(0);' class='excluirContato' onCLick='removerContatoEquipamentoListaAlarmes(<?php echo $contaId; ?>)'><i class='fa fa-times '></i></a></td>
+                                                    </tr>
+                                                <?php
+                                        }
+
                                     }else{
                                         ?>
                                             <tr>
@@ -238,6 +264,74 @@
 
 <?php
 
-    var_dump($lista);
+    //var_dump($listaContatosEquio);
 
  ?>
+ <!-- MODAL PARA A EDIÇÃO DE CONTATO PARA RECEBER ALERTA -->
+
+ <div  id="editContato" class="modal fade" tabindex="-1" role="dialog">
+   <div class="modal-dialog modal-lg" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <h4 class="modal-title">Editar contato</h4>
+       </div>
+       <div class="modal-body">
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                 <i class="fa fa-user-md "></i> Dados do contato para alarme
+               </div>
+               <div class="panel-body">
+                   <form id="edicaoContatoAlarme" method="post">
+                       <div class="row">
+                           <input id="idContatoEditar" name="idContatoEditar" type="hidden" value="" />
+
+                           <div class="col-md-4">
+                               <div class="form-group">
+                                   <label for="exampleInputEmail1">Nome do contato : </label>
+                                   <input type="text" class="form-control" id="txt_nomeContato_edit" name="txt_nomeContato_edit" placeholder="Nome para contato" maxlength="80" value="">
+                               </div>
+                           </div>
+
+                           <div class="col-md-4">
+                               <div class="form-group">
+                                   <label for="exampleInputEmail1">Função : </label>
+                                   <input type="text" class="form-control" id="txt_funcao_edit" name="txt_funcao_edit" placeholder="Função do contato" maxlength="80" value="">
+                               </div>
+                           </div>
+
+                           <div class="col-md-4">
+                               <div class="form-group">
+                                   <label for="exampleInputEmail1">Email : </label>
+                                   <input type="text" class="form-control" id="txt_email_edit" name="txt_email_edit" placeholder="Email do contato" maxlength="80" value="">
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="row">
+                           <div class="col-md-4">
+                               <div class="form-group">
+                                   <label for="exampleInputEmail1">Celular : </label>
+                                   <input type="text" class="form-control" id="txt_celular_edit" name="txt_celular_edit" placeholder="Celular do contato" maxlength="80" value="">
+                               </div>
+                           </div>
+
+                           <div class="col-md-4">
+                               <div class="form-group">
+                                   <label for="exampleInputEmail1">Observações : </label>
+                                   <textarea id="txt_obs_edit" name="txt_obs_edit" class="form-control" ></textarea>
+                               </div>
+                           </div>
+
+                       </div>
+                   </form>
+               </div>
+           </div>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+         <button id="registraAlteracao" type="button" class="btn btn-primary">Salvar alterações</button>
+       </div>
+     </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->
