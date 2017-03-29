@@ -55,7 +55,6 @@ class UsuarioModel extends MainModel
         $cliente   = explode("-",$_POST['opc_cliente']);
         $local     = isset($_POST['opc_local']) ? $_POST['opc_local'] : 0;
 
-
         // Verifica se existe valor e se a variavel esta definida
         if (isset($cliente[1]) && is_numeric($cliente[1]))
         {

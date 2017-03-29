@@ -368,14 +368,14 @@
                             break;
                             case '3':
 
-                                $valoresCorrente        = explode('|', $configuracaoSalva[4]);
+                                $valoresEntrada = explode('|', $configuracaoSalva[1]);
 
-                                $valorValidoB =  verificaProtocoloPosicaoTebela($_POST['B'], $protocolos);
-                                $valorValidoC =  verificaProtocoloPosicaoTebela($_POST['C'], $protocolos);
-                                $valorValidoD =  verificaProtocoloPosicaoTebela($_POST['D'], $protocolos);
+                                $valorValidoB   =  verificaProtocoloPosicaoTebela($_POST['B'], $protocolos);
+                                $valorValidoC   =  verificaProtocoloPosicaoTebela($_POST['C'], $protocolos);
+                                $valorValidoD   =  verificaProtocoloPosicaoTebela($_POST['D'], $protocolos);
 
                                 if($valorValidoB > 0){
-                                    $statusB                = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
+                                    $statusB    = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
 
@@ -384,14 +384,14 @@
                                 }
 
                                 if($valorValidoC > 0){
-                                    $statusC                = comparaParametrosEquipamento(($_POST['C']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
+                                    $statusC    = comparaParametrosEquipamento(($_POST['C']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'c');
                                 }
 
                                 if($valorValidoD > 0){
-                                    $statusD                = comparaParametrosEquipamento(($_POST['D']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'd');
+                                    $statusD    = comparaParametrosEquipamento(($_POST['D']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'd');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'd');
@@ -440,7 +440,7 @@
                                 $valorValidoE =  verificaProtocoloPosicaoTebela($_POST['E'], $protocolos);
 
                                 if($valorValidoE > 0){
-                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'e');
+                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
@@ -451,7 +451,7 @@
                                 $valorValidoM =  verificaProtocoloPosicaoTebela($_POST['M'], $protocolos);
 
                                 if($valorValidoM > 0){
-                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'm');
+                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
@@ -467,14 +467,14 @@
                                 $valorValidoF =  verificaProtocoloPosicaoTebela($_POST['F'], $protocolos);
 
                                 if($valorValidoE > 0){
-                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'e');
+                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
                                 }
 
                                 if($valorValidoF > 0){
-                                    $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'f');
+                                    $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'f');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'f');
@@ -486,14 +486,14 @@
                                 $valorValidoN =  verificaProtocoloPosicaoTebela($_POST['N'], $protocolos);
 
                                 if($valorValidoM > 0){
-                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'm');
+                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
                                 }
 
                                 if($valorValidoN > 0){
-                                    $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'n');
+                                    $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
@@ -510,14 +510,14 @@
                                 $valorValidoG =  verificaProtocoloPosicaoTebela($_POST['G'], $protocolos);
 
                                 if($valorValidoE > 0){
-                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'e');
+                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
                                 }
 
                                 if($valorValidoF > 0){
-                                    $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'f');
+                                    $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'f');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'f');
@@ -537,14 +537,14 @@
                                 $valorValidoO =  verificaProtocoloPosicaoTebela($_POST['O'], $protocolos);
 
                                 if($valorValidoM > 0){
-                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'm');
+                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
                                 }
 
                                 if($valorValidoN > 0){
-                                    $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'n');
+                                    $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
@@ -577,12 +577,12 @@
                             gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'h');
                         }
 
-                        if($valorValidoP > 0){
-                            $statusP    = comparaParametrosEquipamento(($_POST['P']/100), $valoresBateria, $idSimEquip, 'Bateria', 'p');
-                        }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'p');
-                        }
+                        // if($valorValidoP > 0){
+                        //     $statusP    = comparaParametrosEquipamento(($_POST['P']/100), $valoresBateria, $idSimEquip, 'Bateria', 'p');
+                        // }else{
+                        //     //GERA ALARME DE PROTOCOLO
+                        //     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'p');
+                        // }
 
                         /*
                         * VERIFICA AS MEDIDAS DAS TEMPERATURAS
@@ -593,7 +593,7 @@
                         $valorValidoQ =  verificaProtocoloPosicaoTebela($_POST['Q'], $protocolos);
 
                         if($valorValidoQ > 0){
-                            $statusQ    = comparaParametrosEquipamento(($_POST['Q']/100), $valoresCorrenteSaida, $idSimEquip, 'Temperatura ambiente', 'q');
+                            $statusQ    = comparaParametrosEquipamento(($_POST['Q']/100), $valoresTeperaturaAmbiente, $idSimEquip, 'Temperatura ambiente', 'q');
                         }else{
                             //GERA ALARME DE PROTOCOLO
                             gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Temperatura ambiente', 9, 1, 'q');
@@ -604,7 +604,7 @@
                         $valorValidoR =  verificaProtocoloPosicaoTebela($_POST['R'], $protocolos);
 
                         if($valorValidoR > 0){
-                            $statusR    = comparaParametrosEquipamento(($_POST['R']/100), $valoresCorrenteSaida, $idSimEquip, 'Temperatura Banco de bateria', 'r');
+                            $statusR    = comparaParametrosEquipamento(($_POST['R']/100), $valoresTemperaturaBancoBat, $idSimEquip, 'Temperatura Banco de bateria', 'r');
                         }else{
                             //GERA ALARME DE PROTOCOLO
                             gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Temperatura Banco de bateria', 9, 1, 'r');
@@ -701,7 +701,7 @@
             /* ARMAZENA NA ARRAY */
             while ($row = @mysql_fetch_assoc ($result))
             {
-                                    $retorno[] = $row;
+                $retorno[] = $row;
             }
 
         }else{

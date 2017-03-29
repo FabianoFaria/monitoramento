@@ -210,6 +210,21 @@
             // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
             $usuarioModelo          = $this->load_model('usuario/usuario-model');
 
+            /*
+            'txt_userId' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'5'</font> <i>(length=1)</i>
+              'opc_local' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'1'</font> <i>(length=1)</i>
+              'txt_nome' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Sistema2'</font> <i>(length=8)</i>
+              'txt_sobrenome' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Eficaz'</font> <i>(length=6)</i>
+              'txt_telefone_usuario' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'(012) 3323-2222'</font> <i>(length=15)</i>
+              'txt_celular_usuario' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'(041) 2312-3123'</font> <i>(length=15)</i>
+              'txt_email' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'sistemaeficaz@sistema.eficazsystem.com.br'</font> <i>(length=41)</i>
+              'txt_senha' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>''</font> <i>(length=0)</i>
+              'txt_cfsenha' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>''</font> <i>(length=0)</i>
+            */
+
+            //var_dump($_POST);
+            
+
             $atualizarUsuarioJson   = $usuarioModelo->atualizarUsuarioJson($_POST['idUser'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['senha'], $_POST['confirmaS']);
 
             if($atualizarUsuarioJson['status']){

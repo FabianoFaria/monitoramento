@@ -166,7 +166,7 @@
         $tabela         .="<thead><tr>
                             <th>Equipamento</th>
                             <th>Modelo</th>
-                            <th>local</th>
+                            <th>Unidade</th>
                             <th class='txt-center'>Monitorar</th>
                             </tr></thead>";
 
@@ -277,7 +277,7 @@
 
             //MONTA A LISTA PARA O SELECT
             $lista = "";
-                $lista .= "<option value='0'> Matriz </option>";
+            $lista .= "<option value='0'> Matriz </option>";
             foreach ($dadosFiliais['filiais'] as $filial) {
 
                 $idClie     = $filial['id'];
@@ -293,7 +293,7 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
 
@@ -341,7 +341,7 @@
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
@@ -372,7 +372,7 @@
         $tabela         .="<thead><tr>
                             <th>Equipamento</th>
                             <th>Modelo</th>
-                            <th>local</th>
+                            <th>Unidade</th>
                             <th class='txt-center'>Relatôrio</th>
                             </tr></thead>";
 
@@ -501,7 +501,7 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Relatôrio alarmes</th>
                                 </tr></thead>";
 
@@ -547,7 +547,7 @@
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Estatistica</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
@@ -567,8 +567,11 @@
     public function carregarListaEquipamentoFilialAlarmeDetalhadoJson(){
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+        $clienteModelo  = $this->load_model('cliente/cliente-model');
 
         $dadosEquips    = $equipeModelo->listarEquipamentosFilialCliente($_POST['idCliente'], $_POST['idFilial']);
+        $dadosFiliais   = $clienteModelo->carregarFiliaisCliente($_POST['idCliente']);
+
 
         if(!empty($dadosEquips['status'])){
 
@@ -579,7 +582,7 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Alarmes detalhados</th>
                                 </tr></thead>";
             if($listaEquip){
@@ -612,13 +615,30 @@
                     $tabela         .="</tr>";
                 $tabela         .="</tbody>";
             }
-            exit(json_encode(array('status' => true, 'equipamentos' => $tabela)));
+
+            if(!empty($dadosFiliais['status'])){
+                //MONTA A LISTA PARA O SELECT
+                $lista = "";
+                    $lista .= "<option value='0'> Matriz </option>";
+                foreach ($dadosFiliais['filiais'] as $filial) {
+
+                    $idClie     = $filial['id'];
+                    $nomeFili   = $filial['nome'];
+
+                    $lista .= "<option value='".$idClie."'>".$nomeFili."</option>";
+                }
+            }else{
+                $lista = "";
+                    $lista .= "<option value='0'> Matriz </option>";
+            }
+
+            exit(json_encode(array('status' => true, 'equipamentos' => $tabela, 'filiais' => $lista)));
         }else{
             //GERA TABELA VAZIA
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Estatisticas</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
@@ -627,7 +647,24 @@
                 $tabela         .="</tr>";
             $tabela         .="</tbody>";
 
-            exit(json_encode(array('status' => false, 'equipamentos' => $tabela)));
+            if(!empty($dadosFiliais['status'])){
+                //MONTA A LISTA PARA O SELECT
+                $lista = "";
+                    $lista .= "<option value='0'> Matriz </option>";
+                foreach ($dadosFiliais['filiais'] as $filial) {
+
+                    $idClie     = $filial['id'];
+                    $nomeFili   = $filial['nome'];
+
+                    $lista .= "<option value='".$idClie."'>".$nomeFili."</option>";
+                }
+            }else{
+                $lista = "";
+                    $lista .= "<option value='0'> Matriz </option>";
+            }
+
+            //exit(json_encode(array('status' => false, 'equipamentos' => $tabela)));
+            exit(json_encode(array('status' => false, 'equipamentos' => $tabela, 'filiais' => $lista)));
         }
 
     }
@@ -651,7 +688,7 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
             if($listaEquip){
@@ -694,7 +731,7 @@
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
@@ -726,7 +763,7 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
             if($listaEquip){
@@ -769,7 +806,7 @@
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
@@ -801,7 +838,7 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Estatisticas</th>
                                 </tr></thead>";
             if($listaEquip){
@@ -844,7 +881,7 @@
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Estatisticas</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
@@ -894,8 +931,8 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>Cliente</th>
-                                <th>local</th>
+                                <th>Unidade</th>
+                                <th>Estado</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
             if($listaEquip){
@@ -910,11 +947,13 @@
                             $tabela         .="<td>";
                                 $tabela     .=$equip['nomeModeloEquipamento'];
                             $tabela         .="</td>";
-                            $tabela         .="<td>";
-                                $tabela     .=$equip['cliente'];
-                            $tabela         .="</td>";
+
                             $tabela         .="<td>";
                                 $tabela     .= (isset($equip['filial'])) ? $equip['filial'] : "Matriz";
+                            $tabela         .="</td>";
+
+                            $tabela         .="<td>";
+                                $tabela     .=$equip['estado'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $link       = HOME_URI."/monitoramento/gerarGrafico/".$equip['id']."";
@@ -939,7 +978,7 @@
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
@@ -989,8 +1028,8 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>Cliente</th>
-                                <th>local</th>
+                                <th>Unidade</th>
+                                <th>Estado</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
             if($listaEquip){
@@ -1005,12 +1044,15 @@
                             $tabela         .="<td>";
                                 $tabela     .=$equip['nomeModeloEquipamento'];
                             $tabela         .="</td>";
-                            $tabela         .="<td>";
-                                $tabela     .=$equip['cliente'];
-                            $tabela         .="</td>";
+
                             $tabela         .="<td>";
                                 $tabela     .= (isset($equip['filial'])) ? $equip['filial'] : "Matriz";
                             $tabela         .="</td>";
+
+                            $tabela         .="<td>";
+                                $tabela     .=$equip['estado'];
+                            $tabela         .="</td>";
+
                             $tabela         .="<td>";
                                 $link       = HOME_URI."/grafico/opcaoVisualizacao/".$equip['id']."";
                                 $tabela     .= "<a href='".$link."'><i class='fa fa-clipboard fa-2x'></i></a>";
@@ -1034,7 +1076,7 @@
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Monitorar</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
@@ -1084,8 +1126,8 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>Cliente</th>
-                                <th>local</th>
+                                <th>Unidade</th>
+                                <th>Estado</th>
                                 <th class='txt-center'>Estatistica</th>
                                 </tr></thead>";
             if($listaEquip){
@@ -1100,12 +1142,15 @@
                             $tabela         .="<td>";
                                 $tabela     .=$equip['nomeModeloEquipamento'];
                             $tabela         .="</td>";
-                            $tabela         .="<td>";
-                                $tabela     .=$equip['cliente'];
-                            $tabela         .="</td>";
+
                             $tabela         .="<td>";
                                 $tabela     .= (isset($equip['filial'])) ? $equip['filial'] : "Matriz";
                             $tabela         .="</td>";
+
+                            $tabela         .="<td>";
+                                $tabela     .=$equip['estado'];
+                            $tabela         .="</td>";
+
                             $tabela         .="<td>";
                                 $link       = HOME_URI."/grafico/graficoFisicoParametrosEquipamentoCliente/".$equip['id']."";
                                 $tabela     .= "<a href='".$link."'><i class='fa fa-list-alt fa-2x'></i></a>";
@@ -1129,7 +1174,7 @@
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
+                                <th>Unidade</th>
                                 <th class='txt-center'>Estatistica</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
@@ -1179,8 +1224,8 @@
             $tabela         .="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>Cliente</th>
-                                <th>local</th>
+                                <th>Unidade</th>
+                                <th>Estado</th>
                                 <th class='txt-center'>Estatistica</th>
                                 </tr></thead>";
 
@@ -1197,10 +1242,10 @@
                                 $tabela     .=$equip['nomeModeloEquipamento'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
-                                $tabela     .=$equip['cliente'];
+                                $tabela     .= (isset($equip['filial'])) ? $equip['filial'] : "Matriz";
                             $tabela         .="</td>";
                             $tabela         .="<td>";
-                                $tabela     .= (isset($equip['filial'])) ? $equip['filial'] : "Matriz";
+                                $tabela     .=$equip['estado'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $link       = HOME_URI."/grafico/graficoFisicoParametrosEquipamentoAlarmeDetalhado/".$equip['id']."";
@@ -1225,8 +1270,8 @@
             $tabela         ="<thead><tr>
                                 <th>Equipamento</th>
                                 <th>Modelo</th>
-                                <th>local</th>
-                                <th class='txt-center'>Detalhes alarme</th>
+                                <th>Unidade</th>
+                                <th>Estado</th>
                                 </tr></thead>";
             $tabela         .="<tbody>";
                 $tabela         .="<tr>";
@@ -1318,8 +1363,6 @@
             require_once EFIPATH . "/views/cliente/editarCliente-view.php";
             require_once EFIPATH . "/views/_includes/footer.php";
         }
-
-
 
     }
 

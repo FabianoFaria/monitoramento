@@ -42,7 +42,7 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
     <div class="col-md-12">
 
         <!-- formulario de cadastro -->
-        <form method="post" id="edicao_usuario">
+        <form method="post" id="edicao_usuario" enctype="multipart/form-data">
 
             <div class="row">
 
@@ -54,6 +54,19 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
                 </div>
 
             </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Imagem do usuário</label>
+                        <input id="imagemUser" name="imagemUser" type="file" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+
             <div class="row">
 
                 <!-- nome do usuario -->

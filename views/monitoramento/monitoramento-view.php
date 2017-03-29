@@ -100,15 +100,18 @@ switch ($_SESSION['userdata']['tipo_usu']) {
                             </p>
                         </div>
                         <div class="col-md-3">
+
                             <!-- <p>
-                                Local : <select id="filtroLocalLista" class="form-control">
-                                            <option value="0">Selecione... </option>
-                                        </select>
+                                Unidade : <input type="text" class="form-control" id="filtroLocalAutoComplete" name="filtroLocalAutoComplete" value="">
+                                <input type="hidden" id="localId" value="" />
                             </p> -->
                             <p>
-                                Local : <input type="text" class="form-control" id="filtroLocalAutoComplete" name="filtroLocalAutoComplete" value="">
+                                Unidade : <select id="filtroLocalLista" class="form-control">
+                                            <option value="0">Selecione... </option>
+                                        </select>
                                 <input type="hidden" id="localId" value="" />
                             </p>
+
                         </div>
                         <div class="col-md-3">
                             <p>
@@ -144,6 +147,7 @@ switch ($_SESSION['userdata']['tipo_usu']) {
                                 <br />
                                 <button class="btn btn-primary" id="limparFiltro">Limpar filtro</button>
                             </p>
+
                         </div>
 
                     </form>

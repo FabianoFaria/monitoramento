@@ -40,6 +40,8 @@ if(is_numeric($this->parametros[0])){
     // CARREGA OS PARAMETROS CONFIGURADOS PARA O EQUIPAMENTO
     $retorno = $modelo->loadGraficoParam($idEquip, $idSimEquip, $idSim);
 
+    //var_dump($dadosEquipamento);
+
 }else{
     $retorno = null;
 }
@@ -90,11 +92,12 @@ else
         var menu = document.getElementById('listadir');
         menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / ' +
                          '<a href="<?php echo HOME_URI; ?>/monitoramento/" class="linkMenuSup">Monitoramento</a> / ' +
-                         '<a href="<?php echo HOME_URI; ?>/monitoramento/unidades/<?php echo $idClie ?>"> <?php echo $nomeClie; ?></a>' +
+                         '<a href="<?php echo HOME_URI; ?>/monitoramento/unidades/<?php echo $idClie ?>"> Unidade :<?php echo (isset($dadosEquipamento['filial'])) ? $dadosEquipamento['filial'] :"Matriz"; ?></a>' +
                          '/<a href="<?php echo HOME_URI; ?>/monitoramento/gerarGrafico/<?php echo $this->parametros[0]; ?>"> <?php echo $equipamentoMonitorado; ?> </a>';
     </script>
 
     <?php
+
     // Verifica se existe retorno
     if (!$cValor)
     {

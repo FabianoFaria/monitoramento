@@ -50,7 +50,7 @@
                                 <th>Fabricante</th>
                                 <!-- <th>Potencia</th>-->
                                 <th>Cliente</th>
-                                <th>Local</th>
+                                <th>Unidade</th>
                                 <!-- <th>Quantidade baterias</th> -->
                                 <th>N° SIM</th>
                                 <!-- <th>Tipo bateria</th> -->

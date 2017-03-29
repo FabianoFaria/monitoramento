@@ -4,6 +4,7 @@
 
     $dadosCliente   = $modeloClie->carregarDadosCliente($this->parametros[0]);
 
+
     /*
     * INICIA CONTADOR DE ALERTAS
     */

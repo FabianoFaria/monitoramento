@@ -143,7 +143,7 @@ class EquipamentoModel extends MainModel
                         LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                         LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
                         LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0
-                        WHERE equip.id_cliente = '$idCliente' AND equip.id_filial = '$idFili'
+                        WHERE equip.id_cliente = '$idCliente' AND equip.id_filial = '$idFili' AND equip.status_ativo = '1'
                         GROUP BY equip.id";
 
             /* MONTA A RESULT */
@@ -197,7 +197,8 @@ class EquipamentoModel extends MainModel
              equip.qnt_bateria,
              equip.tipo_bateria,
              equip.localBateria,
-             clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip' ";
+             clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip',
+             estado.nome as 'estado'";
 
             $query .= "";
 
@@ -205,6 +206,7 @@ class EquipamentoModel extends MainModel
             $query .= " JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante";
             $query .= " LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id";
             $query .= " LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id";
+            $query .= " LEFT JOIN tb_estado estado ON estado.id = clie.id_estado";
             $query .= " LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0";
             $query .= " WHERE equip.status_ativo = '1' ";
             if($idCliente != 0 ){

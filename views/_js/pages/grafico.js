@@ -379,7 +379,7 @@ $().ready(function() {
                         * PREENCHE O SELECT ALVO
                         */
                         $('#filtroLocalLista').html(datra.filiais);
-
+                        //$('#filtroLocalAutoComplete').html(datra.filiais);
 
                         /*
                         * PREENCHE TABELA COM EQUIPAMENTOS
@@ -392,7 +392,8 @@ $().ready(function() {
                         $('#localId').val(0);
 
                     }else{
-                        //$('#filtroLocalLista').html(datra.filiais);
+                        $('#filtroLocalLista').html(datra.filiais);
+                        //$('#filtroLocalAutoComplete').html(datra.filiais);
                         // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
                         $('#listaMonitoria').html(datra.equipamentos);
                         $('#localId').val(0);
@@ -420,96 +421,151 @@ $().ready(function() {
     * FILTRA OS EQUIPAMENTOS DE ACORDO COM A ESCOLHA DO LOCAL
     * DEMANDA AS FUNÇÕES SPLIT E AUTOCOMPLETE
     */
-    $("#filtroLocalAutoComplete")
-      // don't navigate away from the field on tab when selecting an item
-      .on( "keydown", function( event ) {
+    // $("#filtroLocalAutoComplete")
+    //   // don't navigate away from the field on tab when selecting an item
+    //   .on( "keydown", function( event ) {
+    //
+    //     var idClie = $('#filtroClienteLista').val();
+    //
+    //     /*
+    //     * VERIFICA SE FOI SELECIONADO UM CLIENTE
+    //     */
+    //     if(idClie != ''){
+    //         if ( event.keyCode === $.ui.keyCode.TAB &&
+    //             $( this ).autocomplete( "instance" ).menu.active ) {
+    //           event.preventDefault();
+    //         }
+    //     }else{
+    //        swal('','Selecione um cliente antes!','info');
+    //     }
+    //     /*
+    //     * RETORNA OS EQUIPAMENTOS DA MATRIZ
+    //     */
+    //    //  if(){
+    //    //      console.log('Chamando a matriz');
+    //    //  } IMPLEMENTAR
+    //
+    //   })
+    //   .autocomplete({
+    //     source: function( request, response ) {
+    //       $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteLista").val(), {
+    //         term: extractLast( request.term )
+    //       }, response
+    //   );
+    //     },
+    //     search: function() {
+    //       // custom minLength
+    //       var term = extractLast( this.value );
+    //       if ( term.length < 2 ) {
+    //         return false;
+    //       }
+    //     },
+    //     focus: function() {
+    //       // prevent value inserted on focus
+    //       return false;
+    //     },
+    //     select: function( event, ui ) {
+    //
+    //        $('#localId').val(ui.item.id);
+    //
+    //        //GERA A TABELA DE EQUIPAMENTOS CONFORME O LOCAL ESCOLHIDO
+    //        var idFilial    = ui.item.id;
+    //        var idCliente   = $('#filtroClienteLista').val();
+    //
+    //        if(idFilial != ''){
+    //            //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+    //            $.ajax({
+    //                url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialRelatoriosJson",
+    //                secureuri: false,
+    //                type : "POST",
+    //                dataType: 'json',
+    //                data      : {
+    //                    'idCliente' : idCliente,
+    //                    'idFilial' : idFilial
+    //                },
+    //                success : function(datra)
+    //                {
+    //                    if(datra.status){
+    //
+    //                        /*
+    //                        * PREENCHE TABELA COM EQUIPAMENTOS
+    //                        */
+    //                        $('#listaMonitoria').html(datra.equipamentos);
+    //
+    //                    }else{
+    //
+    //                        // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+    //                        $('#listaMonitoria').html(datra.equipamentos);
+    //                    }
+    //
+    //                },
+    //                error: function(jqXHR, textStatus, errorThrown)
+    //                {
+    //                    //Settar a mensagem de erro!
+    //                    // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+    //                    swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
+    //                     // Handle errors here
+    //                     console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+    //                     // STOP LOADING SPINNER
+    //                }
+    //            });
+    //        }
+    //    }
+    // });
 
-        var idClie = $('#filtroClienteLista').val();
+    /*
+    * FILTRA OS EQUIPAMENTOS DE ACORDO COM A ESCOLHA DO LOCAL
+    */
+    $('#filtroLocalLista').change(function() {
 
-        /*
-        * VERIFICA SE FOI SELECIONADO UM CLIENTE
-        */
-        if(idClie != ''){
-            if ( event.keyCode === $.ui.keyCode.TAB &&
-                $( this ).autocomplete( "instance" ).menu.active ) {
-              event.preventDefault();
-            }
+        var idFilial    = $(this).val();
+        var idCliente   = $('#filtroClienteLista').val();
+
+        if(idFilial != ''){
+
+            //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+            $.ajax({
+                url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialRelatoriosJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'idCliente' : idCliente,
+                    'idFilial' : idFilial
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
+
+                        /*
+                        * PREENCHE TABELA COM EQUIPAMENTOS
+                        */
+                        $('#listaMonitoria').html(datra.equipamentos);
+                        $('#localId').val(idFilial);
+
+                    }else{
+
+                        // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                        $('#listaMonitoria').html(datra.equipamentos);
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+
+                    //Settar a mensagem de erro!
+                        // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                        swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
         }else{
-           swal('','Selecione um cliente antes!','info');
+            $('#filtroEquipLista').html("<option value=''> Selecione...</option>");
         }
-        /*
-        * RETORNA OS EQUIPAMENTOS DA MATRIZ
-        */
-       //  if(){
-       //      console.log('Chamando a matriz');
-       //  } IMPLEMENTAR
 
-      })
-      .autocomplete({
-        source: function( request, response ) {
-          $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteLista").val(), {
-            term: extractLast( request.term )
-          }, response
-      );
-        },
-        search: function() {
-          // custom minLength
-          var term = extractLast( this.value );
-          if ( term.length < 2 ) {
-            return false;
-          }
-        },
-        focus: function() {
-          // prevent value inserted on focus
-          return false;
-        },
-        select: function( event, ui ) {
-
-           $('#localId').val(ui.item.id);
-
-           //GERA A TABELA DE EQUIPAMENTOS CONFORME O LOCAL ESCOLHIDO
-           var idFilial    = ui.item.id;
-           var idCliente   = $('#filtroClienteLista').val();
-
-           if(idFilial != ''){
-               //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
-               $.ajax({
-                   url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialRelatoriosJson",
-                   secureuri: false,
-                   type : "POST",
-                   dataType: 'json',
-                   data      : {
-                       'idCliente' : idCliente,
-                       'idFilial' : idFilial
-                   },
-                   success : function(datra)
-                   {
-                       if(datra.status){
-
-                           /*
-                           * PREENCHE TABELA COM EQUIPAMENTOS
-                           */
-                           $('#listaMonitoria').html(datra.equipamentos);
-
-                       }else{
-
-                           // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
-                           $('#listaMonitoria').html(datra.equipamentos);
-                       }
-
-                   },
-                   error: function(jqXHR, textStatus, errorThrown)
-                   {
-                       //Settar a mensagem de erro!
-                       // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
-                       swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
-                        // Handle errors here
-                        console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
-                        // STOP LOADING SPINNER
-                   }
-               });
-           }
-       }
     });
 
    /* FUNÇÕES ADICIONAIS DE AUTOCOMPLETE
@@ -601,8 +657,8 @@ $().ready(function() {
                         /*
                         * PREENCHE O SELECT ALVO
                         */
-                        $('#filtroLocalLista').html(datra.filiais);
-
+                        //$('#filtroLocalLista').html(datra.filiais);
+                        $('#filtroLocalListaGerador').html(datra.filiais);
 
                         /*
                         * PREENCHE TABELA COM EQUIPAMENTOS
@@ -616,6 +672,7 @@ $().ready(function() {
 
                     }else{
                         //$('#filtroLocalLista').html(datra.filiais);
+                        $('#filtroLocalListaGerador').html(datra.filiais);
                         // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
                         $('#listaMonitoria').html(datra.equipamentos);
                         $('#localId').val(0);
@@ -639,6 +696,64 @@ $().ready(function() {
         }
 
     });
+
+
+    /*
+    * FILTRA OS EQUIPAMENTOS DE ACORDO COM A ESCOLHA DO LOCAL
+    */
+    $('#filtroLocalListaGerador').change(function() {
+
+        var idFilial    = $(this).val();
+        var idCliente   = $('#filtroClienteLista').val();
+
+        if(idFilial != ''){
+
+            //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+            $.ajax({
+                url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialEstatisticaJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'idCliente' : idCliente,
+                    'idFilial' : idFilial
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
+
+                        /*
+                        * PREENCHE TABELA COM EQUIPAMENTOS
+                        */
+                        $('#listaMonitoria').html(datra.equipamentos);
+                        $('#localId').val(idFilial);
+
+                    }else{
+
+                        // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                        $('#listaMonitoria').html(datra.equipamentos);
+                        $('#localId').val(0);
+                    }
+
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+
+                    //Settar a mensagem de erro!
+                        // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                        swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
+        }else{
+            $('#filtroEquipLista').html("<option value=''> Selecione...</option>");
+        }
+
+    });
+
 
     /*
     * FILTRA OS EQUIPAMENTOS DE ACORDO COM A ESCOLHA DO LOCAL PARA ESTATISTICA
@@ -816,8 +931,8 @@ $().ready(function() {
                         /*
                         * PREENCHE O SELECT ALVO
                         */
-                        $('#filtroLocalLista').html(datra.filiais);
-
+                        //$('#filtroLocalLista').html(datra.filiais);
+                        $('#filtroLocalListaGeradorDetalhado').html(datra.filiais);
 
                         /*
                         * PREENCHE TABELA COM EQUIPAMENTOS
@@ -831,6 +946,7 @@ $().ready(function() {
 
                     }else{
                         //$('#filtroLocalLista').html(datra.filiais);
+                        $('#filtroLocalListaGeradorDetalhado').html(datra.filiais);
                         // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
                         $('#listaMonitoria').html(datra.equipamentos);
                         $('#localId').val(0);
@@ -857,90 +973,150 @@ $().ready(function() {
     /*
     * FILTRA OS EQUIPAMENTOS DE ACORDO COM A ESCOLHA DO LOCAL PARA DETALHAMENTO DE ALARMES
     */
+    $('#filtroLocalListaGeradorDetalhado').change(function() {
 
-    $("#filtroLocalAutoCompleteAlarmeDetalhado")
-        // don't navigate away from the field on tab when selecting an item
-        .on( "keydown", function( event ) {
+        var idFilial    = $(this).val();
+        var idCliente   = $('#filtroClienteAlarmeDetalhado').val();
 
-            var idClie = $('#filtroClienteAlarmeDetalhado').val();
+        if(idFilial != ''){
 
-            /*
-            * VERIFICA SE FOI SELECIONADO UM CLIENTE
-            */
-            if(idClie != ''){
-                if ( event.keyCode === $.ui.keyCode.TAB &&
-                    $( this ).autocomplete( "instance" ).menu.active ) {
-                  event.preventDefault();
-                }
-            }else{
-               swal('','Selecione um cliente antes!','info');
-            }
+            //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+            $.ajax({
+                url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialAlarmeDetalhadoJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data      : {
+                    'idCliente' : idCliente,
+                    'idFilial' : idFilial
+                },
+                success : function(datra)
+                {
+                    if(datra.status){
 
-        }).autocomplete({
-        source: function( request, response ) {
-            $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteAlarmeDetalhado").val(), {
-              term: extractLast( request.term )
-            }, response
-        );
-        },
-        search: function() {
-            // custom minLength
-            var term = extractLast( this.value );
-              if ( term.length < 2 ) {
-                return false;
-            }
-        },
-        focus: function() {
-            // prevent value inserted on focus
-            return false;
-        },
-        select: function( event, ui ) {
+                        /*
+                        * PREENCHE TABELA COM EQUIPAMENTOS
+                        */
+                        $('#listaMonitoria').html(datra.equipamentos);
+                        $('#localId').val(idFilial);
 
-            $('#localId').val(ui.item.id);
+                    }else{
 
-            //GERA A TABELA DE EQUIPAMENTOS CONFORME O LOCAL ESCOLHIDO
-            var idFilial    = ui.item.id;
-            var idCliente   = $('#filtroClienteAlarmeDetalhado').val();
+                        // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                        $('#listaMonitoria').html(datra.equipamentos);
+                    }
 
-            if(idFilial != ''){
-                //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
-                $.ajax({
-                    url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialAlarmeDetalhadoJson",
-                    secureuri: false,
-                    type : "POST",
-                    dataType: 'json',
-                    data      : {
-                        'idCliente' : idCliente,
-                        'idFilial' : idFilial
-                    },
-                    success : function(datra)
-                    {
-                        if(datra.status){
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
 
-                            /*
-                            * PREENCHE TABELA COM EQUIPAMENTOS
-                            */
-                            $('#listaMonitoria').html(datra.equipamentos);
-
-                        }else{
-
-                            // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
-                            $('#listaMonitoria').html(datra.equipamentos);
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown)
-                    {
-                        //Settar a mensagem de erro!
+                    //Settar a mensagem de erro!
                         // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
                         swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
-                        // Handle errors here
-                        console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
-                        // STOP LOADING SPINNER
-                    }
-                });
-            }
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
+        }else{
+            $('#filtroEquipLista').html("<option value=''> Selecione...</option>");
         }
+
     });
+
+    /*
+    * FILTRA OS EQUIPAMENTOS DE ACORDO COM A ESCOLHA DO LOCAL PARA DETALHAMENTO DE ALARMES
+    */
+
+    // $("#filtroLocalAutoCompleteAlarmeDetalhado")
+    //     // don't navigate away from the field on tab when selecting an item
+    //     .on( "keydown", function( event ) {
+    //
+    //         var idClie = $('#filtroClienteAlarmeDetalhado').val();
+    //
+    //         /*
+    //         * VERIFICA SE FOI SELECIONADO UM CLIENTE
+    //         */
+    //         if(idClie != ''){
+    //             if ( event.keyCode === $.ui.keyCode.TAB &&
+    //                 $( this ).autocomplete( "instance" ).menu.active ) {
+    //               event.preventDefault();
+    //             }
+    //         }else{
+    //            swal('','Selecione um cliente antes!','info');
+    //         }
+    //
+    //     }).autocomplete({
+    //     source: function( request, response ) {
+    //         $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteAlarmeDetalhado").val(), {
+    //           term: extractLast( request.term )
+    //         }, response
+    //     );
+    //     },
+    //     search: function() {
+    //         // custom minLength
+    //         var term = extractLast( this.value );
+    //           if ( term.length < 2 ) {
+    //             return false;
+    //         }
+    //     },
+    //     focus: function() {
+    //         // prevent value inserted on focus
+    //         return false;
+    //     },
+    //     select: function( event, ui ) {
+    //
+    //         $('#localId').val(ui.item.id);
+    //
+    //         //GERA A TABELA DE EQUIPAMENTOS CONFORME O LOCAL ESCOLHIDO
+    //         var idFilial    = ui.item.id;
+    //         var idCliente   = $('#filtroClienteAlarmeDetalhado').val();
+    //
+    //         if(idFilial != ''){
+    //             //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+    //             $.ajax({
+    //                 url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialAlarmeDetalhadoJson",
+    //                 secureuri: false,
+    //                 type : "POST",
+    //                 dataType: 'json',
+    //                 data      : {
+    //                     'idCliente' : idCliente,
+    //                     'idFilial' : idFilial
+    //                 },
+    //                 success : function(datra)
+    //                 {
+    //                     if(datra.status){
+    //
+    //                         /*
+    //                         * PREENCHE TABELA COM EQUIPAMENTOS
+    //                         */
+    //                         $('#listaMonitoria').html(datra.equipamentos);
+    //
+    //                         /*
+    //                         * RETIRA O VALOR DO ID DE FILIAL
+    //                         */
+    //                         $('#localId').val(idFilial);
+    //
+    //                     }else{
+    //
+    //                         // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+    //                         $('#listaMonitoria').html(datra.equipamentos);
+    //                     }
+    //                 },
+    //                 error: function(jqXHR, textStatus, errorThrown)
+    //                 {
+    //                     //Settar a mensagem de erro!
+    //                     // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+    //                     swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
+    //                     // Handle errors here
+    //                     console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+    //                     // STOP LOADING SPINNER
+    //                 }
+    //             });
+    //         }
+    //     }
+    // });
 
     /*
     * FILTRAR EQUIPAMENTOS DE ACORDO COM O CLIENTE, FILIAL E O TIPO DE EQUIPAMENTO PARA DETALHAMENTO DE ALARMES

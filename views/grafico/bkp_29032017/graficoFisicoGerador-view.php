@@ -126,16 +126,15 @@ $retorno = $modelo->buscaRelacao();
                             </p>
                         </div>
                         <div class="col-md-3">
-                            <p>
-                                Unidade : <select id="filtroLocalListaGerador" class="form-control">
+                            <!-- <p>
+                                Local : <select id="filtroLocalLista" class="form-control">
                                             <option value="0">Selecione... </option>
                                         </select>
-                                <input type="hidden" id="localId" value="" />
-                            </p>
-                            <!-- <p>
+                            </p> -->
+                            <p>
                                 Local : <input type="text" class="form-control" id="filtroLocalAutoCompleteEstatistica" name="filtroLocalAutoCompleteEstatistica" value="">
                                 <input type="hidden" id="localId" value="" />
-                            </p> -->
+                            </p>
                         </div>
                         <div class="col-md-3">
                             <p>

@@ -89,31 +89,40 @@ $().ready(function() {
         if($('#edicao_usuario').valid()){
 
             //EFETUA A REQUISIÇÃO PARA JSON PARA ATUALIZAR
+			//var formData = new FormData();
+			 var fd = new FormData(document.getElementById("edicao_usuario"));
+			 fd.append('file', $('input[type=file]')[0].files[0]);
 
-            var nomeContato     = $('#txt_nome').val();
-            var sobrenome       = $('#txt_sobrenome').val();
-            var emailContato    = $('#txt_email').val();
-            var celularContato  = $('#txt_celular_usuario').val();
-            var telefoneContato = $('#txt_telefone_usuario').val();
-            var senhaContato    = $('#txt_senha').val();
-            var confirmaSenha   = $('#txt_cfsenha').val();
-            var idUser          = $('#txt_userId').val();
+            // var nomeContato     = $('#txt_nome').val();
+            // var sobrenome       = $('#txt_sobrenome').val();
+            // var emailContato    = $('#txt_email').val();
+            // var celularContato  = $('#txt_celular_usuario').val();
+            // var telefoneContato = $('#txt_telefone_usuario').val();
+            // var senhaContato    = $('#txt_senha').val();
+            // var confirmaSenha   = $('#txt_cfsenha').val();
+            // var idUser          = $('#txt_userId').val();
+
+			/*
+				data      : {
+					'nome'      : nomeContato,
+					'sobrenome' : sobrenome,
+					'email'     : emailContato,
+					'celular'   : celularContato,
+					'telefone'  : telefoneContato,
+					'senha'     : senhaContato,
+					'confirmaS' : confirmaSenha,
+					'idUser'    : idUser
+				},
+			*/
 
             $.ajax({
                 url: urlP+"/eficazmonitor/usuario/atualizarUsuarioManual",
                 secureuri: false,
                 type : "POST",
-                dataType: 'json',
-                data      : {
-                    'nome'      : nomeContato,
-                    'sobrenome' : sobrenome,
-                    'email'     : emailContato,
-                    'celular'   : celularContato,
-                    'telefone'  : telefoneContato,
-                    'senha'     : senhaContato,
-                    'confirmaS' : confirmaSenha,
-                    'idUser'    : idUser
-                },
+                // dataType: 'json',
+				processData: false,  // tell jQuery not to process the data
+			    contentType: false,   // tell jQuery not to set contentType
+				data: fd,
                 success : function(datra)
                 {
                     if(datra.status){

@@ -112,6 +112,7 @@ $('#filtroLocalLista').change(function() {
                     * PREENCHE TABELA COM EQUIPAMENTOS
                     */
                     $('#listaMonitoria').html(datra.equipamentos);
+                    $('#localId').html(idFilial);
 
                 }else{
 
