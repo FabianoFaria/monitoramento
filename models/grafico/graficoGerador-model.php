@@ -58,8 +58,8 @@ class GraficoGeradorModel extends MainModel
     {
 
         // CRIA AS TABELAS
-        $tabela = array("b","c","d","e","f","g","i", "j", "l", "m", "n", "o", "h", "q","r");
-        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T", "Corrente R", "Corrente S", "Corrente T", "Corrente Saida R", "Corrente Saida S", "Corrente Saida T", "Bateria", "Temperatura Ambiente","Temperatura Banco bateria");
+        $tabela = array("dad.b","dad.c","dad.d","dad.e","dad.f","dad.g","dad.i", "dad.j", "dad.l", "dad.m", "dad.n", "dad.o", "dad.h", "dad.q","dad.r", "dad.er", "dadPot.es", "dadPot.et", "dadPot.cr", "dadPot.cs", "dadPot.ct");
+        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T", "Corrente R", "Corrente S", "Corrente T", "Corrente Saida R", "Corrente Saida S", "Corrente Saida T", "Bateria", "Temperatura Ambiente","Temperatura Banco bateria", "Pontência entrada R", "Pontência entrada S", "Pontência entrada T", "Pontência saída T", "Pontência saída T", "Pontência saída T");
 
         // CONVERTE DA BASE 64
         //$sim_num = base64_decode($this->parametros[0]);
@@ -81,16 +81,16 @@ class GraficoGeradorModel extends MainModel
                 $opc = explode(",",$this->parametros[1]);
 
                 // Monta a query para buscar os resultados
-                $query = "SELECT DATE(dt_criacao) date, MINUTE(dt_criacao) minut, DAY(dt_criacao) day, HOUR(dt_criacao) hour, MIN(dt_criacao) min_date, UNIX_TIMESTAMP(dt_criacao) AS 'dt_criacao', ";
+                $query = "SELECT DATE(dad.dt_criacao) date, MINUTE(dad.dt_criacao) minut, DAY(dad.dt_criacao) day, HOUR(dad.dt_criacao) hour, MIN(dad.dt_criacao) min_date, UNIX_TIMESTAMP(dad.dt_criacao) AS 'dt_criacao', ";
 
                 // Define os parametros
                 for ($a = 0; $a < sizeof($tabela) ; $a++)
                 {
                     if (($opc[$a] == 1) && (is_numeric($opc[$a]))){
 
-                        if($tabela[$a] == 'h'){
+                        if($tabela[$a] == 'dad.h'){
                             //$query .= ''.$tabela[$a] . " + (800) AS 'h',";
-                            $query .= ' IF(h > 0, h + 1700, h) AS "h",';
+                            $query .= ' IF(dad.h > 0, dad.h + 1700, dad.h) AS "h",';
                         }else{
                             $query .= ''.$tabela[$a] . ",";
                         }
@@ -105,18 +105,18 @@ class GraficoGeradorModel extends MainModel
                 $query = str_replace(",.","",$query);
 
                 //RECUPERA OS HORÁRIOS PASSADOS PELO USUÁRIO
-                $horaIni  = $opc[17];
-                $horaFim  = $opc[18];
+                $horaIni  = $opc[23];
+                $horaFim  = $opc[24];
 
                 // Recupera as datas de inicio e fim de periodo
 
-                $dataIni  = date( "Y-m-d ".$horaIni.":00", strtotime($opc[15]) );
-                $dataFim  = date( "Y-m-d ".$horaFim.":59", strtotime($opc[16]) );
+                $dataIni  = date( "Y-m-d ".$horaIni.":00", strtotime($opc[21]) );
+                $dataFim  = date( "Y-m-d ".$horaFim.":59", strtotime($opc[22]) );
 
                 //$diff       = $this->date_diff_bkp( date_create($opc[13]),date_create($opc[14]));
                 // $diasDiff   = $diff->format("%R%a days");
-                $datetime1 = date_create($opc[15]);
-                $datetime2 = date_create($opc[16]);
+                $datetime1 = date_create($opc[21]);
+                $datetime2 = date_create($opc[22]);
                 $intervalInDays = ($datetime2->format("U") - $datetime1->format("U"))/(3600 * 24);
 
                 $diasDiff   = $intervalInDays;
@@ -148,15 +148,16 @@ class GraficoGeradorModel extends MainModel
                 * TOMAR CUIDADO COM AS VERSÕES DE MYSQL, POIS A QUERY É COMPLETAMENTE DIFERENTE.
                 */
                 // Inicio versão em produção
-                $query .= " FROM tb_dados";
-                $query .= " WHERE dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}' AND num_sim = '{$sim_num}'";
+                $query .= " FROM tb_dados dad";
+                $query .= " JOIN tb_dados_potencia dadPot ON dadPot.num_sim = dad.num_sim";
+                $query .= " WHERE dad.dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}' AND dad.num_sim = '{$sim_num}'";
 
                 if($diasDiff > 60){
-                    $query .=" GROUP BY DATE(dt_criacao)";
+                    $query .=" GROUP BY DATE(dad.dt_criacao)";
                 }elseif($diasDiff > 1){
-                    $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao)";
+                    $query .=" GROUP BY DATE(dad.dt_criacao),HOUR(dad.dt_criacao)";
                 }else{
-                    $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao), MINUTE(dt_criacao)";
+                    $query .=" GROUP BY DATE(dad.dt_criacao),HOUR(dad.dt_criacao), MINUTE(dad.dt_criacao)";
                 }
                 // Final da versão em produção
 
@@ -211,7 +212,7 @@ class GraficoGeradorModel extends MainModel
                 // $query .=" WHERE a.num_sim = '' AND a.dt_criacao BETWEEN ' 00:00:00' AND ' 23:59:59' ORDER BY a.dt_criacao DESC ";
 
                 //var_dump( $opc, $query, $diasDiff);
-                //var_dump($query);
+                var_dump($query);
 
                 // Busca os dados no banco
                 $result = $this->verificaQuery($query);

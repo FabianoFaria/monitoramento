@@ -63,7 +63,7 @@ function geraGrafico(link)
     if (!tempAmb) tempAmb = 0; else tempAmb = 1;
     if (!tempBanco) tempBanco = 0; else tempBanco = 1;
 
-    var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c+ "," + entr1tc + "," + ents1tc + "," + entt1tc + "," + entr1cc + "," + ents1cc + "," + entt1cc + "," + batent +","+tempAmb+","+tempBanco+ "," + dataIni + "," + dataFim + ","+ horasDas +","+horasAte;
+    var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c+ "," + entr1tc + "," + ents1tc + "," + entt1tc + "," + entr1cc + "," + ents1cc + "," + entt1cc + "," + batent +","+tempAmb+","+tempBanco+ ",0,0,0,0,0,0," + dataIni + "," + dataFim + ","+ horasDas +","+horasAte;
     window.location.href = link + url;
 
 }
