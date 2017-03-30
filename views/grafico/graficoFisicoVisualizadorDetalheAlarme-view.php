@@ -48,7 +48,7 @@
     var menu = document.getElementById('listadir');
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / '+
                       '<a href="<?php echo HOME_URI; ?>/grafico/graficoTratamentoAlarme" class="linkMenuSup">Relatôrio alarmes detalhados</a> / '+
-                      '<a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoEquipamentoCliente/<?php echo $this->parametros[0]; ?>"> Cliente :<?php echo $nomeCliente; ?></a> /'+
+                      '<a href="#"> Unidade : <?php echo (isset($lista[0]['filial'])) ? $lista[0]['filial'] :"Matriz"; ?></a> /'+
                       '<a href="<?php echo HOME_URI; ?>/grafico/gerarRelatorioAlarmeDetalheEquipamentoCliente/<?php echo $this->parametros[0]; ?>/<?php echo $this->parametros[1]; ?>/<?php echo $this->parametros[2]; ?>/<?php echo $this->parametros[3]; ?>"> Gerando relatôrio detalhado alarme </a>';
 </script>
 
@@ -68,7 +68,8 @@
         <div class="panel panel-success">
 
             <div class="panel-heading">
-                Cliente : <?php echo $nomeCliente; ?>
+                <!-- Cliente : <?php //echo $nomeCliente; ?> -->
+                Unidade : <?php echo (isset($lista[0]['filial'])) ? $lista[0]['filial'] :"Matriz"; ?>
                 <div class="col-md-4 pull-right">
                     Periodo : <?php echo  implode("/", array_reverse(explode("-",($dataInicio))))." até ".implode("/", array_reverse(explode("-",($dataFim)))); ?>
                 </div>

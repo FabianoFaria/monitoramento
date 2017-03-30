@@ -704,7 +704,7 @@ $().ready(function() {
     $('#filtroLocalListaGerador').change(function() {
 
         var idFilial    = $(this).val();
-        var idCliente   = $('#filtroClienteLista').val();
+        var idCliente   = $('#filtroClienteListaEstatistica').val();
 
         if(idFilial != ''){
 

@@ -92,7 +92,7 @@
     var menu = document.getElementById('listadir');
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / '+
                       '<a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoGerador" class="linkMenuSup">Relatôrio fisico</a> / '+
-                      '<a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoEquipamentoCliente/<?php echo $this->parametros[0]; ?>"> Cliente :<?php echo $nomeCliente; ?></a> /'+
+                      '<a href="#"> Unidade : <?php echo (isset($lista[0]['filial'])) ? $lista[0]['filial'] :"Matriz"; ?> </a> /'+
                       '<a href="<?php echo HOME_URI; ?>/grafico/gerarRelatorioCliente/<?php echo $this->parametros[0]; ?>/<?php echo $this->parametros[1]; ?>/<?php echo $this->parametros[2]; ?>"> Gerando relatôrio </a>';
 </script>
 
@@ -104,6 +104,7 @@
     <div class="col-md-3">
 
         <?php
+
             if($totalParans < 4){
             ?>
                 <a class="btn btn-primary pull-right" href="<?php echo HOME_URI; ?>/grafico/exibirImpressaoRelatorio/<?php echo $this->parametros[0]; ?>/<?php echo $this->parametros[1]; ?>/<?php echo $this->parametros[2]; ?>" target="_blank"><i class="fa fa-print"></i> Imprimir relatôrio</a>
@@ -123,7 +124,8 @@
         <!-- TABELA CONTENDO OS USUÁRIOS CADASTRADOS -->
         <div class="panel panel-success">
             <div class="panel-heading">
-                Cliente : <?php echo $nomeCliente; ?>
+                <!-- //Cliente : <?php //echo $nomeCliente; ?> -->
+                Unidade : <?php echo (isset($lista[0]['filial'])) ? $lista[0]['filial'] :"Matriz"; ?>
                 <div class="col-md-4 pull-right">
                     Periodo : <?php echo  implode("/", array_reverse(explode("-",($dataInicio))))." até ".implode("/", array_reverse(explode("-",($dataFim)))); ?>
                 </div>

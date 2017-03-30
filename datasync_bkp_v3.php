@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
     /*
     * TERCEIRA VERSÃO DO DATASYNC.
@@ -161,62 +161,6 @@
                         var_dump($equipamentoAnalizado);
 
                         /*
-                        * CALCULA A POTENCIA DE ENTRADA CONSUMIDA
-                        */
-                        echo "<p> Inicio potência entrada consumida --> </p>";
-
-                            $potenciaEntradaR = 0;
-                            $potenciaEntradaS = 0;
-                            $potenciaEntradaT = 0;
-
-                            $valorB = verificaProtocoloPosicaoTebela($_POST['B'], $protocolos);
-                            $valorI = verificaProtocoloPosicaoTebela($_POST['I'], $protocolos);
-
-                            if($valorB == 1 && $valorI == 1){
-                                //Testa se é possivel calcular a potência R
-                                if((isset($_POST['B']) && ($_POST['B'] > 0)) && (isset($_POST['I']) && ($_POST['I'] > 0))){
-
-                                    $potenciaEntradaR = ($_POST['B'] / 100 ) * ($_POST['I'] / 100 );
-
-                                }
-                            }else{
-                                var_dump($valorB, $valorI);
-                            }
-
-                            $valorC = verificaProtocoloPosicaoTebela($_POST['C'], $protocolos);
-                            $valorJ = verificaProtocoloPosicaoTebela($_POST['J'], $protocolos);
-
-                            if($valorC == 1 && $valorJ == 1){
-                                //Testa se é possivel calcular a potência R
-                                if((isset($_POST['C']) && ($_POST['J'] > 0)) && (isset($_POST['C']) && ($_POST['J'] > 0))){
-
-                                    $potenciaEntradaS = ($_POST['C'] / 100 ) * ($_POST['J'] / 100 );
-
-                                }
-                            }else{
-                                var_dump($valorC, $valorJ);
-                            }
-
-
-                            $valorD = verificaProtocoloPosicaoTebela($_POST['D'], $protocolos);
-                            $valorL = verificaProtocoloPosicaoTebela($_POST['L'], $protocolos);
-
-                            if($valorD == 1 && $valorL == 1){
-                                //Testa se é possivel calcular a potência R
-                                if((isset($_POST['D']) && ($_POST['L'] > 0)) && (isset($_POST['D']) && ($_POST['L'] > 0))){
-
-                                    $potenciaEntradaT = ($_POST['D'] / 100 ) * ($_POST['L'] / 100 );
-
-                                }
-                            }else{
-                                var_dump($valorD, $valorL);
-                            }
-
-
-
-                        echo "<p> Fim potência entrada consumida --> </p>";
-
-                        /*
                         * CALCULA A POTENCIA DE SAÍDA CONSUMIDA
                         */
                         echo "<p> Inicio potência consumida --> </p>";
@@ -253,10 +197,10 @@
                                 var_dump($valorF, $valorN);
                             }
 
-                            $valorG = verificaProtocoloPosicaoTebela($_POST['G'], $protocolos);
-                            $valorO = verificaProtocoloPosicaoTebela($_POST['O'], $protocolos);
+                            $valorF = verificaProtocoloPosicaoTebela($_POST['F'], $protocolos);
+                            $valorN = verificaProtocoloPosicaoTebela($_POST['N'], $protocolos);
 
-                            if($valorG && $valorO){
+                            if($valorF && $valorN){
                                 //Testa se é possivel calcular a potência T
                                 if((isset($_POST['G']) && ($_POST['G'] > 0)) && (isset($_POST['O']) && ($_POST['O'] > 0))){
 
@@ -323,17 +267,9 @@
                         * SALVA NO BANCO A POTENCIA CONSUMIDA JUNTAMENTE COM O HORARIO E O NUM_SIM
                         */
 
-                        /*
-                        * ATUALIZAR FUNÇÃO PARA SALVAR AS POTÊNCIAS E ENTADAS DO EQUIPAMENTO
-                        */
-
-                        $salvarPotencia = salvarDadosPotenciaConsmida($_POST['A'], $equipamentoAnalizado[0]['id'], $potenciaConsumida, $statusEntrada, $tempoEstimadoHora, number_format($potenciaEntradaR, 2, '.', ''), number_format($potenciaEntradaS, 2, '.', ''), number_format($potenciaEntradaT, 2, '.', ''), number_format($potenciaR, 2, '.', ''),  number_format($potenciaS, 2, '.', ''), number_format($potenciaT, 2, '.', ''));
-
-                        //$salvarPotencia = salvarDadosPotenciaConsmida($_POST['A'], $equipamentoAnalizado[0]['id'], $potenciaConsumida, $statusEntrada, $tempoEstimadoHora);
+                        $salvarPotencia = salvarDadosPotenciaConsmida($_POST['A'], $equipamentoAnalizado[0]['id'], $potenciaConsumida, $statusEntrada, $tempoEstimadoHora);
 
                             //($numeroSim, $idEquipamento, $totalPotenciaConsumida, $statusEntrada, $tempoEstHora
-
-                        //var_dump($salvarPotencia);
 
                         /*
                         * SE O STATUS DA ENTRADA ESTIVER ATIVADO, CALCULAR E SALVAR O VALOR DO TEMPO DE ESTIMATIVA DA BATERIA
@@ -432,14 +368,14 @@
                             break;
                             case '3':
 
-                                $valoresEntrada = explode('|', $configuracaoSalva[1]);
+                                $valoresCorrente        = explode('|', $configuracaoSalva[4]);
 
-                                $valorValidoB   =  verificaProtocoloPosicaoTebela($_POST['B'], $protocolos);
-                                $valorValidoC   =  verificaProtocoloPosicaoTebela($_POST['C'], $protocolos);
-                                $valorValidoD   =  verificaProtocoloPosicaoTebela($_POST['D'], $protocolos);
+                                $valorValidoB =  verificaProtocoloPosicaoTebela($_POST['B'], $protocolos);
+                                $valorValidoC =  verificaProtocoloPosicaoTebela($_POST['C'], $protocolos);
+                                $valorValidoD =  verificaProtocoloPosicaoTebela($_POST['D'], $protocolos);
 
                                 if($valorValidoB > 0){
-                                    $statusB    = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
+                                    $statusB                = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
 
@@ -448,14 +384,14 @@
                                 }
 
                                 if($valorValidoC > 0){
-                                    $statusC    = comparaParametrosEquipamento(($_POST['C']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
+                                    $statusC                = comparaParametrosEquipamento(($_POST['C']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'c');
                                 }
 
                                 if($valorValidoD > 0){
-                                    $statusD    = comparaParametrosEquipamento(($_POST['D']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'd');
+                                    $statusD                = comparaParametrosEquipamento(($_POST['D']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'd');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'd');
@@ -504,7 +440,7 @@
                                 $valorValidoE =  verificaProtocoloPosicaoTebela($_POST['E'], $protocolos);
 
                                 if($valorValidoE > 0){
-                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
+                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'e');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
@@ -515,7 +451,7 @@
                                 $valorValidoM =  verificaProtocoloPosicaoTebela($_POST['M'], $protocolos);
 
                                 if($valorValidoM > 0){
-                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
+                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'm');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
@@ -531,14 +467,14 @@
                                 $valorValidoF =  verificaProtocoloPosicaoTebela($_POST['F'], $protocolos);
 
                                 if($valorValidoE > 0){
-                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
+                                    $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'e');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
                                 }
 
                                 if($valorValidoF > 0){
-                                    $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'f');
+                                    $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresCorrente, $idSimEquip, 'Saída tensão', 'f');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'f');
@@ -550,14 +486,14 @@
                                 $valorValidoN =  verificaProtocoloPosicaoTebela($_POST['N'], $protocolos);
 
                                 if($valorValidoM > 0){
-                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
+                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'm');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
                                 }
 
                                 if($valorValidoN > 0){
-                                    $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
+                                    $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'n');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
@@ -601,14 +537,14 @@
                                 $valorValidoO =  verificaProtocoloPosicaoTebela($_POST['O'], $protocolos);
 
                                 if($valorValidoM > 0){
-                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
+                                    $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'm');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
                                 }
 
                                 if($valorValidoN > 0){
-                                    $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
+                                    $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrente, $idSimEquip, 'Saída corrente', 'n');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
@@ -641,12 +577,12 @@
                             gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'h');
                         }
 
-                        // if($valorValidoP > 0){
-                        //     $statusP    = comparaParametrosEquipamento(($_POST['P']/100), $valoresBateria, $idSimEquip, 'Bateria', 'p');
-                        // }else{
-                        //     //GERA ALARME DE PROTOCOLO
-                        //     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'p');
-                        // }
+                        //if($valorValidoP > 0){
+                        //    $statusP    = comparaParametrosEquipamento(($_POST['P']/100), $valoresBateria, $idSimEquip, 'Bateria', 'p');
+                        //}else{
+                            //GERA ALARME DE PROTOCOLO
+                        //    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'p');
+                        //}
 
                         /*
                         * VERIFICA AS MEDIDAS DAS TEMPERATURAS
@@ -668,7 +604,7 @@
                         $valorValidoR =  verificaProtocoloPosicaoTebela($_POST['R'], $protocolos);
 
                         if($valorValidoR > 0){
-                            $statusR    = comparaParametrosEquipamento(($_POST['R']/100), $valoresTemperaturaBancoBat, $idSimEquip, 'Temperatura Banco de bateria', 'r');
+                            $statusR    = comparaParametrosEquipamento(($_POST['R']/100), $valoresTeperaturaAmbiente, $idSimEquip, 'Temperatura Banco de bateria', 'r');
                         }else{
                             //GERA ALARME DE PROTOCOLO
                             gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Temperatura Banco de bateria', 9, 1, 'r');
@@ -725,43 +661,6 @@
         // Verifica se existe valor de retorno
         if (@mysql_num_rows ($result) > 0)
         {
-            /* ARMAZENA NA ARRAY */
-            while ($row = @mysql_fetch_assoc ($result))
-            {
-                $retorno[] = $row;
-            }
-
-        }else{
-            // Se nao existir valor de retorno
-            // Armazena 0 no vetor
-            $retorno[] = 0;
-        }
-
-        // Fecha a conexao
-        $connBase->close();
-
-        return $retorno;
-    }
-
-    /*
-    * INICIA O PROCESSO DE PROCURA DE CONTATOS PARA ENVIO DE ALERTA DE DETERMINADO EQUIPAMENTO
-    */
-    function carregarContatosAlertaEquipamento($idSimEquipamento){
-
-        // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
-        $connBase      = new EficazDB;
-
-        $queryContatos = "SELECT contAlert.id_cliente, contAlert.id_filial, contAlert.nome_contato, contAlert.email, contAlert.celular
-                            FROM tb_contato_alerta_equip contAlert
-                            JOIN tb_sim sim ON sim.id_cliente = contAlert.id_cliente
-                            JOIN tb_sim_equipamento simEquip ON simEquip.id_sim = sim.num_sim
-                            WHERE simEquip.id = '$idSimEquipamento'";
-
-        // Monta a result
-        $result = $connBase->select($queryContatos);
-
-        // Verifica se existe valor de retorno
-        if (@mysql_num_rows ($result) > 0){
             /* ARMAZENA NA ARRAY */
             while ($row = @mysql_fetch_assoc ($result))
             {
@@ -981,9 +880,6 @@
                 //Procura os contatos para envio de alerta da tabela tb_contato_alerta
                 $listaContatos      = carregarContatosAlerta($idSimEquip);
 
-                //Procura os contatos de determinado equipamento para enviar EMAILS
-                $listaContatosEquip = carregarContatosAlertaEquipamento($idSimEquip);
-
                 // Cria um objeto de da classe de email
                 $mailer        = new email;
 
@@ -1002,23 +898,6 @@
                         //POSIBILIDADE DE CADASTRO NO LOG EM CASO DE FALHA DE ENVIO
 
                         echo $resultadoEnvio;
-                    }
-                }
-
-                /*
-                * Verifica se a lista de contatos do equipamento não está vazia, então inicia o envio de emails
-                */
-                if(!empty($listaContatosEquip)){
-
-                    foreach ($listaContatosEquip as $contato) {
-
-                        var_dump($contato);
-
-                        //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
-
-                        $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
-
-                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
                     }
                 }
             }
@@ -1065,8 +944,6 @@
                 //Procura os contatos para envio de alerta da tabela tb_contato_alerta
                 $listaContatos      = carregarContatosAlerta($idSimEquip);
 
-                $listaContatosEquip = carregarContatosAlertaEquipamento($idSimEquip);
-
                 // Cria um objeto de da classe de email
                 $mailer             = new email;
 
@@ -1079,24 +956,6 @@
                     foreach ($listaContatos as $contato) {
 
                         //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
-
-                        $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
-
-                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
-                    }
-                }
-
-                /*
-                * Verifica se a lista de contatos do equipamento não está vazia, então inicia o envio de emails
-                */
-                if(!empty($listaContatosEquip)){
-
-
-
-                    foreach ($listaContatosEquip as $contato) {
-                        //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
-
-                        var_dump($contato);
 
                         $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
 
@@ -1293,15 +1152,15 @@
     * RECEBE OS DADOS DE POTENCIA DE SAIDA PARA SALVAR NO BANCO DE DADOS
     * O NÚMERO SIM, A POTÊNCIA, DATA E HORA E O STATUS DE VALOR DE ENTRADA
     */
-    function salvarDadosPotenciaConsmida($numeroSim, $idEquipamento, $totalPotenciaConsumida, $statusEntrada, $tempoEstHora, $potenciaEntradaR, $potenciaEntradaS, $potenciaEntradaT, $potenciaR, $potenciaS, $potenciaT){
+    function salvarDadosPotenciaConsmida($numeroSim, $idEquipamento, $totalPotenciaConsumida, $statusEntrada, $tempoEstHora){
 
         // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
         $connBase   = new EficazDB;
 
         $query  = "INSERT INTO tb_dados_potencia
-                    ( id_equipamento, num_sim, potencia_saida, tempoEstimadoHora, status_entrada , er, es, et, cr, cs, ct)
+                    ( id_equipamento, num_sim, potencia_saida, tempoEstimadoHora, status_entrada )
                     VALUES
-                    ('$idEquipamento', '$numeroSim', '$totalPotenciaConsumida', '$tempoEstHora', '$statusEntrada', '$potenciaEntradaR', '$potenciaEntradaS','$potenciaEntradaT','$potenciaR','$potenciaS','$potenciaT')";
+                    ('$idEquipamento', '$numeroSim', '$totalPotenciaConsumida', '$tempoEstHora', '$statusEntrada')";
 
         $connBase->query($query);
 

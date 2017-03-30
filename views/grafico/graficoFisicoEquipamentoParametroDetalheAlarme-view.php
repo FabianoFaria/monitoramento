@@ -119,7 +119,7 @@
 <script type="text/javascript">
     // gerenciador de link
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoTratamentoAlarme" class="linkMenuSup">Relatôrio alarme detalhado </a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoParametrosEquipamentoAlarmeDetalhado/<?php echo $this->parametros[0]; ?>"> Cliente :<?php echo $nomeCliente; ?></a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoTratamentoAlarme" class="linkMenuSup">Relatôrio alarme detalhado </a> / <a href="<?php echo HOME_URI; ?>/grafico/graficoFisicoParametrosEquipamentoAlarmeDetalhado/<?php echo $this->parametros[0]; ?>"> Unidade : <?php echo (isset($lista[0]['filial'])) ? $lista[0]['filial'] :"Matriz"; ?> </a>';
 </script>
 
 <?php
@@ -195,8 +195,9 @@
                                 <tr>
                                     <th>Equipamento</th>
                                     <th>Modelo</th>
-                                    <th>Cliente</th>
-                                    <th>local</th>
+                                    <!-- <th>Cliente</th> -->
+                                    <th>Unidade</th>
+                                    <!-- <th>Local</th> -->
                                     <!-- <th>Potencia</th>-->
                                     <!-- <th>Tipo bateria</th> -->
                                     <th class="txt-center"></th>
@@ -211,7 +212,7 @@
                                     <tr>
                                         <td><?php echo $equipamento['tipoEquip']; ?></td>
                                         <td><?php echo $equipamento['nomeModeloEquipamento']; ?></td>
-                                        <td><?php echo $equipamento['cliente']?></td>
+
                                         <td>
                                             <?php echo (isset($equipamento['filial'])) ? $equipamento['filial'] : "Matriz"; ?>
                                         </td>

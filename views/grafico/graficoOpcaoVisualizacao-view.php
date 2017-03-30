@@ -9,7 +9,8 @@ if (!defined('EFIPATH')) exit();
 ?>
 
 <script>
-var menu = document.getElementById('listadir');
+
+    var menu = document.getElementById('listadir');
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/grafico/" class="linkMenuSup">Relatôrios</a> / <a href="<?php echo HOME_URI; ?>/grafico/listaFilial/<?php echo $equipamento['id_cliente']; ?>"> Unidade : <?php echo (isset($equipamento['filial'])) ? $equipamento['filial'] :"Matriz"; ?> </a> / <a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/<?php echo $this->parametros[0]; ?>">Equipamento <?php echo $equipamento['nomeModeloEquipamento']; ?></a>';
 
 

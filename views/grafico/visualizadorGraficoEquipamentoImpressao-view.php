@@ -24,6 +24,7 @@
         $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[1]);
         $lista          = $lista['equipamento'];
         $nomeCliente    = $dadosCliente['nome'];
+        $nomeUnidade    = (isset($lista[0]['filial'])) ? $lista[0]['filial'] :"Matriz";
     }else{
         $lista          = false;
     }
@@ -98,6 +99,7 @@
 
                 $htmlRealatorio .="<div class='panel-heading'>";
                     $htmlRealatorio .="<h5> Cliente : ".$nomeCliente." </h5>";
+                    $htmlRealatorio .="<h6> Unidade : ".$nomeUnidade." </h6>";
 
                     $htmlRealatorio .="<div class='col-md-4 pull-right'>";
                         $htmlRealatorio .="<h4><small> Periodo :".implode("/", array_reverse(explode("-",($dataInicio))))." até ".implode("/", array_reverse(explode("-",($dataFim))))."</small></h4>";

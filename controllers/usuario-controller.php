@@ -223,9 +223,11 @@
             */
 
             //var_dump($_POST);
-            
 
-            $atualizarUsuarioJson   = $usuarioModelo->atualizarUsuarioJson($_POST['idUser'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['senha'], $_POST['confirmaS']);
+            //var_dump($_FILES);
+            $arquivoEnviado         = $this->upload_avatar($_FILES, UP_USER_IMG_PATH);
+
+            $atualizarUsuarioJson   = $usuarioModelo->atualizarUsuarioJson($_POST['txt_userId'], $_POST['txt_nome'], $_POST['txt_sobrenome'], $_POST['txt_email'], $_POST['txt_celular_usuario'], $_POST['txt_telefone_usuario'], $_POST['txt_senha'], $_POST['txt_cfsenha'], $arquivoEnviado);
 
             if($atualizarUsuarioJson['status']){
                 exit(json_encode(array('status' => true)));

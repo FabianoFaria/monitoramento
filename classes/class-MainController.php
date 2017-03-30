@@ -289,6 +289,95 @@ class MainController extends UserLogin
         }
         return $saida;
     }
+
+
+    /**
+     * Funcao de upload de arquivo
+     *
+     * @param array $file - Recebe o array com os parametros do arquivo
+     */
+    public function upload_avatar ($file, $destination)
+    {
+        // Pasta de upload
+        $_UP['pasta'] = $destination;
+
+        // Tamanho maximo do arquivo 1mb
+        $_UP['tamanho'] = 1024 * 1024 * 1;
+
+        // Extensoes de arquivo aceita
+        $_UP['extensoes'] = array('jpg','png','gif');
+
+        // Renomeia o arquivo
+        $_UP['renomeia'] = true;
+
+        // Tipos de erro
+        $_UP['erro'][0] = "N&atilde;o houve erro";
+        $_UP['erro'][1] = "Arquivo muito grande";
+        $_UP['erro'][2] = "O arquivo ultrapassa o limite de tamanho espeficado";
+        $_UP['erro'][3] = "Upload do arquivo feito parcialmento";
+        $_UP['erro'][4] = "N&atilde;o foi feito o upload do arquivo";
+
+        // Verifica se existe algum erro
+        if ($_FILES['file_foto']['error'] != 0)
+        {
+            echo "N&atilde;o foi poss&iacute;vel fazer o upload do arquivo, erro: " . $_UP['erro'][$file['file_foto']['error']];
+            exit;
+        }
+
+        // Verifica a extensao
+        // Converte em minusculo
+        $extensao = strtolower($file['file_foto']['name']);
+        // Quebra em array
+        $extensao = explode(".",$extensao);
+        // Pega a ultima posicao
+        $extensao = end($extensao);
+
+        // Verifica a
+        if (array_search($extensao, $_UP['extensoes']) === false)
+        {
+            echo "Extens&otilde;es suportadas: JPG, PNG e GIF";
+            exit;
+        }
+
+        // Verifica o tamanho do arquivo
+        if ($_UP['tamanho'] < $file['file_foto']['size'])
+        {
+            echo "Tamanho maximo do arquivo: 1mb";
+            exit;
+        }
+
+        // Verifica se deve trocar o nome do arquivo
+        if ($_UP['renomeia'] == true)
+        {
+            // Novo nome
+            $nome_final = md5(time()) . "." . $extensao;
+        }
+        else
+        {
+            // Mantem o nome original
+            $nome_final = $file['file_foto']['name'];
+        }
+
+        // Verifica se eh possivel mover o arquivo para a pasta
+        if (move_uploaded_file($file['file_foto']['tmp_name'], $_UP['pasta'] ."/". $nome_final))
+        {
+            // Caso o arquivo seja enviado com sucesso
+            if (defined('DEBUG') && DEBUG == true)
+                echo "Upload efetuado com sucesso.";
+
+            // Retorna o nome final
+            return $nome_final;
+        }
+        else
+        {
+            // Caso nao seja possivel mover o arquivo
+            if (defined('DEBUG') && DEBUG == true)
+                echo "N&atilde;o foi possivel enviar o arquivo, tente mais tarde.";
+
+            // Retorna falso caso de errado
+            return false;
+        }
+    }
 }
 
 ?>

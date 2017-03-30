@@ -857,6 +857,7 @@ else
 
                                     <!-- GRAFICO BATERIA REVISADO -->
                                     <div class="row">
+                                        <input id="quantidadeBancoBateria" type="hidden" value="<?php echo $dadosEquipamento['quantidade_banco_bateria']; ?>"/>
                                         <div id="wellCargabateria" class="well well-normal-status" style="margin-top:30px;height:100px;">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -921,7 +922,7 @@ else
                                                     //console.log(calcula);
 
                                                     if(valorBat > 0){
-                                                        valorBat = valorBat + 9;
+                                                        valorBat = valorBat + 17;
                                                     }
 
                                                     //FORNECE O MESMO DADO PARA O INPUT DE CALCULO PARA TENSÃO DE CARREGADOR DE BATERIA
@@ -1033,6 +1034,8 @@ else
                                             var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncAutonomiaBateria.php?6e756d65726f=<?php echo $idSim;?>&706f73546162656c61=<?php echo $idEquip?>&callback=?";
                                             $.getJSON(url,  function(data) {
 
+                                                var quantidadeBancoBateria = $('#quantidadeBancoBateria').val();
+
                                                 var tempoEstimadoHora   = parseFloat(data[1]);
                                                 var data_registro       = data[3];
                                                 var correnteNominalBateria = parseFloat(data[5]);
@@ -1046,6 +1049,10 @@ else
 
                                                 var tempoEstimado  = (60 * correnteNominalBateria) / tempoEstimadoHora;
 
+                                                if(quantidadeBancoBateria == 2){
+                                                    tempoEstimado = tempoEstimado * 2;
+                                                }
+
                                                 var horaAtual   = new Date();
                                                 //var timeDiff    = Math.abs(ultimaCarga.getTime() - horaAtual.getTime());
                                                 var timeDiff    = (horaAtual - ultimaCarga);
@@ -1053,6 +1060,8 @@ else
                                                 var diffMins    = Math.round(((timeDiff % 86400000) % 3600000) / 60000);
                                                 var diferencaTotal = (diffHrs * 60) + diffMins;
                                                 var temporestante  = tempoEstimado - diferencaTotal;
+
+
 
                                                 console.log("Tempo estimado em minutos :"+ tempoEstimado+ " Tempo da ultima carga :"+ ultimaCarga);
                                                 console.log("Diferença de tempo  :"+ timeDiff+ " Diferença em horas e minutos :"+ diffHrs +":"+ diffMins);
@@ -1071,7 +1080,6 @@ else
                                                     document.getElementById('cargaUtilAutonomiaBateria').style.width = "25%";
                                                     document.getElementById('cargaUtilAutonomiaBateria').className = "progress-bar progress-bar-warning";
                                                 }
-
 
                                                 if(temporestante >= 0){
                                                     document.getElementById('cargaAutonomiaBateriaPorcentagem').innerHTML = temporestante.toFixed(0)+" (min)";
@@ -1159,7 +1167,7 @@ else
                                                 document.getElementById('mensagemCarregadorBateria').innerHTML = "Carregador em nível alto!";
                                             }else if(tensaoBancoBateria < valorrCritBaixo){
                                                 document.getElementById('cargaCarregadorBateria').style.width = "20%";
-                                                document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-danger";
+                                                document.getElementById('cargaCarregadorBateria').className = "progress-bar progress-bar-warning";
                                                 document.getElementById('mensagemCarregadorBateria').innerHTML = "Carregador em rampa!";
                                             }else if(tensaoBancoBateria <= valorrBaixo){
                                                 document.getElementById('cargaCarregadorBateria').style.width = "40%";
@@ -1192,7 +1200,6 @@ else
                                                             <div id="cargaCarregadorBateria" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                                                                 <span id="cargaCarregadorBateriaPorcentagem" class=""></span>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                     <h4 id="mensagemCarregadorBateria" class="text-center"></h4>

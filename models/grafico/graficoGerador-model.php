@@ -90,7 +90,7 @@ class GraficoGeradorModel extends MainModel
 
                         if($tabela[$a] == 'h'){
                             //$query .= ''.$tabela[$a] . " + (800) AS 'h',";
-                            $query .= ' IF(h > 0, h + 900, h) AS "h",';
+                            $query .= ' IF(h > 0, h + 1700, h) AS "h",';
                         }else{
                             $query .= ''.$tabela[$a] . ",";
                         }

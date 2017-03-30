@@ -59,7 +59,7 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
                 <div class="col-md-5">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Imagem do usuário</label>
-                        <input id="imagemUser" name="imagemUser" type="file" />
+                        <input id="file_foto" name="file_foto" type="file" />
                     </div>
                 </div>
                 <div class="col-md-4">
