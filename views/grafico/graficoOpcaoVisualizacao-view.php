@@ -267,7 +267,7 @@ if (!defined('EFIPATH')) exit();
             </div>
 
             <div class="col-md-5">
-                <div class="panel panel-yellow">
+                <div class="panel panel-info">
                     <div class="panel-heading">Temperatura</div>
 
                     <div class="panel-body">

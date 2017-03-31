@@ -119,12 +119,14 @@ $().ready(function() {
                 url: urlP+"/eficazmonitor/usuario/atualizarUsuarioManual",
                 secureuri: false,
                 type : "POST",
-                // dataType: 'json',
+                dataType: 'json',
 				processData: false,  // tell jQuery not to process the data
 			    contentType: false,   // tell jQuery not to set contentType
 				data: fd,
                 success : function(datra)
                 {
+
+					console.log("Status da atualização... "+datra.status);
                     if(datra.status){
                         swal('','Dados atualizados com suscesso !','success');
                         setTimeout(function(){

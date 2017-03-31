@@ -296,7 +296,7 @@ class MainController extends UserLogin
      *
      * @param array $file - Recebe o array com os parametros do arquivo
      */
-    public function upload_avatar ($file, $destination)
+    public function upload_avatar ($file, $destination, $tipoAvatar)
     {
         // Pasta de upload
         $_UP['pasta'] = $destination;
@@ -309,6 +309,13 @@ class MainController extends UserLogin
 
         // Renomeia o arquivo
         $_UP['renomeia'] = true;
+
+        // Redimenciona o tamanho do arquivo
+        if($destination == 'user'){
+            $_UP['best_size'] = 128;
+        }else{
+            $_UP['best_size'] = 256;
+        }
 
         // Tipos de erro
         $_UP['erro'][0] = "N&atilde;o houve erro";
@@ -332,7 +339,7 @@ class MainController extends UserLogin
         // Pega a ultima posicao
         $extensao = end($extensao);
 
-        // Verifica a
+        // Verifica a extensão do arquivo
         if (array_search($extensao, $_UP['extensoes']) === false)
         {
             echo "Extens&otilde;es suportadas: JPG, PNG e GIF";
@@ -365,6 +372,21 @@ class MainController extends UserLogin
             if (defined('DEBUG') && DEBUG == true)
                 echo "Upload efetuado com sucesso.";
 
+                //Verifica o tamanho do arquivo em px
+                $image_info = getimagesize($_UP['pasta'] ."/". $nome_final);
+                $image_width  = $image_info[0];
+                $image_height = $image_info[1];
+
+                if(($_UP['best_size'] < $image_width) || ($_UP['best_size'] < $image_height)){
+
+                    //Arquivo necessita ser redimencionado
+
+                    $arquivoRedimencionado = $this->resize_image($_UP['pasta'] ."/". $nome_final, $_UP['best_size'], $_UP['best_size'], true);
+
+                }
+
+                //var_dump($arquivoRedimencionado);
+
             // Retorna o nome final
             return $nome_final;
         }
@@ -378,6 +400,37 @@ class MainController extends UserLogin
             return false;
         }
     }
+
+    /*
+    * Função para redimencionar tamanho de arquivo
+    */
+    public function resize_image($file, $w, $h, $crop=FALSE) {
+    list($width, $height) = getimagesize($file);
+    $r = $width / $height;
+    if ($crop) {
+        if ($width > $height) {
+            $width = ceil($width-($width*abs($r-$w/$h)));
+        } else {
+            $height = ceil($height-($height*abs($r-$w/$h)));
+        }
+        $newwidth = $w;
+        $newheight = $h;
+    } else {
+        if ($w/$h > $r) {
+            $newwidth = $h*$r;
+            $newheight = $h;
+        } else {
+            $newheight = $w/$r;
+            $newwidth = $w;
+        }
+    }
+    $src = imagecreatefromjpeg($file);
+    $dst = imagecreatetruecolor($newwidth, $newheight);
+
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+    return $dst;
+}
 }
 
 ?>

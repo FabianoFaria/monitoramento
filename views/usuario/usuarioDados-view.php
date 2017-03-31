@@ -56,15 +56,20 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
             </div>
 
             <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Imagem atual do usuário</label>
+
+                        <!-- <img src="<?php //echo HOME_URI; ?>/views/_uploads/users/<?php //echo $dadosUsuario['imagem_usuario']; ?>" alt="..." class="img-rounded"> -->
+                    </div>
+                </div>
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Imagem do usuário</label>
+                        <label for="file_foto">Nova imagem do usuário</label>
                         <input id="file_foto" name="file_foto" type="file" />
                     </div>
                 </div>
-                <div class="col-md-4">
 
-                </div>
             </div>
 
             <div class="row">

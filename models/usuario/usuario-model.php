@@ -525,7 +525,7 @@ class UsuarioModel extends MainModel
     }
 
     //Função para atualizar o usuario
-    public function atualizarUsuarioJson($id_usuario, $nome, $sobrenome, $email, $celular, $telefone, $confirmaS, $idCliente)
+    public function atualizarUsuarioJson($id_usuario, $nome, $sobrenome, $email, $celular, $telefone, $senhaPassada, $confirmaS, $imagemUsuario)
     {
 
         // Coletar os dados do post
@@ -542,9 +542,9 @@ class UsuarioModel extends MainModel
           if(isset($celular)){      $query .= ", celular = '$celular'";}
           if(isset($telefone)){     $query .= ", telefone = '$telefone'";}
           if(isset($senha)){        $query .= ", senha = '$senha'";}
+          if(!empty($imagemUsuario) && ($imagemUsuario != ' ')){ $query .= ", imagem_usuario  = '$imagemUsuario'";}
           $query .= " WHERE id = '$id_user'";
 
-          //var_dump($query);
           /* monta result */
           $result = $this->db->query($query);
 

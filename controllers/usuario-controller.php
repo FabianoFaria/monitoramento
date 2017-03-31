@@ -225,11 +225,31 @@
             //var_dump($_POST);
 
             //var_dump($_FILES);
-            $arquivoEnviado         = $this->upload_avatar($_FILES, UP_USER_IMG_PATH);
+
+            //TESTA SE FOI COLOCADO ALGUM ARQUIVO PARA SER SALVO
+            if(file_exists($_FILES['file_foto']['tmp_name']) && is_uploaded_file($_FILES['file_foto']['tmp_name'])){
+
+
+                //EFETUA O UPLOAD DA IMAGEM SELECIONADA
+                $arquivoEnviado = $this->upload_avatar($_FILES, UP_USER_IMG_PATH, 'user');
+
+            }else{
+                $arquivoEnviado = null;
+            }
+
+            // if(!file_exists($_FILES['myfile']['tmp_name']) || !is_uploaded_file($_FILES['myfile']['tmp_name'])) {
+            //     echo 'No upload';
+            // }
 
             $atualizarUsuarioJson   = $usuarioModelo->atualizarUsuarioJson($_POST['txt_userId'], $_POST['txt_nome'], $_POST['txt_sobrenome'], $_POST['txt_email'], $_POST['txt_celular_usuario'], $_POST['txt_telefone_usuario'], $_POST['txt_senha'], $_POST['txt_cfsenha'], $arquivoEnviado);
 
             if($atualizarUsuarioJson['status']){
+
+                //VERIFICAR O AVATAR ANTIGO DO USUÁRIO E REMOVER A IMAGEM ANTIGA DO USUÁRIO
+                if($arquivoEnviado != null){
+                    var_dump($arquivoEnviado);
+                }
+
                 exit(json_encode(array('status' => true)));
             }else{
                 exit(json_encode(array('status' => false)));
