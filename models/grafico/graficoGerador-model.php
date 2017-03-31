@@ -58,8 +58,8 @@ class GraficoGeradorModel extends MainModel
     {
 
         // CRIA AS TABELAS
-        $tabela = array("dad.b","dad.c","dad.d","dad.e","dad.f","dad.g","dad.i", "dad.j", "dad.l", "dad.m", "dad.n", "dad.o", "dad.h", "dad.q","dad.r", "dad.er", "dadPot.es", "dadPot.et", "dadPot.cr", "dadPot.cs", "dadPot.ct");
-        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T", "Corrente R", "Corrente S", "Corrente T", "Corrente Saida R", "Corrente Saida S", "Corrente Saida T", "Bateria", "Temperatura Ambiente","Temperatura Banco bateria", "Pontência entrada R", "Pontência entrada S", "Pontência entrada T", "Pontência saída T", "Pontência saída T", "Pontência saída T");
+        $tabela = array("b","c","d","e","f","g","i", "j", "l", "m", "n", "o", "h", "q","r", "er", "es", "et", "cr", "cs", "ct");
+        $tabela2 = array("Entrada R","Entrada S","Entrada T","Saida R","Saida S","Saida T", "Corrente R", "Corrente S", "Corrente T", "Corrente Saida R", "Corrente Saida S", "Corrente Saida T", "Bateria", "Temperatura Ambiente","Temperatura Banco bateria", "Pontência entrada R", "Pontência entrada S", "Pontência entrada T", "Pontência saída R", "Pontência saída S", "Pontência saída T");
 
         // CONVERTE DA BASE 64
         //$sim_num = base64_decode($this->parametros[0]);
@@ -149,7 +149,7 @@ class GraficoGeradorModel extends MainModel
                 */
                 // Inicio versão em produção
                 $query .= " FROM tb_dados dad";
-                $query .= " JOIN tb_dados_potencia dadPot ON dadPot.num_sim = dad.num_sim";
+                $query .= " JOIN tb_dados_potencia dadPot ON (dadPot.num_sim = '{$sim_num}' AND dad.num_sim = '{$sim_num}' AND dad.dt_criacao = dadPot.data_registro) ";
                 $query .= " WHERE dad.dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}' AND dad.num_sim = '{$sim_num}'";
 
                 if($diasDiff > 60){
@@ -212,7 +212,7 @@ class GraficoGeradorModel extends MainModel
                 // $query .=" WHERE a.num_sim = '' AND a.dt_criacao BETWEEN ' 00:00:00' AND ' 23:59:59' ORDER BY a.dt_criacao DESC ";
 
                 //var_dump( $opc, $query, $diasDiff);
-                var_dump($query);
+                //var_dump($query);
 
                 // Busca os dados no banco
                 $result = $this->verificaQuery($query);
@@ -239,9 +239,19 @@ class GraficoGeradorModel extends MainModel
 
                             }
 
-                            if ($opc[$b] == 1)
-                                //$respData[$tabela[$b]][0] .= "".intval(floatval($result[$a][$tabela[$b]]/100)).",";
-                                $respData[$tabela[$b]][0] .= "".floatval($result[$a][$tabela[$b]]/100).",";
+                            //VERIFICA SE O PARAMETRO ESTÁ ESCOLHIDO OU NÃO PARA ADICIONAR NA SÉRIE
+                            if ($opc[$b] == 1){
+
+
+                                //EFETUA A DISCRIMINAÇÃO DOS PARAMETROS ESCOLHIDOS
+                                if($tabela[$b] == "er" || $tabela[$b] == "es" || $tabela[$b] == "et" || $tabela[$b] == "cr" || $tabela[$b] == "cs" || $tabela[$b] == "ct"){
+                                    //CONVERTE AS POTÊNCIAS EM (Kw)
+                                    $respData[$tabela[$b]][0] .= "".floatval($result[$a][$tabela[$b]]/1000).",";
+                                }else{
+                                    //$respData[$tabela[$b]][0] .= "".intval(floatval($result[$a][$tabela[$b]]/100)).",";
+                                    $respData[$tabela[$b]][0] .= "".floatval($result[$a][$tabela[$b]]/100).",";
+                                }
+                            }
                         }
                     }
 

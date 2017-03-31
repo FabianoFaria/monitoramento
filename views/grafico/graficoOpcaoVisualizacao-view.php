@@ -192,33 +192,78 @@ if (!defined('EFIPATH')) exit();
         <div class="row">
 
             <div class="col-md-5">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Bateria</div>
+
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">Potências</div>
+
                     <div class="panel-body">
                         <div class="row borda-01">
                             <div class="col-md-12 txt-center">
-                                <label class="font-texto-02">Tensão</label>
+                                <label class="font-texto-02">Opções</label>
                             </div>
                         </div>
+
                         <div class="row borda-01">
                             <div class="col-md-2 txt-center">
-                                <label class="font-texto-02"></label>
+                                <label class="font-texto-02">R</label>
+                            </div>
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">S</label>
+                            </div>
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">T</label>
+                            </div>
+                            <div class="col-md-6 txt-center">
+                                <label class="font-texto-02">FASES</label>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-2 txt-center">
                                 <label class="font-texto-02">
-                                    <input type="checkbox" id="bat_entrada_r1tc" name="parametrosGraficos">
+                                    <input type="checkbox" id="chk_entrada_poter" name="parametrosGraficos">
                                 </label>
                             </div>
-
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">
+                                    <input type="checkbox" id="chk_entrada_potes" name="parametrosGraficos">
+                                </label>
+                            </div>
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">
+                                    <input type="checkbox" id="chk_entrada_potet" name="parametrosGraficos">
+                                </label>
+                            </div>
                             <div class="col-md-6">
-                                <label class="font-texto-02">Banco de bateria</label>
+                                <label class="font-texto-02">Entrada</label>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">
+                                    <input type="checkbox" id="chk_entrada_potsr" name="parametrosGraficos">
+                                </label>
+                            </div>
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">
+                                    <input type="checkbox" id="chk_entrada_potss" name="parametrosGraficos">
+                                </label>
+                            </div>
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">
+                                    <input type="checkbox" id="chk_entrada_potst" name="parametrosGraficos">
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="font-texto-02">Saída</label>
+                            </div>
+                        </div>
+
                     </div>
+
                 </div>
+
             </div>
 
             <div class="col-md-5">
@@ -264,6 +309,13 @@ if (!defined('EFIPATH')) exit();
                             </div>
                         </div>
 
+                        <div class="row borda-01">
+
+                            <div class="col-md-2 txt-center">
+                                <span><br /></span>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -279,6 +331,48 @@ if (!defined('EFIPATH')) exit();
         <div class="row">
 
             <div class="col-md-5">
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Bateria</div>
+                    <div class="panel-body">
+                        <div class="row borda-01">
+                            <div class="col-md-12 txt-center">
+                                <label class="font-texto-02">Tensão</label>
+                            </div>
+                        </div>
+                        <div class="row borda-01">
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02"></label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2 txt-center">
+                                <label class="font-texto-02">
+                                    <input type="checkbox" id="bat_entrada_r1tc" name="parametrosGraficos">
+                                </label>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="font-texto-02">Banco de bateria</label>
+                            </div>
+                        </div>
+
+                        <div class="row borda-01">
+
+                            <div class="col-md-2 txt-center">
+                                <span><br /></span>
+                            </div>
+                        </div>
+
+                        <div class="row borda-01">
+
+                            <div class="col-md-2 txt-center">
+                                <span><br /></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
@@ -382,8 +476,20 @@ if (!defined('EFIPATH')) exit();
         </div>
 
         <div class="row text-center">
-            <!-- <a href="#" class="btn btn-default" id="btn_gerarGrafico" onclick="">Gerar grafico</a> -->
-            <button type="button" class="btn btn-primary" id="btn_gerarGrafico">Gerar gráfico</button>
+
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-4">
+                <!-- <a href="#" class="btn btn-default" id="btn_gerarGrafico" onclick="">Gerar grafico</a> -->
+                <button type="button" class="btn btn-primary btn-lg btn-block" id="btn_gerarGrafico">Gerar gráfico</button>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-2">
+
+            </div>
         </div>
 
     </form>

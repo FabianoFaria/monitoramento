@@ -265,7 +265,9 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     var tipoMedida     = tipoMedidaTemp[1];
                     var notacaoToolTip = "";
 
-                    if(tipoMedida == "Bateria"){
+                    if(tipoMedida == "Pontência"){
+                        notacaoToolTip = "(Kw)";
+                    }else if(tipoMedida == "Bateria"){
                         notacaoToolTip = "(V)";
                     }else if(tipoMedida == "Temperatura"){
                         notacaoToolTip = "(°C)";

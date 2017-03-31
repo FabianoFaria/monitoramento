@@ -23,6 +23,14 @@ function geraGrafico(link)
     var entr1cc = $("#chk_entrada_r1cc").is(":checked");
     var ents1cc = $("#chk_entrada_s1cc").is(":checked");
     var entt1cc = $("#chk_entrada_t1cc").is(":checked");
+
+    var entr1tp = $("#chk_entrada_poter").is(":checked");
+    var ents1tp = $("#chk_entrada_potes").is(":checked");
+    var entt1tp = $("#chk_entrada_potet").is(":checked");
+    var entr1cp = $("#chk_entrada_potsr").is(":checked");
+    var ents1cp = $("#chk_entrada_potss").is(":checked");
+    var entt1cp = $("#chk_entrada_potst").is(":checked");
+
     var batent = $("#bat_entrada_r1tc").is(":checked");
 
     //VARIAVEIS DE COLETA DE TEMPERATURA
@@ -58,12 +66,20 @@ function geraGrafico(link)
     if (!entr1cc) entr1cc = 0; else entr1cc = 1;
     if (!ents1cc) ents1cc = 0; else ents1cc = 1;
     if (!entt1cc) entt1cc = 0; else entt1cc = 1;
+
+    if (!entr1tp) entr1tp = 0; else entr1tp = 1;
+    if (!ents1tp) ents1tp = 0; else ents1tp = 1;
+    if (!entt1tp) entt1tp = 0; else entt1tp = 1;
+    if (!entr1cp) entr1cp = 0; else entr1cp = 1;
+    if (!ents1cp) ents1cp = 0; else ents1cp = 1;
+    if (!entt1cp) entt1cp = 0; else entt1cp = 1;
+
     if (!batent) batent = 0; else batent = 1;
 
     if (!tempAmb) tempAmb = 0; else tempAmb = 1;
     if (!tempBanco) tempBanco = 0; else tempBanco = 1;
 
-    var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c+ "," + entr1tc + "," + ents1tc + "," + entt1tc + "," + entr1cc + "," + ents1cc + "," + entt1cc + "," + batent +","+tempAmb+","+tempBanco+ ",0,0,0,0,0,0," + dataIni + "," + dataFim + ","+ horasDas +","+horasAte;
+    var url = entr1t + "," + ents1t + "," + entt1t + "," + entr1c + "," + ents1c + "," + entt1c+ "," + entr1tc + "," + ents1tc + "," + entt1tc + "," + entr1cc + "," + ents1cc + "," + entt1cc + "," + batent +","+tempAmb+","+tempBanco+ ","+entr1tp+","+ents1tp+","+entt1tp+","+entr1cp+","+ents1cp+","+entt1cp+"," + dataIni + "," + dataFim + ","+ horasDas +","+horasAte;
     window.location.href = link + url;
 
 }
