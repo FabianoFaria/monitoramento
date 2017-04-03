@@ -6,7 +6,18 @@
 * CARREGA MODEL PARA ALARMES, INDEPENDENTE DA PÁGINA
 */
 $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
+$clienteModelo       = $this->load_model('cliente/cliente-model');
+$userModelo          = $this->load_model('usuario/usuario-model');
 
+if($_SESSION['userdata']['cliente'] > 0){
+    $clienteLogo     = $clienteModelo->carregarLogoCliente($_SESSION['userdata']['cliente']);
+}else{
+    $clienteLogo     = null;
+}
+
+$userAvatar          = $userModelo->carregarUserAvatar($_SESSION['userdata']['userId']);
+
+//var_dump($clienteLogo,$userAvatar);
 
 /*
 * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
@@ -78,13 +89,30 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
         <ul class="nav navbar-top-links navbar-right">
             <!-- TOTAL DE ALERTAS, SE EXISTIREM -->
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <!-- <a class="dropdown-toggle" data-toggle="dropdown" href="#"> -->
                 <!-- <i class="fa fa-exclamation-triangle fa-1x"></i> <i class="fa fa-caret-down fa-1x"></i> -->
-                <i class="fa fa-question-circle fa-1x"></i> <i class="fa fa-caret-down fa-1x"></i>
+                <!-- <i class="fa fa-question-circle fa-1x"></i> <i class="fa fa-caret-down fa-1x"></i> -->
+
+              <!-- </a> -->
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                  <!-- <i class="fa fa-user fa-1x"></i> -->
+                  <?php
+                      if(isset($_SESSION['userdata']['cliente']) && ($_SESSION['userdata']['cliente'] > 0) && ($clienteLogo[0]['foto'] != '')){
+                      ?>
+                          <img class="img-rounded" src="<?php echo HOME_URI ?>/views/_uploads/clients/<?php echo $clienteLogo[0]['foto']; ?>" width="64" height="32"/>
+                      <?php
+                      }else{
+                      ?>
+                          <i class="fa fa-building-o fa-1x"></i>
+                      <?php
+                      }
+                  ?>
+
+                  <!-- <i class="fa fa-caret-down fa-1x"></i> -->
               </a>
-              <ul class="dropdown-menu dropdown-user">
-                  <li><span id="btn_sair"><a href="javascript:void(0)"><i class="fa fa-book fa-1x"></i>Ajuda</a></span></li><!-- Fim Botao Sair -->
-              </ul>
+              <!-- <ul class="dropdown-menu dropdown-user"> -->
+                  <!-- <li><span id="btn_sair"><a href="javascript:void(0)"><i class="fa fa-book fa-1x"></i> Ajuda</a></span></li>  -->
+              <!-- </ul> -->
               <?php
 
                 // IMPLEMENTAVA O CONTADOR DE ALARMES
@@ -194,11 +222,28 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
             <!-- BOTAO VISUALIZAR DADOS DO USUÁRIO -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                    <i class="fa fa-user fa-1x"></i>
+                    <!-- <i class="fa fa-user fa-1x"></i> -->
+                    <?php
+                        if(isset($_SESSION['userdata']['avatar'])){
+                        ?>
+                            <img class="img-circle" src="<?php echo HOME_URI ?>/views/_uploads/users/<?php echo $userAvatar['imagem_usuario']; ?>" width="32" height="32"/>
+                        <?php
+                        }else{
+                        ?>
+                            <i class="fa fa-user fa-1x"></i>
+                        <?php
+                        }
+                    ?>
+
                     <i class="fa fa-caret-down fa-1x"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/usuario/"><i class="fa fa-folder-open fa-1x"></i>Perfil do usuário</a></span></li><!-- Fim Botao Sair -->
+                <li>
+                    <span id="btn_sair">
+
+                        <a href="<?php echo HOME_URI; ?>/usuario/"><i class="fa fa-user fa-1x"></i> Perfil do usuário</a>
+                    </span>
+                </li><!-- Fim Botao Sair -->
                 </ul>
             </li>
             <!-- BOTAO SAIR -->
@@ -207,7 +252,7 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
                         <i class="fa fa-power-off fa-2x"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/login/sair"><i class="fa fa-power-off fa-1x"></i>Sair do sistema!</a></span></li><!-- Fim Botao Sair -->
+                        <li><span id="btn_sair"><a href="<?php echo HOME_URI; ?>/login/sair"><i class="fa fa-power-off fa-1x"></i> Sair do sistema!</a></span></li><!-- Fim Botao Sair -->
                     </ul>
                     <!-- /.dropdown-user -->
             </li>
@@ -221,7 +266,7 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
                 <!-- HOME -->
                 <li>
                   <a href="<?php echo HOME_URI; ?>/home/" data-toggle="">
-                      <i class="fa fa-desktop fa-3x"></i> <span class="lb-side">Tela de monitoramento</span><span class="fa arrow"></span>
+                      <i class="fa fa-desktop fa-3x"></i> <span class="lb-side"> Tela de monitoramento</span><span class="fa arrow"></span>
                   </a>
                   <ul class="nav nav-second-level collapse in">
                       <li>

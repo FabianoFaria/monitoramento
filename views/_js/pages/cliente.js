@@ -490,17 +490,17 @@ $().ready(function() {
         if($("#editCliete").valid()){
 
             //Dados da empresa do cliente
-            var idCliente       = $('#txt_idCliente').val();
-            var nomeCliente     = $('#txt_cliente').val();
-            var ddd             = $('#txt_ddd').val();
-            var telefone        = $('#txt_telefone').val();
-            var cep             = $('#txt_cep').val();
-            var endereco        = $('#txt_endereco').val();
-            var numero          = $('#txt_numero').val();
-            var bairro          = $('#txt_bairro').val();
-            var cidade          = $('#txt_cidade').val();
-            var estado          = $('#estados').val();
-            var pais            = $('#paises').val();
+            // var idCliente       = $('#txt_idCliente').val();
+            // var nomeCliente     = $('#txt_cliente').val();
+            // var ddd             = $('#txt_ddd').val();
+            // var telefone        = $('#txt_telefone').val();
+            // var cep             = $('#txt_cep').val();
+            // var endereco        = $('#txt_endereco').val();
+            // var numero          = $('#txt_numero').val();
+            // var bairro          = $('#txt_bairro').val();
+            // var cidade          = $('#txt_cidade').val();
+            // var estado          = $('#estados').val();
+            // var pais            = $('#paises').val();
             // var formUpload      = document.getElementById('imputImageImgUser');
             //var formData = new FormData();
 
@@ -518,48 +518,57 @@ $().ready(function() {
             // fd.append('estado', $("#estado").val());
             // fd.append('pais', $("#pais").val());
 
+            /*
+            data      :
+            {
+             'idCliente' : idCliente,
+             'nome_cliente' : nomeCliente,
+             'ddd' : ddd,
+             'telefone' : telefone,
+             'cep' : cep,
+             'endereco' : endereco,
+             'numero' : numero,
+             'bairro' : bairro,
+             'cidade' : cidade,
+             'estado' : estado,
+             'pais'   : pais
+            },
+            */
+
+            var fd = new FormData(document.getElementById("editCliete"));
+            fd.append('file', $('input[type=file]')[0].files[0]);
+
             //Efetua cadastro do cliente via JSON
             $.ajax({
              url: urlP+"/eficazmonitor/cliente/registrarEdicaoCliente",
              secureuri: false,
              type : "POST",
              dataType: 'json',
-             data      :
-             {
-              'idCliente' : idCliente,
-              'nome_cliente' : nomeCliente,
-              'ddd' : ddd,
-              'telefone' : telefone,
-              'cep' : cep,
-              'endereco' : endereco,
-              'numero' : numero,
-              'bairro' : bairro,
-              'cidade' : cidade,
-              'estado' : estado,
-              'pais'   : pais
-             },
-                success : function(datra)
-                    {
-                       //tempTest = JSON(datra);
-                       if(datra.status == true)
-                       {
-                           //alert("Cliente atualizado com sucesso!");
-                           swal("", "Cliente atualizado com sucesso!", "success");
-                           location.reload();
-                       }
-                       else
-                       {
-                           //Settar a mensagem de erro!
-                           //alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
-                           swal("Oops...", "Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!", "error");
-                       }
-                    },
-                   error: function(jqXHR, textStatus, errorThrown)
-                    {
-                    // Handle errors here
-                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
-                    // STOP LOADING SPINNER
-                    }
+             processData: false,
+             contentType: false,
+             data: fd,
+            success : function(datra)
+            {
+                 //tempTest = JSON(datra);
+                if(datra.status == true)
+                {
+                    //alert("Cliente atualizado com sucesso!");
+                    swal("", "Cliente atualizado com sucesso!", "success");
+                    location.reload();
+                }
+                else
+                {
+                    //Settar a mensagem de erro!
+                    //alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                    swal("Oops...", datra.mensagem, "error");
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                // STOP LOADING SPINNER
+            }
             });
 
         }

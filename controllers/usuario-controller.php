@@ -233,12 +233,23 @@
                 //EFETUA O UPLOAD DA IMAGEM SELECIONADA
                 $arquivoEnviado = $this->upload_avatar($_FILES, UP_USER_IMG_PATH, 'user');
 
+                if($arquivoEnviado['status'] == 'erro'){
+
+                    exit(json_encode(array('status' => false, 'mensagem' => $arquivoEnviado['mensagem'])));
+                }else{
+
+                    $arquivoEnviado = $arquivoEnviado['mensagem'];
+                }
+
             }else{
                 $arquivoEnviado = null;
             }
 
             // if(!file_exists($_FILES['myfile']['tmp_name']) || !is_uploaded_file($_FILES['myfile']['tmp_name'])) {
             //     echo 'No upload';
+
+
+
             // }
 
             $atualizarUsuarioJson   = $usuarioModelo->atualizarUsuarioJson($_POST['txt_userId'], $_POST['txt_nome'], $_POST['txt_sobrenome'], $_POST['txt_email'], $_POST['txt_celular_usuario'], $_POST['txt_telefone_usuario'], $_POST['txt_senha'], $_POST['txt_cfsenha'], $arquivoEnviado);
@@ -247,12 +258,17 @@
 
                 //VERIFICAR O AVATAR ANTIGO DO USUÁRIO E REMOVER A IMAGEM ANTIGA DO USUÁRIO
                 if($arquivoEnviado != null){
-                    var_dump($arquivoEnviado);
+                    //var_dump($arquivoEnviado);
+
+                    if($_POST['imagemAntiga'] != 'default.png'){
+                        $this->removeOldAvatar($_POST['imagemAntiga'], UP_USER_IMG_PATH);
+                    }
+
                 }
 
-                exit(json_encode(array('status' => true)));
+                exit(json_encode(array('status' => true, 'mensagem' => '')));
             }else{
-                exit(json_encode(array('status' => false)));
+                exit(json_encode(array('status' => false, 'mensagem' => 'Ocorreu um erro ao tentar atualizar os dados do usuário, favor verificar as informações fornecidas.')));
             }
         }
 

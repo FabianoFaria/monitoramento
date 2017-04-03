@@ -59,8 +59,12 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Imagem atual do usuário</label>
-
-                        <!-- <img src="<?php //echo HOME_URI; ?>/views/_uploads/users/<?php //echo $dadosUsuario['imagem_usuario']; ?>" alt="..." class="img-rounded"> -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="<?php echo HOME_URI; ?>/views/_uploads/users/<?php echo $dadosUsuario['imagem_usuario']; ?>" alt="Imagem do usuário!" class="img-rounded">
+                                <input id="imagemAntiga" name="imagemAntiga" type="hidden"  value="<?php echo $dadosUsuario['imagem_usuario']; ?>" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-5">

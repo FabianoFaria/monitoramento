@@ -133,7 +133,7 @@ $().ready(function() {
                             location.reload();
                         }, 2000);
                     }else{
-                        swal('','Ocorreu um erro ao tentar atualizar, tente novamente mais tarde!','error');
+                        swal('', datra.mensagem,'error');
                     }
 
                 },

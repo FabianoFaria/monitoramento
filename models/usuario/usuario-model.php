@@ -43,6 +43,35 @@ class UsuarioModel extends MainModel
         return false;
     }
 
+    /*
+    * CARREGA O AVARTAR DO USUÁRIO
+    */
+    public function carregarUserAvatar($usuarioId){
+        //Validação da id informada
+        if($usuarioId > 0){
+
+            $query = "SELECT imagem_usuario FROM tb_users WHERE id = '$usuarioId'";
+
+            /* monta a result */
+            $busca = $this->db->select($query);
+
+            /* verifica se a query executa */
+            if($busca){
+                /* Retorna a row com os dados do usuário */
+                while($row = @mysql_fetch_assoc($busca)){
+
+                    return $row;
+                }
+            }
+            else{
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+    }
+
     //atualiza os dados do usuário
     public function atualizarUsuario()
     {

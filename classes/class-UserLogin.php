@@ -63,7 +63,7 @@ class UserLogin
 
             // Realiza a verificacao do usuario
             $query = "select
-                          u.id , u.nome, u.sobrenome, u.local_usu, u.id_cliente, u.tipo_inst,
+                          u.id , u.nome, u.sobrenome, u.local_usu, u.id_cliente, u.tipo_inst, u.imagem_usuario,
                           pe.nome as tipo_usu , pe.cadastro , pe.pesquisa, pe.vinculo, pe.configuracao, pe.monitoramento, pe.editar
                       from tb_users u
                       inner join tb_perfil_acesso pe on pe.id = u.id_perfil_acesso
@@ -94,6 +94,7 @@ class UserLogin
                         $_SESSION['userdata']['cliente']    = $row['id_cliente'];
                         $_SESSION['userdata']['tipo']       = $row['tipo_inst'];
                         $_SESSION['userdata']['tipo_usu']   = $row['tipo_usu'];
+                        $_SESSION['userdata']['avatar']     = $row['imagem_usuario'];
 
                         // Registra que o usuario esta logado
                         $this->logged_in = true;

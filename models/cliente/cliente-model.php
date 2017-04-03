@@ -18,6 +18,38 @@
      		     $this->parametros = $this->controller->parametros;
          }
 
+         /*
+         * Função para carregar logo do cliente
+         */
+         public function carregarLogoCliente($idCliente){
+
+            $query = "SELECT foto FROM tb_cliente WHERE id = '$idCliente'";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if ($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    return $retorno;
+                }
+            }
+            else{
+                return false;
+            }
+
+         }
+
          /* FUNÇÃO RESPONSAVEL PELA LISTAGEM DE CLIENTES
          *
          */
@@ -265,7 +297,7 @@
         /*
         * Função para atualizar o cliente
         */
-        public function atualizarClienteJson($idCliente, $nome_cliente, $ddd, $telefone, $cep, $endereco, $numero, $bairro, $cidade, $estado, $pais)
+        public function atualizarClienteJson($idCliente, $nome_cliente, $ddd, $telefone, $cep, $endereco, $numero, $bairro, $cidade, $estado, $pais, $logoCliente)
         {
 
           // Armazena o retorno do post
@@ -279,6 +311,7 @@
           $estado   = (is_numeric($estado)) ? $this->tratamento($estado) : null;
           $cidade   = $cidade;
           $bairro   = $this->tratamento($bairro);
+          //$logoCliente = $this->tratamento($logoCliente);
 
           $query = "UPDATE tb_cliente SET ";
           if(isset($cliente)){  $query .= "nome = '$cliente' ";}
@@ -291,6 +324,7 @@
           if(isset($estado)){   $query .= ", id_estado = '$estado'";}
           if(isset($cidade)){   $query .= ", cidade = '$cidade'";}
           if(isset($bairro)){   $query .= ", bairro = '$bairro'";}
+          if(isset($logoCliente)){   $query .= ", foto = '$logoCliente'";}
           $query .= " WHERE id = '$idCliente'";
 
           /* monta result */
@@ -316,7 +350,7 @@
 
             $query = "SELECT
                       c.nome , c.endereco, c.numero, c.cep, c.cidade, c.bairro, c.ddd, c.telefone , p.nome as pais ,
-                      e.nome as estado , p.id as idpais, e.id as idestado
+                      e.nome as estado , c.foto, p.id as idpais, e.id as idestado
                       FROM tb_cliente c
                       INNER JOIN tb_pais p on p.id = c.id_pais
                       INNER JOIN tb_estado e on e.id = c.id_estado

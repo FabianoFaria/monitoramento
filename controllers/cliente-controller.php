@@ -1394,12 +1394,52 @@
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $clienteModelo      = $this->load_model('cliente/cliente-model');
 
-        $atualizarClientes  = $clienteModelo->atualizarClienteJson($_POST['idCliente'], $_POST['nome_cliente'], $_POST['ddd'], $_POST['telefone'], $_POST['cep'], $_POST['endereco'], $_POST['numero'], $_POST['bairro'], $_POST['cidade'], $_POST['estado'], $_POST['pais']);
+        //TESTA SE FOI COLOCADO ALGUM ARQUIVO PARA SER SALVO
+        if(file_exists($_FILES['file_foto']['tmp_name']) && is_uploaded_file($_FILES['file_foto']['tmp_name'])){
+
+            //EFETUA O UPLOAD DA IMAGEM SELECIONADA
+            $arquivoEnviado = $this->upload_avatar($_FILES, UP_CLIE_IMG_PATH, 'clie');
+
+            if($arquivoEnviado['status'] == 'erro'){
+
+                exit(json_encode(array('status' => false, 'mensagem' => $arquivoEnviado['mensagem'])));
+            }else{
+
+                $arquivoEnviado = $arquivoEnviado['mensagem'];
+            }
+
+        }else{
+            $arquivoEnviado = null;
+        }
+
+        /*
+        var idCliente       = $('#txt_idCliente').val();
+        var nomeCliente     = $('#txt_cliente').val();
+        var ddd             = $('#txt_ddd').val();
+        var telefone        = $('#txt_telefone').val();
+        var cep             = $('#txt_cep').val();
+        var endereco        = $('#txt_endereco').val();
+        var numero          = $('#txt_numero').val();
+        var bairro          = $('#txt_bairro').val();
+        var cidade          = $('#txt_cidade').val();
+        var estado          = $('#estados').val();
+        var pais            = $('#paises').val();
+        */
+
+        $atualizarClientes  = $clienteModelo->atualizarClienteJson($_POST['txt_idCliente'], $_POST['txt_cliente'], $_POST['txt_ddd'], $_POST['txt_telefone'], $_POST['txt_cep'], $_POST['txt_endereco'], $_POST['txt_numero'], $_POST['txt_bairro'], $_POST['txt_cidade'], $_POST['estados'], $_POST['paises'], $arquivoEnviado);
 
         if($atualizarClientes['status']){
-            exit(json_encode(array('status' => true)));
+
+            //VERIFICAR O AVATAR ANTIGO DO USUÁRIO E REMOVER A IMAGEM ANTIGA DO USUÁRIO
+            if($arquivoEnviado != null){
+                //var_dump($arquivoEnviado);
+
+                $this->removeOldAvatar($_POST['logoAntiga'], UP_CLIE_IMG_PATH);
+            }
+
+            exit(json_encode(array('status' => true, 'mensagem' => '')));
         }else{
-            exit(json_encode(array('status' => false)));
+            exit(json_encode(array('status' => false, 'mensagem' => 'Ocorreu um erro ao tentar atualizar os dados do cliente, favor verificar as informações fornecidas.')));
         }
     }
 

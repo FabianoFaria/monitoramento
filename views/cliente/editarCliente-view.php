@@ -61,6 +61,46 @@
 
                 	<!-- form contendo os dados do cliente -->
                     <form id="editCliete" method="post" enctype="multipart/form-data">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Logomarca do cliente</label>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+
+
+                                    <?php //echo ($dados['status']) ? $dadosCliente['nome'] : ""; ?>
+                                    <?php
+
+                                        //var_dump($dadosCliente);
+
+                                         if(isset($dadosCliente['foto'])){
+                                        ?>
+                                            <img src="<?php echo HOME_URI; ?>/views/_uploads/clients/<?php echo $dadosCliente['foto']; ?>" alt="Logo do cliente!" class="img-rounded">
+                                            <input id="logoAntiga" name="logoAntiga" type="hidden"  value="<?php echo $dadosCliente['foto']; ?>" />
+                                        <?php
+                                        }else{
+                                        ?>
+                                            <i class="fa fa-building-o fa-5x"></i>
+                                            <input id="logoAntiga" name="logoAntiga" type="hidden"  value="" />
+                                        <?php
+                                        }
+                                    ?>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Nova logomarca do cliente (Tamanho recomendado 128 x 64)</label>
+                                    <input type="file" id="file_foto" name="file_foto"/>
+                                </div>
+                            </div>
+                        </div>
+
                     	<div class="row">
                     		 <!-- nome do cliente -->
                           <div class="col-md-4">

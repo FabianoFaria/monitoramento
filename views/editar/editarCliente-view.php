@@ -43,10 +43,11 @@ $idestado = $retorno[0]['idestado'];
 <div class="container-fluid fontPadrao">
     <!-- Titulo pagina -->
     <label class="titulo-pagina">CLIENTE CADASTRADO</label><!-- Fim Titulo pagina -->
-    
-    
+
+
     <!-- formulario de cadastro -->
     <form method="post" autocomplete="off">
+
         <div class="row">
             <!-- nome do cliente -->
             <div class="col-md-6">
@@ -55,7 +56,7 @@ $idestado = $retorno[0]['idestado'];
                     <input type="text" class="form-control" id="txt_cliente" name="txt_cliente" placeholder="Nome do cliente" maxlength="100" required value="<?php echo $nome; ?>">
                 </div>
             </div><!-- fim do campo nome do cliente -->
-            
+
             <!-- DDD -->
             <div class="col-md-2">
                 <div class="form-group">
@@ -63,7 +64,7 @@ $idestado = $retorno[0]['idestado'];
                     <input type="text" class="form-control" id="txt_ddd" name="txt_ddd" placeholder="DDD (00)" maxlength="2" onkeypress="return onlyNumber(event);" value="<?php if ($ddd != 0) echo $ddd; ?>">
                 </div>
             </div><!-- fim do ddd -->
-            
+
             <!-- telefone -->
             <div class="col-md-3">
                 <div class="form-group">
@@ -72,9 +73,9 @@ $idestado = $retorno[0]['idestado'];
                 </div>
             </div><!-- fim do telefone -->
         </div>
-        
-        
-        
+
+
+
         <div class="row">
             <!-- cep -->
             <div class="col-md-2">
@@ -83,8 +84,8 @@ $idestado = $retorno[0]['idestado'];
                     <input type="text" class="form-control" id="txt_cep" name="txt_cep" placeholder="CEP" maxlength="9" required onkeypress="return onlyNumber(event);" value="<?php echo $cep; ?>">
                 </div>
             </div><!-- fim do cep -->
-            
-            
+
+
             <!-- endereco do cliente -->
             <div class="col-md-6">
                 <div class="form-group">
@@ -92,7 +93,7 @@ $idestado = $retorno[0]['idestado'];
                     <input type="text" class="form-control" id="txt_endereco" name="txt_endereco" placeholder="Rua, Avenida e etc" maxlength="200" required value="<?php echo $endereco; ?>">
                 </div>
             </div><!-- fim do endereco do cliente -->
-            
+
             <!-- numero -->
             <div class="col-md-2">
                 <div class="form-group">
@@ -101,8 +102,8 @@ $idestado = $retorno[0]['idestado'];
                 </div>
             </div><!-- fim do numero -->
         </div>
-        
-        
+
+
         <div class="row">
             <!-- Cidade -->
             <div class="col-md-3">
@@ -111,7 +112,7 @@ $idestado = $retorno[0]['idestado'];
                     <input type="text" class="form-control" id="txt_cidade" name="txt_cidade" placeholder="Cidade" maxlength="50" required value="<?php echo $cidade; ?>">
                 </div>
             </div><!-- fim do campo Cidade -->
-            
+
             <!-- Bairro -->
             <div class="col-md-3">
                 <div class="form-group">
@@ -119,8 +120,8 @@ $idestado = $retorno[0]['idestado'];
                     <input type="text" class="form-control" id="txt_bairro" name="txt_bairro" placeholder="Cidade" maxlength="50" required value="<?php echo $bairro; ?>">
                 </div>
             </div><!-- fim do campo Bairro -->
-            
-            
+
+
             <!-- pais -->
             <div class="col-md-3">
                 <div class="form-group">
@@ -128,8 +129,8 @@ $idestado = $retorno[0]['idestado'];
                     <?php $modelo->listaPaises($idpais); ?>
                 </div>
             </div><!-- fim do pais -->
-            
-            
+
+
             <!-- estado -->
             <div class="col-md-3">
                 <div class="form-group">
@@ -138,13 +139,13 @@ $idestado = $retorno[0]['idestado'];
                 </div>
             </div><!-- fim do estado -->
         </div>
-        
-        
-        
+
+
+
         <!-- botao de enviar -->
         <div class="row">
             <div class="col-md-2 col-md-offset-5 txt-center"><input type="submit" name="btn_salvar" class="btn btn-info" value="Salvar Altera&ccedil;&atilde;o"></div>
         </div><!-- fim do botao de envio -->
-        
+
     </form><!-- fim do formulario de cadastro -->
 </div>
