@@ -48,7 +48,7 @@
     *
     *@param
     */
-    public function envioEmailAlertaEquipamento($email, $nomeContato, $tipoEquip, $nomeEquip, $modeloEquip, $ambiente, $msg, $cliente, $sede, $indiceRecebido, $indiceUltrapassado){
+    public function envioEmailAlertaEquipamento($email, $nomeContato, $tipoEquip, $nomeEquip, $modeloEquip, $ambiente, $msg, $cliente, $sede, $indiceRecebido, $indiceUltrapassado, $parametroVerificado, $pontoTabela){
 
         //require_once('PHPMailerAutoload.php');
 
@@ -58,11 +58,12 @@
         // $mailer->From = 'monitoramento@sistema.eficazsystem.com.br'; //Obrigatório ser a mesma caixa postal configurada no remetente do SMTP
         // $mailer->isSendmail();
 
+
         //Definimos Para quem vai ser enviado o email
         $remetente = $this->remetente;
         $destino = $email;
 
-        $assunto = "ALERTA, ".$tipoEquip." ".$nomeEquip." da ".$cliente." se encontra em estado crítico!";
+        $assunto = "ALERTA, ".$tipoEquip." ".$nomeEquip." da unidade : ".$sede." se encontra em estado crítico!";
 
         // É necessário indicar que o formato do e-mail é html
         $headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -243,13 +244,19 @@
                                                                     $mensagem .= "".$tipoEquip." ".$nomeEquip."  ";
                                                                     $mensagem .= " localizado na sede : ".$cliente." - ".$sede." ";
                                                                     $mensagem .= "</p>";
-                                                                    $mensagem .= "<p>";
-                                                                    $mensagem .= "Apresenta a seguinte mensagem de erro : ";
+                                                                    // $mensagem .= "<p>";
+                                                                    // $mensagem .= "Apresenta a seguinte mensagem de erro : ";
+                                                                    // $mensagem .= "</p>";
+
+                                                                    $mensagem .= "<p> Foi registrado no ponto : ".verificarPontoTabela($pontoTabela).", a mensagem de erro.";
                                                                     $mensagem .= "</p>";
                                                                     $mensagem .= "<p>";
                                                                     $mensagem .= $msg;
                                                                     $mensagem .= "</p>";
-                                                                    $mensagem .= "<p> Foi registrado uma medida de ".$indiceRecebido." no equipamento onde o limite seguro era de : ".$indiceUltrapassado." ";
+
+                                                                    $notacao   = configurarNotacaoMedida($pontoTabela);
+
+                                                                    $mensagem .= "<p> Foi registrado uma medida de ".$indiceRecebido." ".$notacao." no equipamento onde o limite seguro era de : ".$indiceUltrapassado." ".$notacao;
                                                                     $mensagem .= "</p>";
                                                                     $mensagem .= "<p>";
                                                                     $mensagem .= "Favor solicitar verificação do equipamento o mais rapido possível.";
@@ -259,7 +266,7 @@
                                                                     $mensagem .= "</p>";
                                                                 $mensagem .= '</div>';
 
-
+                                                                //verificarPontoTabela
 
                                                                 $mensagem .= '';
 
@@ -678,6 +685,125 @@
         } else {
             return false;
         }
+    }
+
+    /*
+    * Função para configurar o tipo de notação das medidas
+    */
+    public function configurarNotacaoMedida($ponto){
+
+        $notacao = "";
+        if(($ponto == 'b') || ($ponto == 'c') || ($ponto == 'd')){
+            $notacao = " (V)";
+        }else
+        if(($ponto == 'e') || ($ponto == 'f') || ($ponto == 'g')){
+            $notacao = " (V)";
+        }else
+        if(($ponto == 'i') || ($ponto == 'j') || ($ponto == 'l')){
+            $notacao = " (A)";
+        }else
+        if(($ponto == 'm') || ($ponto == 'n') || ($ponto == 'o')){
+            $notacao = " (A)";
+        }else
+        if(($ponto == 'h') || ($ponto == 'p')){
+            $notacao = " (V)";
+        }else
+        if(($ponto == 'q') || ($ponto == 'r')){
+            $notacao = " (°C)";
+        }else{
+            $notacao = " ";
+        }
+
+        return $notacao;
+    }
+
+    /**
+    * Função para verificar o ponto da tabela
+    */
+    public function verificarPontoTabela($ponto){
+        //EQUIPAMENTO inteiro
+        if(($ponto == 'a')){
+            $saida = "Equipamento mestre";
+        }
+        //ENTRADA DE TENSÃO
+        if(($ponto == 'b') || ($ponto == 'c') || ($ponto == 'd')){
+            switch ($ponto) {
+                case 'b':
+                    $saida = "Entrada de tensão R";
+                break;
+                case 'c':
+                    $saida = "Entrada de tensão S";
+                break;
+                case 'd':
+                    $saida = "Entrada de tensão T";
+                break;
+            }
+        }
+        //SAÍDA DE TENSÃO
+        if(($ponto == 'e') || ($ponto == 'f') || ($ponto == 'g')){
+            switch ($ponto) {
+                case 'e':
+                    $saida = "Saída de tensão R";
+                break;
+                case 'f':
+                    $saida = "Saída de tensão S";
+                break;
+                case 'g':
+                    $saida = "Saída de tensão T";
+                break;
+            }
+        }
+        //ENTRADA DE CORRENTE
+        if(($ponto == 'i') || ($ponto == 'j') || ($ponto == 'l')){
+            switch ($ponto) {
+                case 'i':
+                    $saida = "Entrada de corrente R";
+                break;
+                case 'j':
+                    $saida = "Entrada de corrente S";
+                break;
+                case 'l':
+                    $saida = "Entrada de corrente T";
+                break;
+            }
+        }
+        //SAÍDA DE CORRENTE
+        if(($ponto == 'm') || ($ponto == 'n') || ($ponto == 'o')){
+            switch ($ponto) {
+                case 'm':
+                    $saida = "Saída de corrente R";
+                break;
+                case 'n':
+                    $saida = "Saída de corrente S";
+                break;
+                case 'o':
+                    $saida = "Saída de corrente T";
+                break;
+            }
+        }
+        //BATERIA
+        if(($ponto == 'h') || ($ponto == 'p')){
+            switch ($ponto) {
+                case 'h':
+                    $saida = "Bateria";
+                break;
+                case 'p':
+                    $saida = "Bateria 2";
+                break;
+            }
+        }
+        //TEMPERATURA
+        if(($ponto == 'q') || ($ponto == 'r')){
+            switch ($ponto) {
+                case 'q':
+                    $saida = "Temperatura Ambiente";
+                break;
+                case 'r':
+                    $saida = "Temperatura Banco Bateria";
+                break;
+            }
+        }
+        return $saida;
     }
 }
 
