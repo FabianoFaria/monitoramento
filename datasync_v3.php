@@ -788,7 +788,7 @@
         // Cria um objeto de da classe de conexao
         $connBase = new EficazDB;
 
-        $data = date('Y-m-d h:i:s');
+        $data = date('Y-m-d H:i:s');
 
         //REGISTRA O ALARME NO SISTEMA
         $queryAlarme = "INSERT INTO tb_alerta(id_sim_equipamento, id_msg_alerta, nivel_alerta, dt_criacao)

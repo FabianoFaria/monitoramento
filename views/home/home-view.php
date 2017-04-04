@@ -297,7 +297,7 @@
                                                                 </span>
                                                                 <?php
                                                             break;
-                                                            case 'Temperatura banco bateria':
+                                                            case 'Temperatura Banco de bateria':
                                                                 ?>
                                                                 <span class="text-danger">
                                                                     <?php

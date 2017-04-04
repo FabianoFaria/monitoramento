@@ -269,7 +269,7 @@
             $dataCriacao    = explode(" ", $dadosAlarme['dt_criacao']);
             $horaCriacao    = $dataCriacao[1];
             $dataCriacaoTratada = implode("/", array_reverse(explode("-", $dataCriacao[0])));
-            $dataVisualizacao   = date('d/m/Y h:i:s');
+            $dataVisualizacao   = date('d/m/Y H:i:s');
 
             /*
             * DADOS DO STATUS DE ALERTA E MENSAGENS
