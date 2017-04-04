@@ -234,18 +234,21 @@ class EquipamentoController extends MainController
 
         $dadosEquipamento   = $equipModelo->detalhesEquipamentoParaConfiguracao($_POST['idEquipamento']);
 
-        $idSimEquipamento       = $dadosEquipamento[0]['id'];
-        $numeroSimEquipamento   = $dadosEquipamento[0]['id_sim'];
-
         $removerEquip       = $equipModelo->removerEquipamentoViaJson($_POST['idEquipamento']);
 
         if($removerEquip){
 
+            if($dadosEquipamento['status']){
+
+                $idSimEquipamento       = $dadosEquipamento['equipamento'][0]['id'];
+                $numeroSimEquipamento   = $dadosEquipamento['equipamento'][0]['id_sim'];
+
+                //REMOVE DA TABELA DE POSIÇÕES AS POSIÇÕES OCUPADAS NO EQUIPAMENTO PELO SIM
+                $removePosicoesEquipamento  = $equipModelo->removerPosicoesTabelaEquipamentoViaJson($idSimEquipamento, $numeroSimEquipamento);
+            }
+
             //REMOVE OS PARAMETROS CADASTRADOS PARA O EQUIPAMENTO
             $removerParamEquip = $equipModelo->removerParametrosEquipamentoViaJson($_POST['idEquipamento']);
-
-            //REMOVE DA TABELA DE POSIÇÕES AS POSIÇÕES OCUPADAS NO EQUIPAMENTO PELO SIM
-            $removePosicoesEquipamento  = $equipModelo->removerPosicoesTabelaEquipamentoViaJson($idSimEquipamento, $numeroSimEquipamento);
 
             exit(json_encode(array('status' => $removerEquip['status'] )));
         }else{
