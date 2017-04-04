@@ -63,7 +63,7 @@
         $remetente = $this->remetente;
         $destino = $email;
 
-        $assunto = "ALERTA, ".$tipoEquip." ".$nomeEquip." da unidade : ".$sede." se encontra em estado crítico!";
+        $assunto = "ALERTA, ".$tipoEquip." ".$nomeEquip." da unidade ".$sede." se encontra em estado crítico!";
 
         // É necessário indicar que o formato do e-mail é html
         $headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -248,13 +248,15 @@
                                                                     // $mensagem .= "Apresenta a seguinte mensagem de erro : ";
                                                                     // $mensagem .= "</p>";
 
-                                                                    $mensagem .= "<p> Foi registrado no ponto : ".verificarPontoTabela($pontoTabela).", a mensagem de erro.";
+                                                                    $mensagem .= "<p> Ponto que gerou o alarme : ".$this->verificarPontoTabela($pontoTabela).".";
+                                                                    $mensagem .= "</p>";
+                                                                    $mensagem .= "<p> Mensagem de erro :";
                                                                     $mensagem .= "</p>";
                                                                     $mensagem .= "<p>";
                                                                     $mensagem .= $msg;
                                                                     $mensagem .= "</p>";
 
-                                                                    $notacao   = configurarNotacaoMedida($pontoTabela);
+                                                                    $notacao   = $this->configurarNotacaoMedida($pontoTabela);
 
                                                                     $mensagem .= "<p> Foi registrado uma medida de ".$indiceRecebido." ".$notacao." no equipamento onde o limite seguro era de : ".$indiceUltrapassado." ".$notacao;
                                                                     $mensagem .= "</p>";
