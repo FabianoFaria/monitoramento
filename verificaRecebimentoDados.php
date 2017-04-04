@@ -14,7 +14,7 @@
 	/*
 		COLETA A DATA ATUAL DA VERIFICAÇÃO
 	*/
-	$dataAtual = date('Y-m-d h:i:s');
+	$dataAtual = date('Y-m-d H:i:s');
 
 	var_dump($dataAtual);
 
