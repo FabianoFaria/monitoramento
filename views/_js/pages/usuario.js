@@ -90,8 +90,8 @@ $().ready(function() {
 
             //EFETUA A REQUISIÇÃO PARA JSON PARA ATUALIZAR
 			//var formData = new FormData();
-			 var fd = new FormData(document.getElementById("edicao_usuario"));
-			 fd.append('file', $('input[type=file]')[0].files[0]);
+			var fd = new FormData(document.getElementById("edicao_usuario"));
+			// fd.append('file', $('input[type=file]')[0].files[0]);
 
             // var nomeContato     = $('#txt_nome').val();
             // var sobrenome       = $('#txt_sobrenome').val();

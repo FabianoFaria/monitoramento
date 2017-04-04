@@ -227,15 +227,15 @@
             //var_dump($_FILES);
 
             //TESTA SE FOI COLOCADO ALGUM ARQUIVO PARA SER SALVO
-            if(file_exists($_FILES['file_foto']['tmp_name']) && is_uploaded_file($_FILES['file_foto']['tmp_name'])){
-
-
-                //EFETUA O UPLOAD DA IMAGEM SELECIONADA
-                $arquivoEnviado = $this->upload_avatar($_FILES, UP_USER_IMG_PATH, 'user');
-
-            }else{
+            // if(file_exists($_FILES['file_foto']['tmp_name']) && is_uploaded_file($_FILES['file_foto']['tmp_name'])){
+            //
+            //
+            //     //EFETUA O UPLOAD DA IMAGEM SELECIONADA
+            //     $arquivoEnviado = $this->upload_avatar($_FILES, UP_USER_IMG_PATH, 'user');
+            //
+            // }else{
                 $arquivoEnviado = null;
-            }
+            // }
 
             // if(!file_exists($_FILES['myfile']['tmp_name']) || !is_uploaded_file($_FILES['myfile']['tmp_name'])) {
             //     echo 'No upload';

@@ -54,14 +54,14 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
                 </div>
 
             </div>
-
-            <div class="row">
+            <!-- Comentando a parte de upload de imagens até o momento em que for aprovado para ser implementado para o cliente -->
+            <!-- <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Imagem atual do usuário</label>
+                        <label for="exampleInputEmail1">Imagem atual do usuário</label> -->
 
                         <!-- <img src="<?php //echo HOME_URI; ?>/views/_uploads/users/<?php //echo $dadosUsuario['imagem_usuario']; ?>" alt="..." class="img-rounded"> -->
-                    </div>
+                    <!-- </div>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group">
@@ -70,7 +70,7 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
             <div class="row">
 
