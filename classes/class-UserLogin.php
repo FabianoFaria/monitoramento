@@ -55,8 +55,8 @@ class UserLogin
 
             // Extrai as posicoes do array e converte em variaveis
             extract($userdata);
-            $user = $this->tratamento($user, 0);
-            $userpass = $this->tratamento($userpass, 1);
+            $user       = $this->tratamento($user, 0);
+            $userpass   = $this->tratamento($userpass, 1);
 
             // Criptografa senha
             $userpass = md5($userpass);
@@ -102,6 +102,14 @@ class UserLogin
 
                         // Armazena o link
                         $login_uri = HOME_URI;
+
+                        //registro de atividade na tabela de LogModel
+                        $idUsuarioLog   = $row['id'];
+
+                        $queryAtividade = "INSERT INTO tb_atividades_usuarios (id_usuario, id_atividade) VALUES ('$idUsuarioLog', 1)";
+
+                        // Executa a query
+                        $resultLog = $this->db->select($queryAtividade);
 
                         // Redireciona via javascript
                         echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
@@ -268,6 +276,7 @@ class UserLogin
             $this->pedidoSenha_token    = $usuarioToken;
             $this->pedidoSenha_error    = "_";
 
+            //return false;
         }
     }
 

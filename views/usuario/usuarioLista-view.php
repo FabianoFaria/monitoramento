@@ -64,6 +64,13 @@
                                 <th>Email</th>
                                 <th>Cliente</th>
                                 <th>Data criação</th>
+                                <?php
+                                    if($_SESSION['userdata']['tipo_usu'] == 'Administrador'){
+                                ?>
+                                    <th class="txt-center">Atividades</th>
+                                <?php
+                                    }
+                                ?>
                                 <th class="txt-center">Editar</th>
                                 <th class="txt-center">Excluir</th>
                             </tr>
@@ -84,7 +91,21 @@
 
                                         $dataTemp = explode(' ', $usuario['dt_criaco']);
 
-                                        echo implode("/", array_reverse(explode("-", $dataTemp[0]))); ?></td>
+                                        echo implode("/", array_reverse(explode("-", $dataTemp[0]))); ?>
+                                    </td>
+
+                                    <?php
+                                        if($_SESSION['userdata']['tipo_usu'] == 'Administrador'){
+                                    ?>
+                                    <td>
+                                        <a href="<?php echo HOME_URI; ?>/usuario/listarAtividades/<?php echo $usuario['id']; ?>" class="btn button link-tabela-moni">
+                                            <i class="fa fa-file-text-o fa-lg"></i>
+                                        </a>
+                                    </td>
+                                    <?php
+                                        }
+                                    ?>
+
                                    <td>
                                        <!-- <a href="<?php //echo HOME_URI; ?>/usuario/editarTerceiros/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
                                            <i class="fa fa-pencil-square-o fa-lg"></i>

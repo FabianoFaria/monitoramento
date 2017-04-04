@@ -107,7 +107,7 @@
 
             $listaCliente = $modeloCliente->listarCliente($_SESSION['userdata']['cliente'], $_SESSION['userdata']['tipo']);
 
-            //var_dump($_SESSION);
+           //var_dump($_SESSION);
 
     ?>
 
