@@ -15,9 +15,9 @@ class LogModel extends MainModel
         $this->parametros = $this->controller->parametros;
     }
 
-
-
     
+
+
 
 }
 
