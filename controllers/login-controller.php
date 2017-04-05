@@ -29,6 +29,16 @@ class LoginController extends MainController
      */
     public function sair()
     {
+
+        // Prepara os dados para registro de atividade
+        $idUsuario = $_SESSION['userdata']['userId'];
+
+        // Carrega o modelo log para carregar os metodos necessario para adicionar a atividade ao LogModel
+        // CARREGA O MODELO DE USUÁRIO PARA CONTROLE DE LOGIN
+        $modeloLog  = $this->load_model('log/log-model');
+
+        $modeloLog->registrarAtividade($idUsuario, 2);
+
         // Chama o metodo de logout
         $this->logout();
     }
