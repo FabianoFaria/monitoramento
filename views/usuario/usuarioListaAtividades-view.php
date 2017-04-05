@@ -43,18 +43,62 @@
                     <table id="stream_table" class='table table-striped table-bordered'>
                         <thead>
                             <tr>
-                                <td>
+                                <th>
                                     Usuário
-                                </td>
-                                <td>
+                                </th>
+                                <th>
                                     Atividade
-                                </td>
-                                <td>
+                                </th>
+                                <th>
+                                    Horário
+                                </th>
+                                <th>
                                     Data
-                                </td>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
+
+                            <?php
+
+                                //var_dump($listaAcess);
+
+                                if($listaAcess['status']){
+                                    $atividades = $listaAcess['atividades'];
+                                    foreach ($atividades as $acao) {
+
+                                        $dataTemp = explode(' ', $acao['data_registro']);
+
+                                    ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $acao['nome']." ".$acao['sobrenome']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $acao['nome_atividade']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $dataTemp[1]; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo implode('/', array_reverse(explode('-', $dataTemp[0]))); ?>
+                                            </td>
+                                        </tr>
+                                    <?php
+
+                                    }
+
+                                }else{
+                                ?>
+                                    <tr>
+                                        <td colspan="3">
+                                            O usuário especificado não possui atividades registradas.
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+
+                            ?>
 
                         </tbody>
                     </table>

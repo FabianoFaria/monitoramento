@@ -40,7 +40,8 @@ class LogModel extends MainModel
                       FROM tb_users users
                       JOIN tb_atividades_usuarios atividadesUsr ON atividadesUsr.id_usuario = users.id
                       JOIN tb_atividade atividades ON atividadesUsr.id_atividade = atividades.id
-                      WHERE users.id = '$idUsuarioDesejado'";
+                      WHERE users.id = '$idUsuarioDesejado'
+                      ORDER BY atividadesUsr.id DESC LIMIT 50";
 
             /* monta a result */
             $result = $this->db->select($query);
