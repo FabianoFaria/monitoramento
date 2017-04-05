@@ -53,11 +53,47 @@
         <!-- TABELA CONTENDO OS USUÁRIOS CADASTRADOS -->
         <div class="panel panel-default">
             <div class="panel-heading">
-
+                <div class="row">
+                    <form id="filtroUsuarios" class="">
+                        <div class="col-md-3 form-group">
+                            <p>
+                                Cliente : <select id="filtroClienteLista" class="form-control">
+                                            <?php
+                                                if($listaClie){
+                                                    echo "<option value=''>Selecione... </option>";
+                                                    foreach ($listaClie as $cliente){
+                                                        $idClie = $cliente['id'];
+                                                        $nomeClie = $cliente['nome'];
+                                                        echo "<option value='".$idClie."'>".$nomeClie."</option>";
+                                                    }
+                                                }else{
+                                            ?>
+                                                <option value="0">Selecione... </option>
+                                            <?php
+                                                }
+                                            ?>
+                                            </select>
+                            </p>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <p>
+                                Tipo de usuário : <select id="filtroTipoUsuario" name="filtroTipoUsuario" class="form-control">
+                                    <?php
+                                        echo "<option value=''>Selecione... </option>";
+                                        //$modelo->loadClienteFilial();
+                                        foreach ($listaAcess as $acesso) {
+                                            echo "<option value='".$acesso['id']."'>".$acesso['nome']."</option>";
+                                        }
+                                    ?>
+                                </select>
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="panel-body">
                 <div class='table-responsive'>
-                    <table id="stream_table" class='table table-striped table-bordered'>
+                    <table id="listaUsuarios" class='table table-striped table-bordered'>
                         <thead>
                             <tr>
                                 <th>Nome</th>

@@ -78,6 +78,8 @@
                 $modelo = $this->load_model('usuario/usuario-model');
                 // Carrega o modelo de cadastro para este view
                 $modeloCadastro = $this->load_model('cadastrar/cadastro-model');
+                // Carrega o modelo de clientes para este view
+                $modeloClie     = $this->load_model('cliente/cliente-model');
 
                 // Carrega view
                 require_once EFIPATH . "/views/_includes/header.php";
@@ -315,6 +317,51 @@
                 exit(json_encode(array('status' => true)));
             }else{
                 exit(json_encode(array('status' => false)));
+            }
+        }
+
+        /*
+        * FUNÇÃO PARA FILTRAR OS USUÁRIOS POR CLIENTE
+        */
+        public function filtrarUsuariosClienteJson(){
+
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $usuarioModelo          = $this->load_model('usuario/usuario-model');
+
+            $listaUsuarios          = $usuarioModelo->listagemUsuarioCliente($_POST['idCliente']);
+
+            if($listaUsuarios){
+
+                $listaUsuariosTabela      = '';
+
+                foreach ($listaUsuarios as $usuario) {
+
+                    $dataTemp       = explode(' ', $usuario['dt_criaco']);
+
+                    $dataCriacao    = implode("/", array_reverse(explode("-", $dataTemp[0])));
+
+                    $listaUsuariosTabela .="<tr>
+                                            <td>".$usuario['nome']."".$usuario['sobrenome']."</td>
+                                            <td>".$usuario['email']."</td><td>".$usuario['email']."</td>
+                                            <td>".$dataCriacao."</td>
+                                            <td>
+                                                <button class='btnEditUser btn link-tabela-moni' value='".$usuario['id']."'>
+                                                     <i class='fa fa-pencil-square-o fa-lg'></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button class='btnRemoveUser btn link-tabela-moni' value='".$usuario['id']."'>
+                                                    <i class='fa  fa-times fa-lg'></i>
+                                                </button>
+                                            </td>
+                                            </tr>";
+                }
+
+                exit(json_encode(array('status' => true, 'usuarios' => $listaUsuariosTabela)));
+            }else{
+                $listaUsuariosTabela      = '<tr><td colspan="6">Nenhum Usuário cadastrado para o cliente !</td></tr>';
+
+                exit(json_encode(array('status' => false, 'usuarios' => $listaUsuariosTabela)));
             }
         }
 

@@ -296,7 +296,8 @@ $().ready(function() {
     /*
     * INICIA PROCESSO DE EDIÇÂO DE USUÁRIO
     */
-    $('.btnEditUser').click(function(){
+	$(document).on('click','.btnEditUser',function(){
+    //$('.btnEditUser').click(function(){
 
         var usuario = $(this).val();
 
@@ -351,6 +352,57 @@ $().ready(function() {
 
     });
 
+	/*
+	* FILTRO DE USUÁRIOS POR CLIENTE
+	*/
+	$('#filtroClienteLista').change(function() {
+
+		var idCliente = $(this).val();
+
+		if(idCliente != ''){
+
+			//EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+	        $.ajax({
+	            url: urlP+"/eficazmonitor/usuario/filtrarUsuariosClienteJson",
+	            secureuri: false,
+	            type : "POST",
+	            dataType: 'json',
+	            data      : {
+	                'idCliente' : idCliente
+	            },
+	            success : function(datra)
+	            {
+	                if(datra.status){
+
+	                    /*
+	                    * PREENCHE TABELA COM OS USUÁRIOS
+	                    */
+	                    $('#listaUsuarios tbody').html(datra.usuarios);
+
+	                }else{
+	                    // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+	                    $('#listaUsuarios tbody').html(datra.usuarios);
+	                }
+
+	            },
+	            error: function(jqXHR, textStatus, errorThrown)
+	            {
+
+	                //Settar a mensagem de erro!
+	                      // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+	                    swal("Oops...", "Ocorreu um erro ao carregar as filiais, favor verificar os dados informados!", "error");
+	             // Handle errors here
+	             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+	             // STOP LOADING SPINNER
+	            }
+	        });
+		}
+
+	});
+
+	/*
+	* FILTRO DE USUÁRIOS POR TIPO DE ACESSO
+	*/
 
     /*
     * INICIA O PROCESSO DE SALVAR ALTERAÇÕES DO USUÁRIO
@@ -477,7 +529,8 @@ $().ready(function() {
     /*
     * INICIA O PROCESSO DE EXCLUSÃO DE USUÁRIO
     */
-    $('.btnRemoveUser').click(function(){
+	$(document).on('click','.btnRemoveUser',function(){
+    //$('.btnRemoveUser').click(function(){
 
         var idUser = $(this).val();
 
