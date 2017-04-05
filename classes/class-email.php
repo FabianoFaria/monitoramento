@@ -649,12 +649,14 @@
     /*
     * FUNÇÃO PARA ENVIO DE EMAIL PARA NOTIFICAR APARELHO NÃO RESPONDENDO
     */
-    public function envioEmailAlertaEquipamentoNaoResponde($email, $nome_contato, $tipo_equipamento, $nomeModeloEquipamento, $ambiente, $nomeClie){
+    public function envioEmailAlertaEquipamentoNaoResponde($email, $nome_contato, $tipo_equipamento, $nomeModeloEquipamento, $ambiente, $nomeClie, $nomeFili){
+
+        $filial = (isset($nomeFili)) ? $nomeFili : "Matriz";
 
         //Definimos Para quem vai ser enviado o email
         $remetente = $this->remetente;
         $destino = $email;
-        $assunto = "ALERTA - Equipamento mestre não está respondendo!";
+        $assunto = "ALERTA - Equipamento mestre na sede ".$filial." não está respondendo!";
 
         // É necessário indicar que o formato do e-mail é html
         $headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -664,7 +666,7 @@
 
         $mensagem = "<h3>Olá, ".$nome_contato."</h3>";
         $mensagem .= "<p>";
-        $mensagem .= "Foi detectado que o equipamento responsável pelo monitoramento do  ".$tipo_equipamento." ".$nomeModeloEquipamento.", não está enviando dados.";
+        $mensagem .= "Foi detectado que o equipamento responsável pelo monitoramento do  ".$tipo_equipamento." ".$nomeModeloEquipamento.", localizado na sede ".$filial." não está enviando dados.";
         $mensagem .= "</p>";
         $mensagem .= "";
         $mensagem .= "<p>";

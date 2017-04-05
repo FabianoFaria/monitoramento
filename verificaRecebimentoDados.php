@@ -124,7 +124,7 @@
 
 				                    $localEquip = (isset($equipamento['nomeFili'])) ? ' filial '.$equipamento['nomeFili'] : 'Matriz';
 
-									$resultadoEnvio = $mailer->envioEmailAlertaEquipamentoNaoResponde($contato['email'], $contato['nome_contato'], $equipamento['tipo_equipamento'], $equipamento['nomeModeloEquipamento'], $equipamento['ambiente'], $equipamento['nomeClie']);
+									$resultadoEnvio = $mailer->envioEmailAlertaEquipamentoNaoResponde($contato['email'], $contato['nome_contato'], $equipamento['tipo_equipamento'], $equipamento['nomeModeloEquipamento'], $equipamento['ambiente'], $equipamento['nomeClie'], $equipamento['nomeFili']);
 
 									//var_dump($resultadoEnvio);
 								}
