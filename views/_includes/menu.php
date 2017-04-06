@@ -279,11 +279,18 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
                               <spam>Alarmes</span>
                             </a>
                         </li> -->
-                        <li>
-                            <a href="<?php echo HOME_URI; ?>/configuracao/configuracoesSistema" class="">
-                              <i class="fa fa-gears fa-1x"></i>
+                        <!-- <li>
+                            <a href="<?php //echo HOME_URI; ?>/configuracao/configuracoesSistema" class="">
+                              <i class="fa fa-gear fa-1x"></i>
                               <span class="icon-side"></span>
                               <spam>Configurações</span>
+                            </a>
+                        </li> -->
+                        <li>
+                            <a href="<?php echo HOME_URI; ?>/equipamento/gerenciarChips" class="">
+                              <i class="fa fa-credit-card fa-1x"></i>
+                              <span class="icon-side"></span>
+                              <spam>Gerenciar SIM</span>
                             </a>
                         </li>
                        </ul>

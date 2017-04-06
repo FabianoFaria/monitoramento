@@ -55,6 +55,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <form id="filtroUsuarios" class="">
+                        <input type="hidden" id="tipoUser" name="tipoUser" value="<?php echo $_SESSION['userdata']['tipo_usu']; ?>"/>
                         <div class="col-md-3 form-group">
                             <p>
                                 Cliente : <select id="filtroClienteLista" class="form-control">
@@ -75,19 +76,19 @@
                                             </select>
                             </p>
                         </div>
-                        <div class="col-md-3 form-group">
+                        <!-- <div class="col-md-3 form-group">
                             <p>
                                 Tipo de usuário : <select id="filtroTipoUsuario" name="filtroTipoUsuario" class="form-control">
                                     <?php
-                                        echo "<option value=''>Selecione... </option>";
-                                        //$modelo->loadClienteFilial();
-                                        foreach ($listaAcess as $acesso) {
-                                            echo "<option value='".$acesso['id']."'>".$acesso['nome']."</option>";
-                                        }
+                                        // echo "<option value=''>Selecione... </option>";
+                                        // //$modelo->loadClienteFilial();
+                                        // foreach ($listaAcess as $acesso) {
+                                        //     echo "<option value='".$acesso['id']."'>".$acesso['nome']."</option>";
+                                        //}
                                     ?>
                                 </select>
                             </p>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
             </div>

@@ -358,6 +358,7 @@ $().ready(function() {
 	$('#filtroClienteLista').change(function() {
 
 		var idCliente = $(this).val();
+		var tipoUser  = $('#tipoUser').val();
 
 		if(idCliente != ''){
 
@@ -368,7 +369,8 @@ $().ready(function() {
 	            type : "POST",
 	            dataType: 'json',
 	            data      : {
-	                'idCliente' : idCliente
+	                'idCliente' : idCliente,
+					'tipoUser'  : tipoUser
 	            },
 	            success : function(datra)
 	            {
@@ -403,6 +405,57 @@ $().ready(function() {
 	/*
 	* FILTRO DE USUÁRIOS POR TIPO DE ACESSO
 	*/
+	$('#filtroTipoUsuario').change(function() {
+
+		var idTipoUsuario 	= $(this).val();
+		var idCLiente 		= $('#filtroClienteLista').val();
+		var tipoUser  		= $('#tipoUser').val();
+
+		if(idCLiente != ''){
+
+			//EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+	        $.ajax({
+	            url: urlP+"/eficazmonitor/usuario/filtrarUsuariosClienteTipoUsuarioJson",
+	            secureuri: false,
+	            type : "POST",
+	            dataType: 'json',
+	            data      : {
+					'idTipoAcesso' 	: idTipoUsuario,
+	                'idCliente' 	: idCliente,
+					'tipoUser'  	: tipoUser
+	            },
+	            success : function(datra)
+	            {
+	                if(datra.status){
+
+	                    /*
+	                    * PREENCHE TABELA COM OS USUÁRIOS
+	                    */
+	                    $('#listaUsuarios tbody').html(datra.usuarios);
+
+	                }else{
+	                    // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+	                    $('#listaUsuarios tbody').html(datra.usuarios);
+	                }
+
+	            },
+	            error: function(jqXHR, textStatus, errorThrown)
+	            {
+
+	                //Settar a mensagem de erro!
+	                      // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+	                    swal("Oops...", "Ocorreu um erro ao carregar as filiais, favor verificar os dados informados!", "error");
+	             // Handle errors here
+	             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+	             // STOP LOADING SPINNER
+	            }
+	        });
+
+		}else{
+			swal('','Favor selecionar pelo menos um cliente','info');
+		}
+
+	});
 
     /*
     * INICIA O PROCESSO DE SALVAR ALTERAÇÕES DO USUÁRIO

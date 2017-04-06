@@ -377,10 +377,22 @@
 
                     $dataCriacao    = implode("/", array_reverse(explode("-", $dataTemp[0])));
 
+                    if($_POST['tipoUser'] == 'Administrador'){
+                        $atividades = "<td>
+                            <a href='".HOME_URI."/usuario/listarAtividades/".$usuario['id']." class='btn button link-tabela-moni'>
+                                <i class='fa fa-file-text-o fa-l'></i>
+                            </a>
+                        </td>";
+
+                    }else{
+                        $atividades = "";
+                    }
+
                     $listaUsuariosTabela .="<tr>
                                             <td>".$usuario['nome']."".$usuario['sobrenome']."</td>
                                             <td>".$usuario['email']."</td><td>".$usuario['email']."</td>
                                             <td>".$dataCriacao."</td>
+                                            ".$atividades."
                                             <td>
                                                 <button class='btnEditUser btn link-tabela-moni' value='".$usuario['id']."'>
                                                      <i class='fa fa-pencil-square-o fa-lg'></i>
@@ -402,6 +414,12 @@
             }
         }
 
+        /*
+        * FUNÇÃO PARA FILTRAR OS USUÁRIOS POR CLIENTE E POR TIPO
+        */
+        // public function filtrarUsuariosClienteJson(){
+        //
+        // }
     }
 
 

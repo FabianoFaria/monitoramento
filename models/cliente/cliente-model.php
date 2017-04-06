@@ -467,7 +467,7 @@
                             FROM  tb_cliente clie
                             LEFT JOIN tb_filial fili ON clie.id = fili.id_matriz
                             LEFT JOIN tb_sim sim ON fili.id = sim.id_filial
-                            WHERE fili.id_matriz = $idCliente AND fili.id = $idFilial";
+                            WHERE fili.id_matriz = $idCliente AND fili.id = $idFilial AND sim.status_ativo = '1'";
 
                 /* monta result */
                 $result = $this->db->select($query);
@@ -507,7 +507,7 @@
         }
 
         /*
-        * FUnção para carregar o num_sim da matriz do cliente com base no equipamento alocado
+        * Função para carregar o num_sim da matriz do cliente com base no equipamento alocado
         */
 
         public function listarSimClienteMatriz($idEquip){
@@ -517,7 +517,7 @@
                             FROM  tb_cliente clie
                             JOIN tb_equipamento equip ON clie.id = equip.id_cliente
                             LEFT JOIN tb_sim sim ON clie.id = sim.id_cliente
-                            WHERE equip.id = $idEquip";
+                            WHERE equip.id = $idEquip AND sim.status_ativo = '1'";
 
                 /* monta result */
                 $result = $this->db->select($query);

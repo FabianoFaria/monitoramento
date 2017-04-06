@@ -55,7 +55,7 @@ class EficazDB
         // $this->host =     defined('HOSTNAME') ? HOSTNAME : "mysql03.eficazsystem2.hospedagemdesites.ws";
         // $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazsystem22";
         // $this->username = defined('USERNAME') ? USERNAME : "eficazsystem22";
-        // $this->userpass = defined('USERPASS') ? USERPASS : "monitor2981";
+        // $this->userpass = defined('USERPASS') ? USERPASS : "monitor2891";
         $this->host =     defined('HOSTNAME') ? HOSTNAME : "localhost";
         $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazsystem22";
         $this->username = defined('USERNAME') ? USERNAME : "root";

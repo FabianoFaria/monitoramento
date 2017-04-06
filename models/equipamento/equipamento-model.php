@@ -832,6 +832,43 @@ class EquipamentoModel extends MainModel
         return $array;
     }
 
+    /*
+    * CARREGA A LISTA DE CHIPS ATIVOS
+    */
+    public function listaChipsSimAtivos(){
+
+        $query = "SELECT num_sim, id_cliente, id_filial
+                  FROM tb_sim
+                  WHERE status_ativo = '1'";
+
+        /* MONTA RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if($result)
+        {
+            /* VERIFICA SE EXISTE VALOR */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* ARMAZENA NA ARRAY */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'chipsSims' => $retorno);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+    }
+
+
 }
 
 ?>

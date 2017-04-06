@@ -277,7 +277,7 @@
             $statusAlarme    = '';
             switch ($dadosAlarme['status_ativo']) {
                 case '1':
-                    $statusAlarme = "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i> <span>Alarme novo</span>";
+                    $statusAlarme = "<i class='fa fa-exclamation-triangle  fa-2x fa-blink' style='color:red'></i><span>Alarme novo</span>";
                 break;
                 case '2':
                     $statusAlarme = "<i class='fa fa-exclamation-triangle  fa-2x' style='color:orange'></i> <span>Alarme visualizado</span>";
@@ -333,7 +333,7 @@
                             $tratamentos .= $trat['nome']." ".$trat['sobrenome'];
                         $tratamentos .= "</td>";
                         $tratamentos .= "<td>";
-                            $tratamentos .= $trat['tratamento_aplicado'];
+                            $tratamentos .= (isset($trat['tratamento_aplicado'])) ? $trat['tratamento_aplicado'] : "Nenhum";
                         $tratamentos .= "</td>";
                         $tratamentos .= "<td>";
 

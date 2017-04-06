@@ -30,7 +30,7 @@ define('DBNAME' , 'eficazsystem22');
 // // usuario da base
 // define('USERNAME' , 'eficazsystem22');
 // // senha
-// define('USERPASS' , 'monitor2981');
+// define('USERPASS' , 'monitor2891');
 // // nome da base de dados
 // define('DBNAME' , 'eficazsystem22');
 

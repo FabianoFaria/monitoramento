@@ -558,6 +558,41 @@ class EquipamentoController extends MainController
         }
     }
 
+
+    /**
+    * FUNÇÔES PARA GERENCIMENTO DE CHIPS
+    */
+
+    public function gerenciarChips(){
+
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+        $equipModelo = $this->load_model('equipamento/equipamento-model');
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_ca'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            // Carrega o modelo para este view
+            $modelo     = $this->load_model('equipamento/equipamento-model');
+            $modeloClie = $this->load_model('cliente/cliente-model');
+
+            // Carrega view
+             require_once EFIPATH . "/views/_includes/header.php";
+             require_once EFIPATH . "/views/_includes/menu.php";
+             require_once EFIPATH . "/views/equipamento/equipamentoGerenciarSim-view.php";
+             require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+
+    }
+
 }
 
 ?>
