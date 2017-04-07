@@ -47,6 +47,7 @@
         // gerenciador de link
         var menu = document.getElementById('listadir');
         menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Bem vindo : <?php echo $usuarioLogado; ?></a>';
+
     </script>
 
     <?php

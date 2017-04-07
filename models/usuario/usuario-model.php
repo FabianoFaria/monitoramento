@@ -361,10 +361,13 @@ class UsuarioModel extends MainModel
                 }
 
                 /* DEVOLVE RETORNO */
-                return $retorno;
+                //return $retorno
+                $array = array('status' => true, 'clientes' => $retorno);
+            }else{
+                /* DEVOLVE RETORNO */
+                $array = array('status' => false, 'clientes' => '');
             }
-            /* DEVOLVE RETORNO */
-            $array = array('status' => true, 'clientes' => $retorno);
+
         }else{
             $array = array('status' => false, 'clientes' => '');
         }

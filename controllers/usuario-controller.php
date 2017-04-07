@@ -389,7 +389,7 @@
                     }
 
                     $listaUsuariosTabela .="<tr>
-                                            <td>".$usuario['nome']."".$usuario['sobrenome']."</td>
+                                            <td>".$usuario['nome']." ".$usuario['sobrenome']."</td>
                                             <td>".$usuario['email']."</td><td>".$usuario['email']."</td>
                                             <td>".$dataCriacao."</td>
                                             ".$atividades."
