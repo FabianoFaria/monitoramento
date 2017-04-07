@@ -108,8 +108,15 @@
                                 <?php
                                     }
                                 ?>
-                                <th class="txt-center">Editar</th>
-                                <th class="txt-center">Excluir</th>
+                                <?php
+                                    if(($_SESSION['userdata']['tipo_usu'] != 'Tecnico') && ($_SESSION['userdata']['tipo_usu'] != 'Visitante')){
+                                ?>
+                                    <th class="txt-center">Editar</th>
+                                    <th class="txt-center">Excluir</th>
+                                <?php
+                                    }
+                                ?>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -143,22 +150,30 @@
                                         }
                                     ?>
 
-                                   <td>
-                                       <!-- <a href="<?php //echo HOME_URI; ?>/usuario/editarTerceiros/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
-                                           <i class="fa fa-pencil-square-o fa-lg"></i>
-                                       </a> -->
-                                       <button class="btnEditUser btn link-tabela-moni" value="<?php echo $usuario['id']; ?>">
-                                            <i class="fa fa-pencil-square-o fa-lg"></i>
-                                       </button>
-                                   </td>
-                                   <td>
-                                       <!-- <a href="<?php //echo HOME_URI; ?>/usuario/removerUsuario/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
-                                           <i class="fa  fa-times fa-lg"></i>
-                                       </a> -->
-                                       <button class="btnRemoveUser btn link-tabela-moni" value="<?php echo $usuario['id']; ?>">
-                                            <i class="fa  fa-times fa-lg"></i>
-                                       </button>
-                                   </td>
+                                    <?php
+                                        if(($_SESSION['userdata']['tipo_usu'] != 'Tecnico') && ($_SESSION['userdata']['tipo_usu'] != 'Visitante')){
+                                    ?>
+                                        <td>
+                                            <!-- <a href="<?php //echo HOME_URI; ?>/usuario/editarTerceiros/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
+                                                <i class="fa fa-pencil-square-o fa-lg"></i>
+                                            </a> -->
+                                            <button class="btnEditUser btn link-tabela-moni" value="<?php echo $usuario['id']; ?>">
+                                                 <i class="fa fa-pencil-square-o fa-lg"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <!-- <a href="<?php //echo HOME_URI; ?>/usuario/removerUsuario/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
+                                                <i class="fa  fa-times fa-lg"></i>
+                                            </a> -->
+                                            <button class="btnRemoveUser btn link-tabela-moni" value="<?php echo $usuario['id']; ?>">
+                                                 <i class="fa  fa-times fa-lg"></i>
+                                            </button>
+                                        </td>
+                                    <?php
+                                        }
+                                    ?>
+
+
                                </tr>
                            <?php
                                    }

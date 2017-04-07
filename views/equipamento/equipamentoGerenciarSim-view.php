@@ -75,7 +75,29 @@
 
             </div>
             <div class="panel-body">
-
+                <div class='table-responsive'>
+                    <table id="stream_table" class='table table-striped table-bordered'>
+                        <thead>
+                            <tr>
+                                <th>Número SIM</th>
+                                <th>Cliente Atual</th>
+                                <th>Filial Atual</th>
+                                <th>Versão projeto</th>
+                                <th>Modelo chip</th>
+                                <th>Data teste</th>
+                                <th>Data instalação</th>
+                                <th>Data desativação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="8">
+                                    Selecione o filtro desejado
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

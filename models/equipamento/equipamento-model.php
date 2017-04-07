@@ -868,6 +868,49 @@ class EquipamentoModel extends MainModel
 
     }
 
+    /**
+    * FUNÇÃO PARA FILTRAR OS CHIPS SIM DE ACORDO COM SEUS STATUS
+    */
+    public function filtroChipSims($statusChip){
+
+        if(is_numeric($statusChip)){
+
+            $condicoes  = "";
+
+            switch ($statusChip) {
+                case '0':
+                    $condicoes  .= " sim.status_ativo ='1'";
+                break;
+                case '1':
+                    $condicoes  .= " sim.status_ativo ='0'";
+                break;
+                case '2':
+                    $condicoes  .= " sim.id_cliente > 0 AND sim.status_ativo ='1'";
+                break;
+                case '3':
+                    $condicoes  .= " AND sim.id_cliente = '0' AND sim.status_ativo ='1'";
+                break;
+
+                default:
+                    $condicoes  .= " sim.status_ativo ='1'";
+                break;
+            }
+
+            $query      = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, sim.versao_projeto, sim.telefone_chip, sim.data_teste, sim.data_instalacao_clie, sim.data_desativacao,
+
+                            FROM tb_sim sim
+                            JOIN
+                            LEFT JOIN 
+                            WHERE  ".$condicoes." ";
+
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
 
 }
 

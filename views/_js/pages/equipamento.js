@@ -733,6 +733,50 @@ $(document).ready(function(){
 
 	});
 
+
+    /*
+    * FILTRO DE CHIP SIM
+    */
+    $('#filtroStatusChip').change(function() {
+
+        $('#filtroClienteChip').val(' ');
+
+        var statusChip = $(this).val();
+
+        $.ajax({
+         url: urlP+"/eficazmonitor/equipamento/filtroStatusChipJson",
+         secureuri: false,
+         type : "POST",
+         dataType: 'json',
+         data      : {
+          'statusChip' : statusChip
+         },
+          success : function(datra)
+           {
+
+              //tempTest = JSON(datra);
+              if(datra.status == true)
+              {
+                  
+              }
+              else
+              {
+                //Settar a mensagem de erro!
+                //alert('Ocorreu um ero ao tentar cadastrar!');
+                swal("Oops...", "Ocorreu um ero ao tentar cadastrar!", "error");
+              }
+           },
+          error: function(jqXHR, textStatus, errorThrown)
+           {
+           // Handle errors here
+           console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+           // STOP LOADING SPINNER
+           }
+       });
+
+    });
+
+
 });
 
 /*

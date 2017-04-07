@@ -379,6 +379,7 @@ class EquipamentoController extends MainController
     * CARREGA LISTA DE EQUIPAMENTOS POR CLIENTE, FILIAL, TIPO PARA RELATÔRIOS
     */
     public function carregarListaEquipamentoFilialTipoRelatorioJson(){
+
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $equipeModelo   = $this->load_model('equipamento/equipamento-model');
 
@@ -579,6 +580,9 @@ class EquipamentoController extends MainController
             $this->moveHome();
         }else{
 
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "equipamento";
+
             // Carrega o modelo para este view
             $modelo     = $this->load_model('equipamento/equipamento-model');
             $modeloClie = $this->load_model('cliente/cliente-model');
@@ -593,6 +597,24 @@ class EquipamentoController extends MainController
 
     }
 
+    /**
+    * FUNÇÕES PARA FILTRAGEM DE STATUS DE CHIP SIM
+    */
+    public function filtroStatusChipJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $listasChip     = $equipeModelo->filtroChipSims($_POST['statusChip']);
+
+        if($listasChip['status']){
+            exit(json_encode(array('status' => $listasChip['status'], 'chipSims' => $listasChip[''])));
+        }else{
+            exit(json_encode(array('status' => $listasChip['status'])));
+        }
+
+
+    }
 }
 
 ?>

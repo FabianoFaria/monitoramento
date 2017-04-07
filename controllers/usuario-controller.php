@@ -388,22 +388,30 @@
                         $atividades = "";
                     }
 
+                    if(($_POST['tipoUser'] != 'Tecnico') && ($_POST['tipoUser'] != 'Visitante')){
+
+                        $edicao ="<td>
+                            <button class='btnEditUser btn link-tabela-moni' value='".$usuario['id']."'>
+                                 <i class='fa fa-pencil-square-o fa-lg'></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class='btnRemoveUser btn link-tabela-moni' value='".$usuario['id']."'>
+                                <i class='fa  fa-times fa-lg'></i>
+                            </button>
+                        </td>
+                        </tr>";
+
+                    }else{
+                        $edicao = "";
+                    }
+
+
                     $listaUsuariosTabela .="<tr>
                                             <td>".$usuario['nome']." ".$usuario['sobrenome']."</td>
-                                            <td>".$usuario['email']."</td><td>".$usuario['email']."</td>
+                                            <td>".$usuario['email']."</td><td>".$usuario['cliente']."</td>
                                             <td>".$dataCriacao."</td>
-                                            ".$atividades."
-                                            <td>
-                                                <button class='btnEditUser btn link-tabela-moni' value='".$usuario['id']."'>
-                                                     <i class='fa fa-pencil-square-o fa-lg'></i>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button class='btnRemoveUser btn link-tabela-moni' value='".$usuario['id']."'>
-                                                    <i class='fa  fa-times fa-lg'></i>
-                                                </button>
-                                            </td>
-                                            </tr>";
+                                            ".$atividades." ".$edicao;
                 }
 
                 exit(json_encode(array('status' => true, 'usuarios' => $listaUsuariosTabela)));
