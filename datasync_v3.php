@@ -1038,7 +1038,18 @@
             /*
             * VERIFICA ALERTA EXISTNTE E TENTA GERAR ALERTA PARA CRITICO BAIXO
             */
-            $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
+            $alarmeExiste   = verificarAlarmeExistente($idSimEquip, $pontoTabela);
+
+            /*
+            * CARREGA O PEULTIMO DADO PARA CONFIMAR SE NÃO SE TRATA DE UM FALSO POSITIVO
+            */
+            $penultimoDado  = identificarFalsoPositivo($idSimEquip, $pontoTabela);
+
+            //COMPARA O PENULTIMO DADO COM O PARAMETRO ATUAL
+            if(($penultimoDado / 100) < (float) trataValorDataSync($configuacoes[0])){
+
+            }
+
 
             if(!$alarmeExiste){
 
@@ -1307,6 +1318,46 @@
 
         // Fecha a conexao
         $connBase->close();
+
+    }
+
+    /*
+    * FUNÇÃO PARA RECUPERAR O PENULTIMO DADO PARA COMPARACAO E POSSIVEL CONFIRMAÇÂO DE FALSO POSITIVO
+    */
+    function identificarFalsoPositivo($sim_num, $posicao){
+
+        // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+        $connBase       = new EficazDB;
+
+        $queryPosicao = "SELECT $posicao
+                         FROM tb_dados
+                         WHERE num_sim = '$sim_num' AND status_ativo = '1'
+                         GROUP BY id DESC
+                         LIMIT 1,1";
+
+        // Monta a result
+        $result = $connBase->select($queryPosicao);
+
+        // Verifica se existe valor de retorno
+        if (@mysql_num_rows ($result) > 0)
+        {
+            /* ARMAZENA NA ARRAY */
+            while ($row = @mysql_fetch_assoc ($result))
+            {
+                $retorno[] = $row;
+            }
+
+        }else{
+            // Se nao existir valor de retorno
+            // Armazena 0 no vetor
+            $retorno[] = 0;
+        }
+
+        // Fecha a conexao
+        $connBase->close();
+
+
+        return $retorno;
 
     }
 ?>

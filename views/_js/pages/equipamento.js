@@ -19,6 +19,28 @@ $(document).ready(function(){
     $('#txt_qntBateriaPorBanco').mask('999');
 	$('#txt_tensaoMinBarramentoBat').mask('99.9');
 
+    $('#txt_data_teste').mask('99/99/9999');
+    $('#txt_edit_telefone_chip').mask('99 9999999999');
+
+    /*
+    * Adiciona datapicker ao formulario de data
+    */
+    var options = {
+        dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
+        monthNames: [ "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ],
+        maxDate: "+0y +0m +0d",
+        mindate: "-1y -6m",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "c-1:c+1",
+        monthRange: "c-6:c+0",
+        dateFormat: "dd/mm/yy"
+    }
+
+     $("#txt_data_teste").datepicker(options);
+
+
+
 	/*
 	*	JSON Listener para listar as filiais do cliente caso existam
 	*/
@@ -757,13 +779,13 @@ $(document).ready(function(){
               //tempTest = JSON(datra);
               if(datra.status == true)
               {
-                  
+                  $('#stream_table tbody').html(datra.chipSims);
               }
               else
               {
                 //Settar a mensagem de erro!
                 //alert('Ocorreu um ero ao tentar cadastrar!');
-                swal("Oops...", "Ocorreu um ero ao tentar cadastrar!", "error");
+                swal("Oops...", "Não foram encontrados SIMs na condição informada.", "error");
               }
            },
           error: function(jqXHR, textStatus, errorThrown)
@@ -776,6 +798,67 @@ $(document).ready(function(){
 
     });
 
+
+    /*
+    *  ATUALIZAR DADOS DO CHIP SIM
+    */
+    $('#editarDadosSimBtn').click(function(){
+
+        var simChip         = $('#txt_chip_number').val();
+        var telefoneChip    = $('#txt_edit_telefone_chip').val();
+        var modeloChip      = $('#txt_modelo_chip').val();
+        var versaoProjeto   = $('#txt_versao_projeto').val();
+        var dataTeste       = $('#txt_data_teste').val();
+
+        $.ajax({
+            url: urlP+"/eficazmonitor/equipamento/atualizarDadosChipJson",
+    		secureuri: false,
+    		type : "POST",
+    		dataType: 'json',
+    		data      : {
+    		  'simChip'        : simChip,
+              'telefoneChip'   : telefoneChip,
+              'modeloChip'     : modeloChip,
+              'versaoProjeto'  : versaoProjeto,
+              'dataTeste'      : dataTeste,
+    		},
+            success : function(datra)
+            {
+                if(datra.status == true){
+                    swal('','Dados do chip atualizados com sucesso.','success');
+
+                    setTimeout(function(){
+                        location.reload();
+                    }, 2000);
+
+                }else{
+                    swal('','Não foi póssivel atualizar os dados, favor verificar as informações.','error');
+
+                }
+            },
+       		error: function(jqXHR, textStatus, errorThrown)
+       		{
+       		  // Handle errors here
+       		  console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+       		  // STOP LOADING SPINNER
+       		}
+
+        });
+
+    });
+
+
+
+    // var options = {
+    //     onText: "Ativado",
+    //     onColor: 'primary',
+    //     offColor: 'danger',
+    //     offText: "Não ativo",
+    //     animate: true,
+    // };
+    //
+    // $("#simAtivado").bootstrapSwitch(options);
+    // $("#simInstalado").bootstrapSwitch(options);
 
 });
 
@@ -885,4 +968,120 @@ function removerContatoEquipamentoListaAlarmes(id_contatoAlerta){
         swal("Cancelado", "Nenhuma ação foi aplicada.", "error");
       }
     });
+}
+
+/*
+* CARREGA A MODAL COM OS DADOS DO CHIP SIM
+*/
+function carregarDadosChipSim(idChip){
+
+    if(idChip > 0){
+
+        $.ajax({
+         url: urlP+"/eficazmonitor/equipamento/carregarDadosSIMJson",
+         secureuri: false,
+         type : "POST",
+         dataType: 'json',
+         data      : {
+          'idChipSim' : idChip
+         },
+          success : function(datra)
+           {
+              //tempTest = JSON(datra);
+              if(datra.status)
+              {
+
+                 /*
+                 'status' <font color='#888a85'>=&gt;</font> <small>boolean</small> <font color='#75507b'>true</font>
+                  'informacoesChip' <font color='#888a85'>=&gt;</font>
+                    <b>array</b> <i>(size=1)</i>
+                      0 <font color='#888a85'>=&gt;</font>
+                        <b>array</b> <i>(size=13)</i>
+                          'num_sim' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'777777777'</font> <i>(length=9)</i>
+                          'id_cliente' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'49'</font> <i>(length=2)</i>
+                          'id_filial' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0'</font> <i>(length=1)</i>
+                          'versao_projeto' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>''</font> <i>(length=0)</i>
+                          'modelo_chip' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>''</font> <i>(length=0)</i>
+                          'telefone_chip' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0'</font> <i>(length=1)</i>
+                          'ativo_cliente' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0'</font> <i>(length=1)</i>
+                          'status_ativo' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'1'</font> <i>(length=1)</i>
+                          'data_teste' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0000-00-00 00:00:00'</font> <i>(length=19)</i>
+                          'data_instalacao_clie' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0000-00-00 00:00:00'</font> <i>(length=19)</i>
+                          'data_desativacao' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0000-00-00 00:00:00'</font> <i>(length=19)</i>
+                          'cliente' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Gemania Editado'</font> <i>(length=15)</i>
+                          'filial' <font color='#888a85'>=&gt;</font> <font color='#3465a4'>null</font>
+                <
+                 */
+
+                var idFilial    = datra.chipInformacao['id_filial'];
+                var filial      = datra.chipInformacao['filial'];
+
+                if(filial == null){
+                    filial = 'Matriz';
+                }
+
+                var chipAtivo       = datra.chipInformacao['status_ativo'];
+                var chipInstalado   = datra.chipInformacao['ativo_cliente'];
+
+
+                // $(document).ready(function() {
+                //     if(chipAtivo == 1){
+                //         $("#simAtivado").bootstrapSwitch('setState', true);
+                //     }else{
+                //         $("#simAtivado").bootstrapSwitch('setState', false);
+                //     }
+                //
+                //     if(chipInstalado == 1){
+                //         $("#simInstalado").bootstrapSwitch('setState', true);
+                //     }else{
+                //         $("#simInstalado").bootstrapSwitch('setState', false);
+                //     }
+                // });
+
+                if(chipAtivo == '1'){
+                    //$("#simAtivado").bootstrapSwitch('setState', true);
+                    $('#simAtivado').prop('checked', true);
+                }else{
+                    //$("#simAtivado").bootstrapSwitch('setState', false);
+                    $('#simAtivado').prop('checked', false);
+                }
+
+                if(chipInstalado == '1'){
+                    //$("#simInstalado").bootstrapSwitch('setState', true);
+                    $('#simInstalado').prop('checked', true);
+                }else{
+                    //$("#simInstalado").bootstrapSwitch('setState', false);
+                    $('#simInstalado').prop('checked', false);
+                }
+
+                $('#txt_data_desativacao').val(datra.dataDesativacao);
+                $('#txt_data_instalacao').val(datra.dataAtivacao);
+                $('#txt_data_teste').val(datra.dataTestes);
+
+                $('#txt_chip_number').val(datra.chipInformacao['num_sim']);
+                $('#text_cliente').val(datra.chipInformacao['id_cliente']);
+                $('#text_filial').html("<option val='"+idFilial+"'>"+filial+"</option>" );
+                $('#txt_versao_projeto').val(datra.chipInformacao['versao_projeto']);
+                $('#txt_modelo_chip').val(datra.chipInformacao['modelo_chip']);
+                $('#txt_edit_telefone_chip').val(datra.chipInformacao['telefone_chip']);
+
+
+                $('#modalEditChip').modal();
+              }
+              else
+              {
+                //Settar a mensagem de erro!
+                //alert('Ocorreu um ero ao tentar cadastrar!');
+                swal("Oops...", "Ocorreu um ero ao tentar carregar os dados do chip!", "error");
+              }
+           },
+          error: function(jqXHR, textStatus, errorThrown)
+           {
+           // Handle errors here
+           console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+           // STOP LOADING SPINNER
+           }
+        });
+    }
+
 }

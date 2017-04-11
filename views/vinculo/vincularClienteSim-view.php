@@ -74,7 +74,11 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">C&oacute;digo do SIM</label>
-                        <input type="text" class="form-control" id="txt_numSim" name="txt_numSim" placeholder="C&oacute;digo do SIM" maxlength="20" required>
+                        <select id="txt_numSim" name="txt_numSim" class="form-control">
+
+                        </select>
+
+                        <!-- <input type="text" class="form-control" id="txt_numSim" name="txt_numSim" placeholder="C&oacute;digo do SIM" maxlength="20" required> -->
                     </div>
                 </div><!-- fim do Codigo SIM -->
 

@@ -379,7 +379,7 @@
 
                     if($_POST['tipoUser'] == 'Administrador'){
                         $atividades = "<td>
-                            <a href='".HOME_URI."/usuario/listarAtividades/".$usuario['id']." class='btn button link-tabela-moni'>
+                            <a href='".HOME_URI."/usuario/listarAtividades/".$usuario['id']."' class='btn button link-tabela-moni'>
                                 <i class='fa fa-file-text-o fa-l'></i>
                             </a>
                         </td>";

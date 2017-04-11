@@ -897,12 +897,36 @@ class EquipamentoModel extends MainModel
             }
 
             $query      = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, sim.versao_projeto, sim.telefone_chip, sim.data_teste, sim.data_instalacao_clie, sim.data_desativacao,
-
+                            clie.nome AS 'cliente', fili.nome AS 'filial'
                             FROM tb_sim sim
-                            JOIN
-                            LEFT JOIN 
+                            LEFT JOIN tb_cliente clie ON sim.id_cliente = clie.id
+                            LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
                             WHERE  ".$condicoes." ";
 
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'chipsSims' => $retorno);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
 
         }else{
             $array = array('status' => false);
@@ -910,6 +934,69 @@ class EquipamentoModel extends MainModel
 
         return $array;
 
+    }
+
+    /*
+    * CARREGA OS DADOS DO CHIP SIM
+    */
+
+    public function carregarDadosChipSim($idChipSim){
+
+        $query = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, sim.versao_projeto, sim.modelo_chip, sim.telefone_chip, sim.ativo_cliente, sim.status_ativo,
+                  sim.data_teste, sim.data_instalacao_clie, sim.data_desativacao, clie.nome AS 'cliente', fili.nome AS 'filial'
+                  FROM tb_sim sim
+                  LEFT JOIN tb_cliente clie ON sim.id_cliente = clie.id
+                  LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
+                  WHERE sim.num_sim = '$idChipSim'";
+
+        /* MONTA RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if($result)
+        {
+            /* VERIFICA SE EXISTE VALOR */
+            if (@mysql_num_rows($result) > 0)
+            {
+                /* ARMAZENA NA ARRAY */
+                while ($row = @mysql_fetch_assoc ($result))
+                {
+                    $retorno[] = $row;
+                }
+
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'informacoesChip' => $retorno);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
+    /*
+    * ATUALIZAR DADOS DO SIM CHIP
+    */
+    public function atualizarDadosSimChip($simChip, $telefoneChip, $modeloS, $versaoProjeto, $dataTeste){
+
+        $query = "UPDATE tb_sim
+                 SET telefone_chip = '$telefoneChip', modelo_chip = '$modeloS', versao_projeto = '$versaoProjeto', data_teste = '$dataTeste'
+                 WHERE num_sim = '$simChip'";
+
+        /* monta result */
+        $result = $this->db->query($query);
+
+        if ($result){
+          $array = array('status' => true);
+        }else{
+          $array = array('status' => false);
+        }
+
+        return $array;
     }
 
 }

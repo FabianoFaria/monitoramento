@@ -242,9 +242,6 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     }
 
                     var day = date.getDate();
-                    if(day < 10){
-                        day = "0"+day;
-                    }
 
                     //var hour = date.getHours();
                     var hour = date.getHours() + 3;
@@ -259,6 +256,11 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
                     if(hour > 23){
                         hour = hour - 24;
+                        day  = day + 1;
+                    }
+
+                    if(day < 10){
+                        day = "0"+day;
                     }
 
                     var tipoMedidaTemp = item.series.label.split(" ");
