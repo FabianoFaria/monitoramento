@@ -687,6 +687,86 @@ class EquipamentoController extends MainController
 
     }
 
+    /*
+    * FUNÇÕES PARA FILTRAGEM DE STATUS DE CHIP E CLIENTE
+    */
+    public function filtroStatusChipClienteJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $listasChip     = $equipeModelo->filtroChipSimsCliente($_POST['statusChip'], $_POST['idCliente']);
+
+        if($listasChip['status']){
+
+            $listaChip = "";
+
+            foreach ($listasChip['chipsSims'] as $chipSim){
+
+                $cliente   = (isset($chipSim['cliente'])) ? $chipSim['cliente'] : 'Não alocado';
+
+                if(isset($chipSim['cliente'])){
+                    $filial = (isset($chipSim['filial'])) ? $chipSim['filial'] : 'Matriz';
+                }else{
+                    $filial = '';
+                }
+
+                $dataTemp1 = explode(" ", $chipSim['data_teste']);
+                $data_teste = implode("/", array_reverse(explode('-', $dataTemp1[0])));
+
+                $dataTemp2 = explode(" ", $chipSim['data_instalacao_clie']);
+                $data_insta = implode("/", array_reverse(explode('-', $dataTemp2[0])));
+
+                $dataTemp3 = explode(" ", $chipSim['data_desativacao']);
+                $data_desa = implode("/", array_reverse(explode('-', $dataTemp3[0])));
+
+                $dataTeste          = $data_teste." ".$dataTemp1[1];
+                $dataInstalacao     = $data_insta." ".$dataTemp2[1];
+                $dataDesativacao    = $data_desa." ".$dataTemp3[1];
+
+                $listaChip .= "<tr>
+                                    <td>
+                                        ".$chipSim['num_sim']."
+                                    </td>
+                                    <td>
+                                        ".$cliente."
+                                    </td>
+                                    <td>
+                                        ".$filial."
+                                    </td>
+
+                                    <td>
+                                        ".$dataTeste."
+                                    </td>
+                                    <td>
+                                        ".$dataInstalacao."
+                                    </td>
+                                    <td>
+                                        ".$dataDesativacao."
+                                    </td>
+                                    <td>
+                                        <button class='btn button' onclick='carregarDadosChipSim(".$chipSim['num_sim'].")'>
+                                            <i class='fa fa-pencil fa-1x'></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button>
+                                            <i class='fa fa-times fa-1x'></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                ";
+
+            }
+
+            exit(json_encode(array('status' => $listasChip['status'], 'chipSims' => $listaChip)));
+        }else{
+            exit(json_encode(array('status' => $listasChip['status'])));
+        }
+
+
+    }
+
     public function carregarDadosSIMJson(){
 
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO

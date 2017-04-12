@@ -765,6 +765,14 @@ $(document).ready(function(){
 
         var statusChip = $(this).val();
 
+        if(statusChip == 3){
+            //$('#filtroClienteChip');
+            $("#filtroClienteChip").prop('disabled', true);
+
+        }else{
+            $("#filtroClienteChip").prop('disabled', false);
+        }
+
         $.ajax({
          url: urlP+"/eficazmonitor/equipamento/filtroStatusChipJson",
          secureuri: false,
@@ -795,6 +803,48 @@ $(document).ready(function(){
            // STOP LOADING SPINNER
            }
        });
+
+    });
+
+    /*
+    * FILTRAR CHIPS POR STATUS DO CHIP E POR CLIENTE
+    */
+    $('#filtroClienteChip').change(function() {
+
+        var clienteChip = $(this).val();
+
+        var statusChip  = $('#filtroStatusChip').val();
+
+        $.ajax({
+            url: urlP+"/eficazmonitor/equipamento/filtroStatusChipClienteJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+             'statusChip' : statusChip,
+             'idCliente'  : clienteChip
+             },
+             success : function(datra)
+             {
+                 //tempTest = JSON(datra);
+                 if(datra.status == true)
+                 {
+                     $('#stream_table tbody').html(datra.chipSims);
+                 }
+                 else
+                 {
+                   //Settar a mensagem de erro!
+                   //alert('Ocorreu um ero ao tentar cadastrar!');
+                   swal("Oops...", "Não foram encontrados SIMs na condição informada.", "error");
+                 }
+             },
+             error: function(jqXHR, textStatus, errorThrown)
+              {
+              // Handle errors here
+              console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+              // STOP LOADING SPINNER
+              }
+        });
 
     });
 

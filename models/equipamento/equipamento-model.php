@@ -936,6 +936,74 @@ class EquipamentoModel extends MainModel
 
     }
 
+    /**
+    * FUNÇÃO PARA FILTRAR OS CHIPS SIM DE ACORDO COM SEUS STATUS E CLIENTE
+    */
+
+    public function filtroChipSimsCliente($statusChip, $idCliente){
+
+        if(is_numeric($statusChip) && is_numeric($idCliente)){
+
+            $condicoes  = "";
+
+            switch ($statusChip) {
+                case '0':
+                    $condicoes  .= " sim.status_ativo ='1'";
+                break;
+                case '1':
+                    $condicoes  .= " sim.status_ativo ='0'";
+                break;
+                case '2':
+                    $condicoes  .= " sim.id_cliente > 0 AND sim.status_ativo ='1'";
+                break;
+                case '3':
+                    $condicoes  .= " AND sim.id_cliente = '0' AND sim.status_ativo ='1'";
+                break;
+
+                default:
+                    $condicoes  .= " sim.status_ativo ='1'";
+                break;
+            }
+
+            $query      = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, sim.versao_projeto, sim.telefone_chip, sim.data_teste, sim.data_instalacao_clie, sim.data_desativacao,
+                            clie.nome AS 'cliente', fili.nome AS 'filial'
+                            FROM tb_sim sim
+                            LEFT JOIN tb_cliente clie ON sim.id_cliente = clie.id
+                            LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
+                            WHERE  ".$condicoes." AND clie.id = '$idCliente'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result)
+            {
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'chipsSims' => $retorno);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
     /*
     * CARREGA OS DADOS DO CHIP SIM
     */
