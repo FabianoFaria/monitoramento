@@ -755,6 +755,14 @@ $(document).ready(function(){
 
 	});
 
+    /*
+    * INICIA PROCESSO DE CADASTRO DE CHIP SIM
+    */
+    $('#adicionarNovoChipSim').click( function(){  
+
+        $('#modalCadastroChip').modal();
+
+    });
 
     /*
     * FILTRO DE CHIP SIM
