@@ -762,7 +762,8 @@ class VinculoModel extends MainModel
     */
     public function verificarSimExistente($numSim){
 
-        $query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$numSim' AND status_ativo = '1'";
+        //$query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$numSim' AND status_ativo = '1'";
+        $query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$numSim'";
 
         // Monta a result
         $result = $this->db->select($query);

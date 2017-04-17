@@ -868,6 +868,43 @@ class EquipamentoModel extends MainModel
 
     }
 
+    /*
+    * FILTRA OS CHIPS QUE NÃO ESTÃO VINCULADOS
+    */
+    public function carregarSinsDisponiveis(){
+
+        $query = "SELECT num_sim
+                  FROM tb_sim
+                  WHERE status_ativo = '1' AND id_cliente = '0' AND id_filial ='0'";
+
+        /* MONTA RESULT */
+       $result = $this->db->select($query);
+
+       /* VERIFICA SE EXISTE RESPOSTA */
+       if($result)
+       {
+           /* VERIFICA SE EXISTE VALOR */
+           if (@mysql_num_rows($result) > 0)
+           {
+               /* ARMAZENA NA ARRAY */
+               while ($row = @mysql_fetch_assoc ($result))
+               {
+                   $retorno[] = $row;
+               }
+
+               /* DEVOLVE RETORNO */
+               $array = array('status' => true, 'chipsSims' => $retorno);
+           }else{
+               $array = array('status' => false);
+           }
+
+       }else{
+           $array = array('status' => false);
+       }
+
+       return $array;
+    }
+
     /**
     * FUNÇÃO PARA FILTRAR OS CHIPS SIM DE ACORDO COM SEUS STATUS
     */
@@ -888,7 +925,7 @@ class EquipamentoModel extends MainModel
                     $condicoes  .= " sim.id_cliente > 0 AND sim.status_ativo ='1'";
                 break;
                 case '3':
-                    $condicoes  .= " AND sim.id_cliente = '0' AND sim.status_ativo ='1'";
+                    $condicoes  .= " sim.id_cliente = '0' AND sim.status_ativo ='1'";
                 break;
 
                 default:
@@ -902,6 +939,7 @@ class EquipamentoModel extends MainModel
                             LEFT JOIN tb_cliente clie ON sim.id_cliente = clie.id
                             LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
                             WHERE  ".$condicoes." ";
+            // var_dump($query);
 
             /* MONTA RESULT */
             $result = $this->db->select($query);
@@ -1062,6 +1100,36 @@ class EquipamentoModel extends MainModel
           $array = array('status' => true);
         }else{
           $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CADASTRAR NOVO CHIP SIM
+    */
+    public function cadastrarNovoChipSim($numeroChip, $numeroTelefone, $modeloChip, $versaoProjeto){
+
+        if(is_numeric($numeroChip)){
+
+            $numeroChip         = $this->tratamento($numeroChip);
+            $numeroTelefone     = $this->tratamento($numeroTelefone);
+            $modeloChip         = $this->tratamento($modeloChip);
+            $versaoProjeto      = $this->tratamento($versaoProjeto);
+
+            $query = "INSERT INTO tb_sim(num_sim, versao_projeto, modelo_chip, telefone_chip, ambiente_local_sim) VALUES('$numeroChip', '$numeroTelefone', '$modeloChip', '$versaoProjeto', 'Não informado.')";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+                //var_dump($query);
+            if ($result){
+                $array = array('status' => true);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
         }
 
         return $array;

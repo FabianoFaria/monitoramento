@@ -22,6 +22,9 @@ $(document).ready(function(){
     $('#txt_data_teste').mask('99/99/9999');
     $('#txt_edit_telefone_chip').mask('99 9999999999');
 
+    $('#txt_telefone_number').mask('99999999999');
+    $('#txt_chip_number').mask('999999999999999');
+
     /*
     * Adiciona datapicker ao formulario de data
     */
@@ -758,9 +761,134 @@ $(document).ready(function(){
     /*
     * INICIA PROCESSO DE CADASTRO DE CHIP SIM
     */
-    $('#adicionarNovoChipSim').click( function(){  
+    $('#adicionarNovoChipSim').click( function(){
 
         $('#modalCadastroChip').modal();
+
+    });
+
+    /*
+    * RESETA OS DADOS DO CADASTRO AO FECHAR A MODAL
+    */
+    $('#modalCadastroChip').on('hidden.bs.modal', function (e) {
+        $('#txt_chip_number').val('');
+        $('#txt_telefone_number').val('');
+        $('#txt_chip_modelo').val('');
+    });
+
+    /*
+    * INICIA O PROCESSO DE CADASTRO DE NOVO CHIP
+    */
+    $('#cadastrarDadosSimBtn').click( function(){
+
+        /*
+        * INICIA VALIDAÇÃO DOS DADOS DO CHIP
+        */
+        $('#formCadChip').validate({
+            rules: {
+                txt_chip_number : {
+                    required : true,
+                    remote: {
+                      url: urlP+"/eficazmonitor/vinculo/verificarSimExistente",
+                      type: "post",
+                      data: {
+                        num_sim : function() {
+                          //return  $("#txt_numSim" ).val();
+                          return document.getElementById("txt_chip_number").value;
+                        }
+                      }
+                    }
+                },
+                txt_telefone_number : {
+                    required : true
+                },
+                txt_chip_modelo : {
+                    required : true
+                },
+                txt_vercao_projeto : {
+                    required : true
+                }
+            },
+            messages: {
+                txt_chip_number : {
+                    required : "Campo é obrigatorio",
+                    remote: "Número SIM já se encontra registrado no sistema!"
+                },
+                txt_telefone_number : {
+                    required : "Campo é obrigatorio"
+                },
+                txt_chip_modelo : {
+                    required : "Campo é obrigatorio"
+                },
+                txt_vercao_projeto : {
+                    required : "Campo é obrigatorio"
+                }
+            }
+        });
+        /*
+        * INICIA O CADASTRO EM CASO OS DADOS ESTIVEREM CORRETOS
+        */
+        if($('#formCadChip').valid()){
+
+            /*
+            * SOLICITA CONFIRMAÇÃO DO USUÁRIO, SOBRE OS DADOS DO CHIP A SER CADASTRADO.
+            */
+            swal({
+              title: "Tem certeza?",
+              text: "Os dados do chip cadastrado estão corretos?",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "Sim, confirmo!",
+              cancelButtonText: "Não, irei revisar!",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            },
+            function(isConfirm){
+              if (isConfirm) {
+
+                /*
+                * INICIA JSON PARA SALVAR OS DADO DO CHIP CADASTRADO
+                */
+                var numeroChip      = $('#txt_chip_number').val();
+                var numeroTelefone  = $('#txt_telefone_number').val();
+                var modeloChip      = $('#txt_chip_modelo').val();
+                var versaoProjeto   = $('#txt_vercao_projeto').val();
+
+                    $.ajax({
+                     url: urlP+"/eficazmonitor/equipamento/registrarNovoChipJson",
+                     secureuri: false,
+                     type : "POST",
+                     dataType: 'json',
+                     data      : {
+                      'numeroChip' : numeroChip,
+        			  'numeroTelefone' : numeroTelefone,
+        			  'modeloChip' : modeloChip,
+                      'versaoProjeto' : versaoProjeto
+                     },
+                     success : function(datra)
+                      {
+                        if(datra.status){
+                            swal('','Chip foi cadastrado corretamente.','success');
+                            setTimeout(function(){
+                                location.reload();
+                            }, 2000);
+                        }else{
+                            swal("", "Não foi possivel completar o cadastro, tente novamente mais tarde.", "error");
+                        }
+                      },
+                     error: function(jqXHR, textStatus, errorThrown)
+                      {
+                       // Handle errors here
+                       console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                       // STOP LOADING SPINNER
+                      }
+                    });
+                } else {
+                    swal("Cancelado", "Nenhum dado foi cadastrado ainda", "error");
+                }
+            });
+        }
 
     });
 

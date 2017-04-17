@@ -767,6 +767,24 @@ class EquipamentoController extends MainController
 
     }
 
+    /*
+    * CADASTRO DE NOVO CHIP SIM
+    */
+    public function registrarNovoChipJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $novoSim        = $equipeModelo->cadastrarNovoChipSim($_POST['numeroChip'],$_POST['numeroTelefone'], $_POST['modeloChip'], $_POST['versaoProjeto']);
+
+        if($novoSim['status']){
+            exit(json_encode(array('status' => $novoSim['status'])));
+        }else{
+            exit(json_encode(array('status' => $novoSim['status'])));
+        }
+    }
+
+
     public function carregarDadosSIMJson(){
 
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO

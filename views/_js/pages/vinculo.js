@@ -106,17 +106,18 @@ $().ready(function() {
         $('#vincularSimCliente').validate({
             rules: {
                 txt_numSim: {
-                    required : true,
-                    remote: {
-                      url: urlP+"/eficazmonitor/vinculo/verificarSimExistente",
-                      type: "post",
-                      data: {
-                        num_sim : function() {
-                          //return  $("#txt_numSim" ).val();
-                          return document.getElementById("txt_numSim").value;
-                        }
-                      }
-                    }
+                    required : true
+                    // Não há mais necessidade desta condição, pois foi alterado o modo de cadastrar novos chips
+                    // remote: {
+                    //   url: urlP+"/eficazmonitor/vinculo/verificarSimExistente",
+                    //   type: "post",
+                    //   data: {
+                    //     num_sim : function() {
+                    //       //return  $("#txt_numSim" ).val();
+                    //       return document.getElementById("txt_numSim").value;
+                    //     }
+                    //   }
+                    // }
 
                 },
                 filialVincular: {
@@ -125,8 +126,8 @@ $().ready(function() {
             },
             messages: {
                 txt_numSim: {
-                    required : "Campo é obrigatorio",
-                    remote: "Número SIM já se encontra registrado no sistema!"
+                    required : "Campo é obrigatorio"
+                    // remote: "Número SIM já se encontra registrado no sistema!"
                 },
                 filialVincular: {
                     required : "Campo é obrigatorio"
