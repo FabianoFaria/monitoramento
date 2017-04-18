@@ -689,7 +689,10 @@ class VinculoModel extends MainModel
 
             $ambiente  = $this->tratamento($ambiente);
 
-            $query = "INSERT INTO tb_sim (num_sim, id_cliente, id_filial, ambiente_local_sim) VALUES ('$numSim', '$idCliente', '$idFilial', '$ambiente')";
+            //QUERY ATUALIZADA PARA EFETUAR UM UPDATE NO num_sim AO INVÉS DE GERAR UM INSERT
+            //$query = "INSERT INTO tb_sim (num_sim, id_cliente, id_filial, ambiente_local_sim) VALUES ('$numSim', '$idCliente', '$idFilial', '$ambiente')";
+
+            $query = "UPDATE tb_sim SET id_cliente = '$idCliente', id_filial = '$idFilial', ambiente_local_sim = '$ambiente' WHERE num_sim = '$numSim' AND status_ativo = '1'";
 
             //var_dump($query);
 
@@ -743,7 +746,13 @@ class VinculoModel extends MainModel
     */
     public function removerVinculoCliente($simNUmber){
 
-        $query = "UPDATE tb_sim SET status_ativo = '0' WHERE num_sim = '$simNUmber'";
+        /*
+        * NÃO É EFETUADO A DESATIVAÇÃO DO NUM_SIM PARA SIM A DESVINCULAÇÃO DO CHIP COM O CLIENTE E FILIAL
+        * CHIP PERNACE ATIVO E SE TORNA DISPONIVEL PARA NOVO VINCULO COM CLIENTE
+        */
+
+        //$query = "UPDATE tb_sim SET status_ativo = '0' WHERE num_sim = '$simNUmber'";
+        $query = "UPDATE tb_sim SET id_cliente = '0', id_filial = '0' WHERE num_sim = '$simNUmber'";
 
         // Verifica se gravou com sucesso
         if ($this->db->query($query))

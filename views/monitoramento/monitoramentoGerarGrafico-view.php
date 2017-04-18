@@ -464,6 +464,12 @@ else
                 <div class="panel-body">
                     <!-- DETALHES DO CLIENTE -->
                     <div class="row">
+                        <?php
+
+                            var_dump($dadosEquipamento);
+
+                        ?>
+
                         <div class="col-lg-6">
                             <h4>Cliente</h4>
                             <p>

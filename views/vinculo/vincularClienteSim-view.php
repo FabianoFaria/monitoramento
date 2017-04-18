@@ -85,7 +85,7 @@
 
                                     $chipsSims = $simsDisponiveis['chipsSims'];
 
-                                    echo "<option value=' '>Selecione o Sim</option>";
+                                    echo "<option value=''>Selecione o Sim</option>";
 
                                     foreach($chipsSims as $chips) {
                                         ?>
@@ -95,7 +95,7 @@
 
                                 }else{
                             ?>
-                                <option value=" ">Não há SIMs disponíveis </option>
+                                <option value=''>Não há SIMs disponíveis </option>
                             <?php
                                 }
                             ?>

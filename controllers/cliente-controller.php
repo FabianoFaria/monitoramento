@@ -953,7 +953,10 @@
                             $tabela         .="</td>";
 
                             $tabela         .="<td>";
-                                $tabela     .=$equip['estado'];
+
+                                $tabela     .= (isset($equip['filial'])) ? $equip['estadofili'] : $equip['estado'];
+
+                                //$tabela     .=$equip['estado'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $link       = HOME_URI."/monitoramento/gerarGrafico/".$equip['id']."";
@@ -1050,7 +1053,8 @@
                             $tabela         .="</td>";
 
                             $tabela         .="<td>";
-                                $tabela     .=$equip['estado'];
+                                $tabela     .= (isset($equip['filial'])) ? $equip['estadofili'] : $equip['estado'];
+                                //$tabela     .=$equip['estado'];
                             $tabela         .="</td>";
 
                             $tabela         .="<td>";
@@ -1148,7 +1152,8 @@
                             $tabela         .="</td>";
 
                             $tabela         .="<td>";
-                                $tabela     .=$equip['estado'];
+                                $tabela     .= (isset($equip['filial'])) ? $equip['estadofili'] : $equip['estado'];
+                                //$tabela     .=$equip['estado'];
                             $tabela         .="</td>";
 
                             $tabela         .="<td>";
@@ -1245,7 +1250,8 @@
                                 $tabela     .= (isset($equip['filial'])) ? $equip['filial'] : "Matriz";
                             $tabela         .="</td>";
                             $tabela         .="<td>";
-                                $tabela     .=$equip['estado'];
+                                $tabela     .= (isset($equip['filial'])) ? $equip['estadofili'] : $equip['estado'];
+                                //$tabela     .=$equip['estado'];
                             $tabela         .="</td>";
                             $tabela         .="<td>";
                                 $link       = HOME_URI."/grafico/graficoFisicoParametrosEquipamentoAlarmeDetalhado/".$equip['id']."";

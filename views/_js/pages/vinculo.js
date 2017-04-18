@@ -44,7 +44,7 @@ function removerSim(simNumber){
 
     swal({
       title: "Tem certeza?",
-      text: "Esta ação não poderá ser desfeita!!",
+      text: "Esta ação, causara a desativação de equipamentos relacionados a este chip",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#DD6B55",
