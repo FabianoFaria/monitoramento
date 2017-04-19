@@ -833,6 +833,50 @@ class EquipamentoController extends MainController
             exit(json_encode(array('status' => $chipAtualizado['status'])));
         }
     }
+
+    /*
+    * CARREGA OS DADOS DO EQUIPAMENTO E O POSICIONAMENTO DO EQUIPAMENTO NA TABELA
+    */
+    public function carregarDadosEquipamentoCalibracao(){
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_pe'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "equipamento";
+
+            // Carrega o modelo para este view
+            $modelo     = $this->load_model('equipamento/equipamento-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/equipamento/equipamentoCalibracao-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+
+    }
+
+    /*
+    * CARREGA O ULTIMO DADO QUE FOI LIDO NA POSICAO DA TABELA INFORMADA
+    */
+    public function carregarDadosPosicaoTabelaJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $ultimoDado     = $equipeModelo->();
+
+    }
 }
 
 ?>

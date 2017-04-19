@@ -25,6 +25,8 @@ $(document).ready(function(){
     $('#txt_telefone_number').mask('99999999999');
     $('#txt_chip_number').mask('999999999999999');
 
+    $('.calibracaoInput').mask('000.00');
+
     /*
     * Adiciona datapicker ao formulario de data
     */
@@ -41,8 +43,6 @@ $(document).ready(function(){
     }
 
      $("#txt_data_teste").datepicker(options);
-
-
 
 	/*
 	*	JSON Listener para listar as filiais do cliente caso existam
@@ -588,8 +588,6 @@ $(document).ready(function(){
         }
       });
 
-
-
     }
 
   });
@@ -1033,8 +1031,6 @@ $(document).ready(function(){
 
     });
 
-
-
     // var options = {
     //     onText: "Ativado",
     //     onColor: 'primary',
@@ -1045,6 +1041,15 @@ $(document).ready(function(){
     //
     // $("#simAtivado").bootstrapSwitch(options);
     // $("#simInstalado").bootstrapSwitch(options);
+
+    /*
+    * INICIA PROCESSO DE CADASTRAR CALIBRAÇÃO DO EQUIPAMENTO
+    */
+    // $('#validarCalibracaoEquipamento').click( function{
+    //
+    //
+    //
+    // });
 
 });
 
@@ -1177,28 +1182,6 @@ function carregarDadosChipSim(idChip){
               if(datra.status)
               {
 
-                 /*
-                 'status' <font color='#888a85'>=&gt;</font> <small>boolean</small> <font color='#75507b'>true</font>
-                  'informacoesChip' <font color='#888a85'>=&gt;</font>
-                    <b>array</b> <i>(size=1)</i>
-                      0 <font color='#888a85'>=&gt;</font>
-                        <b>array</b> <i>(size=13)</i>
-                          'num_sim' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'777777777'</font> <i>(length=9)</i>
-                          'id_cliente' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'49'</font> <i>(length=2)</i>
-                          'id_filial' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0'</font> <i>(length=1)</i>
-                          'versao_projeto' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>''</font> <i>(length=0)</i>
-                          'modelo_chip' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>''</font> <i>(length=0)</i>
-                          'telefone_chip' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0'</font> <i>(length=1)</i>
-                          'ativo_cliente' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0'</font> <i>(length=1)</i>
-                          'status_ativo' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'1'</font> <i>(length=1)</i>
-                          'data_teste' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0000-00-00 00:00:00'</font> <i>(length=19)</i>
-                          'data_instalacao_clie' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0000-00-00 00:00:00'</font> <i>(length=19)</i>
-                          'data_desativacao' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'0000-00-00 00:00:00'</font> <i>(length=19)</i>
-                          'cliente' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Gemania Editado'</font> <i>(length=15)</i>
-                          'filial' <font color='#888a85'>=&gt;</font> <font color='#3465a4'>null</font>
-                <
-                 */
-
                 var idFilial    = datra.chipInformacao['id_filial'];
                 var filial      = datra.chipInformacao['filial'];
 
@@ -1269,5 +1252,43 @@ function carregarDadosChipSim(idChip){
            }
         });
     }
+}
+
+/*
+* INICIA PROCESSO DE CALIBRAÇÃO DE EQUIPAMENTO
+*/
+function calibrarequipamento(idEquipamento, posicao){
+
+    /*
+    * CARREGA OS DADOS DO EQUIPAMENTO
+    */
+    if(idEquipamento > 0){
+
+        $.ajax({
+            url: urlP+"/eficazmonitor/equipamento/carregarDadosPosicaoTabelaJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+             'idEquipamento' : idEquipamento,
+             'posicao' : posicao
+            },
+            success : function(datra)
+            {
+
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+            }
+        });
+
+        swal('','Teste ! '+idEquipamento,'success');
+
+    }else{
+        swal('','Favor verificar o equipamento que está tentando calibrar.','error');
+    }
+
 
 }

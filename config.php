@@ -36,7 +36,7 @@ define('DBNAME' , 'eficazsystem22');
 
 
 /* modo desenvolvedor */
-define('DEBUG' , TRUE);
+define('DEBUG' , false);
 define('DEVTOOLS', false);
 
 /* carrega o inicializador */

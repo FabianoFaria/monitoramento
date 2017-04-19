@@ -1136,6 +1136,91 @@ class EquipamentoModel extends MainModel
         return $array;
     }
 
+    /*
+    * CARREGAR OS DADOS DO EQUIPAMENTO
+    */
+    public function posicoesCalibradas($idEquip){
+
+        if(is_numeric($idEquip)){
+
+            $query = "SELECT caliEquip.id, caliEquip.id_equip, caliEquip.posicao_tab, caliEquip.variavel_cal
+                      FROM tb_equipamento_calibracao caliEquip
+                      WHERE caliEquip.id_equip";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result){
+
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'posicoesCalibradas' => $retorno);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CARREGA AS POSICOES DO TIPO DE EQUIPAMENTO
+    */
+    public function posicoesTipoEquipamento($idTipoEquipamento){
+
+        if(is_numeric($idTipoEquipamento)){
+
+            $query = "SELECT tpEquipamento.posicoes_tabela
+                      FROM tb_tipo_equipamento tpEquipamento
+                      WHERE tpEquipamento.id = '$idTipoEquipamento'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result){
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'posicoesTipoEquip' => $retorno);
+                }else{
+                    $array = array('status' => false);
+                }
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+
 }
 
 ?>

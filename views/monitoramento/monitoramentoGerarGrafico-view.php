@@ -481,14 +481,16 @@ else
                     <!-- INICIO DOS GRÁFICO DE MONITORAMENTO -->
                     <?php
 
+                        //var_dump($dadosEquipamento);
+
                         // 'tipo_entrada' => string '3' (length=1)
                         // 'tipo_saida' => string '3' (length=1)
                         //VERIFICA O TIPO DE SAIDA E ENTRADA PARA EXIBIR NA TELA
                         $tipoEntrada    = $dadosEquipamento['tipo_entrada'];
                         $tipoSaida      = $dadosEquipamento['tipo_saida'];
                     ?>
-                    <input type="hidden" id="tipoEntrada" val="<?php echo $tipoEntrada; ?>" />
-                    <input type="hidden" id="tipoSaida" val="<?php echo $tipoSaida; ?>" />
+                    <input type="hidden" id="tipoEntrada" value="<?php echo $tipoEntrada; ?>" />
+                    <input type="hidden" id="tipoSaida" value="<?php echo $tipoSaida; ?>" />
 
                     <div class="row">
                         <div class="panel panel-info">
@@ -721,8 +723,13 @@ else
                                             /*
                                              VARIAVEIS PARA VERIFICAÇÃO DE TIPO DE EQUIPAMENTO
                                             */
-                                            var tipoEntradaEquip    = $('#tipoEntrada').val();
-                                            var tipoSaidaEquip      = $('#tipoSaida').val();
+                                            // var tipoEntradaEquip    = $('#tipoEntrada').val();
+                                            // var tipoSaidaEquip      = $('#tipoSaida').val();
+
+                                            var tipoEntradaEquip    = document.getElementById("tipoEntrada").value;
+                                            var tipoSaidaEquip      = document.getElementById("tipoSaida").value;
+
+                                            //console.log('Entrada = '+ tipoEntradaEquip+' sadidas'+ tipoSaidaEquip);
 
                                             var potenciaEquip = $('#totalPotenciaEquip').html();
 
@@ -822,7 +829,7 @@ else
 
                                             //VERIFICA SE EQUIPAMENTO POSSUI SAIDA T
 
-                                            if(tipoSaidaEquip >= 2){
+                                            if(tipoSaidaEquip == 3){
 
                                                 //SAÍDA T
                                                 var tempCorEntT = $('#bat_s3').html();
@@ -839,16 +846,15 @@ else
                                                 var tempCorEntT = 0;
                                                 var tempCorSaiT = 0;
 
+                                                var corEntT    = 0;
+                                                var corSaiT    = 0;
+
                                                 var potSaiT =  0;
                                             }
 
 
-
-
-
-
                                             //SOMA DA ENTRADA DE POTÊNCIA -- CORRIGIR AS VARIAVEIS QUE COMPOE A SOMA
-                                            var totalEntradaPot = potEntR + potEntR + potEntT;
+                                            var totalEntradaPot = potEntR + potEntS + potEntT;
                                             var percentualEntradaPot = (totalEntradaPot * 100) / ((potenciaEquip * 1000) * 0.85);
 
                                             //Estilização do gráfico de entrada de potência
