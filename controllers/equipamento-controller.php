@@ -874,7 +874,57 @@ class EquipamentoController extends MainController
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $equipeModelo   = $this->load_model('equipamento/equipamento-model');
 
-        $ultimoDado     = $equipeModelo->();
+        $ultimoDado     = $equipeModelo->ultimoDadoenviadoPelaPosicao($_POST['idEquipamento'], $_POST['posicao']);
+
+        //var_dump($ultimoDado);
+        /*
+        'ultimoDadoPosicao' <font color='#888a85'>=&gt;</font>
+            <b>array</b> <i>(size=1)</i>
+            'g' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'800'</font> <i>(length=3)</i>
+        */
+
+        if($ultimoDado['status']){
+            exit(json_encode(array('status' => $ultimoDado['status'], 'ultimoDado' => $ultimoDado['ultimoDadoPosicao'][$_POST['posicao']])));
+        }else{
+            exit(json_encode(array('status' => $ultimoDado['status'])));
+        }
+
+    }
+
+    /*
+    * APÓS GERAR O VALOR DE VARIAVEL DE CALIBRAÇÃO, É EFETUADO O REGISTRO NO BANCO DE DADOS
+    */
+    public function salvarPosicaoTabelaJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo       = $this->load_model('equipamento/equipamento-model');
+
+        $variavelSalva      = null;
+
+        //VERIFICA SE JÁ NÃO EXISTE ALGUMA VARIAVEL DE CALIBRAÇÃO PARA A POSICAO ESPECIFICA DO EQUIPAMENTO
+
+        $variavelExistente  = $equipeModelo->recuperaVariavelExistente($_POST['idEquipamento'], $_POST['posicao']);
+
+        if($variavelExistente['status']){
+            //VARIAVEL JÁ EXISTE NO SISTEMA, SERÁ ATUALIZADA
+
+            $idVariavel     = $variavelExistente['idVariavel']['id'];
+
+            $variavelSalva  = $equipeModelo->atualizarVariavelCalibri($idVariavel, $_POST['valorCalibracao']);
+
+        }else{
+            //VARIAVEL AINDA NÃO EXISTE NO SISTEMA, SERÀ CADASTRADA UMA NOVA
+
+            $variavelSalva  = $equipeModelo->registraNovaVariavelCalibri($_POST['idEquipamento'], $_POST['posicao'], $_POST['valorCalibracao']);
+        }
+
+        //var_dump($variavelSalva);
+
+        if($variavelSalva['status']){
+            exit(json_encode(array('status' => $variavelSalva['status'], 'resultado' => $variavelSalva['operatio'])));
+        }else{
+            exit(json_encode(array('status' => $variavelSalva['status'])));
+        }
 
     }
 }

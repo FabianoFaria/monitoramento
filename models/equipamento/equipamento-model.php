@@ -564,7 +564,6 @@ class EquipamentoModel extends MainModel
     /*
     * Função para carregar os tipos de equipamentos
     */
-
     public function listarTipoEquip(){
 
         $query = "SELECT id, tipo_equipamento
@@ -978,7 +977,6 @@ class EquipamentoModel extends MainModel
     /**
     * FUNÇÃO PARA FILTRAR OS CHIPS SIM DE ACORDO COM SEUS STATUS E CLIENTE
     */
-
     public function filtroChipSimsCliente($statusChip, $idCliente){
 
         if(is_numeric($statusChip) && is_numeric($idCliente)){
@@ -1046,7 +1044,6 @@ class EquipamentoModel extends MainModel
     /*
     * CARREGA OS DADOS DO CHIP SIM
     */
-
     public function carregarDadosChipSim($idChipSim){
 
         $query = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, sim.versao_projeto, sim.modelo_chip, sim.telefone_chip, sim.ativo_cliente, sim.status_ativo,
@@ -1137,7 +1134,7 @@ class EquipamentoModel extends MainModel
     }
 
     /*
-    * CARREGAR OS DADOS DO EQUIPAMENTO
+    * CARREGAR OS DADOS DE CALIBRAÇÃO DO EQUIPAMENTO
     */
     public function posicoesCalibradas($idEquip){
 
@@ -1220,7 +1217,158 @@ class EquipamentoModel extends MainModel
         return $array;
     }
 
+    /*
+    * TENTA CARREGAR O ÚLTIMO DADO ENVIADO PELO EQUIPAMENTO NA POSIÇÃO INFORMADA
+    */
+    public function ultimoDadoenviadoPelaPosicao($idEquipamento, $posicao){
+        /*
+        * NOTA : EM ORDEM PARA QUE A FUNÇÃO RETORNE O VALOR DESEJADO, O EQUIPAMENTO DEVE ESTAR VINCULADO COM UM CHIP SIM E ESTAR CONFIGURADO PARA RECEBER PARAMETROS
+        */
+
+        if(is_numeric($idEquipamento)){
+
+            $query = "SELECT $posicao
+                       FROM tb_dados dados
+                       JOIN tb_sim_equipamento  simEquip ON simEquip.id_sim = dados.num_sim
+                       WHERE simEquip.id_equipamento = '$idEquipamento' AND simEquip.status_ativo = '1'
+                       ORDER BY $posicao DESC LIMIT 1";
+
+            //var_dump($query);
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result){
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'ultimoDadoPosicao' => $retorno[0]);
+                }else{
+                    $array = array('status' => false);
+                }
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
+    /*
+    * APÓS GERAR O VALOR DE VARIAVEL DE CALIBRAÇÃO, É EFETUADO O REGISTRO NO BANCO DE DADOS
+    */
+    public function salvarPosicaoTabelaJson($idEquipamento, $posicao, $variaveCalibracao){
+
+    }
+
+    /*
+    * RECUPERAÇÃO DE VARIAVEL DE CALIBRAÇÃO JÁ EXISTENTE
+    */
+    public function recuperaVariavelExistente($idEquipamento, $posicao){
+
+        if(is_numeric($idEquipamento)){
+
+            $query = "SELECT equipCali.id
+                      FROM tb_equipamento_calibracao equipCali
+                      WHERE equipCali.id_equip  = '$idEquipamento' AND equipCali.posicao_tab = '$posicao'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result){
+
+                /* VERIFICA SE EXISTE VALOR */
+                if (@mysql_num_rows($result) > 0)
+                {
+                    /* ARMAZENA NA ARRAY */
+                    while ($row = @mysql_fetch_assoc ($result))
+                    {
+                        $retorno[] = $row;
+                    }
+
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'idVariavel' => $retorno[0]);
+                }else{
+                    $array = array('status' => false);
+                }
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CADASTRA NOVA VARIAVEL DE CALIBRACAO
+    */
+    public function registraNovaVariavelCalibri($idEquipamento, $posicao, $variavel){
+
+        if(is_numeric($idEquipamento)){
+
+            $query = "INSERT INTO tb_equipamento_calibracao(id_equip, posicao_tab, variavel_cal) VALUES ('$idEquipamento','$posicao','$variavel')";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+                //var_dump($query);
+            if ($result){
+                $array = array('status' => true, 'operatio' => 'Cadastrado');
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * ATUALIZAR A VARIAVEL DE CALIBRACAO DA POSICAO DO EQUIPAMENTO
+    */
+    public function atualizarVariavelCalibri($idVariavel, $variavelCalibri){
+
+        if(is_numeric($idVariavel)){
+
+            $query = "UPDATE tb_equipamento_calibracao equipCalibri
+                      SET equipCalibri.variavel_cal = '$variavelCalibri'
+                      WHERE equipCalibri.id = '$idVariavel'";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+
+            if ($result){
+                $array = array('status' => true, 'operatio' => 'Atualizado');
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
 
 }
+
 
 ?>

@@ -25,8 +25,6 @@ $(document).ready(function(){
     $('#txt_telefone_number').mask('99999999999');
     $('#txt_chip_number').mask('999999999999999');
 
-    $('.calibracaoInput').mask('000.00');
-
     /*
     * Adiciona datapicker ao formulario de data
     */
@@ -1276,6 +1274,48 @@ function calibrarequipamento(idEquipamento, posicao){
             success : function(datra)
             {
 
+                if(datra.status){
+
+                    var ultimoDado = Number(datra.ultimoDado) / 100;
+                    var n = ultimoDado.toFixed(2);
+                    var registro = '';
+
+                    //SWAL que exibirá um pronpt para o usuário informar o valor real recebido pelo medidor
+                    swal({
+                          customClass: "modCalibracao",
+                          title: "Calibração!",
+                          text: "Valor bruto enviado do equipamento na posição '"+posicao+"' : "+n+" ! Informe o valor real informado pelo medidor.",
+                          type: "input",
+                          showCancelButton: true,
+                          closeOnConfirm: false,
+                          animation: "slide-from-top",
+                          inputPlaceholder: "000.00"
+                        },
+                        function(inputValue){
+                          if (inputValue === false) return false;
+
+                          if (inputValue === "") {
+                            swal.showInputError("É necessario informar um valor!");
+                            return false
+                          }
+
+                         //Função para cadastrar o valor de calibração da posição
+                         registro = registrarCalibracaoEquipamento(idEquipamento, posicao, n, inputValue);
+
+                         console.log(" Resultado calibracao "+ registro);
+
+                        if(registro != false){
+                            swal("Sucesso!", "Posição : " + posicao +" foi calibrada com sucesso, favor verificar os dados." , "success");
+                        }else{
+                            swal("Ops!", "Favor verificar o valor informado!", "error");
+                        }
+
+                          //swal("Nice!", "You wrote: " + inputValue, "success");
+                    });
+                }else{
+                    swal('','Não foi possivel carragar este dado, favor verificar as informações e configuraçãoes do equipamento.','error');
+                }
+
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -1284,11 +1324,64 @@ function calibrarequipamento(idEquipamento, posicao){
             }
         });
 
-        swal('','Teste ! '+idEquipamento,'success');
+        //swal('','Teste ! '+idEquipamento,'success');
 
     }else{
         swal('','Favor verificar o equipamento que está tentando calibrar.','error');
     }
 
+
+}
+
+/*
+* INICIA PROCESSO DE CADASTRO DE VALOR DE CALIBRAÇÂO
+*/
+function registrarCalibracaoEquipamento(idEquipamento, posicao, valorReal, valorRecebido){
+
+    /*
+    * VERIFICA SE O VALOR DIGITADO PELO USUÁRIO É VÁLIDO
+    */
+    if(isNaN(valorRecebido)){
+
+        return false;
+    }else{
+
+        /*
+            CAUCULO DA VARIAVEL DE CALIBRAÇÃO DE EQUIPAMENTO
+            VALOR BRUTO VINDO DA TABELA  DIVIDIDO PELO VALOR REAL MEDIDO NO EQUIPAMENTO
+            IGUAL A VARIAVEL DE CALIBRAÇÃO.
+        */
+        var calibracaoVal = valorReal / valorRecebido;
+
+        //VARIAVEL DE CALIBRACAO É SALVO
+        $.ajax({
+            url: urlP+"/eficazmonitor/equipamento/salvarPosicaoTabelaJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+             'idEquipamento' : idEquipamento,
+             'posicao' : posicao,
+             'valorCalibracao' : calibracaoVal
+            },
+            success : function(datra)
+            {
+                if(datra.status){
+                    return datra.resultado;
+                }else{
+                    return false;
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+
+                return false;
+            }
+        });
+
+        //return true;
+    }
 
 }

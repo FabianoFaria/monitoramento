@@ -106,29 +106,65 @@
                     </div>
                     <div class="panel-body">
 
-
-
                         <form id="cadastroDadosCalibracao" class="">
 
                             <input type="hidden" id="idEquipamento" name="idEquipamento" value="<?php echo $this->parametros[0]; ?>" />
 
                             <div class="row">
-                                        <?php
+                                <div class="col-md-12 form-group">
 
-                                            foreach ($posicoesEquipamento as $posicao) {
-                                                ?>
-                                                <div class="col-md-2 form-group">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
 
-                                                    <label for="entrada<?php echo $posicao; ?>"> <?php echo strtoupper($posicao); ?> </label>
-                                                    <!-- <input type="text" id="entrada<?php echo $posicao; ?>" name="entrada<?php //echo $posicao; ?>" class="form-control calibracaoInput" /> -->
-                                                    <a href="javascript:void(0)" onclick="calibrarequipamento(<?php echo $this->parametros[0] ?>, <?php echo $posicao; ?>)" class="btn btn-primary">
-                                                        <i class="fa fa-wrench "></i>
-                                                    </a>
-                                                </div>
+                                            </thead>
+                                            <tbody>
+
                                                 <?php
-                                            }
 
-                                        ?>
+                                                    $f = 0;
+
+                                                    ?>
+                                                    <tr>
+
+                                                        <?php
+                                                            foreach ($posicoesEquipamento as $posicao) {
+                                                                if($posicao != 'a'){
+
+                                                                    ?>
+                                                                        <td>
+                                                                            <p class="text-center">
+                                                                                <label for="entrada<?php echo $posicao; ?>"> <?php echo strtoupper($posicao); ?> </label>
+                                                                                <!-- <input type="text" id="entrada<?php echo $posicao; ?>" name="entrada<?php //echo $posicao; ?>" class="form-control calibracaoInput" /> -->
+                                                                                <a href="javascript:void(0)" onclick="calibrarequipamento(<?php echo $this->parametros[0] ?>, '<?php echo $posicao; ?>')" class="btn btn-primary">
+                                                                                    <i class="fa fa-wrench "></i>
+                                                                                </a>
+                                                                            </p>
+                                                                        </td>
+
+                                                                    <?php
+
+                                                                    $f++;
+                                                                    if($f == 5){
+
+                                                                        echo "</tr><tr>";
+
+                                                                        $f = 0;
+                                                                    }
+                                                                }
+
+                                                            }
+                                                        ?>
+
+                                                    </tr>
+                                                    <?php
+                                                ?>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
                             </div>
                         </form>
                     </div>
