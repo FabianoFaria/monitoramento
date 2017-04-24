@@ -13,14 +13,16 @@
     /*
     * INCLUI A CLASSE DE CONEXA
     */
-    require_once "classes/class-EficazDB.php";
-    require_once "classes/class-email.php";
+    define('EFIPATH', dirname(__DIR__));
+    require_once EFIPATH ."/classes/class-EficazDB.php";
+    require_once EFIPATH ."/classes/class-email.php";
+    // require_once "classes/class-EficazDB.php";
+    // require_once "classes/class-email.php";
 
 
     /*
     * VALIDA OS CAMPOS DO POST
     */
-
     if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POST['D']) &&
        isset($_POST['E']) && isset($_POST['F']) && isset($_POST['G']) && isset($_POST['H']) &&
        isset($_POST['I']) && isset($_POST['J']) && isset($_POST['L']) && isset($_POST['M']) &&

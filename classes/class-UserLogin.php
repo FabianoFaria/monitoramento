@@ -73,54 +73,96 @@ class UserLogin
             $result = $this->db->select($query);
 
             // Verifica se existe algum erro na query
-            if ($result)
-            {
-                // Verifica se o usuario existe
-                if (@mysql_num_rows($result) > 0)
-                {
-                    // Se o usuario existir
-                    while ($row = @mysql_fetch_assoc($result))
-                    {
-                        $_SESSION['userdata']['firstname']  = $row['nome'];
-                        $_SESSION['userdata']['secondname'] = $row['sobrenome'];
-                        $_SESSION['userdata']['userId']     = $row['id'];
-                        $_SESSION['userdata']['per_ca']     = $row['cadastro'];
-                        $_SESSION['userdata']['per_pe']     = $row['pesquisa'];
-                        $_SESSION['userdata']['per_vi']     = $row['vinculo'];
-                        $_SESSION['userdata']['per_co']     = $row['configuracao'];
-                        $_SESSION['userdata']['per_mo']     = $row['monitoramento'];
-                        $_SESSION['userdata']['per_ed']     = $row['editar'];
-                        $_SESSION['userdata']['local']      = $row['local_usu'];
-                        $_SESSION['userdata']['cliente']    = $row['id_cliente'];
-                        $_SESSION['userdata']['tipo']       = $row['tipo_inst'];
-                        $_SESSION['userdata']['tipo_usu']   = $row['tipo_usu'];
+            // if ($result)
+            // {
+            //     // Verifica se o usuario existe
+            //     if (@mysql_num_rows($result) > 0)
+            //     {
+            //         // Se o usuario existir
+            //         while ($row = @mysql_fetch_assoc($result))
+            //         {
+            //             $_SESSION['userdata']['firstname']  = $row['nome'];
+            //             $_SESSION['userdata']['secondname'] = $row['sobrenome'];
+            //             $_SESSION['userdata']['userId']     = $row['id'];
+            //             $_SESSION['userdata']['per_ca']     = $row['cadastro'];
+            //             $_SESSION['userdata']['per_pe']     = $row['pesquisa'];
+            //             $_SESSION['userdata']['per_vi']     = $row['vinculo'];
+            //             $_SESSION['userdata']['per_co']     = $row['configuracao'];
+            //             $_SESSION['userdata']['per_mo']     = $row['monitoramento'];
+            //             $_SESSION['userdata']['per_ed']     = $row['editar'];
+            //             $_SESSION['userdata']['local']      = $row['local_usu'];
+            //             $_SESSION['userdata']['cliente']    = $row['id_cliente'];
+            //             $_SESSION['userdata']['tipo']       = $row['tipo_inst'];
+            //             $_SESSION['userdata']['tipo_usu']   = $row['tipo_usu'];
+            //
+            //             // Registra que o usuario esta logado
+            //             $this->logged_in = true;
+            //             // Regista a sessao
+            //             $this->userdata = $_SESSION['userdata'];
+            //
+            //             // Armazena o link
+            //             $login_uri = HOME_URI;
+            //
+            //             //registro de atividade na tabela de LogModel
+            //             $idUsuarioLog   = $row['id'];
+            //
+            //             $queryAtividade = "INSERT INTO tb_atividades_usuarios (id_usuario, id_atividade) VALUES ('$idUsuarioLog', 1)";
+            //
+            //             // Executa a query
+            //             $resultLog = $this->db->select($queryAtividade);
+            //
+            //             // Redireciona via javascript
+            //             echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
+            //         }
+            //     }
+            //     // Se o usuario nao for encontrao
+            //     else
+            //     {
+            //         // Apresenta mensagem informado que nao achou
+            //         $this->login_error = "Usu&aacute;rio e/ou senha incorreto(s).";
+            //     }
+            // }
 
-                        // Registra que o usuario esta logado
-                        $this->logged_in = true;
-                        // Regista a sessao
-                        $this->userdata = $_SESSION['userdata'];
+            if(!empty($result)){
 
-                        // Armazena o link
-                        $login_uri = HOME_URI;
+                /*
+                    array(1) { [0]=> array(13) { ["id"]=> string(1) "5" ["nome"]=> string(8) "Sistema2" ["sobrenome"]=> string(6) "Eficaz" ["local_usu"]=> string(1) "1" ["id_cliente"]=> string(2) "59" ["tipo_inst"]=> string(1) "0" ["tipo_usu"]=> string(13) "Administrador" ["cadastro"]=> string(1) "1" ["pesquisa"]=> string(1) "1" ["vinculo"]=> string(1) "1" ["configuracao"]=> string(1) "1" ["monitoramento"]=> string(1) "1" ["editar"]=> string(1) "1" } }
+                */
+                $row = $result[0];
 
-                        //registro de atividade na tabela de LogModel
-                        $idUsuarioLog   = $row['id'];
+                            $_SESSION['userdata']['firstname']  = $row['nome'];
+                            $_SESSION['userdata']['secondname'] = $row['sobrenome'];
+                            $_SESSION['userdata']['userId']     = $row['id'];
+                            $_SESSION['userdata']['per_ca']     = $row['cadastro'];
+                            $_SESSION['userdata']['per_pe']     = $row['pesquisa'];
+                            $_SESSION['userdata']['per_vi']     = $row['vinculo'];
+                            $_SESSION['userdata']['per_co']     = $row['configuracao'];
+                            $_SESSION['userdata']['per_mo']     = $row['monitoramento'];
+                            $_SESSION['userdata']['per_ed']     = $row['editar'];
+                            $_SESSION['userdata']['local']      = $row['local_usu'];
+                            $_SESSION['userdata']['cliente']    = $row['id_cliente'];
+                            $_SESSION['userdata']['tipo']       = $row['tipo_inst'];
+                            $_SESSION['userdata']['tipo_usu']   = $row['tipo_usu'];
 
-                        $queryAtividade = "INSERT INTO tb_atividades_usuarios (id_usuario, id_atividade) VALUES ('$idUsuarioLog', 1)";
+                // Registra que o usuario esta logado
+                $this->logged_in = true;
+                // Regista a sessao
+                $this->userdata = $_SESSION['userdata'];
 
-                        // Executa a query
-                        $resultLog = $this->db->select($queryAtividade);
+                // Armazena o link
+                $login_uri = HOME_URI;
 
-                        // Redireciona via javascript
-                        echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
-                    }
-                }
-                // Se o usuario nao for encontrao
-                else
-                {
-                    // Apresenta mensagem informado que nao achou
-                    $this->login_error = "Usu&aacute;rio e/ou senha incorreto(s).";
-                }
+                //registro de atividade na tabela de LogModel
+                $idUsuarioLog   = $row['id'];
+
+                $queryAtividade = "INSERT INTO tb_atividades_usuarios (id_usuario, id_atividade) VALUES ('$idUsuarioLog', 1)";
+
+                // Executa a query
+                $resultLog = $this->db->select($queryAtividade);
+
+                // Redireciona via javascript
+                echo '<script type="text/javascript">window.location.href = "' . $login_uri . '";</script>';
+
             }
             else
             {
@@ -314,6 +356,8 @@ class UserLogin
         {
             // Configura a url do login
             $login_uri = HOME_URI . '/login/';
+
+            //var_dump($login_uri);
 
             // Redireciona via javascript
             echo '<meta http-equiv="Refresh" content="0; url=' . $login_uri . '">';

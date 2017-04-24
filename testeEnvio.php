@@ -1,3 +1,8 @@
+<?php
+
+    define('EFIPATH', dirname(__DIR__)."/eficazmonitor");
+
+?>
 <html>
     <head>
         <title>Teste</title>
@@ -8,20 +13,30 @@
             td { border: 1px solid #333; text-align: center; font-size: 12px; }
         </style>
     </head>
-    
+
     <body>
-    
+
         <?php
 
-        require_once "classes/class-EficazDB.php";
+        include($_SERVER["DOCUMENT_ROOT"]."/classes/class-EficazDB.php");
 
         $conn = new EficazDB();
 
+        //Var_dump($conn);
+
         $query = "select * from tb_dados order by (dt_criacao) desc limit 1440";
 
-        $res = $conn->select($query);
-        
-        if (@mysql_num_rows($res) > 0)
+        //$pdo = $conn->connect();
+
+        // o método PDO::prepare() retorna um objeto da classe PDOStatement ou FALSE se ocorreu algum erro (neste caso use $pdo->errorInfo() para descobrir o que deu errado)
+        $stmt = $conn->select($query);
+
+        //var_dump($stmt);
+
+        //$res = $conn->select($query);
+
+        //if (mysql_num_rows($res) > 0)
+        if(!empty($stmt))
         {
             echo "<table class='table table-bordered table-font'>";
             echo "<tr>
@@ -47,39 +62,40 @@
                 <td><b>U</b></td>
                 <td><b>DATA ENVIO</b></td>
             </tr>";
-            while ($row = @mysql_fetch_assoc($res))
-            {
-                $t = date_create($row['dt_criacao']);
+            foreach($stmt as $fila){
+
+                $t = date_create($fila['dt_criacao']);
                 $tempo = date_format($t, "d/m/Y - H:i:s");
+
                 echo "<tr >";
-                echo "<td >{$row['num_sim']}</td>";
-                echo "<td >{$row['b']}</td>";
-                echo "<td >{$row['c']}</td>";
-                echo "<td >{$row['d']}</td>";
-                echo "<td >{$row['e']}</td>";
-                echo "<td >{$row['f']}</td>";
-                echo "<td >{$row['g']}</td>";
-                echo "<td >{$row['h']}</td>";
-                echo "<td >{$row['i']}</td>";
-                echo "<td >{$row['j']}</td>";
-                echo "<td >{$row['l']}</td>";
-                echo "<td >{$row['m']}</td>";
-                echo "<td >{$row['n']}</td>";
-                echo "<td >{$row['o']}</td>";
-                echo "<td >{$row['p']}</td>";
-                echo "<td >{$row['q']}</td>";
-                echo "<td >{$row['r']}</td>";
-                echo "<td >{$row['s']}</td>";
-                echo "<td >{$row['t']}</td>";
-                echo "<td >{$row['u']}</td>";
+                echo "<td >{$fila['num_sim']}</td>";
+                echo "<td >{$fila['b']}</td>";
+                echo "<td >{$fila['c']}</td>";
+                echo "<td >{$fila['d']}</td>";
+                echo "<td >{$fila['e']}</td>";
+                echo "<td >{$fila['f']}</td>";
+                echo "<td >{$fila['g']}</td>";
+                echo "<td >{$fila['h']}</td>";
+                echo "<td >{$fila['i']}</td>";
+                echo "<td >{$fila['j']}</td>";
+                echo "<td >{$fila['l']}</td>";
+                echo "<td >{$fila['m']}</td>";
+                echo "<td >{$fila['n']}</td>";
+                echo "<td >{$fila['o']}</td>";
+                echo "<td >{$fila['p']}</td>";
+                echo "<td >{$fila['q']}</td>";
+                echo "<td >{$fila['r']}</td>";
+                echo "<td >{$fila['s']}</td>";
+                echo "<td >{$fila['t']}</td>";
+                echo "<td >{$fila['u']}</td>";
                 echo "<td >{$tempo}</td>";
                 echo "</tr>";
             }
             echo "</table>";
         }
-        
+
 
         ?>
-        
+
     </body>
 </html>

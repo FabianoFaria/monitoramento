@@ -12,8 +12,10 @@
     /*
     * INCLUI A CLASSE DE CONEXA
     */
-    require_once "classes/class-EficazDB.php";
-    require_once "classes/class-email.php";
+
+    define('EFIPATH', dirname(__FILE__));
+    require_once EFIPATH ."classes/class-EficazDB.php";
+    require_once EFIPATH ."classes/class-email.php";
 
 
     /*
