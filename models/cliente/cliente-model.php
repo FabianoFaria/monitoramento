@@ -29,20 +29,25 @@
              $result = $this->db->select($query);
 
              /* VERIFICA SE EXISTE RESPOSTA */
-             if ($result)
+             if(!empty($result))
              {
-                 /* VERIFICA SE EXISTE VALOR */
-                 if (@mysql_num_rows($result) > 0)
-                 {
-                     /* ARMAZENA NA ARRAY */
-                     while ($row = @mysql_fetch_assoc ($result))
-                     {
-                         $retorno[] = $row;
-                     }
-
-                     /* DEVOLVE RETORNO */
-                     return $retorno;
-                 }
+                //  /* VERIFICA SE EXISTE VALOR */
+                //  if (@mysql_num_rows($result) > 0)
+                //  {
+                //      /* ARMAZENA NA ARRAY */
+                //      while ($row = @mysql_fetch_assoc ($result))
+                //      {
+                //          $retorno[] = $row;
+                //      }
+                 //
+                //      /* DEVOLVE RETORNO */
+                //      return $retorno;
+                //  }
+                foreach ($result as $row) {
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                return $retorno;
              }
              else
                  return false;
@@ -61,18 +66,23 @@
             /* VERIFICA SE EXISTE RESPOSTA */
             if ($result)
             {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
-
-                    /* DEVOLVE RETORNO */
-                    return $retorno;
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     return $retorno;
+                // }
+                foreach ($result as $row) {
+                    $retorno[] = $row;
                 }
+                /* DEVOLVE RETORNO */
+                return $retorno;
             }
             else
                 return false;
@@ -97,22 +107,28 @@
               $result = $this->db->select($query);
 
               /* VERIFICA SE EXISTE RESPOSTA */
-              if ($result)
+              if(!empty($result))
               {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                  {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                      $retorno[] = $row;
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                //   {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //       $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'filiais' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'filiais' => '');
+                // }
+                    foreach ($result as $row) {
+                        $retorno[] = $row;
                     }
-
                     /* DEVOLVE RETORNO */
                     $array = array('status' => true, 'filiais' => $retorno);
-                }else{
-                    $array = array('status' => false, 'filiais' => '');
-                }
+
               }else{
                 $array = array('status' => false, 'filiais' => '');
               }
@@ -139,24 +155,30 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if ($result)
+                if(!empty($result))
                 {
-                  /* VERIFICA SE EXISTE VALOR */
-                  if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                    //   /* VERIFICA SE EXISTE VALOR */
+                    //   if (@mysql_num_rows($result) > 0)
+                    //     {
+                    //       /* ARMAZENA NA ARRAY */
+                    //       while ($row = @mysql_fetch_assoc ($result))
+                    //       {
+                    //         $retorno[] = $row;
+                    //       }
+                      //
+                    //       /* DEVOLVE RETORNO */
+                    //       $array = array('status' => true, 'filiais' => $retorno);
+                    //   }else{
+                    //       $array = array('status' => false, 'filiais' => '');
+                    //   }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
+                    }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'filiais' => $retorno);
 
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'filiais' => $retorno);
-                  }else{
-                      $array = array('status' => false, 'filiais' => '');
-                  }
                 }else{
-                  $array = array('status' => false, 'filiais' => '');
+                    $array = array('status' => false, 'filiais' => '');
                 }
 
             }else{
@@ -248,8 +270,15 @@
 
                 //var_dump($query);
 
-                $idGerada  = mysql_insert_id();
+                //$idGerada  = mysql_insert_id();
                 //$queryId = mysql_insert_id();
+
+                if(is_numeric($result)){
+                    $idGerada = $result;
+                }else{
+                    $idGerada = null;
+                }
+
 
                 $array = array('status' => $result, 'idCliente' => $idGerada);
 
@@ -325,22 +354,27 @@
              /* monta result */
              $result = $this->db->select($query);
 
-            if ($result){
-              /* verifica se existe valor */
-              if (@mysql_num_rows($result)>0)
-              {
-                  /* pega os valores e monta um array */
-                  while ($row = @mysql_fetch_assoc($result))
-                      $retorno[] = $row;
-
-                  /* retorna o select */
-                  $cliente  = $retorno;
-                //   $status   = true;
-                   $array = array('status' => true, 'dados' => $cliente) ;
-              }
-              else
-                /* fim */
-                 $array = array('status' => false, 'dados' => '') ;
+            if(!empty($result)){
+            //   /* verifica se existe valor */
+            //   if (@mysql_num_rows($result)>0)
+            //   {
+            //       /* pega os valores e monta um array */
+            //       while ($row = @mysql_fetch_assoc($result))
+            //           $retorno[] = $row;
+              //
+            //       /* retorna o select */
+            //       $cliente  = $retorno;
+            //     //   $status   = true;
+            //        $array = array('status' => true, 'dados' => $cliente) ;
+            //   }
+            //   else
+            //     /* fim */
+            //      $array = array('status' => false, 'dados' => '') ;
+                foreach ($result as $row) {
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'dados' => $retorno) ;
 
             }else{
               /* fim */
@@ -377,22 +411,27 @@
                 /* monta result */
                 $result = $this->db->select($query);
 
-                if ($result){
-                  /* verifica se existe valor */
-                  if (@mysql_num_rows($result)>0)
-                  {
-                      /* pega os valores e monta um array */
-                      while ($row = @mysql_fetch_assoc($result))
-                          $retorno[] = $row;
-
-                      /* retorna o select */
-                      $cliente  = $retorno;
-                    //   $status   = true;
-                       $array = array('status' => true, 'dados' => $cliente) ;
-                  }
-                  else
-                    /* fim */
-                     $array = array('status' => false, 'dados' => '') ;
+                if (!empty($result)){
+                //   /* verifica se existe valor */
+                //   if (@mysql_num_rows($result)>0)
+                //   {
+                //       /* pega os valores e monta um array */
+                //       while ($row = @mysql_fetch_assoc($result))
+                //           $retorno[] = $row;
+                  //
+                //       /* retorna o select */
+                //       $cliente  = $retorno;
+                //     //   $status   = true;
+                //        $array = array('status' => true, 'dados' => $cliente) ;
+                //   }
+                //   else
+                //     /* fim */
+                //      $array = array('status' => false, 'dados' => '') ;
+                    foreach ($result as $row) {
+                        $retorno[] = $row;
+                    }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'dados' => $retorno);
 
                 }else{
                   /* fim */
@@ -422,25 +461,31 @@
             /* monta result */
             $result = $this->db->select($query);
 
-            if ($result){
-              /* verifica se existe valor */
-              if (@mysql_num_rows($result)>0)
-              {
-                  /* pega os valores e monta um array */
-                  while ($row = @mysql_fetch_assoc($result))
-                      $retorno[] = $row;
+            if (!empty($result)){
+                //   /* verifica se existe valor */
+                //   if (@mysql_num_rows($result)>0)
+                //   {
+                //       /* pega os valores e monta um array */
+                //       while ($row = @mysql_fetch_assoc($result))
+                //           $retorno[] = $row;
+                  //
+                //       /* retorna o select */
+                //       $cliente  = $retorno;
+                //       $status   = true;
+                  //
+                //       $array = array('status' => true, 'dados' => $cliente) ;
+                //   }
+                //   else
+                //     /* fim */
+                //     // $status = false;
+                  //
+                //     $array = array('status' => false, 'dados' => '') ;
 
-                  /* retorna o select */
-                  $cliente  = $retorno;
-                  $status   = true;
-
-                  $array = array('status' => true, 'dados' => $cliente) ;
-              }
-              else
-                /* fim */
-                // $status = false;
-
-                $array = array('status' => false, 'dados' => '') ;
+                foreach ($result as $row) {
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'dados' => $retorno) ;
 
             }else{
               /* fim */
@@ -472,24 +517,30 @@
                 /* monta result */
                 $result = $this->db->select($query);
 
-                if ($result){
-                  /* verifica se existe valor */
-                  if (@mysql_num_rows($result)>0)
-                  {
-                      /* pega os valores e monta um array */
-                      while ($row = @mysql_fetch_assoc($result))
-                          $retorno[] = $row;
+                if (!empty($result)){
+                //   /* verifica se existe valor */
+                //   if (@mysql_num_rows($result)>0)
+                //   {
+                //       /* pega os valores e monta um array */
+                //       while ($row = @mysql_fetch_assoc($result))
+                //           $retorno[] = $row;
+                  //
+                //       /* retorna o select */
+                //       $cliente  = $retorno;
+                //       $status   = true;
+                  //
+                //       $array = array('status' => true, 'dados' => $cliente) ;
+                //   }
+                //   else
+                //     /* fim */
+                //     // $status = false;
+                //     $array = array('status' => false, 'dados' => '') ;
 
-                      /* retorna o select */
-                      $cliente  = $retorno;
-                      $status   = true;
-
-                      $array = array('status' => true, 'dados' => $cliente) ;
-                  }
-                  else
-                    /* fim */
-                    // $status = false;
-                    $array = array('status' => false, 'dados' => '') ;
+                    foreach ($result as $row) {
+                        $retorno[] = $row;
+                    }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'dados' => $cliente) ;
 
                 }else{
                   /* fim */
@@ -522,25 +573,31 @@
                 /* monta result */
                 $result = $this->db->select($query);
 
-                if($result){
+                if(!empty($result)){
 
-                    /* verifica se existe valor */
-                    if (@mysql_num_rows($result)>0)
-                    {
-                        /* pega os valores e monta um array */
-                        while ($row = @mysql_fetch_assoc($result))
-                            $retorno[] = $row;
-
-                        /* retorna o select */
-                        $cliente  = $retorno;
-                        $status   = true;
-
-                        $array = array('status' => true, 'dados' => $cliente) ;
+                    // /* verifica se existe valor */
+                    // if (@mysql_num_rows($result)>0)
+                    // {
+                    //     /* pega os valores e monta um array */
+                    //     while ($row = @mysql_fetch_assoc($result))
+                    //         $retorno[] = $row;
+                    //
+                    //     /* retorna o select */
+                    //     $cliente  = $retorno;
+                    //     $status   = true;
+                    //
+                    //     $array = array('status' => true, 'dados' => $cliente) ;
+                    // }
+                    // else
+                    //   /* fim */
+                    //   // $status = false;
+                    //   $array = array('status' => false, 'dados' => '');
+                    foreach ($result as $row) {
+                        $retorno[] = $row;
                     }
-                    else
-                      /* fim */
-                      // $status = false;
-                      $array = array('status' => false, 'dados' => '');
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'dados' => $cliente) ;
+
                 }else{
                      $array = array('status' => false, 'dados' => '');
                 }
@@ -624,23 +681,30 @@
 
             if($result){
 
-                /* verifica se existe valor */
-                if (@mysql_num_rows($result)>0)
-                {
-                    /* pega os valores e monta um array */
-                    while ($row = @mysql_fetch_assoc($result))
-                        $retorno[] = $row;
+                // /* verifica se existe valor */
+                // if (@mysql_num_rows($result)>0)
+                // {
+                //     /* pega os valores e monta um array */
+                //     while ($row = @mysql_fetch_assoc($result))
+                //         $retorno[] = $row;
+                //
+                //     /* retorna o select */
+                //     $cliente  = $retorno;
+                //     $status   = true;
+                //
+                //     $array = array('status' => true, 'dados' => $cliente) ;
+                // }
+                // else
+                //   /* fim */
+                //   // $status = false;
+                //   $array = array('status' => false, 'dados' => '');
 
-                    /* retorna o select */
-                    $cliente  = $retorno;
-                    $status   = true;
-
-                    $array = array('status' => true, 'dados' => $cliente) ;
+                foreach ($result as $row) {
+                    $retorno[] = $row;
                 }
-                else
-                  /* fim */
-                  // $status = false;
-                  $array = array('status' => false, 'dados' => '');
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'dados' => $retorno) ;
+
             }else{
                  $array = array('status' => false, 'dados' => '');
             }
@@ -659,25 +723,32 @@
             /* monta result */
             $result = $this->db->select($query);
 
-            if($result){
+            if(!empty($result)){
 
-                /* verifica se existe valor */
-                if (@mysql_num_rows($result)>0)
-                {
-                    /* pega os valores e monta um array */
-                    while ($row = @mysql_fetch_assoc($result))
-                        $retorno[] = $row;
+                // /* verifica se existe valor */
+                // if (@mysql_num_rows($result)>0)
+                // {
+                //     /* pega os valores e monta um array */
+                //     while ($row = @mysql_fetch_assoc($result))
+                //         $retorno[] = $row;
+                //
+                //     /* retorna o select */
+                //     $cliente  = $retorno;
+                //     $status   = true;
+                //
+                //     $array = array('status' => true, 'dados' => $cliente) ;
+                // }
+                // else
+                //   /* fim */
+                //   // $status = false;
+                //   $array = array('status' => false, 'dados' => '');
 
-                    /* retorna o select */
-                    $cliente  = $retorno;
-                    $status   = true;
-
-                    $array = array('status' => true, 'dados' => $cliente) ;
+                foreach ($result as $row) {
+                    $retorno[] = $row;
                 }
-                else
-                  /* fim */
-                  // $status = false;
-                  $array = array('status' => false, 'dados' => '');
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'dados' => $cliente) ;
+
             }else{
                  $array = array('status' => false, 'dados' => '');
             }

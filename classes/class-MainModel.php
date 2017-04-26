@@ -209,15 +209,19 @@ class MainModel
             $result = $this->db->select($busca);
 
             // Verifica se existe retorno
-            if ($result)
+            if (!empty($result))
             {
-                // Verifica se existe valor
-                if (@mysql_num_rows($result) > 0)
-                {
-                    // Guarda os valores no array
-                    while ($row = @mysql_fetch_assoc($result))
-                        $valorNot[] = $row;
+                foreach ($result as $row) {
+                     $valorNot[] = $row;
                 }
+
+                // Verifica se existe valor
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     // Guarda os valores no array
+                //     while ($row = @mysql_fetch_assoc($result))
+                //         $valorNot[] = $row;
+                // }
             }
         }
 
@@ -250,11 +254,17 @@ class MainModel
         $result = $this->db->select($query);
 
         /* verifica se existe resultado */
-        if (@mysql_num_rows($result) > 0)
-        {
-            /* monta array com os resultados */
-            while ($row = @mysql_fetch_assoc($result))
-                $retorno[] = $row;
+        // if(@mysql_num_rows($result) > 0)
+        // {
+        if(!empty($result)){
+
+            foreach ($result as $row) {
+                 $retorno[] = $row;
+            }
+
+            // /* monta array com os resultados */
+            // while ($row = @mysql_fetch_assoc($result))
+            //     $retorno[] = $row;
 
             /* retorna o array */
             $array = array('status' => true, 'alarmes' => $retorno);
@@ -288,11 +298,17 @@ class MainModel
             $result = $this->db->select($query);
 
             /* verifica se existe resultado */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* monta array com os resultados */
-                while ($row = @mysql_fetch_assoc($result))
-                    $retorno[] = $row;
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            if(!empty($result)){
+
+                foreach ($result as $row) {
+                     $retorno[] = $row;
+                }
+
+                // /* monta array com os resultados */
+                // while ($row = @mysql_fetch_assoc($result))
+                //     $retorno[] = $row;
 
                 /* retorna o array */
                 $array = array('status' => true, 'alarmes' => $retorno);
@@ -708,18 +724,22 @@ class MainModel
         $result = $this->db->select($query);
 
         // Verifica se existe retorno
-        if ($result)
+        if(!empty($result))
         {
             // Verifica se existe resultado
-            if (@mysql_num_rows($result) > 0)
-            {
-                // Monta array com os resultados
-                while ($row = @mysql_fetch_assoc($result))
-                    $retorno[] = $row;
-
-                // Retorna o array
-                return $retorno;
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     // Monta array com os resultados
+            //     while ($row = @mysql_fetch_assoc($result))
+            //         $retorno[] = $row;
+            //
+            //     // Retorna o array
+            //     return $retorno;
+            // }
+            foreach ($result as $row) {
+                 $retorno[] = $row;
             }
+            return $retorno;
         }
     }
 
@@ -786,17 +806,22 @@ class MainModel
         $result = $this->db->select($query);
 
         /* verifica se existe retorno */
-        if ($result)
+        if (!empty($result))
         {
-            /* verifica se existe resultado */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* monta array com os resultados */
-                while ($row = @mysql_fetch_assoc($result))
-                    $retorno[] = $row;
-
-                return $retorno;
+            foreach ($result as $row) {
+                 $retorno[] = $row;
             }
+            return $retorno;
+
+            // /* verifica se existe resultado */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* monta array com os resultados */
+            //     while ($row = @mysql_fetch_assoc($result))
+            //         $retorno[] = $row;
+            //
+            //     return $retorno;
+            // }
         }
 
         // Retorna o valor do select
@@ -869,12 +894,18 @@ class MainModel
         // Criar o array de resposta
         $resultado = array();
 
-        // Verifica se existe valor na result
-        if (@mysql_num_rows($result) > 0)
-        {
-            // Monta o array de dados
-            while ($row = @mysql_fetch_assoc($result))
-                $resultado[] = $row;
+        // // Verifica se existe valor na result
+        // if (@mysql_num_rows($result) > 0)
+        // {
+        //     // Monta o array de dados
+        //     while ($row = @mysql_fetch_assoc($result))
+        //         $resultado[] = $row;
+        // }
+        if(!empty($result)){
+
+            foreach ($result as $row) {
+                 $resultado[] = $row;
+            }
         }
 
         // Retorna array
@@ -895,18 +926,23 @@ class MainModel
         $result = $this->db->select($query);
 
         /* verifica se existe retorno */
-        if ($result)
+        if (!empty($result))
         {
-            /* verifica se existe resultado */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* monta array com os resultados */
-                while ($row = @mysql_fetch_assoc($result))
-                    $retorno[] = $row;
+            // /* verifica se existe resultado */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* monta array com os resultados */
+            //     while ($row = @mysql_fetch_assoc($result))
+            //         $retorno[] = $row;
+            //
+            //     /* retorna o array */
+            //     return $retorno[0];
+            // }
 
-                /* retorna o array */
-                return $retorno[0];
+            foreach ($result as $row) {
+                 $retorno[] = $row;
             }
+            return $retorno[0];
         }
         return false;
     }

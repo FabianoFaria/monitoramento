@@ -296,7 +296,7 @@ class MainController extends UserLogin
      *
      * @param array $file - Recebe o array com os parametros do arquivo
      */
-    public function upload_avatar ($file, $destination, $tipoAvatar)
+    public function upload_avatar($file, $destination, $tipoAvatar)
     {
         // Pasta de upload
         $_UP['pasta'] = $destination;

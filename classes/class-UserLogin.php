@@ -184,26 +184,35 @@ class UserLogin
             // Executa a query
             $result = $this->db->select($query);
 
-            if($result){
+            //if($result){
+
+            if(!empty($result)){
 
                 $id     = "";
                 $nome   = "";
                 $email  = "";
                 $senha  = "";
 
-                //Inicia o tratamento da rquisição de nova senha!
-                if (@mysql_num_rows($result) > 0)
-                {
-                    // Se o usuario existir
-                    while ($row = @mysql_fetch_assoc($result))
-                    {
-                        $id     = $row['id'];
-                        $nome   = $row['nome']." ".$row['sobrenome'];
-                        $email  = $row['email'];
-                        $senha  = $row['senha'];
+                $row = $result[0];
 
-                    }
-                }
+                $id     = $row['id'];
+                $nome   = $row['nome']." ".$row['sobrenome'];
+                $email  = $row['email'];
+                $senha  = $row['senha'];
+
+                //Inicia o tratamento da rquisição de nova senha!
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     // Se o usuario existir
+                //     while ($row = @mysql_fetch_assoc($result))
+                //     {
+                //         $id     = $row['id'];
+                //         $nome   = $row['nome']." ".$row['sobrenome'];
+                //         $email  = $row['email'];
+                //         $senha  = $row['senha'];
+                //
+                //     }
+                // }
 
                 $data_solicitação   = date('Y-m-d');
                 $id_criptografada   = sha1($id);
@@ -261,14 +270,26 @@ class UserLogin
             $statusToken    = "";
 
             //validação dos resultados da query
-            if(@mysql_num_rows($result) > 0){
+            // if(@mysql_num_rows($result) > 0){
+            //
+            //     // Se o usuario existir
+            //     while ($row = @mysql_fetch_assoc($result))
+            //     {
+            //         $idUsuario      = $row['id_recuperar'];
+            //         $statusToken    = $row['token_validador'];
+            //     }
+            //
+            //     $this->pedidoSenha_info     = $idUsuario;
+            //     $this->pedidoSenha_token    = $statusToken;
+            //     $this->pedidoSenha_error    = "_";
+            // }
 
-                // Se o usuario existir
-                while ($row = @mysql_fetch_assoc($result))
-                {
-                    $idUsuario      = $row['id_recuperar'];
-                    $statusToken    = $row['token_validador'];
-                }
+            if(!empty($result)){
+
+                $row = $result[0];
+
+                $idUsuario      = $row['id_recuperar'];
+                $statusToken    = $row['token_validador'];
 
                 $this->pedidoSenha_info     = $idUsuario;
                 $this->pedidoSenha_token    = $statusToken;
@@ -340,7 +361,7 @@ class UserLogin
         session_destroy();
 
         // Regenera o id da sessao
-        session_regenerate_id();
+        //session_regenerate_id();
 
         // Redireciona para a pagina de login
         $this->goto_login();

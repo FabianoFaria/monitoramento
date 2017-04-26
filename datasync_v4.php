@@ -683,6 +683,7 @@
             }
 
         }else{
+            
             //var_dump($dados);
             $parametros = 0;
         }

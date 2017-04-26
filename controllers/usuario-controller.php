@@ -422,12 +422,6 @@
             }
         }
 
-        /*
-        * FUNÇÃO PARA FILTRAR OS USUÁRIOS POR CLIENTE E POR TIPO
-        */
-        // public function filtrarUsuariosClienteJson(){
-        //
-        // }
     }
 
 

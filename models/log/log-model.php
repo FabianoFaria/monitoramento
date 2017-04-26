@@ -47,23 +47,29 @@ class LogModel extends MainModel
             $result = $this->db->select($query);
 
             /* verifica se existe resposta */
-            if ($result)
+            if(!empty($result))
             {
-                /* verifica se existe valor */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* armazena na array */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
+                // /* verifica se existe valor */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* armazena na array */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* devolve retorno */
+                //     //return $retorno;
+                //     $array = array('status' => true, 'atividades' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'atividades' => ' ');
+                // }
 
-                    /* devolve retorno */
-                    //return $retorno;
-                    $array = array('status' => true, 'atividades' => $retorno);
-                }else{
-                    $array = array('status' => false, 'atividades' => ' ');
+                foreach ($result as $row){
+                    $retorno[] = $row;
                 }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'atividades' => $retorno);
             }
             else{
                 $array = array('status' => false, 'atividades' => ' ');

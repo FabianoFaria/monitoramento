@@ -65,30 +65,14 @@ class MonitoramentoModel extends MainModel
             $busca = $this->db->select($query);
 
             /* verifica se a query executa */
-            if ($busca)
+            if(!empty($busca))
             {
-                /* verifica se existe valor */
-                if (@mysql_num_rows($busca) > 0)
-                {
-                    /* monta o array com os valores */
-                    while($row = @mysql_fetch_assoc($busca))
-                        $retorno[] = $row;
+
+                foreach ($busca as $row){
+                    $retorno[] = $row;
 
                     /* quebra a resposta no array */
                     $retorno = explode("|inicio|",$retorno[0]['parametro']);
-
-                    //var_dump($retorno);
-
-                    // foreach($retorno as $row)
-                    // {
-                    //
-                    //
-                    //     $row2 = explode("-",$row);
-                    //     // Coleta posicao
-                    //     $posicao[] = $row2[0];
-                    //     // colote valor
-                    //     $valor[] = $row2[2];
-                    // }
 
                     for($i = 1; $i <=8; $i++){
                         //var_dump($retorno[0]);
@@ -112,17 +96,71 @@ class MonitoramentoModel extends MainModel
                         //(isset($configuracaoSalva)) ? $this->trataValor($valoresEntrada[0]) : ""
                     }
 
-                    //Destroi variavel auxiliar
-                    unset($row2);
-                    //Retorna os valores
-                    return $valor;
-                    //return $retorno;
                 }
-                else
-                {
-                    /* caso nao existir valor, retorna false */
-                    return false;
-                }
+                //Destroi variavel auxiliar
+                unset($row2);
+                //Retorna os valores
+                return $valor;
+                //return $retorno;
+
+
+
+                // /* verifica se existe valor */
+                // if (@mysql_num_rows($busca) > 0)
+                // {
+                //     /* monta o array com os valores */
+                //     while($row = @mysql_fetch_assoc($busca))
+                //         $retorno[] = $row;
+                //
+                //     /* quebra a resposta no array */
+                //     $retorno = explode("|inicio|",$retorno[0]['parametro']);
+
+                    //var_dump($retorno);
+
+                    // foreach($retorno as $row)
+                    // {
+                    //
+                    //
+                    //     $row2 = explode("-",$row);
+                    //     // Coleta posicao
+                    //     $posicao[] = $row2[0];
+                    //     // colote valor
+                    //     $valor[] = $row2[2];
+                    // }
+
+                    // for($i = 1; $i <=8; $i++){
+                    //     //var_dump($retorno[0]);
+                    //
+                    //     $row2 = explode("|", $retorno[$i]);
+                    //
+                    //     if($row2 != ''){
+                    //
+                    //         for($f=0; $f<=4; $f++){
+                    //
+                    //             //var_dump($row2[$f]);
+                    //             $row3 = explode("-",$row2[$f]);
+                    //             // Coleta posicao
+                    //             $posicao[] = $row3[0];
+                    //             // // colote valor
+                    //             $valor[] = ($row3[1] != '') ? $row3[1] : 0;
+                    //         }
+                    //     }
+                    //
+                    //     //var_dump($valor);
+                    //     //(isset($configuracaoSalva)) ? $this->trataValor($valoresEntrada[0]) : ""
+                    // }
+
+                    // //Destroi variavel auxiliar
+                    // unset($row2);
+                    // //Retorna os valores
+                    // return $valor;
+                    // //return $retorno;
+                // }
+                // else
+                // {
+                //     /* caso nao existir valor, retorna false */
+                //     return false;
+                // }
             }
             else
             {
@@ -214,14 +252,22 @@ class MonitoramentoModel extends MainModel
         $result = $this->db->select($query);
 
         // Verifica se existe resultado
-        if (@mysql_num_rows ($result) > 0)
-        {
-            // Coleta dos dados
-            while ($row = @mysql_fetch_assoc($result))
-                $resp[] = $row;
+        // if (@mysql_num_rows ($result) > 0)
+        // {
+        if(!empty($result)){
 
+            foreach ($result as $row){
+                $resp[] = $row;
+            }
             // Coleta a data de retorno
             $resultado = strval($resp[0]['dt_criacao']);
+
+            // // Coleta dos dados
+            // while ($row = @mysql_fetch_assoc($result))
+            //     $resp[] = $row;
+            //
+            // // Coleta a data de retorno
+            // $resultado = strval($resp[0]['dt_criacao']);
         }
         else
         {
@@ -231,14 +277,22 @@ class MonitoramentoModel extends MainModel
 
             // Realiza a pesquisa no banco
             $result = $this->db->select($query);
-        if (@mysql_num_rows ($result) > 0)
-        {
-            // Coleta dos dados
-            while ($row = @mysql_fetch_assoc($result))
-                $resp[] = $row;
+        // if (@mysql_num_rows ($result) > 0)
+        // {
+        if(!empty($result)){
 
+            foreach ($result as $row){
+                $resp[] = $row;
+            }
             // Coleta a data de retorno
             $resultado = strval($resp[0]['dt_criacao']);
+
+            // // Coleta dos dados
+            // while ($row = @mysql_fetch_assoc($result))
+            //     $resp[] = $row;
+            //
+            // // Coleta a data de retorno
+            // $resultado = strval($resp[0]['dt_criacao']);
         }
             else
             $resultado = 0;
@@ -327,16 +381,22 @@ class MonitoramentoModel extends MainModel
         $resmon = $this->db->select($querymon);
 
         // Monta os valores
-        if (@mysql_num_rows($resmon) > 0)
-        {
+        // if (@mysql_num_rows($resmon) > 0)
+        // {
+        if(!empty($resmon)){
+
             $tempomon = "[";
             $datamon = "[";
 
 
 
-            // Coleta o resultado
-            while($rowmon = @mysql_fetch_assoc($resmon))
-            {
+            // // Coleta o resultado
+            // while($rowmon = @mysql_fetch_assoc($resmon))
+            // {
+            //     $linhaArr[] = $rowmon;
+            // }
+
+            foreach ($resmon as $rowmon){
                 $linhaArr[] = $rowmon;
             }
 

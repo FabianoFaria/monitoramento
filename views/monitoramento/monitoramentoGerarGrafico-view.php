@@ -1195,9 +1195,11 @@ else
 
                                                 var quantidadeBancoBateria = $('#quantidadeBancoBateria').val();
 
-                                                var tempoEstimadoHora   = parseFloat(data[1]);
-                                                var data_registro       = data[3];
-                                                var correnteNominalBateria = parseFloat(data[5]);
+                                                console.log(data.data_registro);
+
+                                                var tempoEstimadoHora   = parseFloat(data.tempoEstimadoHora);//parseFloat(data[1]);
+                                                var data_registro       = data.data_registro; //data[3];
+                                                var correnteNominalBateria = parseFloat(data.correnteBancoBateria);//parseFloat(data.);//parseFloat(data[5]);
 
                                                 var tempoTemp           = data_registro.split(" ");
                                                 var dataCarga           = tempoTemp[0].split("-");

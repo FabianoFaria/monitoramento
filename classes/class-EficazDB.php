@@ -139,16 +139,40 @@ class EficazDB
      */
     public function query ($query)
     {
-        // Verifica se a query executou com secesso
-        if (@mysql_query($query))
-        {
-            // Caso grave com sucesso
-            // Retorna verdadeiro
-            return true;
+        // // Verifica se a query executou com secesso
+        // if (@mysql_query($query))
+        // {
+        //     // Caso grave com sucesso
+        //     // Retorna verdadeiro
+        //     return true;
+        // }
+        // // Se der erro de execucao
+        // // Retorna falso
+        // return false;
+
+        $pdo = $this->connect();
+
+        // o método PDO::prepare() retorna um objeto da classe PDOStatement ou FALSE se ocorreu algum erro (neste caso use $pdo->errorInfo() para descobrir o que deu errado)
+        $stmt = $pdo->prepare($query);
+
+        // executamos o statement
+        $ok = $stmt->execute();
+
+        if($ok){
+
+            //Testa se é possivel retornar última id cadastrada
+            $id = $pdo->lastInsertId();
+
+            if(is_numeric($id)){
+                return $id;
+            }else{
+                return true;
+            }
+
+        }else{
+            return false;
         }
-        // Se der erro de execucao
-        // Retorna falso
-        return false;
+
     }
 
     /**
@@ -169,6 +193,8 @@ class EficazDB
         // agora podemos pegar os resultados (partimos do pressuposto que não houve erro)
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $pdo = NULL;
+
         return $result;
 
     }
@@ -179,29 +205,31 @@ class EficazDB
      */
     public function close ()
     {
+         echo "<p class='mensagemRetorno'>PDO foi fechado com sucesso.</p>";
         // Verifica se a conexao fechou
-        if (@mysql_close())
-        {
-            // Verifica se o modo desenvolvedor esta ativo
-            if (defined('DEVTOOLS') && DEVTOOLS == true)
-            {
-                // Se estiver ativo
-                // Retorna confirmacao de fechamento
-                echo "<p class='mensagemRetorno'>Conex&atilde;o fechada com sucesso.</p>";
-            }
-        }
-        else
-        {
-            // Caso de erro na hora de fechar a conexao
-            // Verifica se o modo desenvolvedor esta ativo
-            if (defined('DEVTOOLS') && DEVTOOLS == true)
-            {
-                // Se estiver ativo
-                // Mostra a mensagem de erro
-                echo "<p class='mensagemRetorno'>Erro ao fechar a conex&atilde;o : " . @mysql_error() . "</p>";
-            }
-        }
+        // if (@mysql_close())
+        // {
+        //     // Verifica se o modo desenvolvedor esta ativo
+        //     if (defined('DEVTOOLS') && DEVTOOLS == true)
+        //     {
+        //         // Se estiver ativo
+        //         // Retorna confirmacao de fechamento
+        //         echo "<p class='mensagemRetorno'>Conex&atilde;o fechada com sucesso.</p>";
+        //     }
+        // }
+        // else
+        // {
+        //     // Caso de erro na hora de fechar a conexao
+        //     // Verifica se o modo desenvolvedor esta ativo
+        //     if (defined('DEVTOOLS') && DEVTOOLS == true)
+        //     {
+        //         // Se estiver ativo
+        //         // Mostra a mensagem de erro
+        //         echo "<p class='mensagemRetorno'>Erro ao fechar a conex&atilde;o : " . @mysql_error() . "</p>";
+        //     }
+        // }
     }
+
 }
 
 ?>

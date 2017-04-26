@@ -28,6 +28,8 @@
         break;
     }
 
+    //var_dump($listaClie);
+
 ?>
 
 <script type="text/javascript">
@@ -62,7 +64,7 @@
                                             <?php
                                                 if($listaClie){
                                                     echo "<option value=''>Selecione... </option>";
-                                                    foreach ($listaClie as $cliente){
+                                                    foreach ($listaClie['clientes'] as $cliente){
                                                         $idClie = $cliente['id'];
                                                         $nomeClie = $cliente['nome'];
                                                         echo "<option value='".$idClie."'>".$nomeClie."</option>";

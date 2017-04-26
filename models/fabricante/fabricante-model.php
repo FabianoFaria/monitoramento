@@ -34,20 +34,24 @@ class FabricanteModel extends MainModel
         $result = $this->db->select($query);
 
         /* VERIFICA SE EXISTE RESPOSTA */
-        if ($result)
+        if (!empty($result))
         {
-            /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
-
-                /* DEVOLVE RETORNO */
-                return $retorno;
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* DEVOLVE RETORNO */
+            //     return $retorno;
+            // }
+            foreach ($result as $row){
+                $retorno[] = $row;
             }
+            return $retorno;
         }
         else
             return false;
@@ -102,20 +106,27 @@ class FabricanteModel extends MainModel
         $result = $this->db->select($query);
 
         /* VERIFICA SE EXISTE RESPOSTA */
-        if ($result)
+        if(!empty($result))
         {
-            /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
-
-                /* DEVOLVE RETORNO */
-                $array = array('status' => true, 'dados' => $retorno[0]);
+            foreach ($result as $row) {
+                $retorno[] = $row;
             }
+
+            /* DEVOLVE RETORNO */
+            $array = array('status' => true, 'dados' => $retorno[0]);
+
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* DEVOLVE RETORNO */
+            //     $array = array('status' => true, 'dados' => $retorno[0]);
+            // }
 
         }else{
             $array = array('status' => false);
