@@ -163,7 +163,7 @@ class EficazDB
             //Testa se é possivel retornar última id cadastrada
             $id = $pdo->lastInsertId();
 
-            if(is_numeric($id)){
+            if($id > 0){
                 return $id;
             }else{
                 return true;

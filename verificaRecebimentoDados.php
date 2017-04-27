@@ -16,8 +16,6 @@
 	*/
 	$dataAtual = date('Y-m-d H:i:s');
 
-	var_dump($dataAtual);
-
 
     /*
 		LISTA DE EQUIPAMENTOS ATIVOS
@@ -137,7 +135,7 @@
 							registraDadosZeradosEquipamento($dados['num_sim']);
 						}
 
-						//var_dump($alarmeExiste);
+						var_dump($alarmeExiste);
 						//$id_sim_equip, $numSim, $data
 					}
 

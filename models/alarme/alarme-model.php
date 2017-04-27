@@ -778,12 +778,11 @@
 
                 $id_usuer   = $_SESSION['userdata']['userId'];
 
-                $query      = "UPDATE tb_tratamento_alerta SET id_user = $id_usuer, tratamento_aplicado = '$tratamento'
-                            WHERE id_alerta = '$idAlarme'";
+                $query      = "UPDATE tb_tratamento_alerta SET id_user = $id_usuer, tratamento_aplicado = '$tratamento' WHERE id_alerta = '$idAlarme'";
 
-                //var_dump($query);
+                $result = $this->db->query($query);
 
-                if ($this->db->query($query))
+                if($result)
                 {
                     $array = array('status' => true);
                 }else{

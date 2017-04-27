@@ -28,7 +28,8 @@
         break;
     }
 
-    //var_dump($listaClie);
+    // var_dump($listaClie);
+    // var_dump($listaAcess);
 
 ?>
 
@@ -318,7 +319,7 @@
 </div>
 
 
-<!-- MODAL PARA EDIÇÃO DE NOVO USUÁRIO -->
+<!-- MODAL PARA EDIÇÃO DE USUÁRIO -->
 <div id="modalEditUsuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -403,7 +404,7 @@
                                 <select id="nomeClienteEdit" name="nomeClienteEdit" class="form-control">
                                     <?php
                                         //$modelo->loadClienteFilial();
-                                        foreach ($listaClie as $cliente) {
+                                        foreach ($listaClie['clientes'] as $cliente) {
                                             echo "<option value='".$cliente['id']."'>".$cliente['nome']."</option>";
                                         }
                                     ?>
@@ -418,7 +419,7 @@
                                 <select id="acessoUsuarioEdit" name="acessoUsuarioEdit" class="form-control">
                                     <?php
                                         //$modelo->loadClienteFilial();
-                                        foreach ($listaAcess as $acesso) {
+                                        foreach ($listaAcess['acessos'] as $acesso) {
                                             echo "<option value='".$acesso['id']."'>".$acesso['nome']."</option>";
                                         }
                                     ?>

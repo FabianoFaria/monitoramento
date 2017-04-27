@@ -75,7 +75,7 @@
                 $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
                 // Carrega o modelo para este view
-                $modelo = $this->load_model('usuario/usuario-model');
+                $modelo         = $this->load_model('usuario/usuario-model');
                 // Carrega o modelo de cadastro para este view
                 $modeloCadastro = $this->load_model('cadastrar/cadastro-model');
                 // Carrega o modelo de clientes para este view
@@ -232,7 +232,9 @@
             // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
             $usuarioModelo     = $this->load_model('usuario/usuario-model');
 
-            $atualizarContato  = $usuarioModelo->atualizarUsuarioJson($_POST['id_usuario'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['confirmaS'], $_POST['idCliente']);
+            //$atualizarContato  = $usuarioModelo->atualizarUsuarioJson($_POST['id_usuario'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['confirmaS'], $_POST['idCliente']);
+
+            $atualizarContato   = $usuarioModelo->atualizarUsuarioContatoJson($_POST['id_usuario'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['confirmaS'], $_POST['idCliente']);
 
             if($atualizarContato['status']){
                 exit(json_encode(array('status' => true)));

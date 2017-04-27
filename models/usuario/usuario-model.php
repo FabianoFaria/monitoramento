@@ -611,6 +611,40 @@ class UsuarioModel extends MainModel
           return $array;
     }
 
+
+    /*
+    * FUNÇÃO PARA ATUALIZAR O USUÁRIO CONTATO DO CLIENTE
+    */
+    public function atualizarUsuarioContatoJson($idUsuario, $nome, $sobrenome, $email, $celular, $telefone, $senha, $iCliente){
+
+        // Coletar os dados do post
+        $id_user   = $idUsuario;
+        $nome      = $this->tratamento($nome);
+        $sobrenome = $this->tratamento($sobrenome);
+        $email     = $this->tratamento($email,1);
+        $senha     = ($senha != '') ? md5($senha) : null;
+
+        $query = "UPDATE tb_users SET ";
+          if(isset($nome)){         $query .= "nome = '$nome' ";}
+          if(isset($sobrenome)){    $query .= ", sobrenome = '$sobrenome'";}
+          if(isset($email)){        $query .= ", email = '$email'";}
+          if(isset($celular)){      $query .= ", celular = '$celular'";}
+          if(isset($telefone)){     $query .= ", telefone = '$telefone'";}
+          if(isset($senha)){        $query .= ", senha = '$senha'";}
+          $query .= " WHERE id = '$id_user'";
+
+        /* monta result */
+        $result = $this->db->query($query);
+
+        if ($result){
+          $array = array('status' => true);
+        }else{
+          $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
     /*
     * FUNÇÃO PARA EXCLUIR O USUÁRIO
     */
