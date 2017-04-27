@@ -23,19 +23,33 @@ class HomeModel extends MainModel
         /* verifica se a query esta funcionando */
         if ($result = $this->db->select ("call proc_trazclinte ({$cliente},{$tipo})"))
         {
-            /* verifica se existe retorno */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* se existir retorno, associa a array */
-                while ($row = @mysql_fetch_assoc($result))
-                {
-                    /* armazena os valores e no array */
-                    $retornoTabCliente[] = $row;
-                }
-                /* devolve os valores */
+
+            if(!empty($result)){
+
+                $row = $result[0];
+
+                /* armazena os valores e no array */
+                $retornoTabCliente[] = $row;
+
                 return $retornoTabCliente;
+            }else{
+                return false;
             }
-            return false;
+
+
+            /* verifica se existe retorno */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* se existir retorno, associa a array */
+            //     while ($row = @mysql_fetch_assoc($result))
+            //     {
+            //         /* armazena os valores e no array */
+            //         $retornoTabCliente[] = $row;
+            //     }
+            //     /* devolve os valores */
+            //     return $retornoTabCliente;
+            // }
+            // return false;
         }
         return false;
     }
@@ -139,14 +153,33 @@ class HomeModel extends MainModel
         if ($busca)
         {
             /* verifica se existe valor */
-            if (@mysql_num_rows($busca) > 0)
-            {
-                /* monta o array com os valores */
-                while($row = @mysql_fetch_assoc($busca))
-                    $retorno[] = $row;
+            // if (@mysql_num_rows($busca) > 0)
+            // {
+            //     /* monta o array com os valores */
+            //     while($row = @mysql_fetch_assoc($busca))
+            //         $retorno[] = $row;
+            //
+            //     /* quebra a resposta no array */
+            //     $retorno = explode("|",$retorno[0]['parametro']);
+            //     foreach($retorno as $row)
+            //     {
+            //         $row2 = explode("-",$row);
+            //         /* coleta posicao */
+            //         $posicao[] = $row2[0];
+            //         /* colote valor */
+            //         $valor[] = $row2[1];
+            //     }
+            //
+            //     /* retorna os valores */
+            //     return $valor;
+            // }
 
-                /* quebra a resposta no array */
-                $retorno = explode("|",$retorno[0]['parametro']);
+            if(!empty($busca)){
+
+                foreach ($busca as $row) {
+                    $retorno[] = $row;
+                }
+
                 foreach($retorno as $row)
                 {
                     $row2 = explode("-",$row);

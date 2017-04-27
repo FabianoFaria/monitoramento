@@ -254,11 +254,11 @@
                    </div>
 
                    <div class="row">
-                      <div class="col-md-4">
+                      <!-- <div class="col-md-4">
                       </div>
                       <div class="col-md-4">
                            <buttom type="button" id="salvarEditFabricante" name="btn_salvar" class="btn btn-info" value="Salvar">Salvar</button>
-                      </div>
+                      </div> -->
                    </div>
               </form>
 

@@ -64,20 +64,25 @@ class EquipamentoModel extends MainModel
         $result = $this->db->select($query);
 
         /* VERIFICA SE EXISTE RESPOSTA */
-        if ($result)
+        if(!empty($result))
         {
             /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
-
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* DEVOLVE RETORNO */
+            //     return $retorno;
+            // }
+            foreach ($result as $row) {
+                $retorno[] = $row;
+            }
                 /* DEVOLVE RETORNO */
                 return $retorno;
-            }
         }
         else
             return false;
@@ -103,22 +108,28 @@ class EquipamentoModel extends MainModel
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if($result)
+            if(!empty($result))
             {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
-
-                    /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'equipamentos' => $retorno);
-                }else{
-                    $array = array('status' => false, 'equipamentos' => '');
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'equipamentos' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'equipamentos' => '');
+                // }
+                foreach ($result as $row) {
+                    $retorno[] = $row;
                 }
+                    /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'equipamentos' => $retorno);
+
             }else{
                 $array = array('status' => false, 'equipamentos' => '');
             }
@@ -150,22 +161,27 @@ class EquipamentoModel extends MainModel
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if($result)
+            if(!empty($result))
             {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
-
-                    /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'equipamentos' => $retorno);
-                }else{
-                    $array = array('status' => false, 'equipamentos' => '');
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'equipamentos' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'equipamentos' => '');
+                // }
+                foreach ($result as $row) {
+                    $retorno[] = $row;
                 }
+                    /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'equipamentos' => $retorno);
             }else{
                 $array = array('status' => false, 'equipamentos' => '');
             }
@@ -198,7 +214,7 @@ class EquipamentoModel extends MainModel
              equip.tipo_bateria,
              equip.localBateria,
              clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip',
-             estado.nome as 'estado'";
+             estado.nome as 'estado', estadofili.nome as 'estadofili'";
 
             $query .= "";
 
@@ -206,8 +222,9 @@ class EquipamentoModel extends MainModel
             $query .= " JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante";
             $query .= " LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id";
             $query .= " LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id";
-            $query .= " LEFT JOIN tb_estado estado ON estado.id = clie.id_estado";
             $query .= " LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0";
+            $query .= " LEFT JOIN tb_estado estado ON (estado.id = clie.id_estado AND equip.id_filial = 0)";
+            $query .= " LEFT JOIN tb_estado estadofili ON (estadofili.id = fili.id_estado AND equip.id_filial > 0)";
             $query .= " WHERE equip.status_ativo = '1' ";
             if($idCliente != 0 ){
                 $query .= "AND equip.id_cliente = '$idCliente'";
@@ -230,22 +247,27 @@ class EquipamentoModel extends MainModel
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if($result)
+            if(!empty($result))
             {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
-
-                    /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'equipamentos' => $retorno);
-                }else{
-                    $array = array('status' => false, 'equipamentos' => '');
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'equipamentos' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'equipamentos' => '');
+                // }
+                foreach ($result as $row) {
+                    $retorno[] = $row;
                 }
+                    /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'equipamentos' => $retorno);
             }else{
                 $array = array('status' => false, 'equipamentos' => '');
             }
@@ -317,21 +339,25 @@ class EquipamentoModel extends MainModel
             /* VERIFICA SE EXISTE RESPOSTA */
             if($result)
             {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
-
-                    /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'equipamento' => $retorno);
-                }else{
-                    $array = array('status' => false, 'equipamento' => '');
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'equipamento' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'equipamento' => '');
+                // }
+                foreach ($result as $row) {
+                    $retorno[] = $row;
                 }
-
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'equipamento' => $retorno);
             }else{
                 $array = array('status' => false, 'equipamento' => '');
             }
@@ -408,7 +434,13 @@ class EquipamentoModel extends MainModel
 
             $result         = $this->db->select($query);
 
-            $idEquip        = mysql_insert_id();
+            //$idEquip        = mysql_insert_id();
+            //$idEquip        = $this->db->lastInsertIdPDO();
+            if(is_numeric($result)){
+                $idEquip = $result;
+            }else{
+                $idEquip = null;
+            }
 
             $array = array('status' => $result, 'idequipamento' => $idEquip);
 
@@ -531,23 +563,27 @@ class EquipamentoModel extends MainModel
 
             $result         = $this->db->select($query);
             /* VERIFICA SE EXISTE RESPOSTA */
-            if($result)
+            if(!empty($result))
             {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
-
-                    /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'equipamento' => $retorno);
-                }else{
-                    $array = array('status' => false);
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'equipamento' => $retorno);
+                // }else{
+                //     $array = array('status' => false);
+                // }
+                foreach ($result as $row) {
+                    $retorno[] = $row;
                 }
-
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'equipamento' => $retorno);
             }else{
                 $array = array('status' => false);
             }
@@ -563,7 +599,6 @@ class EquipamentoModel extends MainModel
     /*
     * Função para carregar os tipos de equipamentos
     */
-
     public function listarTipoEquip(){
 
         $query = "SELECT id, tipo_equipamento
@@ -573,22 +608,28 @@ class EquipamentoModel extends MainModel
                 $result         = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if($result)
+                if(!empty($result))
                 {
-                    /* VERIFICA SE EXISTE VALOR */
-                    if (@mysql_num_rows($result) > 0)
-                    {
-                        /* ARMAZENA NA ARRAY */
-                        while ($row = @mysql_fetch_assoc ($result))
-                        {
-                            $retorno[] = $row;
-                        }
+                    // /* VERIFICA SE EXISTE VALOR */
+                    // if (@mysql_num_rows($result) > 0)
+                    // {
+                    //     /* ARMAZENA NA ARRAY */
+                    //     while ($row = @mysql_fetch_assoc ($result))
+                    //     {
+                    //         $retorno[] = $row;
+                    //     }
+                    //
+                    //     /* DEVOLVE RETORNO */
+                    //     $array = array('status' => true, 'equipamento' => $retorno);
+                    // }else{
+                    //     $array = array('status' => false);
+                    // }
 
-                        /* DEVOLVE RETORNO */
-                        $array = array('status' => true, 'equipamento' => $retorno);
-                    }else{
-                        $array = array('status' => false);
+                    foreach ($result as $row) {
+                        $retorno[] = $row;
                     }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipamento' => $retorno);
 
                 }else{
                     $array = array('status' => false);
@@ -611,22 +652,27 @@ class EquipamentoModel extends MainModel
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if($result)
+            if(!empty($result))
             {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
-
-                    /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'equipamento' => $retorno);
-                }else{
-                    $array = array('status' => false);
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'equipamento' => $retorno);
+                // }else{
+                //     $array = array('status' => false);
+                // }
+                foreach ($result as $row) {
+                    $retorno[] = $row;
                 }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'equipamento' => $retorno);
 
             }else{
                 $array = array('status' => false);
@@ -679,22 +725,27 @@ class EquipamentoModel extends MainModel
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if($result)
+            if(!empty($result))
             {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
-
-                    /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'quantidade' => $retorno);
-                }else{
-                    $array = array('status' => false);
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'quantidade' => $retorno);
+                // }else{
+                //     $array = array('status' => false);
+                // }
+                foreach ($result as $row){
+                    $retorno[] = $row;
                 }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'quantidade' => $retorno);
 
             }else{
                 $array = array('status' => false);
@@ -806,22 +857,28 @@ class EquipamentoModel extends MainModel
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if($result)
+            if(!empty($result))
             {
-                /* VERIFICA SE EXISTE VALOR */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* ARMAZENA NA ARRAY */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
-                        $retorno[] = $row;
-                    }
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'contatos' => $retorno);
+                // }else{
+                //     $array = array('status' => false);
+                // }
 
-                    /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'contatos' => $retorno);
-                }else{
-                    $array = array('status' => false);
+                foreach ($result as $row){
+                    $retorno[] = $row;
                 }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'contatos' => $retorno);
 
             }else{
                 $array = array('status' => false);
@@ -832,6 +889,590 @@ class EquipamentoModel extends MainModel
         return $array;
     }
 
+    /*
+    * CARREGA A LISTA DE CHIPS ATIVOS
+    */
+    public function listaChipsSimAtivos(){
+
+        $query = "SELECT num_sim, id_cliente, id_filial
+                  FROM tb_sim
+                  WHERE status_ativo = '1'";
+
+        /* MONTA RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if(!empty($result))
+        {
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* DEVOLVE RETORNO */
+            //     $array = array('status' => true, 'chipsSims' => $retorno);
+            // }else{
+            //     $array = array('status' => false);
+            // }
+            foreach ($result as $row){
+                $retorno[] = $row;
+            }
+            /* DEVOLVE RETORNO */
+            $array = array('status' => true, 'chipsSims' => $retorno);
+
+        }else{
+            $array = array('status' => false);
+        }
+
+    }
+
+    /*
+    * FILTRA OS CHIPS QUE NÃO ESTÃO VINCULADOS
+    */
+    public function carregarSinsDisponiveis(){
+
+        $query = "SELECT num_sim
+                  FROM tb_sim
+                  WHERE status_ativo = '1' AND id_cliente = '0' AND id_filial ='0'";
+
+        /* MONTA RESULT */
+       $result = $this->db->select($query);
+
+       /* VERIFICA SE EXISTE RESPOSTA */
+       if(!empty($result))
+       {
+        //    /* VERIFICA SE EXISTE VALOR */
+        //    if (@mysql_num_rows($result) > 0)
+        //    {
+        //        /* ARMAZENA NA ARRAY */
+        //        while ($row = @mysql_fetch_assoc ($result))
+        //        {
+        //            $retorno[] = $row;
+        //        }
+           //
+        //        /* DEVOLVE RETORNO */
+        //        $array = array('status' => true, 'chipsSims' => $retorno);
+        //    }else{
+        //        $array = array('status' => false);
+        //    }
+            foreach ($result as $row){
+                $retorno[] = $row;
+            }
+            /* DEVOLVE RETORNO */
+            $array = array('status' => true, 'chipsSims' => $retorno);
+
+       }else{
+           $array = array('status' => false);
+       }
+
+       return $array;
+    }
+
+    /**
+    * FUNÇÃO PARA FILTRAR OS CHIPS SIM DE ACORDO COM SEUS STATUS
+    */
+    public function filtroChipSims($statusChip){
+
+        if(is_numeric($statusChip)){
+
+            $condicoes  = "";
+
+            switch ($statusChip) {
+                case '0':
+                    $condicoes  .= " sim.status_ativo ='1'";
+                break;
+                case '1':
+                    $condicoes  .= " sim.status_ativo ='0'";
+                break;
+                case '2':
+                    $condicoes  .= " sim.id_cliente > 0 AND sim.status_ativo ='1'";
+                break;
+                case '3':
+                    $condicoes  .= " sim.id_cliente = '0' AND sim.status_ativo ='1'";
+                break;
+
+                default:
+                    $condicoes  .= " sim.status_ativo ='1'";
+                break;
+            }
+
+            $query      = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, sim.versao_projeto, sim.telefone_chip, sim.data_teste, sim.data_instalacao_clie, sim.data_desativacao,
+                            clie.nome AS 'cliente', fili.nome AS 'filial'
+                            FROM tb_sim sim
+                            LEFT JOIN tb_cliente clie ON sim.id_cliente = clie.id
+                            LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
+                            WHERE  ".$condicoes." ";
+            // var_dump($query);
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if(!empty($result))
+            {
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'chipsSims' => $retorno);
+                // }else{
+                //     $array = array('status' => false);
+                // }
+
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'chipsSims' => $retorno);
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
+    /**
+    * FUNÇÃO PARA FILTRAR OS CHIPS SIM DE ACORDO COM SEUS STATUS E CLIENTE
+    */
+    public function filtroChipSimsCliente($statusChip, $idCliente){
+
+        if(is_numeric($statusChip) && is_numeric($idCliente)){
+
+            $condicoes  = "";
+
+            switch ($statusChip) {
+                case '0':
+                    $condicoes  .= " sim.status_ativo ='1'";
+                break;
+                case '1':
+                    $condicoes  .= " sim.status_ativo ='0'";
+                break;
+                case '2':
+                    $condicoes  .= " sim.id_cliente > 0 AND sim.status_ativo ='1'";
+                break;
+                case '3':
+                    $condicoes  .= " AND sim.id_cliente = '0' AND sim.status_ativo ='1'";
+                break;
+
+                default:
+                    $condicoes  .= " sim.status_ativo ='1'";
+                break;
+            }
+
+            $query      = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, sim.versao_projeto, sim.telefone_chip, sim.data_teste, sim.data_instalacao_clie, sim.data_desativacao,
+                            clie.nome AS 'cliente', fili.nome AS 'filial'
+                            FROM tb_sim sim
+                            LEFT JOIN tb_cliente clie ON sim.id_cliente = clie.id
+                            LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
+                            WHERE  ".$condicoes." AND clie.id = '$idCliente'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if(!empty($result))
+            {
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'chipsSims' => $retorno);
+                // }else{
+                //     $array = array('status' => false);
+                // }
+
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'chipsSims' => $retorno);
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CARREGA OS DADOS DO CHIP SIM
+    */
+    public function carregarDadosChipSim($idChipSim){
+
+        $query = "SELECT sim.num_sim, sim.id_cliente, sim.id_filial, sim.versao_projeto, sim.modelo_chip, sim.telefone_chip, sim.ativo_cliente, sim.status_ativo,
+                  sim.data_teste, sim.data_instalacao_clie, sim.data_desativacao, clie.nome AS 'cliente', fili.nome AS 'filial'
+                  FROM tb_sim sim
+                  LEFT JOIN tb_cliente clie ON sim.id_cliente = clie.id
+                  LEFT JOIN tb_filial fili ON sim.id_filial = fili.id
+                  WHERE sim.num_sim = '$idChipSim'";
+
+        /* MONTA RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if(!empty($result))
+        {
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* DEVOLVE RETORNO */
+            //     $array = array('status' => true, 'informacoesChip' => $retorno);
+            // }else{
+            //     $array = array('status' => false);
+            // }
+            foreach ($result as $row){
+                $retorno[] = $row;
+            }
+            /* DEVOLVE RETORNO */
+            $array = array('status' => true, 'informacoesChip' => $retorno);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
+    /*
+    * ATUALIZAR DADOS DO SIM CHIP
+    */
+    public function atualizarDadosSimChip($simChip, $telefoneChip, $modeloS, $versaoProjeto, $dataTeste){
+
+        $query = "UPDATE tb_sim
+                 SET telefone_chip = '$telefoneChip', modelo_chip = '$modeloS', versao_projeto = '$versaoProjeto', data_teste = '$dataTeste'
+                 WHERE num_sim = '$simChip'";
+
+        /* monta result */
+        $result = $this->db->query($query);
+
+        if ($result){
+          $array = array('status' => true);
+        }else{
+          $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CADASTRAR NOVO CHIP SIM
+    */
+    public function cadastrarNovoChipSim($numeroChip, $numeroTelefone, $modeloChip, $versaoProjeto){
+
+        if(is_numeric($numeroChip)){
+
+            $numeroChip         = $this->tratamento($numeroChip);
+            $numeroTelefone     = $this->tratamento($numeroTelefone);
+            $modeloChip         = $this->tratamento($modeloChip);
+            $versaoProjeto      = $this->tratamento($versaoProjeto);
+
+            $query = "INSERT INTO tb_sim(num_sim, versao_projeto, modelo_chip, telefone_chip, ambiente_local_sim) VALUES('$numeroChip', '$numeroTelefone', '$modeloChip', '$versaoProjeto', 'Não informado.')";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+                //var_dump($query);
+            if ($result){
+                $array = array('status' => true);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CARREGAR OS DADOS DE CALIBRAÇÃO DO EQUIPAMENTO
+    */
+    public function posicoesCalibradas($idEquip){
+
+        if(is_numeric($idEquip)){
+
+            $query = "SELECT caliEquip.id, caliEquip.id_equip, caliEquip.posicao_tab, caliEquip.variavel_cal
+                      FROM tb_equipamento_calibracao caliEquip
+                      WHERE caliEquip.id_equip";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if(!empty($result)){
+
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'posicoesCalibradas' => $retorno);
+                // }else{
+                //     $array = array('status' => false);
+                // }
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'posicoesCalibradas' => $retorno);
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CARREGA AS POSICOES DO TIPO DE EQUIPAMENTO
+    */
+    public function posicoesTipoEquipamento($idTipoEquipamento){
+
+        if(is_numeric($idTipoEquipamento)){
+
+            $query = "SELECT tpEquipamento.posicoes_tabela
+                      FROM tb_tipo_equipamento tpEquipamento
+                      WHERE tpEquipamento.id = '$idTipoEquipamento'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if(!empty($result)){
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'posicoesTipoEquip' => $retorno);
+                // }else{
+                //     $array = array('status' => false);
+                // }
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'posicoesTipoEquip' => $retorno);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * TENTA CARREGAR O ÚLTIMO DADO ENVIADO PELO EQUIPAMENTO NA POSIÇÃO INFORMADA
+    */
+    public function ultimoDadoenviadoPelaPosicao($idEquipamento, $posicao){
+        /*
+        * NOTA : EM ORDEM PARA QUE A FUNÇÃO RETORNE O VALOR DESEJADO, O EQUIPAMENTO DEVE ESTAR VINCULADO COM UM CHIP SIM E ESTAR CONFIGURADO PARA RECEBER PARAMETROS
+        */
+
+        if(is_numeric($idEquipamento)){
+
+            $query = "SELECT $posicao
+                       FROM tb_dados dados
+                       JOIN tb_sim_equipamento  simEquip ON simEquip.id_sim = dados.num_sim
+                       WHERE simEquip.id_equipamento = '$idEquipamento' AND simEquip.status_ativo = '1'
+                       ORDER BY $posicao DESC LIMIT 1";
+
+            //var_dump($query);
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if($result){
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'ultimoDadoPosicao' => $retorno[0]);
+                // }else{
+                //     $array = array('status' => false);
+                // }
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'ultimoDadoPosicao' => $retorno[0]);
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
+    /*
+    * APÓS GERAR O VALOR DE VARIAVEL DE CALIBRAÇÃO, É EFETUADO O REGISTRO NO BANCO DE DADOS
+    */
+    public function salvarPosicaoTabelaJson($idEquipamento, $posicao, $variaveCalibracao){
+
+    }
+
+    /*
+    * RECUPERAÇÃO DE VARIAVEL DE CALIBRAÇÃO JÁ EXISTENTE
+    */
+    public function recuperaVariavelExistente($idEquipamento, $posicao){
+
+        if(is_numeric($idEquipamento)){
+
+            $query = "SELECT equipCali.id
+                      FROM tb_equipamento_calibracao equipCali
+                      WHERE equipCali.id_equip  = '$idEquipamento' AND equipCali.posicao_tab = '$posicao'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if(!empty(result)){
+
+                // /* VERIFICA SE EXISTE VALOR */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* ARMAZENA NA ARRAY */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* DEVOLVE RETORNO */
+                //     $array = array('status' => true, 'idVariavel' => $retorno[0]);
+                // }else{
+                //     $array = array('status' => false);
+                // }
+
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'idVariavel' => $retorno[0]);
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CADASTRA NOVA VARIAVEL DE CALIBRACAO
+    */
+    public function registraNovaVariavelCalibri($idEquipamento, $posicao, $variavel){
+
+        if(is_numeric($idEquipamento)){
+
+            $query = "INSERT INTO tb_equipamento_calibracao(id_equip, posicao_tab, variavel_cal) VALUES ('$idEquipamento','$posicao','$variavel')";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+                //var_dump($query);
+            if ($result){
+                $array = array('status' => true, 'operatio' => 'Cadastrado');
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * ATUALIZAR A VARIAVEL DE CALIBRACAO DA POSICAO DO EQUIPAMENTO
+    */
+    public function atualizarVariavelCalibri($idVariavel, $variavelCalibri){
+
+        if(is_numeric($idVariavel)){
+
+            $query = "UPDATE tb_equipamento_calibracao equipCalibri
+                      SET equipCalibri.variavel_cal = '$variavelCalibri'
+                      WHERE equipCalibri.id = '$idVariavel'";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+
+            if ($result){
+                $array = array('status' => true, 'operatio' => 'Atualizado');
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
 }
+
 
 ?>

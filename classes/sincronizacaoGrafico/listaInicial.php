@@ -63,15 +63,15 @@ class ListaInicial
         }
 
         // Verifica se existe resposta do select
-        if ($select)
+        if(!empty($select))
         {
-            // Verifica se existe valor na result
-            if (@mysql_num_rows($select) > 0)
-            {
+            // // Verifica se existe valor na result
+            // if (@mysql_num_rows($select) > 0)
+            // {
+            //if($select->fetchColumn() > 0){
 
-                // Coleta os valores da result e transforma em array
-                while($row = @mysql_fetch_array($select))
-                {
+                foreach ($select as $row){
+
                     // Converte a data e hora em array
                     $separando = explode(' ',$row['dt_criacao']);
 
@@ -96,14 +96,42 @@ class ListaInicial
 
 
                 }
-            }
-            else
-            {
-                // Caso nao exista valor na result
-                // Armazena false na data
-                $this->data = false;
-                return;
-            }
+
+                // // Coleta os valores da result e transforma em array
+                // while($row = @mysql_fetch_array($select))
+                // {
+                    // // Converte a data e hora em array
+                    // $separando = explode(' ',$row['dt_criacao']);
+                    //
+                    // // Converte a data em array, separando o dia, mes e ano
+                    // $sepData = explode('-',$separando['0']);
+                    //
+                    // // Converte a hora em array, separando a hora, min e sec
+                    // $sepHora = explode(':',$separando['1']);
+
+                    /**  08/12/2016
+                     * AJUSTE TEMPORARIO PARA QUE O TESTE DE EXIBIÇÂO FUNCIONE CORRETAMENTE
+                     */
+                     /**
+                      * ORIGINALMENTE A [entrada][] recebe o valor $row[h]
+                      * E ASSIM A [entrada][] recebe o valor $row[i]
+                      */
+
+                //     // Ajusta os dados no padrao de dados do grafico
+                //     $this->data['entrada'][] = "[Date.UTC({$sepData[0]},{$sepData[1]},{$sepData[2]},{$sepHora[0]},{$sepHora[1]},{$sepHora[2]}),".intval($row['i'])."]";
+                //
+                //     $this->data['saida'][] = "[Date.UTC({$sepData[0]},{$sepData[1]},{$sepData[2]},{$sepHora[0]},{$sepHora[1]},{$sepHora[2]}),".intval($row['h'])."]";
+                //
+                //
+                // }
+            // }
+            // else
+            // {
+            //     // Caso nao exista valor na result
+            //     // Armazena false na data
+            //     $this->data = false;
+            //     return;
+            // }
         }
         else
         {

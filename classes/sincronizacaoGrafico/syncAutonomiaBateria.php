@@ -24,11 +24,18 @@ $result = $cone->select("SELECT dadosPot.id, dadosPot.tempoEstimadoHora, dadosPo
                         WHERE dadosPot.id_equipamento = '{$param}' AND dadosPot.num_sim = '{$sim}' AND dadosPot.status_entrada = '1' ORDER BY dadosPot.id DESC LIMIT 1 ");
 
 /* verifica se existe conteudo no select */
-if (@mysql_num_rows($result) > 0){
+//if (@mysql_num_rows($result) > 0){
+
+if(!empty($result)){
     /* coleta o conteudo que retornou do banco */
-    while($row = @mysql_fetch_array($result))
-        /* armazena a resposta do array na varaiavel */
+    // while($row = @mysql_fetch_array($result))
+    //     /* armazena a resposta do array na varaiavel */
+    //     $resp = $row;
+
+    foreach ($result as $row){
         $resp = $row;
+    }
+
         /* converte a resposta em uma array */
         //$array = array($resp);
     /* joga na funcao calback como encriptacao json */
@@ -36,6 +43,6 @@ if (@mysql_num_rows($result) > 0){
 }
 
 /* finaliza a conexao com o banco de dados */
-$cone->close();
+//$cone->close();
 
 ?>

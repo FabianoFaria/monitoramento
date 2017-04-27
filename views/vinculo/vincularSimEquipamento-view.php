@@ -20,6 +20,7 @@
     }
 
 	//var_dump($dadosEquipamentos);
+    //var_dump($dadosCliente);
 
 
 ?>
@@ -122,7 +123,7 @@
     <div class="col-md-12">
 
         <!-- TITULO PAGINA -->
-        <label class="page-header">Gerenciar sims do cliente : <?php echo $dadosCliente['dados'][0]['cliente']; ?></label><!-- Fim Titulo pagina -->
+        <label class="page-header">Gerenciar sims do cliente : <?php echo ($dadosCliente['dados'] != '' ) ?  $dadosCliente['dados'][0]['cliente'] : ""; ?></label><!-- Fim Titulo pagina -->
         <p>
             <a href="<?php echo HOME_URI; ?>/vinculo/gerenciarVinculo/<?php echo $dadosEquipamentos['id_cliente']; ?>">Gerenciar sims</a>
         </p>

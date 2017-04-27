@@ -51,28 +51,51 @@ class VinculoModel extends MainModel
                         return;
                     }
 
-                    /* verifica se existe um valor de retorno */
-                    if (@mysql_num_rows($proc) > 0)
-                    {
-                        /* trasforma a resposta em array */
-                        while($row = @mysql_fetch_assoc($proc))
+                    if(!empty($proc)){
+
+                        foreach ($proc as $row){
+                            $retorno[] = $row;
+                        }
+
+                        /* quebra o retorno em array */
+                        $resultado = explode("|",$row['resposta']);
+
+                        /* verifica se existe uma resposta verdadeira */
+                        if ($resultado[1] == "verdade")
                         {
-                            /* quebra o retorno em array */
-                            $resultado = explode("|",$row['resposta']);
-                            /* verifica se existe uma resposta verdadeira */
-                            if ($resultado[1] == "verdade")
-                            {
-                                /* mostra a mensagem de sucesso*/
-                                echo "<div class='mensagemSucesso'><span>{$resultado[0]}</span></div>";
-                            }
-                            /* para resposta falsa */
-                            else if ($resultado[1] == "erro")
-                            {
-                                /* apresenta o erro */
-                                echo "<div class='mensagemError'><span>{$resultado[0]}</span></div>";
-                            }
+                            /* mostra a mensagem de sucesso*/
+                            echo "<div class='mensagemSucesso'><span>{$resultado[0]}</span></div>";
+                        }
+                        /* para resposta falsa */
+                        else if ($resultado[1] == "erro")
+                        {
+                            /* apresenta o erro */
+                            echo "<div class='mensagemError'><span>{$resultado[0]}</span></div>";
                         }
                     }
+
+                    // /* verifica se existe um valor de retorno */
+                    // if (@mysql_num_rows($proc) > 0)
+                    // {
+                    //     /* trasforma a resposta em array */
+                    //     while($row = @mysql_fetch_assoc($proc))
+                    //     {
+                    //         /* quebra o retorno em array */
+                    //         $resultado = explode("|",$row['resposta']);
+                    //         /* verifica se existe uma resposta verdadeira */
+                    //         if ($resultado[1] == "verdade")
+                    //         {
+                    //             /* mostra a mensagem de sucesso*/
+                    //             echo "<div class='mensagemSucesso'><span>{$resultado[0]}</span></div>";
+                    //         }
+                    //         /* para resposta falsa */
+                    //         else if ($resultado[1] == "erro")
+                    //         {
+                    //             /* apresenta o erro */
+                    //             echo "<div class='mensagemError'><span>{$resultado[0]}</span></div>";
+                    //         }
+                    //     }
+                    // }
                 }
                 else
                     echo "<div class='mensagemError'><span>Erro durante o salvamento, entre em contato com o administrador. Error 1001.</span></div>";
@@ -228,31 +251,27 @@ class VinculoModel extends MainModel
         $result = $this->db->select($query);
 
         // Verifica se existe resposta
-        if ($result)
-        {
-            // Verifica se existe valor
-            if (@mysql_num_rows($result) > 0)
-            {
-                // Coleta os dados
-                $row = @mysql_fetch_assoc($result);
+        //if ($result)
+        //{
+        if(!empty($result)){
+
+            foreach ($result as $row) {
+                //$retorno[] = $row;
 
                 // Busca cliente
                 if (isset($row['id_cliente']) && !empty($row['id_cliente']))
                     // monta a busca de cliente
                     $queryCli = "select nome from tb_cliente where id = {$row['id_cliente']}";
 
-
                 // Busca filial
                 if (isset($row['id_filial']) && !empty($row['id_filial']))
                     // monta a busca de filial
                     $queryCli = "select nome from tb_cliente where id = {$row['id_filial']}";
 
-
                 // Busca equipamento
                 if (isset($row['id_equipamento']) && !empty($row['id_equipamento']))
                     // monta a busca de equipamento
                     $queryEqui = "select tipo_equipamento as nome from tb_equipamento where id = {$row['id_equipamento']}";
-
 
                 // Realiza a busca da query de cliente e equipamento
                 $buscaCli  = $this->resultado_query($queryCli);
@@ -263,7 +282,43 @@ class VinculoModel extends MainModel
                 $buscaEqui = isset($buscaEqui[0]['nome']) && !empty($buscaEqui[0]['nome']) ? $this->converte($buscaEqui[0]['nome'],1) : "";
 
                 return $buscaCli . "/" . $buscaEqui;
+
             }
+
+            // // Verifica se existe valor
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     // Coleta os dados
+            //     $row = @mysql_fetch_assoc($result);
+
+                // // Busca cliente
+                // if (isset($row['id_cliente']) && !empty($row['id_cliente']))
+                //     // monta a busca de cliente
+                //     $queryCli = "select nome from tb_cliente where id = {$row['id_cliente']}";
+
+
+                // // Busca filial
+                // if (isset($row['id_filial']) && !empty($row['id_filial']))
+                //     // monta a busca de filial
+                //     $queryCli = "select nome from tb_cliente where id = {$row['id_filial']}";
+
+
+                // // Busca equipamento
+                // if (isset($row['id_equipamento']) && !empty($row['id_equipamento']))
+                //     // monta a busca de equipamento
+                //     $queryEqui = "select tipo_equipamento as nome from tb_equipamento where id = {$row['id_equipamento']}";
+
+
+                // // Realiza a busca da query de cliente e equipamento
+                // $buscaCli  = $this->resultado_query($queryCli);
+                // $buscaEqui = $this->resultado_query($queryEqui);
+
+                // // coleta os dados e monta a variavel com o nome do cliente e equipamento
+                // $buscaCli = isset($buscaCli[0]['nome']) && !empty($buscaCli[0]['nome']) ? $this->converte($buscaCli[0]['nome'], 1) : "";
+                // $buscaEqui = isset($buscaEqui[0]['nome']) && !empty($buscaEqui[0]['nome']) ? $this->converte($buscaEqui[0]['nome'],1) : "";
+                //
+                // return $buscaCli . "/" . $buscaEqui;
+            //}
         }
     }
 
@@ -292,14 +347,26 @@ class VinculoModel extends MainModel
             {
                 // Monta a query para verificar se existe a posicao cadastrada no banco
                 $query = "select * from tb_posicao where id_num_sim = {$parametro[1]} and posicao = '{$confpos}'";
-                // Verifica se existe resposta do banco
-                if (@mysql_num_rows($this->db->select($query)) > 0)
-                {
+
+                $resultado = $this->db->select($query);
+
+                if(!empty($resultado)){
+
                     // Incremeta um valor no controle
                     $controle++;
                     // Marcao a posicao que exite
                     $marca[] = $confpos;
+
                 }
+
+                // Verifica se existe resposta do banco
+                // if (@mysql_num_rows($this->db->select($query)) > 0)
+                // {
+                //     // Incremeta um valor no controle
+                //     $controle++;
+                //     // Marcao a posicao que exite
+                //     $marca[] = $confpos;
+                // }
             }
 
             // Verifica o controle
@@ -384,12 +451,20 @@ class VinculoModel extends MainModel
         // Criar o array de resposta
         $resultado = array();
 
-        // Verifica se existe valor na result
-        if (@mysql_num_rows($result) > 0)
-        {
-            // Monta o array de dados
-            while ($rowestado = @mysql_fetch_assoc($result))
+        // // Verifica se existe valor na result
+        // if (@mysql_num_rows($result) > 0)
+        // {
+        //     // Monta o array de dados
+        //     while ($rowestado = @mysql_fetch_assoc($result))
+        //         $resultado[] = $rowestado;
+        // }
+
+        if(!empty($result)){
+
+            foreach ($result as $rowestado) {
                 $resultado[] = $rowestado;
+            }
+
         }
 
         $query = "select  s.num_sim, c.nome
@@ -400,13 +475,21 @@ class VinculoModel extends MainModel
         // Monta a result
         $result = $this->db->select($query);
 
-        // Verifica se existe valor na result
-        if (@mysql_num_rows($result) > 0)
-        {
-            // Monta o array de dados
-            while ($rowestado = @mysql_fetch_assoc($result))
+        if(!empty($result)){
+
+            foreach ($result as $rowestado) {
                 $resultado[] = $rowestado;
+            }
+
         }
+
+        // // Verifica se existe valor na result
+        // if (@mysql_num_rows($result) > 0)
+        // {
+        //     // Monta o array de dados
+        //     while ($rowestado = @mysql_fetch_assoc($result))
+        //         $resultado[] = $rowestado;
+        // }
 
         // Exibe os clientes e filiais junto do sim no option
         echo "<select id='simNumInput' name='opc_numSim' class='font-texto-01' required><option>Selecione um cliente/filial</option>";
@@ -441,12 +524,20 @@ class VinculoModel extends MainModel
         // Criar o array de resposta
         $resultado = array();
 
-        // Verifica se existe valor na result
-        if (@mysql_num_rows($result) > 0)
-        {
-            // Monta o array de dados
-            while ($rowequiperes = @mysql_fetch_assoc($result))
-                $resultado[] = $rowequiperes;
+        // // Verifica se existe valor na result
+        // if (@mysql_num_rows($result) > 0)
+        // {
+        //     // Monta o array de dados
+        //     while ($rowequiperes = @mysql_fetch_assoc($result))
+        //         $resultado[] = $rowequiperes;
+        // }
+
+        if(!empty($result)){
+
+            foreach ($result as $rowestado) {
+                $resultado[] = $rowestado;
+            }
+
         }
 
         // Exibe os equipamentos no option
@@ -474,21 +565,27 @@ class VinculoModel extends MainModel
         $result = $this->db->select ($query);
 
         // Verifica se existe resposta
-        if ($result)
+        if (!empty($result))
         {
-            // Verifica se existe resultado
-            if (@mysql_num_rows($result) > 0)
-            {
-                // Converte para array
-                while ($row = @mysql_fetch_assoc($result))
-                    // Armazena no array de retorno
-                    $retorno[] = $row;
 
-                // Retorna o valor
-                return $retorno;
+            foreach ($result as $row) {
+                $retorno[] = $row;
             }
+
+            // // Verifica se existe resultado
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     // Converte para array
+            //     while ($row = @mysql_fetch_assoc($result))
+            //         // Armazena no array de retorno
+            //         $retorno[] = $row;
+            //
+            //     // Retorna o valor
+            //     return $retorno;
+            // }
             // Fim
-            return false;
+            //return false;
+            return $retorno;
         }
         // Fim
         return false;
@@ -512,21 +609,28 @@ class VinculoModel extends MainModel
             $result = $this->db->select($query);
 
             // Verifica se existe resposta
-            if($result)
+            if(!empty($result))
             {
-                // Verifica se existe resultado
-                if (@mysql_num_rows($result) > 0)
-                {
-                    // Converte para array
-                    while ($row = @mysql_fetch_assoc($result))
-                        // Armazena no array de retorno
-                        $retorno[] = $row;
 
-                    // Retorna o valor
-                    $array = array('status' => true, 'sims' => $retorno);
-                }else{
-                    $array = array('status' => false, 'sims' => '');
+                foreach ($result as $row){
+                    $retorno[] = $row;
                 }
+
+                $array = array('status' => true, 'sims' => $retorno);
+
+                // // Verifica se existe resultado
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     // Converte para array
+                //     while ($row = @mysql_fetch_assoc($result))
+                //         // Armazena no array de retorno
+                //         $retorno[] = $row;
+                //
+                //     // Retorna o valor
+                //     $array = array('status' => true, 'sims' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'sims' => '');
+                // }
                 // Fim
 
             }else{
@@ -557,21 +661,28 @@ class VinculoModel extends MainModel
             $result = $this->db->select($query);
 
             // Verifica se existe resposta
-            if($result)
+            if(!empty($result))
             {
-                // Verifica se existe resultado
-                if (@mysql_num_rows($result) > 0)
-                {
-                    // Converte para array
-                    while ($row = @mysql_fetch_assoc($result))
-                        // Armazena no array de retorno
-                        $retorno[] = $row;
 
-                    // Retorna o valor
-                    $array = array('status' => true, 'sims' => $retorno);
-                }else{
-                    $array = array('status' => false, 'sims' => '');
+                foreach ($result as $row){
+                    $retorno[] = $row;
                 }
+
+                $array = array('status' => true, 'sims' => $retorno);
+
+                // // Verifica se existe resultado
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     // Converte para array
+                //     while ($row = @mysql_fetch_assoc($result))
+                //         // Armazena no array de retorno
+                //         $retorno[] = $row;
+                //
+                //     // Retorna o valor
+                //     $array = array('status' => true, 'sims' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'sims' => '');
+                // }
                 // Fim
 
             }else{
@@ -600,21 +711,28 @@ class VinculoModel extends MainModel
             $result = $this->db->select($query);
 
             // Verifica se existe resposta
-            if($result){
+            if(!empty($result)){
 
-                // Verifica se existe resultado
-                if (@mysql_num_rows($result) > 0)
-                {
-                    // Converte para array
-                    while ($row = @mysql_fetch_assoc($result))
-                        // Armazena no array de retorno
-                        $retorno[] = $row;
-
-                    // Retorna o valor
-                    $array = array('status' => true, 'posicoes' => $retorno);
-                }else{
-                    $array = array('status' => false, 'posicoes' => '');
+                foreach ($result as $row){
+                    $retorno[] = $row;
                 }
+
+                $array = array('status' => true, 'posicoes' => $retorno);
+
+
+                // // Verifica se existe resultado
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     // Converte para array
+                //     while ($row = @mysql_fetch_assoc($result))
+                //         // Armazena no array de retorno
+                //         $retorno[] = $row;
+                //
+                //     // Retorna o valor
+                //     $array = array('status' => true, 'posicoes' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'posicoes' => '');
+                // }
 
             }else{
                 $array = array('status' => false);
@@ -646,21 +764,27 @@ class VinculoModel extends MainModel
             $result = $this->db->select($query);
 
             // Verifica se existe resposta
-            if($result){
+            if(!empty($result)){
 
-                // Verifica se existe resultado
-                if (@mysql_num_rows($result) > 0)
-                {
-                    // Converte para array
-                    while ($row = @mysql_fetch_assoc($result))
-                        // Armazena no array de retorno
-                        $retorno[] = $row;
-
-                    // Retorna o valor
-                    $array = array('status' => true, 'posicoes_ocupadas' => $retorno);
-                }else{
-                    $array = array('status' => false, 'posicoes_ocupadas' => '');
+                foreach ($result as $row){
+                    $retorno[] = $row;
                 }
+
+                $array = array('status' => true, 'posicoes_ocupadas' => $retorno);
+
+                // // Verifica se existe resultado
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     // Converte para array
+                //     while ($row = @mysql_fetch_assoc($result))
+                //         // Armazena no array de retorno
+                //         $retorno[] = $row;
+                //
+                //     // Retorna o valor
+                //     $array = array('status' => true, 'posicoes_ocupadas' => $retorno);
+                // }else{
+                //     $array = array('status' => false, 'posicoes_ocupadas' => '');
+                // }
 
             }else{
 
@@ -689,7 +813,10 @@ class VinculoModel extends MainModel
 
             $ambiente  = $this->tratamento($ambiente);
 
-            $query = "INSERT INTO tb_sim (num_sim, id_cliente, id_filial, ambiente_local_sim) VALUES ('$numSim', '$idCliente', '$idFilial', '$ambiente')";
+            //QUERY ATUALIZADA PARA EFETUAR UM UPDATE NO num_sim AO INVÉS DE GERAR UM INSERT
+            //$query = "INSERT INTO tb_sim (num_sim, id_cliente, id_filial, ambiente_local_sim) VALUES ('$numSim', '$idCliente', '$idFilial', '$ambiente')";
+
+            $query = "UPDATE tb_sim SET id_cliente = '$idCliente', id_filial = '$idFilial', ambiente_local_sim = '$ambiente' WHERE num_sim = '$numSim' AND status_ativo = '1'";
 
             //var_dump($query);
 
@@ -721,11 +848,19 @@ class VinculoModel extends MainModel
 
             $query = "INSERT INTO tb_sim_equipamento (id_equipamento, id_sim, num_serie, ambiente) VALUES ('$idEquipamento', '$simVinculado', '$simVinculado', '$ambiente')";
 
+            $result = $this->db->query($query);
+
             // Verifica se gravou com sucesso
-            if ($this->db->query($query))
+            if(!empty($result))
             {
+                if(is_numeric($result)){
+                    $idGerada = $result;
+                }else{
+                    $idGerada = null;
+                }
+
                 //var_dump($query);
-                $idGerada  = mysql_insert_id();
+                // $idGerada  = mysql_insert_id();
                 $array = array('status' => true, 'id_sim_equipamento' => $idGerada);
             }else{
                 $array = array('status' => false);
@@ -743,7 +878,13 @@ class VinculoModel extends MainModel
     */
     public function removerVinculoCliente($simNUmber){
 
-        $query = "UPDATE tb_sim SET status_ativo = '0' WHERE num_sim = '$simNUmber'";
+        /*
+        * NÃO É EFETUADO A DESATIVAÇÃO DO NUM_SIM PARA SIM A DESVINCULAÇÃO DO CHIP COM O CLIENTE E FILIAL
+        * CHIP PERNACE ATIVO E SE TORNA DISPONIVEL PARA NOVO VINCULO COM CLIENTE
+        */
+
+        //$query = "UPDATE tb_sim SET status_ativo = '0' WHERE num_sim = '$simNUmber'";
+        $query = "UPDATE tb_sim SET id_cliente = '0', id_filial = '0' WHERE num_sim = '$simNUmber'";
 
         // Verifica se gravou com sucesso
         if ($this->db->query($query))
@@ -762,7 +903,8 @@ class VinculoModel extends MainModel
     */
     public function verificarSimExistente($numSim){
 
-        $query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$numSim' AND status_ativo = '1'";
+        //$query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$numSim' AND status_ativo = '1'";
+        $query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$numSim'";
 
         // Monta a result
         $result = $this->db->select($query);
@@ -770,18 +912,27 @@ class VinculoModel extends MainModel
         // Verifica se existe resposta
         if($result){
 
-            // Verifica se existe resultado
-            if (@mysql_num_rows($result) > 0)
-            {
-                // Converte para array
-                while ($row = @mysql_fetch_assoc($result))
-                    // Armazena no array de retorno
-                    $retorno[] = $row;
+            // // Verifica se existe resultado
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     // Converte para array
+            //     while ($row = @mysql_fetch_assoc($result))
+            //         // Armazena no array de retorno
+            //         $retorno[] = $row;
+            //
+            //     // Retorna o valor
+            //     $array = array('status' => true);
+            // }else{
+            //     $array = array('status' => false);
+            // }
 
-                // Retorna o valor
+            if(!empty($result)){
+
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+
                 $array = array('status' => true);
-            }else{
-                $array = array('status' => false);
             }
 
         }else{

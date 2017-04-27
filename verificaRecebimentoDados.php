@@ -14,9 +14,7 @@
 	/*
 		COLETA A DATA ATUAL DA VERIFICAÇÃO
 	*/
-	$dataAtual = date('Y-m-d h:i:s');
-
-	var_dump($dataAtual);
+	$dataAtual = date('Y-m-d H:i:s');
 
 
     /*
@@ -124,7 +122,7 @@
 
 				                    $localEquip = (isset($equipamento['nomeFili'])) ? ' filial '.$equipamento['nomeFili'] : 'Matriz';
 
-									$resultadoEnvio = $mailer->envioEmailAlertaEquipamentoNaoResponde($contato['email'], $contato['nome_contato'], $equipamento['tipo_equipamento'], $equipamento['nomeModeloEquipamento'], $equipamento['ambiente'], $equipamento['nomeClie']);
+									$resultadoEnvio = $mailer->envioEmailAlertaEquipamentoNaoResponde($contato['email'], $contato['nome_contato'], $equipamento['tipo_equipamento'], $equipamento['nomeModeloEquipamento'], $equipamento['ambiente'], $equipamento['nomeClie'], $equipamento['nomeFili']);
 
 									//var_dump($resultadoEnvio);
 								}
@@ -137,7 +135,7 @@
 							registraDadosZeradosEquipamento($dados['num_sim']);
 						}
 
-						//var_dump($alarmeExiste);
+						var_dump($alarmeExiste);
 						//$id_sim_equip, $numSim, $data
 					}
 
@@ -184,18 +182,24 @@
           $paramEquip = $conn->select($query);
 
           /* VERIFICA SE EXISTE VALOR */
-          if (@mysql_num_rows($paramEquip) > 0)
-          {
+        //   if (@mysql_num_rows($paramEquip) > 0)
+        //   {
+
+		   if(!empty($paramEquip)){
                /* ARMAZENA NA ARRAY */
-               while ($rowEquip = @mysql_fetch_assoc ($paramEquip))
-               {
-                   $retornoEquip[] = $rowEquip;
-               }
+	            //    while ($rowEquip = @mysql_fetch_assoc ($paramEquip))
+	            //    {
+	            //        $retornoEquip[] = $rowEquip;
+	            //    }
+
+				foreach ($paramEquip as $rowEquip) {
+					$retornoEquip[] = $rowEquip;
+				}
 
                $parametros = $retornoEquip;
 
                // Fecha a conexao
-               $conn->close();
+               //$conn->close();
 
            }else{
                $parametros = false;
@@ -238,18 +242,24 @@
 		$paramEquip = $conn->select($query);
 
 		/* VERIFICA SE EXISTE VALOR */
-		if (@mysql_num_rows($paramEquip) > 0)
-		{
+		// if (@mysql_num_rows($paramEquip) > 0)
+		// {
+
+		if(!empty($paramEquip)){
+
 			/* ARMAZENA NA ARRAY */
-			while ($rowEquip = @mysql_fetch_assoc ($paramEquip))
-			{
+			// while ($rowEquip = @mysql_fetch_assoc ($paramEquip))
+			// {
+			// 	$retornoEquip[] = $rowEquip;
+			// }
+			foreach ($paramEquip as $rowEquip) {
 				$retornoEquip[] = $rowEquip;
 			}
 
 			$parametros = $retornoEquip;
 
 			// Fecha a conexao
-			$conn->close();
+			//$conn->close();
 
 		}else{
 			$parametros = false;
@@ -310,8 +320,11 @@
 		// Monta a query para salvar uma falta
 		$query = "insert into tb_numero_falta (id_num_sim) values ('$numSim')";
 
+
 		// Executa a query
-		if (!$conn->query($query))
+        $result = $conn->query($query);
+
+        if(!$result)
 		{
 			// Monta a query de log
 			$query = "insert into tb_log (log)  values ('Erro ao grava o numero de faltas; numero do sim ".$numSim." ')";
@@ -337,7 +350,13 @@
 
 		$result = $conn->query($queryAlarme);
 
-		$idGerada  = mysql_insert_id();
+		//$idGerada  = mysql_insert_id();
+
+		if(is_numeric($result)){
+            $idGerada = $result;
+        }else{
+            $idGerada = null;
+        }
 
 		//REGISTRA OS DETALHES DO ALARME PARA CONSULTA PELO MONITOR
 		$queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta(id_alerta, parametro, parametroMedido, parametroAtingido, pontoTabela)
@@ -346,7 +365,7 @@
 		$conn->query($queryDetalheAlarme);
 
 		// Fecha a conexao
-		$conn->close();
+		//$conn->close();
 
 	}
 
@@ -379,18 +398,25 @@
 		$paramEquip = $conn->select($query);
 
 		/* VERIFICA SE EXISTE VALOR */
-		if (@mysql_num_rows($paramEquip) > 0)
-		{
+		// if (@mysql_num_rows($paramEquip) > 0)
+		// {
+
+		if(!empty($paramEquip)){
+
 			/* ARMAZENA NA ARRAY */
-			while ($rowEquip = @mysql_fetch_assoc ($paramEquip))
-			{
+			// while ($rowEquip = @mysql_fetch_assoc ($paramEquip))
+			// {
+			// 	$retornoEquip[] = $rowEquip;
+			// }
+
+			foreach ($paramEquip as $rowEquip) {
 				$retornoEquip[] = $rowEquip;
 			}
 
 			$parametros = $retornoEquip;
 
 			// Fecha a conexao
-			$conn->close();
+			//$conn->close();
 
 		}else{
 			$parametros = false;
@@ -459,13 +485,20 @@
         $result =  $conn->select($query);
 
         /* VERIFICA SE EXISTE VALOR */
-        if (@mysql_num_rows($result) > 0)
-        {
+        // if (@mysql_num_rows($result) > 0)
+        // {
+
+		if(!empty($result)){
+
             /* ARMAZENA NA ARRAY */
-            while ($rowEquip = @mysql_fetch_assoc ($result))
-            {
-                $retornoEquip[] = $rowEquip;
-            }
+            // while ($rowEquip = @mysql_fetch_assoc ($result))
+            // {
+            //     $retornoEquip[] = $rowEquip;
+            // }
+
+			foreach ($result as $rowEquip){
+				$retornoEquip[] = $rowEquip;
+			}
 
             $dados = $retornoEquip;
 

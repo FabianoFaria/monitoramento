@@ -234,18 +234,21 @@ class EquipamentoController extends MainController
 
         $dadosEquipamento   = $equipModelo->detalhesEquipamentoParaConfiguracao($_POST['idEquipamento']);
 
-        $idSimEquipamento       = $dadosEquipamento[0]['id'];
-        $numeroSimEquipamento   = $dadosEquipamento[0]['id_sim'];
-
         $removerEquip       = $equipModelo->removerEquipamentoViaJson($_POST['idEquipamento']);
 
         if($removerEquip){
 
+            if($dadosEquipamento['status']){
+
+                $idSimEquipamento       = $dadosEquipamento['equipamento'][0]['id'];
+                $numeroSimEquipamento   = $dadosEquipamento['equipamento'][0]['id_sim'];
+
+                //REMOVE DA TABELA DE POSIÇÕES AS POSIÇÕES OCUPADAS NO EQUIPAMENTO PELO SIM
+                $removePosicoesEquipamento  = $equipModelo->removerPosicoesTabelaEquipamentoViaJson($idSimEquipamento, $numeroSimEquipamento);
+            }
+
             //REMOVE OS PARAMETROS CADASTRADOS PARA O EQUIPAMENTO
             $removerParamEquip = $equipModelo->removerParametrosEquipamentoViaJson($_POST['idEquipamento']);
-
-            //REMOVE DA TABELA DE POSIÇÕES AS POSIÇÕES OCUPADAS NO EQUIPAMENTO PELO SIM
-            $removePosicoesEquipamento  = $equipModelo->removerPosicoesTabelaEquipamentoViaJson($idSimEquipamento, $numeroSimEquipamento);
 
             exit(json_encode(array('status' => $removerEquip['status'] )));
         }else{
@@ -376,6 +379,7 @@ class EquipamentoController extends MainController
     * CARREGA LISTA DE EQUIPAMENTOS POR CLIENTE, FILIAL, TIPO PARA RELATÔRIOS
     */
     public function carregarListaEquipamentoFilialTipoRelatorioJson(){
+
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $equipeModelo   = $this->load_model('equipamento/equipamento-model');
 
@@ -555,6 +559,374 @@ class EquipamentoController extends MainController
         }
     }
 
+
+    /**
+    * FUNÇÔES PARA GERENCIMENTO DE CHIPS
+    */
+
+    public function gerenciarChips(){
+
+        //CARREGA MODELO PARA ESTA FUNÇÃO
+        $equipModelo = $this->load_model('equipamento/equipamento-model');
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_ca'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "equipamento";
+
+            // Carrega o modelo para este view
+            $modelo     = $this->load_model('equipamento/equipamento-model');
+            $modeloClie = $this->load_model('cliente/cliente-model');
+
+            // Carrega view
+             require_once EFIPATH . "/views/_includes/header.php";
+             require_once EFIPATH . "/views/_includes/menu.php";
+             require_once EFIPATH . "/views/equipamento/equipamentoGerenciarSim-view.php";
+             require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+
+    }
+
+    /**
+    * FUNÇÕES PARA FILTRAGEM DE STATUS DE CHIP SIM
+    */
+    public function filtroStatusChipJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $listasChip     = $equipeModelo->filtroChipSims($_POST['statusChip']);
+
+        if($listasChip['status']){
+
+            //var_dump( $listasChip['chipsSims']);
+
+            $listaChip = "";
+
+            foreach ($listasChip['chipsSims'] as $chipSim) {
+
+                $cliente   = (isset($chipSim['cliente'])) ? $chipSim['cliente'] : 'Não alocado';
+
+                if(isset($chipSim['cliente'])){
+                    $filial = (isset($chipSim['filial'])) ? $chipSim['filial'] : 'Matriz';
+                }else{
+                    $filial = '';
+                }
+
+                $dataTemp1 = explode(" ", $chipSim['data_teste']);
+                $data_teste = implode("/", array_reverse(explode('-', $dataTemp1[0])));
+
+                $dataTemp2 = explode(" ", $chipSim['data_instalacao_clie']);
+                $data_insta = implode("/", array_reverse(explode('-', $dataTemp2[0])));
+
+                $dataTemp3 = explode(" ", $chipSim['data_desativacao']);
+                $data_desa = implode("/", array_reverse(explode('-', $dataTemp3[0])));
+
+                $dataTeste          = $data_teste." ".$dataTemp1[1];
+                $dataInstalacao     = $data_insta." ".$dataTemp2[1];
+                $dataDesativacao    = $data_desa." ".$dataTemp3[1];
+
+                /*
+                <td>
+                    ".$chipSim['versao_projeto']."
+                </td>
+                <td>
+                    ".$chipSim['versao_projeto']."
+                </td>
+                */
+
+                $listaChip .= "<tr>
+                                    <td>
+                                        ".$chipSim['num_sim']."
+                                    </td>
+                                    <td>
+                                        ".$cliente."
+                                    </td>
+                                    <td>
+                                        ".$filial."
+                                    </td>
+
+                                    <td>
+                                        ".$dataTeste."
+                                    </td>
+                                    <td>
+                                        ".$dataInstalacao."
+                                    </td>
+                                    <td>
+                                        ".$dataDesativacao."
+                                    </td>
+                                    <td>
+                                        <button class='btn button' onclick='carregarDadosChipSim(".$chipSim['num_sim'].")'>
+                                            <i class='fa fa-pencil fa-1x'></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button>
+                                            <i class='fa fa-times fa-1x'></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                ";
+
+            }
+
+            exit(json_encode(array('status' => $listasChip['status'], 'chipSims' => $listaChip)));
+        }else{
+            exit(json_encode(array('status' => $listasChip['status'])));
+        }
+
+    }
+
+    /*
+    * FUNÇÕES PARA FILTRAGEM DE STATUS DE CHIP E CLIENTE
+    */
+    public function filtroStatusChipClienteJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $listasChip     = $equipeModelo->filtroChipSimsCliente($_POST['statusChip'], $_POST['idCliente']);
+
+        if($listasChip['status']){
+
+            $listaChip = "";
+
+            foreach ($listasChip['chipsSims'] as $chipSim){
+
+                $cliente   = (isset($chipSim['cliente'])) ? $chipSim['cliente'] : 'Não alocado';
+
+                if(isset($chipSim['cliente'])){
+                    $filial = (isset($chipSim['filial'])) ? $chipSim['filial'] : 'Matriz';
+                }else{
+                    $filial = '';
+                }
+
+                $dataTemp1 = explode(" ", $chipSim['data_teste']);
+                $data_teste = implode("/", array_reverse(explode('-', $dataTemp1[0])));
+
+                $dataTemp2 = explode(" ", $chipSim['data_instalacao_clie']);
+                $data_insta = implode("/", array_reverse(explode('-', $dataTemp2[0])));
+
+                $dataTemp3 = explode(" ", $chipSim['data_desativacao']);
+                $data_desa = implode("/", array_reverse(explode('-', $dataTemp3[0])));
+
+                $dataTeste          = $data_teste." ".$dataTemp1[1];
+                $dataInstalacao     = $data_insta." ".$dataTemp2[1];
+                $dataDesativacao    = $data_desa." ".$dataTemp3[1];
+
+                $listaChip .= "<tr>
+                                    <td>
+                                        ".$chipSim['num_sim']."
+                                    </td>
+                                    <td>
+                                        ".$cliente."
+                                    </td>
+                                    <td>
+                                        ".$filial."
+                                    </td>
+
+                                    <td>
+                                        ".$dataTeste."
+                                    </td>
+                                    <td>
+                                        ".$dataInstalacao."
+                                    </td>
+                                    <td>
+                                        ".$dataDesativacao."
+                                    </td>
+                                    <td>
+                                        <button class='btn button' onclick='carregarDadosChipSim(".$chipSim['num_sim'].")'>
+                                            <i class='fa fa-pencil fa-1x'></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button>
+                                            <i class='fa fa-times fa-1x'></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                ";
+
+            }
+
+            exit(json_encode(array('status' => $listasChip['status'], 'chipSims' => $listaChip)));
+        }else{
+            exit(json_encode(array('status' => $listasChip['status'])));
+        }
+
+
+    }
+
+    /*
+    * CADASTRO DE NOVO CHIP SIM
+    */
+    public function registrarNovoChipJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $novoSim        = $equipeModelo->cadastrarNovoChipSim($_POST['numeroChip'],$_POST['numeroTelefone'], $_POST['modeloChip'], $_POST['versaoProjeto']);
+
+        if($novoSim['status']){
+            exit(json_encode(array('status' => $novoSim['status'])));
+        }else{
+            exit(json_encode(array('status' => $novoSim['status'])));
+        }
+    }
+
+
+    public function carregarDadosSIMJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $dadosChipSim   = $equipeModelo->carregarDadosChipSim($_POST['idChipSim']);
+
+        if($dadosChipSim['status']){
+
+            //$dadosChipSim['informacoesChip'][0]
+
+            $dataAtivacaoTemp       = explode(' ', $dadosChipSim['informacoesChip'][0]['data_instalacao_clie']);
+            $dataDesativacaoTemp    = explode(' ', $dadosChipSim['informacoesChip'][0]['data_desativacao']);
+            $dataTeste              = explode(' ', $dadosChipSim['informacoesChip'][0]['data_teste']);
+
+            $dataAtivacao       = implode('/', array_reverse(explode('-', $dataAtivacaoTemp[0])))." ".$dataAtivacaoTemp[1];
+            $dataDesativacao    = implode('/', array_reverse(explode('-', $dataDesativacaoTemp[0])))." ".$dataDesativacaoTemp[1];
+            $dateTestes         = implode('/', array_reverse(explode('-', $dataTeste[0])))." ".$dataTeste[1];
+
+            exit(json_encode(array('status' => $dadosChipSim['status'], 'chipInformacao' => $dadosChipSim['informacoesChip'][0], 'dataTestes' => $dateTestes, 'dataAtivacao' => $dataAtivacao, 'dataDesativacao' => $dataDesativacao)));
+
+        }else{
+            exit(json_encode(array('status' => $dadosChipSim['status'])));
+        }
+
+    }
+
+    public function atualizarDadosChipJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $dataTeste      = explode('/', $_POST['dataTeste']);
+        $horaAtual      = date('H:m:s');
+        $dataTesteFinal = implode('-', array_reverse($dataTeste))." ".$horaAtual;
+
+        $telefone       = str_replace(" ", "", $_POST['telefoneChip']);
+
+        $chipAtualizado = $equipeModelo->atualizarDadosSimChip($_POST['simChip'], $telefone, $_POST['modeloChip'], $_POST['versaoProjeto'], $dataTesteFinal);
+
+        if($chipAtualizado['status']){
+
+            exit(json_encode(array('status' => $chipAtualizado['status'])));
+        }else{
+
+            exit(json_encode(array('status' => $chipAtualizado['status'])));
+        }
+    }
+
+    /*
+    * CARREGA OS DADOS DO EQUIPAMENTO E O POSICIONAMENTO DO EQUIPAMENTO NA TABELA
+    */
+    public function carregarDadosEquipamentoCalibracao(){
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_pe'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "equipamento";
+
+            // Carrega o modelo para este view
+            $modelo     = $this->load_model('equipamento/equipamento-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/equipamento/equipamentoCalibracao-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+
+    }
+
+    /*
+    * CARREGA O ULTIMO DADO QUE FOI LIDO NA POSICAO DA TABELA INFORMADA
+    */
+    public function carregarDadosPosicaoTabelaJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo   = $this->load_model('equipamento/equipamento-model');
+
+        $ultimoDado     = $equipeModelo->ultimoDadoenviadoPelaPosicao($_POST['idEquipamento'], $_POST['posicao']);
+
+        //var_dump($ultimoDado);
+        /*
+        'ultimoDadoPosicao' <font color='#888a85'>=&gt;</font>
+            <b>array</b> <i>(size=1)</i>
+            'g' <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'800'</font> <i>(length=3)</i>
+        */
+
+        if($ultimoDado['status']){
+            exit(json_encode(array('status' => $ultimoDado['status'], 'ultimoDado' => $ultimoDado['ultimoDadoPosicao'][$_POST['posicao']])));
+        }else{
+            exit(json_encode(array('status' => $ultimoDado['status'])));
+        }
+
+    }
+
+    /*
+    * APÓS GERAR O VALOR DE VARIAVEL DE CALIBRAÇÃO, É EFETUADO O REGISTRO NO BANCO DE DADOS
+    */
+    public function salvarPosicaoTabelaJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo       = $this->load_model('equipamento/equipamento-model');
+
+        $variavelSalva      = null;
+
+        //VERIFICA SE JÁ NÃO EXISTE ALGUMA VARIAVEL DE CALIBRAÇÃO PARA A POSICAO ESPECIFICA DO EQUIPAMENTO
+
+        $variavelExistente  = $equipeModelo->recuperaVariavelExistente($_POST['idEquipamento'], $_POST['posicao']);
+
+        if($variavelExistente['status']){
+            //VARIAVEL JÁ EXISTE NO SISTEMA, SERÁ ATUALIZADA
+
+            $idVariavel     = $variavelExistente['idVariavel']['id'];
+
+            $variavelSalva  = $equipeModelo->atualizarVariavelCalibri($idVariavel, $_POST['valorCalibracao']);
+
+        }else{
+            //VARIAVEL AINDA NÃO EXISTE NO SISTEMA, SERÀ CADASTRADA UMA NOVA
+
+            $variavelSalva  = $equipeModelo->registraNovaVariavelCalibri($_POST['idEquipamento'], $_POST['posicao'], $_POST['valorCalibracao']);
+        }
+
+        //var_dump($variavelSalva);
+
+        if($variavelSalva['status']){
+            exit(json_encode(array('status' => $variavelSalva['status'], 'resultado' => $variavelSalva['operatio'])));
+        }else{
+            exit(json_encode(array('status' => $variavelSalva['status'])));
+        }
+
+    }
 }
 
 ?>

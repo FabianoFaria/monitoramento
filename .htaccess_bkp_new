@@ -1,6 +1,6 @@
-RewriteEngine On 
-RewriteCond %{SERVER_PORT} 80 
-RewriteRule ^(.*)$ https://monitor.eficazsystem.com.br/login/$1 [R,L]
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ http://monitoramento.com/login/$1 [R,L]
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>

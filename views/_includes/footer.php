@@ -15,6 +15,7 @@
 
         <!-- bootstrap -->
         <script src="<?php echo HOME_URI; ?>/views/_js/bootstrap.min.js"></script>
+        <script src="<?php echo HOME_URI; ?>/views/_js/bootstrap-switch.min.js"></script>
 
         <!-- Metis Menu Plugin JavaScript -->
         <script src="<?php echo HOME_URI; ?>/views/_js/metisMenu.js"></script>
@@ -46,7 +47,6 @@
         <script src="<?php echo HOME_URI; ?>/views/_js/wickedpicker.min.js"></script>
 
         <!-- Js Files da página atual, se existir -->
-
         <script src="<?php echo HOME_URI; ?>/views/_js/pages/<?php echo $this->title; ?>.js"></script>
 
 	</body>

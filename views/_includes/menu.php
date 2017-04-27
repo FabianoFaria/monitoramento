@@ -19,6 +19,13 @@ $userAvatar          = $userModelo->carregarUserAvatar($_SESSION['userdata']['us
 
 //var_dump($clienteLogo,$userAvatar);
 
+//VERIFICA SE ENCONTRA A IMAGEM DE AVATAR
+$fileExiste = fileExists(HOME_URI."/views/_uploads/users/".$userAvatar['imagem_usuario']);
+
+function fileExists($path){
+    return (@fopen($path,"r")==true);
+}
+
 /*
 * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
 */
@@ -99,11 +106,11 @@ $userAvatar          = $userModelo->carregarUserAvatar($_SESSION['userdata']['us
                   <?php
                       if(isset($_SESSION['userdata']['cliente']) && ($_SESSION['userdata']['cliente'] > 0) && ($clienteLogo[0]['foto'] != '')){
                       ?>
-                          <img class="img-rounded" src="<?php echo HOME_URI ?>/views/_uploads/clients/<?php echo $clienteLogo[0]['foto']; ?>" width="64" height="32"/>
+                          <!-- <img class="img-rounded" src="<?php //echo HOME_URI ?>/views/_uploads/clients/<?php //echo $clienteLogo[0]['foto']; ?>" width="64" height="32"/> -->
                       <?php
                       }else{
                       ?>
-                          <i class="fa fa-building-o fa-1x"></i>
+                          <!-- <i class="fa fa-building-o fa-1x"></i> -->
                       <?php
                       }
                   ?>
@@ -224,9 +231,10 @@ $userAvatar          = $userModelo->carregarUserAvatar($_SESSION['userdata']['us
                 <a class="dropdown-toggle" data-toggle="dropdown" href="">
                     <!-- <i class="fa fa-user fa-1x"></i> -->
                     <?php
-                        if(isset($_SESSION['userdata']['avatar'])){
+
+                        if($fileExiste){
                         ?>
-                            <img class="img-circle" src="<?php echo HOME_URI ?>/views/_uploads/users/<?php echo $userAvatar['imagem_usuario']; ?>" width="32" height="32"/>
+                            <img class="img-circle" src="<?php echo HOME_URI."/views/_uploads/users/".$userAvatar['imagem_usuario']; ?>" width="32" height="32"/>
                         <?php
                         }else{
                         ?>
@@ -324,11 +332,18 @@ $userAvatar          = $userModelo->carregarUserAvatar($_SESSION['userdata']['us
                               <spam>Alarmes</span>
                             </a>
                         </li> -->
-                        <li>
-                            <a href="<?php echo HOME_URI; ?>/configuracao/configuracoesSistema" class="">
-                              <i class="fa fa-gears fa-1x"></i>
+                        <!-- <li>
+                            <a href="<?php //echo HOME_URI; ?>/configuracao/configuracoesSistema" class="">
+                              <i class="fa fa-gear fa-1x"></i>
                               <span class="icon-side"></span>
                               <spam>Configurações</span>
+                            </a>
+                        </li> -->
+                        <li>
+                            <a href="<?php echo HOME_URI; ?>/equipamento/gerenciarChips" class="">
+                              <i class="fa fa-credit-card fa-1x"></i>
+                              <span class="icon-side"></span>
+                              <spam>Gerenciar SIM</span>
                             </a>
                         </li>
                        </ul>

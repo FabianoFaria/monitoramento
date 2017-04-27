@@ -47,6 +47,7 @@
         // gerenciador de link
         var menu = document.getElementById('listadir');
         menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Bem vindo : <?php echo $usuarioLogado; ?></a>';
+
     </script>
 
     <?php
@@ -107,7 +108,7 @@
 
             $listaCliente = $modeloCliente->listarCliente($_SESSION['userdata']['cliente'], $_SESSION['userdata']['tipo']);
 
-            //var_dump($_SESSION);
+           //var_dump($_SESSION);
 
     ?>
 
@@ -297,7 +298,7 @@
                                                                 </span>
                                                                 <?php
                                                             break;
-                                                            case 'Temperatura banco bateria':
+                                                            case 'Temperatura Banco de bateria':
                                                                 ?>
                                                                 <span class="text-danger">
                                                                     <?php

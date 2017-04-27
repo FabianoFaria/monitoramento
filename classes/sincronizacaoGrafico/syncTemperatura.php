@@ -21,18 +21,23 @@ if(isset($_GET['6e756d65726f'])){
 $result = $cone->select("select {$param} from tb_dados where num_sim={$sim} and status_ativo=1 order by id desc limit 1");
 
 /* verifica se existe conteudo no select */
-if (@mysql_num_rows($result) > 0)
-{
+// if (@mysql_num_rows($result) > 0)
+// {
+if(!empty($result)){
     /* coleta o conteudo que retornou do banco */
-    while($row = @mysql_fetch_array($result))
-        /* armazena a resposta do array na varaiavel */
+    // while($row = @mysql_fetch_array($result))
+    //     /* armazena a resposta do array na varaiavel */
+    //     $resp = $row[$param];
+
+    foreach ($result as $row){
         $resp = $row[$param];
+    }
     /* converte a resposta em uma array */
     $array = array($resp);
     /* joga na funcao calback como encriptacao json */
     echo $_GET['callback']. '('. json_encode($array) . ')';
 }
 /* finaliza a conexao com o banco de dados */
-$cone->close();
+//$cone->close();
 
 ?>

@@ -99,7 +99,7 @@ $().ready(function() {
             //Efetua o cadastro via JSON
             //Efetua cadastro do cliente via JSON
             $.ajax({
-             url: urlP+"/eficazmonitor/fabricante/registraFabricanteJSON",
+             url: urlP+"/fabricante/registraFabricanteJSON",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -125,7 +125,7 @@ $().ready(function() {
                         swal('','Fabricante cadastrado com sucesso!','success');
                        	var statusCad      = datra.status;
                         setTimeout(function(){
-                            window.location.replace(urlP +"/eficazmonitor/fabricante/");
+                            window.location.replace(urlP +"/fabricante/");
                         }, 2000);
                     }
                     else
@@ -312,7 +312,7 @@ $().ready(function() {
 
         //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
         $.ajax({
-            url: urlP+"/eficazmonitor/fabricante/carregarFabricanteJson",
+            url: urlP+"/fabricante/carregarFabricanteJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',
@@ -465,7 +465,7 @@ $().ready(function() {
             //Efetua o cadastro via JSON
             //Efetua cadastro do cliente via JSON
             $.ajax({
-             url: urlP+"/eficazmonitor/fabricante/atualizarFabricanteJSON",
+             url: urlP+"/fabricante/atualizarFabricanteJSON",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -491,7 +491,7 @@ $().ready(function() {
                         swal('','Fabricante atualizado com sucesso!','success');
                        	var statusCad      = datra.status;
                         setTimeout(function(){
-                            window.location.replace(urlP +"/eficazmonitor/fabricante/");
+                            window.location.replace(urlP +"/fabricante/");
                         }, 2000);
                     }
                     else
@@ -533,7 +533,7 @@ $().ready(function() {
           if (isConfirm) {
             //EFETUA A REMOÇÃO DOS DADOS DA FILIAL
             $.ajax({
-                url: urlP+"/eficazmonitor/fabricante/removerFabricanteJSON",
+                url: urlP+"/fabricante/removerFabricanteJSON",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -546,7 +546,7 @@ $().ready(function() {
                         swal('','Fabricante removido com sucesso!','success');
                         var statusCad      = datra.status;
                         setTimeout(function(){
-                            window.location.replace(urlP +"/eficazmonitor/fabricante/");
+                            window.location.replace(urlP +"/fabricante/");
                         }, 2000);
                     }else{
                         swal("", "Ocorreu um erro ao tentar remover, favor verificar os dados enviados!", "error");

@@ -26,18 +26,24 @@ class ConfiguracaoModel extends MainModel
         $result = $this->db->select($query);
 
         /* verifica se existe retorno */
-        if ($result)
+        if (!empty($result))
         {
-            /* verifica se existe resultado */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* monta array com os resultados */
-                while ($row = @mysql_fetch_assoc($result))
-                    $retorno[] = $row;
+            // /* verifica se existe resultado */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* monta array com os resultados */
+            //     while ($row = @mysql_fetch_assoc($result))
+            //         $retorno[] = $row;
+            //
+            //     /* retorna o array */
+            //     return $retorno;
+            // }
 
-                /* retorna o array */
-                return $retorno;
+            foreach ($result as $row){
+                $retorno[] = $row;
             }
+            /* DEVOLVE RETORNO */
+            return $retorno;
         }
     }
 
@@ -89,17 +95,23 @@ class ConfiguracaoModel extends MainModel
         $result = $this->db->select($query);
 
         /* verifica se existe retorno */
-        if ($result)
+        if(!empty($result))
         {
-            /* verifica se existe resultado */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* monta array com os resultados */
-                while ($row = @mysql_fetch_assoc($result))
-                    $retorno[] = $row;
+            // /* verifica se existe resultado */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* monta array com os resultados */
+            //     while ($row = @mysql_fetch_assoc($result))
+            //         $retorno[] = $row;
+            //
+            //     return $retorno;
+            // }
 
-                return $retorno;
+            foreach ($result as $row){
+                $retorno[] = $row;
             }
+            /* DEVOLVE RETORNO */
+            return $retorno;
         }
 
         // Retorna o valor do select
@@ -163,18 +175,24 @@ class ConfiguracaoModel extends MainModel
         $result = $this->db->select($query);
 
         /* verifica se existe retorno */
-        if ($result)
+        if(!empty($result))
         {
-            /* verifica se existe resultado */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* monta array com os resultados */
-                while ($row = @mysql_fetch_assoc($result))
-                    $retorno[] = $row;
+            // /* verifica se existe resultado */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* monta array com os resultados */
+            //     while ($row = @mysql_fetch_assoc($result))
+            //         $retorno[] = $row;
+            //
+            //     /* retorna o array */
+            //     return $retorno[0];
+            // }
 
-                /* retorna o array */
-                return $retorno[0];
+            foreach ($result as $row){
+                $retorno[] = $row;
             }
+            /* DEVOLVE RETORNO */
+            return $retorno;
         }
         return false;
     }
@@ -198,20 +216,27 @@ class ConfiguracaoModel extends MainModel
             /* busca os valores */
             $result = $this->db->select($query);
             /* verifica se existe retorno */
-            if ($result)
+            if(!empty($result))
             {
-                /* verifica se existe valor */
-                if (@mysql_num_rows ($result) > 0)
-                {
-                    /* associa o retorno do banco no array */
-                    while ($row = @mysql_fetch_assoc($result))
-                    {
+                // /* verifica se existe valor */
+                // if (@mysql_num_rows ($result) > 0)
+                // {
+                //     /* associa o retorno do banco no array */
+                //     while ($row = @mysql_fetch_assoc($result))
+                //     {
+                //         /* armazena os valores no array */
+                //         $retorno[] = $row['parametro'];
+                //     }
+                //     /* retorna o array */
+                //     return $retorno;
+                // }
+
+                foreach ($result as $row){
                         /* armazena os valores no array */
                         $retorno[] = $row['parametro'];
-                    }
-                    /* retorna o array */
-                    return $retorno;
                 }
+                /* DEVOLVE RETORNO */
+                return $retorno;
             }
         }
     }
@@ -287,23 +312,29 @@ class ConfiguracaoModel extends MainModel
             $result = $this->db->select($query);
 
             /* verifica se existe resposta */
-            if ($result)
+            if(!empty($result))
             {
-                /* verifica se existe valor */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* armazena na array */
-                    while ($row = @mysql_fetch_assoc ($result))
-                    {
+                // /* verifica se existe valor */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* armazena na array */
+                //     while ($row = @mysql_fetch_assoc ($result))
+                //     {
+                //         $retorno[] = $row;
+                //     }
+                //
+                //     /* devolve retorno */
+                //     $array = array('status' => true, 'param' => $retorno);
+                //
+                // }else{
+                //     $array = array('status' => false, 'param' => 0);
+                // }
+                foreach ($result as $row){
+                        /* armazena os valores no array */
                         $retorno[] = $row;
-                    }
-
-                    /* devolve retorno */
-                    $array = array('status' => true, 'param' => $retorno);
-
-                }else{
-                    $array = array('status' => false, 'param' => 0);
                 }
+                /* DEVOLVE RETORNO */
+                 $array = array('status' => true, 'param' => $retorno);
             }else{
                 $array = array('status' => false, 'param' => 0);
             }

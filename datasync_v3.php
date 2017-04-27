@@ -788,7 +788,7 @@
         // Cria um objeto de da classe de conexao
         $connBase = new EficazDB;
 
-        $data = date('Y-m-d h:i:s');
+        $data = date('Y-m-d H:i:s');
 
         //REGISTRA O ALARME NO SISTEMA
         $queryAlarme = "INSERT INTO tb_alerta(id_sim_equipamento, id_msg_alerta, nivel_alerta, dt_criacao)
@@ -997,7 +997,7 @@
 
                         $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
 
-                        $resultadoEnvio = $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], " ", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+                        $resultadoEnvio = $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], " ", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado, $ParametroVerificado, $pontoTabela);
 
                         //POSIBILIDADE DE CADASTRO NO LOG EM CASO DE FALHA DE ENVIO
 
@@ -1018,7 +1018,7 @@
 
                         $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
 
-                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado, $ParametroVerificado, $pontoTabela);
                     }
                 }
             }
@@ -1038,7 +1038,18 @@
             /*
             * VERIFICA ALERTA EXISTNTE E TENTA GERAR ALERTA PARA CRITICO BAIXO
             */
-            $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
+            $alarmeExiste   = verificarAlarmeExistente($idSimEquip, $pontoTabela);
+
+            /*
+            * CARREGA O PEULTIMO DADO PARA CONFIMAR SE NÃO SE TRATA DE UM FALSO POSITIVO
+            */
+            $penultimoDado  = identificarFalsoPositivo($idSimEquip, $pontoTabela);
+
+            //COMPARA O PENULTIMO DADO COM O PARAMETRO ATUAL
+            if(($penultimoDado / 100) < (float) trataValorDataSync($configuacoes[0])){
+
+            }
+
 
             if(!$alarmeExiste){
 
@@ -1082,7 +1093,7 @@
 
                         $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
 
-                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado, $ParametroVerificado, $pontoTabela);
                     }
                 }
 
@@ -1100,7 +1111,7 @@
 
                         $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
 
-                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado);
+                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado, $ParametroVerificado, $pontoTabela);
                     }
                 }
             }
@@ -1307,6 +1318,46 @@
 
         // Fecha a conexao
         $connBase->close();
+
+    }
+
+    /*
+    * FUNÇÃO PARA RECUPERAR O PENULTIMO DADO PARA COMPARACAO E POSSIVEL CONFIRMAÇÂO DE FALSO POSITIVO
+    */
+    function identificarFalsoPositivo($sim_num, $posicao){
+
+        // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+        $connBase       = new EficazDB;
+
+        $queryPosicao = "SELECT $posicao
+                         FROM tb_dados
+                         WHERE num_sim = '$sim_num' AND status_ativo = '1'
+                         GROUP BY id DESC
+                         LIMIT 1,1";
+
+        // Monta a result
+        $result = $connBase->select($queryPosicao);
+
+        // Verifica se existe valor de retorno
+        if (@mysql_num_rows ($result) > 0)
+        {
+            /* ARMAZENA NA ARRAY */
+            while ($row = @mysql_fetch_assoc ($result))
+            {
+                $retorno[] = $row;
+            }
+
+        }else{
+            // Se nao existir valor de retorno
+            // Armazena 0 no vetor
+            $retorno[] = 0;
+        }
+
+        // Fecha a conexao
+        $connBase->close();
+
+
+        return $retorno;
 
     }
 ?>

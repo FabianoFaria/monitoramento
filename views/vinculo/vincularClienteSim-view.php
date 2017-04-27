@@ -1,10 +1,12 @@
 <!-- VINCULAR CLIENTES VIEW -->
 <?php
+
     if (! defined('EFIPATH')) exit;
 
     /* Carrega os dados do cliente */
-    $dados = $modelo->carregarDadosCliente($this->parametros[0]);
-    $filiais  = $modelo->carregarFiliaisCliente($this->parametros[0]);
+    $dados              = $modelo->carregarDadosCliente($this->parametros[0]);
+    $filiais            = $modelo->carregarFiliaisCliente($this->parametros[0]);
+    $simsDisponiveis    = $modeloEquip->carregarSinsDisponiveis();
 
     if($dados['status']){
 		$dadosCliente = $dados['dados'][0];
@@ -20,6 +22,7 @@
 	}
 
     //var_dump($dadosFiliais);
+    //var_dump($simsDisponiveis);
 
 ?>
 
@@ -50,6 +53,7 @@
                             <?php
 
                                 if(isset($dadosFiliais)){
+
                                     ?>
                                         <option value="">Selecione uma filial </option>
                                         <option value="0">Vicular a Matriz </option>
@@ -73,8 +77,32 @@
                 <!-- Codigo SIM -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">C&oacute;digo do SIM</label>
-                        <input type="text" class="form-control" id="txt_numSim" name="txt_numSim" placeholder="C&oacute;digo do SIM" maxlength="20" required>
+                        <label for="exampleInputEmail1">C&oacute;digo do SIM disponível para vínculo</label>
+                        <select id="txt_numSim" name="txt_numSim" class="form-control">
+
+                            <?php
+                                if($simsDisponiveis['status']){
+
+                                    $chipsSims = $simsDisponiveis['chipsSims'];
+
+                                    echo "<option value=''>Selecione o Sim</option>";
+
+                                    foreach($chipsSims as $chips) {
+                                        ?>
+                                            <option value="<?php echo $chips['num_sim']; ?>"><?php echo $chips['num_sim']; ?></option>
+                                        <?php
+                                    }
+
+                                }else{
+                            ?>
+                                <option value=''>Não há SIMs disponíveis </option>
+                            <?php
+                                }
+                            ?>
+
+                        </select>
+
+                        <!-- <input type="text" class="form-control" id="txt_numSim" name="txt_numSim" placeholder="C&oacute;digo do SIM" maxlength="20" required> -->
                     </div>
                 </div><!-- fim do Codigo SIM -->
 

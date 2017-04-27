@@ -90,8 +90,8 @@ $().ready(function() {
 
             //EFETUA A REQUISIÇÃO PARA JSON PARA ATUALIZAR
 			//var formData = new FormData();
-			 var fd = new FormData(document.getElementById("edicao_usuario"));
-			 fd.append('file', $('input[type=file]')[0].files[0]);
+			var fd = new FormData(document.getElementById("edicao_usuario"));
+			// fd.append('file', $('input[type=file]')[0].files[0]);
 
             // var nomeContato     = $('#txt_nome').val();
             // var sobrenome       = $('#txt_sobrenome').val();
@@ -116,7 +116,7 @@ $().ready(function() {
 			*/
 
             $.ajax({
-                url: urlP+"/eficazmonitor/usuario/atualizarUsuarioManual",
+                url: urlP+"/usuario/atualizarUsuarioManual",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -255,7 +255,7 @@ $().ready(function() {
             var acesso      = $('#acessoCliente').val();
 
             $.ajax({
-                url: urlP+"/eficazmonitor/usuario/registraUsuarioPorSistema",
+                url: urlP+"/usuario/registraUsuarioPorSistema",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -296,13 +296,14 @@ $().ready(function() {
     /*
     * INICIA PROCESSO DE EDIÇÂO DE USUÁRIO
     */
-    $('.btnEditUser').click(function(){
+	$(document).on('click','.btnEditUser',function(){
+    //$('.btnEditUser').click(function(){
 
         var usuario = $(this).val();
 
         //Efetua o carregamento dos dados da filial
         $.ajax({
-            url: urlP+"/eficazmonitor/usuario/carregarDadosUsuariosJson",
+            url: urlP+"/usuario/carregarDadosUsuariosJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',
@@ -351,6 +352,110 @@ $().ready(function() {
 
     });
 
+	/*
+	* FILTRO DE USUÁRIOS POR CLIENTE
+	*/
+	$('#filtroClienteLista').change(function() {
+
+		var idCliente = $(this).val();
+		var tipoUser  = $('#tipoUser').val();
+
+		if(idCliente != ''){
+
+			//EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+	        $.ajax({
+	            url: urlP+"/usuario/filtrarUsuariosClienteJson",
+	            secureuri: false,
+	            type : "POST",
+	            dataType: 'json',
+	            data      : {
+	                'idCliente' : idCliente,
+					'tipoUser'  : tipoUser
+	            },
+	            success : function(datra)
+	            {
+	                if(datra.status){
+
+	                    /*
+	                    * PREENCHE TABELA COM OS USUÁRIOS
+	                    */
+	                    $('#listaUsuarios tbody').html(datra.usuarios);
+
+	                }else{
+	                    // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+	                    $('#listaUsuarios tbody').html(datra.usuarios);
+	                }
+
+	            },
+	            error: function(jqXHR, textStatus, errorThrown)
+	            {
+
+	                //Settar a mensagem de erro!
+	                      // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+	                    swal("Oops...", "Ocorreu um erro ao carregar as filiais, favor verificar os dados informados!", "error");
+	             // Handle errors here
+	             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+	             // STOP LOADING SPINNER
+	            }
+	        });
+		}
+
+	});
+
+	/*
+	* FILTRO DE USUÁRIOS POR TIPO DE ACESSO
+	*/
+	$('#filtroTipoUsuario').change(function() {
+
+		var idTipoUsuario 	= $(this).val();
+		var idCLiente 		= $('#filtroClienteLista').val();
+		var tipoUser  		= $('#tipoUser').val();
+
+		if(idCLiente != ''){
+
+			//EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+	        $.ajax({
+	            url: urlP+"/usuario/filtrarUsuariosClienteTipoUsuarioJson",
+	            secureuri: false,
+	            type : "POST",
+	            dataType: 'json',
+	            data      : {
+					'idTipoAcesso' 	: idTipoUsuario,
+	                'idCliente' 	: idCliente,
+					'tipoUser'  	: tipoUser
+	            },
+	            success : function(datra)
+	            {
+	                if(datra.status){
+
+	                    /*
+	                    * PREENCHE TABELA COM OS USUÁRIOS
+	                    */
+	                    $('#listaUsuarios tbody').html(datra.usuarios);
+
+	                }else{
+	                    // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+	                    $('#listaUsuarios tbody').html(datra.usuarios);
+	                }
+
+	            },
+	            error: function(jqXHR, textStatus, errorThrown)
+	            {
+
+	                //Settar a mensagem de erro!
+	                      // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+	                    swal("Oops...", "Ocorreu um erro ao carregar as filiais, favor verificar os dados informados!", "error");
+	             // Handle errors here
+	             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+	             // STOP LOADING SPINNER
+	            }
+	        });
+
+		}else{
+			swal('','Favor selecionar pelo menos um cliente','info');
+		}
+
+	});
 
     /*
     * INICIA O PROCESSO DE SALVAR ALTERAÇÕES DO USUÁRIO
@@ -434,7 +539,7 @@ $().ready(function() {
             var acesso      = $('#acessoUsuarioEdit').val();
 
             $.ajax({
-                url: urlP+"/eficazmonitor/usuario/atualizarUsuarioPorSistema",
+                url: urlP+"/usuario/atualizarUsuarioPorSistema",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -477,7 +582,8 @@ $().ready(function() {
     /*
     * INICIA O PROCESSO DE EXCLUSÃO DE USUÁRIO
     */
-    $('.btnRemoveUser').click(function(){
+	$(document).on('click','.btnRemoveUser',function(){
+    //$('.btnRemoveUser').click(function(){
 
         var idUser = $(this).val();
 
@@ -497,7 +603,7 @@ $().ready(function() {
 
                 //Efetua o carregamento dos dados da filial
                 $.ajax({
-                    url: urlP+"/eficazmonitor/usuario/excluirUsuariosJson",
+                    url: urlP+"/usuario/excluirUsuariosJson",
                     secureuri: false,
                     type : "POST",
                     dataType: 'json',

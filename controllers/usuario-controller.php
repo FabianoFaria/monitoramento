@@ -75,14 +75,53 @@
                 $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
                 // Carrega o modelo para este view
-                $modelo = $this->load_model('usuario/usuario-model');
+                $modelo         = $this->load_model('usuario/usuario-model');
                 // Carrega o modelo de cadastro para este view
                 $modeloCadastro = $this->load_model('cadastrar/cadastro-model');
+                // Carrega o modelo de clientes para este view
+                $modeloClie     = $this->load_model('cliente/cliente-model');
 
                 // Carrega view
                 require_once EFIPATH . "/views/_includes/header.php";
                 require_once EFIPATH . "/views/_includes/menu.php";
                 require_once EFIPATH . "/views/usuario/usuarioLista-view.php";
+                require_once EFIPATH . "/views/_includes/footer.php";
+            }
+
+        }
+
+        /*
+        * Função para listar as ulstimas atividades do usuário selecionado
+        */
+        public function listarAtividades(){
+
+            // Verifica se esta logado
+            $this->check_login();
+
+            // Verifica as permissoes necessaris
+            if ($_SESSION['userdata']['per_pe'] != 1 )
+            {
+                 // Se nao possuir permissao
+                 // Redireciona para index
+                 $this->moveHome();
+
+            }else{
+
+                //Define o titulo da página
+                $this->title = "usuario";
+
+                // Define os parametro da funcao
+                $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+                // Carrega o modelo para este view
+                $modelo = $this->load_model('usuario/usuario-model');
+                // Carrega o modelo de cadastro para este view
+                $modeloLog = $this->load_model('log/log-model');
+
+                // Carrega view
+                require_once EFIPATH . "/views/_includes/header.php";
+                require_once EFIPATH . "/views/_includes/menu.php";
+                require_once EFIPATH . "/views/usuario/usuarioListaAtividades-view.php";
                 require_once EFIPATH . "/views/_includes/footer.php";
             }
 
@@ -193,7 +232,9 @@
             // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
             $usuarioModelo     = $this->load_model('usuario/usuario-model');
 
-            $atualizarContato  = $usuarioModelo->atualizarUsuarioJson($_POST['id_usuario'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['confirmaS'], $_POST['idCliente']);
+            //$atualizarContato  = $usuarioModelo->atualizarUsuarioJson($_POST['id_usuario'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['confirmaS'], $_POST['idCliente']);
+
+            $atualizarContato   = $usuarioModelo->atualizarUsuarioContatoJson($_POST['id_usuario'], $_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['celular'], $_POST['telefone'], $_POST['confirmaS'], $_POST['idCliente']);
 
             if($atualizarContato['status']){
                 exit(json_encode(array('status' => true)));
@@ -227,6 +268,7 @@
             //var_dump($_FILES);
 
             //TESTA SE FOI COLOCADO ALGUM ARQUIVO PARA SER SALVO
+
             if(file_exists($_FILES['file_foto']['tmp_name']) && is_uploaded_file($_FILES['file_foto']['tmp_name'])){
 
 
@@ -242,6 +284,7 @@
                 }
 
             }else{
+
                 $arquivoEnviado = null;
             }
 
@@ -331,6 +374,71 @@
                 exit(json_encode(array('status' => true)));
             }else{
                 exit(json_encode(array('status' => false)));
+            }
+        }
+
+        /*
+        * FUNÇÃO PARA FILTRAR OS USUÁRIOS POR CLIENTE
+        */
+        public function filtrarUsuariosClienteJson(){
+
+            // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+            $usuarioModelo          = $this->load_model('usuario/usuario-model');
+
+            $listaUsuarios          = $usuarioModelo->listagemUsuarioCliente($_POST['idCliente']);
+
+            if($listaUsuarios){
+
+                $listaUsuariosTabela      = '';
+
+                foreach ($listaUsuarios as $usuario) {
+
+                    $dataTemp       = explode(' ', $usuario['dt_criaco']);
+
+                    $dataCriacao    = implode("/", array_reverse(explode("-", $dataTemp[0])));
+
+                    if($_POST['tipoUser'] == 'Administrador'){
+                        $atividades = "<td>
+                            <a href='".HOME_URI."/usuario/listarAtividades/".$usuario['id']."' class='btn button link-tabela-moni'>
+                                <i class='fa fa-file-text-o fa-l'></i>
+                            </a>
+                        </td>";
+
+                    }else{
+                        $atividades = "";
+                    }
+
+                    if(($_POST['tipoUser'] != 'Tecnico') && ($_POST['tipoUser'] != 'Visitante')){
+
+                        $edicao ="<td>
+                            <button class='btnEditUser btn link-tabela-moni' value='".$usuario['id']."'>
+                                 <i class='fa fa-pencil-square-o fa-lg'></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class='btnRemoveUser btn link-tabela-moni' value='".$usuario['id']."'>
+                                <i class='fa  fa-times fa-lg'></i>
+                            </button>
+                        </td>
+                        </tr>";
+
+                    }else{
+                        $edicao = "";
+                    }
+
+
+                    $listaUsuariosTabela .="<tr>
+                                            <td>".$usuario['nome']." ".$usuario['sobrenome']."</td>
+                                            <td>".$usuario['email']."</td><td>".$usuario['cliente']."</td>
+                                            <td>".$dataCriacao."</td>
+                                            ".$atividades." ".$edicao;
+                }
+
+                exit(json_encode(array('status' => true, 'usuarios' => $listaUsuariosTabela)));
+            }else{
+                $listaUsuariosTabela      = '<tr><td colspan="6">Nenhum Usuário cadastrado para o cliente !</td></tr>';
+
+                exit(json_encode(array('status' => false, 'usuarios' => $listaUsuariosTabela)));
             }
         }
 

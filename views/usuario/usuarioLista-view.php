@@ -28,6 +28,9 @@
         break;
     }
 
+    // var_dump($listaClie);
+    // var_dump($listaAcess);
+
 ?>
 
 <script type="text/javascript">
@@ -53,19 +56,70 @@
         <!-- TABELA CONTENDO OS USUÁRIOS CADASTRADOS -->
         <div class="panel panel-default">
             <div class="panel-heading">
-
+                <div class="row">
+                    <form id="filtroUsuarios" class="">
+                        <input type="hidden" id="tipoUser" name="tipoUser" value="<?php echo $_SESSION['userdata']['tipo_usu']; ?>"/>
+                        <div class="col-md-3 form-group">
+                            <p>
+                                Cliente : <select id="filtroClienteLista" class="form-control">
+                                            <?php
+                                                if($listaClie){
+                                                    echo "<option value=''>Selecione... </option>";
+                                                    foreach ($listaClie['clientes'] as $cliente){
+                                                        $idClie = $cliente['id'];
+                                                        $nomeClie = $cliente['nome'];
+                                                        echo "<option value='".$idClie."'>".$nomeClie."</option>";
+                                                    }
+                                                }else{
+                                            ?>
+                                                <option value="0">Selecione... </option>
+                                            <?php
+                                                }
+                                            ?>
+                                            </select>
+                            </p>
+                        </div>
+                        <!-- <div class="col-md-3 form-group">
+                            <p>
+                                Tipo de usuário : <select id="filtroTipoUsuario" name="filtroTipoUsuario" class="form-control">
+                                    <?php
+                                        // echo "<option value=''>Selecione... </option>";
+                                        // //$modelo->loadClienteFilial();
+                                        // foreach ($listaAcess as $acesso) {
+                                        //     echo "<option value='".$acesso['id']."'>".$acesso['nome']."</option>";
+                                        //}
+                                    ?>
+                                </select>
+                            </p>
+                        </div> -->
+                    </form>
+                </div>
             </div>
             <div class="panel-body">
                 <div class='table-responsive'>
-                    <table id="stream_table" class='table table-striped table-bordered'>
+                    <table id="listaUsuarios" class='table table-striped table-bordered'>
                         <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>Cliente</th>
                                 <th>Data criação</th>
-                                <th class="txt-center">Editar</th>
-                                <th class="txt-center">Excluir</th>
+                                <?php
+                                    if($_SESSION['userdata']['tipo_usu'] == 'Administrador'){
+                                ?>
+                                    <th class="txt-center">Atividades</th>
+                                <?php
+                                    }
+                                ?>
+                                <?php
+                                    if(($_SESSION['userdata']['tipo_usu'] != 'Tecnico') && ($_SESSION['userdata']['tipo_usu'] != 'Visitante')){
+                                ?>
+                                    <th class="txt-center">Editar</th>
+                                    <th class="txt-center">Excluir</th>
+                                <?php
+                                    }
+                                ?>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -84,23 +138,45 @@
 
                                         $dataTemp = explode(' ', $usuario['dt_criaco']);
 
-                                        echo implode("/", array_reverse(explode("-", $dataTemp[0]))); ?></td>
-                                   <td>
-                                       <!-- <a href="<?php //echo HOME_URI; ?>/usuario/editarTerceiros/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
-                                           <i class="fa fa-pencil-square-o fa-lg"></i>
-                                       </a> -->
-                                       <button class="btnEditUser btn link-tabela-moni" value="<?php echo $usuario['id']; ?>">
-                                            <i class="fa fa-pencil-square-o fa-lg"></i>
-                                       </button>
-                                   </td>
-                                   <td>
-                                       <!-- <a href="<?php //echo HOME_URI; ?>/usuario/removerUsuario/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
-                                           <i class="fa  fa-times fa-lg"></i>
-                                       </a> -->
-                                       <button class="btnRemoveUser btn link-tabela-moni" value="<?php echo $usuario['id']; ?>">
-                                            <i class="fa  fa-times fa-lg"></i>
-                                       </button>
-                                   </td>
+                                        echo implode("/", array_reverse(explode("-", $dataTemp[0]))); ?>
+                                    </td>
+
+                                    <?php
+                                        if($_SESSION['userdata']['tipo_usu'] == 'Administrador'){
+                                    ?>
+                                    <td>
+                                        <a href="<?php echo HOME_URI; ?>/usuario/listarAtividades/<?php echo $usuario['id']; ?>" class="btn button link-tabela-moni">
+                                            <i class="fa fa-file-text-o fa-lg"></i>
+                                        </a>
+                                    </td>
+                                    <?php
+                                        }
+                                    ?>
+
+                                    <?php
+                                        if(($_SESSION['userdata']['tipo_usu'] != 'Tecnico') && ($_SESSION['userdata']['tipo_usu'] != 'Visitante')){
+                                    ?>
+                                        <td>
+                                            <!-- <a href="<?php //echo HOME_URI; ?>/usuario/editarTerceiros/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
+                                                <i class="fa fa-pencil-square-o fa-lg"></i>
+                                            </a> -->
+                                            <button class="btnEditUser btn link-tabela-moni" value="<?php echo $usuario['id']; ?>">
+                                                 <i class="fa fa-pencil-square-o fa-lg"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <!-- <a href="<?php //echo HOME_URI; ?>/usuario/removerUsuario/<?php //echo $usuario['id']; ?>" class="link-tabela-moni">
+                                                <i class="fa  fa-times fa-lg"></i>
+                                            </a> -->
+                                            <button class="btnRemoveUser btn link-tabela-moni" value="<?php echo $usuario['id']; ?>">
+                                                 <i class="fa  fa-times fa-lg"></i>
+                                            </button>
+                                        </td>
+                                    <?php
+                                        }
+                                    ?>
+
+
                                </tr>
                            <?php
                                    }
@@ -208,7 +284,7 @@
                                         echo "<option value=''> Selecione... </option>";
                                         echo ($_SESSION['userdata']['cliente'] == 0) ? "<option value='0'> Usuário sistema </option>" : "";
 
-                                        foreach ($listaClie as $cliente) {
+                                        foreach ($listaClie['clientes'] as $cliente) {
                                             echo "<option value='".$cliente['id']."'>".$cliente['nome']."</option>";
                                         }
                                     ?>
@@ -224,7 +300,7 @@
                                     <?php
                                         //$modelo->loadClienteFilial();
                                         echo "<option value=''> Selecione... </option>";
-                                        foreach ($listaAcess as $acesso) {
+                                        foreach ($listaAcess['acessos'] as $acesso) {
                                             echo "<option value='".$acesso['id']."'>".$acesso['nome']."</option>";
                                         }
                                     ?>
@@ -243,7 +319,7 @@
 </div>
 
 
-<!-- MODAL PARA EDIÇÃO DE NOVO USUÁRIO -->
+<!-- MODAL PARA EDIÇÃO DE USUÁRIO -->
 <div id="modalEditUsuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -328,7 +404,7 @@
                                 <select id="nomeClienteEdit" name="nomeClienteEdit" class="form-control">
                                     <?php
                                         //$modelo->loadClienteFilial();
-                                        foreach ($listaClie as $cliente) {
+                                        foreach ($listaClie['clientes'] as $cliente) {
                                             echo "<option value='".$cliente['id']."'>".$cliente['nome']."</option>";
                                         }
                                     ?>
@@ -343,7 +419,7 @@
                                 <select id="acessoUsuarioEdit" name="acessoUsuarioEdit" class="form-control">
                                     <?php
                                         //$modelo->loadClienteFilial();
-                                        foreach ($listaAcess as $acesso) {
+                                        foreach ($listaAcess['acessos'] as $acesso) {
                                             echo "<option value='".$acesso['id']."'>".$acesso['nome']."</option>";
                                         }
                                     ?>

@@ -19,6 +19,29 @@ $(document).ready(function(){
     $('#txt_qntBateriaPorBanco').mask('999');
 	$('#txt_tensaoMinBarramentoBat').mask('99.9');
 
+    $('#txt_data_teste').mask('99/99/9999');
+    $('#txt_edit_telefone_chip').mask('99 9999999999');
+
+    $('#txt_telefone_number').mask('99999999999');
+    $('#txt_chip_number').mask('999999999999999');
+
+    /*
+    * Adiciona datapicker ao formulario de data
+    */
+    var options = {
+        dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
+        monthNames: [ "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ],
+        maxDate: "+0y +0m +0d",
+        mindate: "-1y -6m",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "c-1:c+1",
+        monthRange: "c-6:c+0",
+        dateFormat: "dd/mm/yy"
+    }
+
+     $("#txt_data_teste").datepicker(options);
+
 	/*
 	*	JSON Listener para listar as filiais do cliente caso existam
 	*/
@@ -30,7 +53,7 @@ $(document).ready(function(){
 		//Ação ajax para buscar no BD as filiais cadastrada para o cliente
 		//Efetua cadastro do cliente via JSON
             $.ajax({
-             url: urlP+"/eficazmonitor/cliente/listarFiliaisClienteJson",
+             url: urlP+"/cliente/listarFiliaisClienteJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -219,7 +242,7 @@ $(document).ready(function(){
 				//Efetua o registro do equipamento no BD
 
 				$.ajax({
-	             url: urlP+"/eficazmonitor/equipamento/registrarEquipamentoClienteJson",
+	             url: urlP+"/equipamento/registrarEquipamentoClienteJson",
 	             secureuri: false,
 	             type : "POST",
 	             dataType: 'json',
@@ -249,7 +272,7 @@ $(document).ready(function(){
                     		//alert("Equipamento cadastrado corretamente.");
                             swal("", "Equipamento cadastrado corretamente!", "success");
                     		setTimeout(function(){
-			                    window.location.replace(urlP +"/eficazmonitor/equipamento/");
+			                    window.location.replace(urlP +"/equipamento/");
 			                }, 3000);
                     	}else{
                     		//alert("Ocorreu um erro ao cadastrar o equipamento.");
@@ -326,7 +349,7 @@ $(document).ready(function(){
 			var obserEdit   = $('#txt_obs_edit').val();
 
 			$.ajax({
-			 url: urlP+"/eficazmonitor/equipamento/salvarEditContatoAlarmeJson",
+			 url: urlP+"/equipamento/salvarEditContatoAlarmeJson",
 			 secureuri: false,
 			 type : "POST",
 			 dataType: 'json',
@@ -515,7 +538,7 @@ $(document).ready(function(){
       //Efetua o registro do equipamento no BD
 
       $.ajax({
-        url: urlP+"/eficazmonitor/equipamento/editarEquipamentoClienteJson",
+        url: urlP+"/equipamento/editarEquipamentoClienteJson",
         secureuri: false,
         type : "POST",
         dataType: 'json',
@@ -545,7 +568,7 @@ $(document).ready(function(){
                         //alert("Equipamento editado corretamente.");
                         swal("", "Equipamento editado corretamente.", "success");
                         setTimeout(function(){
-                          window.location.replace(urlP +"/eficazmonitor/equipamento/");
+                          window.location.replace(urlP +"/equipamento/");
               }, 3000);
             }else{
               //alert("Ocorreu um erro ao editar o equipamento.");
@@ -562,8 +585,6 @@ $(document).ready(function(){
           // STOP LOADING SPINNER
         }
       });
-
-
 
     }
 
@@ -592,7 +613,7 @@ $(document).ready(function(){
 
               //Efetua o carregamento dos dados da filial
               $.ajax({
-                  url: urlP+"/eficazmonitor/equipamento/removerEquipamentoJson",
+                  url: urlP+"/equipamento/removerEquipamentoJson",
                   secureuri: false,
                   type : "POST",
                   dataType: 'json',
@@ -687,7 +708,7 @@ $(document).ready(function(){
             var obsContato 		= $('#txt_obs').val();
 
             $.ajax({
-             url: urlP+"/eficazmonitor/equipamento/registrarContatoAlarmeJson",
+             url: urlP+"/equipamento/registrarContatoAlarmeJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -733,6 +754,301 @@ $(document).ready(function(){
 
 	});
 
+    /*
+    * INICIA PROCESSO DE CADASTRO DE CHIP SIM
+    */
+    $('#adicionarNovoChipSim').click( function(){
+
+        $('#modalCadastroChip').modal();
+
+    });
+
+    /*
+    * RESETA OS DADOS DO CADASTRO AO FECHAR A MODAL
+    */
+    $('#modalCadastroChip').on('hidden.bs.modal', function (e) {
+        $('#txt_chip_number').val('');
+        $('#txt_telefone_number').val('');
+        $('#txt_chip_modelo').val('');
+    });
+
+    /*
+    * INICIA O PROCESSO DE CADASTRO DE NOVO CHIP
+    */
+    $('#cadastrarDadosSimBtn').click( function(){
+
+        /*
+        * INICIA VALIDAÇÃO DOS DADOS DO CHIP
+        */
+        $('#formCadChip').validate({
+            rules: {
+                txt_chip_number : {
+                    required : true,
+                    remote: {
+                      url: urlP+"/vinculo/verificarSimExistente",
+                      type: "post",
+                      data: {
+                        num_sim : function() {
+                          //return  $("#txt_numSim" ).val();
+                          return document.getElementById("txt_chip_number").value;
+                        }
+                      }
+                    }
+                },
+                txt_telefone_number : {
+                    required : true
+                },
+                txt_chip_modelo : {
+                    required : true
+                },
+                txt_vercao_projeto : {
+                    required : true
+                }
+            },
+            messages: {
+                txt_chip_number : {
+                    required : "Campo é obrigatorio",
+                    remote: "Número SIM já se encontra registrado no sistema!"
+                },
+                txt_telefone_number : {
+                    required : "Campo é obrigatorio"
+                },
+                txt_chip_modelo : {
+                    required : "Campo é obrigatorio"
+                },
+                txt_vercao_projeto : {
+                    required : "Campo é obrigatorio"
+                }
+            }
+        });
+        /*
+        * INICIA O CADASTRO EM CASO OS DADOS ESTIVEREM CORRETOS
+        */
+        if($('#formCadChip').valid()){
+
+            /*
+            * SOLICITA CONFIRMAÇÃO DO USUÁRIO, SOBRE OS DADOS DO CHIP A SER CADASTRADO.
+            */
+            swal({
+              title: "Tem certeza?",
+              text: "Os dados do chip cadastrado estão corretos?",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "Sim, confirmo!",
+              cancelButtonText: "Não, irei revisar!",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            },
+            function(isConfirm){
+              if (isConfirm) {
+
+                /*
+                * INICIA JSON PARA SALVAR OS DADO DO CHIP CADASTRADO
+                */
+                var numeroChip      = $('#txt_chip_number').val();
+                var numeroTelefone  = $('#txt_telefone_number').val();
+                var modeloChip      = $('#txt_chip_modelo').val();
+                var versaoProjeto   = $('#txt_vercao_projeto').val();
+
+                    $.ajax({
+                     url: urlP+"/equipamento/registrarNovoChipJson",
+                     secureuri: false,
+                     type : "POST",
+                     dataType: 'json',
+                     data      : {
+                      'numeroChip' : numeroChip,
+        			  'numeroTelefone' : numeroTelefone,
+        			  'modeloChip' : modeloChip,
+                      'versaoProjeto' : versaoProjeto
+                     },
+                     success : function(datra)
+                      {
+                        if(datra.status){
+                            swal('','Chip foi cadastrado corretamente.','success');
+                            setTimeout(function(){
+                                location.reload();
+                            }, 2000);
+                        }else{
+                            swal("", "Não foi possivel completar o cadastro, tente novamente mais tarde.", "error");
+                        }
+                      },
+                     error: function(jqXHR, textStatus, errorThrown)
+                      {
+                       // Handle errors here
+                       console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                       // STOP LOADING SPINNER
+                      }
+                    });
+                } else {
+                    swal("Cancelado", "Nenhum dado foi cadastrado ainda", "error");
+                }
+            });
+        }
+
+    });
+
+    /*
+    * FILTRO DE CHIP SIM
+    */
+    $('#filtroStatusChip').change(function() {
+
+        $('#filtroClienteChip').val(' ');
+
+        var statusChip = $(this).val();
+
+        if(statusChip == 3){
+            //$('#filtroClienteChip');
+            $("#filtroClienteChip").prop('disabled', true);
+
+        }else{
+            $("#filtroClienteChip").prop('disabled', false);
+        }
+
+        $.ajax({
+         url: urlP+"/equipamento/filtroStatusChipJson",
+         secureuri: false,
+         type : "POST",
+         dataType: 'json',
+         data      : {
+          'statusChip' : statusChip
+         },
+          success : function(datra)
+           {
+
+              //tempTest = JSON(datra);
+              if(datra.status == true)
+              {
+                  $('#stream_table tbody').html(datra.chipSims);
+              }
+              else
+              {
+                //Settar a mensagem de erro!
+                //alert('Ocorreu um ero ao tentar cadastrar!');
+                swal("Oops...", "Não foram encontrados SIMs na condição informada.", "error");
+              }
+           },
+          error: function(jqXHR, textStatus, errorThrown)
+           {
+           // Handle errors here
+           console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+           // STOP LOADING SPINNER
+           }
+       });
+
+    });
+
+    /*
+    * FILTRAR CHIPS POR STATUS DO CHIP E POR CLIENTE
+    */
+    $('#filtroClienteChip').change(function() {
+
+        var clienteChip = $(this).val();
+
+        var statusChip  = $('#filtroStatusChip').val();
+
+        $.ajax({
+            url: urlP+"/equipamento/filtroStatusChipClienteJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+             'statusChip' : statusChip,
+             'idCliente'  : clienteChip
+             },
+             success : function(datra)
+             {
+                 //tempTest = JSON(datra);
+                 if(datra.status == true)
+                 {
+                     $('#stream_table tbody').html(datra.chipSims);
+                 }
+                 else
+                 {
+                   //Settar a mensagem de erro!
+                   //alert('Ocorreu um ero ao tentar cadastrar!');
+                   swal("Oops...", "Não foram encontrados SIMs na condição informada.", "error");
+                 }
+             },
+             error: function(jqXHR, textStatus, errorThrown)
+              {
+              // Handle errors here
+              console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+              // STOP LOADING SPINNER
+              }
+        });
+
+    });
+
+
+    /*
+    *  ATUALIZAR DADOS DO CHIP SIM
+    */
+    $('#editarDadosSimBtn').click(function(){
+
+        var simChip         = $('#txt_chip_number').val();
+        var telefoneChip    = $('#txt_edit_telefone_chip').val();
+        var modeloChip      = $('#txt_modelo_chip').val();
+        var versaoProjeto   = $('#txt_versao_projeto').val();
+        var dataTeste       = $('#txt_data_teste').val();
+
+        $.ajax({
+            url: urlP+"/equipamento/atualizarDadosChipJson",
+    		secureuri: false,
+    		type : "POST",
+    		dataType: 'json',
+    		data      : {
+    		  'simChip'        : simChip,
+              'telefoneChip'   : telefoneChip,
+              'modeloChip'     : modeloChip,
+              'versaoProjeto'  : versaoProjeto,
+              'dataTeste'      : dataTeste,
+    		},
+            success : function(datra)
+            {
+                if(datra.status == true){
+                    swal('','Dados do chip atualizados com sucesso.','success');
+
+                    setTimeout(function(){
+                        location.reload();
+                    }, 2000);
+
+                }else{
+                    swal('','Não foi póssivel atualizar os dados, favor verificar as informações.','error');
+
+                }
+            },
+       		error: function(jqXHR, textStatus, errorThrown)
+       		{
+       		  // Handle errors here
+       		  console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+       		  // STOP LOADING SPINNER
+       		}
+
+        });
+
+    });
+
+    // var options = {
+    //     onText: "Ativado",
+    //     onColor: 'primary',
+    //     offColor: 'danger',
+    //     offText: "Não ativo",
+    //     animate: true,
+    // };
+    //
+    // $("#simAtivado").bootstrapSwitch(options);
+    // $("#simInstalado").bootstrapSwitch(options);
+
+    /*
+    * INICIA PROCESSO DE CADASTRAR CALIBRAÇÃO DO EQUIPAMENTO
+    */
+    // $('#validarCalibracaoEquipamento').click( function{
+    //
+    //
+    //
+    // });
+
 });
 
 /*
@@ -740,7 +1056,7 @@ $(document).ready(function(){
 */
 function atualizarContatoEquip(id_contatoAlerta){
 	$.ajax({
-		url: urlP+"/eficazmonitor/equipamento/carregarContatosAlarmesJson",
+		url: urlP+"/equipamento/carregarContatosAlarmesJson",
 		secureuri: false,
 		type : "POST",
 		dataType: 'json',
@@ -804,7 +1120,7 @@ function removerContatoEquipamentoListaAlarmes(id_contatoAlerta){
       if (isConfirm) {
 
         $.ajax({
-         url: urlP+"/eficazmonitor/equipamento/removerContatosAlarmesJson",
+         url: urlP+"/equipamento/removerContatosAlarmesJson",
          secureuri: false,
          type : "POST",
          dataType: 'json',
@@ -841,4 +1157,231 @@ function removerContatoEquipamentoListaAlarmes(id_contatoAlerta){
         swal("Cancelado", "Nenhuma ação foi aplicada.", "error");
       }
     });
+}
+
+/*
+* CARREGA A MODAL COM OS DADOS DO CHIP SIM
+*/
+function carregarDadosChipSim(idChip){
+
+    if(idChip > 0){
+
+        $.ajax({
+         url: urlP+"/equipamento/carregarDadosSIMJson",
+         secureuri: false,
+         type : "POST",
+         dataType: 'json',
+         data      : {
+          'idChipSim' : idChip
+         },
+          success : function(datra)
+           {
+              //tempTest = JSON(datra);
+              if(datra.status)
+              {
+
+                var idFilial    = datra.chipInformacao['id_filial'];
+                var filial      = datra.chipInformacao['filial'];
+
+                if(filial == null){
+                    filial = 'Matriz';
+                }
+
+                var chipAtivo       = datra.chipInformacao['status_ativo'];
+                var chipInstalado   = datra.chipInformacao['ativo_cliente'];
+
+
+                // $(document).ready(function() {
+                //     if(chipAtivo == 1){
+                //         $("#simAtivado").bootstrapSwitch('setState', true);
+                //     }else{
+                //         $("#simAtivado").bootstrapSwitch('setState', false);
+                //     }
+                //
+                //     if(chipInstalado == 1){
+                //         $("#simInstalado").bootstrapSwitch('setState', true);
+                //     }else{
+                //         $("#simInstalado").bootstrapSwitch('setState', false);
+                //     }
+                // });
+
+                if(chipAtivo == '1'){
+                    //$("#simAtivado").bootstrapSwitch('setState', true);
+                    $('#simAtivado').prop('checked', true);
+                }else{
+                    //$("#simAtivado").bootstrapSwitch('setState', false);
+                    $('#simAtivado').prop('checked', false);
+                }
+
+                if(chipInstalado == '1'){
+                    //$("#simInstalado").bootstrapSwitch('setState', true);
+                    $('#simInstalado').prop('checked', true);
+                }else{
+                    //$("#simInstalado").bootstrapSwitch('setState', false);
+                    $('#simInstalado').prop('checked', false);
+                }
+
+                $('#txt_data_desativacao').val(datra.dataDesativacao);
+                $('#txt_data_instalacao').val(datra.dataAtivacao);
+                $('#txt_data_teste').val(datra.dataTestes);
+
+                $('#txt_chip_number').val(datra.chipInformacao['num_sim']);
+                $('#text_cliente').val(datra.chipInformacao['id_cliente']);
+                $('#text_filial').html("<option val='"+idFilial+"'>"+filial+"</option>" );
+                $('#txt_versao_projeto').val(datra.chipInformacao['versao_projeto']);
+                $('#txt_modelo_chip').val(datra.chipInformacao['modelo_chip']);
+                $('#txt_edit_telefone_chip').val(datra.chipInformacao['telefone_chip']);
+
+
+                $('#modalEditChip').modal();
+              }
+              else
+              {
+                //Settar a mensagem de erro!
+                //alert('Ocorreu um ero ao tentar cadastrar!');
+                swal("Oops...", "Ocorreu um ero ao tentar carregar os dados do chip!", "error");
+              }
+           },
+          error: function(jqXHR, textStatus, errorThrown)
+           {
+           // Handle errors here
+           console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+           // STOP LOADING SPINNER
+           }
+        });
+    }
+}
+
+/*
+* INICIA PROCESSO DE CALIBRAÇÃO DE EQUIPAMENTO
+*/
+function calibrarequipamento(idEquipamento, posicao){
+
+    /*
+    * CARREGA OS DADOS DO EQUIPAMENTO
+    */
+    if(idEquipamento > 0){
+
+        $.ajax({
+            url: urlP+"/equipamento/carregarDadosPosicaoTabelaJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+             'idEquipamento' : idEquipamento,
+             'posicao' : posicao
+            },
+            success : function(datra)
+            {
+
+                if(datra.status){
+
+                    var ultimoDado = Number(datra.ultimoDado) / 100;
+                    var n = ultimoDado.toFixed(2);
+                    var registro = '';
+
+                    //SWAL que exibirá um pronpt para o usuário informar o valor real recebido pelo medidor
+                    swal({
+                          customClass: "modCalibracao",
+                          title: "Calibração!",
+                          text: "Valor bruto enviado do equipamento na posição '"+posicao+"' : "+n+" ! Informe o valor real informado pelo medidor.",
+                          type: "input",
+                          showCancelButton: true,
+                          closeOnConfirm: false,
+                          animation: "slide-from-top",
+                          inputPlaceholder: "000.00"
+                        },
+                        function(inputValue){
+                          if (inputValue === false) return false;
+
+                          if (inputValue === "") {
+                            swal.showInputError("É necessario informar um valor!");
+                            return false
+                          }
+
+                         //Função para cadastrar o valor de calibração da posição
+                         registro = registrarCalibracaoEquipamento(idEquipamento, posicao, n, inputValue);
+
+                         console.log(" Resultado calibracao "+ registro);
+
+                        if(registro != false){
+                            swal("Sucesso!", "Posição : " + posicao +" foi calibrada com sucesso, favor verificar os dados." , "success");
+                        }else{
+                            swal("Ops!", "Favor verificar o valor informado!", "error");
+                        }
+
+                          //swal("Nice!", "You wrote: " + inputValue, "success");
+                    });
+                }else{
+                    swal('','Não foi possivel carragar este dado, favor verificar as informações e configuraçãoes do equipamento.','error');
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+            }
+        });
+
+        //swal('','Teste ! '+idEquipamento,'success');
+
+    }else{
+        swal('','Favor verificar o equipamento que está tentando calibrar.','error');
+    }
+
+
+}
+
+/*
+* INICIA PROCESSO DE CADASTRO DE VALOR DE CALIBRAÇÂO
+*/
+function registrarCalibracaoEquipamento(idEquipamento, posicao, valorReal, valorRecebido){
+
+    /*
+    * VERIFICA SE O VALOR DIGITADO PELO USUÁRIO É VÁLIDO
+    */
+    if(isNaN(valorRecebido)){
+
+        return false;
+    }else{
+
+        /*
+            CAUCULO DA VARIAVEL DE CALIBRAÇÃO DE EQUIPAMENTO
+            VALOR BRUTO VINDO DA TABELA  DIVIDIDO PELO VALOR REAL MEDIDO NO EQUIPAMENTO
+            IGUAL A VARIAVEL DE CALIBRAÇÃO.
+        */
+        var calibracaoVal = valorReal / valorRecebido;
+
+        //VARIAVEL DE CALIBRACAO É SALVO
+        $.ajax({
+            url: urlP+"/equipamento/salvarPosicaoTabelaJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+             'idEquipamento' : idEquipamento,
+             'posicao' : posicao,
+             'valorCalibracao' : calibracaoVal
+            },
+            success : function(datra)
+            {
+                if(datra.status){
+                    return datra.resultado;
+                }else{
+                    return false;
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+
+                return false;
+            }
+        });
+
+        //return true;
+    }
+
 }

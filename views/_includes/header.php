@@ -20,6 +20,7 @@
 
         <!-- Bootstrap -->
         <link href="<?php echo HOME_URI; ?>/views/_css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="<?php echo HOME_URI; ?>/views/_css/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
         <!-- <link href="<?php echo HOME_URI; ?>/views/_css/bootstrap-reset.css" rel="stylesheet" type="text/css"> -->
 
 
@@ -44,6 +45,8 @@
 
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.validate.js"></script>
         <script src="<?php echo HOME_URI; ?>/views/_js/additional-methods.js"></script>
+
+        
 
         <!-- Jquery UI CSS -->
         <!-- <link rel="stylesheet" type="text/css" href="<?php //echo HOME_URI; ?>/views/_css/jquery.css"> -->

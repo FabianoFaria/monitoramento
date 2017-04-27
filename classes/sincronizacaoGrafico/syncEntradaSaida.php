@@ -98,12 +98,20 @@ function verificaLigado($conn,$sim)
     // Executa a query
     $result = $conn->select($query);
 
-    // Verifica se existe valor na result
-    if (@mysql_num_rows($result) > 0)
-    {
+    // // Verifica se existe valor na result
+    // if (@mysql_num_rows($result) > 0)
+    // {
+
+    if(!empty($result)){
+
         // Converte os valores da result em array
-        while ($row = @mysql_fetch_assoc($result))
+        // while ($row = @mysql_fetch_assoc($result))
+        //     $resultado[] = $row;
+
+        foreach ($result as $row){
             $resultado[] = $row;
+        }
+
     }
 
     // Verifica se esta em branco
@@ -137,19 +145,29 @@ function verificaEntradaSaida ($conn,$tb,$sim)
     // Verifica se existe uma resposta
     if ($result)
     {
-        // Verifica se existe conteudo */
-        if (@mysql_num_rows($result) > 0)
-        {
+        // // Verifica se existe conteudo */
+        // if (@mysql_num_rows($result) > 0)
+        // {
+        if(!empty($result)){
             // Coleta o valor e insere na variavel de resposta
-            while($row = @mysql_fetch_assoc($result))
-            {
-                // Insere na variavel de resposta
+            // while($row = @mysql_fetch_assoc($result))
+            // {
+            //     // Insere na variavel de resposta
+            //     $resp = $row[$tb];
+            //     // Retorna o tamanho da string
+            //     $tamResp = strlen($resp);
+            //     // Convert a string em vetor
+            //     $resp = intval($resp);
+            // }
+
+            foreach ($result as $row){
                 $resp = $row[$tb];
                 // Retorna o tamanho da string
                 $tamResp = strlen($resp);
                 // Convert a string em vetor
                 $resp = intval($resp);
             }
+
             // Devolve a resposta por callback
             echo $_GET['callback']. '(['. json_encode($resp) . '])';
         }
@@ -170,11 +188,17 @@ function verificaFaltas($conn,$sim)
     $result = $conn->select($query);
 
     // Verifica se existe resultado
-    if (@mysql_num_rows ($result) > 0)
-    {
-        // Coleta dos dados
-        while ($row = @mysql_fetch_assoc($result))
+    // if (@mysql_num_rows ($result) > 0)
+    // {
+
+    if(!empty($result)){
+
+        // // Coleta dos dados
+        // while ($row = @mysql_fetch_assoc($result))
+        //     $resp[] = $row;
+        foreach ($result as $row){
             $resp[] = $row;
+        }
     }
     // converte para inteiro
     $resultado = intval($resp[0]['n_falta']);
@@ -196,11 +220,16 @@ function verificaTempoOperacao($conn,$sim)
     $result = $conn->select($query);
 
     // Verifica se existe resultado
-    if (@mysql_num_rows ($result) > 0)
-    {
+    // if (@mysql_num_rows ($result) > 0)
+    // {
+    if(!empty($result)){
         // Coleta dos dados
-        while ($row = @mysql_fetch_assoc($result))
+        // while ($row = @mysql_fetch_assoc($result))
+        //     $resp[] = $row;
+
+        foreach ($result as $row){
             $resp[] = $row;
+        }
     }
     else
     {
@@ -210,11 +239,18 @@ function verificaTempoOperacao($conn,$sim)
 
         // Realiza a pesquisa no banco
         $result = $conn->select($query);
-        if (@mysql_num_rows ($result) > 0)
-        {
-            // Coleta dos dados
-            while ($row = @mysql_fetch_assoc($result))
+        // if (@mysql_num_rows ($result) > 0)
+        // {
+
+        if(!empty($result)){
+
+            // // Coleta dos dados
+            // while ($row = @mysql_fetch_assoc($result))
+            //     $resp[] = $row;
+
+            foreach ($result as $row){
                 $resp[] = $row;
+            }
         }
         else
             $resultdo = 0;
@@ -239,12 +275,17 @@ function verificaBateria ($conn,$sim,$tb)
     // MONTA A RESULT
     $result = $conn->select($query);
 
-    // Verifica se existe valor
-    if (@mysql_num_rows($result) > 0)
-    {
-        // Pega os valores
-        while ($row = @mysql_fetch_assoc($result))
+    // // Verifica se existe valor
+    // if (@mysql_num_rows($result) > 0)
+    // {
+    if(!empty($result)){
+        // // Pega os valores
+        // while ($row = @mysql_fetch_assoc($result))
+        //     $resp[] = $row;
+
+        foreach ($result as $row){
             $resp[] = $row;
+        }
     }
     else
         $resp = 0;
@@ -257,5 +298,5 @@ function verificaBateria ($conn,$sim,$tb)
 }
 
 // Fecha a conexao com o banco
-$conn->close();
+//$conn->close();
 ?>

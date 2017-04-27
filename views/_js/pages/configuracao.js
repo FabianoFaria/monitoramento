@@ -13,7 +13,7 @@ $('#txt_celular').mask('(99) 9999-99999');
 function atualizarContato(id_contatoAlerta)
 {
     $.ajax({
-        url: urlP+"/eficazmonitor/alarme/carregarContatosAlarmesJson",
+        url: urlP+"/alarme/carregarContatosAlarmesJson",
         secureuri: false,
         type : "POST",
         dataType: 'json',
@@ -78,7 +78,7 @@ function removerContato(id_contatoAlerta){
       if (isConfirm) {
 
           $.ajax({
-              url: urlP+"/eficazmonitor/alarme/removerContatosAlarmesJson",
+              url: urlP+"/alarme/removerContatosAlarmesJson",
               secureuri: false,
               type : "POST",
               dataType: 'json',
@@ -213,7 +213,7 @@ $().ready(function(){
             var numeroSim           = $('#num_sim').val();
 
             $.ajax({
-                url: urlP+"/eficazmonitor/configuracao/cadastrarConfiguracaoEquipamentoJson",
+                url: urlP+"/configuracao/cadastrarConfiguracaoEquipamentoJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -252,7 +252,7 @@ $().ready(function(){
             var numeroSim           = $('#num_sim').val();
 
             $.ajax({
-                url: urlP+"/eficazmonitor/configuracao/editarConfiguracaoEquipamentoJson",
+                url: urlP+"/configuracao/editarConfiguracaoEquipamentoJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -351,7 +351,7 @@ $().ready(function(){
             var numeroSim           = $('#num_sim').val();
 
             $.ajax({
-                url: urlP+"/eficazmonitor/configuracao/cadastrarConfiguracaoEquipamentoJson",
+                url: urlP+"/configuracao/cadastrarConfiguracaoEquipamentoJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -393,7 +393,7 @@ $().ready(function(){
             //console.log(parametros.length);
 
             $.ajax({
-                url: urlP+"/eficazmonitor/configuracao/editarConfiguracaoEquipamentoJson",
+                url: urlP+"/configuracao/editarConfiguracaoEquipamentoJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -478,7 +478,7 @@ $().ready(function(){
             var obserEdit   = $('#txt_obs_edit').val();
 
             $.ajax({
-             url: urlP+"/eficazmonitor/alarme/salvarEditContatoAlarmeJson",
+             url: urlP+"/alarme/salvarEditContatoAlarmeJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -578,7 +578,7 @@ $().ready(function(){
             var obsContato = $('#txt_obs').val();
 
             $.ajax({
-             url: urlP+"/eficazmonitor/alarme/registrarContatoAlarmeJson",
+             url: urlP+"/alarme/registrarContatoAlarmeJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',

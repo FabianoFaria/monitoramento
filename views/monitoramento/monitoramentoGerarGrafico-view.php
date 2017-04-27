@@ -464,6 +464,7 @@ else
                 <div class="panel-body">
                     <!-- DETALHES DO CLIENTE -->
                     <div class="row">
+
                         <div class="col-lg-6">
                             <h4>Cliente</h4>
                             <p>
@@ -478,6 +479,18 @@ else
                         </div>
                     </div>
                     <!-- INICIO DOS GRÁFICO DE MONITORAMENTO -->
+                    <?php
+
+                        //var_dump($dadosEquipamento);
+
+                        // 'tipo_entrada' => string '3' (length=1)
+                        // 'tipo_saida' => string '3' (length=1)
+                        //VERIFICA O TIPO DE SAIDA E ENTRADA PARA EXIBIR NA TELA
+                        $tipoEntrada    = $dadosEquipamento['tipo_entrada'];
+                        $tipoSaida      = $dadosEquipamento['tipo_saida'];
+                    ?>
+                    <input type="hidden" id="tipoEntrada" value="<?php echo $tipoEntrada; ?>" />
+                    <input type="hidden" id="tipoSaida" value="<?php echo $tipoSaida; ?>" />
 
                     <div class="row">
                         <div class="panel panel-info">
@@ -510,22 +523,43 @@ else
                                                             <div id="sit-ent1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada R/S -->
                                                     </div>
-                                                    <div class="row">
-                                                        <!-- Entrada R/S -->
-                                                        <div class="ol-md-12 col-sm-12 col-xs-12">
-                                                            <div id="containerEntrada2" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_e2">0</span> ( v )</label>
-                                                            <div id="sit-ent2" class="situacaoDesligado">Carregando...</div>
-                                                        </div><!-- Fim entrada R/S -->
-                                                    </div>
-                                                    <div class="row">
-                                                        <!-- Entrada R/S -->
-                                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                                            <div id="containerEntrada3" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_e3">0</span> ( v )</label>
-                                                            <div id="sit-ent3" class="situacaoDesligado">Carregando...</div>
-                                                        </div><!-- Fim entrada R/S -->
-                                                    </div>
+                                                    <?php
+                                                        //VERIFICA SE ENTRADA POSSUI A ENTRADA S
+                                                        if($tipoEntrada >= 2){
+
+                                                        ?>
+                                                        <div class="row">
+                                                            <!-- Entrada R/S -->
+                                                            <div class="ol-md-12 col-sm-12 col-xs-12">
+                                                                <div id="containerEntrada2" style="width: 100%; margin: 0 auto;"></div>
+                                                                <label class="valorVindo" value=""><span id="bat_e2">0</span> ( v )</label>
+                                                                <div id="sit-ent2" class="situacaoDesligado">Carregando...</div>
+                                                            </div><!-- Fim entrada R/S -->
+                                                        </div>
+                                                        <?php
+
+                                                        }
+                                                    ?>
+
+                                                    <?php
+
+                                                        //VERIFICA SE ENTRADA POSSUI A ENTRADA T
+                                                        if($tipoEntrada == 3){
+                                                        ?>
+                                                        <div class="row">
+                                                            <!-- Entrada R/S -->
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div id="containerEntrada3" style="width: 100%; margin: 0 auto;"></div>
+                                                                <label class="valorVindo" value=""><span id="bat_e3">0</span> ( v )</label>
+                                                                <div id="sit-ent3" class="situacaoDesligado">Carregando...</div>
+                                                            </div><!-- Fim entrada R/S -->
+                                                        </div>
+                                                        <?php
+                                                        }
+
+                                                    ?>
+
+
 
                                                 </div>
                                                 <!-- SAÍDA -->
@@ -539,22 +573,41 @@ else
                                                             <div id="sit-sai1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Saida S/T -->
                                                     </div>
-                                                    <div class="row">
-                                                        <!-- Saida S/T -->
-                                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                                            <div id="containerTensaSaida2" style="width:100%; margin: 0 auto"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_s2">0</span> ( v )</label>
-                                                            <div id="sit-sai2" class="situacaoDesligado">Carregando...</div>
-                                                        </div><!-- Saida S/T -->
-                                                    </div>
-                                                    <div class="row">
-                                                        <!-- Saida S/T -->
-                                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                                            <div id="containerTensaSaida3" style="width:100%; margin: 0 auto"></div>
-                                                            <label class="valorVindo" value=""><span id="bat_s3">0</span> ( v )</label>
-                                                            <div id="sit-sai3" class="situacaoDesligado">Carregando...</div>
-                                                        </div><!-- Saida S/T -->
-                                                    </div>
+                                                    <?php
+
+                                                        //VERIFICA SE ENTRADA POSSUI A ENTRADA T
+                                                        if($tipoEntrada >= 2){
+                                                        ?>
+                                                        <div class="row">
+                                                            <!-- Saida S/T -->
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div id="containerTensaSaida2" style="width:100%; margin: 0 auto"></div>
+                                                                <label class="valorVindo" value=""><span id="bat_s2">0</span> ( v )</label>
+                                                                <div id="sit-sai2" class="situacaoDesligado">Carregando...</div>
+                                                            </div><!-- Saida S/T -->
+                                                        </div>
+                                                        <?php
+                                                        }
+
+                                                    ?>
+
+                                                    <?php
+
+                                                        //VERIFICA SE ENTRADA POSSUI A ENTRADA T
+                                                        if($tipoEntrada == 3){
+                                                        ?>
+                                                        <div class="row">
+                                                            <!-- Saida S/T -->
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div id="containerTensaSaida3" style="width:100%; margin: 0 auto"></div>
+                                                                <label class="valorVindo" value=""><span id="bat_s3">0</span> ( v )</label>
+                                                                <div id="sit-sai3" class="situacaoDesligado">Carregando...</div>
+                                                            </div><!-- Saida S/T -->
+                                                        </div>
+                                                        <?php
+                                                        }
+
+                                                    ?>
 
                                                 </div>
                                             </div>
@@ -573,18 +626,36 @@ else
                                                             <label class="valorVindo"><span id="cor_e1">0</span> ( A )</label>
                                                             <div id="sit-cor-ent1" class="situacaoDesligado">Carregando...</div>
                                                         </div><!-- Fim entrada Corrente -->
-                                                        <!-- Entrada Corrente -->
-                                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                                            <div id="containerEntradaCorente2" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo"><span id="cor_e2" >0</span> ( A )</label>
-                                                            <div id="sit-cor-ent2" class="situacaoDesligado">Carregando...</div>
-                                                        </div><!-- Fim entrada Corrente -->
-                                                        <!-- Entrada Corrente -->
-                                                        <div class="col-md-12 col-sm-12 col-xs-12 ">
-                                                            <div id="containerEntradaCorente3" style="width: 100%; margin: 0 auto;"></div>
-                                                            <label class="valorVindo"> <span id="cor_e3" >0</span> ( A )</label>
-                                                            <div id="sit-cor-ent3" class="situacaoDesligado">Carregando...</div>
-                                                        </div><!-- Fim entrada Corrente -->
+                                                        <?php
+
+                                                            //VERIFICA SE EQUIPAMENTO POSSUI A SAÍDA S
+                                                            if($tipoSaida >= 2){
+                                                            ?>
+                                                            <!-- Entrada Corrente -->
+                                                            <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                                <div id="containerEntradaCorente2" style="width: 100%; margin: 0 auto;"></div>
+                                                                <label class="valorVindo"><span id="cor_e2" >0</span> ( A )</label>
+                                                                <div id="sit-cor-ent2" class="situacaoDesligado">Carregando...</div>
+                                                            </div><!-- Fim entrada Corrente -->
+                                                            <?php
+                                                            }
+                                                        ?>
+
+                                                        <?php
+
+                                                            //VERIFICA SE EQUIPAMENTO POSSUI A SAÍDA S
+                                                            if($tipoSaida == 3 ){
+                                                            ?>
+                                                            <!-- Entrada Corrente -->
+                                                            <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                                <div id="containerEntradaCorente3" style="width: 100%; margin: 0 auto;"></div>
+                                                                <label class="valorVindo"> <span id="cor_e3" >0</span> ( A )</label>
+                                                                <div id="sit-cor-ent3" class="situacaoDesligado">Carregando...</div>
+                                                            </div><!-- Fim entrada Corrente -->
+                                                            <?php
+                                                            }
+                                                        ?>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -595,18 +666,37 @@ else
                                                         <label class="valorVindo"><span id="cor_s1">0</span> ( A )</label>
                                                         <div id="sit-cor-sai1" class="situacaoDesligado">Carregando...</div>
                                                     </div><!-- Saida S/T -->
-                                                    <!-- Saida S/T -->
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <div id="containerCorrentSaida2" style="width:100%; margin: 0 auto"></div>
-                                                        <label  class="valorVindo"><span id="cor_s2">0</span> ( A )</label>
-                                                        <div id="sit-cor-sai2" class="situacaoDesligado">Carregando...</div>
-                                                    </div><!-- Saida S/T -->
-                                                    <!-- Saida S/T -->
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <div id="containerCorrentSaida3" style="width:100%; margin: 0 auto"></div>
-                                                        <label  class="valorVindo"><span id="cor_s3">0</span> ( A )</label>
-                                                        <div id="sit-cor-sai3" class="situacaoDesligado">Carregando...</div>
-                                                    </div><!-- Saida S/T -->
+
+                                                    <?php
+
+                                                        //VERIFICA SE EQUIPAMENTO POSSUI A SAÍDA S
+                                                        if($tipoSaida >= 2){
+                                                        ?>
+                                                        <!-- Saida S/T -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div id="containerCorrentSaida2" style="width:100%; margin: 0 auto"></div>
+                                                            <label  class="valorVindo"><span id="cor_s2">0</span> ( A )</label>
+                                                            <div id="sit-cor-sai2" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Saida S/T -->
+                                                        <?php
+                                                        }
+                                                    ?>
+
+                                                    <?php
+
+                                                        //VERIFICA SE EQUIPAMENTO POSSUI A SAÍDA S
+                                                        if($tipoSaida == 3 ){
+                                                        ?>
+                                                        <!-- Saida S/T -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div id="containerCorrentSaida3" style="width:100%; margin: 0 auto"></div>
+                                                            <label  class="valorVindo"><span id="cor_s3">0</span> ( A )</label>
+                                                            <div id="sit-cor-sai3" class="situacaoDesligado">Carregando...</div>
+                                                        </div><!-- Saida S/T -->
+                                                        <?php
+                                                        }
+                                                    ?>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -630,6 +720,17 @@ else
                                     <script>
                                         setInterval(function(){
 
+                                            /*
+                                             VARIAVEIS PARA VERIFICAÇÃO DE TIPO DE EQUIPAMENTO
+                                            */
+                                            // var tipoEntradaEquip    = $('#tipoEntrada').val();
+                                            // var tipoSaidaEquip      = $('#tipoSaida').val();
+
+                                            var tipoEntradaEquip    = document.getElementById("tipoEntrada").value;
+                                            var tipoSaidaEquip      = document.getElementById("tipoSaida").value;
+
+                                            //console.log('Entrada = '+ tipoEntradaEquip+' sadidas'+ tipoSaidaEquip);
+
                                             var potenciaEquip = $('#totalPotenciaEquip').html();
 
                                             //ENTRADA R
@@ -642,27 +743,58 @@ else
                                             var potEntR = new Number(entR[0]) * new Number(saiR[0]);
                                             $('#entrR').html(potEntR.toFixed(2) + " (w)");
 
-                                            //ENTRADA S
-                                            var tempEntS = $('#bat_e2').html();
-                                            var tempSaiS = $('#cor_e2').html();
+                                            //VERIFICA SE EQUIPAMENTO POSSUI ENTRADA S
 
-                                            var entS    = tempEntS.split(' ');
-                                            var saiS    = tempSaiS.split(' ');
+                                            if(tipoEntradaEquip >= 2){
+                                                //ENTRADA S
+                                                var tempEntS = $('#bat_e2').html();
+                                                var tempSaiS = $('#cor_e2').html();
 
-                                            var potEntS = new Number(entS[0]) * new Number(saiS[0]);
-                                            $('#entrS').html(potEntR.toFixed(2) + " (w)");
+                                                var entS    = tempEntS.split(' ');
+                                                var saiS    = tempSaiS.split(' ');
+
+                                                var potEntS = new Number(entS[0]) * new Number(saiS[0]);
+                                                $('#entrS').html(potEntR.toFixed(2) + " (w)");
+
+                                            }else{
+                                                //ENTRADA S
+                                                var tempEntS = 0;
+                                                var tempSaiS = 0;
+
+                                                var entS    = 0;
+                                                var saiS    = 0;
+
+                                                var potEntS = 0;
+                                            }
 
 
-                                            //ENTRADA T
-                                            var tempEntT = $('#bat_e3').html();
-                                            var tempSaiT = $('#cor_e3').html();
+                                            //VERIFICA SE EQUIPAMENTO POSSUI ENTRADA T
+                                            if(tipoEntradaEquip == 3){
+                                                //ENTRADA T
+                                                var tempEntT = $('#bat_e3').html();
+                                                var tempSaiT = $('#cor_e3').html();
 
-                                            var entT    = tempEntT.split(' ');
-                                            var saiT    = tempSaiT.split(' ');
+                                                var entT    = tempEntT.split(' ');
+                                                var saiT    = tempSaiT.split(' ');
 
-                                            var potEntT = new Number(entT[0]) * new Number(saiT[0]);
-                                            $('#entrT').html(potEntT.toFixed(2) + " (w)");
+                                                var potEntT = new Number(entT[0]) * new Number(saiT[0]);
+                                                $('#entrT').html(potEntT.toFixed(2) + " (w)");
+                                            }else{
+                                                //ENTRADA T
+                                                var tempEntT = 0;
+                                                var tempSaiT = 0;
 
+                                                var entT    = 0;
+                                                var saiT    = 0;
+
+                                                var potEntT = 0;
+                                            }
+
+
+
+
+
+                                            //  Inicio do calculo para saidas
 
                                             //SAÍDA R
                                             var tempCorEntR = $('#bat_s1').html();
@@ -674,28 +806,55 @@ else
                                             var potSaiR = new Number(corEntR[0]) * new Number(corSaiR[0]);
                                             $('#saiR').html(potSaiR.toFixed(2) + " (w)");
 
-                                            //SAÍDA S
-                                            var tempCorEntS = $('#bat_s2').html();
-                                            var tempCorSaiS = $('#cor_s2').html();
+                                            //VERIFICA SE EQUIPAMENTO POSSUI SAIDA S
 
-                                            var corEntS    = tempCorEntS.split(' ');
-                                            var corSaiS    = tempCorSaiS.split(' ');
+                                            if(tipoSaidaEquip >= 2){
+                                                //SAÍDA S
+                                                var tempCorEntS = $('#bat_s2').html();
+                                                var tempCorSaiS = $('#cor_s2').html();
 
-                                            var potSaiS = new Number(corEntS[0]) * new Number(corSaiS[0]);
-                                            $('#saiS').html(potSaiS.toFixed(2) + " (w)");
+                                                var corEntS    = tempCorEntS.split(' ');
+                                                var corSaiS    = tempCorSaiS.split(' ');
 
-                                            //SAÍDA T
-                                            var tempCorEntT = $('#bat_s3').html();
-                                            var tempCorSaiT = $('#cor_s3').html();
+                                                var potSaiS = new Number(corEntS[0]) * new Number(corSaiS[0]);
+                                                $('#saiS').html(potSaiS.toFixed(2) + " (w)");
 
-                                            var corEntT    = tempCorEntT.split(' ');
-                                            var corSaiT    = tempCorSaiT.split(' ');
+                                            }else{
+                                                //SAÍDA S
+                                                var tempCorEntS = 0;
+                                                var tempCorSaiS = 0;
 
-                                            var potSaiT = new Number(corEntT[0]) * new Number(corSaiT[0]);
-                                            $('#saiT').html(potSaiT.toFixed(2) + " (w)");
+                                                var potSaiS = 0;
+                                            }
+
+                                            //VERIFICA SE EQUIPAMENTO POSSUI SAIDA T
+
+                                            if(tipoSaidaEquip == 3){
+
+                                                //SAÍDA T
+                                                var tempCorEntT = $('#bat_s3').html();
+                                                var tempCorSaiT = $('#cor_s3').html();
+
+                                                var corEntT    = tempCorEntT.split(' ');
+                                                var corSaiT    = tempCorSaiT.split(' ');
+
+                                                var potSaiT = new Number(corEntT[0]) * new Number(corSaiT[0]);
+                                                $('#saiT').html(potSaiT.toFixed(2) + " (w)");
+
+                                            }else{
+                                                //SAÍDA T
+                                                var tempCorEntT = 0;
+                                                var tempCorSaiT = 0;
+
+                                                var corEntT    = 0;
+                                                var corSaiT    = 0;
+
+                                                var potSaiT =  0;
+                                            }
+
 
                                             //SOMA DA ENTRADA DE POTÊNCIA -- CORRIGIR AS VARIAVEIS QUE COMPOE A SOMA
-                                            var totalEntradaPot = potEntR + potEntR + potEntT;
+                                            var totalEntradaPot = potEntR + potEntS + potEntT;
                                             var percentualEntradaPot = (totalEntradaPot * 100) / ((potenciaEquip * 1000) * 0.85);
 
                                             //Estilização do gráfico de entrada de potência
@@ -1036,9 +1195,11 @@ else
 
                                                 var quantidadeBancoBateria = $('#quantidadeBancoBateria').val();
 
-                                                var tempoEstimadoHora   = parseFloat(data[1]);
-                                                var data_registro       = data[3];
-                                                var correnteNominalBateria = parseFloat(data[5]);
+                                                console.log(data.data_registro);
+
+                                                var tempoEstimadoHora   = parseFloat(data.tempoEstimadoHora);//parseFloat(data[1]);
+                                                var data_registro       = data.data_registro; //data[3];
+                                                var correnteNominalBateria = parseFloat(data.correnteBancoBateria);//parseFloat(data.);//parseFloat(data[5]);
 
                                                 var tempoTemp           = data_registro.split(" ");
                                                 var dataCarga           = tempoTemp[0].split("-");

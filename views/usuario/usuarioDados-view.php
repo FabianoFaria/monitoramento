@@ -54,7 +54,7 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
                 </div>
 
             </div>
-
+            <!-- Comentando a parte de upload de imagens até o momento em que for aprovado para ser implementado para o cliente -->
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -66,6 +66,7 @@ menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Ho
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="col-md-5">
                     <div class="form-group">

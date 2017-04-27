@@ -742,6 +742,46 @@ function calculaPotenciaSimples($idSim, $paramTensao, $paramCorren, $sentido, $p
     return $retorno;
 }
 
+/*
+* FUNÇÃO PARA IDENTIFIR FALSOS POSITIVOS
+*/
+function identificarFalsoPositivo($sim_num, $posicao){
+
+    // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+    $connBase       = new EficazDB;
+
+    $queryPosicao = "SELECT $posicao
+                     FROM tb_dados
+                     WHERE num_sim = '$sim_num' AND status_ativo = '1'
+                     GROUP BY id DESC
+                     LIMIT 1,1";
+
+    // Monta a result
+    $result = $connBase->select($queryPosicao);
+
+    // Verifica se existe valor de retorno
+    if (@mysql_num_rows ($result) > 0)
+    {
+        /* ARMAZENA NA ARRAY */
+        while ($row = @mysql_fetch_assoc ($result))
+        {
+            $retorno[] = $row;
+        }
+
+    }else{
+        // Se nao existir valor de retorno
+        // Armazena 0 no vetor
+        $retorno[] = 0;
+    }
+
+    // Fecha a conexao
+    $connBase->close();
+
+
+    return $retorno;
+
+}
+
 
 
 ?>

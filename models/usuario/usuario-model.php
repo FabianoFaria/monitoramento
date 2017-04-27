@@ -27,12 +27,16 @@ class UsuarioModel extends MainModel
             $busca = $this->db->select($query);
 
             /* verifica se a query executa */
-            if($busca){
-                /* Retorna a row com os dados do usuário */
-                while($row = @mysql_fetch_assoc($busca)){
-
-                    return $row;
+            if(!empty($busca)){
+                // /* Retorna a row com os dados do usuário */
+                // while($row = @mysql_fetch_assoc($busca)){
+                //
+                //     return $row;
+                // }
+                foreach ($busca as $row) {
+                    $retorno = $row;
                 }
+                return $retorno;
             }
             else{
                 return false;
@@ -56,12 +60,16 @@ class UsuarioModel extends MainModel
             $busca = $this->db->select($query);
 
             /* verifica se a query executa */
-            if($busca){
+            if(!empty($busca)){
                 /* Retorna a row com os dados do usuário */
-                while($row = @mysql_fetch_assoc($busca)){
-
-                    return $row;
+                // while($row = @mysql_fetch_assoc($busca)){
+                //
+                //     return $row;
+                // }
+                foreach ($busca as $row) {
+                    $retorno = $row;
                 }
+                 return $retorno;
             }
             else{
                 return false;
@@ -214,20 +222,24 @@ class UsuarioModel extends MainModel
         $result = $this->db->select($query);
 
         /* verifica se existe resposta */
-        if ($result)
+        if(!empty($result))
         {
-            /* verifica se existe valor */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* armazena na array */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
-
-                /* devolve retorno */
-                return $retorno;
+            // /* verifica se existe valor */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* armazena na array */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* devolve retorno */
+            //     return $retorno;
+            // }
+            foreach ($result as $row) {
+                $retorno[] = $row;
             }
+            return $retorno;
         }
         else
             return false;
@@ -255,20 +267,24 @@ class UsuarioModel extends MainModel
         $result = $this->db->select($query);
 
         /* verifica se existe resposta */
-        if ($result)
+        if(!empty($result))
         {
-            /* verifica se existe valor */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* armazena na array */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
-
-                /* devolve retorno */
-                return $retorno;
+            // /* verifica se existe valor */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* armazena na array */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* devolve retorno */
+            //     return $retorno;
+            // }
+            foreach ($result as $row) {
+                $retorno[] = $row;
             }
+            return $retorno;
         }
         else
             return false;
@@ -290,10 +306,18 @@ class UsuarioModel extends MainModel
 
             //var_dump($query);
 
+            $resultado = $this->db->query($query);
+
             // Verifica se gravou com sucesso
-            if ($this->db->query($query))
+            if(!empty($resultado))
             {
-                $idGerada  = mysql_insert_id();
+                if(is_numeric($resultado)){
+                    $idGerada = $result;
+                }else{
+                    $idGerada = null;
+                }
+
+                //$idGerada  = mysql_insert_id();
                 $array = array('status' => true, 'idUsuario' => $idGerada);
             }else{
                 $array = array('status' => false, 'idUsuario' => 0);
@@ -345,22 +369,30 @@ class UsuarioModel extends MainModel
         $result = $this->db->select($query);
 
         /* VERIFICA SE EXISTE RESPOSTA */
-        if ($result)
+        if(!empty($result))
         {
-            /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* DEVOLVE RETORNO */
+            //     return $retorno;
+            // }
+            // /* DEVOLVE RETORNO */
+            // $array = array('status' => true, 'clientes' => $retorno);
 
-                /* DEVOLVE RETORNO */
-                return $retorno;
+            foreach ($result as $row) {
+                $retorno[] = $row;
             }
-            /* DEVOLVE RETORNO */
+
+             /* DEVOLVE RETORNO */
             $array = array('status' => true, 'clientes' => $retorno);
+
         }else{
             $array = array('status' => false, 'clientes' => '');
         }
@@ -378,22 +410,32 @@ class UsuarioModel extends MainModel
         $result = $this->db->select($query);
 
         /* VERIFICA SE EXISTE RESPOSTA */
-        if ($result)
+        if (!empty($result))
         {
-            /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* DEVOLVE RETORNO */
+            //     //return $retorno
+            //     $array = array('status' => true, 'clientes' => $retorno);
+            // }else{
+            //     /* DEVOLVE RETORNO */
+            //     $array = array('status' => false, 'clientes' => '');
+            // }
 
-                /* DEVOLVE RETORNO */
-                return $retorno;
+            foreach ($result as $row){
+                $retorno[] = $row;
             }
+
             /* DEVOLVE RETORNO */
             $array = array('status' => true, 'clientes' => $retorno);
+
         }else{
             $array = array('status' => false, 'clientes' => '');
         }
@@ -414,22 +456,30 @@ class UsuarioModel extends MainModel
         $result = $this->db->select($query);
 
         /* VERIFICA SE EXISTE RESPOSTA */
-        if ($result)
+        if (!empty($result))
         {
-            /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* DEVOLVE RETORNO */
+            //     return $retorno;
+            // }
+            // /* DEVOLVE RETORNO */
+            // $array = array('status' => true, 'acessos' => $retorno);
 
-                /* DEVOLVE RETORNO */
-                return $retorno;
+            foreach ($result as $row){
+                $retorno[] = $row;
             }
+
             /* DEVOLVE RETORNO */
             $array = array('status' => true, 'acessos' => $retorno);
+
         }else{
             $array = array('status' => false, 'acessos' => '');
         }
@@ -452,22 +502,30 @@ class UsuarioModel extends MainModel
         $result = $this->db->select($query);
 
         /* VERIFICA SE EXISTE RESPOSTA */
-        if ($result)
+        if (!empty($result))
         {
-            /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     /* DEVOLVE RETORNO */
+            //     return $retorno;
+            // }
+            // /* DEVOLVE RETORNO */
+            // $array = array('status' => true, 'acessos' => $retorno);
 
-                /* DEVOLVE RETORNO */
-                return $retorno;
+            foreach ($result as $row){
+                $retorno[] = $row;
             }
+
             /* DEVOLVE RETORNO */
             $array = array('status' => true, 'acessos' => $retorno);
+
         }else{
             $array = array('status' => false, 'acessos' => '');
         }
@@ -584,6 +642,40 @@ class UsuarioModel extends MainModel
           }
 
           return $array;
+    }
+
+
+    /*
+    * FUNÇÃO PARA ATUALIZAR O USUÁRIO CONTATO DO CLIENTE
+    */
+    public function atualizarUsuarioContatoJson($idUsuario, $nome, $sobrenome, $email, $celular, $telefone, $senha, $iCliente){
+
+        // Coletar os dados do post
+        $id_user   = $idUsuario;
+        $nome      = $this->tratamento($nome);
+        $sobrenome = $this->tratamento($sobrenome);
+        $email     = $this->tratamento($email,1);
+        $senha     = ($senha != '') ? md5($senha) : null;
+
+        $query = "UPDATE tb_users SET ";
+          if(isset($nome)){         $query .= "nome = '$nome' ";}
+          if(isset($sobrenome)){    $query .= ", sobrenome = '$sobrenome'";}
+          if(isset($email)){        $query .= ", email = '$email'";}
+          if(isset($celular)){      $query .= ", celular = '$celular'";}
+          if(isset($telefone)){     $query .= ", telefone = '$telefone'";}
+          if(isset($senha)){        $query .= ", senha = '$senha'";}
+          $query .= " WHERE id = '$id_user'";
+
+        /* monta result */
+        $result = $this->db->query($query);
+
+        if ($result){
+          $array = array('status' => true);
+        }else{
+          $array = array('status' => false);
+        }
+
+        return $array;
     }
 
     /*

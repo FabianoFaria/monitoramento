@@ -88,31 +88,31 @@
 
                         $valoresEntrada         = explode('|', $configuracaoSalva[1]);
                         //TESTA OS VALORES DE ENTRADA
-                        $statusB                = comparaParametrosEquipamento(($dadosCarragados['b']/10), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'b');
-                        $statusC                = comparaParametrosEquipamento(($dadosCarragados['c']/10), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'c');
-                        $statusD                = comparaParametrosEquipamento(($dadosCarragados['d']/10), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'd');
+                        $statusB                = comparaParametrosEquipamento(($dadosCarragados['b']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'b');
+                        $statusC                = comparaParametrosEquipamento(($dadosCarragados['c']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'c');
+                        $statusD                = comparaParametrosEquipamento(($dadosCarragados['d']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'd');
 
                         $valoresSaida           = explode('|', $configuracaoSalva[2]);
                         //TESTA OS VALORES DE SAÍDA
-                        $statusE                = comparaParametrosEquipamento(($dadosCarragados['e']/10), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'e');
-                        $statusF                = comparaParametrosEquipamento(($dadosCarragados['f']/10), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'f');
-                        $statusG                = comparaParametrosEquipamento(($dadosCarragados['g']/10), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'g');
+                        $statusE                = comparaParametrosEquipamento(($dadosCarragados['e']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'e');
+                        $statusF                = comparaParametrosEquipamento(($dadosCarragados['f']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'f');
+                        $statusG                = comparaParametrosEquipamento(($dadosCarragados['g']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'g');
 
                         $valoresBateria         = explode('|', $configuracaoSalva[3]);
                         //TESTA OS VALORES DA BATERIA
-                        $statusH                = comparaParametrosEquipamento($dadosCarragados['i'], $valoresBateria, $id_sim_equipamento, 'Bateria', 'h');
+                        $statusH                = comparaParametrosEquipamento(($dadosCarragados['h']/100), $valoresBateria, $id_sim_equipamento, 'Bateria', 'h');
 
                         $valoresCorrente        = explode('|', $configuracaoSalva[4]);
                         //TESTA OS VALORES DE CORRENTE
-                        $statusI                = comparaParametrosEquipamento(($dadosCarragados['h']/10), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'i');
-                        $statusJ                = comparaParametrosEquipamento(($dadosCarragados['j']/10), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'j');
-                        $statusL                = comparaParametrosEquipamento(($dadosCarragados['l']/10), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'l');
+                        $statusI                = comparaParametrosEquipamento(($dadosCarragados['h']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'i');
+                        $statusJ                = comparaParametrosEquipamento(($dadosCarragados['j']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'j');
+                        $statusL                = comparaParametrosEquipamento(($dadosCarragados['l']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'l');
 
                         $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
                         //TESTA OS VALORES DE SAÍDA DE CORRENTE
-                        $statusM                = comparaParametrosEquipamento(($dadosCarragados['m']/10), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'm');
-                        $statusN                = comparaParametrosEquipamento(($dadosCarragados['n']/10), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'n');
-                        $statusO                = comparaParametrosEquipamento(($dadosCarragados['o']/10), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'o');
+                        $statusM                = comparaParametrosEquipamento(($dadosCarragados['m']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'm');
+                        $statusN                = comparaParametrosEquipamento(($dadosCarragados['n']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'n');
+                        $statusO                = comparaParametrosEquipamento(($dadosCarragados['o']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'o');
 
 
                         if(($statusB) && ($statusC) && ($statusD) && ($statusE) && ($statusF) && ($statusG) && ($statusH) && ($statusI) && ($statusJ) && ($statusL) && ($statusM) && ($statusN) && ($statusO)){

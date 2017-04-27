@@ -15,7 +15,7 @@ class MonitoramentoController extends MainController
         $this->check_login();
 
         // Define o titulo da pagina
-        $this->title = "Monitoramento";
+        $this->title = "monitoramento";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -46,7 +46,7 @@ class MonitoramentoController extends MainController
         $this->check_login();
 
         // Define o titulo da pagina
-        $this->title = "Monitoramento";
+        $this->title = "monitoramento";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -77,7 +77,7 @@ class MonitoramentoController extends MainController
         $this->check_login();
 
         // Define o titulo da pagina
-        $this->title = "Monitoramento";
+        $this->title = "monitoramento";
 
         // Define os parametro da funcao
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();

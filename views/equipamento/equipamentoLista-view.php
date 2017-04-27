@@ -46,14 +46,15 @@
                         <thead>
                             <tr>
                                 <th>Equipamento</th>
-                                <th>Modelo</th>
-                                <th>Fabricante</th>
+                                <th>Modelo/Fabricante</th>
+
                                 <!-- <th>Potencia</th>-->
                                 <th>Cliente</th>
                                 <th>Unidade</th>
                                 <!-- <th>Quantidade baterias</th> -->
                                 <th>N° SIM</th>
                                 <!-- <th>Tipo bateria</th> -->
+                                <th class="txt-center">Calibrar valores</th>
                                 <th class="txt-center">Configurar parametros</th>
                                 <th class="txt-center">Editar equipamento</th>
                                 <th class="txt-center">Excluir</th>
@@ -67,8 +68,10 @@
                             ?>
                                 <tr>
                                     <td><?php echo $equipamento['tipo_equipamento']; ?></td>
-                                    <td><?php echo $equipamento['nomeModeloEquipamento']; ?></td>
-                                    <td><?php echo $equipamento['fabricante']; ?></td>
+                                    <td>
+                                        <b><?php echo $equipamento['nomeModeloEquipamento']; ?></b> / <?php echo $equipamento['fabricante']; ?>
+                                    </td>
+
                                     <!-- <td><?php //echo $equipamento['potencia']; ?></td> -->
                                     <td><?php echo $equipamento['cliente']?></td>
                                     <td><?php
@@ -81,13 +84,21 @@
 
                                         ?>
                                     </td>
+
                                     <!-- <td><?php //echo $equipamento['qnt_bateria']; ?></td> -->
                                     <td><?php echo (isset($equipamento['sim_clie'])) ? $equipamento['sim_clie'] : "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> Vincular N° SIM </a>"; ?></td>
 
-                                    <!-- <td><?php //echo $equipamento['tipo_bateria']; ?></td> -->
+                                    <td>
+                                        <!-- <a href="javascript:void(0)" onclick="calibrarequipamento(<?php //echo $equipamento['id'] ?>)"> -->
+                                        <a href="<?php echo HOME_URI; ?>/equipamento/carregarDadosEquipamentoCalibracao/<?php echo $equipamento['id']; ?>" class="link-tabela-moni">
+                                            <i class="fa fa-wrench "></i>
+                                        </a>
+                                    </td>
+
+                                    <!-- <td><?php // echo $equipamento['tipo_bateria']; ?></td> -->
                                     <td><?php //echo $equipamento['amperagem_bateria']; ?>
                                         <a href="<?php echo HOME_URI; ?>/configuracao/configurarEquipamentoCliente/<?php echo $equipamento['id'] ?>" class="link-tabela-moni">
-                                            <i class="fa fa-wrench "></i>
+                                            <i class="fa fa-gears "></i>
                                         </a>
                                     </td>
                                     <td>

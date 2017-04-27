@@ -10,6 +10,8 @@ $dadosEquipamento   = $dadosEquipamento['equipamento'][0];
 $dadosCliente       = $modeloClie->carregarDadosCliente($dadosEquipamento['id_cliente']);
 $dadosCliente       = $dadosCliente['dados'][0];
 
+//var_dump($dadosEquipamento);
+
 ?>
 
 <script>
@@ -20,7 +22,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
     <?php
 
-        // var_dump($modelo->respData);
+        //var_dump($modelo->respData);
         //
         // var_dump($modelo->respDate);
         //
@@ -44,8 +46,6 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
     ?>
             $(function() {
-
-            //var d = [[1196463600000, 0], [1196550000000, 0], [1196636400000, 0], [1196722800000, 77], [1196809200000, 3636], [1196895600000, 3575], [1196982000000, 2736], [1197068400000, 1086], [1197154800000, 676], [1197241200000, 1205], [1197327600000, 906], [1197414000000, 710], [1197500400000, 639], [1197586800000, 540], [1197673200000, 435], [1197759600000, 301], [1197846000000, 575], [1197932400000, 481], [1198018800000, 591], [1198105200000, 608], [1198191600000, 459], [1198278000000, 234], [1198364400000, 1352], [1198450800000, 686], [1198537200000, 279], [1198623600000, 449], [1198710000000, 468], [1198796400000, 392], [1198882800000, 282], [1198969200000, 208], [1199055600000, 229], [1199142000000, 177], [1199228400000, 374], [1199314800000, 436], [1199401200000, 404], [1199487600000, 253], [1199574000000, 218], [1199660400000, 476], [1199746800000, 462], [1199833200000, 448], [1199919600000, 442], [1200006000000, 403], [1200092400000, 204], [1200178800000, 194], [1200265200000, 327], [1200351600000, 374], [1200438000000, 507], [1200524400000, 546], [1200610800000, 482], [1200697200000, 283], [1200783600000, 221], [1200870000000, 483], [1200956400000, 523], [1201042800000, 528], [1201129200000, 483], [1201215600000, 452], [1201302000000, 270], [1201388400000, 222], [1201474800000, 439], [1201561200000, 559], [1201647600000, 521], [1201734000000, 477], [1201820400000, 442], [1201906800000, 252], [1201993200000, 236], [1202079600000, 525], [1202166000000, 477], [1202252400000, 386], [1202338800000, 409], [1202425200000, 408], [1202511600000, 237], [1202598000000, 193], [1202684400000, 357], [1202770800000, 414], [1202857200000, 393], [1202943600000, 353], [1203030000000, 364], [1203116400000, 215], [1203202800000, 214], [1203289200000, 356], [1203375600000, 399], [1203462000000, 334], [1203548400000, 348], [1203634800000, 243], [1203721200000, 126], [1203807600000, 157], [1203894000000, 288]];
 
             // first correct the timestamps - they are recorded as the daily
             // midnights in UTC+0100, but Flot always displays dates in UTC
@@ -102,10 +102,6 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     markings.push({ xaxis: { from: i, to: i + 2 * 24 * 60 * 60 * 1000 } });
                     i += 7 * 24 * 60 * 60 * 1000;
 
-                    //Salva o valor maximo de x;
-                    axisMax = axes.xaxis.max;
-                    axisMin = markings[0];
-
                 } while (i < axes.xaxis.max);
 
                 return markings;
@@ -127,7 +123,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
     			},
     			yaxis: {
                     zoomRange: [1, 250],
-				    panRange: [-5, 250]
+				    panRange: [-5, 430]
                     // set the lowest range on the y-axis to 5 dollars
                     // zoomRange: [5, null],
                     // // set the pan limits slightly outside the data range
@@ -154,6 +150,11 @@ $dadosCliente       = $dadosCliente['dados'][0];
     			pan: {
     				interactive: true
     			}
+                // ,
+                // legend:{
+                //      margin:30,
+                //     container: $("#legendPlace")
+                // }
             };
 
             var plot = $.plot("#placeholder", [
@@ -194,6 +195,11 @@ $dadosCliente       = $dadosCliente['dados'][0];
                                 $dias     = explode("-", $datahora[0]);
                                 $horas    = explode(":", $datahora[1]);
                                 // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
+
+                                //SOLUÇÃO PALEATIVA PARA CORRIGIR VALOR DE BATERIA
+                                if($nomeSerie == 'Bateria'){
+                                    $valorX = $valorX + 8;
+                                }
 
                                  $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".($horas[0] - 3).", ".$horas[1].", ".$horas[2]."),".$valorX."],";
                                  //var_dump(gmdate("d-m-Y H:i:s", $dataMedida[$i]));
@@ -255,7 +261,24 @@ $dadosCliente       = $dadosCliente['dados'][0];
                         hour = hour - 24;
                     }
 
-                    $("#tooltip").html("<p>"+item.series.label + " " + day +"/"+month+"/"+year+" às "+hour+":"+min+":"+sec+"</p><p><b>"+y+" (V)</b></p>")
+                    var tipoMedidaTemp = item.series.label.split(" ");
+                    var tipoMedida     = tipoMedidaTemp[1];
+                    var notacaoToolTip = "";
+
+                    if(tipoMedida == "Pontência"){
+                        notacaoToolTip = "(Kw)";
+                    }else if(tipoMedida == "Bateria"){
+                        notacaoToolTip = "(V)";
+                    }else if(tipoMedida == "Temperatura"){
+                        notacaoToolTip = "(°C)";
+                    }
+                    else if(tipoMedida == "Corrente"){
+                        notacaoToolTip = "(A)";
+                    }else{
+                        notacaoToolTip = "(V)";
+                    }
+
+                    $("#tooltip").html("<p>"+item.series.label + " <br />" + day +"/"+month+"/"+year+" às "+hour+":"+min+":"+sec+"</p><p><b>"+y+" "+notacaoToolTip+"</b></p>")
                     .css({top: item.pageY+5, left: item.pageX+5})
                     .fadeIn(200);
                 } else {
@@ -264,87 +287,90 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
             });
 
-            var overview = $.plot("#overview",
-                [
-                    <?php
-                        foreach ($testeJon as $jon) {
-
-                            $amostra = explode("data:", $jon[0]);
-
-                            $nomeSerie = $amostra[0];
-
-                            $nomeSerie = str_replace("{name:'"," ",$nomeSerie);
-                            $nomeSerie = str_replace("',"," ",$nomeSerie);
-
-                            $amostra = str_replace("]"," ",$amostra[1]);
-                            $amostra = str_replace("["," ",$amostra);
-                            $amostra = str_replace("}"," ",$amostra);
-
-                            $dataAmostra = explode(",",$amostra);
-
-                            //Inicia a montagem da série
-                            $i     = 0;
-                            $j     = 0;
-                            $serie = "[";
-                            foreach ($dataAmostra as $valorX) {
-                                $i++;
-                                $j++;
-                                /*
-                                * Devido ao fato de exitir registros no BD a cada 30 segundos, foi implementado esse código para exibir no gráfico somente leituras a cada 1 min
-                                */
-                                // if($j == 60){
-                                //     $serie .= "[".$dataMedida[$i].",".$valorX."],";
-                                //     $j = 0;
-                                // }
-
-                                $dataTemp = gmdate("d-m-Y H:i:s", $modelo->respRawDate[($i - 1)]);
-                                //
-                                $datahora = explode(" ", $dataTemp);
-                                $dias     = explode("-", $datahora[0]);
-                                $horas    = explode(":", $datahora[1]);
-                                // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
-
-                                $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".($horas[0] - 3).", ".$horas[1].", ".$horas[2]."),".$valorX."],";
-
-
-                                //$serie .= "[".$dataMedida[$i].",".$valorX."],";
-
-                                //$valorX
-
-                            }
-                            $serie .= "]";
-
-                            // var_dump($serie);
-                            // var_dump($nomeSerie);
-                            ?>
-                        {    data : <?php echo $serie; ?>, label : "<?php echo $nomeSerie; ?>"},
-                            <?php
-                        }
-                    ?>
-                ],
-                {
-                series: {
-                    lines: {
-                        show: true,
-                        lineWidth: 1
-                    },
-                    shadowSize: 0
-                },
-                xaxis: {
-                    ticks: [],
-                    // mode: "time",
-                    timezone: "America/Sao_Paulo"
-                },
-                yaxis: {
-                    ticks: [],
-                    min: 0,
-                    autoscaleMargin: 0.1
-                }
-                // ,
-                // selection: {
-                //     mode: "x"
-                // }
-            });
+            /*
+                Overview sendo colocado em desuso
+            */
+            // var overview = $.plot("#overview",
+            //     [
+            //         <?php
+            //             foreach ($testeJon as $jon) {
+            //
+            //                 $amostra = explode("data:", $jon[0]);
+            //
+            //                 $nomeSerie = $amostra[0];
+            //
+            //                 $nomeSerie = str_replace("{name:'"," ",$nomeSerie);
+            //                 $nomeSerie = str_replace("',"," ",$nomeSerie);
+            //
+            //                 $amostra = str_replace("]"," ",$amostra[1]);
+            //                 $amostra = str_replace("["," ",$amostra);
+            //                 $amostra = str_replace("}"," ",$amostra);
+            //
+            //                 $dataAmostra = explode(",",$amostra);
+            //
+            //                 //Inicia a montagem da série
+            //                 $i     = 0;
+            //                 $j     = 0;
+            //                 $serie = "[";
+            //                 foreach ($dataAmostra as $valorX) {
+            //                     $i++;
+            //                     $j++;
+            //                     /*
+            //                     * Devido ao fato de exitir registros no BD a cada 30 segundos, foi implementado esse código para exibir no gráfico somente leituras a cada 1 min
+            //                     */
+            //                     // if($j == 60){
+            //                     //     $serie .= "[".$dataMedida[$i].",".$valorX."],";
+            //                     //     $j = 0;
+            //                     // }
+            //
+            //                     $dataTemp = gmdate("d-m-Y H:i:s", $modelo->respRawDate[($i - 1)]);
+            //                     //
+            //                     $datahora = explode(" ", $dataTemp);
+            //                     $dias     = explode("-", $datahora[0]);
+            //                     $horas    = explode(":", $datahora[1]);
+            //                     // [Date.UTC(2011, 2, 12, 14, 0, 0), 28],
+            //
+            //                     $serie .= "[ Date.UTC(".$dias[2].", ".($dias[1] - 1).", ".$dias[0].", ".($horas[0] - 3).", ".$horas[1].", ".$horas[2]."),".$valorX."],";
+            //
+            //
+            //                     //$serie .= "[".$dataMedida[$i].",".$valorX."],";
+            //
+            //                     //$valorX
+            //
+            //                 }
+            //                 $serie .= "]";
+            //
+            //                 // var_dump($serie);
+            //                 // var_dump($nomeSerie);
+            //                 ?>
+            //             {    data : <?php //echo $serie; ?>, label : "<?php //echo $nomeSerie; ?>"},
+            //                 <?php
+            //             }
+            //         ?>
+            //     ],
+            //     {
+            //     series: {
+            //         lines: {
+            //             show: true,
+            //             lineWidth: 1
+            //         },
+            //         shadowSize: 0
+            //     },
+            //     xaxis: {
+            //         ticks: [],
+            //         // mode: "time",
+            //         timezone: "America/Sao_Paulo"
+            //     },
+            //     yaxis: {
+            //         ticks: [],
+            //         min: 0,
+            //         autoscaleMargin: 0.1
+            //     }
+            //     // ,
+            //     // selection: {
+            //     //     mode: "x"
+            //     // }
+            // });
 
             // now connect the two
 
@@ -362,12 +388,13 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
                 // don't fire event on the overview to prevent eternal loop
 
-                overview.setSelection(ranges, true);
+                //overview.setSelection(ranges, true);
             });
 
-            $("#overview").bind("plotselected", function (event, ranges) {
-                plot.setSelection(ranges);
-            });
+
+            // $("#overview").bind("plotselected", function (event, ranges) {
+            //     plot.setSelection(ranges);
+            // });
 
         });
     <?php
@@ -380,7 +407,7 @@ $dadosCliente       = $dadosCliente['dados'][0];
     var menu = document.getElementById('listadir');
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / ' +
                     '<a href="<?php echo HOME_URI; ?>/grafico/" class="linkMenuSup">Relatôrio</a> / ' +
-                    '<a href="<?php echo HOME_URI; ?>/grafico/listaFilial/<?php echo $dadosEquipamento['id_cliente']; ?>"> Cliente : <?php echo $dadosCliente['nome']; ?></a>' +
+                    '<a href="<?php echo HOME_URI; ?>/grafico/listaFilial/<?php echo $dadosEquipamento['id_cliente']; ?>"> Unidade :<?php echo (isset($dadosEquipamento['filial'])) ? $dadosEquipamento['filial'] :"Matriz"; ?> </a>' +
                     '/<a href="<?php echo HOME_URI; ?>/grafico/opcaoVisualizacao/<?php echo $this->parametros[0]; ?>"> Equipamento : <?php echo $dadosEquipamento['tipoEquip']." ".$dadosEquipamento['nomeModeloEquipamento']; ?> </a>';
 </script>
 
@@ -431,26 +458,46 @@ $dadosCliente       = $dadosCliente['dados'][0];
                                 <div class="demo-container">
                                     <div id="placeholder" class="demo-placeholder col-md-12" style="height:510px;background-color:#ffffff;">
                                     </div>
-                                </div >
+                                </div>
                             </div>
                             <div class="row">
+                                <div id="legendPlace" class="col-md-12">
+
+                                </div>
+                            </div>
+                            <!-- Gráfico de #overview caiu em desuso pois se mostrou desnecessario para o atual formato do gráfico -->
+                            <!-- <div class="row">
                                 <div class="col-md-1"></div>
                                 <div id="overview" class="col-md-10" style="margin-top:30px;height:150px;background-color: #635757cc;color:#ffffff;">
 
 
                                 </div>
                                 <div class="col-md-1"></div>
-                            </div>
+                            </div> -->
 
-                            <p class="message"></p>
 
-                            <h4 class="text-center">Clique e arraste no quadro menor para escolher a área do gráfico para efetuar o zoom.</h4>
+
 
                         </div>
 
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="well">
+                        <p class="message"></p>
+
+                        <p class="text-left"><i class="fa fa-dribbble -up fa-1x"></i> Roda do mouse : Zoom +, Zoom -</p>
+                        <p class="text-left"><i class="fa fa-hand-o-up fa-1x"></i> Botão principal do mouse : Arrastar gráfico</p>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+
             <?php
 
         }else{
