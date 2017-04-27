@@ -53,7 +53,7 @@ $(document).ready(function(){
 		//Ação ajax para buscar no BD as filiais cadastrada para o cliente
 		//Efetua cadastro do cliente via JSON
             $.ajax({
-             url: urlP+"/eficazmonitor/cliente/listarFiliaisClienteJson",
+             url: urlP+"/cliente/listarFiliaisClienteJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -242,7 +242,7 @@ $(document).ready(function(){
 				//Efetua o registro do equipamento no BD
 
 				$.ajax({
-	             url: urlP+"/eficazmonitor/equipamento/registrarEquipamentoClienteJson",
+	             url: urlP+"/equipamento/registrarEquipamentoClienteJson",
 	             secureuri: false,
 	             type : "POST",
 	             dataType: 'json',
@@ -272,7 +272,7 @@ $(document).ready(function(){
                     		//alert("Equipamento cadastrado corretamente.");
                             swal("", "Equipamento cadastrado corretamente!", "success");
                     		setTimeout(function(){
-			                    window.location.replace(urlP +"/eficazmonitor/equipamento/");
+			                    window.location.replace(urlP +"/equipamento/");
 			                }, 3000);
                     	}else{
                     		//alert("Ocorreu um erro ao cadastrar o equipamento.");
@@ -349,7 +349,7 @@ $(document).ready(function(){
 			var obserEdit   = $('#txt_obs_edit').val();
 
 			$.ajax({
-			 url: urlP+"/eficazmonitor/equipamento/salvarEditContatoAlarmeJson",
+			 url: urlP+"/equipamento/salvarEditContatoAlarmeJson",
 			 secureuri: false,
 			 type : "POST",
 			 dataType: 'json',
@@ -538,7 +538,7 @@ $(document).ready(function(){
       //Efetua o registro do equipamento no BD
 
       $.ajax({
-        url: urlP+"/eficazmonitor/equipamento/editarEquipamentoClienteJson",
+        url: urlP+"/equipamento/editarEquipamentoClienteJson",
         secureuri: false,
         type : "POST",
         dataType: 'json',
@@ -568,7 +568,7 @@ $(document).ready(function(){
                         //alert("Equipamento editado corretamente.");
                         swal("", "Equipamento editado corretamente.", "success");
                         setTimeout(function(){
-                          window.location.replace(urlP +"/eficazmonitor/equipamento/");
+                          window.location.replace(urlP +"/equipamento/");
               }, 3000);
             }else{
               //alert("Ocorreu um erro ao editar o equipamento.");
@@ -613,7 +613,7 @@ $(document).ready(function(){
 
               //Efetua o carregamento dos dados da filial
               $.ajax({
-                  url: urlP+"/eficazmonitor/equipamento/removerEquipamentoJson",
+                  url: urlP+"/equipamento/removerEquipamentoJson",
                   secureuri: false,
                   type : "POST",
                   dataType: 'json',
@@ -708,7 +708,7 @@ $(document).ready(function(){
             var obsContato 		= $('#txt_obs').val();
 
             $.ajax({
-             url: urlP+"/eficazmonitor/equipamento/registrarContatoAlarmeJson",
+             url: urlP+"/equipamento/registrarContatoAlarmeJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -785,7 +785,7 @@ $(document).ready(function(){
                 txt_chip_number : {
                     required : true,
                     remote: {
-                      url: urlP+"/eficazmonitor/vinculo/verificarSimExistente",
+                      url: urlP+"/vinculo/verificarSimExistente",
                       type: "post",
                       data: {
                         num_sim : function() {
@@ -852,7 +852,7 @@ $(document).ready(function(){
                 var versaoProjeto   = $('#txt_vercao_projeto').val();
 
                     $.ajax({
-                     url: urlP+"/eficazmonitor/equipamento/registrarNovoChipJson",
+                     url: urlP+"/equipamento/registrarNovoChipJson",
                      secureuri: false,
                      type : "POST",
                      dataType: 'json',
@@ -906,7 +906,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-         url: urlP+"/eficazmonitor/equipamento/filtroStatusChipJson",
+         url: urlP+"/equipamento/filtroStatusChipJson",
          secureuri: false,
          type : "POST",
          dataType: 'json',
@@ -948,7 +948,7 @@ $(document).ready(function(){
         var statusChip  = $('#filtroStatusChip').val();
 
         $.ajax({
-            url: urlP+"/eficazmonitor/equipamento/filtroStatusChipClienteJson",
+            url: urlP+"/equipamento/filtroStatusChipClienteJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',
@@ -993,7 +993,7 @@ $(document).ready(function(){
         var dataTeste       = $('#txt_data_teste').val();
 
         $.ajax({
-            url: urlP+"/eficazmonitor/equipamento/atualizarDadosChipJson",
+            url: urlP+"/equipamento/atualizarDadosChipJson",
     		secureuri: false,
     		type : "POST",
     		dataType: 'json',
@@ -1056,7 +1056,7 @@ $(document).ready(function(){
 */
 function atualizarContatoEquip(id_contatoAlerta){
 	$.ajax({
-		url: urlP+"/eficazmonitor/equipamento/carregarContatosAlarmesJson",
+		url: urlP+"/equipamento/carregarContatosAlarmesJson",
 		secureuri: false,
 		type : "POST",
 		dataType: 'json',
@@ -1120,7 +1120,7 @@ function removerContatoEquipamentoListaAlarmes(id_contatoAlerta){
       if (isConfirm) {
 
         $.ajax({
-         url: urlP+"/eficazmonitor/equipamento/removerContatosAlarmesJson",
+         url: urlP+"/equipamento/removerContatosAlarmesJson",
          secureuri: false,
          type : "POST",
          dataType: 'json',
@@ -1167,7 +1167,7 @@ function carregarDadosChipSim(idChip){
     if(idChip > 0){
 
         $.ajax({
-         url: urlP+"/eficazmonitor/equipamento/carregarDadosSIMJson",
+         url: urlP+"/equipamento/carregarDadosSIMJson",
          secureuri: false,
          type : "POST",
          dataType: 'json',
@@ -1263,7 +1263,7 @@ function calibrarequipamento(idEquipamento, posicao){
     if(idEquipamento > 0){
 
         $.ajax({
-            url: urlP+"/eficazmonitor/equipamento/carregarDadosPosicaoTabelaJson",
+            url: urlP+"/equipamento/carregarDadosPosicaoTabelaJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',
@@ -1355,7 +1355,7 @@ function registrarCalibracaoEquipamento(idEquipamento, posicao, valorReal, valor
 
         //VARIAVEL DE CALIBRACAO É SALVO
         $.ajax({
-            url: urlP+"/eficazmonitor/equipamento/salvarPosicaoTabelaJson",
+            url: urlP+"/equipamento/salvarPosicaoTabelaJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',

@@ -9,10 +9,11 @@ define('UP_USER_IMG_PATH', EFIPATH.'/views/_uploads/users');
 // caminho pasta upload de imagem de clientes
 define('UP_CLIE_IMG_PATH', EFIPATH.'/views/_uploads/clients');
 // url da home
-define('HOME_URI' , 'http://127.0.0.1/eficazmonitor'); // versao desenvolvedor
+//define('HOME_URI' , 'http://127.0.0.1/eficazmonitor'); // versao desenvolvedor
 //define('HOME_URI' , 'http://eficazsystem.com.br/eficazmonitor');
 //define('HOME_URI' , 'http://monitor.eficazsystem.com.br');
-//define('HOME_URI' , 'http://monitoramento.com');  // versao produção segura
+//define('HOME_URI' , 'http://monitoramento.com');  // versao produção VPS
+define('HOME_URI','http://eficazsystem.com.local'); // versao desenvolvedor
 /* configuracao da base de dados */
 
 // hostname

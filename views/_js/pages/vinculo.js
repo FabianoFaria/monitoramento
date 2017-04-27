@@ -11,7 +11,7 @@ function detalhesPosicao(simNumber){
 
     //Efetua a consulta na tabela de posicionamento
     $.ajax({
-        url: urlP+"/eficazmonitor/vinculo/posicoesOcupadasTabela",
+        url: urlP+"/vinculo/posicoesOcupadasTabela",
         secureuri: false,
         type : "POST",
         dataType: 'json',
@@ -59,7 +59,7 @@ function removerSim(simNumber){
           //Requisita chamada AJAX para efetuar remoção do vinculo
           //Efetua a consulta na tabela de posicionamento
           $.ajax({
-              url: urlP+"/eficazmonitor/vinculo/removerVinculoSim",
+              url: urlP+"/vinculo/removerVinculoSim",
               secureuri: false,
               type : "POST",
               dataType: 'json',
@@ -109,7 +109,7 @@ $().ready(function() {
                     required : true
                     // Não há mais necessidade desta condição, pois foi alterado o modo de cadastrar novos chips
                     // remote: {
-                    //   url: urlP+"/eficazmonitor/vinculo/verificarSimExistente",
+                    //   url: urlP+"/vinculo/verificarSimExistente",
                     //   type: "post",
                     //   data: {
                     //     num_sim : function() {
@@ -147,7 +147,7 @@ $().ready(function() {
             //Efetua o cadastro via JSON
 
             $.ajax({
-             url: urlP+"/eficazmonitor/vinculo/registrarVinculoClienteJson",
+             url: urlP+"/vinculo/registrarVinculoClienteJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -169,7 +169,7 @@ $().ready(function() {
                     //alert('Vinculo cadastrado com sucesso!');
                     swal("", "'Vinculo cadastrado com sucesso!", "success");
                     setTimeout(function(){
-                        window.location.replace(urlP +"/eficazmonitor/vinculo/gerenciarVinculo/"+clienteVinculo+"/");
+                        window.location.replace(urlP +"/vinculo/gerenciarVinculo/"+clienteVinculo+"/");
                     }, 2500);
                   }
                   else
@@ -226,7 +226,7 @@ $().ready(function() {
             var tipoEquipamento = $('#idTipoEquipamento').val();
 
             $.ajax({
-             url: urlP+"/eficazmonitor/vinculo/registrarVinculoEquipamentoJson",
+             url: urlP+"/vinculo/registrarVinculoEquipamentoJson",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -248,7 +248,7 @@ $().ready(function() {
                     //alert('Vinculo cadastrado com sucesso!');
                     swal("", resposta, "success");
                     setTimeout(function(){
-                        window.location.replace(urlP +"/eficazmonitor/equipamento/");
+                        window.location.replace(urlP +"/equipamento/");
                     }, 3000);
                   }
                   else
@@ -299,7 +299,7 @@ $().ready(function() {
        })
        .autocomplete({
          source: function( request, response ) {
-           $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#idCliente").val(), {
+           $.getJSON( urlP+"/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#idCliente").val(), {
              term: extractLast( request.term )
            }, response
        );
@@ -326,7 +326,7 @@ $().ready(function() {
             if(idFilial != ''){
                 //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
                 $.ajax({
-                    url: urlP+"/eficazmonitor/vinculo/carregarListaSimFilialJson",
+                    url: urlP+"/vinculo/carregarListaSimFilialJson",
                     secureuri: false,
                     type : "POST",
                     dataType: 'json',

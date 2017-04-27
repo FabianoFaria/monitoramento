@@ -14,7 +14,7 @@ $().ready(function() {
 * FUNÇÃO PARA LIMPAR FILTROS
 */
 $('#limparFiltro').click(function(){
-    window.location.replace(urlP +"/eficazmonitor/monitoramento/");
+    window.location.replace(urlP +"/monitoramento/");
 });
 
 /*
@@ -32,7 +32,7 @@ $('#filtroClienteLista').change(function() {
 
         //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
         $.ajax({
-            url: urlP+"/eficazmonitor/cliente/carregarListaFilialClienteJson",
+            url: urlP+"/cliente/carregarListaFilialClienteJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',
@@ -96,7 +96,7 @@ $('#filtroLocalLista').change(function() {
 
         //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
         $.ajax({
-            url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialJson",
+            url: urlP+"/cliente/carregarListaEquipamentoFilialJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',
@@ -169,7 +169,7 @@ $('#filtroLocalLista').change(function() {
    })
    .autocomplete({
      source: function( request, response ) {
-       $.getJSON( urlP+"/eficazmonitor/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteLista").val(), {
+       $.getJSON( urlP+"/cliente/carregarListaFilialAutoCompleteJson/?filtroClie="+ $("#filtroClienteLista").val(), {
          term: extractLast( request.term )
        }, response
    );
@@ -196,7 +196,7 @@ $('#filtroLocalLista').change(function() {
         if(idFilial != ''){
             //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
             $.ajax({
-                url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialJson",
+                url: urlP+"/cliente/carregarListaEquipamentoFilialJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -255,7 +255,7 @@ $('#filtroEquipLista').change(function() {
     if(idTipoEquip != ''){
         //EFETUA O CARREGAMENTO DOS DADOS DOS EQUIPAMENTOS POR TIPO
         $.ajax({
-            url: urlP+"/eficazmonitor/cliente/carregarListaEquipamentoFilialTipoJson",
+            url: urlP+"/cliente/carregarListaEquipamentoFilialTipoJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',

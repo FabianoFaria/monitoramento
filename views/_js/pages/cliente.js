@@ -121,7 +121,7 @@ $().ready(function() {
 
             //Efetua cadastro do cliente via JSON
             $.ajax({
-             url: urlP+"/eficazmonitor/cliente/registrarClientes",
+             url: urlP+"/cliente/registrarClientes",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -251,7 +251,7 @@ $().ready(function() {
 
             //Efetua o cadastro do contato do cliente via JSON
             $.ajax({
-                url: urlP+"/eficazmonitor/usuario/registraUsuario",
+                url: urlP+"/usuario/registraUsuario",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -372,7 +372,7 @@ $().ready(function() {
 
                         //Envio de dados para cadastro de filial via JSON
                         $.ajax({
-                            url: urlP+"/eficazmonitor/filial/registraFilial",
+                            url: urlP+"/filial/registraFilial",
                             secureuri: false,
                             type : "POST",
                             dataType: 'json',
@@ -408,7 +408,7 @@ $().ready(function() {
                 swal("","Cliente cadastrado corretamente!","success");
 
                 setTimeout(function(){
-                    window.location.replace(urlP +"/eficazmonitor/cliente/");
+                    window.location.replace(urlP +"/cliente/");
                 }, 3000);
 
             }else{
@@ -416,7 +416,7 @@ $().ready(function() {
                 swal("","Cadastro de cliente foi concluido!","success");
 
                 setTimeout(function(){
-                        window.location.replace(urlP +"/eficazmonitor/cliente/");
+                        window.location.replace(urlP +"/cliente/");
                     }, 1500);
 
             }
@@ -520,7 +520,7 @@ $().ready(function() {
 
             //Efetua cadastro do cliente via JSON
             $.ajax({
-             url: urlP+"/eficazmonitor/cliente/registrarEdicaoCliente",
+             url: urlP+"/cliente/registrarEdicaoCliente",
              secureuri: false,
              type : "POST",
              dataType: 'json',
@@ -646,7 +646,7 @@ $().ready(function() {
 
             //Efetua o cadastro do contato do cliente via JSON
             $.ajax({
-                url: urlP+"/eficazmonitor/usuario/registraAtualizacaoUsuario",
+                url: urlP+"/usuario/registraAtualizacaoUsuario",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -1015,7 +1015,7 @@ $().ready(function() {
 
         //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
         $.ajax({
-            url: urlP+"/eficazmonitor/cliente/carregarFilialClienteJson",
+            url: urlP+"/cliente/carregarFilialClienteJson",
             secureuri: false,
             type : "POST",
             dataType: 'json',
@@ -1156,7 +1156,7 @@ $().ready(function() {
 
             //Efetua o cadastro do contato do cliente via JSON
             $.ajax({
-                url: urlP+"/eficazmonitor/cliente/editarFilialClienteJson",
+                url: urlP+"/cliente/editarFilialClienteJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -1311,7 +1311,7 @@ $().ready(function() {
 
             //Efetua o cadastro do contato do cliente via JSON
             $.ajax({
-                url: urlP+"/eficazmonitor/cliente/cadastrarFilialClienteJson",
+                url: urlP+"/cliente/cadastrarFilialClienteJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
@@ -1380,7 +1380,7 @@ $().ready(function() {
 
                 //Efetua o carregamento dos dados da filial
                 $.ajax({
-                    url: urlP+"/eficazmonitor/cliente/excluirClienteJson",
+                    url: urlP+"/cliente/excluirClienteJson",
                     secureuri: false,
                     type : "POST",
                     dataType: 'json',

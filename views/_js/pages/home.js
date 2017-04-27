@@ -8,7 +8,7 @@ function detalharAlarme(idAlarme){
 
     //Inicia a coleta de dados do alarme para preparação para exibição
     $.ajax({
-        url: urlP+"/eficazmonitor/alarme/carregarDetalhesAlarmeJson",
+        url: urlP+"/alarme/carregarDetalhesAlarmeJson",
         secureuri: false,
         type : "POST",
         dataType: 'json',
@@ -87,7 +87,7 @@ $().ready(function() {
     * Efetua verificação a cada X segundos para verificar novos alarmes
     */
     // var interval = setInterval(function() {
-    //     $.getJSON(urlP+"/eficazmonitor/alarme/listarNovosAlarmesJson",,function(response){
+    //     $.getJSON(urlP+"/alarme/listarNovosAlarmesJson",,function(response){
     //         $('.stat1').css({'color': response.status1});
     //         $('.stat2').css({'color': response.status2});
     //         ...
@@ -128,7 +128,7 @@ $().ready(function() {
         if($('#solucaoAplicada').valid()){
 
             $.ajax({
-                url: urlP+"/eficazmonitor/alarme/salvarTratamentoAlarmeJson",
+                url: urlP+"/alarme/salvarTratamentoAlarmeJson",
                 secureuri: false,
                 type : "POST",
                 dataType: 'json',
