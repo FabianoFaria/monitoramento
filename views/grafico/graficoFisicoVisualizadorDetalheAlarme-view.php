@@ -136,12 +136,6 @@
                                                                         <p><b>Data :</b> <?php echo implode("/",array_reverse(explode("-", $dataAlarme[0]))); ?></p>
                                                                         <p><b>Horário :</b> <?php echo $dataAlarme[1]; ?></p>
                                                                         <p><b>Alerta :</b> <?php echo $alarm['mensagem']; ?></p>
-
-                                                                    </div>
-                                                                    <div class="col-md-2">
-
-                                                                    </div>
-                                                                    <div class="col-md-4">
                                                                         <p><b>Status :</b>
                                                                             <?php
                                                                                 switch ($alarm['status_ativo']){
@@ -164,7 +158,14 @@
                                                                                 }
                                                                             ?>
                                                                         </p>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+
+                                                                    </div>
+                                                                    <div class="col-md-4">
+
                                                                         <p><b>Parametro :</b> <?php echo $alarm['parametro'] ?></p>
+                                                                        <p><b>Ponto :</b> <?php echo $this->verificarPontoTabela($alarm['pontoTabela']); ?></p>
                                                                         <p><b>Medida :</b>
                                                                             <?php
 

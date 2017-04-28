@@ -220,7 +220,10 @@
 
                                                 $htmlRealatorio .= "</td>";
                                                 $htmlRealatorio .= "<td>";
-                                                    $htmlRealatorio .= $alarm['mensagem'];
+
+                                                    $pontoAlarme  = $this->verificarPontoTabela($alarm['pontoTabela']);
+
+                                                    $htmlRealatorio .= $pontoAlarme." <br />".$alarm['mensagem'];
                                                 $htmlRealatorio .= "</td>";
                                                 // $htmlRealatorio .= "<td>";
                                                 //     $htmlRealatorio .= $alarm['parametro'];

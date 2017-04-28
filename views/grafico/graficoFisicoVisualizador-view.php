@@ -174,7 +174,7 @@
                                                     $totalAlarmes = $alarmesGeral['alarmes'][0]['total'];
                                                 }
 
-                                                $alarmEquip    = $modeloAlarme->recuperaAlarmesEquipamento($equipamento['id_equipamento'], $dataInicio, $dataFim);
+                                                $alarmEquip   = $modeloAlarme->recuperaAlarmesEquipamento($equipamento['id_equipamento'], $dataInicio, $dataFim);
 
                                                 //var_dump($alarmEquip);
 
@@ -305,6 +305,7 @@
                                                         <th>Status</th>
                                                         <th>Mensagem</th>
                                                         <th>Parametro</th>
+                                                        <th>Ponto</th>
                                                         <th>Medida</th>
                                                         <th>Tratamento</th>
                                                     </tr>
@@ -352,6 +353,9 @@
                                                                     </td>
                                                                     <td>
                                                                         <?php echo $alarm['parametro'] ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $this->verificarPontoTabela($alarm['pontoTabela']); ?>
                                                                     </td>
                                                                     <td>
                                                                         <?php

@@ -9,7 +9,8 @@ $alarmeModeloStatus  = $this->load_model('alarme/alarme-model');
 $clienteModelo       = $this->load_model('cliente/cliente-model');
 $userModelo          = $this->load_model('usuario/usuario-model');
 
-if($_SESSION['userdata']['cliente'] > 0){
+//if($_SESSION['userdata']['cliente'] > ){
+if(3 > 4){    
     $clienteLogo     = $clienteModelo->carregarLogoCliente($_SESSION['userdata']['cliente']);
 }else{
     $clienteLogo     = null;

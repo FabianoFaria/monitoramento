@@ -60,12 +60,12 @@
     function http_get_contents($url)
     {
       $ch = curl_init();
-      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
       curl_setopt($ch, CURLOPT_TIMEOUT, 1);
       curl_setopt($ch, CURLOPT_URL, $url);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
+      curl_getinfo($ch);
       /*
          curl_setopt($ch, CURLOPT_CAINFO, $cert);
         curl_setopt($ch, CURLOPT_POST, 1 );
@@ -117,7 +117,7 @@
                 $htmlRealatorio .="<div class='panel-heading'>";
                     $htmlRealatorio .="<h5> Cliente : ".$nomeCliente." </h5>";
                     $htmlRealatorio .="<h6> Unidade : ".$nomeUnidade." </h6>";
-                    
+
                     $htmlRealatorio .="<div class='col-md-4 pull-right'>";
                         $htmlRealatorio .="<h4><small> Periodo :".implode("/", array_reverse(explode("-",($dataInicio))))." até ".implode("/", array_reverse(explode("-",($dataFim))))."</small></h4>";
                     $htmlRealatorio .="</div>";
@@ -176,12 +176,6 @@
                                                         $htmlRealatorio .="<p><b>Data :</b> $dataAlarm</p>";
                                                         $htmlRealatorio .="<p><b>Horário :</b>  $dataAlarme[1]</p>";
                                                         $htmlRealatorio .="<p><b>Alerta :</b> $msgAlarm</p>";
-                                                    $htmlRealatorio .="</td>";
-
-                                                    $htmlRealatorio .="<td>";
-                                                    $htmlRealatorio .="</td>";
-
-                                                    $htmlRealatorio .="<td>";
 
                                                         $statusAlarm = "";
                                                         switch ($alarm['status_ativo']){
@@ -205,9 +199,20 @@
 
                                                         $htmlRealatorio .="<p><b>Status :</b> $statusAlarm</p>";
 
+                                                    $htmlRealatorio .="</td>";
+
+                                                    $htmlRealatorio .="<td>";
+                                                    $htmlRealatorio .="</td>";
+
+                                                    $htmlRealatorio .="<td>";
+
                                                         $parametro  = $alarm['parametro'];
 
                                                         $htmlRealatorio .="<p><b>Parametro :</b> $parametro</p>";
+
+                                                        $pontoAlarme  = $this->verificarPontoTabela($alarm['pontoTabela']);
+
+                                                        $htmlRealatorio .="<p><b>Ponto :</b> $pontoAlarme </p>";
 
                                                             $medidaAlarm = "";
                                                             switch ($alarm['parametroMedido']){
@@ -364,6 +369,7 @@
     ));
 
     //var_dump(http_get_contents($stylesheet));
+    //var_dump($stylesheet);
 
     // Write some HTML code:
     $mpdf->WriteHTML(http_get_contents($stylesheet),1);

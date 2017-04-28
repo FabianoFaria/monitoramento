@@ -1015,6 +1015,18 @@ else
                                     <h4>Tensão do banco de bateria</h4>
 
                                     <!-- GRAFICO BATERIA REVISADO -->
+                                    <?php
+                                        /*
+                                        * RECUPERANDO O VALOR PARA OS NÍVEIS DE BATERIA, VINDOS DA VARIAVEL '$retorno'
+                                        */
+                                        $bateriaCriticoBaixo    = $retorno['10'];
+                                        $bateriaBaixo           = $retorno['11'];
+                                        $bateriaNivelNormal     = $retorno['12'];
+                                        $bateriaNivelAlto       = $retorno['13'];
+
+                                    ?>
+                                    <input type="hidden" id="bateriaValorAlto" value="<?php echo $bateriaNivelAlto; ?>" />
+
                                     <div class="row">
                                         <input id="quantidadeBancoBateria" type="hidden" value="<?php echo $dadosEquipamento['quantidade_banco_bateria']; ?>"/>
                                         <div id="wellCargabateria" class="well well-normal-status" style="margin-top:30px;height:100px;">
@@ -1058,19 +1070,12 @@ else
                                             <!-- <div id="div-cargaBat" class="div-carga"></div> -->
                                         <!-- </div> -->
 
-                                        <?php
-                                            /*
-                                            * RECUPERANDO O VALOR PARA OS NÍVEIS DE BATERIA, VINDOS DA VARIAVEL '$retorno'
-                                            */
-                                            $bateriaCriticoBaixo    = $retorno['10'];
-                                            $bateriaBaixo           = $retorno['11'];
-                                            $bateriaNivelNormal     = $retorno['12'];
-
-                                        ?>
 
                                         <script type="application/javascript">
-                                            var valorBat = 0;
-                                            var maxBat = 420;
+
+                                            var valorBat            = 0;
+                                            var valorBateriaAlto    = $('#bateriaValorAlto').val();
+                                            var maxBat              = valorBateriaAlto - 1;
 
                                             setInterval(function(){  //, colocando '$idSim' no lugar de '$nova_url[0]'
                                                 var url = "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=5&706f73546162656c61=h&callback=?";
