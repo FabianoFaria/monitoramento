@@ -545,7 +545,7 @@
         {
             if(is_numeric($idCliente)){
 
-                $query = "SELECT clie.nome as 'cliente', fili.nome as 'filial', sim.num_sim
+                $query = "SELECT clie.nome as 'cliente', fili.nome as 'filial', sim.num_sim, sim.ativo_cliente
                             FROM  tb_cliente clie
                             LEFT JOIN tb_filial fili ON clie.id = fili.id_matriz
                             LEFT JOIN tb_sim sim ON fili.id = sim.id_filial
@@ -601,11 +601,17 @@
         public function listarSimClienteMatriz($idEquip){
 
             if(is_numeric($idEquip)){
-                $query = "SELECT clie.nome as 'cliente', sim.num_sim
-                            FROM  tb_cliente clie
-                            JOIN tb_equipamento equip ON clie.id = equip.id_cliente
-                            LEFT JOIN tb_sim sim ON clie.id = sim.id_cliente
-                            WHERE equip.id = $idEquip AND sim.status_ativo = '1'";
+                // $query = "SELECT clie.nome as 'cliente', sim.num_sim, sim.ativo_cliente
+                //             FROM  tb_cliente clie
+                //             JOIN tb_equipamento equip ON clie.id = equip.id_cliente
+                //             LEFT JOIN tb_sim sim ON clie.id = sim.id_cliente
+                //             WHERE equip.id = $idEquip AND sim.status_ativo = '1'";
+
+                $query = "SELECT clie.nome as 'cliente', sim.num_sim, sim.ativo_cliente
+                          FROM tb_equipamento equip
+                          JOIN tb_cliente clie ON equip.id_cliente = clie.id
+                          LEFT JOIN tb_sim sim ON clie.id = sim.id_cliente
+                          WHERE equip.id = $idEquip AND sim.status_ativo = '1'";
 
                 /* monta result */
                 $result = $this->db->select($query);
@@ -633,7 +639,7 @@
                         $retorno[] = $row;
                     }
                     /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'dados' => $cliente) ;
+                    $array = array('status' => true, 'dados' => $retorno) ;
 
                 }else{
                      $array = array('status' => false, 'dados' => '');

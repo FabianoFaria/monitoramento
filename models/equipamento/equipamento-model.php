@@ -57,7 +57,7 @@ class EquipamentoModel extends MainModel
                     LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                     LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
                     LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0
-                    LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id
+                    LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id AND simEquip.status_ativo > 0
                     WHERE equip.status_ativo = '1'";
 
         /* MONTA A RESULT */
@@ -326,9 +326,15 @@ class EquipamentoModel extends MainModel
                     equip.localBateria,
                     equip.tipo_entrada,
                     equip.tipo_saida,
+                    equip_sim.id_sim,
+                    equip_sim.id as 'id_sim_equip',
+                    equip_sim.status_ativo as 'vinculo_ativo',
+                    sim.ativo_cliente,
                     clie.id as 'idClie', clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
                       FROM tb_equipamento equip
                       LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
+                      LEFT JOIN tb_sim_equipamento equip_sim ON equip_sim.id_equipamento = equip.id
+                      LEFT JOIN tb_sim sim ON equip_sim.id_sim = sim.num_sim
                       LEFT JOIN tb_cliente clie ON clie.id = equip.id_cliente
                       LEFT JOIN tb_filial fili ON fili.id = equip.id_filial
                       WHERE  equip.id = '$idEquipamento'";

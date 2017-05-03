@@ -269,6 +269,70 @@ $().ready(function() {
 
     });
 
+
+    /*
+    * FUNÇÃO PARA REMOVER O VINCULO ENTRE UM EQUIPAMENTO E UM SIM
+    */
+    $('#btnDesvincularEquipamento').click(function (){
+
+        swal({
+          title: "Tem certeza?",
+          text: "Você não poderá reverter esse processo!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Sim, desvincular!",
+          cancelButtonText: "Não, Cancelar!",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function(isConfirm){
+          if (isConfirm) {
+
+            var simDesvincular = $('#numeroSimVinculado').val();
+            var idSimEquip     = $('#idEquipamentoSim').val();
+
+            //Implementacao de desvincular equipamento do SIM
+            $.ajax({
+                url: urlP+"/vinculo/desvinculoEquipamentoJson",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+                data : {
+                   'simDesvincular'   : simDesvincular,
+                   'idSimEquip'     : idSimEquip
+                 },
+                success : function(datra)
+                {
+                    if(datra.status){
+
+                        swal("", datra.resposta, "success");
+                        setTimeout(function(){
+                            location.reload();
+                        }, 3000);
+
+                    }else{
+                        swal("", datra.resposta, "error");
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+            });
+
+
+            //swal("Deleted!", "Your imaginary file has been deleted.", "success");
+          } else {
+        	    swal("Cancelado", "Nenhuma ação ocorreu!", "error");
+          }
+        });
+
+    });
+
+
     /*
     * FILTRA OS LOCAIS ATRAVES DE AUTO COMPLETE
     */

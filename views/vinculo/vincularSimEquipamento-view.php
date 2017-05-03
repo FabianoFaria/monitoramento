@@ -54,35 +54,57 @@
                 </div>
 
                 <div class="col-md-5">
-                    <div class="form-group">
-                        <!-- SELECT PARA VINCULAR O SIM AO CLIENTE OU FILIAL -->
 
-                        <label for="numeroSerie">Selecione o número de série para vincular</label>
-                        <?php
-                            $count = 0;
-                            $opcoes = "<option value=''>Selecione um SIM</option>";
+                    <?php
 
-                            if($dadosCliente['status']){
-                                foreach ($dadosCliente['dados'] as $clienteSim) {
-                                    if(isset($clienteSim['num_sim'])){
-                                        $opcoes .= "<option value='".$clienteSim['num_sim']."'>".$clienteSim['num_sim']."</option>";
-                                        $count++;
-                                    }
-                                }
-                            }
+                        if(isset($dadosEquipamentos['id_sim'])){
 
-                        ?>
-                        <select id="simVinculadoCliente" class="form-control" name="simVinculadoCliente">
+                    ?>
+                        <div class="form-group">
+                            <label for="numeroSerie">Número do SIM vinculado ao equipamento :</label>
+                            <input type="input" id="numeroSimVinculado" name="numeroSimVinculado" class="form-control" value="<?php echo $dadosEquipamentos['id_sim'];?>" disabled="" />
+                            <input type="hidden" id="idEquipamentoSim" name="idEquipamentoSim" value="<?php echo $dadosEquipamentos['id_sim_equip'];?>" />
+                        </div>
+                    <?php
+
+                        }else{
+
+                    ?>
+                        <div class="form-group">
+                            <!-- SELECT PARA VINCULAR O SIM AO CLIENTE OU FILIAL -->
+
+                            <label for="numeroSerie">Selecione o número de série para vincular</label>
                             <?php
-                                if($count >0){
-                                    echo $opcoes;
-                                }else{
-                                    echo "<option value=''>Favor vincular um SIM a um cliente antes</option>";
+                                $count = 0;
+                                $opcoes = "<option value=''>Selecione um SIM</option>";
+
+                                if($dadosCliente['status']){
+                                    foreach ($dadosCliente['dados'] as $clienteSim) {
+                                        if(isset($clienteSim['num_sim']) && ($clienteSim['ativo_cliente'] == 0)){
+                                            $opcoes .= "<option value='".$clienteSim['num_sim']."'>".$clienteSim['num_sim']."</option>";
+                                            $count++;
+                                        }
+
+                                    }
                                 }
 
                             ?>
-                        </select>
-                    </div>
+                            <select id="simVinculadoCliente" class="form-control" name="simVinculadoCliente">
+                                <?php
+                                    if($count >0){
+                                        echo $opcoes;
+                                    }else{
+                                        echo "<option value=''>Favor vincular um SIM a um cliente antes</option>";
+                                    }
+
+                                ?>
+                            </select>
+                        </div>
+
+                    <?php
+                        }
+                    ?>
+
                 </div>
             </div>
 
@@ -109,9 +131,29 @@
             </div>
             <!-- botao de envio -->
             <div class="row">
-                <div class="col-md-2 col-md-offset-5 txt-center">
-                    <button type="button" id="btnVincularEquipamento" class="btn btn-info">Vincular</button>
-                </div>
+
+                <?php
+
+                    if(isset($dadosEquipamentos['id_sim'])){
+
+                    ?>
+                        <div class="col-md-3 col-md-offset-5 txt-center">
+                            <button type="button" id="btnDesvincularEquipamento" class="btn btn-info btn-lg btn-block">Desvincular</button>
+                        </div>
+                    <?php
+
+                    }else{
+
+                    ?>
+                        <div class="col-md-4 col-md-offset-5 txt-center">
+                            <button type="button" id="btnVincularEquipamento" class="btn btn-info btn-lg btn-block">Vincular</button>
+                        </div>
+                    <?php
+
+                    }
+
+                ?>
+
             </div><!-- fim botao de envio -->
 
         </form>

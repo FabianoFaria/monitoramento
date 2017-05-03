@@ -52,7 +52,7 @@
                                 <th>Cliente</th>
                                 <th>Unidade</th>
                                 <!-- <th>Quantidade baterias</th> -->
-                                <th>N° SIM</th>
+                                <th>Gerenciar N° SIM</th>
                                 <!-- <th>Tipo bateria</th> -->
                                 <th class="txt-center">Calibrar valores</th>
                                 <th class="txt-center">Configurar parametros</th>
@@ -74,7 +74,8 @@
 
                                     <!-- <td><?php //echo $equipamento['potencia']; ?></td> -->
                                     <td><?php echo $equipamento['cliente']?></td>
-                                    <td><?php
+                                    <td>
+                                        <?php
 
                                             if(isset($equipamento['filial'])){
                                                 echo $equipamento['filial'];
@@ -86,7 +87,20 @@
                                     </td>
 
                                     <!-- <td><?php //echo $equipamento['qnt_bateria']; ?></td> -->
-                                    <td><?php echo (isset($equipamento['sim_clie'])) ? $equipamento['sim_clie'] : "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> Vincular N° SIM </a>"; ?></td>
+                                    <td>
+                                        <?php //echo (isset($equipamento['sim_clie'])) ? $equipamento['sim_clie'] : "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> Vincular N° SIM </a>"; ?>
+
+                                        <?php
+
+                                            if(isset($equipamento['sim_clie'])){
+                                                echo "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> ".$equipamento['sim_clie']."</a>";
+                                            }else{
+                                                echo "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> Vincular N° SIM </a>";
+                                            }
+
+                                        ?>
+
+                                    </td>
 
                                     <td>
                                         <!-- <a href="javascript:void(0)" onclick="calibrarequipamento(<?php //echo $equipamento['id'] ?>)"> -->

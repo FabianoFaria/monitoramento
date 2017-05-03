@@ -304,6 +304,50 @@ class VinculoController extends MainController
     }
 
     /*
+    * Função para registrar o desvinculo entre o equipamento e o SIM
+    */
+    public function desvinculoEquipamentoJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $vinculoModelo      = $this->load_model('vinculo/vinculo-model');
+
+        /*
+        * Desativa a relação entre o SIM e o equipamento através do id_sim_equipamento
+        */
+
+        $vinculoDesativado  = $vinculoModelo->desativarIdSimEquipamento($_POST['idSimEquip']);
+
+        if($vinculoDesativado['status']){
+
+            /*
+            * Caso o id seja desativado, irá desativar os demais vinculos do id_sim_equipamento com os dados do banco
+            */
+
+            /*
+            * Desativa as posições cadastradas
+            */
+            $vinculoPosicoes    = $vinculoModelo->desativarPosicoesIdSimEquip($_POST['idSimEquip']);
+            /*
+            * Desativa os parametros cadastrados
+            */
+            $vinculoParametros  = $vinculoModelo->desativarParametroIdSimEquip($_POST['idSimEquip']);
+            /*
+            * Desativa os dados do número SIM
+            */
+            $vinculoDadosSim   = $vinculoModelo->desativarDadosNumSim($_POST['simDesvincular']);
+            /*
+            * Desativa os dados de alerta do número SIM
+            */
+            $vinculoAlarmes   = $vinculoModelo->desativarAlarmesNumSim($_POST['idSimEquip']);
+
+            exit(json_encode(array('status' => $vinculoDesativado['status'])));
+        }else{
+            exit(json_encode(array('status' => $vinculoDesativado['status'])));
+        }
+
+    }
+
+    /*
     * Função para registrar o vinculo entre um equipamento e um SIM
     */
     public function registrarVinculoEquipamentoJson(){

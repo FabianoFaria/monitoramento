@@ -837,7 +837,6 @@ class VinculoModel extends MainModel
     /*
     * Função para registrar vinculo com equipamento
     */
-
     public function cadastrarVinculoEquipamento($idEquipamento, $simVinculado, $ambiente){
 
         if(is_numeric($idEquipamento)){
@@ -874,7 +873,98 @@ class VinculoModel extends MainModel
     }
 
     /*
-    * REMOVER VINCULO COM O SIM
+    * Função para efetuar desvinculo de SIM com equipamento
+    */
+    public function desativarIdSimEquipamento($idSimEquip){
+
+        /*
+        * Aqui é efetuado o processo de desativação do idSimEquip
+        */
+        $query = "UPDATE tb_sim_equipamento SET status_ativo = '0' WHERE id = '$idSimEquip'";
+
+        // Verifica se gravou com sucesso
+        if ($this->db->query($query))
+        {
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+
+    }
+
+    public function desativarPosicoesIdSimEquip($idSimEquip){
+
+        /*
+        * Aqui é efetuado o processo de desativação dos posições relacionadas ao id_sim_equipamento
+        */
+        $query = "UPDATE tb_posicao SET status_ativo = '0' WHERE id_sim_equipamento = '$idSimEquip'";
+
+        // Verifica se gravou com sucesso
+        if ($this->db->query($query))
+        {
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * DESATIVA OS PARAMETROS DO ID_SIM_EQUIPAMENTO ESPECIFICADO
+    */
+    public function desativarParametroIdSimEquip($idSimEquip){
+
+        $query = "UPDATE tb_parametro SET status_ativo = '0' WHERE id_sim_equipamento = '$idSimEquip'";
+
+        // Verifica se gravou com sucesso
+        if ($this->db->query($query))
+        {
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * Desativa os dados de potencia relacionados ao número SIM
+    */
+    public function desativarDadosNumSim($numSim){
+
+        $query = "UPDATE tb_dados SET status_ativo = '0' WHERE num_sim = '$numSim'";
+
+        // Verifica se gravou com sucesso
+        if ($this->db->query($query))
+        {
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    public function desativarAlarmesNumSim($idSimEquip){
+
+        //id_sim_equipamento
+        $query = "UPDATE tb_alerta SET status_ativo = '5' WHERE id_sim_equipamento = '$idSimEquip'";
+
+        if ($this->db->query($query))
+        {
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * REMOVER VINCULO DO CLIENTE COM O SIM
     */
     public function removerVinculoCliente($simNUmber){
 
