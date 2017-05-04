@@ -40,7 +40,24 @@ if(is_numeric($this->parametros[0])){
     // CARREGA OS PARAMETROS CONFIGURADOS PARA O EQUIPAMENTO
     $retorno = $modelo->loadGraficoParam($idEquip, $idSimEquip, $idSim);
 
+    // CARREGA OS VALORES DE CALIBRAÇÃO SALVOS PARA O EQUIPAMENTO
+    $valoresCalibracao = $modeloEquip->posicoesCalibradas($idEquip);
+
+    if($valoresCalibracao['status']){
+
+        foreach ($valoresCalibracao['posicoesCalibradas'] as $calibracao) {
+
+            $posicoesCalibradas[] = array($calibracao['posicao_tab'] => $calibracao['variavel_cal']);
+        }
+
+    }else{
+        $posicoesCalibradas = 0;
+    }
+
+    var_dump($posicoesCalibradas);
     //var_dump($dadosEquipamento);
+
+
 
 }else{
     $retorno = null;

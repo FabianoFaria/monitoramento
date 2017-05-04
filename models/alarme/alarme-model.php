@@ -48,24 +48,30 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if ($result)
+                if(!empty($result))
                 {
-                  /* VERIFICA SE EXISTE VALOR */
-                  if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                //   /* VERIFICA SE EXISTE VALOR */
+                //   if (@mysql_num_rows($result) > 0)
+                //     {
+                //       /* ARMAZENA NA ARRAY */
+                //       while ($row = @mysql_fetch_assoc ($result))
+                //       {
+                //         $retorno[] = $row;
+                //       }
+                  //
+                //       /* DEVOLVE RETORNO */
+                //       $array = array('status' => true, 'contatos' => $retorno);
+                //   }else{
+                //       $array = array('status' => false, 'contatos' => '');
+                //   }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
+                    }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'contatos' => $retorno);
 
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'contatos' => $retorno);
-                  }else{
-                      $array = array('status' => false, 'contatos' => '');
-                  }
                 }else{
-                  $array = array('status' => false, 'contatos' => '');
+                    $array = array('status' => false, 'contatos' => '');
                 }
 
             }else{
@@ -94,22 +100,28 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if ($result)
+                if(!empty($result))
                 {
-                  /* VERIFICA SE EXISTE VALOR */
-                  if (@mysql_num_rows($result) > 0)
-                  {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                //   /* VERIFICA SE EXISTE VALOR */
+                //   if (@mysql_num_rows($result) > 0)
+                //   {
+                //       /* ARMAZENA NA ARRAY */
+                //       while ($row = @mysql_fetch_assoc ($result))
+                //       {
+                //         $retorno[] = $row;
+                //       }
+                  //
+                //       /* DEVOLVE RETORNO */
+                //       $array = array('status' => true, 'contatos' => $retorno);
+                //   }else{
+                //       $array = array('status' => false, 'contatos' => '');
+                //   }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
+                    }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'contatos' => $retorno);
 
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'contatos' => $retorno);
-                  }else{
-                      $array = array('status' => false, 'contatos' => '');
-                  }
                 }else{
                   $array = array('status' => false, 'contatos' => '');
                 }
@@ -186,22 +198,28 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if($result)
+                if(!empty($result))
                 {
-                    /* VERIFICA SE EXISTE VALOR */
-                    if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                    // /* VERIFICA SE EXISTE VALOR */
+                    // if (@mysql_num_rows($result) > 0)
+                    // {
+                    //   /* ARMAZENA NA ARRAY */
+                    //   while ($row = @mysql_fetch_assoc ($result))
+                    //   {
+                    //     $retorno[] = $row;
+                    //   }
+                    //
+                    //     /* DEVOLVE RETORNO */
+                    //     $array = array('status' => true, 'contato' => $retorno);
+                    // }else{
+                    //     $array = array('status' => false, 'contato' => '');
+                    // }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
-
-                        /* DEVOLVE RETORNO */
-                        $array = array('status' => true, 'contato' => $retorno);
-                    }else{
-                        $array = array('status' => false, 'contato' => '');
                     }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'contato' => $retorno);
+
                 }else{
 
                     $array = array('status' => false, 'contato' => '');
@@ -231,22 +249,26 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if($result)
+                if(!empty($result))
                 {
-                  /* VERIFICA SE EXISTE VALOR */
-                  if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                //   /* VERIFICA SE EXISTE VALOR */
+                //   if (@mysql_num_rows($result) > 0)
+                //     {
+                //       /* ARMAZENA NA ARRAY */
+                //       while ($row = @mysql_fetch_assoc ($result))
+                //       {
+                //         $retorno[] = $row;
+                //       }
+                  //
+                //       /* DEVOLVE RETORNO */
+                //       $array = array('status' => true, 'contato' => $retorno);
+                //   }else{
+                //       $array = array('status' => false, 'contato' => '');
+                //   }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
-
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'contato' => $retorno);
-                  }else{
-                      $array = array('status' => false, 'contato' => '');
-                  }
+                    }
+                    $array = array('status' => true, 'contato' => $retorno);
               }
 
             }else{
@@ -382,23 +404,27 @@
             /* VERIFICA SE EXISTE RESPOSTA */
             if ($result)
             {
-              /* VERIFICA SE EXISTE VALOR */
-              if (@mysql_num_rows($result) > 0)
-                {
-                  /* ARMAZENA NA ARRAY */
-                  while ($row = @mysql_fetch_assoc ($result))
-                  {
+            //   /* VERIFICA SE EXISTE VALOR */
+            //   if (@mysql_num_rows($result) > 0)
+            //     {
+            //       /* ARMAZENA NA ARRAY */
+            //       while ($row = @mysql_fetch_assoc ($result))
+            //       {
+            //         $retorno[] = $row;
+            //       }
+              //
+            //       /* DEVOLVE RETORNO */
+            //       $array = array('status' => true, 'alerta' => $retorno);
+            //   }else{
+            //       $array = array('status' => false, 'alerta' => '');
+              //
+            //         //$retorno[] = $row;
+            //   }
+                foreach ($result as $row) {
                     $retorno[] = $row;
-                  }
-
-                  /* DEVOLVE RETORNO */
-                  $array = array('status' => true, 'alerta' => $retorno);
-              }else{
-                  $array = array('status' => false, 'alerta' => '');
-
-                    //$retorno[] = $row;
-              }
-
+                }
+                 /* DEVOLVE RETORNO */
+                 $array = array('status' => true, 'alerta' => $retorno);
             }else{
               $array = array('status' => false, 'alerta' => '');
             }
@@ -431,25 +457,31 @@
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if ($result)
+            if (!empty($result))
             {
-              /* VERIFICA SE EXISTE VALOR */
-              if (@mysql_num_rows($result) > 0)
-                {
-                  /* ARMAZENA NA ARRAY */
-                  while ($row = @mysql_fetch_assoc ($result))
-                  {
+                //   /* VERIFICA SE EXISTE VALOR */
+                //   if (@mysql_num_rows($result) > 0)
+                //     {
+                //       /* ARMAZENA NA ARRAY */
+                //       while ($row = @mysql_fetch_assoc ($result))
+                //       {
+                //         $retorno[] = $row;
+                //       }
+                  //
+                //       /* DEVOLVE RETORNO */
+                //       $array = array('status' => true, 'alerta' => $retorno);
+                //   }else{
+                //       $array = array('status' => false, 'alerta' => '');
+                  //
+                //         $retorno[] = "";
+                //       }
+                foreach ($result as $row) {
                     $retorno[] = $row;
-                  }
-
-                  /* DEVOLVE RETORNO */
-                  $array = array('status' => true, 'alerta' => $retorno);
-              }else{
-                  $array = array('status' => false, 'alerta' => '');
-
-                    $retorno[] = "";
-                  }
-
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'alerta' => $retorno);
+            }else{
+                 $array = array('status' => false, 'alerta' => '');
             }
 
             return $array;
@@ -474,22 +506,29 @@
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if ($result)
+            if(!empty($result))
             {
-              /* VERIFICA SE EXISTE VALOR */
-              if (@mysql_num_rows($result) > 0)
-                {
-                  /* ARMAZENA NA ARRAY */
-                  while ($row = @mysql_fetch_assoc ($result))
-                  {
+            //   /* VERIFICA SE EXISTE VALOR */
+            //   if (@mysql_num_rows($result) > 0)
+            //     {
+            //       /* ARMAZENA NA ARRAY */
+            //       while ($row = @mysql_fetch_assoc ($result))
+            //       {
+            //         $retorno[] = $row;
+            //       }
+              //
+            //       /* DEVOLVE RETORNO */
+            //       $array = array('status' => true, 'alerta' => $retorno);
+            //   }else{
+            //       $array = array('status' => false, 'alerta' => '');
+            //   }
+                foreach ($result as $row) {
                     $retorno[] = $row;
-                  }
-
-                  /* DEVOLVE RETORNO */
-                  $array = array('status' => true, 'alerta' => $retorno);
-              }else{
-                  $array = array('status' => false, 'alerta' => '');
-              }
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'alerta' => $retorno);
+            }else{
+                $array = array('status' => false, 'alerta' => '');
             }
 
             return $array;
@@ -511,24 +550,32 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if ($result)
+                if(!empty($result))
                 {
-                  /* VERIFICA SE EXISTE VALOR */
-                  if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                    //   /* VERIFICA SE EXISTE VALOR */
+                    //   if (@mysql_num_rows($result) > 0)
+                    //     {
+                    //       /* ARMAZENA NA ARRAY */
+                    //       while ($row = @mysql_fetch_assoc ($result))
+                    //       {
+                    //         $retorno[] = $row;
+                    //       }
+                      //
+                    //       /* DEVOLVE RETORNO */
+                    //       $array = array('status' => true, 'tratamentos' => $retorno);
+                    //   }else{
+                    //       $array = array('status' => false, 'tratamentos' => '');
+                    //   }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
+                    }
 
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'tratamentos' => $retorno);
-                  }else{
-                      $array = array('status' => false, 'tratamentos' => '');
-                  }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'tratamentos' => $retorno);
+
+                }else{
+                    $array = array('status' => false, 'tratamentos' => '');
                 }
-
             }else{
                 $array = array('status' => false, 'tratamentos' => '');
             }
@@ -560,22 +607,27 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if ($result)
+                if(!empty($result))
                 {
-                  /* VERIFICA SE EXISTE VALOR */
-                  if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                    //   /* VERIFICA SE EXISTE VALOR */
+                    //   if (@mysql_num_rows($result) > 0)
+                    //     {
+                    //       /* ARMAZENA NA ARRAY */
+                    //       while ($row = @mysql_fetch_assoc ($result))
+                    //       {
+                    //         $retorno[] = $row;
+                    //       }
+                      //
+                    //       /* DEVOLVE RETORNO */
+                    //       $array = array('status' => true, 'totalAlarmes' => $retorno);
+                    //   }else{
+                    //       $array = array('status' => true, 'totalAlarmes' => 0);
+                    //   }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
-
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'totalAlarmes' => $retorno);
-                  }else{
-                      $array = array('status' => true, 'totalAlarmes' => 0);
-                  }
+                    }
+                     /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'totalAlarmes' => $retorno);
               }else{
                 $array = array('status' => false, 'totalAlarmes' => 0);
               }
@@ -627,14 +679,25 @@
                 // Monta a result
                 $result = $this->db->select($query);
 
-                /* verifica se existe resultado */
-                if (@mysql_num_rows($result) > 0)
-                {
-                    /* monta array com os resultados */
-                    while ($row = @mysql_fetch_assoc($result))
-                        $retorno[] = $row;
+                // /* verifica se existe resultado */
+                // if (@mysql_num_rows($result) > 0)
+                // {
+                //     /* monta array com os resultados */
+                //     while ($row = @mysql_fetch_assoc($result))
+                //         $retorno[] = $row;
+                //
+                //     /* retorna o array */
+                //     $array = array('status' => true, 'alarmes' => $retorno);
+                //
+                // }else{
+                //     $array = array('status' => false, 'alarmes' => '');
+                // }
+                if (!empty($result)){
 
-                    /* retorna o array */
+                    foreach ($result as $row) {
+                        $retorno[] = $row;
+                    }
+                    /* DEVOLVE RETORNO */
                     $array = array('status' => true, 'alarmes' => $retorno);
 
                 }else{
@@ -661,22 +724,30 @@
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if ($result)
+            if(!empty($result))
             {
-              /* VERIFICA SE EXISTE VALOR */
-              if (@mysql_num_rows($result) > 0)
-                {
-                  /* ARMAZENA NA ARRAY */
-                  while ($row = @mysql_fetch_assoc ($result))
-                  {
-                    $retorno[] = $row;
-                  }
+                //   /* VERIFICA SE EXISTE VALOR */
+                //   if (@mysql_num_rows($result) > 0)
+                //     {
+                //       /* ARMAZENA NA ARRAY */
+                //       while ($row = @mysql_fetch_assoc ($result))
+                //       {
+                //         $retorno[] = $row;
+                //       }
+                  //
+                //       /* DEVOLVE RETORNO */
+                //       $array = array('status' => true, 'mensagem' => $retorno);
+                //   }else{
+                //       $array = array('status' => false, 'mensagem' => '');
+                //   }
 
-                  /* DEVOLVE RETORNO */
-                  $array = array('status' => true, 'mensagem' => $retorno);
-              }else{
-                  $array = array('status' => false, 'mensagem' => '');
-              }
+                foreach ($result as $row) {
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                 $array = array('status' => true, 'mensagem' => $retorno);
+            }else{
+                 $array = array('status' => false, 'mensagem' => '');
             }
 
             return $array;
@@ -792,22 +863,28 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if($result)
+                if(!empty($result))
                 {
-                    /* VERIFICA SE EXISTE VALOR */
-                    if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                        // /* VERIFICA SE EXISTE VALOR */
+                        // if (@mysql_num_rows($result) > 0)
+                        // {
+                        //   /* ARMAZENA NA ARRAY */
+                        //   while ($row = @mysql_fetch_assoc ($result))
+                        //   {
+                        //     $retorno[] = $row;
+                        //   }
+                        //
+                        //   /* DEVOLVE RETORNO */
+                        //   $array = array('status' => true, 'equipamentos' => $retorno);
+                        // }else{
+                        //   $array = array('status' => false, 'equipamentos' => '');
+                        // }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
-
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'equipamentos' => $retorno);
-                    }else{
-                      $array = array('status' => false, 'equipamentos' => '');
                     }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipamentos' => $retorno);
+
                 }else{
                     $array = array('status' => false, 'equipamentos' => '');
                 }
@@ -835,22 +912,28 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if($result)
+                if(!empty($result))
                 {
-                    /* VERIFICA SE EXISTE VALOR */
-                    if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                        // /* VERIFICA SE EXISTE VALOR */
+                        // if (@mysql_num_rows($result) > 0)
+                        // {
+                        //   /* ARMAZENA NA ARRAY */
+                        //   while ($row = @mysql_fetch_assoc ($result))
+                        //   {
+                        //     $retorno[] = $row;
+                        //   }
+                        //
+                        //   /* DEVOLVE RETORNO */
+                        //   $array = array('status' => true, 'alarmes' => $retorno);
+                        // }else{
+                        //   $array = array('status' => false, 'alarmes' => '');
+                        // }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
-
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'alarmes' => $retorno);
-                    }else{
-                      $array = array('status' => false, 'alarmes' => '');
                     }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'alarmes' => $retorno);
+
                 }else{
                     $array = array('status' => false, 'alarmes' => '');
                 }
@@ -899,22 +982,27 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if($result)
+                if(!empty($result))
                 {
-                    /* VERIFICA SE EXISTE VALOR */
-                    if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                        // /* VERIFICA SE EXISTE VALOR */
+                        // if (@mysql_num_rows($result) > 0)
+                        // {
+                        //   /* ARMAZENA NA ARRAY */
+                        //   while ($row = @mysql_fetch_assoc ($result))
+                        //   {
+                        //     $retorno[] = $row;
+                        //   }
+                        //
+                        //   /* DEVOLVE RETORNO */
+                        //   $array = array('status' => true, 'equipAlarm' => $retorno);
+                        // }else{
+                        //   $array = array('status' => false, 'equipAlarm' => '');
+                        // }
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
-
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'equipAlarm' => $retorno);
-                    }else{
-                      $array = array('status' => false, 'equipAlarm' => '');
                     }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipAlarm' => $retorno);
                 }else{
                     $array = array('status' => false, 'equipAlarm' => '');
                 }
@@ -943,23 +1031,28 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if($result){
+                if(!empty($result)){
 
-                    /* VERIFICA SE EXISTE VALOR */
-                    if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
+                    // /* VERIFICA SE EXISTE VALOR */
+                    // if (@mysql_num_rows($result) > 0)
+                    // {
+                    //   /* ARMAZENA NA ARRAY */
+                    //   while ($row = @mysql_fetch_assoc ($result))
+                    //   {
+                    //     $retorno[] = $row;
+                    //   }
+                    //
+                    //   /* DEVOLVE RETORNO */
+                    //   $array = array('status' => true, 'alarmTrat' => $retorno);
+                    // }else{
+                    //   $array = array('status' => false, 'alarmTrat' => '');
+                    // }
+
+                    foreach ($result as $row) {
                         $retorno[] = $row;
-                      }
-
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'alarmTrat' => $retorno);
-                    }else{
-                      $array = array('status' => false, 'alarmTrat' => '');
                     }
-
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'alarmTrat' => $retorno);
                 }else{
                     $array = array('status' => false);
                 }
@@ -988,22 +1081,28 @@
                 $result = $this->db->select($query);
 
                 /* VERIFICA SE EXISTE RESPOSTA */
-                if($result)
+                if(!empty($result))
                 {
-                    /* VERIFICA SE EXISTE VALOR */
-                    if (@mysql_num_rows($result) > 0)
-                    {
-                      /* ARMAZENA NA ARRAY */
-                      while ($row = @mysql_fetch_assoc ($result))
-                      {
-                        $retorno[] = $row;
-                      }
+                    // /* VERIFICA SE EXISTE VALOR */
+                    // if (@mysql_num_rows($result) > 0)
+                    // {
+                    //   /* ARMAZENA NA ARRAY */
+                    //   while ($row = @mysql_fetch_assoc ($result))
+                    //   {
+                    //     $retorno[] = $row;
+                    //   }
+                    //
+                    //   /* DEVOLVE RETORNO */
+                    //   $array = array('status' => true, 'equipAlarm' => $retorno);
+                    // }else{
+                    //   $array = array('status' => false, 'equipAlarm' => '');
+                    // }
 
-                      /* DEVOLVE RETORNO */
-                      $array = array('status' => true, 'equipAlarm' => $retorno);
-                    }else{
-                      $array = array('status' => false, 'equipAlarm' => '');
+                    foreach ($result as $row) {
+                        $retorno[] = $row;
                     }
+                    /* DEVOLVE RETORNO */
+                    $array = array('status' => true, 'equipAlarm' => $retorno);
                 }else{
                     $array = array('status' => false, 'equipAlarm' => '');
                 }

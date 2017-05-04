@@ -52,6 +52,8 @@
 
     <?php
 
+        // var_dump($alarmesRegistrados);
+
         //LOCAL PARA GUARDAR A QUANTIDADE DE NOVOS ALARMES
         if($alarmesRegistrados['status']){
 

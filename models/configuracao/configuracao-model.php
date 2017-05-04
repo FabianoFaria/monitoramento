@@ -306,7 +306,7 @@ class ConfiguracaoModel extends MainModel
 
             $query = "SELECT param.id, param.id_equipamento, param.id_users, param.id_sim_equipamento, param.num_sim, param.parametro
                         FROM tb_parametro param
-                        WHERE param.id_equipamento = '$idEquip'";
+                        WHERE param.id_equipamento = '$idEquip' AND status_ativo = '1'";
 
             /* monta a result */
             $result = $this->db->select($query);

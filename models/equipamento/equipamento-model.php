@@ -333,7 +333,7 @@ class EquipamentoModel extends MainModel
                     clie.id as 'idClie', clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
                       FROM tb_equipamento equip
                       LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
-                      LEFT JOIN tb_sim_equipamento equip_sim ON equip_sim.id_equipamento = equip.id
+                      LEFT JOIN tb_sim_equipamento equip_sim ON equip_sim.id_equipamento = equip.id AND equip_sim.status_ativo = '1'
                       LEFT JOIN tb_sim sim ON equip_sim.id_sim = sim.num_sim
                       LEFT JOIN tb_cliente clie ON clie.id = equip.id_cliente
                       LEFT JOIN tb_filial fili ON fili.id = equip.id_filial
@@ -565,7 +565,7 @@ class EquipamentoModel extends MainModel
 
             $query = "SELECT simEquip.id, simEquip.id_equipamento, simEquip.id_sim
                         FROM tb_sim_equipamento simEquip
-                        WHERE simEquip.id_equipamento = '$idEquip'";
+                        WHERE simEquip.id_equipamento = '$idEquip' AND simEquip.status_ativo = '1'";
 
             $result         = $this->db->select($query);
             /* VERIFICA SE EXISTE RESPOSTA */
@@ -1330,7 +1330,7 @@ class EquipamentoModel extends MainModel
                        FROM tb_dados dados
                        JOIN tb_sim_equipamento  simEquip ON simEquip.id_sim = dados.num_sim
                        WHERE simEquip.id_equipamento = '$idEquipamento' AND simEquip.status_ativo = '1'
-                       ORDER BY $posicao DESC LIMIT 1";
+                       ORDER BY dados.dt_criacao DESC LIMIT 1";
 
             //var_dump($query);
 
@@ -1338,7 +1338,7 @@ class EquipamentoModel extends MainModel
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if($result){
+            if(!empty($result)){
                 // /* VERIFICA SE EXISTE VALOR */
                 // if (@mysql_num_rows($result) > 0)
                 // {
@@ -1392,7 +1392,7 @@ class EquipamentoModel extends MainModel
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if(!empty(result)){
+            if(!empty($result)){
 
                 // /* VERIFICA SE EXISTE VALOR */
                 // if (@mysql_num_rows($result) > 0)

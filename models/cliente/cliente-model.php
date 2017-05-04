@@ -99,7 +99,7 @@
             $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
-            if ($result)
+            if(!empty($result))
             {
                 // /* VERIFICA SE EXISTE VALOR */
                 // if (@mysql_num_rows($result) > 0)
@@ -577,7 +577,7 @@
                         $retorno[] = $row;
                     }
                     /* DEVOLVE RETORNO */
-                    $array = array('status' => true, 'dados' => $cliente) ;
+                    $array = array('status' => true, 'dados' => $retorno) ;
 
                 }else{
                   /* fim */
@@ -722,7 +722,7 @@
             /* monta result */
             $result = $this->db->select($query);
 
-            if($result){
+            if(!empty($result)){
 
                 // /* verifica se existe valor */
                 // if (@mysql_num_rows($result)>0)
