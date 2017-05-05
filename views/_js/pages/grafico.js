@@ -91,9 +91,9 @@ function gerarGraficoFisico(){
 /*
 * Adiciona datapicker ao formulario de data
 */
+
 var options = {
     dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
-    monthNames: [ "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ],
     maxDate: "+0y +0m +0d",
     mindate: "-1y -6m",
     changeMonth: true,

@@ -4,8 +4,7 @@
 		SCRIPT COM O OBJETIVO DE VERIFICAR SE SISTEMA ESTÀ RECEBENDO DADOS DO EQUIPAMENTO, CASO CONTRARIO EMITE ALERTA
 	*/
 
-
-	 // Inclui a classe de conexa
+	// Inclui a classe de conexa
     require_once "classes/class-EficazDB.php";
     require_once "classes/class-email.php";
 
@@ -81,12 +80,7 @@
 					// var_dump(time());
 					// var_dump(strtotime($dataAtual));
 
-
-
 					//var_dump($listaContatos);
-
-
-
 
 					/*
 						CASO A DIFERENÇA SEJA MAIOR QUE 10MIN
@@ -102,7 +96,7 @@
 							/*
 								INICIA O PROCESSO DE GERAR ALARME DO EQUIPAMENTO
 							*/
-							gerarAlarmeEquipamento($equipamento['idSimEquip'], $dados['num_sim'],$dataAtual);
+							gerarAlarmeEquipamento($equipamento['id'], $equipamento['idSimEquip'], $dados['num_sim'],$dataAtual);
 
 							/*
 								INICIA PROCESSO DE GERAR EMAILS
@@ -300,7 +294,7 @@
 	/*
 	 * FUNÇÃO PARA GERAR ALARME DO EQUIPAMENTO
 	*/
-	function gerarAlarmeEquipamento($id_sim_equip, $numSim, $data){
+	function gerarAlarmeEquipamento($id_equip, $id_sim_equip, $numSim, $data){
 
 		/*
         *  CRIA UM OBJETO DE DA CLASSE DE CONEXAO
@@ -341,6 +335,15 @@
 	                   '0','0','0','0','0','0')";
 
 		$result = $conn->query($queryDadosVazios);
+
+		/*
+			REGISTRA NA TABELA DE EQUIPAMENTO POTÊNCIA, QUE NADA FOI REGISTRADO
+		*/
+
+		$queryDadosVaziosPotencia = "INSERT INTO tb_dados_potencia ( id_equipamento, num_sim, potencia_saida, er, es, et, cr, cs, ct, tempoEstimadoHora, status_entrada) VALUES
+									('$id_equip' ,'$numSim', '0', '0', '0', '0', '0', '0', '0', '0', '0')";
+
+		$result = $conn->query($queryDadosVaziosPotencia);
 
 		/*
 			REGISTRA O ALARME NA TABELA DO BD

@@ -5,9 +5,8 @@
  *
  * Modelo que gerencia toda as regras da geracao do grafico
  */
- class GraficoGeradorModel extends MainModel
+class GraficoGeradorModel extends MainModel
 {
-
     /**
      * respData
      *
@@ -33,7 +32,6 @@
      *
      * @access public
      */
-
     public function __construct ($db = false, $controller = null)
     {
         /* carrega a conexao */
@@ -68,8 +66,8 @@
         $equipId = $this->parametros[0];
 
         //RECUPERA O SIM ATRAVES DO NUMERO DO EQUIPAMENTO
-        if(is_numeric($equipId)){
 
+        if(is_numeric($equipId)){
             $querySim = "SELECT id_sim FROM tb_sim_equipamento WHERE id_equipamento = '$equipId'";
 
             $resultadoSim = $this->verificaQuery($querySim);
@@ -79,7 +77,32 @@
                 $sim_num = $resultadoSim[0]['id_sim'];
 
                 // Coleta os itens ativados
+                //$opc = explode(",",$this->parametros[4]);
                 $opc = explode(",",$this->parametros[1]);
+
+                // Monta a query para buscar os resultados
+                $query = "SELECT DATE(dad.dt_criacao) date, MINUTE(dad.dt_criacao) minut, DAY(dad.dt_criacao) day, HOUR(dad.dt_criacao) hour, MIN(dad.dt_criacao) min_date, UNIX_TIMESTAMP(dad.dt_criacao) AS 'dt_criacao', ";
+
+                // Define os parametros
+                for ($a = 0; $a < sizeof($tabela) ; $a++)
+                {
+                    if (($opc[$a] == 1) && (is_numeric($opc[$a]))){
+
+                        if($tabela[$a] == 'dad.h'){
+                            //$query .= ''.$tabela[$a] . " + (800) AS 'h',";
+                            $query .= ' IF(dad.h > 0, dad.h + 1700, dad.h) AS "h",';
+                        }else{
+                            $query .= ''.$tabela[$a] . ",";
+                        }
+
+                        //$query .= ''.$tabela[$a] . ",";
+                    }
+
+                }
+
+                // Trata a ultima posicao
+                $query .= ".";
+                $query = str_replace(",.","",$query);
 
                 //RECUPERA OS HORÁRIOS PASSADOS PELO USUÁRIO
                 $horaIni  = $opc[23];
@@ -90,127 +113,121 @@
                 $dataIni  = date( "Y-m-d ".$horaIni.":00", strtotime($opc[21]) );
                 $dataFim  = date( "Y-m-d ".$horaFim.":59", strtotime($opc[22]) );
 
+                //$diff       = $this->date_diff_bkp( date_create($opc[13]),date_create($opc[14]));
+                // $diasDiff   = $diff->format("%R%a days");
                 $datetime1 = date_create($opc[21]);
                 $datetime2 = date_create($opc[22]);
                 $intervalInDays = ($datetime2->format("U") - $datetime1->format("U"))/(3600 * 24);
 
                 $diasDiff   = $intervalInDays;
 
+                // $diferencaData = $diff;
+
+                // Adiciona o final da query
+                // $query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao > '{$dataIni}' AND dt_criacao < '{$dataFim}' LIMIT 300";
+                //$query .= " FROM tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim} ' LIMIT 4360";
+                //$query .="FROM ( SELECT @row := @row +1 AS rownum, dt_criacao FROM (SELECT @row :=0) r, tb_dados WHERE num_sim = {$sim_num} AND dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}') ) ranked WHERE rownum %30 =1";
 
                 /*
-                * QUERY PARA TRAZER OS DADOS DA TABELA NORMAL
+
+                    VERIFICAR O SWICTH COM A DIFERENÇA DE DATAS
+
                 */
-                // Monta a query para buscar os resultados
-                $query = "SELECT DATE(dad.dt_criacao) date, MINUTE(dad.dt_criacao) minut, DAY(dad.dt_criacao) day, HOUR(dad.dt_criacao) hour, MIN(dad.dt_criacao) min_date, UNIX_TIMESTAMP(dad.dt_criacao) AS 'dt_criacao', ";
+                 /*
 
-                // Define os parametros
-                for ($a = 0; $a < sizeof($tabela) ; $a++)
-                {
-                    if (($opc[$a] == 1) && (is_numeric($opc[$a]))){
+                    MONTAR A NOVA QUERY A PARTIR DAQUI...
 
-                        //$query .= ' dad.'.$tabela[$a] . ",";
-
-                        if($tabela[$a] == 'h'){
-                            //$query .= ''.$tabela[$a] . " + (800) AS 'h',";
-                            $query .= ' IF(dad.h > 0, dad.h + 1700, dad.h) AS "h",';
-                        }else{
-                            //Coreção para não misturar parametros desta query com as da outra tabela
-                            if(($tabela[$a] != 'er') && ($tabela[$a] != 'es') && ($tabela[$a] != 'et') && ($tabela[$a] != 'ct') && ($tabela[$a] != 'cr') && ($tabela[$a] != 'cs')){
-
-                                $query .= ' dad.'.$tabela[$a] . ",";
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-                // Trata a ultima posicao
-                $query .= ".";
-                $query = str_replace(",.","",$query);
-
-                $query .= " FROM tb_dados dad";
-
-                // $query .= " JOIN tb_sim_equipamento sim_equip ON sim_equip.id_sim = dad.num_sim";
+                */
+                // $query .=" FROM  tb_dados a";
                 //
-                // $query .= " JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento";
+                // $query .=" INNER JOIN";
+                // $query .="(";
+                // $query .="SELECT  DATE(dt_criacao) date,";
 
-                //$query .= " JOIN tb_dados_potencia dadPot ON (dadPot.num_sim = '{$sim_num}' AND dad.num_sim = '{$sim_num}' AND dad.dt_criacao = dadPot.data_registro) ";
+                /*
+                * TOMAR CUIDADO COM AS VERSÕES DE MYSQL, POIS A QUERY É COMPLETAMENTE DIFERENTE.
+                */
+                // Inicio versão em produção
+                $query .= " FROM tb_dados dad";
+                $query .= " JOIN tb_dados_potencia dadPot ON (dadPot.num_sim = '{$sim_num}' AND dad.num_sim = '{$sim_num}' AND dad.dt_criacao = dadPot.data_registro) ";
+                $query .= " WHERE dad.dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}' AND dad.num_sim = '{$sim_num}'";
 
-                $query .= " WHERE dad.dt_criacao BETWEEN '{$dataIni}' AND '{$dataFim}' AND dad.num_sim = '{$sim_num}' AND dad.status_ativo = '1'";
-
-                if($diasDiff > 7){
+                if($diasDiff > 60){
                     $query .=" GROUP BY DATE(dad.dt_criacao)";
-                }elseif($diasDiff > 2){
+                }elseif($diasDiff > 1){
                     $query .=" GROUP BY DATE(dad.dt_criacao),HOUR(dad.dt_criacao)";
                 }else{
                     $query .=" GROUP BY DATE(dad.dt_criacao),HOUR(dad.dt_criacao), MINUTE(dad.dt_criacao)";
                 }
+                // Final da versão em produção
+
+                // switch ($diasDiff) {
+                //     case ($diasDiff > 60) :
+                //         //MAIOR QUE UM MÊS, MOSTRA A MEDIDA DE CADA DIA
+                //
+                //         $query .=" MINUTE(dt_criacao) minut,";
+                //         $query .=" DAY(dt_criacao) day,";
+                //         $query .=" HOUR(dt_criacao) hour,";
+                //         $query .=" MIN(dt_criacao) min_date";
+                //         $query .=" FROM    tb_dados";
+                //         $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
+                //         $query .=")b ON DATE(a.dt_criacao) = b.date AND";
+                //         $query .=" DAY(a.dt_criacao) = b.hour AND";
+                //         $query .=" a.dt_criacao = b.min_date";
+                //         $query .=" GROUP BY DATE(dt_criacao)";
+                //
+                //     break;
+                //     case $diasDiff > 1 :
+                //         //MAIOR QUE TRÊS DIAS, MOSTRA A MEDIDA DE CADA HORA
+                //
+                //         $query .=" MINUTE(dt_criacao) minut,";
+                //         $query .=" DAY(dt_criacao) day,";
+                //         $query .=" HOUR(dt_criacao) hour,";
+                //         $query .=" MIN(dt_criacao) min_date";
+                //         $query .=" FROM    tb_dados";
+                //         $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
+                //         $query .=")b ON DATE(a.dt_criacao) = b.date AND";
+                //         $query .=" HOUR(a.dt_criacao) = b.hour AND";
+                //         $query .=" a.dt_criacao = b.min_date";
+                //         $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao)";
+                //     break;
+                //     default :
+                //         //ATÉ TRÊS DIAS, MOSTRA A CADA MINUTO
+                //
+                //         $query .=" MINUTE(dt_criacao) minut,";
+                //         $query .=" DAY(dt_criacao) day,";
+                //         $query .=" HOUR(dt_criacao) hour,";
+                //         $query .=" MIN(dt_criacao) min_date";
+                //         $query .=" FROM    tb_dados";
+                //         $query .=" GROUP   BY DATE(dt_criacao), HOUR(dt_criacao)";
+                //         $query .=")b ON DATE(a.dt_criacao) = b.date AND ";
+                //         $query .=" MINUTE(a.dt_criacao) = b.minut AND ";
+                //         $query .=" a.dt_criacao = b.min_date";
+                //
+                //         $query .=" GROUP BY DATE(dt_criacao),HOUR(dt_criacao), MINUTE(dt_criacao)";
+                //
+                //     break;
+                // }
+                //
+                // $query .=" WHERE a.num_sim = '' AND a.dt_criacao BETWEEN ' 00:00:00' AND ' 23:59:59' ORDER BY a.dt_criacao DESC ";
 
                 //var_dump( $opc, $query, $diasDiff);
-                // print_r($query);
-                // exit();
+                //var_dump($query);
 
-                // BUSCA OS DADOS NO BANCO
+                // Busca os dados no banco
                 $result = $this->verificaQuery($query);
-
-                /*
-                * QUERY PARA TRAZER OS DADOS DE POTENCIA
-                */
-                $queryPot = "SELECT DATE(dadPot.data_registro) date, MINUTE(dadPot.data_registro) minut, DAY(dadPot.data_registro) day, HOUR(dadPot.data_registro) hour, MIN(dadPot.data_registro) min_date, UNIX_TIMESTAMP(dadPot.data_registro) AS 'dt_criacao', ";
-                // Define os parametros
-                for ($a = 0; $a < sizeof($tabela) ; $a++)
-                {
-                    if (($opc[$a] == 1) && (is_numeric($opc[$a]))){
-
-                        if(($tabela[$a] == 'er') || ($tabela[$a] == 'es') || ($tabela[$a] == 'et') || ($tabela[$a] == 'ct') || ($tabela[$a] == 'cr') || ($tabela[$a] == 'cs')){
-
-                            $queryPot .= ' dadPot.'.$tabela[$a] . ",";
-
-                        }
-
-                    }
-                }
-
-                // Trata a ultima posicao
-                $queryPot .= ".";
-                $queryPot = str_replace(",.","",$queryPot);
-
-                $queryPot .= " FROM tb_dados_potencia dadPot";
-                $queryPot .= " WHERE dadPot.data_registro BETWEEN '{$dataIni}' AND '{$dataFim}' AND dadPot.num_sim = '{$sim_num}'";
-
-                if($diasDiff > 7){
-                    $queryPot .=" GROUP BY DATE(dadPot.data_registro)";
-                }elseif($diasDiff > 2){
-                    $queryPot .=" GROUP BY DATE(dadPot.data_registro),HOUR(dadPot.data_registro)";
-                }else{
-                    $queryPot .=" GROUP BY DATE(dadPot.data_registro),HOUR(dadPot.data_registro), MINUTE(dadPot.data_registro)";
-                }
-
-                // BUSCA OS DADOS NO BANCO
-                $resultPot = $this->verificaQuery($queryPot);
-
-                // var_dump($resultPot);
-                // print_r($queryPot);
-                // exit();
 
                 // Inicia a variavel da data
                 $respDate       = "[";
                 $respRawDate    = array();
 
-                // JUNÇÃO DOS RESULTADOS DAS DUAS QUERYES
-
-                if((!empty($result)) || (!empty($resultPot))){
+                if(!empty($result)){
 
                     // Realiza o loop na result
                     for ($a = 0; $a < sizeof($result); $a++)
                     {
-                        //$respDate é responsavel por armazenar as séries das datas.
                         // $respDate .= "'".date('d-M-y H:i',strtotime($result[$a]['dt_criacao']))."',";
                         $respDate .= "'".$result[$a]['dt_criacao']."',";
-
                         //SALVA NA ARRAY A DATA PURA
                         array_push($respRawDate, $result[$a]['dt_criacao']);
 
@@ -225,58 +242,18 @@
                             //VERIFICA SE O PARAMETRO ESTÁ ESCOLHIDO OU NÃO PARA ADICIONAR NA SÉRIE
                             if ($opc[$b] == 1){
 
+
                                 //EFETUA A DISCRIMINAÇÃO DOS PARAMETROS ESCOLHIDOS
-                                if(($tabela[$b] != "er") && ($tabela[$b] != "es") && ($tabela[$b] != "et") && ($tabela[$b] != "cr") && ($tabela[$b] != "cs") && ($tabela[$b] != "ct")){
+                                if($tabela[$b] == "er" || $tabela[$b] == "es" || $tabela[$b] == "et" || $tabela[$b] == "cr" || $tabela[$b] == "cs" || $tabela[$b] == "ct"){
                                     //CONVERTE AS POTÊNCIAS EM (Kw)
+                                    $respData[$tabela[$b]][0] .= "".floatval($result[$a][$tabela[$b]]/1000).",";
+                                }else{
+                                    //$respData[$tabela[$b]][0] .= "".intval(floatval($result[$a][$tabela[$b]]/100)).",";
                                     $respData[$tabela[$b]][0] .= "".floatval($result[$a][$tabela[$b]]/100).",";
-                                }else{
-                                    //$respData[$tabela[$b]][0] .= "".intval(floatval($result[$a][$tabela[$b]]/100)).",";
-                                    //$respData[$tabela[$b]][0] .= "".floatval($result[$a][$tabela[$b]]/100).",";
                                 }
-
                             }
-
                         }
                     }
-
-                    // Realiza o loop na resultPot
-                    for ($a = 0; $a < sizeof($resultPot); $a++)
-                    {
-
-                        // TESTA SE $result RETORNOU RESULTADO, CASO NEGATIVO
-                        if(empty($result)){
-
-                            $respDate .= "'".$resultPot[$a]['dt_criacao']."',";
-
-                            //SALVA NA ARRAY A DATA PURA
-                            array_push($respRawDate, $resultPot[$a]['dt_criacao']);
-                        }
-
-                        for ($b = 0; $b < sizeof($tabela) ; $b++)
-                        {
-                            if ($opc[$b] == 1 && empty ($respData[$tabela[$b]][0]))
-                            {
-                                $respData[$tabela[$b]][0] = "{name:'{$tabela2[$b]}',data:[";
-
-                            }
-
-                            //VERIFICA SE O PARAMETRO ESTÁ ESCOLHIDO OU NÃO PARA ADICIONAR NA SÉRIE
-                            if ($opc[$b] == 1){
-
-                                //EFETUA A DISCRIMINAÇÃO DOS PARAMETROS ESCOLHIDOS
-                                if(($tabela[$b] == "er") || ($tabela[$b] == "es") || ($tabela[$b] == "et") || ($tabela[$b] == "cr") || ($tabela[$b] == "cs") || ($tabela[$b] == "ct")){
-                                    //CONVERTE AS POTÊNCIAS EM (Kw)
-                                    $respData[$tabela[$b]][0] .= "".floatval($resultPot[$a][$tabela[$b]]/1000).",";
-                                }else{
-                                    //$respData[$tabela[$b]][0] .= "".intval(floatval($result[$a][$tabela[$b]]/100)).",";
-                                    //$respData[$tabela[$b]][0] .= "".floatval($result[$a][$tabela[$b]]/100).",";
-                                }
-
-                            }
-                        }
-
-                    }
-
 
                     // Adiciona e remove os caracteres
                     $respDate .= "]";
@@ -303,6 +280,8 @@
                 $diasDiff = 0;
             }
 
+            //var_dump($resultadoSim);
+
         }else{
             $respDate = "[]";
             $respData = "{}";
@@ -315,8 +294,8 @@
         $this->respDate = $respDate;
         $this->respRawDate = $respRawDate;
         $this->respDiference = $diasDiff;
-
     }
+
 
 
     /**
@@ -329,7 +308,6 @@
      */
     public function buscaDadosClinte ($sim)
     {
-
         // Decodifica o sim
         $sim = base64_decode($sim);
 
@@ -349,7 +327,8 @@
         // Verifica se existe retorno
         if ($resultado)
             return $resultado;
-        else{
+        else
+        {
             // Caso nao exista resultado
             // Realiza a busca para as filiais
             // Monta a query da filial
@@ -377,19 +356,8 @@
                 // Caso nao exista, retorna false
                 return $resultado;
             }
-
         }
-
-
     }
-
-
 }
-
-
-
-
-
-
 
 ?>

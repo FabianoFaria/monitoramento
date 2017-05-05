@@ -249,14 +249,26 @@ $dadosCliente       = $dadosCliente['dados'][0];
                     if(min < 10){
                         min = "0"+min;
                     }
+                    //Correções de segundos
                     var sec = date.getSeconds();
                     if(sec < 10){
                         sec = "0"+sec;
                     }
 
+                    //Correções de horas
                     if(hour > 23){
                         hour = hour - 24;
                         day  = day + 1;
+                    }
+
+
+                    //Correções de datas
+                    if(day > 31){
+                        day = 1;
+                        month = date.getMonth() + 2;
+                        if(month < 10){
+                            month = "0"+month;
+                        }
                     }
 
                     if(day < 10){
