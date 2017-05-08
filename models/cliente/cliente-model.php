@@ -315,7 +315,7 @@
                 }
 
 
-                $array = array('status' => $result, 'idCliente' => $idGerada);
+                $array = array('status' => true, 'idCliente' => $idGerada);
 
             }else{
 
@@ -498,6 +498,8 @@
             /* monta result */
             $result = $this->db->select($query);
 
+            // var_dump($result);
+
             if (!empty($result)){
                 //   /* verifica se existe valor */
                 //   if (@mysql_num_rows($result)>0)
@@ -528,7 +530,7 @@
               /* fim */
               $status = false;
 
-              $array = array('status' => true, 'dados' => '') ;
+              $array = array('status' => false, 'dados' => '') ;
             }
 
           }else{

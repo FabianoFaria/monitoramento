@@ -79,7 +79,7 @@ else if ($entrada == 4)
 else if ($entrada == 5)
 {
     // Verifica a carga da bateria
-    verificaBateria ($conn,$sim,$tb);
+    verificaBateria($conn,$sim,$tb);
 }
 
 
@@ -142,6 +142,9 @@ function verificaEntradaSaida ($conn,$tb,$sim)
 {
     // Coleta os dados
     $result = $conn->select ("SELECT {$tb} FROM tb_dados WHERE num_sim={$sim} AND status_ativo=1 ORDER BY (dt_criacao) DESC LIMIT 1");
+
+    $resultCali = $conn->select("SELECT cali.variavel_cal FROM tb_equipamento_calibracao cali JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = cali.id_equip WHERE simEquip.id_sim = '{$sim}' AND cali.posicao_tab = '{$tb}' AND simEquip.status_ativo = '1'");
+
     // Verifica se existe uma resposta
     if ($result)
     {
@@ -149,6 +152,9 @@ function verificaEntradaSaida ($conn,$tb,$sim)
         // if (@mysql_num_rows($result) > 0)
         // {
         if(!empty($result)){
+
+            // Tenta carregar o valor de calibração na posicao selecionada
+
             // Coleta o valor e insere na variavel de resposta
             // while($row = @mysql_fetch_assoc($result))
             // {
@@ -159,13 +165,31 @@ function verificaEntradaSaida ($conn,$tb,$sim)
             //     // Convert a string em vetor
             //     $resp = intval($resp);
             // }
+            $calibracao = 0;
+
+            //var_dump($resultCali);
+            //exit();
+
+            if(!empty($resultCali)){
+
+                foreach ($resultCali as $calibri) {
+                    $cal = $calibri;
+                }
+                //RECUPERA A VARIAVEL DE CALIBRAÇÃO
+                $calibracao = $cal['variavel_cal'];
+
+            }else{
+                //CASO NÃO EXISTA UMA VARIAVEL DE CALIBRAÇÃO CADASTRADO PARA A POSIÇÃO
+                $calibracao = 1;
+            }
 
             foreach ($result as $row){
                 $resp = $row[$tb];
                 // Retorna o tamanho da string
                 $tamResp = strlen($resp);
                 // Convert a string em vetor
-                $resp = intval($resp);
+                // EFETUA A MULTIPLICAÇÃO DO VALOR DO BANCO DE DADOS COM A VARIÁVEL DE CALIBRAÇÃO
+                $resp = intval($resp) * $calibracao;
             }
 
             // Devolve a resposta por callback
@@ -272,6 +296,10 @@ function verificaBateria ($conn,$sim,$tb)
     // MONTA A QUERY
     $query = "select {$tb} from tb_dados where num_sim = {$sim} order by (dt_criacao) desc limit 1 ";
 
+    $resultCali = $conn->select("SELECT cali.variavel_cal FROM tb_equipamento_calibracao cali JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = cali.id_equip WHERE simEquip.id_sim = '{$sim}' AND cali.posicao_tab = '{$tb}' AND simEquip.status_ativo = '1'");
+
+    //var_dump($resultCali);
+
     // MONTA A RESULT
     $result = $conn->select($query);
 
@@ -283,15 +311,32 @@ function verificaBateria ($conn,$sim,$tb)
         // while ($row = @mysql_fetch_assoc($result))
         //     $resp[] = $row;
 
+        if(!empty($resultCali)){
+
+            foreach ($resultCali as $calibri) {
+                $cal = $calibri;
+            }
+            //RECUPERA A VARIAVEL DE CALIBRAÇÃO
+            $calibracao = $cal['variavel_cal'];
+
+        }else{
+            //CASO NÃO EXISTA UMA VARIAVEL DE CALIBRAÇÃO CADASTRADO PARA A POSIÇÃO
+            $calibracao = 555.00;
+        }
+
+
         foreach ($result as $row){
             $resp[] = $row;
         }
+
+        $resp = floatval($resp[0][$tb]) * $calibracao;
     }
     else
         $resp = 0;
 
     // Coleta a data de retorno
-    $resultado = floatval($resp[0][$tb]);
+    //$resultado = floatval($resp[0][$tb]);
+    $resultado = $resp;
 
     // Devolve a resposta por callback
     echo $_GET['callback']. '(['. json_encode($resultado) . '])';

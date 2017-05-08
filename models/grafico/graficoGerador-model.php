@@ -96,7 +96,38 @@
 
                 $diasDiff   = $intervalInDays;
 
+                /*
+                * QUERY PARA CARREGAR AS VARIAVEIS DE CALIBRAÇÃO DO EQUIPAMENTO
+                */
 
+                $variaveisCalib = array();
+
+                // Monta a sequencia de opções de calibração para serem carregadas no gráfico
+                for ($a = 0; $a < sizeof($tabela) ; $a++)
+                {
+
+                    if (($opc[$a] == 1) && (is_numeric($opc[$a]))){
+
+                        $queryCalibracao  = "SELECT cali.variavel_cal FROM tb_equipamento_calibracao cali JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = cali.id_equip WHERE simEquip.id_sim = '{$sim_num}' AND cali.posicao_tab = '$tabela[$a]' AND simEquip.status_ativo = '1'";
+
+                        // BUSCA OS DADOS NO BANCO
+                        $resultCalib = $this->verificaQuery($queryCalibracao);
+
+                        print_r($resultCalib);
+
+                        if(!empty($resultCalib)){
+
+                            foreach ($resultCalib as $cal) {
+                                
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                exit();
                 /*
                 * QUERY PARA TRAZER OS DADOS DA TABELA NORMAL
                 */
@@ -149,7 +180,7 @@
                     $query .=" GROUP BY DATE(dad.dt_criacao),HOUR(dad.dt_criacao), MINUTE(dad.dt_criacao)";
                 }
 
-                //var_dump( $opc, $query, $diasDiff);
+                // var_dump( $opc, $query, $diasDiff);
                 // print_r($query);
                 // exit();
 

@@ -10,6 +10,8 @@ $dadosEquipamento   = $dadosEquipamento['equipamento'][0];
 $dadosCliente       = $modeloClie->carregarDadosCliente($dadosEquipamento['id_cliente']);
 $dadosCliente       = $dadosCliente['dados'][0];
 
+
+
 //var_dump($dadosEquipamento);
 
 ?>
@@ -235,6 +237,9 @@ $dadosCliente       = $dadosCliente['dados'][0];
                         y = item.datapoint[1].toFixed(2);
 
                     var date = new Date(x);
+                    // Correção para alinhar o primeiro ponto no gráfico com a primeiro dado recuperado do BD
+                    date.setHours(date.getHours() + 3);
+
                     var year = date.getFullYear();
                     var month = date.getMonth() + 1;
                     if(month < 10){
@@ -243,8 +248,8 @@ $dadosCliente       = $dadosCliente['dados'][0];
 
                     var day = date.getDate();
 
-                    //var hour = date.getHours();
-                    var hour = date.getHours() + 3;
+                    var hour = date.getHours();
+                    // var hour = date.getHours() + 3;
                     var min = date.getMinutes();
                     if(min < 10){
                         min = "0"+min;

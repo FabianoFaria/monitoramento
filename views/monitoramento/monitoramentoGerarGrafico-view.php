@@ -40,21 +40,21 @@ if(is_numeric($this->parametros[0])){
     // CARREGA OS PARAMETROS CONFIGURADOS PARA O EQUIPAMENTO
     $retorno = $modelo->loadGraficoParam($idEquip, $idSimEquip, $idSim);
 
-    // CARREGA OS VALORES DE CALIBRAÇÃO SALVOS PARA O EQUIPAMENTO
-    $valoresCalibracao = $modeloEquip->posicoesCalibradas($idEquip);
+    // // CARREGA OS VALORES DE CALIBRAÇÃO SALVOS PARA O EQUIPAMENTO
+    // $valoresCalibracao = $modeloEquip->posicoesCalibradas($idEquip);
+    //
+    // if($valoresCalibracao['status']){
+    //
+    //     foreach ($valoresCalibracao['posicoesCalibradas'] as $calibracao) {
+    //
+    //         $posicoesCalibradas[] = array($calibracao['posicao_tab'] => $calibracao['variavel_cal']);
+    //     }
+    //
+    // }else{
+    //     $posicoesCalibradas = 0;
+    // }
 
-    if($valoresCalibracao['status']){
-
-        foreach ($valoresCalibracao['posicoesCalibradas'] as $calibracao) {
-
-            $posicoesCalibradas[] = array($calibracao['posicao_tab'] => $calibracao['variavel_cal']);
-        }
-
-    }else{
-        $posicoesCalibradas = 0;
-    }
-
-    var_dump($posicoesCalibradas);
+    // var_dump($posicoesCalibradas);
     //var_dump($dadosEquipamento);
 
 
@@ -346,7 +346,10 @@ else
                                          inc = parseFloat(valor/100);
 
 
-                                     leftVal =  inc;
+                                        var valorPreciso = inc.toFixed(2);
+
+
+                                     leftVal =  valorPreciso;
 
 
                                      //rightVal = inc;
@@ -1102,16 +1105,16 @@ else
                                                     var labelCarga  = parseFloat(calcula.toFixed(2));
                                                     //console.log(calcula);
 
-                                                    if(valorBat > 0){
-                                                        valorBat = valorBat + 17;
-                                                    }
+                                                    // if(valorBat > 0){
+                                                    //     valorBat = valorBat + 17;
+                                                    // }
 
                                                     //FORNECE O MESMO DADO PARA O INPUT DE CALCULO PARA TENSÃO DE CARREGADOR DE BATERIA
                                                     document.getElementById('valorVariavelTensaoBateria').value = valorBat;
                                                     // document.getElementById('div-cargaBat').style.width = calcula+"%";
 
                                                     //Estilização do novo gráfico de bateria
-                                                    document.getElementById('cargaBateriaPorcentagem').innerHTML = valorBat+" (Vdc)";
+                                                    document.getElementById('cargaBateriaPorcentagem').innerHTML = valorBat.toFixed(2)+" (Vdc)";
                                                     document.getElementById('cargaUtilGraficoBateria').style.width = calcula+"%";
                                                     //Se a bateria chegar a menor de 15% muda o estilo do well
                                                     if(valorBat < <?php echo $bateriaBaixo; ?>){

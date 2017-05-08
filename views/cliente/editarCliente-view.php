@@ -6,7 +6,7 @@
     $dados    = $modelo->carregarDadosCliente($this->parametros[0]);
     $contato  = $modelo->carregaDadosContato($this->parametros[0]);
 
-    //var_dump($dados);
+    //var_dump($contato);
 
     /*
 		  array(2) { ["status"]=> bool(true) ["dados"]=> array(2) { [0]=> array(7) { ["id"]=> string(1) "3" ["nome"]=> string(8) "Fabiano " ["sobrenome"]=> string(6) "Hatori" ["email"]=> string(27) "fabiano@eficazSystem.com.br" ["telefone"]=> string(0) "" ["celular"]=> string(1) "0" ["id_cliente"]=> string(1) "1" } [1]=> array(7) { ["id"]=> string(1) "4" ["nome"]=> string(6) "Allan " ["sobrenome"]=> string(5) "Lima " ["email"]=> string(30) "allan.lima@eficazsystem.com.br" ["telefone"]=> string(0) "" ["celular"]=> string(1) "0" ["id_cliente"]=> string(1) "1" } } }

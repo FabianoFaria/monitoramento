@@ -1351,7 +1351,7 @@ function registrarCalibracaoEquipamento(idEquipamento, posicao, valorReal, valor
             VALOR BRUTO VINDO DA TABELA  DIVIDIDO PELO VALOR REAL MEDIDO NO EQUIPAMENTO
             IGUAL A VARIAVEL DE CALIBRAÇÃO.
         */
-        var calibracaoVal = valorReal / valorRecebido;
+        var calibracaoVal = valorRecebido / valorReal;
 
         //VARIAVEL DE CALIBRACAO É SALVO
         $.ajax({

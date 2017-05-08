@@ -1231,7 +1231,7 @@ class EquipamentoModel extends MainModel
 
             $query = "SELECT caliEquip.id, caliEquip.id_equip, caliEquip.posicao_tab, caliEquip.variavel_cal
                       FROM tb_equipamento_calibracao caliEquip
-                      WHERE caliEquip.id_equip";
+                      WHERE caliEquip.id_equip = '$idEquip'";
 
             /* MONTA RESULT */
             $result = $this->db->select($query);
