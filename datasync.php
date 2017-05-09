@@ -1,96 +1,105 @@
 <?php
 
-    /*
-    * TERCEIRA VERSÃO DO DATASYNC.
-    * CARACTERISTICAS DESTA VERSÃO:
-    * RECEBER E GUARDAR OS DADOS RECEBIDO DO EQUIPAMENTO
-    * CONFORME OS TIPOS DE ENTRADA E SAÍDA DO EQUIPAMENTO EFETUAR OS TESTES DOS PARAMETROS E GERAR ALARME
-    * CONFORME AS ENTRADAS E SAÍDAS, CALCULAR A POTENCIA CONSUMIDA E SALVAR NO BANCO
-    * QUANDO DETECTADO QUEDA DE ENERGIA, INICIAR PPROCESSO DE CALCULO DE AUTONOMIA DA BATERIA
-    */
+/*
+* QUINTA VERSÃO DO DATASYNC.
+* CARACTERISTICAS DESTA VERSÃO:
+* ATUALIZAÇÃO DE CONEXÃO DE BD COM PDO E PREPARED STATEMENT
+* RECEBER E GUARDAR OS DADOS RECEBIDO DO EQUIPAMENTO
+* CONFORME OS TIPOS DE ENTRADA E SAÍDA DO EQUIPAMENTO EFETUAR OS TESTES DOS PARAMETROS E GERAR ALARME
+* CONFORME AS ENTRADAS E SAÍDAS, CALCULAR A POTENCIA CONSUMIDA E SALVAR NO BANCO
+* QUANDO DETECTADO QUEDA DE ENERGIA, INICIAR PPROCESSO DE CALCULO DE AUTONOMIA DA BATERIA
+* ADIÇÃO DE TESTE DE FALSO POSITIVO PARA OS ALARMES DE CRÍTICO BAIXO ( EVITAR O PROBLEMA DE HARDWARE MANDAR ZERO E LOGO EM SEGUIDA MANDAR OS DADOS CORRETAMENTE )
+*/
+
+/*
+* INCLUI A CLASSE DE CONEXA
+*/
+
+/* mostra todos os erros */
+error_reporting(E_ALL);
+ini_set("display_errors",1);
+
+
+define('EFIPATH', dirname(__FILE__));
+require_once EFIPATH ."/classes/class-EficazDB.php";
+require_once EFIPATH ."/classes/class-email.php";
+
+/*
+* VALIDA OS CAMPOS DO POST
+*/
+
+//VERIFICA SE O CHIP SIM ESTÁ ATIVO NO SISTEMA ANTES DE INICIAR O PROCESSO DE VALIDAÇÃO DOS DADOS
+
+if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POST['D']) &&
+   isset($_POST['E']) && isset($_POST['F']) && isset($_POST['G']) && isset($_POST['H']) &&
+   isset($_POST['I']) && isset($_POST['J']) && isset($_POST['L']) && isset($_POST['M']) &&
+   isset($_POST['N']) && isset($_POST['O']) && isset($_POST['P']) && isset($_POST['Q']) &&
+   isset($_POST['R']) && isset($_POST['S']) && isset($_POST['T']) && isset($_POST['U'])){
 
     /*
-    * INCLUI A CLASSE DE CONEXA
+    *  CRIA UM OBJETO DE DA CLASSE DE CONEXAO
     */
-
-    define('EFIPATH', dirname(__FILE__));
-    require_once EFIPATH ."classes/class-EficazDB.php";
-    require_once EFIPATH ."classes/class-email.php";
-
+    $conn = new EficazDB;
 
     /*
-    * VALIDA OS CAMPOS DO POST
+    * VERIFICA SE EXISTE ERRO DE CONEXAO
     */
-
-    if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POST['D']) &&
-       isset($_POST['E']) && isset($_POST['F']) && isset($_POST['G']) && isset($_POST['H']) &&
-       isset($_POST['I']) && isset($_POST['J']) && isset($_POST['L']) && isset($_POST['M']) &&
-       isset($_POST['N']) && isset($_POST['O']) && isset($_POST['P']) && isset($_POST['Q']) &&
-       isset($_POST['R']) && isset($_POST['S']) && isset($_POST['T']) && isset($_POST['U']))
+    if (!$conn)
     {
-        /*
-        *  CRIA UM OBJETO DE DA CLASSE DE CONEXAO
-        */
-        $conn = new EficazDB;
+        // Retorno erro
+        header('HTTP/1.1 404 Not Found');
+        // Finaliza a execucao
+        exit();
+    }
 
-        /*
-        * VERIFICA SE EXISTE ERRO DE CONEXAO
-        */
-        if (!$conn)
-        {
-            // Retorno erro
-            header('HTTP/1.1 404 Not Found');
-            // Finaliza a execucao
-            exit();
-        }
+    /*
+    * LISTA DE PROTOCOLOS
+    * EM FUTURAS VERSÕES, EFETUAR UM INCLUDE OU UMA QUERY DO BD
+    */
+    $protocolos    = array(
+                        '65534' => 'Alerta Y',
+                        '65533' => 'Alerta Z'
+                    );
 
-        /*
-        * LISTA DE PROTOCOLOS
-        */
-        $protocolos    = array(
-                            '65534' => 'Alerta Y',
-                            '65533' => 'Alerta Z'
-                        );
+    /*
+    * CADA UM DOS POSTS SERÁ VERIFICADO PARA PROCURAR ALGUM TIPO DE PROTOCOLO ENVIADO PELO EQUIPAMENTO
+    * EM CASO DE PROTOCOLO ENCONTRADO, IRÁ SALVAR UM ZERO NO LUGAR DO CÓDIGO DO PROTOCOLO
+    */
 
-        /*
-        * CADA UM DOS POSTS SERÁ VERIFICADO PARA PROCURAR ALGUM TIPO DE PROTOCOLO ENVIADO PELO EQUIPAMENTO
-        * EM CASO DE PROTOCOLO ENCONTRADO, IRÁ SALVAR UM ZERO no LUGAR DO CÓDIGO DO PROTOCOLO
-        */
-        $postB = verificaValorPosicaoQuery($_POST['B'],$protocolos);
-        $postC = verificaValorPosicaoQuery($_POST['C'],$protocolos);
-        $postD = verificaValorPosicaoQuery($_POST['D'],$protocolos);
+    $postB = verificaValorPosicaoQuery($_POST['B'],$protocolos);
+    $postC = verificaValorPosicaoQuery($_POST['C'],$protocolos);
+    $postD = verificaValorPosicaoQuery($_POST['D'],$protocolos);
 
-        $postE = verificaValorPosicaoQuery($_POST['E'],$protocolos);
-        $postF = verificaValorPosicaoQuery($_POST['F'],$protocolos);
-        $postG = verificaValorPosicaoQuery($_POST['G'],$protocolos);
+    $postE = verificaValorPosicaoQuery($_POST['E'],$protocolos);
+    $postF = verificaValorPosicaoQuery($_POST['F'],$protocolos);
+    $postG = verificaValorPosicaoQuery($_POST['G'],$protocolos);
 
-        $postH = verificaValorPosicaoQuery($_POST['H'],$protocolos);
+    $postH = verificaValorPosicaoQuery($_POST['H'],$protocolos);
 
-        $postI = verificaValorPosicaoQuery($_POST['I'],$protocolos);
-        $postJ = verificaValorPosicaoQuery($_POST['J'],$protocolos);
-        $postL = verificaValorPosicaoQuery($_POST['L'],$protocolos);
+    $postI = verificaValorPosicaoQuery($_POST['I'],$protocolos);
+    $postJ = verificaValorPosicaoQuery($_POST['J'],$protocolos);
+    $postL = verificaValorPosicaoQuery($_POST['L'],$protocolos);
 
-        $postM = verificaValorPosicaoQuery($_POST['M'],$protocolos);
-        $postN = verificaValorPosicaoQuery($_POST['N'],$protocolos);
-        $postO = verificaValorPosicaoQuery($_POST['O'],$protocolos);
+    $postM = verificaValorPosicaoQuery($_POST['M'],$protocolos);
+    $postN = verificaValorPosicaoQuery($_POST['N'],$protocolos);
+    $postO = verificaValorPosicaoQuery($_POST['O'],$protocolos);
 
-        $postP = verificaValorPosicaoQuery($_POST['P'],$protocolos);
+    $postP = verificaValorPosicaoQuery($_POST['P'],$protocolos);
 
-        $postQ = verificaValorPosicaoQuery($_POST['Q'],$protocolos);
-        $postR = verificaValorPosicaoQuery($_POST['R'],$protocolos);
-        $postS = verificaValorPosicaoQuery($_POST['S'],$protocolos);
-        $postT = verificaValorPosicaoQuery($_POST['T'],$protocolos);
-        $postU = verificaValorPosicaoQuery($_POST['U'],$protocolos);
+    $postQ = verificaValorPosicaoQuery($_POST['Q'],$protocolos);
+    $postR = verificaValorPosicaoQuery($_POST['R'],$protocolos);
+    $postS = verificaValorPosicaoQuery($_POST['S'],$protocolos);
+    $postT = verificaValorPosicaoQuery($_POST['T'],$protocolos);
+    $postU = verificaValorPosicaoQuery($_POST['U'],$protocolos);
 
-        /*
-        * MONTA A QUERY
-        */
-        // $valor = "insert into tb_dados (num_sim,b,c,d,e,f,g,h,i,j,l,m,n,o,p,q,r,s,t,u) values
-        //               ('{$_POST['A']}','{$postB}','{$postC}','{$postD}','{$postE}','{$postF}','{$postG}',
-        //                '{$postH}','{$postI}','{$postJ}','{$postL}','{$postM}','{$postN}','{$postO}',
-        //                '{$postP}','{$postQ}','{$postR}','{$postS}','{$postT}','{$postU}')";
 
-        // MONTA A QUERY
+    //VERIFICA SE CHIP SIM ESTÁ ATIVO NO SISTEMA
+
+    $chipExiste = chipSimExistente($_POST['A']);
+
+    if($chipExiste){
+
+        // MONTA A QUERY PARA GUARDAR OS DADOS RECEBIDOS
         $valor = "insert into tb_dados (num_sim,b,c,d,e,f,g,h,i,j,l,m,n,o,p,q,r,s,t,u) values
                     ('{$_POST['A']}','{$_POST['B']}','{$_POST['C']}','{$_POST['D']}','{$_POST['E']}','{$_POST['F']}','{$_POST['G']}',
                     '{$_POST['H']}','{$_POST['I']}','{$_POST['J']}','{$_POST['L']}','{$_POST['M']}','{$_POST['N']}','{$_POST['O']}',
@@ -99,32 +108,37 @@
         /*
         * EXECUTA A QUERY NO BANCO E VERIFICA SE RETORNO ERRO
         */
-        if (!$conn->query($valor))
+
+        /* MONTA A RESULT */
+        $result = $conn->query($valor);
+
+        if (!$result)
         {
             // Monta a query de log
             $query = "insert into tb_log (log)  values ('Erro ao gravar os valores da tabela respota; SIM [{$_POST['A']}]')";
 
             // Grava o log
-            $conn->query($valor);
+            $conn->query($query);
 
             // Retona o erro
             header('HTTP/1.1 404 Not Found');
             // Finaliza a execucao
             exit();
         }
+        //FIM DO PROCESSO DE SALVAR OS DADOS RECEBIDOS.
+
+        /*
+        INICIA O PROCESSO DE VERIFICAÇÃO DE ALARME
+        */
 
         /*
         * CARREGA OS TIPOS DE EQUIPAMENTOS CADASTRADOS COM O SIM
         */
-
         $equipamentosSim = carregaEquipamentosSim($_POST['A']);
-
-        var_dump($equipamentosSim);
 
         /*
         * CARREGA OS PARAMETROS DEFINIDOS PARA O SIM INFORMADO
         */
-
         $dados = carregaParamentrosSim($_POST['A']);
 
         var_dump($dados);
@@ -153,6 +167,7 @@
                 switch ($equipamento['tipo_equipamento']) {
 
                     case '1':
+
                         /*
                         * Equipamento é um No-break
                         * Carrega os dados de equipamentos para verificar as saídas e entradas corretas
@@ -166,55 +181,51 @@
                         * CALCULA A POTENCIA DE ENTRADA CONSUMIDA
                         */
                         echo "<p> Inicio potência entrada consumida --> </p>";
+                        $potenciaEntradaR = 0;
+                        $potenciaEntradaS = 0;
+                        $potenciaEntradaT = 0;
 
-                            $potenciaEntradaR = 0;
-                            $potenciaEntradaS = 0;
-                            $potenciaEntradaT = 0;
+                        $valorB = verificaProtocoloPosicaoTebela($_POST['B'], $protocolos);
+                        $valorI = verificaProtocoloPosicaoTebela($_POST['I'], $protocolos);
 
-                            $valorB = verificaProtocoloPosicaoTebela($_POST['B'], $protocolos);
-                            $valorI = verificaProtocoloPosicaoTebela($_POST['I'], $protocolos);
+                        if($valorB == 1 && $valorI == 1){
+                            //Testa se é possivel calcular a potência R
+                            if((isset($_POST['B']) && ($_POST['B'] > 0)) && (isset($_POST['I']) && ($_POST['I'] > 0))){
 
-                            if($valorB == 1 && $valorI == 1){
-                                //Testa se é possivel calcular a potência R
-                                if((isset($_POST['B']) && ($_POST['B'] > 0)) && (isset($_POST['I']) && ($_POST['I'] > 0))){
+                                $potenciaEntradaR = ($_POST['B'] / 100 ) * ($_POST['I'] / 100 );
 
-                                    $potenciaEntradaR = ($_POST['B'] / 100 ) * ($_POST['I'] / 100 );
-
-                                }
-                            }else{
-                                var_dump($valorB, $valorI);
                             }
+                        }else{
+                            var_dump($valorB, $valorI);
+                        }
 
-                            $valorC = verificaProtocoloPosicaoTebela($_POST['C'], $protocolos);
-                            $valorJ = verificaProtocoloPosicaoTebela($_POST['J'], $protocolos);
+                        $valorC = verificaProtocoloPosicaoTebela($_POST['C'], $protocolos);
+                        $valorJ = verificaProtocoloPosicaoTebela($_POST['J'], $protocolos);
 
-                            if($valorC == 1 && $valorJ == 1){
-                                //Testa se é possivel calcular a potência R
-                                if((isset($_POST['C']) && ($_POST['J'] > 0)) && (isset($_POST['C']) && ($_POST['J'] > 0))){
+                        if($valorC == 1 && $valorJ == 1){
+                            //Testa se é possivel calcular a potência R
+                            if((isset($_POST['C']) && ($_POST['J'] > 0)) && (isset($_POST['C']) && ($_POST['J'] > 0))){
 
-                                    $potenciaEntradaS = ($_POST['C'] / 100 ) * ($_POST['J'] / 100 );
+                                $potenciaEntradaS = ($_POST['C'] / 100 ) * ($_POST['J'] / 100 );
 
-                                }
-                            }else{
-                                var_dump($valorC, $valorJ);
                             }
+                        }else{
+                            var_dump($valorC, $valorJ);
+                        }
 
+                        $valorD = verificaProtocoloPosicaoTebela($_POST['D'], $protocolos);
+                        $valorL = verificaProtocoloPosicaoTebela($_POST['L'], $protocolos);
 
-                            $valorD = verificaProtocoloPosicaoTebela($_POST['D'], $protocolos);
-                            $valorL = verificaProtocoloPosicaoTebela($_POST['L'], $protocolos);
+                        if($valorD == 1 && $valorL == 1){
+                            //Testa se é possivel calcular a potência R
+                            if((isset($_POST['D']) && ($_POST['L'] > 0)) && (isset($_POST['D']) && ($_POST['L'] > 0))){
 
-                            if($valorD == 1 && $valorL == 1){
-                                //Testa se é possivel calcular a potência R
-                                if((isset($_POST['D']) && ($_POST['L'] > 0)) && (isset($_POST['D']) && ($_POST['L'] > 0))){
+                                $potenciaEntradaT = ($_POST['D'] / 100 ) * ($_POST['L'] / 100 );
 
-                                    $potenciaEntradaT = ($_POST['D'] / 100 ) * ($_POST['L'] / 100 );
-
-                                }
-                            }else{
-                                var_dump($valorD, $valorL);
                             }
-
-
+                        }else{
+                            var_dump($valorD, $valorL);
+                        }
 
                         echo "<p> Fim potência entrada consumida --> </p>";
 
@@ -223,78 +234,65 @@
                         */
                         echo "<p> Inicio potência consumida --> </p>";
 
-                            $potenciaR = 0;
-                            $potenciaS = 0;
-                            $potenciaT = 0;
+                        $potenciaR = 0;
+                        $potenciaS = 0;
+                        $potenciaT = 0;
 
-                            $valorE = verificaProtocoloPosicaoTebela($_POST['E'], $protocolos);
-                            $valorM = verificaProtocoloPosicaoTebela($_POST['M'], $protocolos);
+                        $valorE = verificaProtocoloPosicaoTebela($_POST['E'], $protocolos);
+                        $valorM = verificaProtocoloPosicaoTebela($_POST['M'], $protocolos);
 
-                            if($valorE && $valorM){
-                                //Testa se é possivel calcular a potência R
-                                if((isset($_POST['E']) && ($_POST['E'] > 0)) && (isset($_POST['M']) && ($_POST['M'] > 0))){
+                        if($valorE && $valorM){
+                            //Testa se é possivel calcular a potência R
+                            if((isset($_POST['E']) && ($_POST['E'] > 0)) && (isset($_POST['M']) && ($_POST['M'] > 0))){
 
-                                    $potenciaR = ($_POST['E'] / 100 ) * ($_POST['M'] / 100 );
+                                $potenciaR = ($_POST['E'] / 100 ) * ($_POST['M'] / 100 );
 
-                                }
-                            }else{
-                                var_dump($valorE, $valorM);
                             }
+                        }else{
+                            var_dump($valorE, $valorM);
+                        }
 
-                            $valorF = verificaProtocoloPosicaoTebela($_POST['F'], $protocolos);
-                            $valorN = verificaProtocoloPosicaoTebela($_POST['N'], $protocolos);
+                        $valorF = verificaProtocoloPosicaoTebela($_POST['F'], $protocolos);
+                        $valorN = verificaProtocoloPosicaoTebela($_POST['N'], $protocolos);
 
-                            if($valorF && $valorN){
-                                //Testa se é possivel calcular a potência S
-                                if((isset($_POST['F']) && ($_POST['F'] > 0)) && (isset($_POST['N']) && ($_POST['N'] > 0))){
+                        if($valorF && $valorN){
+                            //Testa se é possivel calcular a potência S
+                            if((isset($_POST['F']) && ($_POST['F'] > 0)) && (isset($_POST['N']) && ($_POST['N'] > 0))){
 
-                                    $potenciaS = ($_POST['F'] / 100 ) * ($_POST['N'] / 100 );
+                                $potenciaS = ($_POST['F'] / 100 ) * ($_POST['N'] / 100 );
 
-                                }
-                            }else{
-                                var_dump($valorF, $valorN);
                             }
+                        }else{
+                            var_dump($valorF, $valorN);
+                        }
 
-                            $valorG = verificaProtocoloPosicaoTebela($_POST['G'], $protocolos);
-                            $valorO = verificaProtocoloPosicaoTebela($_POST['O'], $protocolos);
+                        $valorG = verificaProtocoloPosicaoTebela($_POST['G'], $protocolos);
+                        $valorO = verificaProtocoloPosicaoTebela($_POST['O'], $protocolos);
 
-                            if($valorG && $valorO){
-                                //Testa se é possivel calcular a potência T
-                                if((isset($_POST['G']) && ($_POST['G'] > 0)) && (isset($_POST['O']) && ($_POST['O'] > 0))){
+                        if($valorG && $valorO){
+                            //Testa se é possivel calcular a potência T
+                            if((isset($_POST['G']) && ($_POST['G'] > 0)) && (isset($_POST['O']) && ($_POST['O'] > 0))){
 
-                                    $potenciaT = ($_POST['G'] / 100 ) * ($_POST['O'] / 100 );
+                                $potenciaT = ($_POST['G'] / 100 ) * ($_POST['O'] / 100 );
 
-                                }
-                            }else{
-                                var_dump($valorF, $valorN);
                             }
+                        }else{
+                            var_dump($valorF, $valorN);
+                        }
 
+                        $potenciaEquip      = $equipamentoAnalizado[0]['potencia'];
+                        //Substituir 0.85 pelo valor de "fator de potência" que será implementado no cadastro de equipamento
+                        $totalSaidaPot      = $potenciaR + $potenciaS + $potenciaT;
 
-                            $potenciaEquip      = $equipamentoAnalizado[0]['potencia'];
-                            //Substituir 0.85 pelo valor de "fator de potência" que será implementado no cadastro de equipamento
-                            $totalSaidaPot      = $potenciaR + $potenciaS + $potenciaT;
+                        $percentualSaidaPot = ($totalSaidaPot * 100) / (($potenciaEquip * 1000) * 0.85);
 
-                            $percentualSaidaPot = ($totalSaidaPot * 100) / (($potenciaEquip * 1000) * 0.85);
-
-                            $potenciaConsumida  = ((($potenciaEquip * 100) * $percentualSaidaPot) / 100) / 100;
-                            var_dump($potenciaConsumida);
-                            //((potenciaEquip * 1000) * 0.85);
-
-
-                            /*
-                            //SOMA DE SAÍDA DE POTÊNCIA
-                            var totalSaidaPot       = potSaiR + potSaiS + potSaiT;
-                            var percentualSaidaPot  = (totalSaidaPot * 100) / ((potenciaEquip * 1000) * 0.85);
-                            var percentualDisponivel = 100 - percentualSaidaPot;
-
-                            //VALOR DE POTENCIA SENDO CONSUMIDA ATUALMENTE
-
-                            var potenciaConsumida  =  (((potenciaEquip * 100) * percentualSaidaPot) / 100) / 100;
-                            */
+                        $potenciaConsumida  = ((($potenciaEquip * 100) * $percentualSaidaPot) / 100) / 100;
+                        var_dump($potenciaConsumida);
 
                         /*
                         * VERIFICA O STATUS DE RECEBIMENTO DE ENTRADA
                         */
+
                         $statusEntrada = 0;
                         switch ($equipamentoAnalizado[0]['tipo_entrada']) {
                             case '1':
@@ -323,19 +321,10 @@
 
                         /*
                         * SALVA NO BANCO A POTENCIA CONSUMIDA JUNTAMENTE COM O HORARIO E O NUM_SIM
-                        */
-
-                        /*
                         * ATUALIZAR FUNÇÃO PARA SALVAR AS POTÊNCIAS E ENTADAS DO EQUIPAMENTO
                         */
 
                         $salvarPotencia = salvarDadosPotenciaConsmida($_POST['A'], $equipamentoAnalizado[0]['id'], $potenciaConsumida, $statusEntrada, $tempoEstimadoHora, number_format($potenciaEntradaR, 2, '.', ''), number_format($potenciaEntradaS, 2, '.', ''), number_format($potenciaEntradaT, 2, '.', ''), number_format($potenciaR, 2, '.', ''),  number_format($potenciaS, 2, '.', ''), number_format($potenciaT, 2, '.', ''));
-
-                        //$salvarPotencia = salvarDadosPotenciaConsmida($_POST['A'], $equipamentoAnalizado[0]['id'], $potenciaConsumida, $statusEntrada, $tempoEstimadoHora);
-
-                            //($numeroSim, $idEquipamento, $totalPotenciaConsumida, $statusEntrada, $tempoEstHora
-
-                        //var_dump($salvarPotencia);
 
                         /*
                         * SE O STATUS DA ENTRADA ESTIVER ATIVADO, CALCULAR E SALVAR O VALOR DO TEMPO DE ESTIMATIVA DA BATERIA
@@ -359,10 +348,10 @@
                         */
 
                         /*
-                        * Verifica o tipo de entrada do equipamento e então efetua a verificação dos parametros
+                        * VERIFICA O TIPO DE ENTRADA DO EQUIPAMENTO E ENTÃO EFETUA A VERIFICAÇÃO DOS PARAMETROS
                         */
-                        switch ($equipamentoAnalizado[0]['tipo_entrada']) {
 
+                        switch ($equipamentoAnalizado[0]['tipo_entrada']) {
                             case '1':
                                 # Equipamento monofásico
                                 $valoresEntrada         = explode('|', $configuracaoSalva[1]);
@@ -491,12 +480,12 @@
                                 }
 
                             break;
-
                         }
 
                         /*
-                        * Verifica o tipo de saída do equipamento e então efetua a verificação dos parametros
+                        * VERIFICA O TIPO DE SAÍDA DO EQUIPAMENTO E ENTÃO EFETUA A VERIFICAÇÃO DOS PARAMETROS
                         */
+
                         switch ($equipamentoAnalizado[0]['tipo_saida']) {
 
                             case '1':
@@ -643,13 +632,6 @@
                             gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'h');
                         }
 
-                        // if($valorValidoP > 0){
-                        //     $statusP    = comparaParametrosEquipamento(($_POST['P']/100), $valoresBateria, $idSimEquip, 'Bateria', 'p');
-                        // }else{
-                        //     //GERA ALARME DE PROTOCOLO
-                        //     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'p');
-                        // }
-
                         /*
                         * VERIFICA AS MEDIDAS DAS TEMPERATURAS
                         */
@@ -678,7 +660,6 @@
 
                     break;
                 }
-
             }
 
         }else{
@@ -689,17 +670,14 @@
         /*
         * FECHA A CONEXAO
         */
-        $conn->close();
-
-
-    }else{
-        /*
-        * RETORNA ERRO
-        */
-        header('HTTP/1.1 404 Not Found');
     }
 
-
+}else{
+    /*
+    * RETORNA ERRO
+    */
+    header('HTTP/1.1 404 Not Found');
+}
 
 /*
 *
@@ -707,11 +685,11 @@
 *
 */
 
+
     /*
     * INICIA O PROCESSO DE PROCURA DE CONTATOS PARA ENVIO DE ALERTA
     */
     function carregarContatosAlerta($idSimEquipamento){
-
         // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
         $connBase      = new EficazDB;
 
@@ -724,12 +702,17 @@
         // Monta a result
         $result = $connBase->select($queryContatos);
 
-        // Verifica se existe valor de retorno
-        if (@mysql_num_rows ($result) > 0)
-        {
-            /* ARMAZENA NA ARRAY */
-            while ($row = @mysql_fetch_assoc ($result))
-            {
+        // // Verifica se existe valor de retorno
+        // if (@mysql_num_rows ($result) > 0)
+        // {
+        if(!empty($result)){
+
+            // /* ARMAZENA NA ARRAY */
+            // while ($row = @mysql_fetch_assoc ($result))
+            // {
+            //     $retorno[] = $row;
+            // }
+            foreach ($result as $row) {
                 $retorno[] = $row;
             }
 
@@ -740,7 +723,7 @@
         }
 
         // Fecha a conexao
-        $connBase->close();
+        //$connBase->close();
 
         return $retorno;
     }
@@ -763,10 +746,14 @@
         $result = $connBase->select($queryContatos);
 
         // Verifica se existe valor de retorno
-        if (@mysql_num_rows ($result) > 0){
+        //if (@mysql_num_rows ($result) > 0){
+        if(!empty($result)){
             /* ARMAZENA NA ARRAY */
-            while ($row = @mysql_fetch_assoc ($result))
-            {
+            // while ($row = @mysql_fetch_assoc ($result))
+            // {
+            //     $retorno[] = $row;
+            // }
+            foreach ($result as $row) {
                 $retorno[] = $row;
             }
 
@@ -798,7 +785,15 @@
 
         $result = $connBase->query($queryAlarme);
 
-        $idGerada  = mysql_insert_id();
+        //$idGerada  = mysql_insert_id();
+
+        if(is_numeric($result)){
+            $idGerada = $result;
+        }else{
+            $idGerada = null;
+        }
+
+        //$idGerada = $connBase->lastInsertId();
 
         if(!$result)
         {
@@ -814,7 +809,13 @@
             exit();
         }
 
-        $idAlarme = mysql_insert_id();
+        //$idAlarme = mysql_insert_id();
+        //$idAlarme = $connBase->lastInsertId();
+        if(is_numeric($result)){
+            $idAlarme = $result;
+        }else{
+            $idAlarme = null;
+        }
 
         //REGISTRA OS DETALHES DO ALARME PARA CONSULTA PELO MONITOR
         $queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta(id_alerta, parametro, parametroMedido, parametroAtingido, pontoTabela)
@@ -859,49 +860,30 @@
         // Monta a result com os parametros
         $result = $connBase->select($queryAlarme);
 
-        if($result){
-            //var_dump($result);
+        if(!empty($result)){
 
-            // Verifica se existe valor de retorno
-            if (@mysql_num_rows ($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
-
-                return $retorno;
-
-            }else{
-                return false;
+            foreach ($result as $row) {
+                $retorno[] = $row;
             }
 
-            // Fecha a conexao
-            $connBase->close();
+            return $retorno;
 
         }else{
+
             // echo  "Nada encontrado";
             return false;
-
-            // Fecha a conexao
-            $connBase->close();
         }
-
     }
 
     /*
     * VERIFICA SE JÁ EXISTE ALGUM ALARME ATIVO PARA O EQUIPAMENTO
     */
     function verificarAlarmeExistente($idEquipSim, $tipoAlerta){
+
         //PROCURA NA TABELA DE ALARME, ALGUM REGISTRO DO EQUIPAMENTO COMPROMETIDO
         // Cria um objeto de da classe de conexao
         $connBase    = new EficazDB;
 
-        // Um alerta com status 5 sinaliza que está finalizado, abixo disso, ainda está ativo
-        // ATUALIZAÇÃO - Com status 4, significa que o alarme foi solucionado, sendo assim, está apto a registrar outros alarmes
-        //$queryAlarme = "SELECT id FROM tb_alerta WHERE id_sim_equipamento = '$idEquipSim' AND  status_ativo < 4";
-        // ATUALIZAÇÃO  - Com a verificação do ponto de tabela, permite agora o equipamento gerar mais de um tipo de alerta
         $queryAlarme = "SELECT alert.id
                         FROM tb_alerta alert
                         JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
@@ -910,27 +892,16 @@
         // Monta a result com os parametros
         $result = $connBase->select($queryAlarme);
 
-        if($result){
-            //var_dump($result);
+        if(!empty($result)){
 
-            // Verifica se existe valor de retorno
-            if (@mysql_num_rows ($result) > 0)
-            {
-                return true;
-            }else{
-                return false;
-            }
-
-            // Fecha a conexao
-            $connBase->close();
+            return true;
 
         }else{
+
             // echo  "Nada encontrado";
             return false;
-
-            // Fecha a conexao
-            $connBase->close();
         }
+
     }
 
     /*
@@ -947,85 +918,11 @@
     * AQUI OCORRE A VERIFICAÇÃO SE O PARAMETRO GEROU ALARME OU NÃO
     */
     function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $ParametroVerificado, $pontoTabela){
+
         /*
         * TESTA OS PARAMETROS ATRAVÉS DE IF E ELSES
         */
         if($parametro > (float) trataValorDataSync($configuacoes[4])){
-            /*
-            * VERIFICA ALERTA EXISTNTE E TENTA GERAR ALERTA PARA CRITICO ALTO
-            */
-            //$alarmeExiste = verificarAlarmeExistente($idSimEquip, 2);
-            $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
-
-            if(!$alarmeExiste){
-
-                gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 3, 2, $pontoTabela);
-
-                /*
-                * REGISTRA FALHA
-                */
-                //registraFalhaEquipamento($_POST['A']);
-
-                /*
-                * INICIA O PROCESSO DE ENVIO DE EMAIL PARA O RESPONSAVEL
-                */
-
-                //Carrega a mensagem de alerta
-                $msgAlerta          = carregarMensagemAlerta(3);
-                $msgAlerta          = $msgAlerta[0]['mensagem'];
-                //Parametros violados
-                $indiceRecebido     = $parametro;
-                $indiceUltrapassado = (float) trataValorDataSync($configuacoes[3]);
-
-                //Carrega as informações do equipamento que gerou o alarme
-                $equipamentoAlerta  = carregarDadosEquip($idSimEquip);
-
-                //Procura os contatos para envio de alerta da tabela tb_contato_alerta
-                $listaContatos      = carregarContatosAlerta($idSimEquip);
-
-                //Procura os contatos de determinado equipamento para enviar EMAILS
-                $listaContatosEquip = carregarContatosAlertaEquipamento($idSimEquip);
-
-                // Cria um objeto de da classe de email
-                $mailer        = new email;
-
-                /*
-                * VERIFICA SE A LISTA DE CONTATOS NÃO ESTÁ VAZIA, ENTÃO INICIA O ENVIO DE EMAILS
-                */
-                if(!empty($listaContatos)){
-                    foreach ($listaContatos as $contato) {
-
-                        //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
-
-                        $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
-
-                        $resultadoEnvio = $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], " ", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado, $ParametroVerificado, $pontoTabela);
-
-                        //POSIBILIDADE DE CADASTRO NO LOG EM CASO DE FALHA DE ENVIO
-
-                        echo $resultadoEnvio;
-                    }
-                }
-
-                /*
-                * Verifica se a lista de contatos do equipamento não está vazia, então inicia o envio de emails
-                */
-                if(!empty($listaContatosEquip)){
-
-                    foreach ($listaContatosEquip as $contato) {
-
-                        var_dump($contato);
-
-                        //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
-
-                        $localEquip = (isset($equipamentoAlerta[0]['filial'])) ? ' filial '.$equipamentoAlerta[0]['filial'] : 'Matriz';
-
-                        $mailer->envioEmailAlertaEquipamento($contato['email'], $contato['nome_contato'], $equipamentoAlerta[0]['tipo_equipamento'], $equipamentoAlerta[0]['nomeModeloEquipamento'], "", $equipamentoAlerta[0]['ambiente'], $msgAlerta, $equipamentoAlerta[0]['cliente'], $localEquip, $indiceRecebido, $indiceUltrapassado, $ParametroVerificado, $pontoTabela);
-                    }
-                }
-            }
-
-        }elseif($parametro > (float) trataValorDataSync($configuacoes[3])){
             /*
             * VERIFICA ALERTA EXISTNTE E TENTA GERAR ALERTA PARA ALTO
             */
@@ -1035,14 +932,26 @@
 
                 gerarAlarmeEquipamento($idSimEquip, $parametro, (float) trataValorDataSync($configuacoes[3]), $ParametroVerificado, 5, 1, $pontoTabela);
             }
-
         }elseif($parametro < (float) trataValorDataSync($configuacoes[0])){
             /*
             * VERIFICA ALERTA EXISTNTE E TENTA GERAR ALERTA PARA CRITICO BAIXO
             */
             $alarmeExiste = verificarAlarmeExistente($idSimEquip, $pontoTabela);
 
-            if(!$alarmeExiste){
+            /*
+            * CARREGA O PEULTIMO DADO PARA CONFIMAR SE NÃO SE TRATA DE UM FALSO POSITIVO
+            */
+            $penultimoDado  = identificarFalsoPositivo($idSimEquip, $pontoTabela);
+
+            //COMPARA O PENULTIMO DADO COM O PARAMETRO ATUAL
+            if(($penultimoDado[0][$pontoTabela] / 100) < (float) trataValorDataSync($configuacoes[0])){
+                $falsoPositivo = true;
+            }else{
+                $falsoPositivo = false;
+            }
+
+            // CASO NÃO EXISTA UM ALARME REGISTRADO E NÃO SEJA CASO DE FALSO POSITIVO
+            if(!$alarmeExiste && $falsoPositivo){
 
                 /*
                 * GERAR ALARME
@@ -1093,8 +1002,6 @@
                 */
                 if(!empty($listaContatosEquip)){
 
-
-
                     foreach ($listaContatosEquip as $contato) {
                         //CHAMA A FUNÇÃO PARA EFETUAR O ENVIO DE EMAIL PARA CADA UM DOS CONTATOS
 
@@ -1121,6 +1028,7 @@
             //Nada acontece
             echo "OK ! ".$parametro."<br>";
         }
+
     }
 
     /*
@@ -1139,7 +1047,6 @@
     * VERIFICA SE NÃO FOI PASSADO UM PROTOCOLO NO LUGAR DO VALOR
     */
     function verificaProtocoloPosicaoTebela($valor, $protocolos){
-
         //Procura na array de protocolos o valor passado pelo
         if (array_key_exists($valor,$protocolos)){
             //Retorna o valor da array em caso o valor tenha sido retornado um dos protocolos
@@ -1170,11 +1077,15 @@
         $result = $connBase->select($query);
 
         // Verifica se existe valor de retorno
-        if (@mysql_num_rows ($result) > 0)
-        {
+        // if (@mysql_num_rows ($result) > 0)
+        // {
+        if(!empty($result)){
             /* ARMAZENA NA ARRAY */
-            while ($row = @mysql_fetch_assoc ($result))
-            {
+            // while ($row = @mysql_fetch_assoc ($result))
+            // {
+            //     $retorno[] = $row;
+            // }
+            foreach ($result as $row) {
                 $retorno[] = $row;
             }
 
@@ -1185,7 +1096,7 @@
         }
 
         // Fecha a conexao
-        $connBase->close();
+        //$connBase->close();
 
         return $retorno;
 
@@ -1207,19 +1118,25 @@
         /*
         * VERIFICA SE EXISTE RESPOSTA
         */
-        if ($result)
+        if(!empty($result))
         {
-            /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
-
-                $dados = $retorno;
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     $dados = $retorno;
+            // }
+            foreach ($result as $row) {
+                $retorno[] = $row;
             }
+
+             $dados = $retorno;
+
         }else{
             $dados = false;
         }
@@ -1259,14 +1176,18 @@
         $result = $connBase->select($query);
 
         // Verifica se existe valor de retorno
-        if (@mysql_num_rows ($result) > 0)
-        {
+        // if (@mysql_num_rows ($result) > 0)
+        // {
+        if(!empty($result)){
+
             /* ARMAZENA NA ARRAY */
-            while ($row = @mysql_fetch_assoc ($result))
-            {
+            // while ($row = @mysql_fetch_assoc ($result))
+            // {
+            //     $retorno[] = $row;
+            // }
+            foreach ($result as $row) {
                 $retorno[] = $row;
             }
-
         }else{
             // Se nao existir valor de retorno
             // Armazena 0 no vetor
@@ -1274,9 +1195,10 @@
         }
 
         // Fecha a conexao
-        $connBase->close();
+        //$connBase->close();
 
         return $retorno;
+
     }
 
     /*
@@ -1290,6 +1212,7 @@
 
         return $tempoEstimadoPorHora;
     }
+
 
     /*
     * RECEBE OS DADOS DE POTENCIA DE SAIDA PARA SALVAR NO BANCO DE DADOS
@@ -1308,7 +1231,91 @@
         $connBase->query($query);
 
         // Fecha a conexao
-        $connBase->close();
+        //$connBase->close();
+    }
+
+    /*
+    * FUNÇÃO PARA RECUPERAR O PENULTIMO DADO PARA COMPARACAO E POSSIVEL CONFIRMAÇÂO DE FALSO POSITIVO
+    */
+    function identificarFalsoPositivo($sim_num, $posicao){
+
+        // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+        $connBase       = new EficazDB;
+
+        $queryPosicao = "SELECT $posicao
+                         FROM tb_dados dados
+                         JOIN tb_sim_equipamento simEquip ON dados.num_sim = simEquip.id_sim
+                         WHERE simEquip.id = '$sim_num' AND simEquip.status_ativo = '1'
+                         GROUP BY dados.id DESC
+                         LIMIT 1,1";
+
+        //var_dump($queryPosicao);
+
+        // Monta a result
+        $result = $connBase->select($queryPosicao);
+
+        // Verifica se existe valor de retorno
+        //if (@mysql_num_rows ($result) > 0)
+        //{
+        if(!empty($result)){
+
+            /* ARMAZENA NA ARRAY */
+            // while ($row = @mysql_fetch_assoc ($result))
+            // {
+            //     $retorno[] = $row;
+            // }
+            foreach ($result as $row) {
+                $retorno[] = $row;
+            }
+
+        }else{
+            // Se nao existir valor de retorno
+            // Armazena 0 no vetor
+            $retorno[] = 0;
+        }
+
+        // Fecha a conexao
+        //$connBase->close();
+
+
+        return $retorno;
+    }
+
+    /*
+    * FUNÇÃO PARA VERIFICAR A EXISTENCIA DO CHIP SIM QUE ESTÀ TENTANDO ENVIAR DADOS
+    */
+    function chipSimExistente($sim_num){
+
+        // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+        $connBase       = new EficazDB;
+
+        //Exemplo
+        $query = "SELECT num_sim FROM tb_sim WHERE num_sim = '$sim_num' AND status_ativo = '1'";
+        //$query = $connBase->prepare("SELECT num_sim FROM tb_sim WHERE num_sim = ? AND status_ativo = ?");
+
+        //$stmt->execute(array($_GET['name'])
+
+        // $query->execute(array($sim_num, '1'));
+        // Monta a result
+        $result = $connBase->select($query);
+
+        if(!empty($result)){
+
+            return true;
+
+        }else{
+
+            return false;
+
+        }
+
+        // // executamos o statement
+        // $ok = $stmt->execute();
+        //
+        // // agora podemos pegar os resultados (partimos do pressuposto que não houve erro)
+        // $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+
 ?>
