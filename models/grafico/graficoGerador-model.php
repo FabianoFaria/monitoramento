@@ -100,34 +100,41 @@
                 * QUERY PARA CARREGAR AS VARIAVEIS DE CALIBRAÇÃO DO EQUIPAMENTO
                 */
 
-                $variaveisCalib = array();
+                // $variaveisCalib = array();
 
                 // Monta a sequencia de opções de calibração para serem carregadas no gráfico
-                for ($a = 0; $a < sizeof($tabela) ; $a++)
-                {
+                // for ($a = 0; $a < sizeof($tabela) ; $a++)
+                // {
+                //
+                //     if (($opc[$a] == 1) && (is_numeric($opc[$a]))){
 
-                    if (($opc[$a] == 1) && (is_numeric($opc[$a]))){
-
-                        $queryCalibracao  = "SELECT cali.variavel_cal FROM tb_equipamento_calibracao cali JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = cali.id_equip WHERE simEquip.id_sim = '{$sim_num}' AND cali.posicao_tab = '$tabela[$a]' AND simEquip.status_ativo = '1'";
+                        // $queryCalibracao  = "SELECT cali.variavel_cal FROM tb_equipamento_calibracao cali JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = cali.id_equip WHERE simEquip.id_sim = '{$sim_num}' AND cali.posicao_tab = '$tabela[$a]' AND simEquip.status_ativo = '1'";
 
                         // BUSCA OS DADOS NO BANCO
-                        $resultCalib = $this->verificaQuery($queryCalibracao);
+                        // $resultCalib = $this->verificaQuery($queryCalibracao);
 
-                        print_r($resultCalib);
+                        // if(!empty($resultCalib)){
+                        //
+                        //     // Adiciona o valor de calibração na array
+                        //
+                        //     foreach ($resultCalib as $cal){
+                        //
+                        //         //print_r($cal['variavel_cal']);
+                        //
+                        //         array_push($variaveisCalib, array($tabela[$a] => $cal['variavel_cal']));
+                        //
+                        //     }
+                        //
+                        // }
 
-                        if(!empty($resultCalib)){
+                //     }
+                //
+                // }
 
-                            foreach ($resultCalib as $cal) {
-                                
-                            }
+                //print_r($opc);
+                //var_dump($variaveisCalib);
+                //exit();
 
-                        }
-
-                    }
-
-                }
-
-                exit();
                 /*
                 * QUERY PARA TRAZER OS DADOS DA TABELA NORMAL
                 */
@@ -139,20 +146,46 @@
                 {
                     if (($opc[$a] == 1) && (is_numeric($opc[$a]))){
 
-                        //$query .= ' dad.'.$tabela[$a] . ",";
+                        // $query .= ' dad.'.$tabela[$a] . ",";
+                        // Query para procurar a variavel de calibracao da posição da tabela.
+                        $queryCalibracao  = "SELECT cali.variavel_cal FROM tb_equipamento_calibracao cali JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = cali.id_equip WHERE simEquip.id_sim = '{$sim_num}' AND cali.posicao_tab = '$tabela[$a]' AND simEquip.status_ativo = '1'";
 
-                        if($tabela[$a] == 'h'){
-                            //$query .= ''.$tabela[$a] . " + (800) AS 'h',";
-                            $query .= ' IF(dad.h > 0, dad.h + 1700, dad.h) AS "h",';
+                        // BUSCA OS DADOS NO BANCO
+                        $resultCalib = $this->verificaQuery($queryCalibracao);
+
+                        if(!empty($resultCalib)){
+
+                            // Adiciona o valor de calibração na query
+
+                            foreach ($resultCalib as $cal){
+
+                                //print_r($cal['variavel_cal']);
+                                $query .= ' ( dad.'.$tabela[$a].' * '.$cal['variavel_cal'].') AS "'.$tabela[$a].'",';
+                            }
+
                         }else{
+
                             //Coreção para não misturar parametros desta query com as da outra tabela
                             if(($tabela[$a] != 'er') && ($tabela[$a] != 'es') && ($tabela[$a] != 'et') && ($tabela[$a] != 'ct') && ($tabela[$a] != 'cr') && ($tabela[$a] != 'cs')){
 
                                 $query .= ' dad.'.$tabela[$a] . ",";
 
                             }
-
                         }
+
+
+                        // if($tabela[$a] == 'h'){
+                        //     //$query .= ''.$tabela[$a] . " + (800) AS 'h',";
+                        //     $query .= ' IF(dad.h > 0, dad.h + 1700, dad.h) AS "h",';
+                        // }else{
+                        //     //Coreção para não misturar parametros desta query com as da outra tabela
+                        //     if(($tabela[$a] != 'er') && ($tabela[$a] != 'es') && ($tabela[$a] != 'et') && ($tabela[$a] != 'ct') && ($tabela[$a] != 'cr') && ($tabela[$a] != 'cs')){
+                        //
+                        //         $query .= ' dad.'.$tabela[$a] . ",";
+                        //
+                        //     }
+                        //
+                        // }
 
                     }
 
@@ -238,7 +271,7 @@
                     // Realiza o loop na result
                     for ($a = 0; $a < sizeof($result); $a++)
                     {
-                        //$respDate é responsavel por armazenar as séries das datas.
+                        // $respDate é responsavel por armazenar as séries das datas.
                         // $respDate .= "'".date('d-M-y H:i',strtotime($result[$a]['dt_criacao']))."',";
                         $respDate .= "'".$result[$a]['dt_criacao']."',";
 
