@@ -246,6 +246,7 @@
     public function carregarDetalhesAlarmeJson(){
         // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
         $alarmeModelo       = $this->load_model('alarme/alarme-model');
+        $equipModel         = $this->load_model('equipamento/equipamento-model');
         $clieModelo         = $this->load_model('cliente/cliente-model');
         $filiModelo         = $this->load_model('filial/filial-model');
 
@@ -303,13 +304,31 @@
             $pontoTabela            = $this->verificarPontoTabela($dadosAlarme['pontoTabela']);
             $localEquip             = ($dadosAlarme['ambiente_local_sim'] == ' ') ? $dadosAlarme['ambiente_local_sim'] : "Não informado.";
 
+
+            /*
+            * CARREGA VARIAVEL DE CALIBRACAO DA POSICAO SOLICITADA
+            */
+
+            // $dadosAlarme['id_sim_equipamento'],
+
+            $variavelCalibracao     = $alarmeModelo->carregarVariavelCalibracao($dadosAlarme['id_sim_equipamento'], $dadosAlarme['pontoTabela']);
+
+            if(isset($variavelCalibracao[0])){
+
+                $parametro    = $variavelCalibracao[0]['variavel_cal'];
+
+            }else{
+                $parametro    = 1;
+            }
+
             /*
             * ÚLTIMA LEITURA DO EQUIPAMENTO
             */
+            // O tratamento é efetuado com a variavel de calibracao
             $ultimaLeitura          = $alarmeModelo->recuperacaoUltimaLeituraEquip($dadosAlarme['simEquip'], $dadosAlarme['pontoTabela']);
 
             if($ultimaLeitura['status']){
-                $leitura =  $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], $ultimaLeitura['equipAlarm'][0]['medida']);
+                $leitura =  $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], ($ultimaLeitura['equipAlarm'][0]['medida'] * $parametro));
             }else{
                 $leitura = "Não recebida.";
             }
@@ -317,7 +336,8 @@
             /*
             * DADO QUE GEROU ALARME
             */
-            $dadoGeradorAlarme = $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], ($dadosAlarme['parametroMedido'] * 100));
+            // O tratamento é efetuado com a variavel de calibracao
+            $dadoGeradorAlarme = $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], (($dadosAlarme['parametroMedido'] * 100) * $parametro));
 
             /*
             * TRATAMENTOS REGISTRADOS PARA O ALARME

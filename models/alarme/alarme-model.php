@@ -1113,6 +1113,37 @@
 
             return $array;
         }
+
+        /*
+        * FUNÇÃO PARA RECUPERAR O DADO DE CALIBRAÇÃO DO EQUIPAMENTO
+        */
+
+        public function carregarVariavelCalibracao($idEquipSim, $posicaoTab){
+
+            $query          = "SELECT cali.variavel_cal
+                                FROM tb_equipamento_calibracao cali
+                                JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = cali.id_equip
+                                WHERE simEquip.id = '$idEquipSim' AND cali.posicao_tab = '$posicaoTab' AND simEquip.status_ativo";
+
+            $result = $this->db->select($query);
+
+            if(!empty($result)){
+
+                foreach ($result as $row) {
+                    $retorno[] = $row;
+                }
+
+                $array = $retorno;
+
+            }else{
+
+                $array = false;
+
+            }
+
+            return $array;
+
+        }
     }
 
 ?>

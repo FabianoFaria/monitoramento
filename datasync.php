@@ -433,7 +433,6 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
                                     $statusB    = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
                                 }else{
                                     //GERA ALARME DE PROTOCOLO
-
                                     gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
 
                                 }
@@ -917,12 +916,33 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     * RECEBE A ARRAY COM OS PARAMETROS DE DETERMINADA ENTRADA DE TENSÃO, CORRENTE, BATERIA E TEMPERATURA VARIAVEL PARA COMPARAÇÃO
     * AQUI OCORRE A VERIFICAÇÃO SE O PARAMETRO GEROU ALARME OU NÃO
     */
-    function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $ParametroVerificado, $pontoTabela){
+    function comparaParametrosEquipamento($parametroBruto, $configuacoes, $idSimEquip, $ParametroVerificado, $pontoTabela){
+
+        /*
+        * Carrega as variaveis de calibração da posição a ser verificada
+        */
+        $variavelCalib = carregarVariavelCalibracao($idSimEquip, $pontoTabela);
+
+        // echo "Teste de variavel de calirbação </br>";
+        // var_dump($variavelCalib[0]['variavel_cal']);
+
+        if(isset($variavelCalib[0])){
+
+            // echo "Parametro antes da modificação : ".$parametroBruto;
+
+            $parametro    = $parametroBruto * $variavelCalib[0]['variavel_cal'];
+
+            // echo "Teste de variavel de calirbação </br>";
+            // var_dump($parametro);
+        }else{
+            $parametro    = $parametroBruto;
+        }
 
         /*
         * TESTA OS PARAMETROS ATRAVÉS DE IF E ELSES
         */
         if($parametro > (float) trataValorDataSync($configuacoes[4])){
+
             /*
             * VERIFICA ALERTA EXISTNTE E TENTA GERAR ALERTA PARA ALTO
             */
@@ -1317,5 +1337,35 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
 
     }
 
+    /*
+    * FUNÇÃO PARA RECUPERAR AS VARIAVEIS DE CALIBRAÇÃO DE DETERMINADA POSIÇÃO DA TABELA
+    */
+    function carregarVariavelCalibracao($idEquipSim, $posicaoTab){
+
+        // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+        $connBase       = new EficazDB;
+
+        $query          = "SELECT cali.variavel_cal
+                            FROM tb_equipamento_calibracao cali
+                            JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = cali.id_equip
+                            WHERE simEquip.id = '$idEquipSim' AND cali.posicao_tab = '$posicaoTab' AND simEquip.status_ativo";
+
+        $result = $connBase->select($query);
+
+        if(!empty($result)){
+
+            foreach ($result as $row) {
+                $retorno[] = $row;
+            }
+
+            return $retorno;
+
+        }else{
+
+            return false;
+
+        }
+
+    }
 
 ?>
