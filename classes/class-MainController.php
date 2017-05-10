@@ -208,13 +208,13 @@ class MainController extends UserLogin
         if(($ponto == 'b') || ($ponto == 'c') || ($ponto == 'd')){
             switch ($ponto) {
                 case 'b':
-                    $saida = ($medida / 100)." (V)";
+                    $saida = number_format(($medida / 100), 2)." (V)";
                 break;
                 case 'c':
-                    $saida = ($medida / 100)." (V)";
+                    $saida = number_format(($medida / 100), 2)." (V)";
                 break;
                 case 'd':
-                    $saida = ($medida / 100)." (V)";
+                    $saida = number_format(($medida / 100), 2)." (V)";
                 break;
             }
         }else
@@ -222,13 +222,13 @@ class MainController extends UserLogin
         if(($ponto == 'e') || ($ponto == 'f') || ($ponto == 'g')){
             switch ($ponto) {
                 case 'e':
-                    $saida = ($medida / 100)." (V)";
+                    $saida = number_format(($medida / 100), 2)." (V)";
                 break;
                 case 'f':
-                    $saida = ($medida / 100)." (V)";
+                    $saida = number_format(($medida / 100), 2)." (V)";
                 break;
                 case 'g':
-                    $saida = ($medida / 100)." (V)";
+                    $saida = number_format(($medida / 100), 2)." (V)";
                 break;
             }
         }else
@@ -236,13 +236,13 @@ class MainController extends UserLogin
         if(($ponto == 'i') || ($ponto == 'j') || ($ponto == 'l')){
             switch ($ponto) {
                 case 'i':
-                    $saida = ($medida / 100)." (A)";
+                    $saida = number_format(($medida / 100), 2)." (A)";
                 break;
                 case 'j':
-                    $saida = ($medida / 100)." (A)";
+                    $saida = number_format(($medida / 100), 2)." (A)";
                 break;
                 case 'l':
-                    $saida = ($medida / 100)." (A)";
+                    $saida = number_format(($medida / 100), 2)." (A)";
                 break;
             }
         }else
@@ -250,13 +250,13 @@ class MainController extends UserLogin
         if(($ponto == 'm') || ($ponto == 'n') || ($ponto == 'o')){
             switch ($ponto) {
                 case 'm':
-                    $saida = ($medida / 100)." (A)";
+                    $saida = number_format(($medida / 100), 2)." (A)";
                 break;
                 case 'n':
-                    $saida = ($medida / 100)." (A)";
+                    $saida = number_format(($medida / 100), 2)." (A)";
                 break;
                 case 'o':
-                    $saida = ($medida / 100)." (A)";
+                    $saida = number_format(($medida / 100), 2)." (A)";
                 break;
             }
         }else
@@ -264,10 +264,10 @@ class MainController extends UserLogin
         if(($ponto == 'h') || ($ponto == 'p')){
             switch ($ponto) {
                 case 'h':
-                    $saida = ($medida / 100)." (V)";
+                    $saida = number_format(($medida / 100), 2)." (V)";
                 break;
                 case 'p':
-                    $saida = ($medida / 100)." (V)";
+                    $saida = number_format(($medida / 100), 2)." (V)";
                 break;
             }
         }else
@@ -276,11 +276,11 @@ class MainController extends UserLogin
             switch ($ponto) {
                 case 'q':
                     // $saida =  number_format($medida, 1, '.', '')." (°C)";
-                    $saida =  ($medida / 100)." (°C)";
+                    $saida =  number_format(($medida / 100), 2)." (°C)";
                 break;
                 case 'r':
                     //$saida =  number_format($medida, 1, '.', '')." (°C)";
-                    $saida =   ($medida / 100)." (°C)";
+                    $saida =   number_format(($medida / 100), 2)." (°C)";
                 break;
             }
         }

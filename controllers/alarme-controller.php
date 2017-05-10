@@ -326,9 +326,13 @@
             */
             // O tratamento é efetuado com a variavel de calibracao
             $ultimaLeitura          = $alarmeModelo->recuperacaoUltimaLeituraEquip($dadosAlarme['simEquip'], $dadosAlarme['pontoTabela']);
+            $ultimaLeituraValor     = $ultimaLeitura['equipAlarm'][0]['medida'] * $parametro;
+            // $f = sprintf ("%.2f", $ultimaLeituraValor);
+            // number_format($ultimaLeituraValor ,2)
+
 
             if($ultimaLeitura['status']){
-                $leitura =  $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], ($ultimaLeitura['equipAlarm'][0]['medida'] * $parametro));
+                $leitura =  $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], $ultimaLeituraValor);
             }else{
                 $leitura = "Não recebida.";
             }
@@ -336,8 +340,10 @@
             /*
             * DADO QUE GEROU ALARME
             */
-            // O tratamento é efetuado com a variavel de calibracao
-            $dadoGeradorAlarme = $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], (($dadosAlarme['parametroMedido'] * 100) * $parametro));
+            // O valor do alarme já veio da tabela de alarmes com o tratamento de variavel de calibração
+            $dadoAlarmeValor   = number_format(($dadosAlarme['parametroMedido'] * 100), 2, '.', '');
+
+            $dadoGeradorAlarme = $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], $dadoAlarmeValor);
 
             /*
             * TRATAMENTOS REGISTRADOS PARA O ALARME
