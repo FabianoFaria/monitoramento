@@ -113,8 +113,11 @@
                         $statusN                = comparaParametrosEquipamento(($dadosCarragados['n']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'n');
                         $statusO                = comparaParametrosEquipamento(($dadosCarragados['o']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'o');
 
+                        //TESTA OS VALORES DE TEMPERATURA AMBIENTE E DO BANCO DE BATERIA
+                        $statusP                = comparaParametrosEquipamento(($dadosCarragados['p']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'p');
+                        $statusQ                = comparaParametrosEquipamento(($dadosCarragados['q']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'q');
 
-                        if(($statusB) && ($statusC) && ($statusD) && ($statusE) && ($statusF) && ($statusG) && ($statusH) && ($statusI) && ($statusJ) && ($statusL) && ($statusM) && ($statusN) && ($statusO)){
+                        if(($statusB) && ($statusC) && ($statusD) && ($statusE) && ($statusF) && ($statusG) && ($statusH) && ($statusI) && ($statusJ) && ($statusL) && ($statusM) && ($statusN) && ($statusO) && ($statusP) && ($statusQ)){
 
                             echo "Equipamento voltou ao normal!";
 
