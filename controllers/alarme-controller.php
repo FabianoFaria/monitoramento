@@ -324,15 +324,15 @@
             /*
             * ÚLTIMA LEITURA DO EQUIPAMENTO
             */
+
             // O tratamento é efetuado com a variavel de calibracao
             $ultimaLeitura          = $alarmeModelo->recuperacaoUltimaLeituraEquip($dadosAlarme['simEquip'], $dadosAlarme['pontoTabela']);
             $ultimaLeituraValor     = $ultimaLeitura['equipAlarm'][0]['medida'] * $parametro;
-            // $f = sprintf ("%.2f", $ultimaLeituraValor);
+            $f = sprintf ("%.2f", $ultimaLeituraValor);
             // number_format($ultimaLeituraValor ,2)
 
-
             if($ultimaLeitura['status']){
-                $leitura =  $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], $ultimaLeituraValor);
+                $leitura =  $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], number_format($ultimaLeituraValor ,2 ,'.','');
             }else{
                 $leitura = "Não recebida.";
             }

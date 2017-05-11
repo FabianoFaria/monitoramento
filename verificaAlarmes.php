@@ -10,7 +10,6 @@
 
     echo "verificador de Alarmes!";
 
-
     /*
         CARREGA OS ALARMES COM STATUS NOVO
     */
@@ -78,7 +77,7 @@
                     $ultimosDadosEnviados   = carregaUltimaMedicao($numeroSim);
                     $dadosCarragados        = $ultimosDadosEnviados[0];
 
-                    //var_dump($dadosCarragados);
+                    var_dump($dadosCarragados);
 
                     /*
                         INICIA A COMPARAÇÃO DOS DADOS COM OS PARAMETROS PARA VERIFICAR SE EQUIPAMENTO VOLTOU AO NORMAL
@@ -122,7 +121,7 @@
                             $equipOK = true;
 
                         }else{
-                            echo "Equipamento ainda com problemas!";
+                            echo "Equipamento ainda com problemas!</br>";
 
                             $equipOK = false;
                         }
@@ -179,16 +178,16 @@
                         FIM DO PROCESSO DE VERIFICAÇÃO DOS PARAMETROS DO EQUIPAMENTO
                     */
                 }else{
-                    echo "Parametros não encontrados!";
+                    echo "Parametros não encontrados!</br>";
                 }
 
             }else{
-                echo "Equipamento não encontrado!";
+                echo "Equipamento não encontrado!</br>";
             }
         }
 
     }else{
-        echo 'Nenhum alarme para verificar !';
+        echo 'Nenhum alarme para verificar !</br>';
     }
 
     // FIM DA VERIFICAÇÂO DE ALARMES NOVOS
@@ -225,19 +224,23 @@
         */
         $result = $conn->select($alarmes);
 
-        if ($result)
+        if(!empty($result))
         {
-            /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($result) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($row = @mysql_fetch_assoc ($result))
-                {
-                    $retorno[] = $row;
-                }
-
-                $dados = $retorno;
+            // /* VERIFICA SE EXISTE VALOR */
+            // if (@mysql_num_rows($result) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($row = @mysql_fetch_assoc ($result))
+            //     {
+            //         $retorno[] = $row;
+            //     }
+            //
+            //     $dados = $retorno;
+            // }
+            foreach ($result as $row) {
+                $dados[] = $row;
             }
+
 
         }else{
             $dados = false;
@@ -288,24 +291,37 @@
             $dadosEquip = $conn->select($queryEquipamento);
 
             /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($dadosEquip) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($rowEquip = @mysql_fetch_assoc ($dadosEquip))
-                {
-                    $retornoEquip[] = $rowEquip;
-                }
+            if(!empty($dadosEquip)){
 
+                foreach ($dadosEquip as $row) {
+                    $retornoEquip[] = $row;
+                }
                 $equipamento = $retornoEquip;
 
                 $array = $equipamento;
 
-                // Fecha a conexao
-                $conn->close();
-
             }else{
-                $array = false;
+                 $array = false;
             }
+
+            // if (@mysql_num_rows($dadosEquip) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($rowEquip = @mysql_fetch_assoc ($dadosEquip))
+            //     {
+            //         $retornoEquip[] = $rowEquip;
+            //     }
+            //
+            //     $equipamento = $retornoEquip;
+            //
+            //     $array = $equipamento;
+            //
+            //     // Fecha a conexao
+            //     $conn->close();
+            //
+            // }else{
+            //     $array = false;
+            // }
 
         }else{
 
@@ -348,22 +364,35 @@
             $paramEquip = $conn->select($query);
 
             /* VERIFICA SE EXISTE VALOR */
-            if (@mysql_num_rows($paramEquip) > 0)
-            {
-                /* ARMAZENA NA ARRAY */
-                while ($rowEquip = @mysql_fetch_assoc ($paramEquip))
-                {
-                    $retornoEquip[] = $rowEquip;
+            if(!empty($paramEquip)){
+
+                foreach ($paramEquip as $row) {
+                    $retornoEquip[] = $row;
                 }
 
                 $parametros = $retornoEquip;
 
-                // Fecha a conexao
-                $conn->close();
-
             }else{
+
                 $parametros = false;
+
             }
+            // if (@mysql_num_rows($paramEquip) > 0)
+            // {
+            //     /* ARMAZENA NA ARRAY */
+            //     while ($rowEquip = @mysql_fetch_assoc ($paramEquip))
+            //     {
+            //         $retornoEquip[] = $rowEquip;
+            //     }
+            //
+            //     $parametros = $retornoEquip;
+            //
+            //     // Fecha a conexao
+            //     $conn->close();
+            //
+            // }else{
+            //     $parametros = false;
+            // }
 
         }else{
             $parametros = false;
@@ -403,22 +432,35 @@
         $dadosEquip = $conn->select($query);
 
         /* VERIFICA SE EXISTE VALOR */
-        if (@mysql_num_rows($dadosEquip) > 0)
-        {
-            /* ARMAZENA NA ARRAY */
-            while ($rowEquip = @mysql_fetch_assoc ($dadosEquip))
-            {
-                $retornoEquip[] = $rowEquip;
+        if(!empty($dadosEquip)){
+
+            foreach ($dadosEquip as $row) {
+                $retornoEquip[] = $row;
             }
 
             $dados = $retornoEquip;
 
-            // Fecha a conexao
-            $conn->close();
-
         }else{
+
             $dados = false;
+
         }
+        // if (@mysql_num_rows($dadosEquip) > 0)
+        // {
+        //     /* ARMAZENA NA ARRAY */
+        //     while ($rowEquip = @mysql_fetch_assoc ($dadosEquip))
+        //     {
+        //         $retornoEquip[] = $rowEquip;
+        //     }
+        //
+        //     $dados = $retornoEquip;
+        //
+        //     // Fecha a conexao
+        //     $conn->close();
+        //
+        // }else{
+        //     $dados = false;
+        // }
 
         return $dados;
     }
@@ -426,7 +468,24 @@
     /*
     * EFETUA A COMPARAÇÃO DE PARAMETROS SALVOS COM OS DADOS RECEBIDOS
     */
-    function comparaParametrosEquipamento($parametro, $configuacoes, $idSimEquip, $ParametroVerificado, $pontoTabela){
+    function comparaParametrosEquipamento($parametroBruto, $configuacoes, $idSimEquip, $ParametroVerificado, $pontoTabela){
+
+        /*
+        * Carrega as variaveis de calibração da posição a ser verificada
+        */
+        $variavelCalib = carregarVariavelCalibracao($idSimEquip, $pontoTabela);
+
+        if(isset($variavelCalib[0])){
+
+            //  echo "Parametro antes da modificação : ".$parametroBruto;
+
+            $parametro    = $parametroBruto * $variavelCalib[0]['variavel_cal'];
+
+            //  echo "Teste de variavel de calirbação </br>";
+            //  var_dump($parametro);
+        }else{
+            $parametro    = $parametroBruto;
+        }
 
         if($parametro > (float) trataValorDataSync($configuacoes[4])){
             //TRECHO DE CRITICO ALTO;
@@ -470,7 +529,7 @@
     }
 
     /*
-    * ATUALIZA O STATUS DO EQUIPAMENTO
+    * ATUALIZA O STATUS DO ALARME
     */
 
     function atualizarStatusAlarme($idAlerta){
@@ -489,7 +548,7 @@
             exit();
         }
 
-        $query = "UPDATE tb_alerta SET status_ativo = '4' WHERE id = '$idAlerta'";
+        $query = "UPDATE tb_alerta SET status_ativo = '3' WHERE id = '$idAlerta'";
 
         /* monta result */
         $result = $conn->query($query);
@@ -526,7 +585,8 @@
             exit();
         }
 
-        $query = "UPDATE tb_tratamento_alerta SET tratamento_aplicado = 'Nível de alimentação do equipamento voltou ao normal.' WHERE id_alerta = '$idAlerta'";
+        //$query = "UPDATE tb_tratamento_alerta SET tratamento_aplicado = 'Nível de alimentação do equipamento voltou ao normal.' WHERE id_alerta = '$idAlerta'";
+        $query = "INSERT INTO tb_tratamento_provisorio (id_alerta, id_user, tratamento_aplicado) VALUES ('$idAlerta','55','Nível de alimentação do equipamento voltou ao normal.')";
 
         /* monta result */
         $result = $conn->query($query);
@@ -569,24 +629,69 @@
         $result =  $conn->select($query);
 
         /* VERIFICA SE EXISTE VALOR */
-        if (@mysql_num_rows($result) > 0)
-        {
-            /* ARMAZENA NA ARRAY */
-            while ($rowEquip = @mysql_fetch_assoc ($result))
-            {
-                $retornoEquip[] = $rowEquip;
+        if(!empty($result)){
+
+            foreach ($result as $row) {
+                $retorno[] = $row;
             }
 
-            $dados = $retornoEquip;
-
-            // Fecha a conexao
-            $conn->close();
+            $dados = $retorno;
 
         }else{
+
             $dados = false;
+
         }
 
+        // if (@mysql_num_rows($result) > 0)
+        // {
+        //     /* ARMAZENA NA ARRAY */
+        //     while ($rowEquip = @mysql_fetch_assoc ($result))
+        //     {
+        //         $retornoEquip[] = $rowEquip;
+        //     }
+        //
+        //     $dados = $retornoEquip;
+        //
+        //     // Fecha a conexao
+        //     $conn->close();
+        //
+        // }else{
+        //     $dados = false;
+        // }
+
         return $dados;
+    }
+
+    /*
+    * CARREGA A VARIAVEL DE CALIBRAÇÃO DO EQUIPAMENTO
+    */
+    function carregarVariavelCalibracao($idEquipSim, $posicaoTab){
+
+        // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
+        $connBase       = new EficazDB;
+
+        $query          = "SELECT cali.variavel_cal
+                            FROM tb_equipamento_calibracao cali
+                            JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = cali.id_equip
+                            WHERE simEquip.id = '$idEquipSim' AND cali.posicao_tab = '$posicaoTab' AND simEquip.status_ativo";
+
+        $result = $connBase->select($query);
+
+        if(!empty($result)){
+
+            foreach ($result as $row) {
+                $retorno[] = $row;
+            }
+
+            return $retorno;
+
+        }else{
+
+            return false;
+
+        }
+
     }
 
 ?>

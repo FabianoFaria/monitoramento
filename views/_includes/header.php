@@ -6,7 +6,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <meta name="description" content="">
                 <meta name="author" content="">
-                <title>Eficaz System - Monitoramento |<?php echo $this->title;?></title>
+                <title>Eficaz System - Monitoramento |<?php echo $this->title; ?></title>
 	</head>
 
         <!-- FAVICON -->
@@ -46,7 +46,7 @@
         <script src="<?php echo HOME_URI; ?>/views/_js/jquery.validate.js"></script>
         <script src="<?php echo HOME_URI; ?>/views/_js/additional-methods.js"></script>
 
-        
+
 
         <!-- Jquery UI CSS -->
         <!-- <link rel="stylesheet" type="text/css" href="<?php //echo HOME_URI; ?>/views/_css/jquery.css"> -->
