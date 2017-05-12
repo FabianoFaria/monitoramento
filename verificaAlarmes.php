@@ -77,7 +77,7 @@
                     $ultimosDadosEnviados   = carregaUltimaMedicao($numeroSim);
                     $dadosCarragados        = $ultimosDadosEnviados[0];
 
-                    var_dump($dadosCarragados);
+                    //var_dump($dadosCarragados);
 
                     /*
                         INICIA A COMPARAÇÃO DOS DADOS COM OS PARAMETROS PARA VERIFICAR SE EQUIPAMENTO VOLTOU AO NORMAL
@@ -490,32 +490,36 @@
             $parametro    = $parametroBruto;
         }
 
+        //  echo "<br /> Teste de variavel de calirbação </br>";
+        //  var_dump($parametro);
+
+
         if($parametro > (float) trataValorDataSync($configuacoes[4])){
             //TRECHO DE CRITICO ALTO;
 
-            // echo " </br> ".$pontoTabela." Crítico alto <br />";
+            //  echo " </br> ".$pontoTabela." Crítico alto <br />";
             $result = false;
         }
         elseif($parametro > (float) trataValorDataSync($configuacoes[3])){
             //TRECHO DE NÍVEL ALTO;
-            // echo " </br> ".$pontoTabela."alto <br />";
+            //  echo " </br> ".$pontoTabela." alto <br />";
             $result = false;
         }
         elseif($parametro < (float) trataValorDataSync($configuacoes[0])){
             //TRECHO DE CRITICO BAIXO;
 
-            // echo " </br> ".$pontoTabela."Crítico baixo <br />";
+            //  echo " </br> ".$pontoTabela." Crítico baixo <br />";
             $result = false;
         }
         elseif($parametro < (float) trataValorDataSync($configuacoes[1])){
             //TRECHO DE NÍVEL BAIXO;
 
-            // echo " </br> ".$pontoTabela."Baixo <br />";
+            //  echo " </br> ".$pontoTabela." Baixo <br />";
 
             $result = false;
         }
         else{
-            // echo "<br /> Equipamento com alarme OK!";
+            //  echo "<br /> Equipamento com alarme OK!<br />";
             $result = true;
         }
 

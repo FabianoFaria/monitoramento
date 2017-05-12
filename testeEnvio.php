@@ -95,6 +95,9 @@
         }
 
 
+        $conn = null;
+
+
         ?>
 
     </body>
