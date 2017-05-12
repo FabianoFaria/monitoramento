@@ -35,13 +35,15 @@ class HomeController extends MainController
             $modeloAlarme   = $this->load_model('alarme/alarme-model');
             // Chama view cliente interno
             require_once EFIPATH . "/views/home/home-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
         }else{
             // Chama view para cliente
             require_once EFIPATH . "/views/home/homeCliente-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
 
         }
 
-        require_once EFIPATH . "/views/_includes/footer.php";
+
     }
 
     /**

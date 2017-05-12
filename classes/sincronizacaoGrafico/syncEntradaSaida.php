@@ -321,7 +321,7 @@ function verificaBateria ($conn,$sim,$tb)
 
         }else{
             //CASO NÃO EXISTA UMA VARIAVEL DE CALIBRAÇÃO CADASTRADO PARA A POSIÇÃO
-            $calibracao = 555.00;
+            $calibracao = 1;
         }
 
 

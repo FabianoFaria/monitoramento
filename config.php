@@ -11,7 +11,7 @@ define('UP_CLIE_IMG_PATH', EFIPATH.'/views/_uploads/clients');
 // url da home
 //define('HOME_URI' , 'http://127.0.0.1/eficazmonitor'); // versao desenvolvedor
 //define('HOME_URI' , 'http://eficazsystem.com.br/eficazmonitor');
-//define('HOME_URI' , 'http://monitor.eficazsystem.com.br');
+//define('HOME_URI' , 'https://monitor.eficazsystem.com.br');
 //define('HOME_URI' , 'http://monitoramento.com');  // versao produção VPS
 define('HOME_URI','http://eficazsystem.com.local'); // versao desenvolvedor 127.0.0.1
 /* configuracao da base de dados */

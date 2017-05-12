@@ -40,6 +40,8 @@ if(is_numeric($this->parametros[0])){
     // CARREGA OS PARAMETROS CONFIGURADOS PARA O EQUIPAMENTO
     $retorno = $modelo->loadGraficoParam($idEquip, $idSimEquip, $idSim);
 
+    //var_dump($retorno);
+
     // // CARREGA OS VALORES DE CALIBRAÇÃO SALVOS PARA O EQUIPAMENTO
     // $valoresCalibracao = $modeloEquip->posicoesCalibradas($idEquip);
     //
@@ -440,7 +442,13 @@ else
                                          console.log(leftVal + 'Ligado Ok!');
                                      }
 
-                                     left.update(leftVal, false);
+                                     //console.log(leftVal + ' Valor que o ponteiro deveria apontar');
+                                      var pointer = inc.toFixed(0);
+                                     console.log(pointer + ' Valor que o ponteiro deveria apontar');
+
+
+                                    //  left.update(leftVal, false);
+                                    left.update(inc, true);
                                      document.getElementById('<?php echo $nomeDivBat.$a;?>').innerHTML = leftVal + "";
                                      chart.redraw();
 
@@ -809,10 +817,6 @@ else
 
                                                 var potEntT = 0;
                                             }
-
-
-
-
 
                                             //  Inicio do calculo para saidas
 
