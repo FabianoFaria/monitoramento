@@ -12,7 +12,8 @@
 
 <?php
 
-    $lista = $modeloEquipamento->listarEquipamentos();
+    $lista      = $modeloEquipamento->listarEquipamentos();
+    $listaClie  = $modeloCliente->listarCliente();
 
  ?>
 
@@ -39,10 +40,57 @@
         <div class="panel panel-default">
             <div class="panel-heading">
 
+                <div class="row">
+                    <form id="filtroEquipamento" class="">
+
+                        <div class="col-md-3 form-group">
+                            <p>
+                                Cliente :   <select id="filtroClienteLista" class="form-control">
+                                                <?php
+                                                    if($listaClie){
+                                                        echo "<option value=''>Selecione... </option>";
+                                                        foreach ($listaClie as $cliente){
+                                                            $idClie = $cliente['id'];
+                                                            $nomeClie = $cliente['nome'];
+                                                            echo "<option value='".$idClie."'>".$nomeClie."</option>";
+                                                        }
+                                                    }else{
+                                                ?>
+                                                    <option value="0">Selecione... </option>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </select>
+                            </p>
+                        </div>
+
+                        <div class="col-md-3 form-group">
+
+                            Estado :   <select id="filtroEstadoEquipamento" class="form-control">
+                                            <?php
+                                                // if($listaClie){
+                                                //     echo "<option value=''>Selecione... </option>";
+                                                //     foreach ($listaClie as $cliente){
+                                                //         $idClie = $cliente['id'];
+                                                //         $nomeClie = $cliente['nome'];
+                                                //         echo "<option value='".$idClie."'>".$nomeClie."</option>";
+                                                //     }
+                                                // }else{
+                                            ?>
+                                                <!-- <option value="0">Selecione... </option> -->
+                                            <?php
+                                                // }
+                                            ?>
+                                        </select>
+
+                        </div>
+                    </form>
+                </div>
+
             </div>
             <div class="panel-body">
                 <div class='table-responsive'>
-                    <table id="stream_table" class='table table-striped table-bordered'>
+                    <table id="stream_table_equipamentos" class='table table-striped table-bordered'>
                         <thead>
                             <tr>
                                 <th>Equipamento</th>

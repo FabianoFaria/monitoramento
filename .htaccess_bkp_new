@@ -13,3 +13,16 @@ RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress
+
+# CONFIGURAÇÃO VÁLIDA ATUALMENTE
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+RewriteCond %{SERVER_PORT} 443
+#RewriteRule ^(.*)$ https://monitor.eficazsystem.com.br/$1 [R,L]
+
+RewriteRule ^(.+)$ index.php?path=$1 [QSA,L]
