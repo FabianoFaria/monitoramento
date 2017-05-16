@@ -341,6 +341,60 @@ class EquipamentoModel extends MainModel
         return $array;
     }
 
+    /*
+    * FILTRAR EQUIPAMENTOS DA LISTA PRINCIPAL POR CLIENTE E ESTADO
+    */
+    public function filtroListaEquipamentosPorEstado($idCliente, $idEstado){
+
+        if(($idCliente != "") && is_numeric($idCliente)){
+
+            $query = "SELECT equip.id,
+                        equip.nomeModeloEquipamento,
+                        equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante',
+                        equip.potencia,
+                        equip.qnt_bateria,
+                        equip.tipo_bateria,
+                        equip.localBateria,
+                        simEquip.id_sim,
+                        clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip',
+                        estado.nome as 'estado', estadofili.nome as 'estadofili'
+                      FROM tb_equipamento equip
+                      JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
+                      LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id AND simEquip.status_ativo = 1
+                      LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
+                      LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
+                      LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0
+                      LEFT JOIN tb_estado estado ON (estado.id = clie.id_estado AND equip.id_filial = 0)
+                      LEFT JOIN tb_estado estadofili ON (estadofili.id = fili.id_estado AND equip.id_filial > 0)
+                      WHERE equip.status_ativo = '1' AND equip.id_cliente = '$idCliente' AND (estado.id ='$idEstado' OR estadofili.id ='$idEstado')";
+
+            /* MONTA A RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if(!empty($result))
+            {
+
+                foreach ($result as $row) {
+                    $retorno[] = $row;
+                }
+
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'equipamentos' => $retorno);
+
+            }else{
+
+                $array = array('status' => false, 'equipamentos' => '');
+
+            }
+
+        }else{
+            $array = array('status' => false, 'equipamentos' => '');
+        }
+
+        return $array;
+    }
+
 
     /*
     *   CARREGAR DADOS EQUIPAMENTO
@@ -1546,10 +1600,10 @@ class EquipamentoModel extends MainModel
         if(is_numeric($idCliente)){
 
             $query = "SELECT
-                        estados.id,
-                        estados.nome,
+                        estados.id AS 'idMatriz',
+                        estados.nome AS 'estadoMatriz',
                         estadoFili.id,
-                        estadoFili.nome AS estadoFili
+                        estadoFili.nome
                       FROM tb_cliente clie
                       JOIN tb_equipamento equip ON clie.id = equip.id_cliente
                       LEFT JOIN tb_filial fili ON fili.id = equip.id_filial
@@ -1558,7 +1612,7 @@ class EquipamentoModel extends MainModel
                       WHERE clie.id = '$idCliente' AND equip.status_ativo = '1'";
 
             /* MONTA RESULT */
-            $result = $this->db->query($query);
+            $result = $this->db->select($query);
 
             /* VERIFICA SE EXISTE RESPOSTA */
             if(!empty($result)){

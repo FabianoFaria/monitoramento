@@ -940,7 +940,123 @@ class EquipamentoController extends MainController
         $equipamentosCliente        = $equipeModelo->filtroListaEquipamentos($_POST['idCliente']);
         $estadosEquipamentosCliente = $equipeModelo->ufEquipamentosCliente($_POST['idCliente']);
 
-        var_dump($estadosEquipamentosCliente);
+        //var_dump($estadosEquipamentosCliente);
+
+        if($estadosEquipamentosCliente['status']){
+
+            $listaEstados   = "";
+            $listaEstados .="<option value=' '>";
+            $listaEstados .= " Selecione...";
+            $listaEstados .="</option>";
+
+            $listaArray     = array();
+
+            foreach ($estadosEquipamentosCliente['estados'] as $estado) {
+
+                if(isset($estado['id'])){
+
+                    if(!in_array($estado['id'], $listaArray)){
+
+                        array_push($listaArray, $estado['id']);
+
+                        $listaEstados .="<option value='".$estado['id']."'>";
+                            $listaEstados .= $estado['nome'];
+                        $listaEstados .="</option>";
+
+                    }
+
+                }elseif(isset($estado['idMatriz'])){
+
+                    if(!in_array($estado['idMatriz'], $listaArray)){
+
+                        array_push($listaArray, $estado['idMatriz']);
+
+                        $listaEstados .="<option value='".$estado['idMatriz']."'>";
+                            $listaEstados .= $estado['estadoMatriz'];
+                        $listaEstados .="</option>";
+                    }
+
+                }
+
+            }
+
+        }
+
+        if($equipamentosCliente['status']){
+
+            //var_dump($equipamentosCliente);
+            $table = "";
+
+            foreach ($equipamentosCliente['equipamentos'] as $equipamento) {
+
+                $table .= "<tr>";
+
+                    $table .= "<td>";
+                        $table .= $equipamento['tipoEquip'];
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .= "<b>".$equipamento['nomeModeloEquipamento']."</b> / ".$equipamento['fabricante'];
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .= $equipamento['cliente'];
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        if(isset($equipamento['filial'])){
+                            $table .= $equipamento['filial'];
+                        }else{
+                            $table .= 'Matriz';
+                        }
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        if(isset($equipamento['id_sim'])){
+                            $table .= "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> ".$equipamento['id_sim']."</a>";
+                        }else{
+                            $table .= "<a href='".HOME_URI."/vinculo/vincularEquipamentoSim/".$equipamento['id']."'> Vincular N° SIM </a>";
+                        }
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .=  "<a href='".HOME_URI."/equipamento/carregarDadosEquipamentoCalibracao/".$equipamento['id']."' class='link-tabela-moni'> <i class='fa fa-wrench '></i> </a>";
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .=  "<a href='".HOME_URI."/equipamento/configurarEquipamentoCliente/".$equipamento['id']."' class='link-tabela-moni'> <i class='fa fa-gears '></i> </a>";
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .=  "<a href='".HOME_URI."/equipamento/editarEquipamentoCliente/".$equipamento['id']."' class='link-tabela-moni'> <i class='fa fa-pencil-square-o fa-lg '></i> </a>";
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .= "<button class='btn btnRemoveEquip' value='' onclick='excluirEquipamentoBtn(".$equipamento['id'].")'> <i class='fa fa-times fa-lg '></i> </button>";
+
+                    $table .= "</td>";
+
+                $table .= "</tr>";
+
+            }
+
+            exit(json_encode(array('status' => $equipamentosCliente['status'], 'listaEquipamentos' => $table, 'estados' => $listaEstados)));
+
+        }else{
+            exit(json_encode(array('status' => $equipamentosCliente['status'])));
+        }
+
+    }
+
+    /*
+    * LISTA DE EQUIPAMENTOS POR CLIENTES E ESTADOS
+    */
+    public function listarEquipamentosEstadoClienteJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo           = $this->load_model('equipamento/equipamento-model');
+
+        $equipamentosCliente    = $equipeModelo->filtroListaEquipamentosPorEstado($_POST['idCliente'], $_POST['idEstado']);
 
         if($equipamentosCliente['status']){
 
@@ -1007,6 +1123,7 @@ class EquipamentoController extends MainController
         }
 
     }
+
 }
 
 ?>

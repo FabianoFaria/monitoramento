@@ -1070,6 +1070,9 @@ $(document).ready(function(){
             {
                 $('#stream_table_equipamentos tbody').html(' ');
                 $('#stream_table_equipamentos tbody').html(datra.listaEquipamentos);
+
+                $('#filtroEstadoEquipamento').html(' ');
+                $('#filtroEstadoEquipamento').html(datra.estados);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -1081,6 +1084,37 @@ $(document).ready(function(){
 
     });
 
+    /*
+    * INICIA PROCESSO DE FILTRO DE EQUIPAMENTOS POR ESTADOS QUE CONTÉM EQUIPAMENTOS
+    */
+    $('#filtroEstadoEquipamento').change(function() {
+
+        var clienteId   = $('#filtroClienteLista').val();
+        var estadoId    = $(this).val();
+
+        $.ajax({
+            url: urlP+"/equipamento/listarEquipamentosEstadoClienteJson",
+    		secureuri: false,
+    		type : "POST",
+    		dataType: 'json',
+            data      : {
+                'idCliente' : clienteId,
+                'idEstado' : estadoId
+            },
+            success : function(datra)
+            {
+                $('#stream_table_equipamentos tbody').html(' ');
+                $('#stream_table_equipamentos tbody').html(datra.listaEquipamentos);
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+              // Handle errors here
+              console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+              // STOP LOADING SPINNER
+            }
+        });
+
+    });
 
 });
 

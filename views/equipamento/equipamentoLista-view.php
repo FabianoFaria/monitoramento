@@ -67,21 +67,7 @@
                         <div class="col-md-3 form-group">
 
                             Estado :   <select id="filtroEstadoEquipamento" class="form-control">
-                                            <?php
-                                                // if($listaClie){
-                                                //     echo "<option value=''>Selecione... </option>";
-                                                //     foreach ($listaClie as $cliente){
-                                                //         $idClie = $cliente['id'];
-                                                //         $nomeClie = $cliente['nome'];
-                                                //         echo "<option value='".$idClie."'>".$nomeClie."</option>";
-                                                //     }
-                                                // }else{
-                                            ?>
-                                                <!-- <option value="0">Selecione... </option> -->
-                                            <?php
-                                                // }
-                                            ?>
-                                        </select>
+                                       </select>
 
                         </div>
                     </form>
