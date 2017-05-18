@@ -53,7 +53,7 @@ class EquipamentoModel extends MainModel
            equip.localBateria,
           clie.nome as 'cliente', fili.nome as 'filial',  simEquip.id_sim as 'sim_clie'
                     FROM tb_equipamento equip
-                    JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
+                    LEFT JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                     LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                     LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
                     LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0
@@ -306,7 +306,7 @@ class EquipamentoModel extends MainModel
                         clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip',
                         estado.nome as 'estado', estadofili.nome as 'estadofili'
                       FROM tb_equipamento equip
-                      JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
+                      LEFT JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                       LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id AND simEquip.status_ativo = 1
                       LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                       LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
@@ -359,7 +359,7 @@ class EquipamentoModel extends MainModel
                         clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip',
                         estado.nome as 'estado', estadofili.nome as 'estadofili'
                       FROM tb_equipamento equip
-                      JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
+                      LEFT JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                       LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id AND simEquip.status_ativo = 1
                       LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                       LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
@@ -500,7 +500,7 @@ class EquipamentoModel extends MainModel
     public function registrarEquipamentoJson($idCliente, $idFilial, $equipamento, $fabricante, $nomeModelo, $correnteBateria, $potencia, $tensaoBancoBat, $correnteBanco, $quantBat, $quantBancoBat, $quantBatPorBanc, $tipoBateria, $localBateria, $equipamentoEntrada, $equipamentoSaida, $tensaoMinBarramento){
 
         // Verifica se os cambos obrigatorios nao sao nulos
-        if ($idCliente != "" && $equipamento != "" && $equipamento != "" && $fabricante != "")
+        if ($idCliente != "" && $equipamento != "" )
         {
 
             /*
@@ -1629,6 +1629,43 @@ class EquipamentoModel extends MainModel
 
         }else{
             $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * RETORNA O TIPO DE EQUIPAMENTO
+    */
+
+    public function carregarTipoEquipamento($idTipoEquip){
+
+        if(is_numeric($idTipoEquip)){
+
+            $query = "SELECT equip.tipo_equipamento
+                      FROM tb_tipo_equipamento equip
+                      WHERE equip.id = '$idTipoEquip' AND equip.status = '1'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if(!empty($result)){
+
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'tipoEquipamento' => $retorno);
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+
+            $array = array('status' => false);
+
         }
 
         return $array;

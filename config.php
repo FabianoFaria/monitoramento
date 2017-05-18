@@ -25,13 +25,23 @@ define('HOME_URI','http://eficazsystem.com.local'); // versao desenvolvedor 127.
 // // nome da base de dados
 // define('DBNAME' , 'eficazsystem22');
 
-// localhost
+// // localhost
+// // hostname
+// define('HOSTNAME' , 'mysql03.eficazsystem2.hospedagemdesites.ws');
+// // usuario da base
+// define('USERNAME' , 'eficazsystem22');
+// // senha
+// define('USERPASS' , 'monitor2891');
+// // nome da base de dados
+// define('DBNAME' , 'eficazsystem22');
+
+// localhost VPS
 // hostname
-define('HOSTNAME' , 'mysql03.eficazsystem2.hospedagemdesites.ws');
+define('HOSTNAME' , '191.252.110.158');
 // usuario da base
-define('USERNAME' , 'eficazsystem22');
+define('USERNAME' , 'cazeiro');
 // senha
-define('USERPASS' , 'monitor2891');
+define('USERPASS' , 'eficazSystemMaria');
 // nome da base de dados
 define('DBNAME' , 'eficazsystem22');
 

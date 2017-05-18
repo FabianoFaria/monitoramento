@@ -24,6 +24,7 @@ $(document).ready(function(){
 
     $('#txt_telefone_number').mask('99999999999');
     $('#txt_chip_number').mask('999999999999999');
+    $('.entradasMedidor').hide();
 
     /*
     * Adiciona datapicker ao formulario de data
@@ -42,7 +43,64 @@ $(document).ready(function(){
 
      $("#txt_data_teste").datepicker(options);
 
-	/*
+    /*
+    * Processo para ocultar ou exibir campos de cadastro de equipamento
+    */
+    $('#txt_tipoEquip').change(function() {
+
+        var tipoEquipamento = $(this).val();
+
+        /*
+        * BUSCA PELO TIPO DE EQUIPAMENTO, PARA SUPORTAR OUTROS TIPOS DE EQUIPAMENTOS FUTURAMENTE
+        */
+        $.ajax({
+            url: urlP+"/equipamento/buscaTipoEquipamentoJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+             'idTipoEquipamento' : tipoEquipamento,
+            },
+            success : function(datra)
+            {
+                if(datra.status){
+
+                    switch (datra.tipoEquipamento) {
+                        case 'Medidor temperatura':
+                            $('.bateriaTipo').hide();
+                            $('.quantidadesBateria').hide();
+                            $('.bateriaTensao').hide();
+                            $('.bateriaEquipamento').hide();
+                            $('.entradaSaidaEquipamento').hide();
+                            $('.fabricante').hide();
+                            $('.entradasMedidor').show();
+                        break;
+                        default:
+                            $('.bateriaTipo').show();
+                            $('.quantidadesBateria').show();
+                            $('.bateriaTensao').show();
+                            $('.bateriaEquipamento').show();
+                            $('.entradaSaidaEquipamento').show();
+                            $('.fabricante').show();
+                            $('.entradasMedidor').hide();
+                        break;
+                    }
+
+                }else{
+                    swal('','Tipo de equipamento não foi encontrado.','error');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+             // Handle errors here
+             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+             // STOP LOADING SPINNER
+            }
+        });
+
+    });
+
+    /*
 	*	JSON Listener para listar as filiais do cliente caso existam
 	*/
 
@@ -509,29 +567,29 @@ $(document).ready(function(){
     if($('#editarEquipamento').valid()){
       //console.log('prossiga com a edição!!');
 
-      var idEquip           = $('#idEquip').val();
+      var idEquip            = $('#idEquip').val();
 
-      var idCliente 		= $('#clienteEquipamento').val();
-      var idFilial  		= $('#filialEquipamento').val();
+      var idCliente 		 = $('#clienteEquipamento').val();
+      var idFilial  		 = $('#filialEquipamento').val();
 
-      var equipamento 	 = $('#txt_tipoEquip').val();
+      var equipamento 	    = $('#txt_tipoEquip').val();
       var fabricante 		= $('#fabricante_opt').val();
-      var nomeModelo      = $('#txt_nomeModeloEquip').val();
+      var nomeModelo        = $('#txt_nomeModeloEquip').val();
 
-      var correnteBat     = $('#txt_correnteBat').val();
-      var potencia        = $('#txt_potencia').val();
-      var tensaoBanco     = $('#txt_tensao_bancoBat').val();
-      var correnteBanco   = $('#txt_correnteBancoBat').val();
+      var correnteBat       = $('#txt_correnteBat').val();
+      var potencia          = $('#txt_potencia').val();
+      var tensaoBanco       = $('#txt_tensao_bancoBat').val();
+      var correnteBanco     = $('#txt_correnteBancoBat').val();
 
-      var quantBat        = $('#txt_qntBateria').val();
-      var quantBancoBat   = $('#txt_qntBancoBateria').val();
-      var quantBatPorBanc = $('#txt_qntBateriaPorBanco').val();
+      var quantBat          = $('#txt_qntBateria').val();
+      var quantBancoBat     = $('#txt_qntBancoBateria').val();
+      var quantBatPorBanc   = $('#txt_qntBateriaPorBanco').val();
 
-      var tipoBat         = $('#opc_tipoBateria').val();
-      var localBat        = $('#opc_localBat').val();
+      var tipoBat           = $('#opc_tipoBateria').val();
+      var localBat          = $('#opc_localBat').val();
 
-	  var tipoEntrada     = $('#opc_tipoEntrada').val();
-      var tipoSaida      = $('#opc_tipoSaida').val();
+	  var tipoEntrada       = $('#opc_tipoEntrada').val();
+      var tipoSaida         = $('#opc_tipoSaida').val();
 
 	  var tensaoMinBarramento = $('#txt_tensaoMinBarramentoBat').val();
 
@@ -575,8 +633,6 @@ $(document).ready(function(){
               swal("Oops...", "Ocorreu um erro ao editar o equipamento.", "error");
             }
             //$array = array('status' => $result, 'idequipamento' => $idEquip);
-
-
           },
         error: function(jqXHR, textStatus, errorThrown)
         {
@@ -637,9 +693,9 @@ $(document).ready(function(){
 
                       //Settar a mensagem de erro!
                             // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
-                          swal("Oops...", "Ocorreu um erro ao carregar, favor verificar os dados informados!", "error");
+                        swal("Oops...", "Ocorreu um erro ao carregar, favor verificar os dados informados!", "error");
                    // Handle errors here
-                   console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                        console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
                    // STOP LOADING SPINNER
                   }
               });

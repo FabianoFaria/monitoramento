@@ -227,7 +227,12 @@ $().ready(function(){
                 {
                     if(datra.status){
                         //alert('Configuração salva corretamente!');
-                        swal("", "Configuração cadastrada com sucesso!", "success")
+                        swal("", "Configuração cadastrada com sucesso!", "success");
+
+                        setTimeout(function(){
+                            window.location.replace(urlP +"/equipamento/");
+                        }, 3000);
+
                     }else{
                         //alert('Ocorreu um erro ao salvar a configuração, verifique os dados enviados etente novamente!');
                         swal("Oops...", "Ocorreu um erro ao salvar a configuração, verifique os dados enviados e tente novamente!", "error");

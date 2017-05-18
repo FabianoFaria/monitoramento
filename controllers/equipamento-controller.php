@@ -22,7 +22,7 @@ class EquipamentoController extends MainController
          $this->check_login();
 
         // VERIFICA AS PERMISSOES NECESSARIAS
-        if ($_SESSION['userdata']['per_co'] != 1 ){
+        if($_SESSION['userdata']['per_co'] != 1 ){
             // SE NAO POSSUIR
             // REDIRECIONA PARA INDEX
             $this->moveHome();
@@ -1122,6 +1122,32 @@ class EquipamentoController extends MainController
             exit(json_encode(array('status' => $equipamentosCliente['status'])));
         }
 
+    }
+
+    /*
+    * CARREGAR DADOS DO TIPO DE EQUIPAMENTO
+    */
+    public function buscaTipoEquipamentoJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo           = $this->load_model('equipamento/equipamento-model');
+
+        $tipoEquipamento        = $equipeModelo->carregarTipoEquipamento($_POST['idTipoEquipamento']);
+
+        if($tipoEquipamento['status']){
+
+            //var_dump($tipoEquipamento);
+            foreach ($tipoEquipamento['tipoEquipamento'] as $tipo){
+                $tipoEquip = $tipo['tipo_equipamento'];
+            }
+
+            //var_dump($tipoEquip);
+
+            exit(json_encode(array('status' => $tipoEquipamento['status'], 'tipoEquipamento' => $tipoEquip)));
+
+        }else{
+            exit(json_encode(array('status' => $tipoEquipamento['status'])));
+        }
     }
 
 }

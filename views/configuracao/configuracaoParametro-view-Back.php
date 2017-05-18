@@ -380,3 +380,11 @@ if($configuracaoEquip['status']){
         </div><!-- fim botao de envio -->
     </form>
 </div>
+
+
+
+<!--
+
+    Trecho para back up 
+
+-->

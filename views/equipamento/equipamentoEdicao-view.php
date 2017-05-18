@@ -28,7 +28,6 @@
     menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/equipamento">Listar equipamentos</a> / <a href="<?php echo HOME_URI; ?>/equipamento/editarEquipamentoCliente/<?php echo $this->parametros[0]; ?>">Edição de equipamento : <?php echo (isset($equipamentoCarregado)) ? $equipamentoCarregado['tipoEquip']: ""; ?></a>';
 </script>
 
-
 <div class="row">
     <div class="col-lg-12">
         <!-- TITULO PAGINA -->
@@ -53,28 +52,12 @@
         <!-- formulario de cadastro -->
         <form id="editarEquipamento" method="post">
 
-            <div class="row">
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Cliente com o equipamento : </label>
-                        <input id="idEquip" name="idEquip" type='hidden' value="<?php echo $this->parametros[0]; ?>">
-                        <input id="clienteEquipamento" name="clienteEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_cliente']; ?>">
-                        <input id="filialEquipamento" name="filialEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_filial']; ?>">
-                        <input id="nomeCliente" name="nomeCliente" type='text'  class="form-control" value="<?php echo $equipamentoCarregado['cliente']; ?>">
-                    </div>
-                </div><!-- fim cliente -->
-
-        		<div class="col-md-4">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Filial com o equipamento : </label>
-                        <input id="nomeFilial" name="nomeFilial" type='text'  class="form-control" value="<?php echo (isset($equipamentoCarregado['filial'])) ? $equipamentoCarregado['filial']: "Matriz"; ?>">
-                    </div>
-                </div><!-- fim filial -->
-
-            </div>
+            <input type="hidden" id="tipoEquip" value="<?php echo $equipamentoCarregado['tipoEquip']; ?>" />
 
             <div class="row">
+
+                <h4 class="page-header">Tipo de equipamento</h4>
+
                 <!-- TIPO DE EQUIPAMENTO -->
                 <div class="col-md-4">
                     <div class="form-group">
@@ -99,6 +82,49 @@
                         </select>
                     </div>
                 </div><!-- fim tipo do equipamento -->
+
+            </div>
+
+            <div class="row">
+
+                <h4 class="page-header">Cliente e local do equipamento</h4>
+
+            </div>
+
+            <div class="row">
+
+                <!-- MODELO DE EQUIPAMENTO -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="modeloEquipamento">Modelo de Equipamento</label>
+                        <input type="text" class="form-control" id="txt_nomeModeloEquip" name="txt_nomeModeloEquip" placeholder="Modelo de Equipamento" value="<?php echo  $equipamentoCarregado['nomeModeloEquipamento']; ?>">
+                    </div>
+                </div><!-- fim modelo do equipamento -->
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Cliente com o equipamento : </label>
+                        <input id="idEquip" name="idEquip" type='hidden' value="<?php echo $this->parametros[0]; ?>">
+                        <input id="clienteEquipamento" name="clienteEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_cliente']; ?>">
+                        <input id="filialEquipamento" name="filialEquipamento" type='hidden' value="<?php echo $equipamentoCarregado['id_filial']; ?>">
+                        <input id="nomeCliente" name="nomeCliente" type='text'  class="form-control" value="<?php echo $equipamentoCarregado['cliente']; ?>">
+                    </div>
+                </div><!-- fim cliente -->
+
+        		<div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Filial com o equipamento : </label>
+                        <input id="nomeFilial" name="nomeFilial" type='text'  class="form-control" value="<?php echo (isset($equipamentoCarregado['filial'])) ? $equipamentoCarregado['filial']: "Matriz"; ?>">
+                    </div>
+                </div><!-- fim filial -->
+
+            </div>
+
+            <div class="row fabricante">
 
                 <!-- FABRICANTE -->
                 <div class="col-md-4">
@@ -132,16 +158,9 @@
                     </div>
                 </div><!-- fim fabricante -->
 
-                <!-- MODELO DE EQUIPAMENTO -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="modeloEquipamento">Modelo de Equipamento</label>
-                        <input type="text" class="form-control" id="txt_nomeModeloEquip" name="txt_nomeModeloEquip" placeholder="Modelo de Equipamento" value="<?php echo  $equipamentoCarregado['nomeModeloEquipamento']; ?>">
-                    </div>
-                </div><!-- fim modelo do equipamento -->
             </div>
 
-            <div class="row">
+            <div class="row entradaSaidaEquipamento">
                 <!-- Entrada de equipamento -->
                 <div class="col-md-4">
                     <div class="form-group">
@@ -167,7 +186,7 @@
                 </div><!-- fim saída do equipamento -->
             </div>
 
-            <div class="row">
+            <div class="row bateriaEquipamento">
 
                 <h4 class="page-header">Bateria do equipamento</h4>
 
@@ -189,7 +208,7 @@
 
             </div>
 
-            <div class="row">
+            <div class="row bateriaTensao">
 
                 <!-- TENSÃO BANCO DE BATERIA -->
                 <div class="col-md-4">
@@ -216,7 +235,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row quantidadesBateria">
 
                 <!-- Quantidade de bateria -->
                 <div class="col-md-4">
@@ -247,7 +266,7 @@
 
             </div>
 
-            <div class="row">
+            <div class="row bateriaTipo">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="tipoBateria">Tipo de bateria</label>
@@ -283,6 +302,36 @@
             </div><!-- fim do botao de envio -->
 
         </form>
+
+        <script type="text/javascript">
+
+            $(document).ready(function() {
+
+                var tipoEquipamento = $('#tipoEquip').val();
+                console.log(tipoEquipamento);
+
+                switch (tipoEquipamento) {
+                    case 'Medidor temperatura':
+                        $('.bateriaTipo').hide();
+                        $('.quantidadesBateria').hide();
+                        $('.bateriaTensao').hide();
+                        $('.bateriaEquipamento').hide();
+                        $('.entradaSaidaEquipamento').hide();
+                        $('.fabricante').hide();
+                    break;
+                    default:
+                        $('.bateriaTipo').show();
+                        $('.quantidadesBateria').show();
+                        $('.bateriaTensao').show();
+                        $('.bateriaEquipamento').show();
+                        $('.entradaSaidaEquipamento').show();
+                        $('.fabricante').show();
+                    break;
+                }
+
+            });
+
+        </script>
 
     </div>
 </div>

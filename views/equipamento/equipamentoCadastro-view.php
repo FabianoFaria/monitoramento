@@ -46,40 +46,7 @@
         <form id="novoEquipamento" method="post">
             <div class="row">
 
-                <h4 class="page-header">Cliente e local do equipamento</h4>
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Cliente com o equipamento : </label>
-                        <select id="clienteEquipamento" name="clienteEquipamento" class="form-control">
-                            <option value="" selected>Selecione cliente</option>
-                            <?php
-                                if(isset($dadosCliente)){
-
-                                    foreach ($dadosCliente as $clienteEquip) {
-                                        ?>
-                                        <option value="<?php echo $clienteEquip['id']; ?>"><?php echo $clienteEquip['nome']; ?></option>
-                                        <?php
-                                    }
-
-                                }
-                            ?>
-                        </select>
-                    </div>
-                </div><!-- fim fabricante -->
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Filial com o equipamento : </label>
-                        <select id="filialEquipamento" name="filialEquipamento" class="form-control">
-                            <option value="">Selecione filial</option>
-                        </select>
-                    </div>
-                </div><!-- fim filial -->
-
-            </div>
-
-            <div class="row">
+                <h4 class="page-header">Tipo de equipamento</h4>
 
                 <!-- TIPO DE EQUIPAMENTO -->
                 <div class="col-md-4">
@@ -101,6 +68,76 @@
                         </select>
                     </div>
                 </div><!-- fim tipo do equipamento -->
+
+            </div>
+            <div class="row">
+
+                <h4 class="page-header">Cliente e local do equipamento</h4>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Cliente com o equipamento : </label>
+                        <select id="clienteEquipamento" name="clienteEquipamento" class="form-control">
+                            <option value="" selected>Selecione cliente</option>
+                            <?php
+                                if(isset($dadosCliente)){
+
+                                    foreach ($dadosCliente as $clienteEquip) {
+                                        ?>
+                                        <option value="<?php echo $clienteEquip['id']; ?>"><?php echo $clienteEquip['nome']; ?></option>
+                                        <?php
+                                    }
+
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div><!-- fim cliente -->
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Filial com o equipamento : </label>
+                        <select id="filialEquipamento" name="filialEquipamento" class="form-control">
+                            <option value="">Selecione filial</option>
+                        </select>
+                    </div>
+                </div><!-- fim filial -->
+
+            </div>
+
+
+
+            <div class="row">
+
+                <!-- Modelo de equipamento -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="modeloEquipamento">Modelo de Equipamento</label>
+                        <input type="text" class="form-control" id="txt_nomeModeloEquip" name="txt_nomeModeloEquip" placeholder="Modelo de Equipamento" maxlength="80"
+                        required value="">
+                    </div>
+                </div><!-- fim modelo do equipamento -->
+
+            </div>
+
+            <div class="row entradasMedidor">
+
+                <!-- Quantidade de pontos do equipamento -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="">Pontos do equipamento</label>
+                        <select id="opc_tipoEntrada" name="opc_tipoEntrada" class="form-control">
+                            <?php
+                                for($i = 1; $i <= 20; $i++){
+                                    echo "<option value='".$i."'>".$i."</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row fabricante">
 
                 <!-- FABRICANTE -->
                 <div class="col-md-4">
@@ -128,18 +165,9 @@
                     </div>
                 </div><!-- fim fabricante -->
 
-                <!-- Modelo de equipamento -->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="modeloEquipamento">Modelo de Equipamento</label>
-                        <input type="text" class="form-control" id="txt_nomeModeloEquip" name="txt_nomeModeloEquip" placeholder="Modelo de Equipamento" maxlength="80"
-                        required value="">
-                    </div>
-                </div><!-- fim modelo do equipamento -->
-
             </div>
 
-            <div class="row">
+            <div class="row entradaSaidaEquipamento">
                 <!-- Entrada de equipamento -->
                 <div class="col-md-4">
                     <div class="form-group">
@@ -166,7 +194,7 @@
                 </div><!-- fim saída do equipamento -->
             </div>
 
-            <div class="row">
+            <div class="row bateriaEquipamento">
 
                 <h4 class="page-header">Bateria do equipamento</h4>
 
@@ -190,7 +218,7 @@
 
             </div>
 
-            <div class="row">
+            <div class="row bateriaTensao">
 
                 <!-- TENSÃO BANCO DE BATERIA -->
                 <div class="col-md-4">
@@ -219,7 +247,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row quantidadesBateria">
 
                 <!-- Quantidade de bateria -->
                 <div class="col-md-4">
@@ -250,7 +278,7 @@
 
             </div>
 
-            <div class="row">
+            <div class="row bateriaTipo">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="tipoBateria">Tipo de bateria</label>

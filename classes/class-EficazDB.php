@@ -51,10 +51,16 @@ class EficazDB
     public function __construct()
     {
         // Armazena os dados de conexao com o banco
-        $this->host =     defined('HOSTNAME') ? HOSTNAME : "mysql03.eficazsystem2.hospedagemdesites.ws";
+        $this->host =     defined('HOSTNAME') ? HOSTNAME : "191.252.110.158:3306";
         $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazsystem22";
-        $this->username = defined('USERNAME') ? USERNAME : "eficazsystem22";
-        $this->userpass = defined('USERPASS') ? USERPASS : "monitor2891";
+        $this->username = defined('USERNAME') ? USERNAME : "cazeiro";
+        $this->userpass = defined('USERPASS') ? USERPASS : "eficazSystemMaria";
+
+        // $this->host =     defined('HOSTNAME') ? HOSTNAME : "mysql03.eficazsystem2.hospedagemdesites.ws";
+        // $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazsystem22";
+        // $this->username = defined('USERNAME') ? USERNAME : "eficazsystem22";
+        // $this->userpass = defined('USERPASS') ? USERPASS : "monitor2891";
+
         // $this->host =     defined('HOSTNAME') ? HOSTNAME : "localhost";
         // $this->dbname =   defined('DBNAME')   ? DBNAME   : "eficazsystem22";
         // $this->username = defined('USERNAME') ? USERNAME : "root";
@@ -93,33 +99,19 @@ class EficazDB
                 return $error_message;
             }
 
-
-            // Verifica se a conexao foi realiza com secesso
-            // if (mysql_connect($this->host, $this->username, $this->userpass))
-            // {
-            //     // Seleciona o banco de dados
-            //     if (mysql_select_db($this->dbname))
+            // try
             //     {
-            //         // Verifica se o modo desenvolvedor esta ativado
-            //         if (defined('DEVTOOLS') && DEVTOOLS == true)
-            //         {
-            //             // Se estiver apresenta a mensagem
-            //             echo "<p class='mensagemRetorno'>Conex&atilde;o efetuada com sucesso</p>";
-            //         }
+            //         $db = new PDO("mysql:dbname=".$this->dbname.";host=".$this->host.";charset=utf8;",$this->username, $this->userpass);
+            //         return $db;
             //     }
-            //     else
+            //     catch(PDOException $e)
             //     {
-            //         // Caso nao consiga selecionar uma base de dados
-            //         // Apresenta uma mensagem de erro
-            //         echo "<p class='mensagemRetorno'>Erro ao selecionar a base de dados" . mysql_error() . "</p>";
+            //         $error_message = $e->getMessage();
+            //
+            //         // Var_dump($error_message);
+            //
+            //         throw new PDOException($e);
             //     }
-            // }
-            // else
-            // {
-            //     // Caso a conexao nao seja realizada com sucesso
-            //     // Apresenta a mensagem de erro
-            //     echo "<p class='mensagemRetorno'>N&atilde;o foi poss&iacute;vel conectar: " . mysql_error() . "</p>";
-            // }
         }
         else
         {
