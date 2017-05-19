@@ -105,8 +105,6 @@
 
             </div>
 
-
-
             <div class="row">
 
                 <!-- Modelo de equipamento -->

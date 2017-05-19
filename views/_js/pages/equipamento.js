@@ -73,7 +73,8 @@ $(document).ready(function(){
                             $('.bateriaEquipamento').hide();
                             $('.entradaSaidaEquipamento').hide();
                             $('.fabricante').hide();
-                            $('.entradasMedidor').show();
+                            $('.entradasMedidorEditar').show();
+
                         break;
                         default:
                             $('.bateriaTipo').show();
@@ -82,7 +83,8 @@ $(document).ready(function(){
                             $('.bateriaEquipamento').show();
                             $('.entradaSaidaEquipamento').show();
                             $('.fabricante').show();
-                            $('.entradasMedidor').hide();
+                            $('.entradasMedidorEditar').show();
+                    
                         break;
                     }
 
