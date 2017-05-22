@@ -52,7 +52,7 @@
 
     <?php
 
-        // var_dump($alarmesRegistrados);
+        //var_dump($alarmesRegistrados);
 
         //LOCAL PARA GUARDAR A QUANTIDADE DE NOVOS ALARMES
         if($alarmesRegistrados['status']){
@@ -249,8 +249,17 @@
                                             <td>
                                                 <?php
 
-                                                    //IF ELSE PARA TRATAR DO PONTO DA TABELA QUE GEROU O ALARME
-                                                    $ponto = $this->verificarPontoTabela($listaAlarmes['pontoTabela']);
+                                                    //IF ELSE PARA TRATAR DO PONTO DA TABELA QUE GEROU O ALARME, DEPENDENDO DO TIPO DE equipamento
+
+                                                    switch ($listaAlarmes['tipo_equipamento']) {
+                                                        case 'Medidor temperatura':
+                                                            $ponto = "Medidor de temperatura ".strtoupper($listaAlarmes['pontoTabela']);
+                                                        break;
+
+                                                        default:
+                                                            $ponto = $this->verificarPontoTabela($listaAlarmes['pontoTabela']);
+                                                        break;
+                                                    }
 
                                                     echo $ponto;
 
@@ -301,6 +310,20 @@
                                                                 <?php
                                                             break;
                                                             case 'Temperatura Banco de bateria':
+                                                                ?>
+                                                                <span class="text-danger">
+                                                                    <?php
+                                                                        echo  $listaAlarmes['parametroMedido']." (°C)";
+                                                                    ?>
+                                                                </span> onde o limite era
+                                                                <span class="text-info">
+                                                                    <?php
+                                                                        echo $listaAlarmes['parametroAtingido']." (°C)";
+                                                                    ?>
+                                                                </span>
+                                                                <?php
+                                                            break;
+                                                            case 'Medidor de temperatura':
                                                                 ?>
                                                                 <span class="text-danger">
                                                                     <?php

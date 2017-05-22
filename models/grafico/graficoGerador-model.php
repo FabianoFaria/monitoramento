@@ -70,7 +70,10 @@
         //RECUPERA O SIM ATRAVES DO NUMERO DO EQUIPAMENTO
         if(is_numeric($equipId)){
 
-            $querySim = "SELECT id_sim FROM tb_sim_equipamento WHERE id_equipamento = '$equipId'";
+            $querySim = "SELECT id_sim FROM tb_sim_equipamento WHERE id_equipamento = '$equipId' AND status_ativo = '1'";
+
+            // print_r($querySim);
+            // exit();
 
             $resultadoSim = $this->verificaQuery($querySim);
 

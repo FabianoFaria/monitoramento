@@ -132,7 +132,7 @@
                         <label for="">Pontos do equipamento</label>
                         <select id="opc_tipoEntrada" name="opc_tipoEntrada" class="form-control">
                             <?php
-                                for($i = 1; $i <= 20; $i++){
+                                for($i = 1; $i < 20; $i++){
                                     if(isset($equipamentoCarregado['tipo_entrada']) && $equipamentoCarregado['tipo_entrada'] == $i){
                                         echo "<option value='".$i."' selected>".$i."</option>";
                                     }else{

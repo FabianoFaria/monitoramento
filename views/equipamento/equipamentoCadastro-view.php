@@ -126,7 +126,7 @@
                         <label for="">Pontos do equipamento</label>
                         <select id="opc_tipoEntrada" name="opc_tipoEntrada" class="form-control">
                             <?php
-                                for($i = 1; $i <= 20; $i++){
+                                for($i = 1; $i < 20; $i++){
                                     echo "<option value='".$i."'>".$i."</option>";
                                 }
                             ?>

@@ -252,6 +252,9 @@
 
         $dadosAlarme        = $alarmeModelo->recuperaDadosAlarme($_POST['idAlarme']);
 
+        // Carrega os protocolos de erro de equipamento
+        require_once EFIPATH."/protocolosDisponiveis.php";
+
         if($dadosAlarme['status']){
 
             $dadosAlarme = $dadosAlarme['alerta'][0];
@@ -301,9 +304,19 @@
             */
             $tipoEquip              = $dadosAlarme['tipo_equipamento'];
             $nomeEquipamento        = $dadosAlarme['nomeModeloEquipamento'];
-            $pontoTabela            = $this->verificarPontoTabela($dadosAlarme['pontoTabela']);
+
             $localEquip             = ($dadosAlarme['ambiente_local_sim'] == ' ') ? $dadosAlarme['ambiente_local_sim'] : "Não informado.";
 
+
+            //Verifica o tipo de equipamento
+            switch ($tipoEquip) {
+                case 'Medidor temperatura':
+                    $pontoTabela = "Medidor de temperatura ".strtoupper($dadosAlarme['pontoTabela']);
+                break;
+                default:
+                    $pontoTabela  = $this->verificarPontoTabela($dadosAlarme['pontoTabela']);
+                break;
+            }
 
             /*
             * CARREGA VARIAVEL DE CALIBRACAO DA POSICAO SOLICITADA
@@ -336,9 +349,26 @@
             if($ultimaLeitura['status']){
 
                 $ultimaLeituraValor     = $ultimaLeitura['equipAlarm'][0]['medida'] * $parametro;
+
+                $protocoloPassado       = $this->verificaProtocoloPosicaoTebela($ultimaLeituraValor, $protocolos);
+
+                if(!is_numeric($protocoloPassado)){
+                    $ultimaLeituraValor = 0;
+                }
+
                 $f = sprintf ("%.2f", $ultimaLeituraValor);
 
-                $leitura =  $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], number_format($ultimaLeituraValor ,2 ,'.',''));
+                //Verifica o tipo de Equipamento
+                switch ($tipoEquip) {
+                    case 'Medidor temperatura':
+                        $leitura = number_format(($ultimaLeituraValor / 100) ,2 ,'.','')." (°C)";
+                    break;
+
+                    default:
+                        $leitura =  $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], number_format($ultimaLeituraValor ,2 ,'.',''));
+                    break;
+                }
+
             }else{
                 $leitura = "Não recebida.";
             }
@@ -346,10 +376,22 @@
             /*
             * DADO QUE GEROU ALARME
             */
-            // O valor do alarme já veio da tabela de alarmes com o tratamento de variavel de calibração
-            $dadoAlarmeValor   = number_format(($dadosAlarme['parametroMedido'] * 100), 2, '.', '');
 
-            $dadoGeradorAlarme = $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], $dadoAlarmeValor);
+            switch ($tipoEquip) {
+                case 'Medidor temperatura':
+                    // O valor do alarme já veio da tabela de alarmes com o tratamento de variavel de calibração
+                    $dadoAlarmeValor   = number_format(($dadosAlarme['parametroMedido']), 2, '.', '');
+
+                    $dadoGeradorAlarme = $dadoAlarmeValor." (°C)";
+                break;
+
+                default:
+                    // O valor do alarme já veio da tabela de alarmes com o tratamento de variavel de calibração
+                    $dadoAlarmeValor   = number_format(($dadosAlarme['parametroMedido'] * 100), 2, '.', '');
+
+                    $dadoGeradorAlarme = $this->configurarTipoPontoTabela($dadosAlarme['pontoTabela'], $dadoAlarmeValor);
+                break;
+            }
 
             /*
             * TRATAMENTOS REGISTRADOS PARA O ALARME
@@ -381,23 +423,24 @@
                 $tratamentos = "<tr><td colspan='3'>Nenhum tratamento aplicado.</td></tr>";
             }
 
-            exit(json_encode(
+            exit(
+                json_encode(
                             array(
-                                'status' => true,
-                                'cliente' => $dadosClie['dados'][0],
-                                'filial' => $dadosFili,
-                                'alarme' => $dadosAlarme,
-                                'dadoGerouAlarme' => $dadoGeradorAlarme,
-                                'statusAlarme' => $statusAlarme,
-                                'horaAlarme' => $horaCriacao,
-                                'dataAlarme' => $dataCriacaoTratada,
-                                'dataVisualizada' => $dataVisualizacao,
-                                'tipoEquip' => $tipoEquip,
-                                'nomeEquip' => $nomeEquipamento,
-                                'pontoTab' => $pontoTabela,
-                                'ultimoDado' => $leitura,
-                                'tratamentos' => $tratamentos,
-                                'localizacaoEquip' => $localEquip
+                                'status'    => true,
+                                'cliente'   => $dadosClie['dados'][0],
+                                'filial'    => $dadosFili,
+                                'alarme'    => $dadosAlarme,
+                                'dadoGerouAlarme'   => $dadoGeradorAlarme,
+                                'statusAlarme'      => $statusAlarme,
+                                'horaAlarme'        => $horaCriacao,
+                                'dataAlarme'        => $dataCriacaoTratada,
+                                'dataVisualizada'   => $dataVisualizacao,
+                                'tipoEquip'         => $tipoEquip,
+                                'nomeEquip'         => $nomeEquipamento,
+                                'pontoTab'      => $pontoTabela,
+                                'ultimoDado'    => $leitura,
+                                'tratamentos'   => $tratamentos,
+                                'localizacaoEquip'  => $localEquip
                                 )
                             )
                 );
@@ -508,6 +551,22 @@
 
         exit(json_encode(array('status' => $statusContagem, 'contagem' => $totalAlarmes, 'alarmes' => $alarmesNovos)));
 
+    }
+
+    /*
+    * VERIFICA SE NÃO FOI PASSADO UM PROTOCOLO NO LUGAR DO VALOR
+    */
+    public function verificaProtocoloPosicaoTebela($valor, $protocolos){
+
+        require_once EFIPATH."/protocolosDisponiveis.php";
+
+        //Procura na array de protocolos o valor passado pelo
+        if (array_key_exists($valor,$protocolos)){
+            //Retorna o valor da array em caso o valor tenha sido retornado um dos protocolos
+            return $protocolos[$valor];
+        }else{
+            return 1;
+        }
     }
 
     /*

@@ -386,12 +386,13 @@
                 CLUSULA WHERE FOI ALTERADA PARA < 4 POIS O status_ativo = 5 foi removido
             */
 
-            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeModeloEquipamento, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.pontoTabela
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeModeloEquipamento, tp_equip.tipo_equipamento, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.pontoTabela
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
                     JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                    JOIN tb_tipo_equipamento tp_equip ON tp_equip.id = equip.tipo_equipamento
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
                     LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
@@ -441,12 +442,13 @@
                 CLUSULA WHERE FOI ALTERADA PARA < 4 POIS O status_ativo = 5 foi removido
             */
 
-            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeModeloEquipamento, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.pontoTabela
+            $query = "SELECT alert.id, alert.dt_criacao, alert.status_ativo, alert.visto, msg_alert.mensagem, sim_equip.id_equipamento, equip.nomeModeloEquipamento, tp_equip.tipo_equipamento, clie.nome, fili.nome AS 'filial', trat_alert.parametro , trat_alert.parametroMedido, trat_alert.parametroAtingido, trat_alert.pontoTabela
                     FROM tb_alerta alert
                     JOIN tb_msg_alerta msg_alert ON alert.id_msg_alerta = msg_alert.id
                     JOIN tb_tratamento_alerta trat_alert ON trat_alert.id_alerta = alert.id
                     JOIN tb_sim_equipamento sim_equip ON sim_equip.id = alert.id_sim_equipamento
                     JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
+                    JOIN tb_tipo_equipamento tp_equip ON tp_equip.id = equip.tipo_equipamento
                     JOIN tb_sim sim ON sim.num_sim = sim_equip.id_sim
                     JOIN tb_cliente clie ON clie.id = sim.id_cliente
                     LEFT JOIN tb_filial fili ON equip.id_filial = fili.id

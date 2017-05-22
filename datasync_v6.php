@@ -59,10 +59,7 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     * LISTA DE PROTOCOLOS
     * EM FUTURAS VERSÕES, EFETUAR UM INCLUDE OU UMA QUERY DO BD
     */
-    $protocolos    = array(
-                        '65534' => 'Alerta Y',
-                        '65533' => 'Alerta Z'
-                    );
+    require_once EFIPATH."/protocolosDisponiveis.php";
 
     //VERIFICA SE CHIP SIM ESTÁ ATIVO NO SISTEMA
 
@@ -124,7 +121,7 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
 
         switch ($equipamentosSim[0]['tpEquipamento']) {
             case 'Medidor temperatura':
-                echo "Efetuar verificação de alarme de Medidor!";
+                require_once EFIPATH ."/tratamento_medidorTemperatura.php";
             break;
 
             case 'No-break':
@@ -701,7 +698,7 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
     function identificarFalsoPositivo($sim_num, $posicao){
 
         // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
-        $connBase       = new EficazDB;
+        $connBase     = new EficazDB;
 
         $queryPosicao = "SELECT $posicao
                          FROM tb_dados dados
