@@ -929,6 +929,42 @@ class EquipamentoController extends MainController
 
     }
 
+    /**
+    *  FUNÇÃO PARA INICIAR CADASTRO E GERENCIAMENTO DE PLANTA BAIXA
+    */
+    public function gerenciarPlantaBaixa(){
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_pe'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            // Carrega o modelo para este view
+            $modeloEquipamento   = $this->load_model('equipamento/equipamento-model');
+            $modeloCliente    = $this->load_model('cliente/cliente-model');
+
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "equipamento";
+
+            // Carrega o modelo para este view
+            $modelo     = $this->load_model('equipamento/equipamento-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/equipamento/equipamentoPlantaBaixa-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+
+    }
+
     /*
     * LISTA OS EQUIPAMENTOS FILTRADOS POR CLIENTE
     */
@@ -1049,6 +1085,108 @@ class EquipamentoController extends MainController
     }
 
     /*
+    * LISTA DE EQUIPAMENTOS COM OU SEM PLANTA CADASTRADA
+    */
+    public function listarEquipamentosClientePlantaJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo           = $this->load_model('equipamento/equipamento-model');
+
+        $equipamentosCliente        = $equipeModelo->filtroListaEquipamentos($_POST['idCliente']);
+        $estadosEquipamentosCliente = $equipeModelo->ufEquipamentosCliente($_POST['idCliente']);
+
+        if($estadosEquipamentosCliente['status']){
+
+            $listaEstados   = "";
+            $listaEstados .="<option value=' '>";
+            $listaEstados .= " Selecione...";
+            $listaEstados .="</option>";
+
+            $listaArray     = array();
+
+            foreach ($estadosEquipamentosCliente['estados'] as $estado) {
+
+                if(isset($estado['id'])){
+
+                    if(!in_array($estado['id'], $listaArray)){
+
+                        array_push($listaArray, $estado['id']);
+
+                        $listaEstados .="<option value='".$estado['id']."'>";
+                            $listaEstados .= $estado['nome'];
+                        $listaEstados .="</option>";
+
+                    }
+
+                }elseif(isset($estado['idMatriz'])){
+
+                    if(!in_array($estado['idMatriz'], $listaArray)){
+
+                        array_push($listaArray, $estado['idMatriz']);
+
+                        $listaEstados .="<option value='".$estado['idMatriz']."'>";
+                            $listaEstados .= $estado['estadoMatriz'];
+                        $listaEstados .="</option>";
+                    }
+
+                }
+
+            }
+
+        }
+
+        if($equipamentosCliente['status']){
+
+            //var_dump($equipamentosCliente);
+            $table = "";
+
+            foreach ($equipamentosCliente['equipamentos'] as $equipamento) {
+
+                $table .= "<tr>";
+
+                    $table .= "<td>";
+                        $table .= $equipamento['tipoEquip'];
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .= "<b>".$equipamento['nomeModeloEquipamento']."</b> / ".$equipamento['fabricante'];
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .= $equipamento['cliente'];
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        if(isset($equipamento['filial'])){
+                            $table .= $equipamento['filial'];
+                        }else{
+                            $table .= 'Matriz';
+                        }
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .=  "<a href='".HOME_URI."/equipamento/carregarDadosEquipamentoCalibracao/".$equipamento['id']."' class='link-tabela-moni'> <i class='fa fa-map-marker '></i> </a>";
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .=  "<a href='".HOME_URI."/equipamento/configurarEquipamentoCliente/".$equipamento['id']."' class='link-tabela-moni'> <i class='fa fa-picture-o '></i> </a>";
+                    $table .= "</td>";
+
+                $table .= "</tr>";
+
+            }
+
+            exit(json_encode(array('status' => $equipamentosCliente['status'], 'listaEquipamentos' => $table, 'estados' => $listaEstados)));
+
+        }else{
+
+            exit(json_encode(array('status' => $equipamentosCliente['status'])));
+
+        }
+
+    }
+
+    /*
     * LISTA DE EQUIPAMENTOS POR CLIENTES E ESTADOS
     */
     public function listarEquipamentosEstadoClienteJson(){
@@ -1125,6 +1263,66 @@ class EquipamentoController extends MainController
     }
 
     /*
+    *
+    */
+    public function listarEquipamentosEstadoClientePlantaJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo           = $this->load_model('equipamento/equipamento-model');
+
+        $equipamentosCliente    = $equipeModelo->filtroListaEquipamentosPorEstado($_POST['idCliente'], $_POST['idEstado']);
+
+        if($equipamentosCliente['status']){
+
+            //var_dump($equipamentosCliente);
+            $table = "";
+
+            foreach ($equipamentosCliente['equipamentos'] as $equipamento) {
+
+                $table .= "<tr>";
+
+                    $table .= "<td>";
+                        $table .= $equipamento['tipoEquip'];
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .= "<b>".$equipamento['nomeModeloEquipamento']."</b> / ".$equipamento['fabricante'];
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .= $equipamento['cliente'];
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        if(isset($equipamento['filial'])){
+                            $table .= $equipamento['filial'];
+                        }else{
+                            $table .= 'Matriz';
+                        }
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .=  "<a href='".HOME_URI."/equipamento/carregarPontosPlantaBaixa/".$equipamento['id']."' class='link-tabela-moni'> <i class='fa fa-map-marker '></i> </a>";
+                    $table .= "</td>";
+
+                    $table .= "<td>";
+                        $table .=  "<a href='".HOME_URI."/equipamento/configurarPlantaBaixa/".$equipamento['id']."' class='link-tabela-moni'> <i class='fa fa-picture-o '></i> </a>";
+                    $table .= "</td>";
+
+                $table .= "</tr>";
+
+            }
+
+            exit(json_encode(array('status' => $equipamentosCliente['status'], 'listaEquipamentos' => $table)));
+
+        }else{
+
+            exit(json_encode(array('status' => $equipamentosCliente['status'])));
+        }
+
+    }
+
+    /*
     * CARREGAR DADOS DO TIPO DE EQUIPAMENTO
     */
     public function buscaTipoEquipamentoJson(){
@@ -1147,6 +1345,79 @@ class EquipamentoController extends MainController
 
         }else{
             exit(json_encode(array('status' => $tipoEquipamento['status'])));
+        }
+    }
+
+    /*
+    * CARREGAR TELA DE CONFIGURAÇÃO DE PLANTA BAIXA
+    */
+    public function configurarPlantaBaixa(){
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_pe'] != 1 )
+        {
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+        }else{
+
+            // Carrega o modelo para este view
+            $modeloEquipamento   = $this->load_model('equipamento/equipamento-model');
+            $modeloCliente    = $this->load_model('cliente/cliente-model');
+
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "equipamento";
+
+            // Carrega o modelo para este view
+            $modelo     = $this->load_model('equipamento/equipamento-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/equipamento/equipamentoConfigurarPlantaBaixa-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+
+    }
+
+    /*
+    * CARREGAR TELA DE CONFIGURAÇÃO DE PONTOS DO EQUIPAMENTO NA PLANTA BAIXA
+    */
+    public function carregarPontosPlantaBaixa(){
+
+        // Verifica o login
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_pe'] != 1 ){
+
+            // Se nao possuir
+            // Redireciona para index
+            $this->moveHome();
+
+        }else{
+
+            // Carrega o modelo para este view
+            $modeloEquipamento   = $this->load_model('equipamento/equipamento-model');
+            $modeloCliente    = $this->load_model('cliente/cliente-model');
+
+            //DEFINE O TITULO DA PAGINA
+            $this->title = "equipamento";
+
+            // Carrega o modelo para este view
+            $modelo     = $this->load_model('equipamento/equipamento-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/equipamento/equipamentoConfigurarPontosPlantaBaixa-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+
         }
     }
 

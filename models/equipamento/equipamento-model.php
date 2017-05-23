@@ -106,7 +106,7 @@ class EquipamentoModel extends MainModel
                         fili.nome as 'filial',
                         tipo_equip.tipo_equipamento as 'tipoEquip'
                         FROM tb_equipamento equip
-                        JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
+                        LEFT JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                         LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                         LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
                         LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0
@@ -159,7 +159,7 @@ class EquipamentoModel extends MainModel
 
             $query = "SELECT equip.id, equip.nomeModeloEquipamento, equip.tipo_equipamento as 'equipamento', fabri.nome as 'fabricante', equip.potencia, equip.qnt_bateria, equip.tipo_bateria , clie.nome as 'cliente', fili.nome as 'filial', tipo_equip.tipo_equipamento as 'tipoEquip'
                         FROM tb_equipamento equip
-                        JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
+                        LEFT JOIN tb_fabricante fabri ON fabri.id = equip.id_fabricante
                         LEFT JOIN tb_tipo_equipamento tipo_equip ON equip.tipo_equipamento = tipo_equip.id
                         LEFT JOIN tb_cliente clie ON equip.id_cliente = clie.id
                         LEFT JOIN tb_filial fili ON fili.id = equip.id_filial AND equip.id_filial > 0

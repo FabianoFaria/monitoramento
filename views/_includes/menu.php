@@ -10,7 +10,7 @@ $clienteModelo       = $this->load_model('cliente/cliente-model');
 $userModelo          = $this->load_model('usuario/usuario-model');
 
 //if($_SESSION['userdata']['cliente'] > ){
-if(3 > 4){    
+if(3 > 4){
     $clienteLogo     = $clienteModelo->carregarLogoCliente($_SESSION['userdata']['cliente']);
 }else{
     $clienteLogo     = null;
@@ -345,6 +345,13 @@ function fileExists($path){
                               <i class="fa fa-credit-card fa-1x"></i>
                               <span class="icon-side"></span>
                               <spam>Gerenciar SIM</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo HOME_URI; ?>/equipamento/gerenciarPlantaBaixa" class="">
+                              <i class="fa fa-trello fa-1x"></i>
+                              <span class="icon-side"></span>
+                              <spam>Gerenciar planta baixa</span>
                             </a>
                         </li>
                        </ul>

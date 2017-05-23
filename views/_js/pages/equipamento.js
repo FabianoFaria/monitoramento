@@ -84,7 +84,7 @@ $(document).ready(function(){
                             $('.entradaSaidaEquipamento').show();
                             $('.fabricante').show();
                             $('.entradasMedidorEditar').show();
-                    
+
                         break;
                     }
 
@@ -1163,6 +1163,73 @@ $(document).ready(function(){
             {
                 $('#stream_table_equipamentos tbody').html(' ');
                 $('#stream_table_equipamentos tbody').html(datra.listaEquipamentos);
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+              // Handle errors here
+              console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+              // STOP LOADING SPINNER
+            }
+        });
+
+    });
+
+    /*
+    * INICIA O PROCESSO DE FILTRAGEM PARA A TELA DE PLANTA BAIXA
+    */
+    $('#filtroClientePlanta').change(function() {
+
+        $('#filtroEstadoPlanta').val(' ');
+
+        var clienteId = $(this).val();
+
+        $.ajax({
+            url: urlP+"/equipamento/listarEquipamentosClientePlantaJson",
+    		secureuri: false,
+    		type : "POST",
+    		dataType: 'json',
+            data      : {
+                'idCliente' : clienteId
+            },
+            success : function(datra)
+            {
+                $('#stream_table_equipamentos_planta tbody').html(' ');
+                $('#stream_table_equipamentos_planta tbody').html(datra.listaEquipamentos);
+
+                $('#filtroEstadoPlanta').html(' ');
+                $('#filtroEstadoPlanta').html(datra.estados);
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+              // Handle errors here
+              console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+              // STOP LOADING SPINNER
+            }
+        });
+
+    });
+
+    /*
+    * INICIA PROCESSO DE FILTRO DE EQUIPAMENTOS POR ESTADOS QUE CONTÉM EQUIPAMENTOS E PLANTAS
+    */
+    $('#filtroEstadoPlanta').change(function() {
+
+        var clienteId   = $('#filtroClientePlanta').val();
+        var estadoId    = $(this).val();
+
+        $.ajax({
+            url: urlP+"/equipamento/listarEquipamentosEstadoClientePlantaJson",
+    		secureuri: false,
+    		type : "POST",
+    		dataType: 'json',
+            data      : {
+                'idCliente' : clienteId,
+                'idEstado' : estadoId
+            },
+            success : function(datra)
+            {
+                $('#stream_table_equipamentos_planta tbody').html(' ');
+                $('#stream_table_equipamentos_planta tbody').html(datra.listaEquipamentos);
             },
             error: function(jqXHR, textStatus, errorThrown)
             {

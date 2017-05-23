@@ -211,8 +211,16 @@
                         if($valorValidoB > 0){
                             $statusB                = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'b');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
+
+                            }
                         }
 
                         $valoresCorrente        = explode('|', $configuracaoSalva[4]);
@@ -221,8 +229,16 @@
                         if($valorValidoI > 0){
                             $statusI  = comparaParametrosEquipamento(($_POST['I']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'i');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'i');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'i');
+
+                            }
                         }
 
                     break;
@@ -237,15 +253,31 @@
                         if($valorValidoB > 0){
                             $statusB                = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'b');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
+
+                            }
                         }
 
                         if($valorValidoC > 0){
                             $statusC                = comparaParametrosEquipamento(($_POST['C']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'c');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'c');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'c');
+
+                            }
                         }
 
                         $valoresCorrente        = explode('|', $configuracaoSalva[4]);
@@ -256,15 +288,31 @@
                         if($valorValidoI > 0){
                             $statusI  = comparaParametrosEquipamento(($_POST['I']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'i');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'i');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'i');
+
+                            }
                         }
 
                         if($valorValidoJ > 0){
                             $statusJ   = comparaParametrosEquipamento(($_POST['J']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'j');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'j');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'j');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'j');
+
+                            }
                         }
 
                     break;
@@ -279,24 +327,47 @@
                         if($valorValidoB > 0){
                             $statusB    = comparaParametrosEquipamento(($_POST['B']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'b');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
 
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'b');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'b');
+
+                            }
 
                         }
 
                         if($valorValidoC > 0){
                             $statusC    = comparaParametrosEquipamento(($_POST['C']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'c');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'c');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'c');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'c');
+
+                            }
                         }
 
                         if($valorValidoD > 0){
                             $statusD    = comparaParametrosEquipamento(($_POST['D']/100), $valoresEntrada, $idSimEquip, 'Tensão', 'd');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'd');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'd');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Tensão', 9, 1, 'd');
+
+                            }
                         }
 
                         $valoresCorrente        = explode('|', $configuracaoSalva[4]);
@@ -308,22 +379,46 @@
                         if($valorValidoI > 0){
                             $statusI  = comparaParametrosEquipamento(($_POST['I']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'i');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'i');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'i');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'i');
+
+                            }
                         }
 
                         if($valorValidoJ > 0){
                             $statusJ   = comparaParametrosEquipamento(($_POST['J']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'j');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'j');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'j');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'j');
+
+                            }
                         }
 
                         if($valorValidoL > 0){
                             $statusL   = comparaParametrosEquipamento(($_POST['L']/100), $valoresCorrente, $idSimEquip, 'Corrente', 'l');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'l');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'l');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Corrente', 9, 1, 'l');
+
+                            }
                         }
 
                     break;
@@ -344,8 +439,16 @@
                         if($valorValidoE > 0){
                             $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'e');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
+
+                            }
                         }
 
                         $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
@@ -355,8 +458,16 @@
                         if($valorValidoM > 0){
                             $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'm');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
+
+                            }
                         }
 
                     break;
@@ -371,15 +482,31 @@
                         if($valorValidoE > 0){
                             $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'm');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'm');
+
+                            }
                         }
 
                         if($valorValidoF > 0){
                             $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'f');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'f');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'f');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'f');
+
+                            }
                         }
 
                         $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
@@ -390,15 +517,31 @@
                         if($valorValidoM > 0){
                             $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'm');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
+
+                            }
                         }
 
                         if($valorValidoN > 0){
                             $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'n');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
+
+                            }
                         }
 
                     break;
@@ -414,22 +557,46 @@
                         if($valorValidoE > 0){
                             $statusE  = comparaParametrosEquipamento(($_POST['E']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'e');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'e');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'e');
+
+                            }
                         }
 
                         if($valorValidoF > 0){
                             $statusF  = comparaParametrosEquipamento(($_POST['F']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'f');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'f');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'f');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'f');
+
+                            }
                         }
 
                         if($valorValidoG > 0){
                             $statusG   = comparaParametrosEquipamento(($_POST['G']/100), $valoresSaida, $idSimEquip, 'Saída tensão', 'g');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'g');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'g');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída tensão', 9, 1, 'g');
+
+                            }
                         }
 
                         $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
@@ -441,22 +608,46 @@
                         if($valorValidoM > 0){
                             $statusM  = comparaParametrosEquipamento(($_POST['M']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'm');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'm');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'm');
+
+                            }
                         }
 
                         if($valorValidoN > 0){
                             $statusN   = comparaParametrosEquipamento(($_POST['N']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'n');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'n');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'n');
+
+                            }
                         }
 
                         if($valorValidoO > 0){
                             $statusO    = comparaParametrosEquipamento(($_POST['O']/100), $valoresCorrenteSaida, $idSimEquip, 'Saída corrente', 'o');
                         }else{
-                            //GERA ALARME DE PROTOCOLO
-                            gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'o');
+
+                            //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                            $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'o');
+
+                            if(!$alarmeExiste){
+
+                                //GERA ALARME DE PROTOCOLO
+                                gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Saída corrente', 9, 1, 'o');
+
+                            }
                         }
 
                     break;
@@ -475,8 +666,16 @@
                 if($valorValidoH > 0){
                     $statusH   = comparaParametrosEquipamento(($_POST['H']/100), $valoresBateria, $idSimEquip, 'Bateria', 'h');
                 }else{
-                    //GERA ALARME DE PROTOCOLO
-                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'h');
+
+                    //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                    $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'h');
+
+                    if(!$alarmeExiste){
+
+                        //GERA ALARME DE PROTOCOLO
+                        gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Bateria', 9, 1, 'h');
+
+                    }
                 }
 
                 /*
@@ -490,8 +689,16 @@
                 if($valorValidoQ > 0){
                     $statusQ    = comparaParametrosEquipamento(($_POST['Q']/100), $valoresTeperaturaAmbiente, $idSimEquip, 'Temperatura ambiente', 'q');
                 }else{
-                    //GERA ALARME DE PROTOCOLO
-                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Temperatura ambiente', 9, 1, 'q');
+
+                    //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                    $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'q');
+
+                    if(!$alarmeExiste){
+
+                        //GERA ALARME DE PROTOCOLO
+                        gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Temperatura ambiente', 9, 1, 'q');
+
+                    }
                 }
 
                 #Temperatura banco bateria r
@@ -501,8 +708,16 @@
                 if($valorValidoR > 0){
                     $statusR    = comparaParametrosEquipamento(($_POST['R']/100), $valoresTemperaturaBancoBat, $idSimEquip, 'Temperatura Banco de bateria', 'r');
                 }else{
-                    //GERA ALARME DE PROTOCOLO
-                    gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Temperatura Banco de bateria', 9, 1, 'r');
+
+                    //VERIFICA SE JÁ NÃO EXISTE UM ALARME PARA ESSA POSIÇÃO NA TABELA
+                    $alarmeExiste = verificarAlarmeExistente($idSimEquip, 'r');
+
+                    if(!$alarmeExiste){
+
+                        //GERA ALARME DE PROTOCOLO
+                        gerarAlarmeEquipamento($idSimEquip, 0, 0, 'Temperatura Banco de bateria', 9, 1, 'r');
+
+                    }
                 }
 
     }
