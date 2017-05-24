@@ -1263,7 +1263,7 @@ class EquipamentoController extends MainController
     }
 
     /*
-    *
+    * LISTA OS EQUIPAMENTOS POR CLIENTES E ESTADOS PARA PLANTA BAIXA
     */
     public function listarEquipamentosEstadoClientePlantaJson(){
 
@@ -1380,6 +1380,72 @@ class EquipamentoController extends MainController
             require_once EFIPATH . "/views/equipamento/equipamentoConfigurarPlantaBaixa-view.php";
             require_once EFIPATH . "/views/_includes/footer.php";
 
+        }
+
+    }
+
+
+    /*
+    * CADASTRAR DADOS DE PLANTA BAIXA
+    */
+    public function cadastroPlantaBaixa(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo           = $this->load_model('equipamento/equipamento-model');
+
+        //TESTA SE FOI COLOCADO ALGUM ARQUIVO PARA SER SALVO
+
+        if(file_exists($_FILES['file_planta']['tmp_name']) && is_uploaded_file($_FILES['file_planta']['tmp_name'])){
+
+            //EFETUA O UPLOAD DA IMAGEM SELECIONADA
+            $arquivoEnviado = $this->upload_plantaBaixa($_FILES, UP_BLUEPRINT_IMG_PATH);
+
+            if($arquivoEnviado['status'] == 'erro'){
+
+                exit(json_encode(array('status' => false, 'mensagem' => $arquivoEnviado['mensagem'])));
+            }else{
+
+                $arquivoEnviado = $arquivoEnviado['mensagem'];
+            }
+
+        }else{
+
+            $arquivoEnviado = null;
+
+        }
+
+        $cadastrarPlantaJson   = $equipeModelo->cadastrarPlantaJson($_POST['txt_clie'], $_POST['txt_filial'], $_POST['txt_equip'], $_POST['txt_planta'], $arquivoEnviado);
+
+        if($cadastrarPlantaJson['status']){
+
+            exit(json_encode(array('status' => true, 'mensagem' => '')));
+        }else{
+            exit(json_encode(array('status' => false, 'mensagem' => 'Ocorreu um erro ao tentar atualizar os dados do usuário, favor verificar as informações fornecidas.')));
+        }
+    }
+
+    /*
+    * REMOVER DADOS DE PLANTA BAIXA
+    */
+    public function removerPlantaJson(){
+
+        // CARREGA O MODELO PARA ESTE VIEW/OPERAÇÃO
+        $equipeModelo           = $this->load_model('equipamento/equipamento-model');
+
+        $removePlanta           = $equipeModelo->removerPLantaBaixa($_POST['idplanta']);
+
+        if($removePlanta['status']){
+
+            //REMOVE TODOS OS PONTOS QUE FORAM CADASTRADOS NESTA PLANTA BAIXA
+            $removePonto        = $equipeModelo->removerPontosPlanta($_POST['idplanta']);
+
+            if($_POST['nomeArquivo'] != ''){
+                    $this->removeOldAvatar($_POST['nomeArquivo'], UP_BLUEPRINT_IMG_PATH);
+            }
+
+            exit(json_encode(array('status' => true, 'mensagem' => '')));
+        }else{
+            exit(json_encode(array('status' => false, 'mensagem' => 'Ocorreu um erro ao tentar remover planta baixa, favor verificar as informações fornecidas.')));
         }
 
     }

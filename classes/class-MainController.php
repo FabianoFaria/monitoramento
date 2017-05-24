@@ -431,7 +431,8 @@ class MainController extends UserLogin
 
             //size of the resize image
              $new_width = $bestSize;
-             $new_height = 64;
+             $new_height = $bestSize;
+            //$new_height = 64;
 
             //name of the new image
             //$nameOfFile = 'resize_'.$new_width.'x'.$new_height.'_'.basename($file['name']);
@@ -641,6 +642,91 @@ class MainController extends UserLogin
 
         return;
     }
+
+
+    /**
+     * Funcao de upload de arquivo para planta baixa
+     *
+     * @param array $file - Recebe o array com os parametros do arquivo
+     */
+    public function upload_plantaBaixa($file, $destination){
+
+        // Pasta de upload
+        $_UP['pasta'] = $destination;
+
+        // Tamanho maximo do arquivo 3mb
+        $_UP['tamanho'] = 1024 * 1024 * 3;
+
+        // Extensoes de arquivo aceita
+        $_UP['extensoes'] = array('jpg','png','gif', 'jpeg');
+
+        // Renomeia o arquivo
+        $_UP['renomeia'] = true;
+
+        // Redimenciona o tamanho do arquivo
+        $_UP['best_size'] = 512;
+
+        // Tipos de erro
+        $_UP['erro'][0] = "N&atilde;o houve erro";
+        $_UP['erro'][1] = "Arquivo muito grande";
+        $_UP['erro'][2] = "O arquivo ultrapassa o limite de tamanho espeficado";
+        $_UP['erro'][3] = "Upload do arquivo feito parcialmento";
+        $_UP['erro'][4] = "N&atilde;o foi feito o upload do arquivo";
+
+        // Verifica se existe algum erro
+        if ($_FILES['file_planta']['error'] != 0)
+        {
+            $erro = "N&atilde;o foi poss&iacute;vel fazer o upload do arquivo, erro: " . $_UP['erro'][$file['file_planta']['error']];
+
+            return array('status' => 'erro', 'mensagem' => $erro);
+        }
+
+        // Verifica a extensao
+        // Converte em minusculo
+        $extensao = strtolower($file['file_planta']['name']);
+        // Quebra em array
+        $extensao = explode(".",$extensao);
+        // Pega a ultima posicao
+        $extensao = end($extensao);
+
+        // Verifica a extensão do arquivo
+        if (array_search($extensao, $_UP['extensoes']) === false)
+        {
+            // echo "Extens&otilde;es suportadas: JPG, PNG e GIF";
+            // exit;
+            $erro = "Extensões de imagens suportadas: JPG, PNG e GIF";
+
+            return array('status' => 'erro', 'mensagem' => $erro);
+        }
+
+        // Verifica o tamanho do arquivo
+        if ($_UP['tamanho'] < $file['file_planta']['size'])
+        {
+            // echo "Tamanho maximo do arquivo: 1mb";
+            // exit;
+            $erro = "Tamanho maximo do arquivo: 2mb";
+
+            return array('status' => 'erro', 'mensagem' => $erro);
+        }
+
+        // Verifica se deve trocar o nome do arquivo
+        if ($_UP['renomeia'] == true)
+        {
+            // Novo nome
+            $nome_final = md5(time()) . "." . $extensao;
+        }
+        else
+        {
+            // Mantem o nome original
+            $nome_final = $file['file_planta']['name'];
+        }
+
+        $arquivoRedimencionado = $this->resizeImage($file['file_planta'], $_UP['pasta'], $_UP['best_size']);
+
+        return array('status' => 'ok', 'mensagem' => $arquivoRedimencionado);
+
+    }
+
 
 }
 

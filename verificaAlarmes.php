@@ -40,24 +40,16 @@
             if($equipamento){
 
                 $dadosEquip = $equipamento[0];
+                var_dump($equipamento[0]['nomeModeloEquipamento'], $equipamento[0]['id_sim'], $equipamento[0]['typeEquip']);
                 //var_dump($equipamento);
-
-                /*
-                'id' => string '16' (length=2)
-                 'id_equipamento' => string '22' (length=2)
-                 'id_sim' => string '999999888433' (length=12)
-                 'nomeModeloEquipamento' => string 'Gh' (length=2)
-                 'id_cliente' => string '50' (length=2)
-                 'nome' => string 'Nacional Industrias' (length=19)
-                 'id_filial' => null
-                 'filial' => null
-                */
 
                 $idEquipamento  = $equipamento[0]['id_equipamento'];
                 $idClie         = $equipamento[0]['id_cliente'];
                 $idFili         = (isset($equipamento[0]['id_filial'])) ? $equipamento[0]['id_filial'] : 0;
                 $equipamento    = $equipamento[0]['nomeModeloEquipamento'];
-                $tipoEquip        = $dadosEquip['typeEquip'];
+                $tipoEquip      = $dadosEquip['typeEquip'];
+                $tipoEntrada    = $equipamento[0]['tipo_entrada'];
+                $tipoSaida      = $equipamento[0]['tipo_saida'];
 
                 /*
                     CARREGA OS PARAMETROS DO EQUIPAMENTO
@@ -82,51 +74,164 @@
                     /*
                         INICIA A COMPARAÇÃO DOS DADOS COM OS PARAMETROS PARA VERIFICAR SE EQUIPAMENTO VOLTOU AO NORMAL
                     */
+                        $equipOK = false;
 
                         $configuracaoSalva = explode('|inicio|',$parametroEquipamento);
 
+                        /*
+                        * VERIFICAÇÃO DE TIPO DE EQUIPAMENTO E DE DADOS RECEBIDOS
+                        */
                         $valoresEntrada         = explode('|', $configuracaoSalva[1]);
-                        //TESTA OS VALORES DE ENTRADA
-                        $statusB                = comparaParametrosEquipamento(($dadosCarragados['b']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'b');
-                        $statusC                = comparaParametrosEquipamento(($dadosCarragados['c']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'c');
-                        $statusD                = comparaParametrosEquipamento(($dadosCarragados['d']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'd');
+                        $valoresCorrente        = explode('|', $configuracaoSalva[4]);
+
+                        switch ($tipoEntrada) {
+                            case '1':
+                                //TESTA OS VALORES DE ENTRADA
+                                $statusB  = comparaParametrosEquipamento(($dadosCarragados['b']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'b');
+                                //TESTA OS VALORES DE CORRENTE
+                                $statusI  = comparaParametrosEquipamento(($dadosCarragados['i']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'i');
+
+                                if($statusB && $statusI){
+
+                                    $equipOK = true;
+                                }
+
+                            break;
+                            case '2':
+                                //TESTA OS VALORES DE ENTRADA
+                                $statusB  = comparaParametrosEquipamento(($dadosCarragados['b']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'b');
+                                $statusC  = comparaParametrosEquipamento(($dadosCarragados['c']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'c');
+
+                                //TESTA OS VALORES DE CORRENTE
+                                $statusI  = comparaParametrosEquipamento(($dadosCarragados['i']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'i');
+                                $statusJ  = comparaParametrosEquipamento(($dadosCarragados['j']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'j');
+
+                                if($statusB && $statusC && $statusI && $statusJ){
+
+                                    $equipOK = true;
+                                }
+
+                            break;
+                            case '3':
+                                //TESTA OS VALORES DE ENTRADA
+                                $statusB  = comparaParametrosEquipamento(($dadosCarragados['b']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'b');
+                                $statusC  = comparaParametrosEquipamento(($dadosCarragados['c']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'c');
+                                $statusD  = comparaParametrosEquipamento(($dadosCarragados['d']/100), $valoresEntrada, $id_sim_equipamento, 'Tensão', 'd');
+
+                                //TESTA OS VALORES DE CORRENTE
+                                $statusI  = comparaParametrosEquipamento(($dadosCarragados['i']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'i');
+                                $statusJ  = comparaParametrosEquipamento(($dadosCarragados['j']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'j');
+                                $statusL  = comparaParametrosEquipamento(($dadosCarragados['l']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'l');
+
+                                if($statusB && $statusC && $statusD && $statusI && $statusJ && $statusL){
+
+                                    $equipOK = true;
+                                }
+
+                            break;
+                        }
+
 
                         $valoresSaida           = explode('|', $configuracaoSalva[2]);
-                        //TESTA OS VALORES DE SAÍDA
-                        $statusE                = comparaParametrosEquipamento(($dadosCarragados['e']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'e');
-                        $statusF                = comparaParametrosEquipamento(($dadosCarragados['f']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'f');
-                        $statusG                = comparaParametrosEquipamento(($dadosCarragados['g']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'g');
+                        $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
 
+                        switch ($tipoSaida) {
+                            case '1':
+                                //TESTA OS VALORES DE SAÍDA
+                                $statusE    = comparaParametrosEquipamento(($dadosCarragados['e']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'e');
+
+                                //TESTA OS VALORES DE SAÍDA DE CORRENTE
+                                $statusM    = comparaParametrosEquipamento(($dadosCarragados['m']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'm');
+
+                                if($statusE && $statusM){
+
+                                    $equipOK = true;
+                                }else{
+                                    $equipOK = false;
+                                }
+
+                            break;
+                            case '2':
+
+                                //TESTA OS VALORES DE SAÍDA
+                                $statusE    = comparaParametrosEquipamento(($dadosCarragados['e']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'e');
+                                $statusF    = comparaParametrosEquipamento(($dadosCarragados['f']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'f');
+
+                                //TESTA OS VALORES DE SAÍDA DE CORRENTE
+                                $statusM    = comparaParametrosEquipamento(($dadosCarragados['m']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'm');
+                                $statusN    = comparaParametrosEquipamento(($dadosCarragados['n']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'n');
+
+                                if($statusE && $statusF && $statusM && $statusN){
+
+                                    $equipOK = true;
+                                }else{
+                                    $equipOK = false;
+                                }
+
+                            break;
+                            case '3':
+
+                                //TESTA OS VALORES DE SAÍDA
+                                $statusE    = comparaParametrosEquipamento(($dadosCarragados['e']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'e');
+                                $statusF    = comparaParametrosEquipamento(($dadosCarragados['f']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'f');
+                                $statusG    = comparaParametrosEquipamento(($dadosCarragados['g']/100), $valoresSaida, $id_sim_equipamento, 'Saída tensão', 'g');
+
+                                //TESTA OS VALORES DE SAÍDA DE CORRENTE
+                                $statusM    = comparaParametrosEquipamento(($dadosCarragados['m']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'm');
+                                $statusN    = comparaParametrosEquipamento(($dadosCarragados['n']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'n');
+                                $statusO    = comparaParametrosEquipamento(($dadosCarragados['o']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'o');
+
+                                if($statusE && $statusF && $statusG && $statusM && $statusN && $statusO){
+
+                                    $equipOK = true;
+                                }else{
+                                    $equipOK = false;
+                                }
+
+                            break;
+                        }
+
+                        //VERIFICAÇÃO DE BATERIA
                         $valoresBateria         = explode('|', $configuracaoSalva[3]);
                         //TESTA OS VALORES DA BATERIA
                         $statusH                = comparaParametrosEquipamento(($dadosCarragados['h']/100), $valoresBateria, $id_sim_equipamento, 'Bateria', 'h');
 
-                        $valoresCorrente        = explode('|', $configuracaoSalva[4]);
-                        //TESTA OS VALORES DE CORRENTE
-                        $statusI                = comparaParametrosEquipamento(($dadosCarragados['h']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'i');
-                        $statusJ                = comparaParametrosEquipamento(($dadosCarragados['j']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'j');
-                        $statusL                = comparaParametrosEquipamento(($dadosCarragados['l']/100), $valoresCorrente, $id_sim_equipamento, 'Corrente', 'l');
-
-                        $valoresCorrenteSaida   = explode('|', $configuracaoSalva[5]);
-                        //TESTA OS VALORES DE SAÍDA DE CORRENTE
-                        $statusM                = comparaParametrosEquipamento(($dadosCarragados['m']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'm');
-                        $statusN                = comparaParametrosEquipamento(($dadosCarragados['n']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'n');
-                        $statusO                = comparaParametrosEquipamento(($dadosCarragados['o']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'o');
+                        if($statusH){
+                            $equipOK = true;
+                        }else{
+                            $equipOK = false;
+                        }
 
                         //TESTA OS VALORES DE TEMPERATURA AMBIENTE E DO BANCO DE BATERIA
-                        $statusP                = comparaParametrosEquipamento(($dadosCarragados['p']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'p');
-                        $statusQ                = comparaParametrosEquipamento(($dadosCarragados['q']/100), $valoresCorrenteSaida, $id_sim_equipamento, 'Saída corrente', 'q');
 
-                        if(($statusB) && ($statusC) && ($statusD) && ($statusE) && ($statusF) && ($statusG) && ($statusH) && ($statusI) && ($statusJ) && ($statusL) && ($statusM) && ($statusN) && ($statusO) && ($statusP) && ($statusQ)){
+                        #Temperatura ambiente q
+                        $valoresTeperaturaAmbiente         = explode('|', $configuracaoSalva[6]);
+                        #Temperatura banco bateria r
+                        $valoresTemperaturaBancoBat        = explode('|', $configuracaoSalva[7]);
 
-                            echo "Equipamento voltou ao normal!";
+                        $statusQ                = comparaParametrosEquipamento(($dadosCarragados['q']/100), $valoresTeperaturaAmbiente, $id_sim_equipamento, 'Saída corrente', 'q');
+                        $statusR                = comparaParametrosEquipamento(($dadosCarragados['r']/100), $valoresTemperaturaBancoBat, $id_sim_equipamento, 'Saída corrente', 'r');
 
+                        if($statusQ && $statusR){
                             $equipOK = true;
+                        }else{
+                            $equipOK = false;
+                        }
+
+                        //if(($statusB) && ($statusC) && ($statusD) && ($statusE) && ($statusF) && ($statusG) && ($statusH) && ($statusI) && ($statusJ) && ($statusL) && ($statusM) && ($statusN) && ($statusO) && ($statusP) && ($statusQ)){
+                        // if(($statusB) && ($statusC) && ($statusE) && ($statusF) && ($statusH) && ($statusI) && ($statusJ) && ($statusM) && ($statusN)){
+                        //
+                        if($equipOK){
+                            echo "Equipamento voltou ao normal! <br />";
+
+                            //$equipOK = true;
 
                         }else{
-                            echo "Equipamento ainda com problemas!</br>";
+                            echo "Equipamento ainda com problemas!<br />";
 
-                            $equipOK = false;
+                            //var_dump($statusB, $statusC, $statusE, $statusF, $statusH, $statusI, $statusJ, $statusM, $statusN);
+
+                            //$equipOK = false;
                         }
 
                         /*
@@ -170,7 +275,7 @@
 
                                     var_dump($emailEnviado);
 
-                                    $emailEnviadoPhp = $mailer->enviaPhpMailer($nome, $email, $tipoEquip, $equipamento);
+                                    //$emailEnviadoPhp = $mailer->enviaPhpMailer($nome, $email, $tipoEquip, $equipamento);
                                 }
 
                             }
@@ -181,16 +286,16 @@
                         FIM DO PROCESSO DE VERIFICAÇÃO DOS PARAMETROS DO EQUIPAMENTO
                     */
                 }else{
-                    echo "Parametros não encontrados!</br>";
+                    echo "Parametros não encontrados!<br />";
                 }
 
             }else{
-                echo "Equipamento não encontrado!</br>";
+                echo "Equipamento não encontrado!<br />";
             }
         }
 
     }else{
-        echo 'Nenhum alarme para verificar !</br>';
+        echo 'Nenhum alarme para verificar !<br />';
     }
 
     // FIM DA VERIFICAÇÂO DE ALARMES NOVOS
@@ -280,13 +385,23 @@
             /*
                 CARREGA OS DADOS DO EQUIPAMENTO
             */
-            $queryEquipamento = "SELECT sim_equip.id, sim_equip.id_equipamento, sim_equip.id_sim, tpEquip.tipo_equipamento AS 'typeEquip', equip.nomeModeloEquipamento,clie.id as 'id_cliente', clie.nome, fili.id as 'id_filial', fili.nome AS 'filial'
+            $queryEquipamento = "SELECT
+                                sim_equip.id,
+                                sim_equip.id_equipamento,
+                                sim_equip.id_sim,
+                                tpEquip.tipo_equipamento AS 'typeEquip',
+                                equip.nomeModeloEquipamento,
+                                equip.tipo_entrada,
+                                equip.tipo_saida,
+                                clie.id as 'id_cliente',
+                                clie.nome, fili.id as 'id_filial',
+                                fili.nome AS 'filial'
                                 FROM tb_sim_equipamento sim_equip
                                 JOIN tb_equipamento equip ON equip.id = sim_equip.id_equipamento
                                 JOIN tb_tipo_equipamento tpEquip ON equip.tipo_equipamento = tpEquip.id
                                 JOIN tb_cliente clie ON clie.id = equip.id_cliente
                                 LEFT JOIN tb_filial fili ON fili.id = equip.id_filial
-                                WHERE sim_equip.id = '$id_sim_equip'";
+                                WHERE sim_equip.id = '$id_sim_equip' AND sim_equip.status_ativo = '1'";
 
             /*
             * EXECUTA A QUERY NO BANCO E VERIFICA SE RETORNO ERRO
@@ -359,7 +474,7 @@
         if(is_numeric($idEquipamento)){
             $query = "SELECT param.parametro, param.num_sim
                         FROM tb_parametro param
-                        WHERE param.id_equipamento = '$idEquipamento'";
+                        WHERE param.id_equipamento = '$idEquipamento' AND param.status_ativo = '1'";
 
             /*
             * EXECUTA A QUERY NO BANCO E VERIFICA SE RETORNO ERRO
@@ -490,36 +605,35 @@
             $parametro    = $parametroBruto;
         }
 
-        //  echo "<br /> Teste de variavel de calirbação </br>";
+         //echo "<br /> Teste de variavel de calirbação <br />";
         //  var_dump($parametro);
 
 
         if($parametro > (float) trataValorDataSync($configuacoes[4])){
             //TRECHO DE CRITICO ALTO;
 
-            //  echo " </br> ".$pontoTabela." Crítico alto <br />";
+            echo " <br /> ".$pontoTabela." Crítico alto <br />";
             $result = false;
         }
         elseif($parametro > (float) trataValorDataSync($configuacoes[3])){
             //TRECHO DE NÍVEL ALTO;
-            //  echo " </br> ".$pontoTabela." alto <br />";
+            echo " <br /> ".$pontoTabela." alto <br />";
             $result = false;
         }
         elseif($parametro < (float) trataValorDataSync($configuacoes[0])){
             //TRECHO DE CRITICO BAIXO;
 
-            //  echo " </br> ".$pontoTabela." Crítico baixo <br />";
+            echo " <br /> ".$pontoTabela." Crítico baixo <br />";
             $result = false;
         }
         elseif($parametro < (float) trataValorDataSync($configuacoes[1])){
             //TRECHO DE NÍVEL BAIXO;
 
-            //  echo " </br> ".$pontoTabela." Baixo <br />";
-
+            echo " <br /> ".$pontoTabela." Baixo <br />";
             $result = false;
         }
         else{
-            //  echo "<br /> Equipamento com alarme OK!<br />";
+              echo "<br /> Equipamento com alarme OK!<br />";
             $result = true;
         }
 
@@ -593,7 +707,7 @@
         }
 
         //$query = "UPDATE tb_tratamento_alerta SET tratamento_aplicado = 'Nível de alimentação do equipamento voltou ao normal.' WHERE id_alerta = '$idAlerta'";
-        $query = "INSERT INTO tb_tratamento_provisorio (id_alerta, id_user, tratamento_aplicado) VALUES ('$idAlerta','55','Nível de alimentação do equipamento voltou ao normal.')";
+        $query = "INSERT INTO tb_tratamento_provisorio (id_alerta, id_user, tratamento_aplicado) VALUES ('$idAlerta','5','Nível de alimentação do equipamento voltou ao normal.')";
 
         /* monta result */
         $result = $conn->query($query);

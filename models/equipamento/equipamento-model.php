@@ -1671,6 +1671,124 @@ class EquipamentoModel extends MainModel
         return $array;
     }
 
+    /*
+    * CARREGA DADOS DA PLANTA BAIXA DE UM EQUIPAMENTO
+    */
+    public function dadosEquipamentoPlantaBaixa($idEquipamento){
+
+        if(is_numeric($idEquipamento)){
+
+            $query = "SELECT
+                        planta.id_planta,
+                        planta.id_cliente,
+                        planta.id_filial,
+                        planta.descricao_imagem,
+                        planta.imagem_planta
+                      FROM tb_plantaBaixa planta
+                      JOIN tb_equipamento equip ON equip.id_cliente = planta.id_cliente AND equip.id_filial = planta.id_filial
+                      WHERE equip.id = '$idEquipamento' AND planta.status_ativo = '1'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if(!empty($result)){
+
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'dadosPlanta' => $retorno);
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+
+            $array = array('status' => false);
+
+        }
+
+        return $array;
+    }
+
+    /*
+    * EXCLUI A PLANTA BAIXA DO BANCO DE DADOS
+    */
+    public function removerPLantaBaixa($idPlanta){
+
+        if(is_numeric($idPlanta)){
+
+            $query = "DELETE FROM tb_plantaBaixa WHERE id_planta = '$idPlanta'";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+
+            if ($result){
+                $array = array('status' => true, 'operatio' => 'Removido');
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+
+            $array = array('status' => false);
+
+        }
+
+        return $array;
+    }
+
+    /*
+    * REMOVER PONTOS CADASTRADOS PARA A PLANTA BAIXA
+    */
+    public function removerPontosPlanta($idPlanta){
+
+        if(is_numeric($idPlanta)){
+
+            $query = "DELETE FROM tb_plantaPonto WHERE id_planta = '$idPlanta'";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+
+            if ($result){
+                $array = array('status' => true, 'operatio' => 'Removido');
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * SALVAR DADOS DA PLANTA BAIXA
+    */
+    public function cadastrarPlantaJson($cliente, $filial, $equipId, $textoPlanta, $arquivoFinal){
+
+        if(is_numeric($cliente) && is_numeric($filial)){
+
+            $query = "INSERT INTO tb_plantaBaixa (id_cliente, id_filial, id_equipamento, descricao_imagem, imagem_planta) VALUES ('$cliente','$filial', '$equipId', '$textoPlanta','$arquivoFinal')";
+
+            /* MONTA RESULT */
+            $result = $this->db->query($query);
+                //var_dump($query);
+            if ($result){
+                $array = array('status' => true, 'operatio' => 'Cadastrado');
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
 }
 
 

@@ -1241,6 +1241,130 @@ $(document).ready(function(){
 
     });
 
+    /*
+    * INICIA PROCESSO DE CADASTRO DE PLANTA BAIXA
+    */
+    $('#cadastrarPlantaBaixa').click(function(){
+
+        $('#uploadPlanta').validate({
+            rules: {
+                txt_planta : {
+                    required: true
+                },
+                file_planta : {
+                    required : true,
+                    extension: "jpeg|png|jpg"
+                }
+            },
+            messages: {
+                txt_planta : {
+                    required: "Favor informar uma descrição da imagem."
+                },
+                file_planta : {
+                    required : "Um arquivo de imagem deve ser informado.",
+                    extension: "Formatos de imagem aceitas : jpeg, png, jpg"
+                }
+            }
+        });
+
+        if($('#uploadPlanta').valid()){
+
+            var fd = new FormData(document.getElementById("uploadPlanta"));
+
+            $.ajax({
+                url: urlP+"/equipamento/cadastroPlantaBaixa",
+                secureuri: false,
+                type : "POST",
+                dataType: 'json',
+				processData: false,  // tell jQuery not to process the data
+			    contentType: false,   // tell jQuery not to set contentType
+				data: fd,
+                success : function(datra)
+                {
+                    if(datra.status){
+                        swal('','Dados atualizados com suscesso !','success');
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000);
+                    }else{
+                        swal('', datra.mensagem,'error');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                 // Handle errors here
+                 console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                 // STOP LOADING SPINNER
+                }
+
+            });
+        }
+
+    });
+
+    /*
+    * EXECUTA O PROCESSO DE EXCLUSÃO DE PLANTA BAIXA
+    */
+    $('#removerPlantaBaixa').click(function(){
+
+        swal({
+          title: "Tem certeza?",
+          text: "Está ação não poderá ser desfeita!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Sim, remover!",
+          cancelButtonText: "Não, cancelar!",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function(isConfirm){
+          if (isConfirm) {
+
+                var idplanta   = $('#txt_planta').val();
+                var nomeArquivo     = $('#txt_img').val();
+
+                //Efetua o carregamento dos dados da filial
+                $.ajax({
+                    url: urlP+"/equipamento/removerPlantaJson",
+                    secureuri: false,
+                    type : "POST",
+                    dataType: 'json',
+                    data      : {
+                        'idplanta' : idplanta,
+                        'nomeArquivo' : nomeArquivo
+                    },
+                    success : function(datra)
+                    {
+                        if(datra.status){
+                            swal("Removido!", "Planta baixa foi removida do sistema!", "success");
+                            setTimeout(function(){
+                                location.reload();
+                            }, 2000);
+                        }else{
+                            //swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                            swal("Oops!", "Ocorreu um erro ao tentar remover planta baixa do sistema, tente novamente mais tarde!", "error");
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+
+                        //Settar a mensagem de erro!
+                              // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                            swal("Oops...", "Ocorreu um erro ao carregar, favor verificar os dados informados!", "error");
+                     // Handle errors here
+                     console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                     // STOP LOADING SPINNER
+                    }
+                });
+
+          } else {
+            swal("Cancelado", "Nenhuma ação ocorreu!", "error");
+          }
+        });
+
+    });
+
 });
 
 /*

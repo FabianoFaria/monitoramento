@@ -583,7 +583,7 @@
         $mensagem .= "</p>";
 
         $mensagem .= "<p>";
-        $mensagem .= "Eficaz system - Sistema de monitoramento";
+        $mensagem .= "Eficaz system - Sistema de monitoramento Infraweb";
         $mensagem .= "</p>";
 
 

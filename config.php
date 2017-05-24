@@ -8,6 +8,8 @@ define('UP_EFIPATH' , EFIPATH . '/views/_uploads');
 define('UP_USER_IMG_PATH', EFIPATH.'/views/_uploads/users');
 // caminho pasta upload de imagem de clientes
 define('UP_CLIE_IMG_PATH', EFIPATH.'/views/_uploads/clients');
+// caminho pasta upload de imagem de planta baixa
+define('UP_BLUEPRINT_IMG_PATH', EFIPATH.'/views/_uploads/plantas');
 // url da home
 //define('HOME_URI' , 'http://127.0.0.1/eficazmonitor'); // versao desenvolvedor
 //define('HOME_URI' , 'http://eficazsystem.com.br/eficazmonitor');
