@@ -324,6 +324,8 @@
 			$query = "insert into tb_log (log)  values ('Erro ao grava o numero de faltas; numero do sim ".$numSim." ')";
 			// Grava o log
 			$conn->query($valor);
+		}else{
+			echo " Erro ao gravar falta no BD <br />";
 		}
 
 		/*
@@ -336,6 +338,10 @@
 
 		$result = $conn->query($queryDadosVazios);
 
+		if(!is_numeric($result)){
+			echo " Erro ao gravar em tb_dados os dados de ".$numSim." no BD <br />";
+		}
+
 		/*
 			REGISTRA NA TABELA DE EQUIPAMENTO POTÊNCIA, QUE NADA FOI REGISTRADO
 		*/
@@ -344,6 +350,10 @@
 									('$id_equip' ,'$numSim', '0', '0', '0', '0', '0', '0', '0', '0', '0')";
 
 		$result = $conn->query($queryDadosVaziosPotencia);
+
+		if(!is_numeric($result)){
+			echo " Erro ao gravar em tb_dados_potencia os dados de ".$numSim." no BD <br />";
+		}
 
 		/*
 			REGISTRA O ALARME NA TABELA DO BD
@@ -360,13 +370,21 @@
         }else{
             $idGerada = null;
         }
+		//Exibe na saída o resultado do INSERT
+		if(!is_numeric($result)){
+			echo " Erro ao gravar em tb_alerta os dados de ".$numSim." no BD <br />";
+		}
 
 		//REGISTRA OS DETALHES DO ALARME PARA CONSULTA PELO MONITOR
 		$queryDetalheAlarme = "INSERT INTO tb_tratamento_alerta(id_alerta, parametro, parametroMedido, parametroAtingido, pontoTabela)
 					        VALUES ('$idGerada', 'Equipamento mestre', '0', '0', 'a')";
 
-		$conn->query($queryDetalheAlarme);
+		$result = $conn->query($queryDetalheAlarme);
 
+		//Exibe na saída o resultado do INSERT
+		if(!is_numeric($result)){
+			echo " Erro ao gravar em tb_tratamento_alerta os dados de ".$numSim." no BD <br />";
+		}
 		// Fecha a conexao
 		//$conn->close();
 

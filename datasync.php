@@ -1305,7 +1305,7 @@ if(isset($_POST['A']) && isset($_POST['B']) && isset($_POST['C']) && isset($_POS
                     simEquip.id AS 'simIdEquip'
                     FROM tb_equipamento equip
                     JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id
-                    WHERE simEquip.id_sim = $numSim AND equip.status_ativo = '1'";
+                    WHERE simEquip.id_sim = $numSim AND equip.status_ativo = '1' AND simEquip.status_ativo = '1'";
 
         // CRIA UM OBJETO DE DA CLASSE DE CONEXAO
         $connBase   = new EficazDB;
