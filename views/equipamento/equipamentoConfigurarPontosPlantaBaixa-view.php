@@ -4,7 +4,7 @@
 
     $dadosEquipamento   = $modelo->dadosEquipamentoCliente($this->parametros[0]);
 
-    var_dump($dadosEquipamento);
+    //var_dump($dadosEquipamento);
 
     $local              = (isset($dadosEquipamento['equipamento'][0]['filial']))? $dadosEquipamento['equipamento'][0]['filial'] : "Matriz";
     $local              = $dadosEquipamento['equipamento'][0]['cliente']." - ".$local;
@@ -14,8 +14,11 @@
     //var_dump($plantaBaixa);
 ?>
 
-<!-- <script src="<?php echo HOME_URI ?>/views/_js/go.js" ></script> -->
+<link rel="stylesheet" type="text/css" href="<?php echo HOME_URI ?>/views/_css/jquery.qtip.min.css">
+
+<script src="<?php echo HOME_URI ?>/views/_js/jquery.qtip.min.js" ></script>
 <script src='<?php echo HOME_URI ?>/views/_js/cytoscape.min.js'></script>
+<script src="<?php echo HOME_URI ?>/views/_js/cytoscape-qtip.js"></script>
 
 <script type="text/javascript">
     // gerenciador de link
@@ -90,7 +93,7 @@
 
                     ?>
 
-                    <div class="col-md-12">
+                    <div class="col-md-8">
 
                         <div id="sample">
                           <div id="myDiagramDiv" style="border: solid 1px black; width:100%; height:600px; background:url(<?php echo HOME_URI; ?>/views/_uploads/plantas/<?php echo $plantaBaixa['dadosPlanta'][0]['imagem_planta']; ?>) no-repeat; background-position:5px 5px;"></div>
@@ -102,12 +105,23 @@
 
                     </div>
 
+                    <div class="col-md-4">
+                        <input type='button' id='advance' class="btn btn-primary" value='Salvar posições'>
+
+                        <div id="png-eg2">
+                            <img id="png-eg" />
+                        </div>
+                    </div>
+
                     <script  type="text/javascript">
+
+                        //Pontos da tabela que serão representados na planta baixa
+                        var pontosTabela = ['b','c','d','e','f','g','h','j','l','m','n','o','p','q','r','s','t','u'];
 
                         var cy = cytoscape({
                             container: document.getElementById('myDiagramDiv'),
                             elements: [
-                                { data: { id: 'Equipamento A', equipamento: 'Mestre', image: '<?php echo HOME_URI; ?>/views/_images/equipamento.png'} },
+                                { data: { id: 'Mestre', equipamento: 'Equipamento mestre', image: '<?php echo HOME_URI; ?>/views/_images/equipamento.png'} },
                             ],
                             style: [ // the stylesheet for the graph
                                 {
@@ -151,15 +165,15 @@
 
                                         for (var i = 0; i < <?php echo $numerosEntradas; ?>; i++) {
                                             cy.add({
-                                                data: { id: 'Medidor :' + i, equipamento: 'Ponto :'+i, image: '<?php echo HOME_URI; ?>/views/_images/scale.png' }
+                                                data: { id: pontosTabela[i], equipamento: 'Ponto : '+pontosTabela[i].toUpperCase(), image: '<?php echo HOME_URI; ?>/views/_images/scale.png' }
                                                 }
                                             );
-                                            var source = 'Medidor :' + i;
+                                            var source = pontosTabela[i];
                                             cy.add({
                                                 data: {
                                                     id: 'edge' + i,
                                                     source: source,
-                                                    target: 'Equipamento A'
+                                                    target: 'Mestre'
                                                 }
                                             });
                                         }
@@ -171,15 +185,15 @@
                                     // Irá Adicionar o medidor de temperatura ambiente
                                     ?>
                                         cy.add({
-                                            data: { id: 'tempAmb', equipamento: 'Temperatura ambiente', image: '<?php echo HOME_URI; ?>/views/_images/scale.png' }
+                                            data: { id: 'q', equipamento: 'Temperatura ambiente', image: '<?php echo HOME_URI; ?>/views/_images/scale.png' }
                                             }
                                         );
-                                        var source = 'tempAmb';
+                                        var source = 'q';
                                         cy.add({
                                                 data: {
                                                     id: 'edge',
                                                     source: source,
-                                                    target: 'Equipamento A'
+                                                    target: 'Mestre'
                                             }
                                         });
                                     <?php
@@ -189,22 +203,93 @@
 
                         ?>
 
-                        // cy.on('tap', 'node', function(evt){
-                        //     //var node = evt.target;
-                        //         //console.log( 'tapped ' + node.id() );
-                        //
-                        //         var node = evt.target;
-                        //        node.qtip({
-                        //             content: 'hello world <br /> Teste',
-                        //             show: {
-                        //                evt: evt.type,
-                        //                ready: true
-                        //             },
-                        //             hide: {
-                        //                evt: 'mouseout unfocus'
-                        //             }
-                        //        }, evt);
-                        // });
+                        cy.on('tap', 'node', function(evt){
+                            // var node = evt.target;
+                            //     console.log( 'tapped ' + node.id() );
+
+                            var node = evt.target;
+                            node.qtip({
+                                content: function(){ return 'Example qTip on ele ' + this.data('equipamento') },
+                                show: {
+                                    evt: evt.type,
+                                    ready: true
+                                },
+                                hide: {
+                                       evt: 'mouseout unfocus'
+                                },
+                                style: {
+                                   	classes: 'qtip-bootstrap',
+                                   	tip: {
+                                   		width: 16,
+                                   		height: 8
+                                   	}
+                                }
+                            }, evt);
+                            // node.qtip({ // Grab some elements to apply the tooltip to
+                            //     content: {
+                            //         text: 'My common piece of text here'
+                            //     }
+                            // })
+
+                        });
+
+                        $('#advance').click(function(){
+
+                            //var cyc = cytoscape({ container: document.getElementById('myDiagramDiv') });
+                                <?php
+
+                                    //VERIFICA O TIPO DE EQUIPAMENTO
+                                    switch ($tipoEquip) {
+                                        case 'Medidor temperatura':
+                                            ?>
+                                                var allElements = cy.elements();
+                                                var allNodes = allElements.filter('node');
+
+                                                for(var i=0; i<allNodes.size(); i++){
+
+                                                    var objTemp = allNodes[i].json()
+
+                                                    //console.log(objTemp);
+                                                    console.log(objTemp['data']['id']);
+                                                    console.log(objTemp['position']['x']);
+                                                    console.log(objTemp['position']['y']);
+                                                }
+
+                                            <?php
+                                        break;
+                                        default:
+                                            ?>
+                                                var allElements = cy.elements();
+                                                var allNodes = allElements.filter('node');
+
+                                                var nodes = [];
+
+                                                for(var i=0; i<allNodes.size(); i++){
+
+                                                    var objTemp = allNodes[i].json()
+
+                                                    console.log(objTemp['data']['id']);
+                                                    console.log(objTemp['position']['x']);
+                                                    console.log(objTemp['position']['y']);
+
+                                                    //Efetua chamada JSON para efetuar o cadastro da posição do equipamento
+
+                                                }
+                                            <?php
+                                        break;
+                                    }
+
+                                ?>
+
+
+                        });
+
+                        /*
+                        * FUNÇÃO QUE IRÁ REALIZAR O CADASTRO OU ATUALIZAÇÃO DOS PONTOS NA PLANTA BAIXA
+                        */
+                        function salvarPontosPlantaBaixa(){
+                            
+                        }
 
                     </script>
 
