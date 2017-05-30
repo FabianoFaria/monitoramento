@@ -1487,6 +1487,49 @@ class EquipamentoController extends MainController
         }
     }
 
+    /*
+    * Função para atualizar o posicionamento dos pontos e do equipamento
+    */
+    public function salvarPontosTabelaJson(){
+
+        // Carrega o modelo para este view
+        $modeloEquipamento   = $this->load_model('equipamento/equipamento-model');
+
+        $verificaPosicaoExistente = $modeloEquipamento->verificaPosicionamentoExistente($_POST['idEquip'], $_POST['idPlantaBaixa'], $_POST['idPosicao']);
+
+        if($verificaPosicaoExistente['status']){
+
+            //Apenas atualiza a posicao do ponto
+            $pontoRegistrado = $modeloEquipamento->atualizarPosicionamento($_POST['idEquip'], $_POST['idPlantaBaixa'], $_POST['idPosicao'], $_POST['posx'], $_POST['posy']);
+
+            if($pontoRegistrado['status']){
+                $resultado = true;
+            }else{
+                $resultado = false;
+            }
+
+        }else{
+
+            //Registra a posicao do ponto
+
+            $pontoRegistrado = $modeloEquipamento->cadastrarPosicionamento($_POST['idEquip'], $_POST['idPlantaBaixa'], $_POST['idPosicao'], $_POST['posx'], $_POST['posy']);
+
+            if($pontoRegistrado['status']){
+                $resultado = true;
+            }else{
+                $resultado = false;
+            }
+
+        }
+
+        if($resultado){
+            exit(json_encode(array('status' => $resultado)));
+
+        }else{
+
+            exit(json_encode(array('status' => $resultado)));
+        }
+    }
 }
 
 ?>

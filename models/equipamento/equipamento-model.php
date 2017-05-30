@@ -1776,13 +1776,136 @@ class EquipamentoModel extends MainModel
 
             /* MONTA RESULT */
             $result = $this->db->query($query);
-                //var_dump($query);
-            if ($result){
-                $array = array('status' => true, 'operatio' => 'Cadastrado');
+
+            // Verifica se gravou com sucesso
+            if ($result)
+            {
+                $array = array('status' => true);
             }else{
                 $array = array('status' => false);
             }
 
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CARREGA OS PONTOS CADASTRADOS DO EQUIPAMENTO
+    */
+    public function carregarPontosPlantaBaixa($idEquip){
+
+        if(is_numeric($idEquip)){
+
+            $query = "SELECT id_ponto, id_planta, id_equipamento, coordenada_x, coordenada_y, ponto_tabela FROM tb_plantaPonto WHERE id_equipamento = '$idEquip' AND status_ativo = '1'";
+
+            /* MONTA RESULT */
+            $result = $this->db->select($query);
+
+            /* VERIFICA SE EXISTE RESPOSTA */
+            if(!empty($result)){
+
+                foreach ($result as $row){
+                    $retorno[] = $row;
+                }
+                /* DEVOLVE RETORNO */
+                $array = array('status' => true, 'pontosPLanta' => $retorno);
+
+            }else{
+                $array = array('status' => false);
+            }
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * VERIFICA SE PONTO DO EQUIPAMENTO ESXISTE
+    */
+    public function verificaPosicionamentoExistente($idEquipamento, $idPLantaBaixa, $pontoCad){
+
+        $query = "SELECT id_planta, id_ponto
+                    FROM tb_plantaPonto
+                    WHERE id_planta = '$idPLantaBaixa'  AND id_equipamento = '$idEquipamento' AND  	ponto_tabela = '$pontoCad' AND status_ativo = '1'";
+
+        /* MONTA RESULT */
+        $result = $this->db->select($query);
+
+        /* VERIFICA SE EXISTE RESPOSTA */
+        if(!empty($result)){
+
+            /* DEVOLVE RETORNO */
+            $array = array('status' => true);
+
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * CADASTRA O POSICIONAMENTO DE UM PONTO
+    */
+    public function cadastrarPosicionamento($idEquip, $idPlantaBaixa, $idPosicao, $posx, $posy){
+
+        $query = "INSERT INTO tb_plantaPonto (id_planta, id_equipamento, coordenada_x, coordenada_y, ponto_tabela) VALUES ('$idPlantaBaixa', '$idEquip', '$posx', '$posy', '$idPosicao')";
+
+        //print_r($query);
+
+        $result   = $this->db->select($query);
+
+        // Verifica se gravou com sucesso
+        if ($result)
+        {
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * ATUALIZA O POSICIONAMENTO DE UM PONTO DO EQUIPAMENTO
+    */
+    public function atualizarPosicionamento($idEquip, $idPlantaBaixa, $idPosicao, $posx, $posy){
+
+        $query = "UPDATE tb_plantaPonto
+                  SET coordenada_x = '$posx', coordenada_y = '$posy'
+                  WHERE id_planta = '$idPlantaBaixa' AND id_equipamento = '$idEquip' AND ponto_tabela = '$idPosicao'";
+
+        /* MONTA RESULT */
+        $result = $this->db->query($query);
+
+        if ($result){
+            $array = array('status' => true);
+        }else{
+            $array = array('status' => false);
+        }
+
+        return $array;
+    }
+
+    /*
+    * DESATIVA OS POSICIONAMENTOS DE UM PONTO
+    */
+    public function desativarPosicionamentos($idEquip, $idPlantaBaixa){
+
+        $query = "UPDATE tb_plantaPonto
+                  SET status_ativo = '0'
+                  WHERE id_planta = '$idPlantaBaixa' AND id_equipamento = '$idEquip'";
+
+        /* MONTA RESULT */
+        $result = $this->db->query($query);
+
+        if ($result){
+            $array = array('status' => true);
         }else{
             $array = array('status' => false);
         }
