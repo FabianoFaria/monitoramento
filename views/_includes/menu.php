@@ -370,6 +370,9 @@ function fileExists($path){
                         <li>
                             <a href="<?php echo HOME_URI; ?>/monitoramento/"><i class="fa fa-tachometer fa-1x"></i><span> Monitorar</span></a>
                         </li>
+                        <li>
+                            <a href="<?php echo HOME_URI; ?>/monitoramento/equipamentoPlantaBaixa"><i class="fa fa-instagram fa-1x"></i><span> Monitorar planta baixa</span></a>
+                        </li>
                     </ul>
                 </li>
                 <?php } ?>

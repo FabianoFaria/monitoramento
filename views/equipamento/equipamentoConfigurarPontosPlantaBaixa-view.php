@@ -15,9 +15,6 @@
 
     //var_dump($plantaBaixa);
 
-    $idPlantaBaixa      = $plantaBaixa['dadosPlanta'][0]['id_planta'];
-    //var_dump($idPlantaBaixa);
-
     $pontosCadastrados  = $modelo->carregarPontosPlantaBaixa($idEquip);
 
     //var_dump($pontosCadastrados);
@@ -74,6 +71,9 @@
             <?php
 
             }else{
+
+                $idPlantaBaixa      = $plantaBaixa['dadosPlanta'][0]['id_planta'];
+                //var_dump($idPlantaBaixa);
 
             ?>
 
@@ -146,8 +146,8 @@
                                                         },
                                                       position:
                                                         {
-                                                            x: '<?php echo $ponto['coordenada_x']; ?>',
-                                                            y: '<?php echo $ponto['coordenada_y']; ?>'
+                                                            x: <?php echo $ponto['coordenada_x']; ?>,
+                                                            y: <?php echo $ponto['coordenada_y']; ?>
                                                         }
                                                     },
                                                 <?php
@@ -198,10 +198,12 @@
                                 }
                             ],
                             layout: {
-                                name: 'grid',
+                                name: 'preset',
                                 rows: 1
                             },
-                            zoomingEnabled: false
+                            zoomingEnabled: false,
+                            boxSelectionEnabled : false,
+                            panningEnabled :false
                         });
 
                         <?php
@@ -246,7 +248,15 @@
 
                                             for (var i = 0; i < <?php echo $numerosEntradas; ?>; i++) {
                                                 cy.add({
-                                                    data: { id: pontosTabela[i], equipamento: 'Ponto : '+pontosTabela[i].toUpperCase(), image: '<?php echo HOME_URI; ?>/views/_images/scale.png' }
+                                                    data: {
+                                                        id: pontosTabela[i],
+                                                        equipamento: 'Ponto : '+pontosTabela[i].toUpperCase(),
+                                                        image: '<?php echo HOME_URI; ?>/views/_images/scale.png'
+                                                    },
+                                                    position: {
+                                                            x: 150,
+                                                            y: 150
+                                                        }
                                                     }
                                                 );
                                                 var source = pontosTabela[i];
@@ -266,68 +276,110 @@
 
                                 default:
                                     // Irá Adicionar o medidor de temperatura ambiente
-                                    ?>
-                                        cy.add({
-                                            data: { id: 'q', equipamento: 'Temperatura ambiente', image: '<?php echo HOME_URI; ?>/views/_images/scale.png' }
+
+                                    // Irá Adicionar os pontos configurados para o medidor de temperatura
+                                    if($pontosCadastrados['status']){
+                                        //Há posições cadastradas ainda
+                                        $posicoes = $pontosCadastrados['pontosPLanta'];
+
+                                        foreach ($posicoes as $ponto) {
+                                            if($ponto['ponto_tabela'] != 'Mestre'){
+                                                ?>
+                                                    cy.add({
+                                                        data: {
+                                                            id: '<?php echo $ponto['ponto_tabela']; ?>',
+                                                            equipamento: 'Ponto : <?php echo strtoupper($ponto['ponto_tabela']); ?>',
+                                                            image: '<?php echo HOME_URI; ?>/views/_images/scale.png'
+                                                            },
+                                                        position: { x: <?php echo $ponto['coordenada_x']; ?>, y: <?php echo $ponto['coordenada_y']; ?> }
+
+                                                        }
+                                                    );
+                                                    var source = '<?php echo $ponto['ponto_tabela']; ?>';
+                                                    cy.add({
+                                                        data: {
+                                                            id: 'edge<?php echo $ponto['ponto_tabela']; ?>',
+                                                            source: source,
+                                                            target: 'Mestre'
+                                                        }
+                                                    });
+                                                <?php
                                             }
-                                        );
-                                        var source = 'q';
-                                        cy.add({
+                                        }
+
+                                    }else{
+                                        ?>
+                                            cy.add({
                                                 data: {
-                                                    id: 'edge',
-                                                    source: source,
-                                                    target: 'Mestre'
-                                            }
-                                        });
-                                    <?php
+                                                    id: 'q',
+                                                    equipamento: 'Temperatura ambiente',
+                                                    image: '<?php echo HOME_URI; ?>/views/_images/scale.png'
+                                                },
+                                                position: {
+                                                        x: 150,
+                                                        y: 150
+                                                    }
+                                            });
+                                            var source = 'q';
+                                            cy.add({
+                                                    data: {
+                                                        id: 'edge',
+                                                        source: source,
+                                                        target: 'Mestre'
+                                                }
+                                            });
+                                        <?php
+                                    }
 
                                 break;
                             }
 
                         ?>
 
-                        cy.on('tap', 'node', function(evt){
-                            // var node = evt.target;
-                            //     console.log( 'tapped ' + node.id() );
+                        // cy.on('tap', 'node', function(evt){
+                        //     // var node = evt.target;
+                        //     //     console.log( 'tapped ' + node.id() );
+                        //
+                        //     var node = evt.target;
+                        //     node.qtip({
+                        //         content: function(){ return 'Example qTip on ele ' + this.data('equipamento') },
+                        //         show: {
+                        //             evt: evt.type,
+                        //             ready: true
+                        //         },
+                        //         hide: {
+                        //                evt: 'mouseout unfocus'
+                        //         },
+                        //         style: {
+                        //            	classes: 'qtip-bootstrap',
+                        //            	tip: {
+                        //            		width: 16,
+                        //            		height: 8
+                        //            	}
+                        //         }
+                        //     }, evt);
 
-                            var node = evt.target;
-                            node.qtip({
-                                content: function(){ return 'Example qTip on ele ' + this.data('equipamento') },
-                                show: {
-                                    evt: evt.type,
-                                    ready: true
-                                },
-                                hide: {
-                                       evt: 'mouseout unfocus'
-                                },
-                                style: {
-                                   	classes: 'qtip-bootstrap',
-                                   	tip: {
-                                   		width: 16,
-                                   		height: 8
-                                   	}
-                                }
-                            }, evt);
+
                             // node.qtip({ // Grab some elements to apply the tooltip to
                             //     content: {
                             //         text: 'My common piece of text here'
                             //     }
                             // })
 
-                        });
+                        //});
 
                         $('#advance').click(function(){
 
                             //var cyc = cytoscape({ container: document.getElementById('myDiagramDiv') });
+                            var result = false;
                                 <?php
 
                                     //VERIFICA O TIPO DE EQUIPAMENTO
                                     switch ($tipoEquip) {
                                         case 'Medidor temperatura':
                                             ?>
-                                                var allElements = cy.elements();
-                                                var allNodes = allElements.filter('node');
-                                                var resultadoInsercao = false;
+                                                var allElements         = cy.elements();
+                                                var allNodes            = allElements.filter('node');
 
                                                 for(var i=0; i<allNodes.size(); i++){
 
@@ -340,7 +392,8 @@
                                                     // console.log(objTemp['position']['x']);
                                                     // console.log(objTemp['position']['y']);
 
-                                                    resultadoInsercao = salvarPontosPlantaBaixa(objId, objX, objY);
+                                                    result = salvarPontosPlantaBaixa(objId, objX, objY);
+                                                    //resultadoInsercao.push(result);
                                                 }
 
                                                 // if(!resultadoInsercao){
@@ -369,7 +422,9 @@
                                                     // console.log(objTemp['position']['y']);
 
                                                     //Efetua chamada JSON para efetuar o cadastro da posição do equipamento
-                                                    resultadoInsercao = salvarPontosPlantaBaixa(objId, objX, objY);
+                                                    //resultadoInsercao = salvarPontosPlantaBaixa(objId, objX, objY);
+                                                    result = salvarPontosPlantaBaixa(objId, objX, objY);
+                                                    //resultadoInsercao.push(result);
                                                 }
 
                                             <?php
@@ -377,7 +432,12 @@
                                     }
 
                                 ?>
-
+                            swal({
+                              title: "Salvando posições!",
+                              text: "Essa mensagem se fechará após a conclusão.",
+                              timer: 4000,
+                              showConfirmButton: false
+                            });
 
                         });
 

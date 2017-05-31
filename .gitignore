@@ -1,1 +1,4 @@
 #lista de pastas e arquivos para serem ignorados pelo git
+
+.htaccess
+config.php

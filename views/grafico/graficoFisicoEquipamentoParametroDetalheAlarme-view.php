@@ -82,6 +82,9 @@
                 $dadosCliente   = $modeloClie->carregarDadosClienteEquipamento($this->parametros[0]);
 
                 if($dadosCliente['status']){
+
+                    $idClienteForm  = $idcliente;
+
                     $dadosCliente   = $dadosCliente['dados'][0];
                     $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
                     $lista          = $lista['equipamento'];
@@ -104,6 +107,7 @@
                 $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
                 $lista          = $lista['equipamento'];
                 $nomeCliente    = $dadosCliente['nome'];
+                $idClienteForm  = $dadosCliente['id'];
             }else{
                 $lista          = false;
             }

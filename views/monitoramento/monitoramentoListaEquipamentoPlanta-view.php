@@ -1,14 +1,6 @@
 <?php
 /* verifica se esta definido o path */
 if (! defined('EFIPATH')) exit();
-?>
-
-<script src="<?php echo HOME_URI; ?>/views/_js/table/mustache.js" type="text/javascript"></script>
-<script src="<?php echo HOME_URI; ?>/views/_js/table/stream_table.js" type="text/javascript"></script>
-
-<?php
-// chamando lista de valores
-//$retorno = $modelo->buscaRelacao();
 
 /*
 * VERIFICA O TIPO DE USUÁRIO E EFETUA AS RESPECTIVAS OPERAÇÕES
@@ -47,11 +39,9 @@ switch ($_SESSION['userdata']['tipo_usu']) {
 
     // GERENCIADOR DE LINK
     var menu = document.getElementById('listadir');
-    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/monitoramento/" class="linkMenuSup">Monitoramento</a>';
+    menu.innerHTML = '<a href="<?php echo HOME_URI; ?>/home/" class="linkMenuSup">Home</a> / <a href="<?php echo HOME_URI; ?>/equipamentoPlantaBaixa/" class="linkMenuSup">Monitoramento planta baixa</a>';
+
 </script>
-
-
-<script src="<?php echo HOME_URI; ?>/views/_js/table/index.js" type="text/javascript"></script>
 
 <div class="row">
     <div class="col-md-12">
@@ -73,7 +63,6 @@ switch ($_SESSION['userdata']['tipo_usu']) {
 
 <div class="row">
     <div class="col-lg-12">
-
         <!-- TABELA CONTENDO TODOS OS CLIENTES -->
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -81,7 +70,7 @@ switch ($_SESSION['userdata']['tipo_usu']) {
                     <form id="filtroMonitoramento" class="">
                         <div class="col-md-3 form-group">
                             <p>
-                                Cliente : <select id="filtroClienteLista" class="form-control">
+                                Cliente : <select id="filtroClienteListaPlanta" class="form-control">
                                                 <?php
                                                     if($lista){
                                                         echo "<option value=''>Selecione... </option>";
@@ -99,27 +88,21 @@ switch ($_SESSION['userdata']['tipo_usu']) {
                                             </select>
                             </p>
                         </div>
-                        <div class="col-md-3">
-
-                            <!-- <p>
-                                Unidade : <input type="text" class="form-control" id="filtroLocalAutoComplete" name="filtroLocalAutoComplete" value="">
-                                <input type="hidden" id="localId" value="" />
-                            </p> -->
+                        <div class="col-md-3 form-group">
                             <p>
-                                Unidade : <select id="filtroLocalLista" class="form-control">
+                                Unidade : <select id="filtroLocalListaPlanta" class="form-control">
                                             <option value="0">Selecione... </option>
                                         </select>
                                 <input type="hidden" id="localId" value="" />
                             </p>
-
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 form-group">
                             <p>
                                 <?php
                                     $listaTipoEquip = $modeloEquip->listarTipoEquip();
                                 ?>
 
-                                Equipamento : <select id="filtroEquipLista" class="form-control">
+                                Equipamento : <select id="filtroEquipListaPlanta" class="form-control">
 
                                                 <?php
                                                     if($listaTipoEquip['status']){
@@ -142,18 +125,9 @@ switch ($_SESSION['userdata']['tipo_usu']) {
                                             </select>
                             </p>
                         </div>
-                        <div class="col-md-3">
-                            <p>
-                                <br />
-                                <button class="btn btn-primary" id="limparFiltro">Limpar filtro</button>
-                            </p>
-
-                        </div>
-
                     </form>
                 </div>
             </div>
-
             <div class="panel-body">
                 <div class='table-responsive'>
                     <table id="listaMonitoria" class='table table-striped table-bordered'>
@@ -166,13 +140,11 @@ switch ($_SESSION['userdata']['tipo_usu']) {
                             </tr>
                         </thead>
                         <tbody>
-                        
+
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>

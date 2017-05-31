@@ -18,6 +18,175 @@ $('#limparFiltro').click(function(){
 });
 
 /*
+* FILTRO DE EQUIPAMENTOS PARA MONITORAR ATRAVÉS DE PLANTA BAIXA
+*/
+$('#filtroClienteListaPlanta').change(function() {
+
+    var idCliente = $(this).val();
+
+    if(idCliente != ''){
+
+        //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+        $.ajax({
+            url: urlP+"/cliente/carregarListaFilialClientePlantaBaixaJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+                'idCliente' : idCliente
+            },
+            success : function(datra)
+            {
+                if(datra.status){
+
+                    /*
+                    * PREENCHE O SELECT ALVO
+                    */
+                    $('#filtroLocalListaPlanta').html(datra.filiais);
+
+                    /*
+                    * PREENCHE TABELA COM EQUIPAMENTOS
+                    */
+                    $('#listaMonitoria').html(datra.equipamentos);
+
+                    /*
+                    * RETIRA O VALOR DO ID DE FILIAL
+                    */
+                    $('#localId').val(0);
+
+                }else{
+                    $('#filtroLocalListaPlanta').html(datra.filiais);
+                    // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                    $('#listaMonitoria').html(datra.equipamentos);
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+
+                //Settar a mensagem de erro!
+                      // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                    swal("Oops...", "Ocorreu um erro ao carregar as filiais, favor verificar os dados informados!", "error");
+             // Handle errors here
+             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+             // STOP LOADING SPINNER
+            }
+        });
+    }else{
+        $('#filtroLocalListaPlanta').html("<option value=''> Selecione...</option>");
+    }
+
+});
+
+/*
+* FILTRO DE LOCAIS DE EQUIPAMENTOS PARA MONITORAR ATRAVÉS DE PLANTA BAIXA
+*/
+$('#filtroLocalListaPlanta').change(function() {
+
+    var idFilial    = $(this).val();
+    var idCliente   = $('#filtroClienteListaPlanta').val();
+
+    if(idFilial != ''){
+
+        //EFETUA O CARREGAMENTO DOS DADOS DA FILIAL
+        $.ajax({
+            url: urlP+"/cliente/carregarListaEquipamentoFilialPlantaBaixaJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+                'idCliente' : idCliente,
+                'idFilial' : idFilial
+            },
+            success : function(datra)
+            {
+                if(datra.status){
+
+                    /*
+                    * PREENCHE TABELA COM EQUIPAMENTOS
+                    */
+                    $('#listaMonitoria').html(datra.equipamentos);
+                    $('#localId').html(idFilial);
+
+                }else{
+
+                    // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                    $('#listaMonitoria').html(datra.equipamentos);
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+
+                //Settar a mensagem de erro!
+                    // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                    swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
+             // Handle errors here
+             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+             // STOP LOADING SPINNER
+            }
+        });
+
+    }else{
+        $('#filtroEquipListaPlanta').html("<option value=''> Selecione...</option>");
+    }
+
+});
+
+/*
+* FILTRO DE LOCAIS DE EQUIPAMENTOS PARA MONITORAR ATRAVÉS DE PLANTA BAIXA
+*/
+$('#filtroEquipListaPlanta').change(function() {
+
+    var idTipoEquip = $(this).val();
+    var idCliente   = $('#filtroClienteListaPlanta').val();
+    var idFilial    = $('#localId').val();
+
+    if(idTipoEquip != ''){
+        //EFETUA O CARREGAMENTO DOS DADOS DOS EQUIPAMENTOS POR TIPO PARA PLANTA BAIXA
+        $.ajax({
+            url: urlP+"/cliente/carregarListaEquipamentoFilialTipoPlantaBaixaJson",
+            secureuri: false,
+            type : "POST",
+            dataType: 'json',
+            data      : {
+                'idCliente': idCliente,
+                'idFilial' : idFilial,
+                'idTipo'   : idTipoEquip
+            },
+            success : function(datra)
+            {
+                if(datra.status){
+
+                    /*
+                    * PREENCHE TABELA COM EQUIPAMENTOS
+                    */
+                    $('#listaMonitoria').html(datra.equipamentos);
+
+                }else{
+
+                    // swal("", "Ocorreu um erro ao tentar carregar os dados, favor verificar os dados enviados!", "error");
+                    $('#listaMonitoria').html(datra.equipamentos);
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+
+                //Settar a mensagem de erro!
+                    // alert("Ocorreu um erro ao atualizar o cliente, favor verificar os dados informados!");
+                    swal("Oops...", "Ocorreu um erro ao carregar os equipamentos, favor verificar os dados informados!", "error");
+             // Handle errors here
+             console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+             // STOP LOADING SPINNER
+            }
+        });
+
+    }
+
+});
+
+/*
 * FUNÇÃO PARA APLICAR NOS FILTRO
 * PRINCIPALMENTE NA TELA DE MONITORAMENTO, RELATÔRIO GRÁFICO E RELATÔRIO ESTATÍSTICO
 */
@@ -80,7 +249,6 @@ $('#filtroClienteLista').change(function() {
     }else{
         $('#filtroLocalLista').html("<option value=''> Selecione...</option>");
     }
-
 
 });
 

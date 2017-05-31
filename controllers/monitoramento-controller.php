@@ -132,6 +132,74 @@ class MonitoramentoController extends MainController
         require_once EFIPATH . "/views/_includes/footer.php";
     }
 
+
+    /*
+    * FUNÇÃO PARA CARREGAR LISTA DE EQUIPAMENTOS PARA EXIBIÇÃO DE PLANTA BAIXA
+    */
+    public function equipamentoPlantaBaixa(){
+
+        // Verifica se esta logado
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_mo'] != 1 ){
+            // SE NAO POSSUIR
+            // REDIRECIONA PARA INDEX
+            $this->moveHome();
+        }else{
+
+            // Define o titulo da pagina
+            $this->title = "monitoramento";
+
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+            // Carrega o modelo
+            $modelo         = $this->load_model('monitoramento/monitoramento-model');
+            $modeloClie     = $this->load_model('cliente/cliente-model');
+            $modeloEquip    = $this->load_model('equipamento/equipamento-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/monitoramento/monitoramentoListaEquipamentoPlanta-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+
+    }
+
+    public function monitorarPlantaBaixa(){
+
+        // Verifica se esta logado
+        $this->check_login();
+
+        // Verifica as permissoes necessarias
+        if ($_SESSION['userdata']['per_mo'] != 1 ){
+            // SE NAO POSSUIR
+            // REDIRECIONA PARA INDEX
+            $this->moveHome();
+        }else{
+
+            // Define o titulo da pagina
+            $this->title = "monitoramento";
+
+            // Define os parametro da funcao
+            $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+            // Carrega o modelo
+            $modelo         = $this->load_model('monitoramento/monitoramento-model');
+            $modeloClie     = $this->load_model('cliente/cliente-model');
+            $modeloEquip    = $this->load_model('equipamento/equipamento-model');
+
+            // Carrega view
+            require_once EFIPATH . "/views/_includes/header.php";
+            require_once EFIPATH . "/views/_includes/menu.php";
+            require_once EFIPATH . "/views/monitoramento/monitoramentoListaVisualizarEquipamentoPlantaBaixa-view.php";
+            require_once EFIPATH . "/views/_includes/footer.php";
+
+        }
+    }
 }
 
 ?>
