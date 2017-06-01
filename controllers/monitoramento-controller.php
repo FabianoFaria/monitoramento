@@ -113,6 +113,8 @@ class MonitoramentoController extends MainController
         $modelo         = $this->load_model('monitoramento/monitoramento-model');
         // Carrega os dados do equipamento
         $modeloEquip    = $this->load_model('equipamento/equipamento-model');
+        // Carrega os dados do cliente
+        $modeloClie     = $this->load_model('cliente/cliente-model');
 
         // Carrega view
         require_once EFIPATH . "/views/_includes/header.php";
@@ -200,6 +202,166 @@ class MonitoramentoController extends MainController
 
         }
     }
+
+    /*
+    * CARREGA A ÚLTIMA LEITURA DO EQUIPAMENTO NO PONTO ESPECIFICADO
+    */
+    public function carregarUltimoDadoPosicaoPlantaBaixaJson(){
+
+        $equipModel         = $this->load_model('equipamento/equipamento-model');
+        $alarmeModelo       = $this->load_model('alarme/alarme-model');
+
+        $idSim          = $_POST['idSim'];
+        $idSimEquip     = $_POST['idSimEquip'];
+        $pontoRecebido  = $_POST['pontoEquip'];
+        $tipoEquip      = $_POST['tipoEquip'];
+
+        /*
+        * VERIFICA SE FOI PASSADO UM PONTO VÁLIDO, OU O EQUIPAMENTO MESTRE
+        */
+        if($pontoRecebido != 'mestre'){
+
+            //Verifica o tipo de equipamento
+            switch ($tipoEquip) {
+                case 'Medidor temperatura':
+                    $pontoTabela = "Medidor de temperatura ".strtoupper($pontoRecebido);
+                break;
+                default:
+                    $pontoTabela  = $this->verificarPontoTabela($pontoRecebido);
+                break;
+            }
+
+            /*
+            * CARREGA VARIAVEL DE CALIBRACAO DA POSICAO SOLICITADA
+            */
+            $variavelCalibracao     = $alarmeModelo->carregarVariavelCalibracao($idSimEquip, $pontoRecebido);
+
+            //var_dump($idSim, $pontoRecebido);
+
+            if(isset($variavelCalibracao[0])){
+
+                $parametro    = $variavelCalibracao[0]['variavel_cal'];
+
+            }else{
+                $parametro    = 1;
+            }
+
+            /*
+            * ÚLTIMA LEITURA DO EQUIPAMENTO
+            */
+            // O tratamento é efetuado com a variavel de calibracao
+            $ultimaLeitura          = $alarmeModelo->recuperacaoUltimaLeituraEquip($idSim, $pontoRecebido);
+
+            if($ultimaLeitura['status']){
+
+                $ultimaLeituraValor     = $ultimaLeitura['equipAlarm'][0]['medida'] * $parametro;
+
+                $protocoloPassado       = $this->verificaProtocoloPosicaoTebela($ultimaLeituraValor);
+
+                if(!is_numeric($protocoloPassado)){
+                    $ultimaLeituraValor = 0;
+                }
+
+                $f = sprintf ("%.2f", $ultimaLeituraValor);
+
+                //Verifica o tipo de Equipamento
+                switch ($tipoEquip) {
+                    case 'Medidor temperatura':
+
+                        // $leitura = "<div class='tg-thermometer small' style='height: 120px'>";
+                        //     $leitura .= " <div class='draw-a'></div>";
+                        //     $leitura .= " <div class='draw-b'></div>";
+                        //     $leitura .= "<div class='meter'>";
+                        //         $leitura .= "<div class='statistics'>";
+                        //             $leitura .= "<div class='percent percent-a'>100 c°</div>";
+                        //             $leitura .= "<div class='percent percent-b'>75 c°</div>";
+                        //             $leitura .= "<div class='percent percent-c'>50 c°</div>";
+                        //             $leitura .= "<div class='percent percent-d'>25 c°</div>";
+                        //             $leitura .= "<div class='percent percent-e'>0 c°</div>";
+                        //         $leitura .= "</div>";
+                        //     $leitura .= "</div>";
+
+                            //$leitura .= "<div class='mercury' style='height: ".number_format(($ultimaLeituraValor / 100) ,2 ,'.','')."%'>";
+                                $leitura = "<div class='percent-current'>".number_format(($ultimaLeituraValor / 100) ,2 ,'.','')." (C°)</div>";
+                        //         $leitura .= "<div class='mask'>";
+                        //             $leitura .= "<div class='bg-color'></div>";
+                        //         $leitura .= "</div>";
+                        //     $leitura .= "</div>";
+                        //
+                        // $leitura .= "</div>";
+
+                    break;
+
+                    default:
+                        $leitura =  $this->configurarTipoPontoTabela($pontoRecebido, number_format($ultimaLeituraValor ,2 ,'.',''));
+                    break;
+                }
+
+                exit(json_encode(array('status' => true, 'dados' => $leitura)));
+
+            }else{
+                $leitura = "Não recebeu.";
+
+                exit(json_encode(array('status' => false, 'dados' => $leitura)));
+            }
+
+        }else{
+
+            /*
+            * EXIBE INFORMAÇÕES DO ULTIMO DADO DO MESTRE MESTRE
+            */
+
+        	$dataAtual = date('Y-m-d H:i:s');
+
+            //$dadoRecebido = ultimoDadoRecebido($equipamento['id']);
+            $dadoRecebido          = $alarmeModelo->recuperacaoUltimaLeituraEquip($idSim, 'num_sim');
+
+            //var_dump($dadoRecebido);
+
+            if($dadoRecebido['status']){
+
+                foreach ($dadoRecebido['equipAlarm'] as $dados){
+
+                    $dataDado = $dados['dt_criacao'];
+
+                    $totalMinutos = round((time() - strtotime($dataDado)) / 60);
+
+                    if($totalMinutos > 10){
+                        $leitura = "Não está recebendo.";
+
+                        exit(json_encode(array('status' => false, 'dados' => $leitura)));
+                    }else{
+                        $leitura = "Equipamento Ok!";
+
+                        exit(json_encode(array('status' => false, 'dados' => $leitura)));
+                    }
+                }
+
+            }else{
+                $leitura = "Não recebeu.";
+
+                exit(json_encode(array('status' => false, 'dados' => $leitura)));
+            }
+        }
+
+    }
+
+    /*
+    * VERIFICA SE NÃO FOI PASSADO UM PROTOCOLO NO LUGAR DO VALOR
+    */
+    public function verificaProtocoloPosicaoTebela($valor){
+
+        require_once EFIPATH."/protocolosDisponiveis.php";
+
+        //Procura na array de protocolos o valor passado pela função, $protocolos já se encontra no arquivo do required
+        if (array_key_exists($valor,$protocolos)){
+            //Retorna o valor da array em caso o valor tenha sido retornado um dos protocolos
+            return $protocolos[$valor];
+        }else{
+            return 1;
+        }
+    }
+
 }
 
 ?>

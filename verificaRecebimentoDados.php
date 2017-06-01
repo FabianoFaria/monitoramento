@@ -166,7 +166,7 @@
                         FROM tb_equipamento equip
 						JOIN tb_tipo_equipamento tpEquip ON equip.tipo_equipamento = tpEquip.id
 						JOIN tb_cliente clie ON equip.id_cliente = clie.id
-						JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id
+						JOIN tb_sim_equipamento simEquip ON simEquip.id_equipamento = equip.id AND simEquip.status_ativo ='1'
 						LEFT JOIN tb_filial fili ON equip.id_filial = fili.id
                         WHERE equip.status_ativo = '1'";
 
@@ -225,7 +225,7 @@
 
         $query = "SELECT dados.id, dados.num_sim, dados.dt_criacao
 					FROM tb_dados dados
-					JOIN tb_sim_equipamento simEquip ON simEquip.id_sim = dados.num_sim
+					JOIN tb_sim_equipamento simEquip ON simEquip.id_sim = dados.num_sim AND simEquip.status_ativo ='1'
 					JOIN tb_equipamento equip ON equip.id = simEquip.id_equipamento
 					WHERE equip.id = '$idEquipamento'
 					ORDER BY dados.id DESC LIMIT 1";

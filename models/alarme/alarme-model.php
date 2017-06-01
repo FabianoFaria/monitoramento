@@ -1073,7 +1073,7 @@
 
             if(is_numeric($idSim)){
 
-                $query = "SELECT id, ".$param." AS 'medida'";
+                $query = "SELECT id, ".$param." AS 'medida', dt_criacao";
 
                 // $query .= " num_sim, b, c, d, e, f, g, h, i, j, l, m, n, o, p, q, r, s, t, u, dt_criacao ";
 

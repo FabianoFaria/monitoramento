@@ -116,6 +116,7 @@
         if($lista){
 
             ?>
+
                 <script type="text/javascript">
 
                     // GERENCIADOR DE LINK
@@ -165,9 +166,12 @@
                                 /*
                                 * VARIAVEIS PARA SEREM USADAS NA MONTAGEM DAS PLANTA BAIXA
                                 */
+                                $idEquip            = $dadosEquipamento['equipamento'][0]['id'];
+                                $idSim              = $dadosEquipamento['equipamento'][0]['id_sim'];
+                                $idSimEquip         = $dadosEquipamento['equipamento'][0]['id_sim_equip'];
                                 $tipoEquip          = $dadosEquipamento['equipamento'][0]['tipoEquip'];
                                 $numerosEntradas    = $dadosEquipamento['equipamento'][0]['tipo_entrada'];
-
+                                $tipoEquip          = $dadosEquipamento['equipamento'][0]['tipoEquip'];
 
                                 /*
                                 * Inicia a construção do gráfico com os pontos do equipamento cadastrado.
@@ -181,6 +185,10 @@
                                             <div class="form-group">
                                                 <!-- <label for="exampleInputEmail1">Descrição da planta baixa cadastrada atualmente</label> -->
                                                 <input type="text" class="form-control" id="txt_planta" name="txt_planta" value="<?php echo $plantaBaixa['dadosPlanta'][0]['descricao_imagem']; ?>" readonly="true">
+                                                <input type="hidden" id="idEquip" name="idEquip" value="<?php echo $idEquip; ?>" />
+                                                <input type="hidden" id="idSim" name="idSim" value="<?php echo $idSim; ?>" />
+                                                <input type="hidden" id="idSimEquip" name="idSimEquip" value="<?php echo $idSimEquip; ?>" />
+                                                <input type="hidden" id="tipoEquip" name="tipoEquip" value="<?php echo $tipoEquip; ?>" />
                                             </div>
 
                                         </div>
@@ -368,8 +376,8 @@
                                                                                 },
                                                                             position: { x: <?php echo $ponto['coordenada_x']; ?>, y: <?php echo $ponto['coordenada_y']; ?> }
 
-                                                                            }
-                                                                        );
+                                                                        });
+
                                                                         var source = '<?php echo $ponto['ponto_tabela']; ?>';
                                                                         cy.add({
                                                                             data: {
@@ -414,26 +422,67 @@
                                             cy.on('tap', 'node', function(evt){
                                                 // var node = evt.target;
                                                 //     console.log( 'tapped ' + node.id() );
-                                                var pontoEquip = this.id(); //this.data('equipamento')
+
+                                                var node        = evt.target;
+
+                                                var idSim       = $('#idSim').val();
+                                                var idSimEquip  = $('#idSimEquip').val();
+                                                var tipoEquip   = $('#tipoEquip').val();
+                                                var pontoReal   = this.id().split(" "); //this.data('equipamento')
+                                                var pontoEquip  = pontoReal[pontoReal.length - 1].toLowerCase();
+                                                var ultimoValor = 0;
                                                 //console.log('teste de id : '+pontoEquip);
-                                                var node       = evt.target;
-                                                node.qtip({
-                                                    content: function(){ return 'Example qTip on ele ' + this.data('equipamento')},
-                                                    show: {
-                                                        evt: evt.type,
-                                                        ready: true
+                                                $.ajax({
+                                                    url: urlP+"/monitoramento/carregarUltimoDadoPosicaoPlantaBaixaJson",
+                                                    secureuri: false,
+                                                    type : "POST",
+                                                    dataType: 'json',
+                                                    data      : {
+                                                        'idSim' : idSim,
+                                                        'idSimEquip' : idSimEquip,
+                                                        'pontoEquip' : pontoEquip,
+                                                        'tipoEquip'  : tipoEquip
                                                     },
-                                                    hide: {
-                                                           evt: 'mouseout unfocus'
+                                                    success : function(datra)
+                                                    {
+                                                        if(datra.status){
+                                                            ultimoValor = "<p>Ponto :"+pontoEquip.toUpperCase()+"</p>"+datra.dados+"";
+                                                        }else{
+                                                            ultimoValor = "<p>Ponto :"+pontoEquip.toUpperCase()+"</p><p><span class='text-danger'>"+datra.dados+"</span></p>";
+                                                        }
+
+                                                        node.qtip({
+                                                            content: function(){ return ultimoValor },
+                                                            show: {
+                                                                evt: evt.type,
+                                                                ready: true
+                                                            },
+                                                            hide: {
+                                                                   evt: 'mouseout unfocus'
+                                                            },
+                                                            style: {
+                                                               	classes: 'qtip-bootstrap',
+                                                               	tip: {
+                                                               		width: 15,
+                                                               		height: 10
+                                                               	}
+                                                            }
+                                                        }, evt);
+
                                                     },
-                                                    style: {
-                                                       	classes: 'qtip-bootstrap',
-                                                       	tip: {
-                                                       		width: 16,
-                                                       		height: 8
-                                                       	}
+                                                    error: function(jqXHR, textStatus, errorThrown)
+                                                    {
+                                                        //Settar a mensagem de erro!
+                                                        ultimoValor = 0;
+                                                        // Handle errors here
+                                                        console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                                                        // STOP LOADING SPINNER
                                                     }
-                                                }, evt);
+                                                });
+
+                                                //'Example qTip on ele ' + this.data('equipamento')
+                                                console.log('Teste de ultimo dado '+ultimoValor);
+
                                             });
 
                                         </script>

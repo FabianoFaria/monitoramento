@@ -1,21 +1,123 @@
 <?php
 
-    // Verifica se esta definido o path
-    if (! defined('EFIPATH')) exit();
+// Verifica se esta definido o path
+if (! defined('EFIPATH')) exit();
 
-    if(is_numeric($this->parametros[0])){
+if(is_numeric($this->parametros[0])){
 
-        // Aqui está sendo simplificado o processo de coleta de dados do equipamento para geração de gráficos
+    /*
+    * TESTA SE USUÁRIO TEM PERMISSÃO PARA VISUALIZAR O EQUIPAMENTO ESPECIFICADO
+    */
+    switch ($_SESSION['userdata']['tipo_usu']) {
+        case 'Administrador':
+
+            $dadosCliente   = $modeloClie->carregarDadosClienteEquipamento($this->parametros[0]);
+
+            if($dadosCliente['status']){
+                $dadosCliente   = $dadosCliente['dados'][0];
+
+                $idClienteForm  = $dadosCliente['id'];
+
+                $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
+                $lista          = $lista['equipamento'];
+                $nomeCliente    = $dadosCliente['nome'];
+            }else{
+                $lista          = false;
+            }
+
+        break;
+        case 'Cliente':
+            //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+            $usuarioAutorizado  = false;
+            $idcliente = $_SESSION['userdata']['cliente'];
+            $usuariosCliente  = $modeloClie->carregarDadosClienteEquipamento($this->parametros[0]);
+
+            //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+            if($usuariosCliente['status']){
+
+                foreach ($usuariosCliente['dados'] as $usuarioCliente){
+
+                    if(intval($usuarioCliente['id']) == $idcliente){
+                        $usuarioAutorizado  = true;
+                    }
+                }
+            }
+
+            if($usuarioAutorizado){
+                $dadosCliente   = $modeloClie->carregarDadosCliente($idcliente);
+
+                if($dadosCliente['status']){
+                    $dadosCliente   = $dadosCliente['dados'][0];
+
+                    $idClienteForm  = $idcliente;
+
+                    $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
+                    $lista          = $lista['equipamento'];
+                    $nomeCliente    = $dadosCliente['nome'];
+                }else{
+                    $lista          = false;
+                }
+            }else{
+                $lista          = false;
+            }
+
+        break;
+        case 'Visitante':
+            //RECEBE O PARAMETRO DO CLIENTE E VERIFICA SE O USUÁRIO TEM ACESSO E ELE
+            $usuarioAutorizado  = false;
+            $idcliente = $_SESSION['userdata']['cliente'];
+            $usuariosCliente  = $modeloClie->carregaDadosContato($this->parametros[0]);
+
+            //VERIFICA SE O USUAÁRIO PERTENCE AO CLIENTE QUE ESTÁ TENTANDO ACESSAR
+            if($usuariosCliente['status']){
+                foreach ($usuariosCliente['dados'] as $usuarioCliente){
+                    if($usuarioCliente['id_cliente'] == $idcliente){
+                        $usuarioAutorizado  = true;
+                    }
+                }
+            }
+
+            if($usuarioAutorizado){
+                $dadosCliente   = $modeloClie->carregarDadosClienteEquipamento($this->parametros[0]);
+
+                if($dadosCliente['status']){
+
+                    $idClienteForm  = $idcliente;
+
+                    $dadosCliente   = $dadosCliente['dados'][0];
+                    $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
+                    $lista          = $lista['equipamento'];
+                    $nomeCliente    = $dadosCliente['nome'];
+                }else{
+                    $lista          = false;
+                }
+            }else{
+                $lista          = false;
+            }
+
+        break;
+        case 'Tecnico':
+            $dadosCliente   = $modeloClie->carregarDadosClienteEquipamento($this->parametros[0]);
+
+            if($dadosCliente['status']){
+                $dadosCliente   = $dadosCliente['dados'][0];
+                $lista          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
+                $lista          = $lista['equipamento'];
+                $nomeCliente    = $dadosCliente['nome'];
+                $idClienteForm  = $dadosCliente['id'];
+            }else{
+                $lista          = false;
+            }
+        break;
+    }
+
+    if($lista){
+
+        //CONFIRMADO A PERMISSÃO DO USUÁRIO SOBRE O EQUIPAMENTO, PROSEGUE A VERIFICAÇÃO DO EQUIPAMENTO
         $dadosEquipamento   = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
         $dadosEquipamento   = $dadosEquipamento['equipamento'][0];
-
         // Aqui está sendo carregado os dados de Sim, id_sim_equipamento necessarios para está página
         $dadosVinculoEquip  = $modeloEquip->detalhesEquipamentoParaConfiguracao($this->parametros[0]);
-
-        var_dump($dadosVinculoEquip);
-        var_dump($dadosEquipamento);
-        exit();
-
         //Aqui são os dados do cliente para exibição na tela
         $dadosClie          = $modeloEquip->dadosEquipamentoCliente($this->parametros[0]);
 
@@ -37,67 +139,25 @@
 
         $equipamentoMonitorado = $dadosEquipamento['tipoEquip']." ".$dadosEquipamento['nomeModeloEquipamento'];
 
-        //INICIA CLASS DA LISTA INICAL
-        $parametroListaIni  = array();
-        array_push($parametroListaIni, $idSim);
-        $limite             = 30;
-        $listaIni           = new ListaInicial($limite, $this->db, $parametroListaIni);
+        var_dump($dadosEquipamento);
 
-        // CARREGA OS PARAMETROS CONFIGURADOS PARA O EQUIPAMENTO
         switch ($dadosEquipamento['tipoEquip']) {
             case 'Medidor temperatura':
-                $retorno = "";
+                # code...
             break;
 
             default:
-                // RETORNO DOS PARAMETROS PARA NOBREAK
-                $retorno = $modelo->loadGraficoParam($idEquip, $idSimEquip, $idSim);
+                require_once EFIPATH ."/views/monitoramento/graficoMonitorNoBreak.php";
             break;
         }
 
-        //var_dump($retorno);
-
-        // // CARREGA OS VALORES DE CALIBRAÇÃO SALVOS PARA O EQUIPAMENTO
-        // $valoresCalibracao = $modeloEquip->posicoesCalibradas($idEquip);
-        //
-        // if($valoresCalibracao['status']){
-        //
-        //     foreach ($valoresCalibracao['posicoesCalibradas'] as $calibracao) {
-        //
-        //         $posicoesCalibradas[] = array($calibracao['posicao_tab'] => $calibracao['variavel_cal']);
-        //     }
-        //
-        // }else{
-        //     $posicoesCalibradas = 0;
-        // }
-
-        // var_dump($posicoesCalibradas);
-        //var_dump($dadosEquipamento);
-
     }else{
-
-        $retorno = null;
-
+        echo "Favor verificar suas permisões de usuário!";
     }
 
+}else{
+    echo "Parametro inválido!";
+}
 
-    /*
-    * VERIFICA SE OS PARAMETROS ESTÃO CORRETOS
-    * E SE HOUVE RETORNO DE DADOS DO EQUIPAMENTO
-    */
-    if (empty($retorno) && !isset($retorno)){
-
-        // Caso nao exista valor
-        // Apresenta mensagem e link informando que nao ha resultado
-        echo "<div class='mensagem-semvalor'>
-                <label class='mensagem-texto'>Verifique se os parametros est&atilde;o configurados.<br>
-                    <a href='".HOME_URI."/configuracao/configurarEquipamentoCliente/".$this->parametros[0]."' class='link-mensagem'>Clique aqui para voltar</a>
-                </label></div>";
-
-    }else{
-
-
-
-    }
 
 ?>
