@@ -37,7 +37,7 @@
         // Tamanho do grafico de linha
         $tamanho_grafico = "311px";
 
-        // Verifica se existe os para metros da data
+        // Verifica se existe os parametros da data
         if (isset($this->parametros[4]) && !empty($this->parametros[4]) && isset($this->parametros[5]) && !empty($this->parametros[5]))
         {
             // Oculta os graficos de multimetro

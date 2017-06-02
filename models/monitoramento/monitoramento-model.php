@@ -35,8 +35,73 @@ class MonitoramentoModel extends MainModel
         return $nova_url;
     }
 
+    /*
+    * Função que carrega os paremetros gráficos de Medidor de temperatura
+    *
+    */
+    public function loadGraficoParamMedidorTemp($idEquip, $idSimEquip, $numSim)
+    {
+        //VALIDANDO OS TRECHOS PASSADOS POR PARAMETROS
+        if(isset($idEquip) && isset($idSimEquip) && isset($numSim)){
+
+            $sim  = $numSim;
+            $ideq = $idEquip;
+            $idsq = $idSimEquip;
+
+            // Monta a query
+            $query = "SELECT parametro FROM tb_parametro WHERE id_sim_equipamento = '$idsq' AND num_sim = '$sim' AND id_equipamento = '$ideq' ORDER BY (dt_criacao) DESC LIMIT 1";
+
+            /* monta a result */
+            $busca = $this->db->select($query);
+
+            /* verifica se a query executa */
+            if(!empty($busca)){
+
+                foreach ($busca as $row){
+                    $retorno[] = $row;
+
+                    /* quebra a resposta no array */
+                    $retorno = explode("|inicio|",$retorno[0]['parametro']);
+
+                    //Enquanto não for definido diferentes parametros para medidores de temperatura
+                    for($i = 1; $i <2; $i++){
+
+                        $row2 = explode("|", $retorno[$i]);
+
+                        if($row2 != ''){
+
+                            for($f=0; $f<=4; $f++){
+
+                                //var_dump($row2[$f]);
+                                $row3 = explode("-",$row2[$f]);
+                                // Coleta posicao
+                                $posicao[] = $row3[0];
+                                // // colote valor
+                                $valor[] = ($row3[1] != '') ? $row3[1] : 0;
+                            }
+                        }
+                    }
+                }
+
+                //Destroi variavel auxiliar
+                unset($row2);
+                //Retorna os valores
+                return $valor;
+                //return $retorno;
+
+            }else{
+                echo "nao";
+                /* se a query apresentar erro, retorna false */
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+    }
+
     /**
-     * funcao que carrega os parametros do grafico
+     * funcao que carrega os parametros do grafico de No-break
      * MODIFICANDO ESTA FUNÇÃO DE FORMA QUE PASSE A RECEBER PARAMETROS
      */
     public function loadGraficoParam($idEquip, $idSimEquip, $numSim)
@@ -174,6 +239,9 @@ class MonitoramentoModel extends MainModel
         }
 
     }
+
+
+
 
     /**
      * Funcao que captura acao do post
@@ -323,8 +391,8 @@ class MonitoramentoModel extends MainModel
                 inner join tb_sim s on s.num_sim = sq.id_sim
                 inner join tb_cliente c on c.id = s.id_cliente
                 inner join tb_equipamento e on e.id = sq.id_equipamento
-                inner join tb_fabricante fa on fa.id = e.id_fabricante
-                where sq.id_sim = {$sim}";
+                left join tb_fabricante fa on fa.id = e.id_fabricante
+                where sq.id_sim = '{$sim}' and sq.status_ativo = '1'";
 
         // Busca valores
         $resultado = $this->realizaBusca($query);

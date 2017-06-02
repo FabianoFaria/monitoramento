@@ -80,7 +80,8 @@
 
                                 if($dadosCliente['status']){
                                     foreach ($dadosCliente['dados'] as $clienteSim) {
-                                        if(isset($clienteSim['num_sim']) && ($clienteSim['ativo_cliente'] == 0)){
+                                        // 'status_ativo' SE REFERE AO STATUS ATIVOS NA TABELA tb_sim_equipamento, OU SEJA, SE O SIM ESTIVER ATIVO EM UM EQUIP, ELE NÃO IRÁ APARECER
+                                        if(isset($clienteSim['num_sim']) && ($clienteSim['status_ativo'] == null)){
                                             $opcoes .= "<option value='".$clienteSim['num_sim']."'>".$clienteSim['num_sim']."</option>";
                                             $count++;
                                         }

@@ -71,6 +71,9 @@ function removerSim(simNumber){
                   // $('#posOcupadas').html(datra.html);
                   // $('#posicoesTabela').modal();
                   swal('','SIM foi removido com suscceso!','success');
+                  setTimeout(function(){
+                      location.reload();
+                  }, 2000);
               },
               error: function(jqXHR, textStatus, errorThrown)
               {

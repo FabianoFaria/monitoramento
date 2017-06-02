@@ -603,17 +603,17 @@
         public function listarSimClienteMatriz($idEquip){
 
             if(is_numeric($idEquip)){
-                // $query = "SELECT clie.nome as 'cliente', sim.num_sim, sim.ativo_cliente
-                //             FROM  tb_cliente clie
-                //             JOIN tb_equipamento equip ON clie.id = equip.id_cliente
-                //             LEFT JOIN tb_sim sim ON clie.id = sim.id_cliente
-                //             WHERE equip.id = $idEquip AND sim.status_ativo = '1'";
 
-                $query = "SELECT clie.nome as 'cliente', sim.num_sim, sim.ativo_cliente
+                $query = "SELECT clie.nome as 'cliente',
+                          sim.num_sim, sim.ativo_cliente, simEquip.id_equipamento, simEquip.status_ativo
                           FROM tb_equipamento equip
                           JOIN tb_cliente clie ON equip.id_cliente = clie.id
-                          LEFT JOIN tb_sim sim ON clie.id = sim.id_cliente
-                          WHERE equip.id = $idEquip AND sim.status_ativo = '1'";
+                          JOIN tb_sim sim ON clie.id = sim.id_cliente AND sim.ativo_cliente = '1'
+                          LEFT JOIN tb_sim_equipamento simEquip ON simEquip.id_sim = sim.num_sim AND simEquip.status_ativo = '1'
+                          WHERE equip.id = '$idEquip' AND sim.status_ativo = '1'";
+
+
+                //var_dump($query);
 
                 /* monta result */
                 $result = $this->db->select($query);

@@ -139,11 +139,11 @@ if(is_numeric($this->parametros[0])){
 
         $equipamentoMonitorado = $dadosEquipamento['tipoEquip']." ".$dadosEquipamento['nomeModeloEquipamento'];
 
-        var_dump($dadosEquipamento);
+        //var_dump($dadosEquipamento);
 
         switch ($dadosEquipamento['tipoEquip']) {
             case 'Medidor temperatura':
-                # code...
+                require_once EFIPATH ."/views/monitoramento/graficoMonitorMedidorTemperatura.php";
             break;
 
             default:
