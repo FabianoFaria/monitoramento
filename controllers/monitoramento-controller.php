@@ -326,15 +326,15 @@ class MonitoramentoController extends MainController
 
                     $totalMinutos = round((time() - strtotime($dataDado)) / 60);
 
-                    if($totalMinutos > 10){
-                        $leitura = "Não está recebendo.";
-
+                    // if($totalMinutos > 10){
+                    //     $leitura = "Não está recebendo.";
+                    //
+                    //     exit(json_encode(array('status' => false, 'dados' => $leitura)));
+                    // }else{
+                         $leitura = "Equipamento ok!";
+                    //
                         exit(json_encode(array('status' => false, 'dados' => $leitura)));
-                    }else{
-                        $leitura = "Equipamento Ok!";
-
-                        exit(json_encode(array('status' => false, 'dados' => $leitura)));
-                    }
+                    // }
                 }
 
             }else{

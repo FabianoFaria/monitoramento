@@ -67,6 +67,10 @@
                                  '/<a href="<?php echo HOME_URI; ?>/monitoramento/gerarGrafico/<?php echo $this->parametros[0]; ?>"> <?php echo $equipamentoMonitorado; ?> </a>';
             </script>
 
+            <!-- Custom CSS -->
+            <link href="<?php echo HOME_URI; ?>/views/_css/grafics.css" rel="stylesheet" type="text/css">
+
+
         <?php
 
         // Verifica se existe retorno
@@ -88,17 +92,103 @@
 
             $id = $idSim;
 
+            //var_dump($dadosEquipamento);
+
+            // 'tipo_entrada' => string '3' (length=1)
+            // 'tipo_saida' => string '3' (length=1)
+            //VERIFICA O TIPO DE SAIDA E ENTRADA PARA EXIBIR NA TELA
+            $tipoEntrada    = $dadosEquipamento['tipo_entrada'];
+            $tipoSaida      = $dadosEquipamento['tipo_saida'];
+
             ?>
 
             <script type="text/javascript">
 
+
+
+
+
                 <?php
                     // LOOP PARA CRIAR O GRAFICO
-                    for($p=0;$p<sizeof($tabela);$p++)
+                    for($p=0;$p < $tipoEntrada;$p++)
                     {
                         // COLETA OS DADOS
                         $dadosMoni = $modelo->carregaDadosGrafico($tabela[$p], $nomes[0], $id);
                         $dadosMoni = explode(";",$dadosMoni);
+
+
+                    ?>
+                        // EFETUA A BUSCA POR DADOS VIA JSON
+                        $(function () {
+
+                            var valor = 0;
+
+                            setInterval(function () {
+
+
+                                var url =  "<?php echo HOME_URI; ?>/classes/sincronizacaoGrafico/syncEntradaSaida.php?6e756d65726f=<?php echo $idSim;?>&656e7472616461=1&706f73546162656c61=<?php echo $tabela[$p];?>&callback=?";
+                                $.getJSON(url,  function(data) {
+                                    valor = parseFloat(data[0]);
+                                });
+
+                                // console.log('Teste : <?php echo $tabela[$p]; ?> '+valor+' ');
+
+                                var inc = parseFloat(valor/100);
+                                var valorPreciso = inc.toFixed(2);
+                                var leftVal =  valorPreciso;
+
+                                // VERIFICA SE A TEMPERATURA ESTÁ OU NÃO DE ACORDO COM OS PARAMETOS
+                                if (leftVal <= 0) {
+
+                                    leftVal = 0;
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoLigado');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").addClass('situacaoDesligado');
+
+                                }else if(leftVal < <?php echo $retorno[0]; ?>){
+
+                                    //console.log('Teste : <?php echo $retorno[0]; ?> '+leftVal+' ');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoLigado');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoAtencao');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").addClass('situacaoDesligado well-blink');
+                                    document.getElementById('sit-cor-temp<?php echo $tabela[$p];?>').innerHTML = 'Nível baixo!';
+                                }else if(leftVal < <?php echo $retorno[1]; ?>){
+
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoLigado');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoDesligado');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('well-blink');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").addClass('situacaoAtencao');
+                                    document.getElementById('sit-cor-temp<?php echo $tabela[$p];?>').innerHTML = 'Atenção';
+                                }else if(leftVal > <?php echo $retorno[4]; ?>){
+
+                                    leftVal = <?php echo $retorno[4]; ?> // alterar para panes
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoLigado');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoAtencao');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").addClass('situacaoDesligado');
+                                    document.getElementById('sit-cor-temp<?php echo $tabela[$p];?>').innerHTML = 'Crítico!';
+                                }else if((leftVal > <?php echo $retorno[3]; ?>) && (leftVal < <?php echo $retorno[4]; ?>)){
+
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoLigado');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoDesligado');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('well-blink');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").addClass('situacaoAtencao');
+                                    document.getElementById('sit-cor-temp<?php echo $tabela[$p];?>').innerHTML = 'Atenção';
+                                }else{
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoDesligado');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('well-blink');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").removeClass('situacaoAtencao');
+                                    $("#sit-cor-temp<?php echo $tabela[$p];?>").addClass('situacaoLigado');
+                                    document.getElementById('sit-cor-temp<?php echo $tabela[$p];?>').innerHTML = 'Normal';
+                                }
+
+                                //Atualiza o valor da temperatura
+                                document.getElementById('cor_temp<?php echo $tabela[$p];?>').innerHTML = leftVal + "";
+
+                            }, 5000);
+
+                        });
+
+                    <?php
+
                     }
 
                 //var_dump($dadosMoni);
@@ -107,9 +197,9 @@
                 * SAIR DO PHP PARA EXECUTAR FUNÇÃO JAVASCRIPT PARA ALIMENTAR OS GRÁFICOS
                 */
                 ?>
-                
 
-            </script>
+                </script>
+
 
                 <!-- INICIO DO HTML DA PÁGINA -->
                 <div class="row">
@@ -149,17 +239,6 @@
                                     </div>
                                 </div>
 
-                                <?php
-
-                                    //var_dump($dadosEquipamento);
-
-                                    // 'tipo_entrada' => string '3' (length=1)
-                                    // 'tipo_saida' => string '3' (length=1)
-                                    //VERIFICA O TIPO DE SAIDA E ENTRADA PARA EXIBIR NA TELA
-                                    $tipoEntrada    = $dadosEquipamento['tipo_entrada'];
-                                    $tipoSaida      = $dadosEquipamento['tipo_saida'];
-
-                                ?>
                                 <input type="hidden" id="tipoEntrada" value="<?php echo $tipoEntrada; ?>" />
                                 <input type="hidden" id="tipoSaida" value="<?php echo $tipoSaida; ?>" />
 
