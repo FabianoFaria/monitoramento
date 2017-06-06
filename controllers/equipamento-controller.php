@@ -231,13 +231,34 @@ class EquipamentoController extends MainController
      */
      public function removerEquipamentoJson(){
         //CARREGA MODELO PARA ESTA FUNÇÃO
-        $equipModelo    = $this->load_model('equipamento/equipamento-model');
+        $equipModelo        = $this->load_model('equipamento/equipamento-model');
 
         $dadosEquipamento   = $equipModelo->detalhesEquipamentoParaConfiguracao($_POST['idEquipamento']);
 
         $removerEquip       = $equipModelo->removerEquipamentoViaJson($_POST['idEquipamento']);
 
+        //RECUPERA INFORMAÇÕES DE PLANTA BAIXA
+        $plantaBaixa        = $equipModelo->dadosEquipamentoPlantaBaixa($_POST['idEquipamento']);
+
+        if($plantaBaixa['status']){
+
+            $removePlanta = $equipModelo->removerPLantaBaixa($plantaBaixa['dadosPlanta'][0]['id_planta']);
+
+            //var_dump($removePlanta);
+            if($removePlanta['status']){
+                //REMOVE TODOS OS PONTOS QUE FORAM CADASTRADOS NESTA PLANTA BAIXA
+                $removePonto        = $equipModelo->removerPontosPlanta($plantaBaixa['dadosPlanta'][0]['id_planta']);
+
+                if($plantaBaixa['dadosPlanta'][0] != ''){
+                        $this->removeOldAvatar($plantaBaixa['dadosPlanta'][0]['imagem_planta'], UP_BLUEPRINT_IMG_PATH);
+                }
+            }
+        }
+
+        //VERIFICA SE REMOÇÃO FOI CONCLUIDA PARA CONTINUAR COM EXCLUSÃO
         if($removerEquip){
+
+            //var_dump($dadosEquipamento);
 
             if($dadosEquipamento['status']){
 
@@ -246,10 +267,13 @@ class EquipamentoController extends MainController
 
                 //REMOVE DA TABELA DE POSIÇÕES AS POSIÇÕES OCUPADAS NO EQUIPAMENTO PELO SIM
                 $removePosicoesEquipamento  = $equipModelo->removerPosicoesTabelaEquipamentoViaJson($idSimEquipamento, $numeroSimEquipamento);
+
             }
 
             //REMOVE OS PARAMETROS CADASTRADOS PARA O EQUIPAMENTO
             $removerParamEquip = $equipModelo->removerParametrosEquipamentoViaJson($_POST['idEquipamento']);
+
+            //REMOVE OS PONTOS DE PLANTA BAIXA E A PLANTA BAIXA CADASTRADA PARA O EQUIPAMENTO
 
             exit(json_encode(array('status' => $removerEquip['status'] )));
         }else{

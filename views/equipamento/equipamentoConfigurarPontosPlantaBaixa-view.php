@@ -224,7 +224,7 @@
                                                         data: {
                                                             id: '<?php echo $ponto['ponto_tabela']; ?>',
                                                             equipamento: 'Ponto : <?php echo strtoupper($ponto['ponto_tabela']); ?>',
-                                                            image: '<?php echo HOME_URI; ?>/views/_images/scale.png'
+                                                            image: '<?php echo HOME_URI; ?>/views/_images/thermometer.png'
                                                             },
                                                         position: { x: <?php echo $ponto['coordenada_x']; ?>, y: <?php echo $ponto['coordenada_y']; ?> }
 
@@ -251,7 +251,7 @@
                                                     data: {
                                                         id: pontosTabela[i],
                                                         equipamento: 'Ponto : '+pontosTabela[i].toUpperCase(),
-                                                        image: '<?php echo HOME_URI; ?>/views/_images/scale.png'
+                                                        image: '<?php echo HOME_URI; ?>/views/_images/thermometer.png'
                                                     },
                                                     position: {
                                                             x: 150,
@@ -289,7 +289,7 @@
                                                         data: {
                                                             id: '<?php echo $ponto['ponto_tabela']; ?>',
                                                             equipamento: 'Ponto : <?php echo strtoupper($ponto['ponto_tabela']); ?>',
-                                                            image: '<?php echo HOME_URI; ?>/views/_images/scale.png'
+                                                            image: '<?php echo HOME_URI; ?>/views/_images/thermometer.png'
                                                             },
                                                         position: { x: <?php echo $ponto['coordenada_x']; ?>, y: <?php echo $ponto['coordenada_y']; ?> }
 
@@ -313,7 +313,7 @@
                                                 data: {
                                                     id: 'q',
                                                     equipamento: 'Temperatura ambiente',
-                                                    image: '<?php echo HOME_URI; ?>/views/_images/scale.png'
+                                                    image: '<?php echo HOME_URI; ?>/views/_images/thermometer.png'
                                                 },
                                                 position: {
                                                         x: 150,

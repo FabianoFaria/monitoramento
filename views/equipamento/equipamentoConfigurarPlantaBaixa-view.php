@@ -16,7 +16,7 @@
 
     $plantaBaixa        = $modelo->dadosEquipamentoPlantaBaixa($this->parametros[0]);
 
-
+    //var_dump($plantaBaixa);
  ?>
 
 

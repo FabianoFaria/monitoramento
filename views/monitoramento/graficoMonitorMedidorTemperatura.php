@@ -104,10 +104,6 @@
 
             <script type="text/javascript">
 
-
-
-
-
                 <?php
                     // LOOP PARA CRIAR O GRAFICO
                     for($p=0;$p < $tipoEntrada;$p++)

@@ -208,13 +208,17 @@ class MonitoramentoController extends MainController
     */
     public function carregarUltimoDadoPosicaoPlantaBaixaJson(){
 
-        $equipModel         = $this->load_model('equipamento/equipamento-model');
-        $alarmeModelo       = $this->load_model('alarme/alarme-model');
+        $equipModel     = $this->load_model('equipamento/equipamento-model');
+        $alarmeModelo   = $this->load_model('alarme/alarme-model');
+        $monitoraModelo = $this->load_model('monitoramento/monitoramento-model');
 
+        $idEquip        = $_POST['idEquip'];
         $idSim          = $_POST['idSim'];
         $idSimEquip     = $_POST['idSimEquip'];
         $pontoRecebido  = $_POST['pontoEquip'];
         $tipoEquip      = $_POST['tipoEquip'];
+
+        //$equipInfo      = $equipModel->;
 
         /*
         * VERIFICA SE FOI PASSADO UM PONTO VÁLIDO, OU O EQUIPAMENTO MESTRE
@@ -268,6 +272,40 @@ class MonitoramentoController extends MainController
                 switch ($tipoEquip) {
                     case 'Medidor temperatura':
 
+                        /*
+                            Carrega os parametros de alarme
+                        */
+                        $parametrosAlarmeEquip = $monitoraModelo->loadGraficoParamMedidorTemp($idEquip, $idSimEquip, $idSim);
+
+                        if(!empty($parametrosAlarmeEquip)){
+
+                            $leitura    = number_format(($ultimaLeituraValor / 100) ,2 ,'.','');
+
+                            //var_dump($parametrosAlarmeEquip);
+                            if($leitura < $parametrosAlarmeEquip[0]){
+
+                                $leitura = "<div class='percent-current lead'> <p class='text-danger'>".$leitura." (C°)</p></div>";
+
+                            }else if($leitura < $parametrosAlarmeEquip[1]){
+
+                                $leitura = "<div class='percent-current lead'> <p class='text-warning'>".$leitura." (C°)</p></div>";
+
+                            }else if($leitura > $parametrosAlarmeEquip[4]){
+
+                                $leitura = "<div class='percent-current lead'> <p class='text-danger'>".$leitura." (C°)</p></div>";
+
+                            }else if(($leitura > $parametrosAlarmeEquip[3]) && ($leitura < $parametrosAlarmeEquip[4]) ){
+
+                                $leitura = "<div class='percent-current lead'> <p class='text-warning'>".$leitura." (C°)</p></div>";
+
+                            }else{
+                                $leitura = "<div class='percent-current lead'> <p class='text-success'>".$leitura." (C°)</p></div>";
+                            }
+
+                        }else{
+                            $leitura = "<div class='percent-current lead'> <p class='text-success'>".number_format(($ultimaLeituraValor / 100) ,2 ,'.','')." (C°)</p></div>";
+                        }
+
                         // $leitura = "<div class='tg-thermometer small' style='height: 120px'>";
                         //     $leitura .= " <div class='draw-a'></div>";
                         //     $leitura .= " <div class='draw-b'></div>";
@@ -282,7 +320,7 @@ class MonitoramentoController extends MainController
                         //     $leitura .= "</div>";
 
                             //$leitura .= "<div class='mercury' style='height: ".number_format(($ultimaLeituraValor / 100) ,2 ,'.','')."%'>";
-                                $leitura = "<div class='percent-current'>".number_format(($ultimaLeituraValor / 100) ,2 ,'.','')." (C°)</div>";
+                            //    $leitura = "<div class='percent-current'>".number_format(($ultimaLeituraValor / 100) ,2 ,'.','')." (C°)</div>";
                         //         $leitura .= "<div class='mask'>";
                         //             $leitura .= "<div class='bg-color'></div>";
                         //         $leitura .= "</div>";
@@ -293,14 +331,17 @@ class MonitoramentoController extends MainController
                     break;
 
                     default:
-                        $leitura =  $this->configurarTipoPontoTabela($pontoRecebido, number_format($ultimaLeituraValor ,2 ,'.',''));
+                        $leituraTemp =  $this->configurarTipoPontoTabela($pontoRecebido, number_format($ultimaLeituraValor ,2 ,'.',''));
+
+                        $leitura = "<div class='percent-current lead'> <p class='text-primary'>".$leituraTemp." </p></div>";
                     break;
                 }
 
                 exit(json_encode(array('status' => true, 'dados' => $leitura)));
 
             }else{
-                $leitura = "Não recebeu.";
+
+                $leitura = "<div class='percent-current lead'> <p class='text-danger'>Não recebeu.</p></div>";
 
                 exit(json_encode(array('status' => false, 'dados' => $leitura)));
             }

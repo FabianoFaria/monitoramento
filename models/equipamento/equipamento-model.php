@@ -1685,7 +1685,7 @@ class EquipamentoModel extends MainModel
                         planta.descricao_imagem,
                         planta.imagem_planta
                       FROM tb_plantaBaixa planta
-                      JOIN tb_equipamento equip ON equip.id_cliente = planta.id_cliente AND equip.id_filial = planta.id_filial
+                      JOIN tb_equipamento equip ON equip.id = planta.id_equipamento
                       WHERE equip.id = '$idEquipamento' AND planta.status_ativo = '1'";
 
             /* MONTA RESULT */
