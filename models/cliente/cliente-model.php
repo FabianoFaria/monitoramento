@@ -547,10 +547,11 @@
         {
             if(is_numeric($idCliente)){
 
-                $query = "SELECT clie.nome as 'cliente', fili.nome as 'filial', sim.num_sim, sim.ativo_cliente
+                $query = "SELECT clie.nome as 'cliente', fili.nome as 'filial', sim.num_sim, sim.ativo_cliente, simEquip.status_ativo
                             FROM  tb_cliente clie
                             LEFT JOIN tb_filial fili ON clie.id = fili.id_matriz
-                            LEFT JOIN tb_sim sim ON fili.id = sim.id_filial
+                            LEFT JOIN tb_sim sim ON fili.id = sim.id_filial,
+                            LEFT JOIN tb_sim_equipamento simEquip ON sim.num_sim = simEquip.id_sim
                             WHERE fili.id_matriz = $idCliente AND fili.id = $idFilial AND sim.status_ativo = '1'";
 
                 /* monta result */

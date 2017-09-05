@@ -558,15 +558,24 @@
     */
     public function verificaProtocoloPosicaoTebela($valor, $protocolos){
 
-        require_once EFIPATH."/protocolosDisponiveis.php";
 
-        //Procura na array de protocolos o valor passado pelo
-        if (array_key_exists($valor,$protocolos)){
-            //Retorna o valor da array em caso o valor tenha sido retornado um dos protocolos
-            return $protocolos[$valor];
-        }else{
-            return 1;
+        if(!is_float($valor))
+        {
+           require_once EFIPATH."/protocolosDisponiveis.php";
+
+           //Procura na array de protocolos o valor passado pelo
+           if (array_key_exists($valor,$protocolos)){
+                //Retorna o valor da array em caso o valor tenha sido retornado um dos protocolos
+                return $protocolos[$valor];
+            }else{
+                return 1;
+            }
         }
+        else
+        {
+          return 1;
+        }
+        
     }
 
     /*

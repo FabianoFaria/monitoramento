@@ -19,7 +19,8 @@
         $dadosCliente   = $modeloClie->listarSimClienteMatriz($dadosEquipamentos['id']);
     }
 
-	//var_dump($dadosEquipamentos);
+	//var_dump($dadosEquipamentos['filial'], $dadosEquipamentos['id_filial'] );
+    //var_dump($dadosEquipamentos);
     //var_dump($dadosCliente);
 
 
@@ -81,7 +82,7 @@
                                 if($dadosCliente['status']){
                                     foreach ($dadosCliente['dados'] as $clienteSim) {
                                         // 'status_ativo' SE REFERE AO STATUS ATIVOS NA TABELA tb_sim_equipamento, OU SEJA, SE O SIM ESTIVER ATIVO EM UM EQUIP, ELE NÃO IRÁ APARECER
-                                        if(isset($clienteSim['num_sim']) && ($clienteSim['status_ativo'] == null)){
+                                        if(isset($clienteSim['num_sim']) && (($clienteSim['status_ativo'] == null) || ($clienteSim['status_ativo'] == 1))){
                                             $opcoes .= "<option value='".$clienteSim['num_sim']."'>".$clienteSim['num_sim']."</option>";
                                             $count++;
                                         }
